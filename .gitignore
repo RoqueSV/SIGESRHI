@@ -2,12 +2,38 @@
 app/bootstrap*
 
 # Symfony directories
-vendor/*
 */logs/*
 */cache/*
 web/uploads/*
-web/bundles/*
+
 
 # Configuration files
-app/config/parameters.ini
 app/config/parameters.yml
+
+
+# Composer
+composer.phar
+
+# sublimetext
+/*.sublime-project
+*.sublime-workspace
+
+# netbeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.*
+!.gitignore
+*~
