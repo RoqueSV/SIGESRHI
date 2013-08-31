@@ -1,16 +1,16 @@
 <?php
-// src/Acme/UserBundle/Entity/User.php
+// src/SIGESRHI/Entity/Usuario.php
 
-namespace SIGESRHI\UserBundle\Entity;
+namespace SIGESRHI\AdminBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="fos_user")
+ * @ORM\Table(name="usuario")
  */
-class User extends BaseUser
+class Usuario extends BaseUser
 {
     /**
      * @ORM\Id

@@ -1,4 +1,4 @@
 _user_bundle:
-    resource: "@UserBundle/Resources/config/routing.yml"
+    resource: "@AdminBundle/Resources/config/routing.yml"
     prefix:   /
 
