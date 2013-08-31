@@ -1,4 +1,0 @@
-_user_bundle:
-    resource: "@UserBundle/Resources/config/routing.yml"
-    prefix:   /
-
