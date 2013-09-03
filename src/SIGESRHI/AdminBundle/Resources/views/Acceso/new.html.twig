@@ -1,6 +1,6 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
+{% block principal -%}
     <h1>Acceso creation</h1>
 
     <form action="{{ path('acceso_create') }}" method="post" {{ form_enctype(form) }}>
@@ -13,7 +13,7 @@
         <ul class="record_actions">
     <li>
         <a href="{{ path('acceso') }}">
-            Back to the list
+            Regresar
         </a>
     </li>
 </ul>
