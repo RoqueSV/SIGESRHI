@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="description" content="Administración de RRHH - ISRI" />
+	<meta name="keywords" content="HTML5, CSS3, Javascript" />
+	
+	{% block hojas_estilo %} 
+	<link href="{{ asset('css/main.css') }}" type="text/css" rel="stylesheet" />
+
+	{% endblock %}
+
+	<title> {% block titulo %} ..:: SIGESRHI ::.. {% endblock %} </title>
+
+</head>
+
+	{% block javascripts %}
+    	{#  <script src="{{ asset('/js/main.js') }}" type="text/javascript"></script> #}
+    {% endblock %}
+
+<body>
+<div id="agrupar">
+	<header id="cabecera">
+		{% block encabezado%}
+		<table class="tabla_cabecera">
+			<tr>
+				<td>
+		<img src="{{ asset('images/Logo_ISRI.png') }}" alt="ISRI" height="150px" width="150px" />
+				</td>
+				<td align="center">
+					<p class="titulo1"> Instituto Salvadoreño de Rehabilitación Integral </p>
+					<br>
+					<p class="titulo1"> Sistema Informático de Gestión de Recurso Humano </p>
+				</td>
+				<td>
+					<img src="{{ asset('images/Escudo_El_Salvador.png') }}" alt="El Salvador" height="150px" width="150px" /> 
+				</td>
+			</tr>
+		</table>
+		{% endblock %}
+	</header>
+
+
+	<nav id="menu">
+		<ul class="mi-menu"> {% block menu_principal %}
+			<li><a href="#">Inicio </a></li>
+
+			<li><a href="#">Opción 1</a>
+				<ul>
+					<li><a href="#">Opción 1.1</a></li>
+					<li><a href="#">Opción 1.2</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Opción 2</a>
+				<ul>
+					<li><a href="#">Opción 2.1</a></li>
+					<li><a href="#">Opción 2.2</a></li>
+					<li><a href="#">Opción 2.3</a></li>
+					<li><a href="#">Opción 2.4</a></li>
+					<li><a href="#">Opción 2.5</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Opción 3</a></li>
+			<li><a href="#">Opción 4</a></li>
+			{% endblock %}
+		</ul>	
+	</nav>	
+
+	<aside id="columna">
+		{% block seccion %}
+		{% if app.user %}
+		
+		<p>Usuario: {{ app.user.username }}</p>
+		<blockquote>Mensaje uno</blockquote>
+		<blockquote>Mensaje dos</blockquote>
+		
+		
+		{% else %}
+		{{ render(controller('FOSUserBundle:Security:login')) }}
+		{% endif %}
+		{% endblock %}
+	</aside>
+	<section id="seccion"> 
+		{% block principal %}
+			Aqui va el contenido de las páginas.
+				
+		{% endblock %}
+	</section>
+
+
+	
+	<footer id="pie">
+		{% block pie_pagina %}
+		<p> Instituto Salvadore&ntilde;o de Rehabilitaci&oacute;n Integral - ISRI </p>
+		<p> Colonia Costa Rica Avenida Irazu # 181, San Salvador, El Salvador, C.A. </p>
+		<p> Tel. (503) 2521 - 8600 </p>
+		<p>	Derechos Reservados &copy; - ISRI - 2013 </p>
+		{% endblock %}
+	</footer>
+
+</div>
+</body>
+
+</html>
