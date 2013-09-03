@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Institucioncapacitadora" table="institucioncapacitadora">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombreinstitucion" type="string" column="nombreinstitucion" length="50" nullable="false"/>
+    <field name="nombrecontacto" type="string" column="nombrecontacto" length="50" nullable="false"/>
+    <field name="telefonocontacto" type="string" column="telefonocontacto" nullable="true"/>
+    <field name="cargocontacto" type="string" column="cargocontacto" length="75" nullable="false"/>
+    <field name="emailcontacto" type="string" column="emailcontacto" length="50" nullable="true"/>
+  </entity>
+</doctrine-mapping>

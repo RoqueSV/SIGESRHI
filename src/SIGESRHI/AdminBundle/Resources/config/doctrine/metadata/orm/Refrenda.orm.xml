@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Refrenda" table="refrenda">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="partida" type="integer" column="partida" nullable="false"/>
+    <field name="subpartida" type="integer" column="subpartida" nullable="false"/>
+    <field name="salariominimo" type="float" column="salariominimo" nullable="false"/>
+    <field name="salariomaximo" type="float" column="salariomaximo" nullable="false"/>
+    <field name="sueldoactual" type="float" column="sueldoactual" nullable="false"/>
+    <field name="unidadpresupuestaria" type="string" column="unidadpresupuestaria" length="100" nullable="false"/>
+    <field name="lineapresupuestaria" type="string" column="lineapresupuestaria" length="100" nullable="false"/>
+    <field name="codigolp" type="string" column="codigolp" length="25" nullable="false"/>
+    <many-to-one field="idusuario" target-entity="Empleado">
+      <join-columns>
+        <join-column name="idusuario" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

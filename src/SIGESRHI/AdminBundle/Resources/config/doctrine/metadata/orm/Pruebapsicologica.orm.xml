@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Pruebapsicologica" table="pruebapsicologica">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="resultadocoeficiente" type="string" column="resultadocoeficiente" length="9" nullable="false"/>
+    <field name="calificacioncoeficiente" type="integer" column="calificacioncoeficiente" nullable="false"/>
+    <field name="resultadoafectividad" type="string" column="resultadoafectividad" length="9" nullable="false"/>
+    <field name="resultadorelaciones" type="string" column="resultadorelaciones" length="9" nullable="false"/>
+    <field name="resultadoautoreconocimiento" type="string" column="resultadoautoreconocimiento" length="9" nullable="false"/>
+    <field name="resultadoseguridad" type="string" column="resultadoseguridad" length="9" nullable="false"/>
+    <many-to-one field="idexpediente" target-entity="Expediente">
+      <join-columns>
+        <join-column name="idexpediente" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

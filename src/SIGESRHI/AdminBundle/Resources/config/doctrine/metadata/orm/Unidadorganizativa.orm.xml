@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Unidadorganizativa" table="unidadorganizativa">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombreunidad" type="string" column="nombreunidad" length="75" nullable="false"/>
+    <field name="descripcionunidad" type="string" column="descripcionunidad" length="500" nullable="true"/>
+    <many-to-one field="idcentro" target-entity="Centrounidad">
+      <join-columns>
+        <join-column name="idcentro" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

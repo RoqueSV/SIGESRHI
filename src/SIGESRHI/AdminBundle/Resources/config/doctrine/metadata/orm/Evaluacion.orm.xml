@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Evaluacion" table="evaluacion">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="fecharealizacion" type="date" column="fecharealizacion" nullable="false"/>
+    <field name="anoevaluado" type="integer" column="anoevaluado" nullable="false"/>
+    <field name="semestre" type="string" column="semestre" nullable="false"/>
+    <many-to-one field="empusuario" target-entity="Empleado">
+      <join-columns>
+        <join-column name="emp_idusuario" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idusuario" target-entity="Empleado">
+      <join-columns>
+        <join-column name="idusuario" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

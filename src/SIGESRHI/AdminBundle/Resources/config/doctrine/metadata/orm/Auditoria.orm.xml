@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Auditoria" table="auditoria">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="accionrealizada" type="string" column="accionrealizada" length="10" nullable="false"/>
+    <field name="tablaafectada" type="string" column="tablaafectada" length="25" nullable="false"/>
+    <field name="valorold" type="text" column="valorold" nullable="true"/>
+    <field name="valornew" type="text" column="valornew" nullable="true"/>
+    <field name="usuarioaccion" type="string" column="usuarioaccion" length="20" nullable="false"/>
+    <field name="fechaaccion" type="date" column="fechaaccion" nullable="false"/>
+  </entity>
+</doctrine-mapping>

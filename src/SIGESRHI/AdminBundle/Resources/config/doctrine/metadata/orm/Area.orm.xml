@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Area" table="area">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombrearea" type="string" column="nombrearea" length="100" nullable="false"/>
+    <field name="descripcionarea" type="string" column="descripcionarea" length="500" nullable="true"/>
+    <many-to-many field="idplaza" target-entity="Plaza" mapped-by="idarea"/>
+  </entity>
+</doctrine-mapping>

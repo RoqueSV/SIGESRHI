@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Solicitudempleo" table="solicitudempleo">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="numsolicitud" type="integer" column="numsolicitud" nullable="true"/>
+    <field name="apellidocasada" type="string" column="apellidocasada" length="20" nullable="true"/>
+    <field name="primerapellido" type="string" column="primerapellido" length="20" nullable="false"/>
+    <field name="segundoapellido" type="string" column="segundoapellido" length="20" nullable="false"/>
+    <field name="nombres" type="string" column="nombres" length="25" nullable="false"/>
+    <field name="colonia" type="string" column="colonia" length="30" nullable="false"/>
+    <field name="calle" type="string" column="calle" length="30" nullable="true"/>
+    <field name="estadocivil" type="string" column="estadocivil" length="12" nullable="false"/>
+    <field name="telefonofijo" type="string" column="telefonofijo" nullable="false"/>
+    <field name="telefonomovil" type="string" column="telefonomovil" nullable="false"/>
+    <field name="email" type="string" column="email" length="255" nullable="false"/>
+    <field name="lugarnac" type="string" column="lugarnac" length="25" nullable="false"/>
+    <field name="fehanac" type="date" column="fehanac" nullable="false"/>
+    <field name="dui" type="string" column="dui" nullable="false"/>
+    <field name="lugardui" type="string" column="lugardui" length="50" nullable="false"/>
+    <field name="fechadui" type="date" column="fechadui" nullable="false"/>
+    <field name="nit" type="string" column="nit" nullable="true"/>
+    <field name="isss" type="string" column="isss" nullable="true"/>
+    <field name="nup" type="string" column="nup" nullable="true"/>
+    <field name="nip" type="string" column="nip" length="20" nullable="true"/>
+    <field name="sexo" type="string" column="sexo" nullable="false"/>
+    <field name="fotografia" type="string" column="fotografia" length="50" nullable="false"/>
+    <field name="fecharegistro" type="date" column="fecharegistro" nullable="false"/>
+    <field name="fechamodificacion" type="date" column="fechamodificacion" nullable="true"/>
+    <many-to-one field="idexpediente" target-entity="Expediente">
+      <join-columns>
+        <join-column name="idexpediente" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idplaza" target-entity="Plaza">
+      <join-columns>
+        <join-column name="idplaza" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idmunicipio" target-entity="Municipio">
+      <join-columns>
+        <join-column name="idmunicipio" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

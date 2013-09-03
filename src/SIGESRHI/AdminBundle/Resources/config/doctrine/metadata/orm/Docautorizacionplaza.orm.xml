@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Docautorizacionplaza" table="docautorizacionplaza">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="numrefdoc" type="string" column="numrefdoc" length="20" nullable="false"/>
+    <field name="accionplaza" type="string" column="accionplaza" nullable="false"/>
+    <field name="fechaautorizacionplaza" type="date" column="fechaautorizacionplaza" nullable="false"/>
+    <many-to-one field="idplaza" target-entity="Plaza">
+      <join-columns>
+        <join-column name="idplaza" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

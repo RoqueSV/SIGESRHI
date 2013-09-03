@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Concurso" table="concurso">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="codigoconcurso" type="string" column="codigoconcurso" length="15" nullable="false"/>
+    <field name="fechaapertura" type="date" column="fechaapertura" nullable="false"/>
+    <field name="fechacierre" type="date" column="fechacierre" nullable="false"/>
+    <field name="numeroacta" type="integer" column="numeroacta" nullable="true"/>
+    <field name="anoacta" type="integer" column="anoacta" nullable="true"/>
+    <many-to-one field="idplaza" target-entity="Plaza">
+      <join-columns>
+        <join-column name="idplaza" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="idusuario" target-entity="Empleado" inversed-by="idconcurso">
+      <join-table name="empleadoconcurso">
+        <join-columns>
+          <join-column name="idconcurso" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="idusuario" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>

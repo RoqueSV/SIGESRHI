@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Administrador" table="administrador">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="idrol" type="integer" column="idrol" nullable="false"/>
+    <field name="nombreadministrador" type="string" column="nombreadministrador" length="25" nullable="false"/>
+    <field name="apellidoadministrador" type="string" column="apellidoadministrador" length="25" nullable="false"/>
+    <field name="emailadministrador" type="string" column="emailadministrador" length="50" nullable="false"/>
+  </entity>
+</doctrine-mapping>

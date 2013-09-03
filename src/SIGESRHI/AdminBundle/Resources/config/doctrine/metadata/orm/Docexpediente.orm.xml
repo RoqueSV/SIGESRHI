@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Docexpediente" table="docexpediente">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombredocexp" type="string" column="nombredocexp" length="25" nullable="false"/>
+    <field name="rutadocexp" type="string" column="rutadocexp" length="50" nullable="false"/>
+    <field name="fechadocexp" type="date" column="fechadocexp" nullable="false"/>
+    <many-to-one field="idexpediente" target-entity="Expediente">
+      <join-columns>
+        <join-column name="idexpediente" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,30 @@
+acceso:
+    pattern:  /
+    defaults: { _controller: "AdminBundle:Acceso:index" }
+
+acceso_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AdminBundle:Acceso:show" }
+
+acceso_new:
+    pattern:  /new
+    defaults: { _controller: "AdminBundle:Acceso:new" }
+
+acceso_create:
+    pattern:  /create
+    defaults: { _controller: "AdminBundle:Acceso:create" }
+    requirements: { _method: post }
+
+acceso_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AdminBundle:Acceso:edit" }
+
+acceso_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AdminBundle:Acceso:update" }
+    requirements: { _method: post|put }
+
+acceso_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AdminBundle:Acceso:delete" }
+    requirements: { _method: post|delete }

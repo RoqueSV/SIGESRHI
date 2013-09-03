@@ -20,4 +20,23 @@ fos_user_change_password:
 hello_page:
     path:  /hello/{name}
     defaults: { _controller: AdminBundle:Default:index }
+    
+_rol:
+    resource: "@AdminBundle/Resources/config/routing/rol.yml"
+    prefix:   /rol
+    
+_acceso:
+    resource: "@AdminBundle/Resources/config/routing/acceso.yml"
+    prefix:   /acceso
 
+_modulo:
+    resource: "@AdminBundle/Resources/config/routing/modulo.yml"
+    prefix:   /modulo
+    
+_centrounidad:
+    resource: "@AdminBundle/Resources/config/routing/centrounidad.yml"
+    prefix:   /centrounidad
+    
+_unidadorganizativa:
+    resource: "@AdminBundle/Resources/config/routing/unidadorganizativa.yml"
+    prefix:   /unidadorganizativa

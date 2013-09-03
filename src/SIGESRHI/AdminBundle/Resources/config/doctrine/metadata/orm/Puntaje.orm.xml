@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Puntaje" table="puntaje">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombrepuntaje" type="string" column="nombrepuntaje" length="15" nullable="false"/>
+    <field name="puntajemin" type="integer" column="puntajemin" nullable="false"/>
+    <field name="puntajemax" type="integer" column="puntajemax" nullable="false"/>
+    <many-to-many field="idformulario" target-entity="Formularioevaluacion" mapped-by="idpuntaje"/>
+  </entity>
+</doctrine-mapping>

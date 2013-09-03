@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Noticia" table="noticia">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="fechanoticia" type="date" column="fechanoticia" nullable="false"/>
+    <field name="asuntonoticia" type="string" column="asuntonoticia" length="50" nullable="false"/>
+    <field name="fechainicionoticia" type="date" column="fechainicionoticia" nullable="false"/>
+    <field name="fechafinnoticia" type="date" column="fechafinnoticia" nullable="true"/>
+    <field name="contenidonoticia" type="string" column="contenidonoticia" length="1000" nullable="false"/>
+    <many-to-many field="idcentro" target-entity="Centrounidad" mapped-by="idnoticia"/>
+  </entity>
+</doctrine-mapping>

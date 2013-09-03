@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Plaza" table="plaza">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombreplaza" type="string" column="nombreplaza" length="100" nullable="false"/>
+    <field name="descripcionplaza" type="string" column="descripcionplaza" length="500" nullable="false"/>
+    <field name="edad" type="integer" column="edad" nullable="false"/>
+    <field name="estadoplaza" type="string" column="estadoplaza" nullable="false"/>
+    <many-to-many field="idmanejoequipo" target-entity="Manejoequipo" inversed-by="idplaza">
+      <join-table name="manejoequipoplaza">
+        <join-columns>
+          <join-column name="idplaza" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="idmanejoequipo" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <many-to-many field="idhabilidad" target-entity="Habilidad" inversed-by="idplaza">
+      <join-table name="habilidadplaza">
+        <join-columns>
+          <join-column name="idplaza" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="idhabilidad" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <many-to-many field="idfuncion" target-entity="Funcion" inversed-by="idplaza">
+      <join-table name="funcionplaza">
+        <join-columns>
+          <join-column name="idplaza" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="idfuncion" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <many-to-many field="idconocimiento" target-entity="Conocimiento" inversed-by="idplaza">
+      <join-table name="conocimientoplaza">
+        <join-columns>
+          <join-column name="idplaza" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="idconocimiento" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+    <many-to-many field="idarea" target-entity="Area" inversed-by="idplaza">
+      <join-table name="areaplaza">
+        <join-columns>
+          <join-column name="idplaza" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="idarea" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>

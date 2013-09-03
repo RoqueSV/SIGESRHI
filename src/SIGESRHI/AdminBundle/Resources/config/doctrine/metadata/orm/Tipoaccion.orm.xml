@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Tipoaccion" table="tipoaccion">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombretipoaccion" type="string" column="nombretipoaccion" length="50" nullable="false"/>
+    <field name="descripciontipoaccion" type="string" column="descripciontipoaccion" length="150" nullable="true"/>
+    <field name="tipoaccion" type="string" column="tipoaccion" nullable="false"/>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Acuerdo" table="acuerdo">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="idtipoaccion" type="integer" column="idtipoaccion" nullable="false"/>
+    <field name="idexpediente" type="integer" column="idexpediente" nullable="false"/>
+    <field name="fecharegistroacccion" type="date" column="fecharegistroacccion" nullable="false"/>
+    <field name="motivoaccion" type="string" column="motivoaccion" length="500" nullable="false"/>
+    <field name="numacuerdo" type="string" column="numacuerdo" length="15" nullable="true"/>
+  </entity>
+</doctrine-mapping>

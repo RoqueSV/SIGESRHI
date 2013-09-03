@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Datosempleo" table="datosempleo">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombreempresa" type="string" column="nombreempresa" length="75" nullable="false"/>
+    <field name="direccionempresa" type="string" column="direccionempresa" length="150" nullable="false"/>
+    <field name="telefonoempresa" type="string" column="telefonoempresa" nullable="false"/>
+    <field name="fechainiciolaboral" type="date" column="fechainiciolaboral" nullable="false"/>
+    <field name="fechafinlaboral" type="date" column="fechafinlaboral" nullable="true"/>
+    <field name="jefeinmediato" type="string" column="jefeinmediato" length="50" nullable="false"/>
+    <field name="cargodesempenado" type="string" column="cargodesempenado" length="50" nullable="false"/>
+    <field name="sueldo" type="float" column="sueldo" nullable="false"/>
+    <field name="motivoretiro" type="string" column="motivoretiro" length="200" nullable="false"/>
+    <field name="tipodatoempleo" type="string" column="tipodatoempleo" nullable="false"/>
+    <many-to-one field="idsolicitudempleo" target-entity="Solicitudempleo">
+      <join-columns>
+        <join-column name="idsolicitudempleo" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

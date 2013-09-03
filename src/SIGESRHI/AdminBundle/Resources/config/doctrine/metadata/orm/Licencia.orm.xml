@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Licencia" table="licencia">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="concepto" type="string" column="concepto" length="12" nullable="false"/>
+    <field name="duraciondias" type="integer" column="duraciondias" nullable="true"/>
+    <field name="duracionhoras" type="integer" column="duracionhoras" nullable="true"/>
+    <field name="duracionminutos" type="integer" column="duracionminutos" nullable="true"/>
+    <field name="congoce" type="boolean" column="congoce" nullable="false"/>
+    <field name="fechainiciolic" type="date" column="fechainiciolic" nullable="true"/>
+    <field name="fechafinlic" type="date" column="fechafinlic" nullable="true"/>
+    <field name="horainiciolic" type="time" column="horainiciolic" nullable="true"/>
+    <field name="horafinlic" type="time" column="horafinlic" nullable="true"/>
+    <field name="fechapermiso" type="date" column="fechapermiso" nullable="false"/>
+    <many-to-one field="idexpediente" target-entity="Expediente">
+      <join-columns>
+        <join-column name="idexpediente" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Beneficiario" table="beneficiario">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombrebeneficiario" type="string" column="nombrebeneficiario" length="50" nullable="false"/>
+    <field name="parentescobeneficiario" type="string" column="parentescobeneficiario" length="10" nullable="false"/>
+    <field name="porcentaje" type="integer" column="porcentaje" nullable="false"/>
+    <many-to-one field="idsegurovida" target-entity="Segurovida">
+      <join-columns>
+        <join-column name="idsegurovida" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

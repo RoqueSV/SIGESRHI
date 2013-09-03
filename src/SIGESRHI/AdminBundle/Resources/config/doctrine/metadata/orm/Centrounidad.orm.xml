@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Centrounidad" table="centrounidad">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombrecentro" type="string" column="nombrecentro" length="100" nullable="false"/>
+    <field name="especialidad" type="string" column="especialidad" length="100" nullable="false"/>
+    <field name="direccioncentro" type="string" column="direccioncentro" length="100" nullable="true"/>
+    <field name="telefonocentro" type="string" column="telefonocentro" nullable="false"/>
+    <field name="extensioncentro" type="integer" column="extensioncentro" nullable="false"/>
+    <many-to-many field="idnoticia" target-entity="Noticia" inversed-by="idcentro">
+      <join-table name="centronoticia">
+        <join-columns>
+          <join-column name="idcentro" referenced-column-name="id"/>
+        </join-columns>
+        <inverse-join-columns>
+          <join-column name="idnoticia" referenced-column-name="id"/>
+        </inverse-join-columns>
+      </join-table>
+    </many-to-many>
+  </entity>
+</doctrine-mapping>

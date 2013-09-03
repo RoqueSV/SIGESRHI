@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Contrato" table="contrato">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="idplaza" type="integer" column="idplaza" nullable="false"/>
+    <field name="idunidad" type="integer" column="idunidad" nullable="false"/>
+    <field name="idusuario" type="integer" column="idusuario" nullable="false"/>
+    <field name="observaciones" type="string" column="observaciones" length="250" nullable="true"/>
+    <field name="sueldoinicial" type="float" column="sueldoinicial" nullable="false"/>
+    <field name="horaslaborales" type="integer" column="horaslaborales" nullable="false"/>
+    <field name="jornadalaboral" type="string" column="jornadalaboral" nullable="false"/>
+    <field name="fechainiciocontratacion" type="date" column="fechainiciocontratacion" nullable="false"/>
+    <field name="doccontratacion" type="string" column="doccontratacion" length="50" nullable="true"/>
+    <field name="informacionadicional" type="string" column="informacionadicional" length="500" nullable="true"/>
+    <field name="fechafincontrato" type="date" column="fechafincontrato" nullable="false"/>
+  </entity>
+</doctrine-mapping>

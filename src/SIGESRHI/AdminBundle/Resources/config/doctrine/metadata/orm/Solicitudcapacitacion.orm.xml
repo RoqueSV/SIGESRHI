@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Solicitudcapacitacion" table="solicitudcapacitacion">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="fechasolicitud" type="date" column="fechasolicitud" nullable="false"/>
+    <field name="aprobacionsolicitud" type="integer" column="aprobacionsolicitud" nullable="false"/>
+    <field name="motivosolicitud" type="string" column="motivosolicitud" length="500" nullable="true"/>
+    <field name="comentariosolicitud" type="string" column="comentariosolicitud" length="500" nullable="true"/>
+    <many-to-one field="idusuario" target-entity="Empleado">
+      <join-columns>
+        <join-column name="idusuario" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idcapacitacion" target-entity="Capacitacion">
+      <join-columns>
+        <join-column name="idcapacitacion" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

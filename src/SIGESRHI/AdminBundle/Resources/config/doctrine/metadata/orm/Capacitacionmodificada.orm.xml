@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Capacitacionmodificada" table="capacitacionmodificada">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="fechamodificada" type="date" column="fechamodificada" nullable="true"/>
+    <field name="horainiciomodificada" type="time" column="horainiciomodificada" nullable="true"/>
+    <field name="horafinmodificada" type="time" column="horafinmodificada" nullable="true"/>
+    <field name="lugarmodificado" type="string" column="lugarmodificado" length="50" nullable="true"/>
+    <field name="perfilmodificado" type="string" column="perfilmodificado" length="150" nullable="true"/>
+    <field name="cupomodificado" type="integer" column="cupomodificado" nullable="true"/>
+    <field name="metodologiamodificada" type="string" column="metodologiamodificada" length="250" nullable="true"/>
+    <field name="resultadosmodificados" type="string" column="resultadosmodificados" length="500" nullable="true"/>
+    <field name="plazomodificado" type="date" column="plazomodificado" nullable="true"/>
+    <field name="contactomodificado" type="string" column="contactomodificado" length="50" nullable="true"/>
+    <field name="materialmodificado" type="string" column="materialmodificado" length="250" nullable="true"/>
+    <field name="justificacionmodificacion" type="string" column="justificacionmodificacion" length="500" nullable="false"/>
+    <many-to-one field="idcapacitacion" target-entity="Capacitacion">
+      <join-columns>
+        <join-column name="idcapacitacion" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Plancapacitacion" table="plancapacitacion">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombreplan" type="string" column="nombreplan" length="25" nullable="true"/>
+    <field name="anoplan" type="integer" column="anoplan" nullable="false"/>
+    <field name="objetivoplan" type="string" column="objetivoplan" length="250" nullable="false"/>
+    <field name="descripcionplan" type="string" column="descripcionplan" length="300" nullable="true"/>
+    <field name="resultadosplan" type="string" column="resultadosplan" length="500" nullable="true"/>
+    <field name="tipoplan" type="string" column="tipoplan" nullable="false"/>
+    <many-to-one field="idcentro" target-entity="Centrounidad">
+      <join-columns>
+        <join-column name="idcentro" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

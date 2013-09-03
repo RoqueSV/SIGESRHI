@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Contratacion" table="contratacion">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="observaciones" type="string" column="observaciones" length="250" nullable="true"/>
+    <field name="sueldoinicial" type="float" column="sueldoinicial" nullable="false"/>
+    <field name="horaslaborales" type="integer" column="horaslaborales" nullable="false"/>
+    <field name="jornadalaboral" type="string" column="jornadalaboral" nullable="false"/>
+    <field name="fechainiciocontratacion" type="date" column="fechainiciocontratacion" nullable="false"/>
+    <field name="doccontratacion" type="string" column="doccontratacion" length="50" nullable="true"/>
+    <field name="informacionadicional" type="string" column="informacionadicional" length="500" nullable="true"/>
+    <many-to-one field="idusuario" target-entity="Empleado">
+      <join-columns>
+        <join-column name="idusuario" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idunidad" target-entity="Unidadorganizativa">
+      <join-columns>
+        <join-column name="idunidad" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idplaza" target-entity="Plaza">
+      <join-columns>
+        <join-column name="idplaza" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

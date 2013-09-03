@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Accionpersonal" table="accionpersonal">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="fecharegistroacccion" type="date" column="fecharegistroacccion" nullable="false"/>
+    <field name="motivoaccion" type="string" column="motivoaccion" length="500" nullable="false"/>
+    <many-to-one field="idexpediente" target-entity="Expediente">
+      <join-columns>
+        <join-column name="idexpediente" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idtipoaccion" target-entity="Tipoaccion">
+      <join-columns>
+        <join-column name="idtipoaccion" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

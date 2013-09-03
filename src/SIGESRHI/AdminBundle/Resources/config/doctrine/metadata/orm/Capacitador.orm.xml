@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Capacitador" table="capacitador">
+    <id name="id" type="integer" column="id">
+      <generator strategy="SEQUENCE"/>
+    </id>
+    <field name="nombrecapacitador" type="string" column="nombrecapacitador" length="50" nullable="false"/>
+    <field name="telefonocapacitador" type="string" column="telefonocapacitador" nullable="false"/>
+    <field name="correocapacitador" type="string" column="correocapacitador" length="50" nullable="false"/>
+    <field name="tematicacapacitador" type="string" column="tematicacapacitador" length="250" nullable="false"/>
+    <many-to-one field="idinstitucion" target-entity="Institucioncapacitadora">
+      <join-columns>
+        <join-column name="idinstitucion" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>
