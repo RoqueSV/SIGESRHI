@@ -11,7 +11,7 @@ class AccesoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombrepagina')
+            ->add('nombrepagina',null,array('required'=>'required'))
             ->add('ruta')
             ->add('idrol')
             ->add('idmodulo')

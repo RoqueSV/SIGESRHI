@@ -1,16 +1,16 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-    <h1>Acceso creation</h1>
-
-    <form action="{{ path('acceso_create') }}" method="post" {{ form_enctype(form) }}>
+    <h2>Acceso creation</h2>
+    <br />
+    <form action="{{ path('acceso_create') }}" method="post" class="_form" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
-            <button type="submit">Create</button>
+            <button class="submit" type="submit">Create</button>
         </p>
     </form>
 
-        <ul class="record_actions">
+<ul class="record_actions">
     <li>
         <a href="{{ path('acceso') }}">
             Regresar
