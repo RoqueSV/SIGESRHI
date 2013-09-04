@@ -12,9 +12,9 @@ class AccesoType extends AbstractType
     {
         $builder
             ->add('nombrepagina',null,array('required'=>'required'))
-            ->add('ruta')
-            ->add('idrol')
-            ->add('idmodulo')
+            ->add('ruta',null,array('required'=>'required'))
+            ->add('idrol',null,array('multiple'=>false))
+            ->add('idmodulo',null,array('multiple'=>false))
         ;
     }
 

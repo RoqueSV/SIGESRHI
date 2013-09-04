@@ -1,3 +1,13 @@
+/*--- Elementos generales del formulario ---*/
+._form
+{
+   padding:2px;
+   display:block;
+   width:390px;
+   margin: 0 auto;
+   text-align:left;
+}
+
 h2 {
     background: none repeat scroll 0 0 #F3F3F3;
     border-radius: 5px;
@@ -7,42 +17,71 @@ h2 {
     font-size: 20px;
     padding: 5px;
     text-shadow: 1px 1px 1px #CCCCCC;
-    width: 433px;
+    width: 390px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    }
+
+legend{
+   font-family: sans-serif;
+   font-size: 13px;
+   color: #555555;
+   padding: 3px;
+    
 }
+
+fieldset
+{
+   padding:2px 0 10px 0 ;
+   display:block;
+   width:220px;
+   margin: 0 auto;
+   text-align:left;
+}
+
 /*--- estilos para los ul y li del formulario ---*/
-._form ul {
+ul {
     width:750px;
     list-style-type:none;
-	margin:0px;
-	padding:0px;
+    margin:0px;
+    padding:0px;
 }
-._form li{
+li{
 	padding:12px; 
-	border-bottom:1px solid #eee;
+	/*border-bottom:1px solid #eee;*/
 	position:relative;
 } 
 ._form label {
     color: #555555;
     display: inline-block;
-    float: left;
+    float: inside;
     font-family: sans-serif;
     font-size: 13px;
     font-weight: bold;
-    margin-top: 3px;
     padding: 3px;
     width: 90px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: 3px;
 }
 ._form input {
 	height:20px; 
 	width:220px; 
 	padding:5px 8px;
+        margin-top: 3px;
+        margin-bottom: 3px;
 }
 ._form textarea {
 	padding:8px; 
 	width:300px;
 }
 ._form button {
-	margin-left:90px;
+	margin-left:150px;
+}
+._form select{
+     margin-top: 3px;
+     margin-bottom: 3px;
 }
 
 /*----- estilos visuales de los elementos --------*/
