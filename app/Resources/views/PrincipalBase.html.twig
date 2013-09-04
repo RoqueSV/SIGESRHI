@@ -47,8 +47,16 @@
 
 	<nav id="menu">
 		<ul class="mi-menu"> {% block menu_principal %}
-			<li><a href="#">Inicio </a></li>
+			
+			{#
+			{% if app.user %}
+			{{ render(controller('AdminBundle:Default:menu', { 'nombreUsuario': app.user.username })) }}
 
+			{% else %}
+			<li><a href="#">Inicio </a></li>
+			{% endif %} 
+				#}
+			<li><a href="#">Inicio </a></li>
 			<li><a href="#">Opción 1</a>
 				<ul>
 					<li><a href="#">Opción 1.1</a></li>
@@ -66,6 +74,7 @@
 			</li>
 			<li><a href="#">Opción 3</a></li>
 			<li><a href="#">Opción 4</a></li>
+			
 			{% endblock %}
 		</ul>	
 	</nav>	
@@ -74,7 +83,7 @@
 		{% block seccion %}
 		{% if app.user %}
 		
-		<p>Usuario: {{ app.user.username }}</p>
+		<p>Usuario: {{ app.user.username }} <a href="{{path('fos_user_security_logout')}}">Salir</a></p>
 		<blockquote>Mensaje uno</blockquote>
 		<blockquote>Mensaje dos</blockquote>
 		

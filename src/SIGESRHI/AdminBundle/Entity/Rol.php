@@ -32,6 +32,18 @@ class Rol
         public function __toString() {
   return $this->nombrerol;
 }
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Acceso", mappedBy="idrol")
+     */
+    protected $idacceso;
+
+    public function __construct()
+    {
+        $this->idacceso = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
     /**
      * Get id
      *

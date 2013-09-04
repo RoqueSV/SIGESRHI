@@ -1,0 +1,10 @@
+{# plantillla de generacion del menu principal, de acuerdo al rol#}
+
+{% for usuarios in usuario %}
+    <li><a href="#">
+        {{ usuarios.iduser }} {{ usuarios.idrol }} {{ usuarios.idAcceso }} 
+    </a></li>
+{% endfor %}
+
+
+

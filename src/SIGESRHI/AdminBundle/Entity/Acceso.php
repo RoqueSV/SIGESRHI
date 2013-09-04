@@ -39,7 +39,7 @@ class Acceso
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Rol")
+     * @ORM\ManyToMany(targetEntity="Rol",inversedBy="idacceso")
      * @ORM\JoinTable(name="accesorol",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idacceso", referencedColumnName="id")
