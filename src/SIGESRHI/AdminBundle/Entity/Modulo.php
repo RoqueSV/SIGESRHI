@@ -36,7 +36,9 @@ class Modulo
      */
     private $descripcion;
 
-
+        public function __toString() {
+  return $this->nombremodulo;
+}
 
     /**
      * Get id

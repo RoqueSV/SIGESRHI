@@ -1,22 +1,20 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-    <h2>Acceso creation</h2>
+    <h1>Creaci&oacute;n de p&aacute;ginas de acceso</h1>
     <br />
     <fieldset>
         <legend> Registro de paginas de acceso </legend>
     <form action="{{ path('acceso_create') }}" method="post" class="_form" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
-        <p>
-            <button class="submit" type="submit">Create</button>
+       <br /> <p>
+            <button class="submit" type="submit">Ingresar</button>
         </p>
     </form>
     </fieldset>
 <ul class="record_actions">
     <li>
-        <a href="{{ path('acceso') }}">
-            Regresar
-        </a>
+        <a href="{{ path('acceso') }}">Regresar</a>
     </li>
 </ul>
 {% endblock %}

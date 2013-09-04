@@ -11,7 +11,7 @@ class RolType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombrerol')
+            ->add('nombrerol',null, array('label'=>'Nombre:'))
         ;
     }
 

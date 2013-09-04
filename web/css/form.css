@@ -8,7 +8,7 @@
    text-align:left;
 }
 
-h2 {
+h1 {
     background: none repeat scroll 0 0 #F3F3F3;
     border-radius: 5px;
     color: #000000;
@@ -41,13 +41,13 @@ fieldset
 }
 
 /*--- estilos para los ul y li del formulario ---*/
-ul {
+._form ul {
     width:750px;
     list-style-type:none;
     margin:0px;
     padding:0px;
 }
-li{
+._form li{
 	padding:12px; 
 	/*border-bottom:1px solid #eee;*/
 	position:relative;

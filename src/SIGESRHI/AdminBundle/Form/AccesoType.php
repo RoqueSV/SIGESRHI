@@ -11,10 +11,10 @@ class AccesoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombrepagina',null,array('required'=>'required'))
-            ->add('ruta',null,array('required'=>'required'))
-            ->add('idrol',null,array('multiple'=>false))
-            ->add('idmodulo',null,array('multiple'=>false))
+            ->add('nombrepagina',null,array('label'=>'Opción:', 'required'=>'required'))
+            ->add('ruta',null,array('label'=>'Ruta:','required'=>'required'))
+            ->add('idrol',null,array('label'=>'Rol:', 'multiple'=>false))
+            ->add('idmodulo',null,array('label'=>'Modulo:'))
         ;
     }
 
