@@ -1,6 +1,6 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
+{% block principal -%}
     <h1>Unidadorganizativa</h1>
 
     <table class="record_properties">
@@ -32,7 +32,7 @@
         </a>
     </li>
     <li>
-        <form action="{{ path('unidadorganizativa_delete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ path('unidadorganizativa_delete', { 'id': entity.id }) }}" class="_form" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
             <button type="submit">Delete</button>

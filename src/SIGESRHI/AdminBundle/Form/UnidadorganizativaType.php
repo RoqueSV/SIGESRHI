@@ -10,10 +10,10 @@ class UnidadorganizativaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('nombreunidad')
-            ->add('descripcionunidad')
-            ->add('idcentro')
+        $builder   
+            ->add('nombreunidad',null,array('label'=>'Unidad organizativa'))
+            ->add('descripcionunidad',null,array('label'=>'Descripcion'))
+            ->add('idcentro',null,array('multiple'=>false,'label'=>'Centros'))
         ;
     }
 
