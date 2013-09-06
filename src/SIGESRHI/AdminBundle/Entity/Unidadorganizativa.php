@@ -39,7 +39,7 @@ class Unidadorganizativa
     /**
      * @var \Centrounidad
      *
-     * @ORM\ManyToOne(targetEntity="Centrounidad")
+     * @ORM\ManyToOne(targetEntity="Centrounidad", inversedBy="idunidad")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idcentro", referencedColumnName="id")
      * })

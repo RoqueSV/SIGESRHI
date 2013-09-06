@@ -53,7 +53,7 @@ class Plaza
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Area")
+     * @ORM\ManyToMany(targetEntity="Area", inversedBy="idplaza")
      * @ORM\JoinTable(name="areaplaza",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
@@ -68,7 +68,7 @@ class Plaza
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Conocimiento")
+     * @ORM\ManyToMany(targetEntity="Conocimiento", inversedBy="idplaza")
      * @ORM\JoinTable(name="conocimientoplaza",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
@@ -83,7 +83,7 @@ class Plaza
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Funcion")
+     * @ORM\ManyToMany(targetEntity="Funcion", inversedBy="idplaza")
      * @ORM\JoinTable(name="funcionplaza",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
@@ -98,7 +98,7 @@ class Plaza
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Habilidad")
+     * @ORM\ManyToMany(targetEntity="Habilidad", inversedBy="idplaza")
      * @ORM\JoinTable(name="habilidadplaza",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
@@ -113,7 +113,7 @@ class Plaza
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Manejoequipo")
+     * @ORM\ManyToMany(targetEntity="Manejoequipo", inversedBy="idplaza")
      * @ORM\JoinTable(name="manejoequipoplaza",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
@@ -125,6 +125,13 @@ class Plaza
      */
     private $idmanejoequipo;
 
+    // ...
+    /**
+     * @ORM\OneToMany(targetEntity="Docautorizacionplaza", mappedBy="idplaza")
+     */
+    private $iddocautorizacion;
+    
+    
     /**
      * Constructor
      */
@@ -403,5 +410,38 @@ class Plaza
     public function getIdmanejoequipo()
     {
         return $this->idmanejoequipo;
+    }
+
+    /**
+     * Add iddocautorizacion
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Docautorizacionplaza $iddocautorizacion
+     * @return Plaza
+     */
+    public function addIddocautorizacion(\SIGESRHI\AdminBundle\Entity\Docautorizacionplaza $iddocautorizacion)
+    {
+        $this->iddocautorizacion[] = $iddocautorizacion;
+    
+        return $this;
+    }
+
+    /**
+     * Remove iddocautorizacion
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Feature $iddocautorizacion
+     */
+    public function removeIddocautorizacion(\SIGESRHI\AdminBundle\Entity\Docautorizacionplaza $iddocautorizacion)
+    {
+        $this->iddocautorizacion->removeElement($iddocautorizacion);
+    }
+
+    /**
+     * Get iddocautorizacion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIddocautorizacion()
+    {
+        return $this->iddocautorizacion;
     }
 }

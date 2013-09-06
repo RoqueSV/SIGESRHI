@@ -28,10 +28,17 @@ class Habilidad
      * @ORM\Column(name="nombrehabilidad", type="string", length=75, nullable=false)
      */
     private $nombrehabilidad;
-
+    
+     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Plaza", mappedBy="idhabilidad")
+     */
+    private $idplaza;
+    
         public function __toString() {
-  return $this->nombrehabilidad;
-}
+        return $this->nombrehabilidad;
+        }
     /**
      * Get id
      *
@@ -63,5 +70,45 @@ class Habilidad
     public function getNombrehabilidad()
     {
         return $this->nombrehabilidad;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idplaza = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     * @return Habilidad
+     */
+    public function addIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    {
+        $this->idplaza[] = $idplaza;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     */
+    public function removeIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    {
+        $this->idplaza->removeElement($idplaza);
+    }
+
+    /**
+     * Get idplaza
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdplaza()
+    {
+        return $this->idplaza;
     }
 }

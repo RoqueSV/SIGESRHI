@@ -36,7 +36,12 @@ class Rol
     /**
      * @ORM\ManyToMany(targetEntity="Acceso", mappedBy="idrol")
      */
-    protected $idacceso;
+    private $idacceso;
+    
+     /**
+     *@ORM\OneToMany(targetEntity="Usuario", mappedBy="idrol")
+     */
+    private $idusuario;
 
     public function __construct()
     {
@@ -75,5 +80,71 @@ class Rol
     public function getNombrerol()
     {
         return $this->nombrerol;
+    }
+
+    /**
+     * Add idacceso
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Acceso $idacceso
+     * @return Rol
+     */
+    public function addIdacceso(\SIGESRHI\AdminBundle\Entity\Acceso $idacceso)
+    {
+        $this->idacceso[] = $idacceso;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idacceso
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Acceso $idacceso
+     */
+    public function removeIdacceso(\SIGESRHI\AdminBundle\Entity\Acceso $idacceso)
+    {
+        $this->idacceso->removeElement($idacceso);
+    }
+
+    /**
+     * Get idacceso
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdacceso()
+    {
+        return $this->idacceso;
+    }
+
+    /**
+     * Add idusuario
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Usuario $idusuario
+     * @return Rol
+     */
+    public function addIdusuario(\SIGESRHI\AdminBundle\Entity\Usuario $idusuario)
+    {
+        $this->idusuario[] = $idusuario;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idusuario
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Usuario $idusuario
+     */
+    public function removeIdusuario(\SIGESRHI\AdminBundle\Entity\Usuario $idusuario)
+    {
+        $this->idusuario->removeElement($idusuario);
+    }
+
+    /**
+     * Get idusuario
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdusuario()
+    {
+        return $this->idusuario;
     }
 }

@@ -54,7 +54,7 @@ class Acceso
     /**
      * @var \Modulo
      *
-     * @ORM\ManyToOne(targetEntity="Modulo")
+     * @ORM\ManyToOne(targetEntity="Modulo",  inversedBy="idacceso")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idmodulo", referencedColumnName="id")
      * })

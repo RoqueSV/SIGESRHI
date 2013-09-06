@@ -35,6 +35,13 @@ class Area
      * @ORM\Column(name="descripcionarea", type="string", length=500, nullable=true)
      */
     private $descripcionarea;
+    
+     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Plaza", mappedBy="idarea")
+     */
+    private $idplaza;
    
     public function __toString() {
   return $this->nombrearea;
@@ -93,5 +100,45 @@ class Area
     public function getDescripcionarea()
     {
         return $this->descripcionarea;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idplaza = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     * @return Area
+     */
+    public function addIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    {
+        $this->idplaza[] = $idplaza;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     */
+    public function removeIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    {
+        $this->idplaza->removeElement($idplaza);
+    }
+
+    /**
+     * Get idplaza
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdplaza()
+    {
+        return $this->idplaza;
     }
 }

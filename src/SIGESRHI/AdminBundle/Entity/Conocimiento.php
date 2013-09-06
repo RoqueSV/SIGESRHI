@@ -28,8 +28,14 @@ class Conocimiento
      * @ORM\Column(name="nombreconocimiento", type="string", length=50, nullable=false)
      */
     private $nombreconocimiento;
+    
+        /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Plaza", mappedBy="idconocimiento")
+     */
+    private $idplaza;
 
-      
         public function __toString() {
   return $this->nombreconocimiento;
 }
@@ -64,5 +70,45 @@ class Conocimiento
     public function getNombreconocimiento()
     {
         return $this->nombreconocimiento;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idplaza = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     * @return Conocimiento
+     */
+    public function addIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    {
+        $this->idplaza[] = $idplaza;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     */
+    public function removeIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    {
+        $this->idplaza->removeElement($idplaza);
+    }
+
+    /**
+     * Get idplaza
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdplaza()
+    {
+        return $this->idplaza;
     }
 }

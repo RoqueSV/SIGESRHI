@@ -57,6 +57,12 @@ class Centrounidad
      */
     private $extensioncentro;
    
+     // ...
+    /**
+     * @ORM\OneToMany(targetEntity="Unidadorganizativa", mappedBy="idcentro")
+     */
+    private $idunidad;
+    
     public function __toString() {
   return $this->nombrecentro;
 }
@@ -183,5 +189,45 @@ class Centrounidad
     public function getExtensioncentro()
     {
         return $this->extensioncentro;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idunidad = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idunidad
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Unidadorganizativa $idunidad
+     * @return Centrounidad
+     */
+    public function addIdunidad(\SIGESRHI\AdminBundle\Entity\Unidadorganizativa $idunidad)
+    {
+        $this->idunidad[] = $idunidad;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idunidad
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Unidadorganizativa $idunidad
+     */
+    public function removeIdunidad(\SIGESRHI\AdminBundle\Entity\Unidadorganizativa $idunidad)
+    {
+        $this->idunidad->removeElement($idunidad);
+    }
+
+    /**
+     * Get idunidad
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdunidad()
+    {
+        return $this->idunidad;
     }
 }

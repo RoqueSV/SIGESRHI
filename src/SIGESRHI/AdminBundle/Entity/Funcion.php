@@ -28,6 +28,13 @@ class Funcion
      * @ORM\Column(name="nombrefuncion", type="string", length=250, nullable=false)
      */
     private $nombrefuncion;
+    
+     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Plaza", mappedBy="idfuncion")
+     */
+    private $idplaza;
   
         public function __toString() {
   return $this->nombrefuncion;
@@ -63,5 +70,45 @@ class Funcion
     public function getNombrefuncion()
     {
         return $this->nombrefuncion;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idplaza = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     * @return Funcion
+     */
+    public function addIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    {
+        $this->idplaza[] = $idplaza;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     */
+    public function removeIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    {
+        $this->idplaza->removeElement($idplaza);
+    }
+
+    /**
+     * Get idplaza
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdplaza()
+    {
+        return $this->idplaza;
     }
 }

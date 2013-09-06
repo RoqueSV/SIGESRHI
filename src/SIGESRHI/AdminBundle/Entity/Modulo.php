@@ -35,7 +35,12 @@ class Modulo
      * @ORM\Column(name="descripcion", type="string", length=150, nullable=true)
      */
     private $descripcion;
-
+    
+     /**
+     * @ORM\OneToMany(targetEntity="Acceso", mappedBy="idmodulo")
+     */
+    private $idacceso;
+    
         public function __toString() {
   return $this->nombremodulo;
 }
@@ -94,5 +99,45 @@ class Modulo
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idacceso = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idacceso
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Acceso $idacceso
+     * @return Modulo
+     */
+    public function addIdacceso(\SIGESRHI\AdminBundle\Entity\Acceso $idacceso)
+    {
+        $this->idacceso[] = $idacceso;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idacceso
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Acceso $idacceso
+     */
+    public function removeIdacceso(\SIGESRHI\AdminBundle\Entity\Acceso $idacceso)
+    {
+        $this->idacceso->removeElement($idacceso);
+    }
+
+    /**
+     * Get idacceso
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdacceso()
+    {
+        return $this->idacceso;
     }
 }

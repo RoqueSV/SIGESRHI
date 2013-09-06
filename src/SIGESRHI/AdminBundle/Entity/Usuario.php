@@ -26,7 +26,7 @@ class Usuario extends BaseUser
     /**
      * @var \Rol
      *
-     * @ORM\ManyToOne(targetEntity="Rol")
+     * @ORM\ManyToOne(targetEntity="Rol", inversedBy="idusuario")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idrol", referencedColumnName="id")
      * })

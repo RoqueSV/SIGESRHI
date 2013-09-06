@@ -46,7 +46,7 @@ class Docautorizacionplaza
     /**
      * @var \Plaza
      *
-     * @ORM\ManyToOne(targetEntity="Plaza")
+     * @ORM\ManyToOne(targetEntity="Plaza", inversedBy="iddocautorizacion")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      * })
