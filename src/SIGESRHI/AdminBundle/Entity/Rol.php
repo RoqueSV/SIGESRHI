@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Rol
@@ -26,6 +27,8 @@ class Rol
      * @var string
      *
      * @ORM\Column(name="nombrerol", type="string", length=20, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del rol")
+     * @Assert\MaxLength(20)
      */
     private $nombrerol;
   

@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Acceso
@@ -26,6 +27,8 @@ class Acceso
      * @var string
      *
      * @ORM\Column(name="nombrepagina", type="string", length=50, nullable=true)
+     * @Assert\NotNull(message="Debe ingresar un nombre de pagina")
+     * @Assert\MaxLength(50)
      */
     private $nombrepagina;
 
@@ -33,6 +36,9 @@ class Acceso
      * @var string
      *
      * @ORM\Column(name="ruta", type="string", length=200, nullable=true)
+     * @Assert\NotNull(message="Debe ingresar una ruta para el acceso")
+     * @Assert\Url()
+      * @Assert\MaxLength(200)
      */
     private $ruta;
 

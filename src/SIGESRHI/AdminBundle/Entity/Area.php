@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Area
@@ -26,6 +27,8 @@ class Area
      * @var string
      *
      * @ORM\Column(name="nombrearea", type="string", length=100, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar un nombre de area")
+     * @Assert\MaxLength(100)
      */
     private $nombrearea;
 
@@ -33,6 +36,7 @@ class Area
      * @var string
      *
      * @ORM\Column(name="descripcionarea", type="string", length=500, nullable=true)
+     * @Assert\MaxLength(500)
      */
     private $descripcionarea;
     

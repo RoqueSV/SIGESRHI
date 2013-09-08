@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Municipio
@@ -26,6 +27,8 @@ class Municipio
      * @var string
      *
      * @ORM\Column(name="nombremunicipio", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del Municipio")
+     * @Assert\MaxLength(50)
      */
     private $nombremunicipio;
 

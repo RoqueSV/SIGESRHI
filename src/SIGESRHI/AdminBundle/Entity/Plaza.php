@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Plaza
@@ -26,6 +27,8 @@ class Plaza
      * @var string
      *
      * @ORM\Column(name="nombreplaza", type="string", length=100, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre de la PLaza")
+     * @Assert\MaxLength(100)
      */
     private $nombreplaza;
 
@@ -33,6 +36,8 @@ class Plaza
      * @var string
      *
      * @ORM\Column(name="descripcionplaza", type="string", length=500, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la descripcion de la plaza")
+     * @Assert\MaxLength(500)
      */
     private $descripcionplaza;
 
@@ -40,6 +45,7 @@ class Plaza
      * @var integer
      *
      * @ORM\Column(name="edad", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la edad minima de la plaza")
      */
     private $edad;
 
@@ -47,6 +53,7 @@ class Plaza
      * @var string
      *
      * @ORM\Column(name="estadoplaza", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el estado de la plaza")
      */
     private $estadoplaza;
 

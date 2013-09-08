@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Conocimiento
@@ -26,6 +27,8 @@ class Conocimiento
      * @var string
      *
      * @ORM\Column(name="nombreconocimiento", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar un nombre de conocimiento")
+     * @Assert\MaxLength(50)
      */
     private $nombreconocimiento;
     

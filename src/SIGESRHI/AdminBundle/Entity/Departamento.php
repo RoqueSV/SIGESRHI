@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Departamento
@@ -26,6 +27,8 @@ class Departamento
      * @var string
      *
      * @ORM\Column(name="nombredepartamento", type="string", length=15, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar un nombre de Departamento")
+     * @Assert\MaxLength(15)
      */
     private $nombredepartamento;
 

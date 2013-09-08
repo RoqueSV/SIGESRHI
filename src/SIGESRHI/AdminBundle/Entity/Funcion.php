@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Funcion
@@ -26,6 +27,8 @@ class Funcion
      * @var string
      *
      * @ORM\Column(name="nombrefuncion", type="string", length=250, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre de la funcion")
+     * @Assert\MaxLength(250)
      */
     private $nombrefuncion;
     

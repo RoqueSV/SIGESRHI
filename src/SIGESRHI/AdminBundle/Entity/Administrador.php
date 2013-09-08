@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Administrador
@@ -26,6 +27,7 @@ class Administrador
      * @var integer
      *
      * @ORM\Column(name="idrol", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar un rol")
      */
     private $idrol;
 
@@ -33,6 +35,8 @@ class Administrador
      * @var string
      *
      * @ORM\Column(name="nombreadministrador", type="string", length=25, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar un nombre para el Administrador")
+     * @Assert\MaxLength(25)
      */
     private $nombreadministrador;
 
@@ -40,6 +44,8 @@ class Administrador
      * @var string
      *
      * @ORM\Column(name="apellidoadministrador", type="string", length=25, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar un apellido para el administrador")
+     * @Assert\MaxLength(25)
      */
     private $apellidoadministrador;
 
@@ -47,6 +53,11 @@ class Administrador
      * @var string
      *
      * @ORM\Column(name="emailadministrador", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar un email para el administrador")
+     * @Assert\Email(
+     *     message = "El email '{{ value }}' no es valido."
+     * )
+     * @Assert\MaxLength(50)
      */
     private $emailadministrador;
 
