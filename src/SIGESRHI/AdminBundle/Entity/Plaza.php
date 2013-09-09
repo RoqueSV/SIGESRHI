@@ -28,7 +28,7 @@ class Plaza
      *
      * @ORM\Column(name="nombreplaza", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre de la PLaza")
-     * @Assert\MaxLength(100)
+     * @Assert\Length(max="100")
      */
     private $nombreplaza;
 
@@ -37,7 +37,7 @@ class Plaza
      *
      * @ORM\Column(name="descripcionplaza", type="string", length=500, nullable=false)
      * @Assert\NotNull(message="Debe ingresar la descripcion de la plaza")
-     * @Assert\MaxLength(500)
+     * @Assert\Length(max="500")
      */
     private $descripcionplaza;
 

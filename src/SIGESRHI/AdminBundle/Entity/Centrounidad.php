@@ -28,7 +28,9 @@ class Centrounidad
      *
      * @ORM\Column(name="nombrecentro", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de Centro")
-     * @Assert\MaxLength(100)
+     * @Assert\Length(
+     *  max = "100"
+     * )
      */
     private $nombrecentro;
 
@@ -37,7 +39,7 @@ class Centrounidad
      *
      * @ORM\Column(name="especialidad", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar la Especialidad")
-     * @Assert\MaxLength(100)
+     * @Assert\Length( max= "100")
      */
     private $especialidad;
 
@@ -45,7 +47,7 @@ class Centrounidad
      * @var string
      *
      * @ORM\Column(name="direccioncentro", type="string", length=100, nullable=true)
-     * @Assert\MaxLength(100)
+     * @Assert\Length(max= "100")
      */
     private $direccioncentro;
 
@@ -54,7 +56,7 @@ class Centrounidad
      *
      * @ORM\Column(name="telefonocentro", type="string", nullable=false)
      * @Assert\NotNull(message="Debe ingresar el telefono")
-     * @Assert\MinLength(6)
+     * @Assert\Length(min="6")
      */
     private $telefonocentro;
 

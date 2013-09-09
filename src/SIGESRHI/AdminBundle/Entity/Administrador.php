@@ -36,7 +36,10 @@ class Administrador
      *
      * @ORM\Column(name="nombreadministrador", type="string", length=25, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre para el Administrador")
-     * @Assert\MaxLength(25)
+     * @Assert\Length(
+     *  max = "25",
+     * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombreadministrador;
 
@@ -45,7 +48,12 @@ class Administrador
      *
      * @ORM\Column(name="apellidoadministrador", type="string", length=25, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un apellido para el administrador")
-     * @Assert\MaxLength(25)
+     * @Assert\Length(
+     *  min = "3",
+     *  max = "25",
+     * minMessage = "El apellido debe tener {{limit}} caracteres o más",
+     * maxMessage = "El apellido no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $apellidoadministrador;
 
@@ -55,9 +63,9 @@ class Administrador
      * @ORM\Column(name="emailadministrador", type="string", length=50, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un email para el administrador")
      * @Assert\Email(
-     *     message = "El email '{{ value }}' no es valido."
+     *     message = "El email '{{ value }}' no es valido.",
+     *     checkMX=true
      * )
-     * @Assert\MaxLength(50)
      */
     private $emailadministrador;
 

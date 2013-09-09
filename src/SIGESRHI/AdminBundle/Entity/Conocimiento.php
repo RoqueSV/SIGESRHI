@@ -28,7 +28,7 @@ class Conocimiento
      *
      * @ORM\Column(name="nombreconocimiento", type="string", length=50, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de conocimiento")
-     * @Assert\MaxLength(50)
+     * @Assert\Length(max= "50")
      */
     private $nombreconocimiento;
     

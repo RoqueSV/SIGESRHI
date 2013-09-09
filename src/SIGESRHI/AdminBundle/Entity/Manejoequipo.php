@@ -28,7 +28,7 @@ class Manejoequipo
      *
      * @ORM\Column(name="nombremanejo", type="string", length=75, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el manejo de equipo")
-     * @Assert\MaxLength(75)
+     * @Assert\Length(max="75")
      */
     private $nombremanejo;
     

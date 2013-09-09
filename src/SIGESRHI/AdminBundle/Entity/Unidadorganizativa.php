@@ -28,7 +28,8 @@ class Unidadorganizativa
      *
      * @ORM\Column(name="nombreunidad", type="string", length=75, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de Unidad")
-     * @Assert\MaxLength(75)
+     * @Assert\Length(max = "75",maxMessage = "El nombre no debe exceder los 75 caracteres")
+     * 
      */
     private $nombreunidad;
 
@@ -36,7 +37,10 @@ class Unidadorganizativa
      * @var string
      *
      * @ORM\Column(name="descripcionunidad", type="string", length=500, nullable=true)
-     * @Assert\MaxLength(500)
+     * @Assert\Length(
+     *  max = "500",
+     * maxMessage = "La descripcion no debe exceder los 500 caracteres"
+     * )
      */
     private $descripcionunidad;
 

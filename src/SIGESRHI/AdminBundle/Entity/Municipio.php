@@ -28,7 +28,7 @@ class Municipio
      *
      * @ORM\Column(name="nombremunicipio", type="string", length=50, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre del Municipio")
-     * @Assert\MaxLength(50)
+     * @Assert\Length(max="50")
      */
     private $nombremunicipio;
 

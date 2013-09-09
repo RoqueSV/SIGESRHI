@@ -28,7 +28,7 @@ class Rol
      *
      * @ORM\Column(name="nombrerol", type="string", length=20, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre del rol")
-     * @Assert\MaxLength(20)
+     * @Assert\Length(max="20")
      */
     private $nombrerol;
   

@@ -28,7 +28,10 @@ class Area
      *
      * @ORM\Column(name="nombrearea", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de area")
-     * @Assert\MaxLength(100)
+     * @Assert\Length(
+     *  max = "100",
+     * maxMessage = "El area no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombrearea;
 
@@ -36,7 +39,10 @@ class Area
      * @var string
      *
      * @ORM\Column(name="descripcionarea", type="string", length=500, nullable=true)
-     * @Assert\MaxLength(500)
+     * @Assert\Length(
+     * max = "500",
+     * maxMessage = "El area no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $descripcionarea;
     
