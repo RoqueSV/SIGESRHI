@@ -1,0 +1,108 @@
+/*@charset "utf-8";
+/* CSS Document */
+
+* {
+	padding:0px;
+	margin:0px;
+}
+
+
+.mi-menu {
+
+	 border-radius: 5px;
+    list-style-type: none;
+   /* margin: 0 auto; /* si queremos centrarlo */
+    padding: 0;
+    /* la altura y su ancho dependerán de los textos */
+    height: 40px; 
+    width: 100%;/* 510px; */
+    /* el color de fondo */
+    background: #555;
+    background: linear-gradient(#555,#222);
+}
+
+ul, ol {
+	list-style:none;
+}
+
+.mi-menum li {
+ float: left; /* la lista se ve horizontal */
+    height: 40px;
+    list-style: none;
+    margin: 0;
+    padding: 0; 
+    position: relative;
+}
+
+.mi-menu li a {
+
+ 	border-left: 1px solid #000;
+    border-right: 1px solid #666;
+    color: #EEE;
+    display: block;
+    font-family: Tahoma;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 28px; /*28px*/
+    padding: 0 14px;
+    margin: 6px 0;
+    text-decoration: none;
+    /* animamos el cambio de color de los textos */
+     
+}
+
+ .mi-menu li:first-child a { border-left: none; }
+  .mi-menu li:last-child a{ border-right: none; }
+
+.mi-menu li:hover >a {
+	
+	background-color: #004C80; border-radius: 0 0 5px 5px;
+}
+
+.mi-menu ul {
+    border-radius: 0 0 5px 5px;
+    /*left: 0;*/
+    margin: 0;
+    /* el color de fondo */
+    background: #222;
+    background: linear-gradient(#222,#555);
+   }
+
+
+ /* son visibes al poner el cursor encima */
+  .mi-menu li:hover > ul { opacity: 1; } 
+
+.mi-menu > li {
+	    
+	float:left;
+}
+
+
+.mi-menu li ul {
+	display:none;
+	position:absolute;
+	min-width:140px;
+	
+}
+
+
+.mi-menu li:hover > ul {
+	display:block;
+}
+
+.mi-menu ul li a{
+
+	border: none;
+    border-bottom: 1px solid #111;
+    margin: 0;
+   /* el ancho dependerá de los textos a utilizar */
+    padding: 5px 20px;
+}
+
+.mi-menu li ul li ul {
+	right:-140px;
+	top:0px;
+}
+
+ /* el último no tiene un borde */
+  .mi-menu li ul li:last-child a { border: none; }

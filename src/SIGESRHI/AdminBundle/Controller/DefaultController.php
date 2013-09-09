@@ -21,17 +21,18 @@ class DefaultController extends Controller
 
     public function menuAction($nombreUsuario)
     {
-  		$em = $this->getDoctrine()->getEntityManager();
+  		$em = $this->getDoctrine()->getManager();
   		$query = $em->createQuery('
-          SELECT u.id iduser, r.id idrol, a.id idacceso FROM AdminBundle:Usuario u
+          SELECT u.id iduser, r.id idrol, a.nombrepagina pagina, a.ruta ruta, m.nombremodulo modulo FROM AdminBundle:Usuario u
           join u.idrol r
           join r.idacceso a
-		  WHERE u.username = :username'
+          join a.idmodulo m
+		      WHERE u.username = :username order by m.nombremodulo'
         )->setParameter('username', $nombreUsuario);
 
-        $usuario = $query->getResult();
+        $opciones = $query->getResult();
                
-        return $this->render('::menuBase.html.twig',array('usuario'=>$usuario));
+        return $this->render('::menuBase.html.twig',array('opciones'=>$opciones));
     
     }
 }

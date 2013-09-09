@@ -18,6 +18,6 @@ fos_user_change_password:
     prefix: /profile
 
 hello_page:
-    path:  /
+    path:  /inicio
     defaults: { _controller: AdminBundle:Default:index }
     

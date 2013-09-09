@@ -1,10 +1,58 @@
-{# plantillla de generacion del menu principal, de acuerdo al rol#}
+{# plantillla de generacion del menu principal, de acuerdo al rol 
 
-{% for usuarios in usuario %}
-    <li><a href="#">
-        {{ usuarios.iduser }} {{ usuarios.idrol }} {{ usuarios.idAcceso }} 
-    </a></li>
+{% for opcion in opciones %}
+
+    <li><a href="#">{{ opcion.modulo }} </a>
+    	<ul>
+    		<li><a href="{{ path(opcion.ruta) }}  "> {{ opcion.pagina }}</a></li>
+    	</ul>
+
+    </li>
 {% endfor %}
 
+#}
 
 
+
+{#########################################################}
+
+{% set aux = 0 %}
+{% set cont = 0 %}
+
+{% for opcion in opciones %}
+
+{% if cont == 0 %}
+<li><a href="#">{{ opcion.modulo }} </a>
+    	<ul> 
+{% endif %}
+
+
+{% if aux != opcion.modulo %}
+</ul>
+    </li>
+
+    <li><a href="#">{{ opcion.modulo }} </a>
+    	<ul> 
+    		<li><a href="{{ path(opcion.ruta) }}  "> {{ opcion.pagina }}</a></li>
+    			
+{% else %}
+
+    				<li><a href="{{ path(opcion.ruta) }}  "> {{ opcion.pagina }}</a></li>
+{% endif %}	    				
+    	
+    {% set aux = opcion.modulo %}
+    {% set cont = 1 %}
+{% endfor %}
+</ul>
+    </li>
+
+
+
+{#
+			<li><a href="#">Opción 1</a>
+				<ul>
+					<li><a href="#">Opción 1.1</a></li>
+					<li><a href="#">Opción 1.2</a></li>
+				</ul>
+			</li>
+#}
