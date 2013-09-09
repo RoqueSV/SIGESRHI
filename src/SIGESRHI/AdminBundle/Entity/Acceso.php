@@ -28,7 +28,7 @@ class Acceso
      *
      * @ORM\Column(name="nombrepagina", type="string", length=50, nullable=true)
      * @Assert\NotNull(message="Debe ingresar un nombre de pagina")
-     * @Assert\MaxLength(50)
+     * @Assert\Length(max="50")
      */
     private $nombrepagina;
 
@@ -37,8 +37,7 @@ class Acceso
      *
      * @ORM\Column(name="ruta", type="string", length=200, nullable=true)
      * @Assert\NotNull(message="Debe ingresar una ruta para el acceso")
-     * @Assert\Url()
-      * @Assert\MaxLength(200)
+     * @Assert\Length(max="200")
      */
     private $ruta;
 
@@ -66,7 +65,10 @@ class Acceso
      * })
      */
     private $idmodulo;
-
+    
+    public function __toString() {
+        return $this->nombrepagina;
+    }    
     /**
      * Constructor
      */

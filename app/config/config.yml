@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: "@AdminBundle/Resources/config/admin.yml" }
 
 framework:
     #esi:             ~
@@ -68,3 +69,23 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: SIGESRHI\AdminBundle\Entity\Usuario
+    
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+
+        sonata.block.service.text:   ~
+        sonata.block.service.action: ~
+        sonata.block.service.rss:    ~
+        
+sonata_admin:
+    title:      'SIGESRHI-Admin'
+    #title_logo: Logo_ISRI.png
+    templates:
+        # plantillas globales predefinidas
+        ajax:    SonataAdminBundle::ajax_layout.html.twig
+    dashboard:
+        blocks:
+           - { position: left, type: sonata.admin.block.admin_list }
