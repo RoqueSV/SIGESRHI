@@ -1,0 +1,66 @@
+services:
+   sonata.admin.admin.modulo:
+      class: SIGESRHI\AdminBundle\Admin\ModuloAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Configuraciones de permisos, label: Modulo }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Modulo, AdminBundle:ModuloAdmin]
+      
+   sonata.admin.admin.rol:
+      class: SIGESRHI\AdminBundle\Admin\RolAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Configuraciones de permisos, label: Rol }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Rol, AdminBundle:RolAdmin]
+      
+   sonata.admin.admin.acceso:
+      class: SIGESRHI\AdminBundle\Admin\AccesoAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Configuraciones de permisos, label: Acceso }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Acceso, AdminBundle:AccesoAdmin]
+
+   sonata.admin.admin.centro:
+      class: SIGESRHI\AdminBundle\Admin\CentroAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Institución, label: Centros de atención }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Centrounidad, AdminBundle:CentroAdmin]
+      
+   sonata.admin.admin.unidad:
+      class: SIGESRHI\AdminBundle\Admin\UnidadAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Institución, label: Unidad Organizativa }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Unidadorganizativa, AdminBundle:UnidadAdmin]
+      
+   sonata.admin.admin.plaza:
+      class: SIGESRHI\AdminBundle\Admin\PlazaAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Plaza }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Plaza, AdminBundle:PlazaAdmin]
+      
+   sonata.admin.admin.area:
+      class: SIGESRHI\AdminBundle\Admin\AreaAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Areas }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Area, AdminBundle:AreaAdmin]
+      
+   sonata.admin.admin.conocimiento:
+      class: SIGESRHI\AdminBundle\Admin\ConocimientoAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Conocimientos }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Conocimiento, AdminBundle:ConocimientoAdmin]
+      
+   sonata.admin.admin.habilidad:
+      class: SIGESRHI\AdminBundle\Admin\HabilidadAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Habilidades }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Habilidad, AdminBundle:HabilidadAdmin]
+      
+   sonata.admin.admin.funcion:
+      class: SIGESRHI\AdminBundle\Admin\FuncionAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Funciones }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Funcion, AdminBundle:FuncionAdmin]
+      
+   sonata.admin.admin.manejo:
+      class: SIGESRHI\AdminBundle\Admin\ManejoAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Manejo de equipo, show_in_dashboard: false }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Manejoequipo, AdminBundle:ManejoAdmin]
