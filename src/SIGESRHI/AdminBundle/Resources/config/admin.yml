@@ -4,18 +4,18 @@ services:
       tags:
         - { name: sonata.admin, manager_type: orm, group: Configuraciones de permisos, label: Modulo }
       arguments: [null, SIGESRHI\AdminBundle\Entity\Modulo, AdminBundle:ModuloAdmin]
+           
+   sonata.admin.admin.acceso:
+      class: SIGESRHI\AdminBundle\Admin\AccesoAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Configuraciones de permisos, label: Acceso }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Acceso, AdminBundle:AccesoAdmin]
       
    sonata.admin.admin.rol:
       class: SIGESRHI\AdminBundle\Admin\RolAdmin
       tags:
         - { name: sonata.admin, manager_type: orm, group: Configuraciones de permisos, label: Rol }
       arguments: [null, SIGESRHI\AdminBundle\Entity\Rol, AdminBundle:RolAdmin]
-      
-   sonata.admin.admin.acceso:
-      class: SIGESRHI\AdminBundle\Admin\AccesoAdmin
-      tags:
-        - { name: sonata.admin, manager_type: orm, group: Configuraciones de permisos, label: Acceso }
-      arguments: [null, SIGESRHI\AdminBundle\Entity\Acceso, AdminBundle:AccesoAdmin]
 
    sonata.admin.admin.centro:
       class: SIGESRHI\AdminBundle\Admin\CentroAdmin

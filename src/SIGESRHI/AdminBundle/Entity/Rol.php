@@ -4,12 +4,14 @@ namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Rol
  *
  * @ORM\Table(name="rol")
  * @ORM\Entity
+ * @UniqueEntity("nombrerol")
  */
 class Rol
 {
@@ -37,7 +39,17 @@ class Rol
 }
 
     /**
-     * @ORM\ManyToMany(targetEntity="Acceso", mappedBy="idrol")
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Acceso",inversedBy="idrol")
+     * @ORM\JoinTable(name="accesorol",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="idrol", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="idacceso", referencedColumnName="id")
+     *   }
+     * )
      */
     private $idacceso;
     

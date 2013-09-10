@@ -46,7 +46,7 @@ class Centrounidad
     /**
      * @var string
      *
-     * @ORM\Column(name="direccioncentro", type="string", length=100, nullable=true)
+     * @ORM\Column(name="direccioncentro", type="string", length=100, nullable=false)
      * @Assert\Length(max= "100")
      */
     private $direccioncentro;
@@ -56,7 +56,7 @@ class Centrounidad
      *
      * @ORM\Column(name="telefonocentro", type="string", nullable=false)
      * @Assert\NotNull(message="Debe ingresar el telefono")
-     * @Assert\Length(min="6")
+     * @Assert\Length(max="8")
      */
     private $telefonocentro;
 

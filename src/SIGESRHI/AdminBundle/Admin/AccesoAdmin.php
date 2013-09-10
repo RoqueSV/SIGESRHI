@@ -21,8 +21,8 @@ class AccesoAdmin extends Admin
             //->add('idmodulo', 'sonata_type_model', array('required'=>false))
             ->add('idmodulo',null,array('required'=>'required', 'label'=>'Modulo'))
             ->add('ruta')
-            ->add('idrol',null,array('multiple'=>true,'expanded'=>true, 'label'=>'Roles'))
-            ->setHelps(array('nombrepagina'=>'Ingresa una opción de acceso'))
+            //->add('idrol','sonata_type_model',array('multiple'=>true, 'label'=>'Roles'))
+            ->setHelps(array('nombrepagina'=>'Ingrese una opción de acceso'))
            
              ;
     }
@@ -44,9 +44,7 @@ class AccesoAdmin extends Admin
             ->addIdentifier('nombrepagina', null,array('label' => 'Opción'))
             ->add('idmodulo',null,array('label'=>'Modulo'))
             ->add('ruta')
-            ->add('idrol',null,array('label'=>'Roles'))
-      
-                
+            ->add('idrol',null,array('label'=>'Roles'))    
         ;
     }
     

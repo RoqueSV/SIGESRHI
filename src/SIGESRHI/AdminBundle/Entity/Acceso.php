@@ -26,7 +26,7 @@ class Acceso
     /**
      * @var string
      *
-     * @ORM\Column(name="nombrepagina", type="string", length=50, nullable=true)
+     * @ORM\Column(name="nombrepagina", type="string", length=50, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de pagina")
      * @Assert\Length(max="50")
      */
@@ -35,24 +35,14 @@ class Acceso
     /**
      * @var string
      *
-     * @ORM\Column(name="ruta", type="string", length=200, nullable=true)
+     * @ORM\Column(name="ruta", type="string", length=200, nullable=false)
      * @Assert\NotNull(message="Debe ingresar una ruta para el acceso")
      * @Assert\Length(max="200")
      */
     private $ruta;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Rol",inversedBy="idacceso")
-     * @ORM\JoinTable(name="accesorol",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idacceso", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idrol", referencedColumnName="id")
-     *   }
-     * )
+    
+     /**
+     * @ORM\ManyToMany(targetEntity="Rol", mappedBy="idacceso")
      */
     private $idrol;
 

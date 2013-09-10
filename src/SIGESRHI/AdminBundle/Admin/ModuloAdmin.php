@@ -17,9 +17,9 @@ class ModuloAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('nombremodulo', 'text', array('label' => 'Modulo'))
-            ->add('descripcion',null, array('required'=>'required'))
-            ->setHelps(array('nombremodulo'=>'Ingresa un módulo', 'descripcion'=>'Ingresa una descripción'))
+            ->add('nombremodulo', 'text', array('label' => 'Modulo','required'=>'required'))
+            ->add('descripcion','textarea', array('required'=>'required'))
+            ->setHelps(array('nombremodulo'=>'Ingrese un módulo', 'descripcion'=>'Ingrese una descripción para el módulo'))
              ;
     }
     
@@ -28,7 +28,7 @@ class ModuloAdmin extends Admin
     {
         $datagridMapper
             ->add('nombremodulo',null, array('label' => 'Módulo'))
-            ->add('descripcion')
+            ->add('descripcion', null, array('label' => 'Descripción'))
         ;
     }
     
@@ -37,7 +37,7 @@ class ModuloAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('nombremodulo', null,array('label' => 'Módulo'))
-            ->add('descripcion')
+            ->add('descripcion', null,array('label' => 'Descripción'))
                 
         ;
     }

@@ -35,13 +35,12 @@ class Modulo
      * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=150, nullable=true)
-     * @Assert\Length(max= "15")
+     * @Assert\Length(max= "150")
      */
     private $descripcion;
     
      /**
      * @ORM\OneToMany(targetEntity="Acceso", mappedBy="idmodulo")
-     * @Assert\Length(max="15")
      */
 
     private $idacceso;

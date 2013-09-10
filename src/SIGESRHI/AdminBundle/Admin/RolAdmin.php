@@ -18,8 +18,8 @@ class RolAdmin extends Admin
     {
         $formMapper
             ->add('nombrerol', 'text', array('label' => 'Rol'))
-            ->add('idacceso',null,array('multiple'=>true,'expanded'=>true, 'label'=>'Opciones'))
-            ->setHelps(array('nombrerol'=>'Ingresa un rol'))
+            ->add('idacceso','sonata_type_model',array('required'=>true,'multiple'=>true,'expanded'=>true ,'label'=>'Opciones'))
+            ->setHelps(array('nombrerol'=>'Ingrese un rol'))
              ;
     }
     
@@ -28,7 +28,7 @@ class RolAdmin extends Admin
     {
         $datagridMapper
             ->add('nombrerol',null, array('label' => 'Rol'))
-            ->add('idacceso')
+            ->add('idacceso', null,array('label' => 'Accesos'))
         ;
     }
     
@@ -36,8 +36,8 @@ class RolAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('nombrerol', null,array('label' => 'Rol')) 
-            ->add('idacceso')
+            ->addIdentifier('nombrerol',null,array('label' => 'Rol')) 
+            ->add('idacceso',null,array('label' => 'Accesos'))
         ;
     }
 }

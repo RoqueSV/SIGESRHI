@@ -20,7 +20,7 @@ class UnidadAdmin extends Admin
             ->add('nombreunidad', null, array('label' => 'Unidad Organizativa'))
             ->add('descripcionunidad', null, array('label' => 'Descripción'))
             ->add('idcentro',null,array('required'=>'required', 'label'=>'Centro Atención'))
-            ->setHelps(array('nombreunidad'=>'Ingresa una unidad organizativa'))
+            ->setHelps(array('nombreunidad'=>'Ingrese una unidad organizativa'))
            
              ;
     }
@@ -30,7 +30,7 @@ class UnidadAdmin extends Admin
     {
         $datagridMapper
             ->add('nombreunidad', null, array('label' => 'Unidad Organizativa'))
-            ->add('descripcionunidad', null, array('label' => 'Descripción'))
+          //->add('descripcionunidad', null, array('label' => 'Descripción'))
             ->add('idcentro',null,array('label'=>'Centro Atención'))
         ;
     }
