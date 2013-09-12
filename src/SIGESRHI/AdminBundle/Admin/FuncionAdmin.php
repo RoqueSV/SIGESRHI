@@ -17,8 +17,8 @@ class FuncionAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('nombrefuncion', null, array('label' => 'Descripción funcion'))
-            ->setHelps(array('nombrehabilidad'=>'Ingresa la descripción de funciones requeridas'))
+            ->add('nombrefuncion', 'textarea', array('label' => 'Descripción funcion'))
+            ->setHelps(array('nombrehabilidad'=>'Ingrese la descripción de funciones requeridas'))
            
              ;
     }

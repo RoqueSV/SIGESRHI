@@ -47,7 +47,7 @@ class Centrounidad
      * @var string
      *
      * @ORM\Column(name="direccioncentro", type="string", length=100, nullable=false)
-     * @Assert\Length(max= "100")
+     * @Assert\Length(max= "170")
      */
     private $direccioncentro;
 

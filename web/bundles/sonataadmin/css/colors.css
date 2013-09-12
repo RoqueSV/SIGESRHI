@@ -52,3 +52,12 @@ div.sonata-ba-field-error select{
 div.sonata-ba-field-error .field-short-description {
     border: 1px solid #B94A48;
 }
+
+/* Vanadium Styles */ 
+.vanadium-message-value {
+  font-style: italic;
+  }
+.vanadium-advice.vanadium-invalid, .vanadium-advice.vanadium-invalid * {
+  color: red;
+  display:inline;
+  }

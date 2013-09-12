@@ -17,8 +17,8 @@ class HabilidadAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('nombrehabilidad', null, array('label' => 'Descripción habilidad'))
-            ->setHelps(array('nombrehabilidad'=>'Ingresa la descripción de habilidades requeridas'))
+            ->add('nombrehabilidad', 'textarea', array('label' => 'Descripción habilidad'))
+            ->setHelps(array('nombrehabilidad'=>'Ingrese la descripción de habilidades requeridas'))
            
              ;
     }

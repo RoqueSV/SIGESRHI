@@ -45,7 +45,7 @@ class Plaza
      * @var integer
      *
      * @ORM\Column(name="edad", type="integer", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar la edad minima de la plaza")
+     * @Assert\NotNull(message="Debe ingresar la edad requerida de la plaza")
      */
     private $edad;
 
@@ -57,18 +57,13 @@ class Plaza
      */
     private $estadoplaza;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
+     /**
+     * @var \Area
      *
-     * @ORM\ManyToMany(targetEntity="Area", inversedBy="idplaza")
-     * @ORM\JoinTable(name="areaplaza",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idarea", referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToOne(targetEntity="Area",  inversedBy="idplaza")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idarea", referencedColumnName="id")
+     * })
      */
     private $idarea;
 
@@ -144,7 +139,7 @@ class Plaza
      */
     public function __construct()
     {
-        $this->idarea = new \Doctrine\Common\Collections\ArrayCollection();
+       // $this->idarea = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idconocimiento = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idfuncion = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idhabilidad = new \Doctrine\Common\Collections\ArrayCollection();
@@ -254,33 +249,23 @@ class Plaza
         return $this->estadoplaza;
     }
 
-    /**
-     * Add idarea
+       /**
+     * Set idarea
      *
      * @param \SIGESRHI\AdminBundle\Entity\Area $idarea
      * @return Plaza
      */
-    public function addIdarea(\SIGESRHI\AdminBundle\Entity\Area $idarea)
+    public function setIdarea(\SIGESRHI\AdminBundle\Entity\Area $idarea = null)
     {
-        $this->idarea[] = $idarea;
+        $this->idarea = $idarea;
     
         return $this;
     }
 
     /**
-     * Remove idarea
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Area $idarea
-     */
-    public function removeIdarea(\SIGESRHI\AdminBundle\Entity\Area $idarea)
-    {
-        $this->idarea->removeElement($idarea);
-    }
-
-    /**
      * Get idarea
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \SIGESRHI\AdminBundle\Entity\Area
      */
     public function getIdarea()
     {

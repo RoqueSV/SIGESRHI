@@ -17,7 +17,7 @@ class ConocimientoAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('nombreconocimiento', null, array('label' => 'Descripción conocimiento'))
+            ->add('nombreconocimiento', 'textarea', array('label' => 'Descripción conocimiento'))
             ->setHelps(array('nombreconocimiento'=>'Ingresa la descripción de conocimientos requeridos'))
            
              ;

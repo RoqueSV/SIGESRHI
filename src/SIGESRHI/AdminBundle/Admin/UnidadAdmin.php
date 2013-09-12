@@ -12,7 +12,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 
 class UnidadAdmin extends Admin
 {
-   // public $supportsPreviewMode = true;
+   
+    protected $baseRoutePattern = 'unidad';
     //Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -20,7 +21,8 @@ class UnidadAdmin extends Admin
             ->add('nombreunidad', null, array('label' => 'Unidad Organizativa'))
             ->add('descripcionunidad', null, array('label' => 'Descripción'))
             ->add('idcentro',null,array('required'=>'required', 'label'=>'Centro Atención'))
-            ->setHelps(array('nombreunidad'=>'Ingrese una unidad organizativa'))
+            ->setHelps(array('nombreunidad'=>'Ingrese una unidad organizativa',
+                             'descripcionunidad'=>'Ingrese una descripción'))
            
              ;
     }

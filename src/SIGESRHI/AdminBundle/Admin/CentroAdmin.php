@@ -12,7 +12,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 
 class CentroAdmin extends Admin
 {
-   
+    protected $baseRoutePattern = 'centro';
     //Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -22,7 +22,11 @@ class CentroAdmin extends Admin
             ->add('direccioncentro','textarea', array('label' => 'Dirección'))
             ->add('telefonocentro',null, array('label' => 'Teléfono', 'max_length'=>'8','attr' => array('class' => ':phone :only_on_blur')))
             ->add('extensioncentro','integer', array('label' => 'Extensión'))
-            ->setHelps(array('nombrecentro'=>'Ingresa un centro de atención'))
+            ->setHelps(array('nombrecentro'=>'Ingrese el nombre de un centro de atención o unidad',
+                             'especialidad'=>'Defina la especialidad para centro de atención o unidad',
+                             'direccioncentro'=>'Ingrese la dirección del centro',
+                             'telefonocentro'=>'Ingrese un número teléfonico sin guiones',
+                             'extensioncentro'=>'Ingrese la extensión'))
              ;
     }
     

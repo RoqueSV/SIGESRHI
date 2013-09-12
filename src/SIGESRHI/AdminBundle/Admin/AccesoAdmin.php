@@ -13,6 +13,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 class AccesoAdmin extends Admin
 {
    // public $supportsPreviewMode = true;
+   protected $baseRoutePattern = 'acceso';
     //Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -22,7 +23,8 @@ class AccesoAdmin extends Admin
             ->add('idmodulo',null,array('required'=>'required', 'label'=>'Modulo'))
             ->add('ruta')
             //->add('idrol','sonata_type_model',array('multiple'=>true, 'label'=>'Roles'))
-            ->setHelps(array('nombrepagina'=>'Ingrese una opción de acceso'))
+            ->setHelps(array('nombrepagina'=>'Ingrese una opción de acceso',
+                             'ruta'=>'Identificador de la ruta, p.ej. hello_page'))
            
              ;
     }

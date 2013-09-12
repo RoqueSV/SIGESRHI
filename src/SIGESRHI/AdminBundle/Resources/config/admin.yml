@@ -32,31 +32,31 @@ services:
    sonata.admin.admin.plaza:
       class: SIGESRHI\AdminBundle\Admin\PlazaAdmin
       tags:
-        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Plaza }
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Administrar Plazas }
       arguments: [null, SIGESRHI\AdminBundle\Entity\Plaza, AdminBundle:PlazaAdmin]
       
    sonata.admin.admin.area:
       class: SIGESRHI\AdminBundle\Admin\AreaAdmin
       tags:
-        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Areas }
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Areas, show_in_dashboard: false }
       arguments: [null, SIGESRHI\AdminBundle\Entity\Area, AdminBundle:AreaAdmin]
       
    sonata.admin.admin.conocimiento:
       class: SIGESRHI\AdminBundle\Admin\ConocimientoAdmin
       tags:
-        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Conocimientos }
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Conocimientos, show_in_dashboard: false }
       arguments: [null, SIGESRHI\AdminBundle\Entity\Conocimiento, AdminBundle:ConocimientoAdmin]
       
    sonata.admin.admin.habilidad:
       class: SIGESRHI\AdminBundle\Admin\HabilidadAdmin
       tags:
-        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Habilidades }
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Habilidades, show_in_dashboard: false }
       arguments: [null, SIGESRHI\AdminBundle\Entity\Habilidad, AdminBundle:HabilidadAdmin]
       
    sonata.admin.admin.funcion:
       class: SIGESRHI\AdminBundle\Admin\FuncionAdmin
       tags:
-        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Funciones }
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Funciones, show_in_dashboard: false }
       arguments: [null, SIGESRHI\AdminBundle\Entity\Funcion, AdminBundle:FuncionAdmin]
       
    sonata.admin.admin.manejo:

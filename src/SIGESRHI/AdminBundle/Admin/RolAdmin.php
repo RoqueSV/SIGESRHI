@@ -12,14 +12,14 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 
 class RolAdmin extends Admin
 {
-   
+   protected $baseRoutePattern = 'rol';
     //Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
             ->add('nombrerol', 'text', array('label' => 'Rol'))
             ->add('idacceso','sonata_type_model',array('required'=>true,'multiple'=>true,'expanded'=>true ,'label'=>'Opciones'))
-            ->setHelps(array('nombrerol'=>'Ingrese un rol'))
+            ->setHelps(array('nombrerol'=>'Ingrese un rol y defina sus opciones'))
              ;
     }
     

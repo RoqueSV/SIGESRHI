@@ -86,6 +86,7 @@ sonata_admin:
     templates:
         # plantillas globales predefinidas
         ajax:    SonataAdminBundle::ajax_layout.html.twig
+        preview: SonataAdminBundle:CRUD:preview.html.twig
     dashboard:
         blocks:
            - { position: left, type: sonata.admin.block.admin_list }

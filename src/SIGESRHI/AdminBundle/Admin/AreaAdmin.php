@@ -17,9 +17,9 @@ class AreaAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('nombrearea', null, array('label' => 'Area'))
-            ->add('descripcionarea', null, array('label' => 'Descripción'))
-            ->setHelps(array('nombrearea'=>'Ingresa una area'))
+            ->add('nombrearea', 'text', array('label' => 'Area'))
+            ->add('descripcionarea', 'textarea', array('label' => 'Descripción'))
+            ->setHelps(array('nombrearea'=>'Ingrese un area'))
            
              ;
     }
@@ -29,7 +29,7 @@ class AreaAdmin extends Admin
     {
         $datagridMapper
             ->add('nombrearea', null, array('label' => 'Area'))
-            ->add('descripcionarea', null, array('label' => 'Descripción'))
+           // ->add('descripcionarea', null, array('label' => 'Descripción'))
         ;
     }
     
@@ -38,7 +38,7 @@ class AreaAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('nombrearea', null,array('label' => 'Descripción'))
-            ->add('descripcionarea', null, array('label' => 'Descripción'))
+          //  ->add('descripcionarea', null, array('label' => 'Descripción'))
                      
         ;
     }

@@ -17,8 +17,8 @@ class ManejoAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('nombremanejo', null, array('label' => 'Descripción manejo de equipo'))
-            ->setHelps(array('nombremanejo'=>'Ingresa la descripción de manejos de equipo requeridos'))
+            ->add('nombremanejo', 'textarea', array('label' => 'Descripción manejo de equipo'))
+            ->setHelps(array('nombremanejo'=>'Ingrese la descripción de manejos de equipo requeridos'))
            
              ;
     }

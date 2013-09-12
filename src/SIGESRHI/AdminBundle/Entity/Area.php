@@ -47,9 +47,7 @@ class Area
     private $descripcionarea;
     
      /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Plaza", mappedBy="idarea")
+     * @ORM\OneToMany(targetEntity="Plaza", mappedBy="idarea")
      */
     private $idplaza;
    

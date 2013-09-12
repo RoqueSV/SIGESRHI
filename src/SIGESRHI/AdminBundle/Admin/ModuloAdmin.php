@@ -12,7 +12,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 
 class ModuloAdmin extends Admin
 {
-   
+    protected $baseRoutePattern = 'modulo';
+    
     //Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -35,10 +36,10 @@ class ModuloAdmin extends Admin
         //Fields to be shown on lists
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper
+         $listMapper
             ->addIdentifier('nombremodulo', null,array('label' => 'Módulo'))
             ->add('descripcion', null,array('label' => 'Descripción'))
-                
+              
         ;
     }
 }
