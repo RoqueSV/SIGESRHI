@@ -1,0 +1,7 @@
+parameters:
+#    expediente.example.class: SIGESRHI\ExpedienteBundle\Example
+
+services:
+#    expediente.example:
+#        class: %expediente.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
