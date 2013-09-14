@@ -42,7 +42,7 @@ class Acceso
     private $ruta;
     
      /**
-     * @ORM\ManyToMany(targetEntity="Rol", mappedBy="idacceso")
+     * @ORM\ManyToMany(targetEntity="Application\Sonata\UserBundle\Entity\Group", mappedBy="idacceso")
      */
     private $idrol;
 

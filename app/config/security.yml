@@ -18,11 +18,11 @@ security:
         main:
             pattern:    ^/
             form_login:
-                check_path: /login_check
-                login_path: /login
+                check_path: /admin/login_check
+                login_path: /admin/login
                 provider: fos_userbundle
             logout:
-                path:   /logout
+                path:   /admin/logout
                 target: /
             anonymous: ~
             #http_basic:

@@ -19,16 +19,6 @@ use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 class ChangePasswordFormType extends AbstractType
 {
-    private $class;
-
-    /**
-     * @param string $class The User class name
-     */
-    public function __construct($class)
-    {
-        $this->class = $class;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if (class_exists('Symfony\Component\Security\Core\Validator\Constraints\UserPassword')) {
@@ -44,7 +34,7 @@ class ChangePasswordFormType extends AbstractType
             'mapped' => false,
             'constraints' => $constraint,
         ));
-        $builder->add('plainPassword', 'repeated', array(
+        $builder->add('new', 'repeated', array(
             'type' => 'password',
             'options' => array('translation_domain' => 'FOSUserBundle'),
             'first_options' => array('label' => 'form.new_password'),
@@ -56,7 +46,7 @@ class ChangePasswordFormType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => $this->class,
+            'data_class' => 'FOS\UserBundle\Form\Model\ChangePassword',
             'intention'  => 'change_password',
         ));
     }

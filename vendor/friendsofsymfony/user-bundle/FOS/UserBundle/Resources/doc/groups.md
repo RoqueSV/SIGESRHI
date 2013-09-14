@@ -48,16 +48,15 @@ Or if you prefer XML:
 The simplest way to create a Group class is to extend the mapped superclass
 provided by the bundle.
 
-#### a) ORM Group class implementation
+**a) ORM Group class implementation**
 
-##### Annotations
 ``` php
 // src/MyProject/MyBundle/Entity/Group.php
 <?php
 
 namespace MyProject\MyBundle\Entity;
 
-use FOS\UserBundle\Model\Group as BaseGroup;
+use FOS\UserBundle\Entity\Group as BaseGroup;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -69,7 +68,7 @@ class Group extends BaseGroup
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\generatedValue(strategy="AUTO")
      */
      protected $id;
 }
@@ -77,37 +76,7 @@ class Group extends BaseGroup
 
 **Note:** `Group` is a reserved keyword in SQL so it cannot be used as the table name.
 
-##### yaml
-
-
-```php
-<?php
-// src/Acme/UserBundle/Entity/Group.php
-
-namespace Acme\UserBundle\Entity;
-
-use FOS\UserBundle\Model\Group as BaseGroup;
-
-/**
- * Group
- */
-class Group extends BaseGroup
-{
-}
-```
-```yaml
-# src/Acme/UserBundle/Resources/config/doctrine/Group.orm.yml
-Acme\UserBundle\Entity\Group:
-    type:  entity
-    table: fos_group
-    id:
-        id:
-            type: integer
-            generator:
-                strategy: AUTO
-```
-
-#### b) MongoDB Group class implementation
+**b) MongoDB Group class implementation**
 
 ``` php
 // src/MyProject/MyBundle/Document/Group.php
@@ -115,8 +84,8 @@ Acme\UserBundle\Entity\Group:
 
 namespace MyProject\MyBundle\Document;
 
-use FOS\UserBundle\Model\Group as BaseGroup;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use FOS\UserBundle\Document\Group as BaseGroup;
+use Doctrine\ODM\MongoDB\Mapping as MongoDB;
 
 /**
  * @MongoDB\Document
@@ -130,7 +99,7 @@ class Group extends BaseGroup
 }
 ```
 
-#### c) CouchDB Group class implementation
+**c) CouchDB Group class implementation**
 
 ``` php
 // src/MyProject/MyBundle/Document/Group.php
@@ -138,7 +107,7 @@ class Group extends BaseGroup
 
 namespace MyProject\MyBundle\Document;
 
-use FOS\UserBundle\Model\Group as BaseGroup;
+use FOS\UserBundle\Document\Group as BaseGroup;
 use Doctrine\ODM\CouchDB\Mapping as MongoDB;
 
 /**
@@ -157,16 +126,15 @@ class Group extends BaseGroup
 
 The next step is to map the relation in your `User` class.
 
-#### a) ORM User-Group mapping
+**a) ORM User-Group mapping**
 
-##### Annotations
 ``` php
 // src/MyProject/MyBundle/Entity/User.php
 <?php
 
 namespace MyProject\MyBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
+use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -193,51 +161,7 @@ class User extends BaseUser
 }
 ```
 
-##### yaml
-```php
-<?php
-// src/Acme/UserBundle/Entity/User.php
-
-namespace Acme\UserBundle\Entity;
-
-use FOS\UserBundle\Model\User as BaseUser;
-
-/**
- * User
- */
-class User extends BaseUser
-{
-    public function __construct()
-    {
-        parent::__construct();
-        // your own logic
-    }
-}
-```
-```yaml
-# src/Acme/UserBundle/Resources/config/doctrine/User.orm.yml
-Acme\UserBundle\Entity\User:
-    type:  entity
-    table: fos_user
-    id:
-        id:
-            type: integer
-            generator:
-                strategy: AUTO
-    manyToMany:
-        groups:
-            targetEntity: Group
-            joinTable:
-                name: fos_user_group
-                joinColumns:
-                    user_id:
-                        referencedColumnName: id
-                inverseJoinColumns:
-                    group_id:
-                        referencedColumnName: id
-```
-
-#### b) MongoDB User-Group mapping
+**b) MongoDB User-Group mapping**
 
 ``` php
 // src/MyProject/MyBundle/Document/User.php
@@ -245,8 +169,8 @@ Acme\UserBundle\Entity\User:
 
 namespace MyProject\MyBundle\Document;
 
-use FOS\UserBundle\Model\User as BaseUser;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use FOS\UserBundle\Document\User as BaseUser;
+use Doctrine\ODM\MongoDB\Mapping as MongoDB;
 
 /**
  * @MongoDB\Document
@@ -263,7 +187,7 @@ class User extends BaseUser
 }
 ```
 
-#### c) CouchDB User-Group mapping
+**c) CouchDB User-Group mapping**
 
 ``` php
 // src/MyProject/MyBundle/Document/User.php
@@ -271,7 +195,7 @@ class User extends BaseUser
 
 namespace MyProject\MyBundle\Document;
 
-use FOS\UserBundle\Model\User as BaseUser;
+use FOS\UserBundle\Document\User as BaseUser;
 use Doctrine\ODM\CouchDB\Mapping as CouchDB;
 
 /**

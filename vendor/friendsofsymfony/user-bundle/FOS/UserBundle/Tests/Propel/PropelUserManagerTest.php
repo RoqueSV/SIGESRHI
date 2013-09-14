@@ -9,13 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace FOS\UserBundle\Tests\Propel;
+namespace FOS\UserBundle\Propel;
 
 class PropelUserManagerTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var \FOS\UserBundle\Propel\UserManager
-     */
     protected $userManager;
 
     public function testFindUserByUsername()
@@ -96,6 +93,41 @@ class PropelUserManagerTest extends \PHPUnit_Framework_TestCase
         $this->userManager->findUserByUsernameOrEmail('JaCk@EmAiL.oRg');
     }
 
+    public function testLoadUserByUsernameWithExistingUser()
+    {
+        $userMock = $this->getMock('FOS\UserBundle\Propel\User', array(), array('sha1'));
+
+        $manager = $this->getMockBuilder('FOS\UserBundle\Propel\UserManager')
+            ->disableOriginalConstructor()
+            ->setMethods(array('findUserByUsername'))
+            ->getMock();
+
+        $manager->expects($this->once())
+            ->method('findUserByUsername')
+            ->with($this->equalTo('jack'))
+            ->will($this->returnValue($userMock));
+
+        $manager->loadUserByUsername('jack');
+    }
+
+    /**
+     * @expectedException Symfony\Component\Security\Core\Exception\UsernameNotFoundException
+     */
+    public function testLoadUserByUsernameWithMissingUser()
+    {
+        $manager = $this->getMockBuilder('FOS\UserBundle\Propel\UserManager')
+            ->disableOriginalConstructor()
+            ->setMethods(array('findUserByUsername'))
+            ->getMock();
+
+        $manager->expects($this->once())
+            ->method('findUserByUsername')
+            ->with($this->equalTo('jack'))
+            ->will($this->returnValue(null));
+
+        $manager->loadUserByUsername('jack');
+    }
+
     protected function setUp()
     {
         if (!class_exists('Propel')) {
@@ -107,7 +139,7 @@ class PropelUserManagerTest extends \PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
-        $this->userManager = null;
+        unset($this->userManager);
     }
 
     protected function getManagerMock()

@@ -37,7 +37,6 @@ class TwigSwiftMailer implements MailerInterface
     {
         $template = $this->parameters['template']['confirmation'];
         $url = $this->router->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), true);
-
         $context = array(
             'user' => $user,
             'confirmationUrl' => $url
@@ -50,12 +49,10 @@ class TwigSwiftMailer implements MailerInterface
     {
         $template = $this->parameters['template']['resetting'];
         $url = $this->router->generate('fos_user_resetting_reset', array('token' => $user->getConfirmationToken()), true);
-
         $context = array(
             'user' => $user,
             'confirmationUrl' => $url
         );
-
         $this->sendMessage($template, $context, $this->parameters['from_email']['resetting'], $user->getEmail());
     }
 
@@ -67,7 +64,6 @@ class TwigSwiftMailer implements MailerInterface
      */
     protected function sendMessage($templateName, $context, $fromEmail, $toEmail)
     {
-        $context = $this->twig->mergeGlobals($context);
         $template = $this->twig->loadTemplate($templateName);
         $subject = $template->renderBlock('subject', $context);
         $textBody = $template->renderBlock('body_text', $context);

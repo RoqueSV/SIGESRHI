@@ -392,7 +392,7 @@ abstract class User implements UserInterface, GroupableInterface
      *
      * @return User
      */
-    public function setCredentialsExpireAt(\DateTime $date = null)
+    public function setCredentialsExpireAt(\DateTime $date)
     {
         $this->credentialsExpireAt = $date;
 
@@ -451,7 +451,7 @@ abstract class User implements UserInterface, GroupableInterface
      *
      * @return User
      */
-    public function setExpiresAt(\DateTime $date = null)
+    public function setExpiresAt(\DateTime $date)
     {
         $this->expiresAt = $date;
 
@@ -483,7 +483,7 @@ abstract class User implements UserInterface, GroupableInterface
         return $this;
     }
 
-    public function setLastLogin(\DateTime $time = null)
+    public function setLastLogin(\DateTime $time)
     {
         $this->lastLogin = $time;
 

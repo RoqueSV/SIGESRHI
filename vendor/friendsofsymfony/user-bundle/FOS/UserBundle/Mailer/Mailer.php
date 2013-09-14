@@ -34,9 +34,6 @@ class Mailer implements MailerInterface
         $this->parameters = $parameters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function sendConfirmationEmailMessage(UserInterface $user)
     {
         $template = $this->parameters['confirmation.template'];
@@ -48,9 +45,6 @@ class Mailer implements MailerInterface
         $this->sendEmailMessage($rendered, $this->parameters['from_email']['confirmation'], $user->getEmail());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function sendResettingEmailMessage(UserInterface $user)
     {
         $template = $this->parameters['resetting.template'];
@@ -64,7 +58,6 @@ class Mailer implements MailerInterface
 
     /**
      * @param string $renderedTemplate
-     * @param string $fromEmail
      * @param string $toEmail
      */
     protected function sendEmailMessage($renderedTemplate, $fromEmail, $toEmail)

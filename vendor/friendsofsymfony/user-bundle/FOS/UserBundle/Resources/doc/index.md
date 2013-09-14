@@ -47,7 +47,7 @@ Add FOSUserBundle in your composer.json:
 ```js
 {
     "require": {
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "*"
     }
 }
 ```
@@ -87,8 +87,7 @@ properties or methods you find useful. This is *your* `User` class.
 The bundle provides base classes which are already mapped for most fields
 to make it easier to create your entity. Here is how you use it:
 
-1. Extend the base `User` class (from the ``Model`` folder if you are using
-   any of the doctrine variants, or ``Propel`` for propel)
+1. Extend the base `User` class (the class to use depends of your storage)
 2. Map the `id` field. It must be protected as it is inherited from the parent class.
 
 **Warning:**
@@ -96,13 +95,13 @@ to make it easier to create your entity. Here is how you use it:
 > When you extend from the mapped superclass provided by the bundle, don't
 > redefine the mapping for the other fields as it is provided by the bundle.
 
-Your `User` class can live inside any bundle in your application. For example,
-if you work at "Acme" company, then you might create a bundle called `AcmeUserBundle`
-and place your `User` class in it.
-
 In the following sections, you'll see examples of how your `User` class should
 look, depending on how you're storing your users (Doctrine ORM, MongoDB ODM,
 or CouchDB ODM).
+
+Your `User` class can live inside any bundle in your application. For example,
+if you work at "Acme" company, then you might create a bundle called `AcmeUserBundle`
+and place your `User` class in it.
 
 **Note:**
 
@@ -116,13 +115,11 @@ or CouchDB ODM).
 > to call parent::__construct(), as the base User class depends on
 > this to initialize some fields.
 
-#### a) Doctrine ORM User class
+**a) Doctrine ORM User class**
 
 If you're persisting your users via the Doctrine ORM, then your `User` class
 should live in the `Entity` namespace of your bundle and look like this to
 start:
-
-##### Annotations
 
 ``` php
 <?php
@@ -130,7 +127,7 @@ start:
 
 namespace Acme\UserBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
+use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -158,43 +155,7 @@ class User extends BaseUser
 
 > `User` is a reserved keyword in SQL so you cannot use it as table name.
 
-##### yaml
-
-If you use yml to configure Doctrine you must add two files. The Entity and the orm.yml:
-
-```php
-<?php
-// src/Acme/UserBundle/Entity/User.php
-
-namespace Acme\UserBundle\Entity;
-
-use FOS\UserBundle\Model\User as BaseUser;
-
-/**
- * User
- */
-class User extends BaseUser
-{
-    public function __construct()
-    {
-        parent::__construct();
-        // your own logic
-    }
-}
-```
-```yaml
-# src/Acme/UserBundle/Resources/config/doctrine/User.orm.yml
-Acme\UserBundle\Entity\User:
-    type:  entity
-    table: fos_user
-    id:
-        id:
-            type: integer
-            generator:
-                strategy: AUTO
-```
-
-#### b) MongoDB User class
+**b) MongoDB User class**
 
 If you're persisting your users via the Doctrine MongoDB ODM, then your `User`
 class should live in the `Document` namespace of your bundle and look like
@@ -206,7 +167,7 @@ this to start:
 
 namespace Acme\UserBundle\Document;
 
-use FOS\UserBundle\Model\User as BaseUser;
+use FOS\UserBundle\Document\User as BaseUser;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
@@ -227,20 +188,20 @@ class User extends BaseUser
 }
 ```
 
-#### c) CouchDB User class
+**c) CouchDB User class**
 
 If you're persisting your users via the Doctrine CouchDB ODM, then your `User`
-class should live in the `CouchDocument` namespace of your bundle and look like
+class should live in the `Document` namespace of your bundle and look like
 this to start:
 
 ``` php
 <?php
 // src/Acme/UserBundle/Document/User.php
 
-namespace Acme\UserBundle\CouchDocument;
+namespace Acme\UserBundle\Document;
 
-use FOS\UserBundle\Model\User as BaseUser;
-use Doctrine\ODM\CouchDB\Mapping\Annotations as CouchDB;
+use FOS\UserBundle\Document\User as BaseUser;
+use Doctrine\ODM\CouchDB\Mapping as CouchDB;
 
 /**
  * @CouchDB\Document
@@ -274,7 +235,7 @@ and customize it to fit your needs.
 
 In order for Symfony's security component to use the FOSUserBundle, you must
 tell it to do so in the `security.yml` file. The `security.yml` file is where the
-basic security configuration for your application is contained.
+basic configuration for the security for your application is contained.
 
 Below is a minimal example of the configuration necessary to use the FOSUserBundle
 in your application:
@@ -282,16 +243,12 @@ in your application:
 ``` yaml
 # app/config/security.yml
 security:
-    encoders:
-        FOS\UserBundle\Model\UserInterface: sha512
-
-    role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
-
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username
+
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
 
     firewalls:
         main:
@@ -307,25 +264,29 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
 ```
 
 Under the `providers` section, you are making the bundle's packaged user provider
 service available via the alias `fos_userbundle`. The id of the bundle's user
 provider service is `fos_user.user_provider.username`.
 
-Next, take a look at and examine the `firewalls` section. Here we have declared a
+Next, take a look at examine the `firewalls` section. Here we have declared a
 firewall named `main`. By specifying `form_login`, you have told the Symfony2
 framework that any time a request is made to this firewall that leads to the
 user needing to authenticate himself, the user will be redirected to a form
 where he will be able to enter his credentials. It should come as no surprise
-then that you have specified the user provider service we declared earlier as the
+then that you have specified the user provider we declared earlier as the
 provider for the firewall to use as part of the authentication process.
 
 **Note:**
 
 > Although we have used the form login mechanism in this example, the FOSUserBundle
-> user provider service is compatible with many other authentication methods as well.
-> Please read the Symfony2 Security component documentation for more information on the
+> user provider is compatible with many other authentication methods as well. Please
+> read the Symfony2 Security component documention for more information on the
 > other types of authentication methods.
 
 The `access_control` section is where you specify the credentials necessary for
@@ -333,7 +294,7 @@ users trying to access specific parts of your application. The bundle requires
 that the login form and all the routes used to create a user and reset the password
 be available to unauthenticated users but use the same firewall as
 the pages you want to secure with the bundle. This is why you have specified that
-any request matching the `/login` pattern or starting with `/register` or
+the any request matching the `/login` pattern or starting with `/register` or
 `/resetting` have been made available to anonymous users. You have also specified
 that any request beginning with `/admin` will require a user to have the
 `ROLE_ADMIN` role.
@@ -380,15 +341,15 @@ Or if you prefer XML:
 Only three configuration values are required to use the bundle:
 
 * The type of datastore you are using (`orm`, `mongodb`, `couchdb` or `propel`).
-* The firewall name which you configured in Step 4.
-* The fully qualified class name (FQCN) of the `User` class which you created in Step 3.
+* The firewall name which you configured in Step 5.
+* The fully qualified class name (FQCN) of the `User` class which you created in Step 4.
 
-**Note:**
+**Warning:**
 
-> FOSUserBundle uses a compiler pass to register mappings for the base
-> User and Group model classes with the object manager that you configured
-> it to use. (Unless specified explicitly, this is the default manager
-> of your doctrine configuration.)
+> When using one of the Doctrine implementation, you need either to use the
+> `auto_mapping` option of the corresponding bundle (done by default for
+> DoctrineBundle in the standard distribution) or to activate the mapping
+> for FOSUserBundle otherwise the base mapping will be ignored.
 
 ### Step 6: Import FOSUserBundle routing files
 
@@ -462,7 +423,7 @@ build your model. First, install it:
 ```json
 {
     "require": {
-        "willdurand/propel-typehintable-behavior": "~1.0"
+        "willdurand/propel-typehintable-behavior": "*"
     }
 }
 ```
@@ -487,7 +448,6 @@ of the bundle.
 The following documents are available:
 
 - [Overriding Templates](overriding_templates.md)
-- [Hooking into the controllers](controller_events.md)
 - [Overriding Controllers](overriding_controllers.md)
 - [Overriding Forms](overriding_forms.md)
 - [Using the UserManager](user_manager.md)

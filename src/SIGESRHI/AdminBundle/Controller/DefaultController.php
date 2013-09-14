@@ -23,11 +23,11 @@ class DefaultController extends Controller
     {
   		$em = $this->getDoctrine()->getManager();
   		$query = $em->createQuery('
-          SELECT u.id iduser, r.id idrol, a.nombrepagina pagina, a.ruta ruta, m.nombremodulo modulo FROM AdminBundle:Usuario u
-          join u.idrol r
-          join r.idacceso a
+          SELECT u.id iduser, g.id idrol, a.nombrepagina pagina, a.ruta ruta, m.nombremodulo modulo FROM ApplicationSonataUserBundle:User u
+          join u.groups g
+          join g.idacceso a
           join a.idmodulo m
-		      WHERE u.username = :username order by m.nombremodulo'
+          WHERE u.username = :username order by m.nombremodulo'
         )->setParameter('username', $nombreUsuario);
 
         $opciones = $query->getResult();

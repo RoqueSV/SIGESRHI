@@ -29,7 +29,7 @@ class ModuloAdmin extends Admin
     {
         $datagridMapper
             ->add('nombremodulo',null, array('label' => 'Módulo'))
-            ->add('descripcion', null, array('label' => 'Descripción'))
+           // ->add('descripcion', null, array('label' => 'Descripción'))
         ;
     }
     

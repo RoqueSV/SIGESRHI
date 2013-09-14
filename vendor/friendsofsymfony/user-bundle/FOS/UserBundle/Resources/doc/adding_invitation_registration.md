@@ -127,6 +127,7 @@ namespace Acme\UserBundle\Form\Type;
 
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseRegistrationFormType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Doctrine\ORM\EntityRepository;
 
 class RegistrationFormType extends BaseRegistrationFormType
 {
@@ -168,7 +169,7 @@ class InvitationFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addViewTransformer($this->invitationTransformer, true);
+        $builder->prependClientTransformer($this->invitationTransformer);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

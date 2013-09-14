@@ -30,10 +30,9 @@ class FOSUserExtension extends Extension
 
         if ('custom' !== $config['db_driver']) {
             $loader->load(sprintf('%s.xml', $config['db_driver']));
-            $container->setParameter($this->getAlias() . '.backend_type_' . $config['db_driver'], true);
         }
 
-        foreach (array('validator', 'security', 'util', 'mailer', 'listeners') as $basename) {
+        foreach (array('validator', 'security', 'util', 'mailer') as $basename) {
             $loader->load(sprintf('%s.xml', $basename));
         }
 
@@ -103,6 +102,9 @@ class FOSUserExtension extends Extension
     {
         $loader->load('profile.xml');
 
+        $container->setAlias('fos_user.profile.form.handler', $config['form']['handler']);
+        unset($config['form']['handler']);
+
         $this->remapParametersNamespaces($config, $container, array(
             'form' => 'fos_user.profile.form.%s',
         ));
@@ -112,9 +114,8 @@ class FOSUserExtension extends Extension
     {
         $loader->load('registration.xml');
 
-        if ($config['confirmation']['enabled']) {
-            $loader->load('email_confirmation.xml');
-        }
+        $container->setAlias('fos_user.registration.form.handler', $config['form']['handler']);
+        unset($config['form']['handler']);
 
         if (isset($config['confirmation']['from_email'])) {
             // overwrite the global one
@@ -133,6 +134,9 @@ class FOSUserExtension extends Extension
     {
         $loader->load('change_password.xml');
 
+        $container->setAlias('fos_user.change_password.form.handler', $config['form']['handler']);
+        unset($config['form']['handler']);
+
         $this->remapParametersNamespaces($config, $container, array(
             'form' => 'fos_user.change_password.form.%s',
         ));
@@ -141,6 +145,9 @@ class FOSUserExtension extends Extension
     private function loadResetting(array $config, ContainerBuilder $container, XmlFileLoader $loader, array $fromEmail)
     {
         $loader->load('resetting.xml');
+
+        $container->setAlias('fos_user.resetting.form.handler', $config['form']['handler']);
+        unset($config['form']['handler']);
 
         if (isset($config['email']['from_email'])) {
             // overwrite the global one
@@ -166,6 +173,8 @@ class FOSUserExtension extends Extension
         }
 
         $container->setAlias('fos_user.group_manager', $config['group_manager']);
+        $container->setAlias('fos_user.group.form.handler', $config['form']['handler']);
+        unset($config['form']['handler']);
 
         $this->remapParametersNamespaces($config, $container, array(
             '' => array(
