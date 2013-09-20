@@ -25,7 +25,7 @@ class UserAdmin extends Admin
     protected $formOptions = array(
         'validation_groups' => 'Profile'
     );
-
+    protected $baseRoutePattern = 'usuario';
     /**
      * {@inheritdoc}
      */
@@ -74,7 +74,7 @@ class UserAdmin extends Admin
             ->with('Groups')
                 ->add('groups')
             ->end()
-            ->with('Profile')
+            ->with('Perfil')
                 ->add('dateOfBirth', 'birthday')
                 ->add('firstname')
                 ->add('lastname')
@@ -85,15 +85,15 @@ class UserAdmin extends Admin
                 ->add('timezone')
                 ->add('phone')
             ->end()
-            ->with('Social')
+          /*  ->with('Social')
                 ->add('facebookUid')
                 ->add('facebookName')
                 ->add('twitterUid')
                 ->add('twitterName')
                 ->add('gplusUid')
                 ->add('gplusName')
-            ->end()
-            ->with('Security')
+            ->end() */
+            ->with('Seguridad')
                 ->add('token')
                 ->add('twoStepVerificationCode')
             ->end()
@@ -111,10 +111,10 @@ class UserAdmin extends Admin
                 ->add('email')
                 ->add('plainPassword', 'text', array('required' => false))
             ->end()
-            ->with('Groups')
-                ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true))
+            ->with('Roles')
+                ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true, 'label'=>'Roles'))
             ->end()
-            ->with('Profile')
+            ->with('Perfil')
                 ->add('dateOfBirth', 'birthday', array('required' => false))
                 ->add('firstname', null, array('required' => false))
                 ->add('lastname', null, array('required' => false))
@@ -123,8 +123,8 @@ class UserAdmin extends Admin
                 ->add('gender', 'choice', array(
                     'choices' => array(
                         UserInterface::GENDER_UNKNOWN => 'gender_unknown',
-                        UserInterface::GENDER_FEMALE  => 'gender_female',
-                        UserInterface::GENDER_MAN     => 'gender_male',
+                        UserInterface::GENDER_FEMALE  => 'Femenino',
+                        UserInterface::GENDER_MAN     => 'Masculino',
                     ),
                     'required' => true,
                     'translation_domain' => $this->getTranslationDomain()
@@ -133,14 +133,14 @@ class UserAdmin extends Admin
                 ->add('timezone', 'timezone', array('required' => false))
                 ->add('phone', null, array('required' => false))
             ->end()
-            ->with('Social')
+            /*->with('Social')
                 ->add('facebookUid', null, array('required' => false))
                 ->add('facebookName', null, array('required' => false))
                 ->add('twitterUid', null, array('required' => false))
                 ->add('twitterName', null, array('required' => false))
                 ->add('gplusUid', null, array('required' => false))
                 ->add('gplusName', null, array('required' => false))
-            ->end()
+            ->end()*/
         ;
 
         if (!$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
@@ -149,7 +149,8 @@ class UserAdmin extends Admin
                     ->add('realRoles', 'sonata_security_roles', array(
                         'expanded' => true,
                         'multiple' => true,
-                        'required' => false
+                        'required' => false,
+                        'label' => 'Tipo'
                     ))
                     ->add('locked', null, array('required' => false))
                     ->add('expired', null, array('required' => false))
@@ -160,7 +161,7 @@ class UserAdmin extends Admin
         }
 
         $formMapper
-            ->with('Security')
+            ->with('Seguridad')
                 ->add('token', null, array('required' => false))
                 ->add('twoStepVerificationCode', null, array('required' => false))
             ->end()

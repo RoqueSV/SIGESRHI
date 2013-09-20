@@ -18,11 +18,9 @@ class AccesoAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('nombrepagina', 'text', array('label' => 'Opción'))
-            //->add('idmodulo', 'sonata_type_model', array('required'=>false))
-            ->add('idmodulo',null,array('required'=>'required', 'label'=>'Modulo'))
+            ->add('nombrepagina', null, array('label' => 'Opción'))
+            ->add('idmodulo','sonata_type_model',array('required'=>'required', 'label'=>'Modulo'))
             ->add('ruta')
-            //->add('idrol','sonata_type_model',array('multiple'=>true, 'label'=>'Roles'))
             ->setHelps(array('nombrepagina'=>'Ingrese una opción de acceso',
                              'ruta'=>'Identificador de la ruta, p.ej. hello_page'))
            
@@ -49,5 +47,5 @@ class AccesoAdmin extends Admin
             ->add('idrol',null,array('label'=>'Roles'))    
         ;
     }
-    
+
 }

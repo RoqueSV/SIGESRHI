@@ -92,3 +92,6 @@ sonata_admin:
     dashboard:
         blocks:
            - { position: left, type: sonata.admin.block.admin_list }
+            
+           - { position: right, type: sonata.block.service.text, settings: { content: "<h2>Area de administración</h2> <p style='font-size:16px' >En esta sección podra llevar a cabo las configuraciones para usuarios, roles y sus respectivos accesos a modulos del sistema. <br /><br /> De igual forma podrá realizar la gestión de los centros de atención, unidades organizativas y la administración para el manual de puestos de la institución.</p>"} }
+         #  - { position: right, type: sonata.block.service.rss, settings: { title: SIGESRHI Repository, url: http://www.elsalvador.com/ultimahora/Rss.xml }}

@@ -194,7 +194,7 @@ class Auditoria
     /**
      * Set fechaaccion
      *
-     * @param \DateTime $fechaaccion
+     * @param $fechaaccion
      * @return Auditoria
      */
     public function setFechaaccion($fechaaccion)

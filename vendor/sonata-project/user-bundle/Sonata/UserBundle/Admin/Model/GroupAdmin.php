@@ -10,7 +10,6 @@
  */
 
 namespace Sonata\UserBundle\Admin\Model;
-
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -21,7 +20,7 @@ class GroupAdmin extends Admin
     protected $formOptions = array(
         'validation_groups' => 'Registration'
     );
-
+    protected $baseRoutePattern = 'grupo';
     /**
      * {@inheritdoc}
      */
@@ -67,7 +66,7 @@ class GroupAdmin extends Admin
                 'multiple' => true,
                 'required' => false
             ))
-            ->add('idacceso','sonata_type_model',array('required'=>true,'multiple'=>true,'expanded'=>true ,'label'=>'Opciones'))
+           ->add('idacceso','sonata_type_model',array('required'=>false,'multiple'=>true,'expanded'=>true ,'label'=>'Opciones')) 
         ;
     }
 }

@@ -760,7 +760,7 @@ class User extends BaseUser implements UserInterface
         $this->plainPassword = null;
     }
 
-    /**
+    
 
 
     public function getUsername()

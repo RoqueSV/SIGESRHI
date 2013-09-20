@@ -1,4 +1,10 @@
 services:
+   sonata.admin.admin.auditoria:
+      class: SIGESRHI\AdminBundle\Admin\AuditoriaAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Configuraciones de permisos, label: Auditoria}
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Auditoria, AdminBundle:AuditoriaAdmin]
+   
    sonata.admin.admin.modulo:
       class: SIGESRHI\AdminBundle\Admin\ModuloAdmin
       tags:

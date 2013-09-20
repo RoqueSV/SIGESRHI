@@ -364,7 +364,7 @@
             </trans-unit>
             <trans-unit id="gender_unknown">
                 <source>gender_unknown</source>
-                <target>gender_unknown</target>
+                <target>No definido</target>
             </trans-unit>
             <trans-unit id="gender_female">
                 <source>gender_female</source>

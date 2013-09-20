@@ -42,6 +42,7 @@ class Acceso
     private $ruta;
     
      /**
+     * @var \Doctrine\Common\Collections\Collection
      * @ORM\ManyToMany(targetEntity="Application\Sonata\UserBundle\Entity\Group", mappedBy="idacceso")
      */
     private $idrol;
@@ -56,8 +57,9 @@ class Acceso
      */
     private $idmodulo;
     
-    public function __toString() {
-        return $this->nombrepagina;
+       public function __toString()
+    {
+        return $this->getNombrepagina();
     }    
     /**
      * Constructor
@@ -67,7 +69,6 @@ class Acceso
         $this->idrol = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
-
     /**
      * Get id
      *
@@ -127,10 +128,10 @@ class Acceso
     /**
      * Add idrol
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Rol $idrol
+     * @param \Application\Sonata\UserBundle\Entity\Group $idrol
      * @return Acceso
      */
-    public function addIdrol(\SIGESRHI\AdminBundle\Entity\Rol $idrol)
+    public function addIdrol(\Application\Sonata\UserBundle\Entity\Group $idrol)
     {
         $this->idrol[] = $idrol;
     
@@ -140,9 +141,9 @@ class Acceso
     /**
      * Remove idrol
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Rol $idrol
+     * @param \Application\Sonata\UserBundle\Entity\Group $idrol
      */
-    public function removeIdrol(\SIGESRHI\AdminBundle\Entity\Rol $idrol)
+    public function removeIdrol(\Application\Sonata\UserBundle\Entity\Group $idrol)
     {
         $this->idrol->removeElement($idrol);
     }

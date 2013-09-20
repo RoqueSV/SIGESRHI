@@ -1,11 +1,11 @@
 <?php
 
-//src/SIGESRHI/AdminBundle/Controller/RolAdminController.php
+//src/SIGESRHI/AdminBundle/Controller/AuditoriaAdminController.php
 
 namespace SIGESRHI\AdminBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 
-class RolAdminController extends Controller
+class AuditoriaAdminController extends Controller
 {
 }

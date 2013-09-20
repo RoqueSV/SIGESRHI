@@ -4,12 +4,13 @@ namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * Plaza
  *
  * @ORM\Table(name="plaza")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Plaza
 {
@@ -133,7 +134,37 @@ class Plaza
      */
     private $iddocautorizacion;
     
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observaciones", type="string", nullable=true)
+     */
+    private $observaciones;
     
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $path;
+    
+        /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $updated;
+    
+    /**
+     * @Assert\File(
+     *     maxSize = "6000000",
+     *     mimeTypes = {"application/pdf", "application/x-pdf"},
+     *     mimeTypesMessage = "El archivo debe estar en formato pdf")
+     */
+    private $file;
     /**
      * Constructor
      */
@@ -146,16 +177,6 @@ class Plaza
         $this->idmanejoequipo = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set nombreplaza
@@ -248,8 +269,31 @@ class Plaza
     {
         return $this->estadoplaza;
     }
+    
+    /**
+     * Set observaciones
+     *
+     * @param string $observaciones
+     * @return Plaza
+     */
+    public function setObservaciones($observaciones)
+    {
+        $this->observaciones = $observaciones;
+    
+        return $this;
+    }
 
-       /**
+    /**
+     * Get observaciones
+     *
+     * @return string 
+     */
+    public function getObservaciones()
+    {
+        return $this->observaciones;
+    }
+    
+     /**
      * Set idarea
      *
      * @param \SIGESRHI\AdminBundle\Entity\Area $idarea
@@ -436,4 +480,178 @@ class Plaza
     {
         return $this->iddocautorizacion;
     }
+    
+    /***  Manejo de archivos  ***/
+    
+    public function getAbsolutePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->path;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir().'/'.$this->path;
+    }
+    
+    /* Definir directorio donde se guardarán archivos */
+    protected function getUploadRootDir()
+    {
+        // la ruta absoluta del directorio donde se deben
+        // guardar los archivos cargados
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // se deshace del __DIR__ para no meter la pata
+        // al mostrar el documento/imagen cargada en la vista.
+        return 'uploads/documents';
+    }
+    
+    /*  fin directorio **/
+
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+        
+    }
+    
+    public function upload($basepath)
+    {
+    // the file property can be empty if the field is not required
+    if (null === $this->getFile()) {
+        return;
+    }
+   if(null===$basepath){return;}
+    // aquí usa el nombre de archivo original pero lo debes
+    // sanear al menos para evitar cualquier problema de seguridad
+
+    // move takes the target directory and then the
+    // target filename to move to
+    $prefijo = substr(md5(uniqid(rand())),0,6); //Clave aleatoria de 6 caracteres
+    $this->getFile()->move(
+        $this->getUploadRootDir($basepath),
+        $prefijo.$this->getFile()->getClientOriginalName()
+    );
+
+    // set the path property to the filename where you've saved the file
+    $this->path = $prefijo.$this->getFile()->getClientOriginalName();
+
+    // limpia la propiedad «file» ya que no la necesitas más
+    $this->file = null;
 }
+
+    /**
+     * Updates the hash value to force the preUpdate and postUpdate events to fire
+     */
+    public function refreshUpdated() {
+        $this->setUpdated(date('Y-m-d H:i:s'));
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Image
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     * @return Image
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+    
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string 
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param string $updated
+     * @return Image
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return string 
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+    
+    /**
+     * Lifecycle callback to upload the file to the server
+     */
+    public function lifecycleFileUpload() {
+        $this->upload();
+    }
+}    
