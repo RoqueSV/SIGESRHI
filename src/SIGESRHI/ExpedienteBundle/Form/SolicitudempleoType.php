@@ -38,7 +38,7 @@ class SolicitudempleoType extends AbstractType
             ->add('fecharegistro',null, array('widget' => 'single_text', 'format'=>'dd-MM-yyyy'))
             ->add('fechamodificacion',null, array('widget' => 'single_text', 'format'=>'dd-MM-yyyy'))
             ->add('idmunicipio',null,array('required' => true,'label'=>'Municipio' ))
-            ->add('departamentos', 'entity', array('class' => 'ExpedienteBundle:Departamento', 'property_path'=>false))
+            ->add('departamentos', 'entity', array('class' => 'ExpedienteBundle:Departamento', 'mapped'=>false))
             ->add('idplaza',null, array('required'=> true, 'label'=>'Plaza'))
             ->add('idexpediente');
 
