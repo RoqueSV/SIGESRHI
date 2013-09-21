@@ -49,7 +49,10 @@ class Titulo
      * @ORM\ManyToMany(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza", mappedBy="idtitulo")
      */
     private $idplaza;
-
+    
+    public function __toString(){
+        return $this->getNombretitulo();
+    }
     /**
      * Get id
      *
