@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="informaciomacademica")
  * @ORM\Entity
  */
-class Informaciomacademica
+class Informacionacademica
 {
     /**
      * @var integer
@@ -39,7 +39,20 @@ class Informaciomacademica
      */
     private $idsolicitudempleo;
 
-
+     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Titulo", inversedBy="idinformacionacademica")
+     * @ORM\JoinTable(name="tituloinformacion",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="idinformacion", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="idtitulo", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $idtitulo;
 
     /**
      * Get id
@@ -95,5 +108,45 @@ class Informaciomacademica
     public function getIdsolicitudempleo()
     {
         return $this->idsolicitudempleo;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idtitulo = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idtitulo
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo
+     * @return Informaciomacademica
+     */
+    public function addIdtitulo(\SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo)
+    {
+        $this->idtitulo[] = $idtitulo;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idtitulo
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo
+     */
+    public function removeIdtitulo(\SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo)
+    {
+        $this->idtitulo->removeElement($idtitulo);
+    }
+
+    /**
+     * Get idtitulo
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdtitulo()
+    {
+        return $this->idtitulo;
     }
 }

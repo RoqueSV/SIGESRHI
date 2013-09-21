@@ -33,11 +33,6 @@ class Plaza
      */
     private $nombreplaza;
 
-     public function __toString() {
-        return $this->nombreplaza;
-    }   
-
-
     /**
      * @var string
      *
@@ -54,6 +49,22 @@ class Plaza
      * @Assert\NotNull(message="Debe ingresar la edad requerida de la plaza")
      */
     private $edad;
+    
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="experiencia", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar una cantidad para la experiencia requerida")
+     */
+    private $experiencia;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="sexo", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe elegir un género")
+     */
+    private $sexo;
 
     /**
      * @var string
@@ -72,6 +83,21 @@ class Plaza
      * })
      */
     private $idarea;
+    
+     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Titulo", inversedBy="idplaza")
+     * @ORM\JoinTable(name="tituloplaza",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="idtitulo", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $idtitulo;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -180,6 +206,7 @@ class Plaza
         $this->idfuncion = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idhabilidad = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idmanejoequipo = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idtitulo = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -659,4 +686,83 @@ class Plaza
     public function lifecycleFileUpload() {
         $this->upload();
     }
-}    
+
+    /**
+     * Set experiencia
+     *
+     * @param integer $experiencia
+     * @return Plaza
+     */
+    public function setExperiencia($experiencia)
+    {
+        $this->experiencia = $experiencia;
+    
+        return $this;
+    }
+
+    /**
+     * Get experiencia
+     *
+     * @return integer 
+     */
+    public function getExperiencia()
+    {
+        return $this->experiencia;
+    }
+
+    /**
+     * Set sexo
+     *
+     * @param string $sexo
+     * @return Plaza
+     */
+    public function setSexo($sexo)
+    {
+        $this->sexo = $sexo;
+    
+        return $this;
+    }
+
+    /**
+     * Get sexo
+     *
+     * @return string 
+     */
+    public function getSexo()
+    {
+        return $this->sexo;
+    }
+
+    /**
+     * Add idtitulo
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo
+     * @return Plaza
+     */
+    public function addIdtitulo(\SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo)
+    {
+        $this->idtitulo[] = $idtitulo;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idtitulo
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo
+     */
+    public function removeIdtitulo(\SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo)
+    {
+        $this->idtitulo->removeElement($idtitulo);
+    }
+
+    /**
+     * Get idtitulo
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdtitulo()
+    {
+        return $this->idtitulo;
+    }
+}

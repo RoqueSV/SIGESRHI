@@ -37,16 +37,18 @@ class Titulo
     private $niveltitulo;
 
     /**
-     * @var \Informaciomacademica
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToOne(targetEntity="Informaciomacademica")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idinformacionacademica", referencedColumnName="id")
-     * })
+     * @ORM\ManyToMany(targetEntity="Informacionacademica", mappedBy="idtitulo")
      */
     private $idinformacionacademica;
 
-
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza", mappedBy="idtitulo")
+     */
+    private $idplaza;
 
     /**
      * Get id
@@ -104,26 +106,78 @@ class Titulo
         return $this->niveltitulo;
     }
 
+
     /**
-     * Set idinformacionacademica
+     * Get idinformacionacademica
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Informaciomacademica $idinformacionacademica
+     * @return \SIGESRHI\AdminBundle\Entity\Informacionacademica 
+     */
+    public function getIdinformacionacademica()
+    {
+        return $this->idinformacionacademica;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idinformacionacademica = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idplaza = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idinformacionacademica
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Informacionacademica $idinformacionacademica
      * @return Titulo
      */
-    public function setIdinformacionacademica(\SIGESRHI\AdminBundle\Entity\Informaciomacademica $idinformacionacademica = null)
+    public function addIdinformacionacademica(\SIGESRHI\ExpedienteBundle\Entity\Informacionacademica $idinformacionacademica)
     {
-        $this->idinformacionacademica = $idinformacionacademica;
+        $this->idinformacionacademica[] = $idinformacionacademica;
     
         return $this;
     }
 
     /**
-     * Get idinformacionacademica
+     * Remove idinformacionacademica
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Informaciomacademica 
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Informacionacademica $idinformacionacademica
      */
-    public function getIdinformacionacademica()
+    public function removeIdinformacionacademica(\SIGESRHI\ExpedienteBundle\Entity\Informacionacademica $idinformacionacademica)
     {
-        return $this->idinformacionacademica;
+        $this->idinformacionacademica->removeElement($idinformacionacademica);
+    }
+
+    /**
+     * Add idplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     * @return Titulo
+     */
+    public function addIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    {
+        $this->idplaza[] = $idplaza;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     */
+    public function removeIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    {
+        $this->idplaza->removeElement($idplaza);
+    }
+
+    /**
+     * Get idplaza
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdplaza()
+    {
+        return $this->idplaza;
     }
 }
