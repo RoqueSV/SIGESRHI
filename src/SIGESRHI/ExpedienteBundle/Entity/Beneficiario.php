@@ -1,6 +1,6 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -137,10 +137,10 @@ class Beneficiario
     /**
      * Set idsegurovida
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Segurovida $idsegurovida
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Segurovida $idsegurovida
      * @return Beneficiario
      */
-    public function setIdsegurovida(\SIGESRHI\AdminBundle\Entity\Segurovida $idsegurovida = null)
+    public function setIdsegurovida(\SIGESRHI\ExpedienteBundle\Entity\Segurovida $idsegurovida = null)
     {
         $this->idsegurovida = $idsegurovida;
     
@@ -150,7 +150,7 @@ class Beneficiario
     /**
      * Get idsegurovida
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Segurovida 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Segurovida 
      */
     public function getIdsegurovida()
     {

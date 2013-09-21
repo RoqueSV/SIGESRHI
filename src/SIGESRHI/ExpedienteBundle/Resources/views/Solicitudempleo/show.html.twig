@@ -1,0 +1,130 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Solicitudempleo</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Numsolicitud</th>
+                <td>{{ entity.numsolicitud }}</td>
+            </tr>
+            <tr>
+                <th>Apellidocasada</th>
+                <td>{{ entity.apellidocasada }}</td>
+            </tr>
+            <tr>
+                <th>Primerapellido</th>
+                <td>{{ entity.primerapellido }}</td>
+            </tr>
+            <tr>
+                <th>Segundoapellido</th>
+                <td>{{ entity.segundoapellido }}</td>
+            </tr>
+            <tr>
+                <th>Nombres</th>
+                <td>{{ entity.nombres }}</td>
+            </tr>
+            <tr>
+                <th>Colonia</th>
+                <td>{{ entity.colonia }}</td>
+            </tr>
+            <tr>
+                <th>Calle</th>
+                <td>{{ entity.calle }}</td>
+            </tr>
+            <tr>
+                <th>Estadocivil</th>
+                <td>{{ entity.estadocivil }}</td>
+            </tr>
+            <tr>
+                <th>Telefonofijo</th>
+                <td>{{ entity.telefonofijo }}</td>
+            </tr>
+            <tr>
+                <th>Telefonomovil</th>
+                <td>{{ entity.telefonomovil }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ entity.email }}</td>
+            </tr>
+            <tr>
+                <th>Lugarnac</th>
+                <td>{{ entity.lugarnac }}</td>
+            </tr>
+            <tr>
+                <th>Fehanac</th>
+                <td>{{ entity.fehanac|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Dui</th>
+                <td>{{ entity.dui }}</td>
+            </tr>
+            <tr>
+                <th>Lugardui</th>
+                <td>{{ entity.lugardui }}</td>
+            </tr>
+            <tr>
+                <th>Fechadui</th>
+                <td>{{ entity.fechadui|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Nit</th>
+                <td>{{ entity.nit }}</td>
+            </tr>
+            <tr>
+                <th>Isss</th>
+                <td>{{ entity.isss }}</td>
+            </tr>
+            <tr>
+                <th>Nup</th>
+                <td>{{ entity.nup }}</td>
+            </tr>
+            <tr>
+                <th>Nip</th>
+                <td>{{ entity.nip }}</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{{ entity.sexo }}</td>
+            </tr>
+            <tr>
+                <th>Fotografia</th>
+                <td>{{ entity.fotografia }}</td>
+            </tr>
+            <tr>
+                <th>Fecharegistro</th>
+                <td>{{ entity.fecharegistro|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fechamodificacion</th>
+                <td>{{ entity.fechamodificacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('solicitud') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('solicitud_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('solicitud_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

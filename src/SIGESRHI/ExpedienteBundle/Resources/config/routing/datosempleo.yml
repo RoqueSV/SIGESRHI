@@ -1,0 +1,30 @@
+datosempleo:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Datosempleo:index" }
+
+datosempleo_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Datosempleo:show" }
+
+datosempleo_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Datosempleo:new" }
+
+datosempleo_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Datosempleo:create" }
+    requirements: { _method: post }
+
+datosempleo_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Datosempleo:edit" }
+
+datosempleo_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Datosempleo:update" }
+    requirements: { _method: post|put }
+
+datosempleo_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Datosempleo:delete" }
+    requirements: { _method: post|delete }

@@ -33,6 +33,11 @@ class Plaza
      */
     private $nombreplaza;
 
+     public function __toString() {
+        return $this->nombreplaza;
+    }   
+
+
     /**
      * @var string
      *

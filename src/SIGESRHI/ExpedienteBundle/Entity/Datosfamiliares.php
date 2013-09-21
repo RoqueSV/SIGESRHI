@@ -1,6 +1,6 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -53,7 +53,7 @@ class Datosfamiliares
     /**
      * @var \Solicitudempleo
      *
-     * @ORM\ManyToOne(targetEntity="Solicitudempleo")
+     * @ORM\ManyToOne(targetEntity="Solicitudempleo", inversedBy="Dfamiliares")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idsolicitudempleo", referencedColumnName="id")
      * })

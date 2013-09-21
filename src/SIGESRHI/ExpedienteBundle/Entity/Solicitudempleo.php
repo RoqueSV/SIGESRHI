@@ -1,7 +1,8 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\ExpedienteBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -109,9 +110,9 @@ class Solicitudempleo
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fehanac", type="date", nullable=false)
+     * @ORM\Column(name="fechanac", type="date", nullable=false)
      */
-    private $fehanac;
+    private $fechanac;
 
     /**
      * @var string
@@ -201,9 +202,9 @@ class Solicitudempleo
     private $idmunicipio;
 
     /**
-     * @var \Plaza
+     * @var \SIGESRHI\AdminBundle\Entity\\Plaza
      *
-     * @ORM\ManyToOne(targetEntity="Plaza")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      * })
@@ -219,6 +220,54 @@ class Solicitudempleo
      * })
      */
     private $idexpediente;
+
+
+
+    /****************************************************************/
+    //Pruebas de integracion de coleccion de formularios
+
+        /*************Datos de empleos****************/
+    /**
+     * @ORM\OneToMany(targetEntity="Datosempleo", mappedBy="idsolicitudempleo")
+     */
+    protected $Dempleos;
+
+    public function __construct()
+    {
+        $this->Dempleos = new ArrayCollection();
+        $this->Dfamiliares = new ArrayCollection();
+    }
+
+
+     public function getDempleos()
+    {
+        return $this->Dempleos;
+    }
+
+    public function setDempleos(ArrayCollection $Dempleos)
+    {
+        $this->Dempleos = $Dempleos;
+    }
+
+
+/*********Datos Familiares*****************/
+    /**
+     * @ORM\OneToMany(targetEntity="Datosfamiliares", mappedBy="idsolicitudempleo")
+     */
+    protected $Dfamiliares;
+
+    public function getDfamiliares()
+    {
+        return $this->Dfamiliares;
+    }
+
+    public function setDfamiliares(ArrayCollection $Dfamiliares)
+    {
+        $this->Dfamiliares = $Dfamiliares;
+    }
+
+    /*****************************************************************/
+
 
 
 
@@ -509,26 +558,26 @@ class Solicitudempleo
     }
 
     /**
-     * Set fehanac
+     * Set fechanac
      *
-     * @param \DateTime $fehanac
+     * @param \DateTime $fechanac
      * @return Solicitudempleo
      */
-    public function setFehanac($fehanac)
+    public function setFechanac($fechanac)
     {
-        $this->fehanac = $fehanac;
+        $this->fechanac = $fechanac;
     
         return $this;
     }
 
     /**
-     * Get fehanac
+     * Get fechanac
      *
      * @return \DateTime 
      */
-    public function getFehanac()
+    public function getFechanac()
     {
-        return $this->fehanac;
+        return $this->fechanac;
     }
 
     /**
@@ -787,10 +836,10 @@ class Solicitudempleo
     /**
      * Set idmunicipio
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Municipio $idmunicipio
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Municipio $idmunicipio
      * @return Solicitudempleo
      */
-    public function setIdmunicipio(\SIGESRHI\AdminBundle\Entity\Municipio $idmunicipio = null)
+    public function setIdmunicipio(\SIGESRHI\ExpedienteBundle\Entity\Municipio $idmunicipio = null)
     {
         $this->idmunicipio = $idmunicipio;
     
@@ -800,7 +849,7 @@ class Solicitudempleo
     /**
      * Get idmunicipio
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Municipio 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Municipio 
      */
     public function getIdmunicipio()
     {
@@ -833,10 +882,10 @@ class Solicitudempleo
     /**
      * Set idexpediente
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Expediente $idexpediente
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Expediente $idexpediente
      * @return Solicitudempleo
      */
-    public function setIdexpediente(\SIGESRHI\AdminBundle\Entity\Expediente $idexpediente = null)
+    public function setIdexpediente(\SIGESRHI\ExpedienteBundle\Entity\Expediente $idexpediente = null)
     {
         $this->idexpediente = $idexpediente;
     
@@ -846,7 +895,7 @@ class Solicitudempleo
     /**
      * Get idexpediente
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Expediente 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Expediente 
      */
     public function getIdexpediente()
     {

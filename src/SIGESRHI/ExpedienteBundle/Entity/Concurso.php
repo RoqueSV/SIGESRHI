@@ -1,6 +1,6 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -73,9 +73,9 @@ class Concurso
     private $idusuario;
 
     /**
-     * @var \Plaza
+     * @var \SIGESRHI\AdminBundle\Entity\Plaza
      *
-     * @ORM\ManyToOne(targetEntity="Plaza")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      * })

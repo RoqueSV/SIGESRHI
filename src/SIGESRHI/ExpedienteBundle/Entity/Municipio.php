@@ -1,6 +1,6 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -42,7 +42,9 @@ class Municipio
      */
     private $iddepartamento;
 
-
+        public function __toString() {
+        return $this->nombremunicipio;
+    }   
 
     /**
      * Get id

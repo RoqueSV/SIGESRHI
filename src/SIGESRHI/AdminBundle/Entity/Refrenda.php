@@ -79,9 +79,9 @@ class Refrenda
     private $codigolp;
 
     /**
-     * @var \Empleado
+     * @var \SIGESRHI\ExpedienteBundle\Entity\Empleado
      *
-     * @ORM\ManyToOne(targetEntity="Empleado")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Empleado")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idusuario", referencedColumnName="id")
      * })
@@ -287,10 +287,10 @@ class Refrenda
     /**
      * Set idusuario
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Empleado $idusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario
      * @return Refrenda
      */
-    public function setIdusuario(\SIGESRHI\AdminBundle\Entity\Empleado $idusuario = null)
+    public function setIdusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario = null)
     {
         $this->idusuario = $idusuario;
     
@@ -300,7 +300,7 @@ class Refrenda
     /**
      * Get idusuario
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Empleado 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Empleado 
      */
     public function getIdusuario()
     {

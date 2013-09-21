@@ -1,0 +1,30 @@
+solicitud:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:index" }
+
+solicitud_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:show" }
+
+solicitud_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:new" }
+
+solicitud_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:create" }
+    requirements: { _method: post }
+
+solicitud_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:edit" }
+
+solicitud_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:update" }
+    requirements: { _method: post|put }
+
+solicitud_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:delete" }
+    requirements: { _method: post|delete }

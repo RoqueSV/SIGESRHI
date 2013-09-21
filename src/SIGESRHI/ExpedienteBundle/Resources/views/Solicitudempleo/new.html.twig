@@ -1,0 +1,168 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+    <form action="{{ path('solicitud_create') }}" method="post" {{ form_enctype(form) }}>
+
+        <fieldset><legend>Registrar Solicitud de Empleo</legend>
+    <h1>Solicitud de Empleo</h1>
+
+    <p> <b>Nota Importante:</b> La solicitud de empleo no implica compromiso por parte del ISRI con el interesado, solamente es un requisito indispensable que debe llenar toda persona que aspira a prestar sus servicios a la institución.</p>
+       {# {{ form_widget(form) }}#}
+            {{ form_row(form.fotografia) }}
+            <fieldset>
+                <legend>Datos Personales</legend>
+
+                <table>
+                <tr>
+                    <td>{{ form_label(form.apellidocasada) }}</td>
+                    <td>{{ form_label(form.primerapellido) }}</td>
+                    <td>{{ form_label(form.segundoapellido) }}</td>
+                    <td>{{ form_label(form.nombres) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_widget(form.apellidocasada) }} {{ form_errors(form.apellidocasada) }}</td>
+                    <td>{{ form_widget(form.primerapellido) }} {{ form_errors(form.primerapellido) }}</td>
+                    <td>{{ form_widget(form.segundoapellido) }} {{ form_errors(form.segundoapellido) }}</td>
+                    <td>{{ form_widget(form.nombres) }} {{ form_errors(form.nombres) }}</td>
+                </tr>
+                </table>
+                
+                
+                Dirección Particular:
+                <table>
+                    <tr>
+                        <td>{{ form_label(form.departamentos) }} </td>
+                        <td>{{ form_label(form.idmunicipio) }}</td>
+                        <td>{{ form_label(form.colonia) }}</td>
+                        <td>{{ form_label(form.calle) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_widget(form.departamentos) }} {{ form_errors(form.departamentos) }}</td>
+                        <td>{{ form_widget(form.idmunicipio) }} {{ form_errors(form.idmunicipio) }}</td>
+                        <td>{{ form_widget(form.colonia) }} {{ form_errors(form.colonia) }}</td>
+                        <td>{{ form_widget(form.calle) }} {{ form_errors(form.calle) }}</td>
+                    </tr>
+                </table>
+                
+                <table>
+                    <tr>
+                        <td>{{ form_label(form.estadocivil) }}</td>
+                        <td>{{ form_widget(form.estadocivil) }} {{ form_errors(form.estadocivil) }}</td>
+                        <td>{{ form_label(form.telefonofijo) }}</td>
+                        <td>{{ form_widget(form.telefonofijo) }} {{ form_errors(form.telefonofijo) }}</td>
+                        <td>{{ form_label(form.telefonomovil) }}</td>
+                        <td>{{ form_widget(form.telefonomovil) }} {{ form_errors(form.telefonomovil) }}</td>
+                        <td></td>
+                    </tr>
+                </table>
+
+                {{ form_row(form.email) }}
+
+                <table><tr><td>{{ form_row(form.lugarnac) }}</td><td>{{ form_row(form.fechanac) }}</td></tr></table>
+                                
+                {{ form_row(form.sexo) }}
+
+                Documentos de Identidad Personal:
+
+                <table>
+                    <tr>
+                        <td>{{ form_label(form.dui) }}</td>
+                        <td>{{ form_label(form.nit) }}</td>
+                        <td>{{ form_label(form.isss) }}</td>
+                        <td>{{ form_label(form.nup) }}</td>
+                        <td>{{ form_label(form.nip) }}</td>
+                    </tr>
+                     <tr>
+                        <td>{{ form_widget(form.dui) }} {{ form_errors(form.dui) }}</td>
+                        <td>{{ form_widget(form.nit) }} {{ form_errors(form.nit) }}</td>
+                        <td>{{ form_widget(form.isss) }} {{ form_errors(form.isss) }}</td>
+                        <td>{{ form_widget(form.nup) }} {{ form_errors(form.nup) }}</td>
+                        <td>{{ form_widget(form.nip) }} {{ form_errors(form.nip) }}</td>
+                    </tr>
+                </table>
+                
+                Lugar y fecha de expedición del DUI:
+               <table><tr><td>{{ form_row(form.lugardui) }}</td><td>{{ form_row(form.fechadui) }}</td></tr></table>
+                
+            </fieldset>
+
+            <fieldset>
+                <legend>Datos de Estudio</legend>
+            </fieldset> 
+
+            <fieldset>
+                <legend>Datos Familiares</legend>
+                <table>
+                    <tr><td>Parentesco</td><td>Nombre</td><td>Dirección</td><td>Teléfono</td></tr>
+                    <tr>
+                        <td>{{ form_widget(form.Dfamiliares[0].parentesco) }} {{ form_errors(form.Dfamiliares[0].parentesco) }}</td>
+                        <td>{{ form_widget(form.Dfamiliares[0].nombrefamiliar) }} {{ form_errors(form.Dfamiliares[0].nombrefamiliar) }}</td>
+                        <td>{{ form_widget(form.Dfamiliares[0].direccionfamiliar) }} {{ form_errors(form.Dfamiliares[0].direccionfamiliar) }}</td>
+                        <td>{{ form_widget(form.Dfamiliares[0].telefonofamiliar) }} {{ form_errors(form.Dfamiliares[0].telefonofamiliar) }}</td>
+                    </tr>
+                </table>
+
+                {# {{ form_row(form.Dfamiliares[0]) }} #}
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Datos de Empleo</legend>
+                
+                <h3>Antecedentes de Empleo</h3>
+                
+                {# itera sobre cada etiqueta existente y reproduce su único campo: name #}
+                {% for Dempleo in form.Dempleos %}
+                    
+                <table>
+                    <tr>
+                        <td> {{ form_label(Dempleo.nombreempresa) }}</td><td>{{ form_widget(Dempleo.nombreempresa) }} {{ form_errors(Dempleo.nombreempresa) }}</td>
+                    </tr>
+                    <tr>
+                        <td> {{ form_label(Dempleo.direccionempresa) }}</td><td>{{ form_widget(Dempleo.direccionempresa) }} {{ form_errors(Dempleo.direccionempresa) }}</td>
+                    </tr>
+                    <tr>
+                        <td> {{ form_label(Dempleo.telefonoempresa) }}</td><td>{{ form_widget(Dempleo.telefonoempresa) }} {{ form_errors(Dempleo.telefonoempresa) }}</td>
+                    </tr>
+                    <tr>
+                        <td> {{ form_label(Dempleo.fechainiciolaboral) }}</td><td>{{ form_widget(Dempleo.fechainiciolaboral) }} {{ form_errors(Dempleo.fechainiciolaboral)}}</td>
+                    </tr>
+                    <tr>
+                        <td> {{ form_label(Dempleo.fechafinlaboral) }}</td><td>{{ form_widget(Dempleo.fechafinlaboral) }} {{ form_errors(Dempleo.fechafinlaboral) }}</td>
+                    </tr>
+                    <tr>
+                        <td> {{ form_label(Dempleo.jefeinmediato) }}</td><td>{{ form_widget(Dempleo.jefeinmediato) }} {{ form_errors(Dempleo.jefeinmediato) }}</td>
+                    </tr>
+                    <tr>
+                        <td> {{ form_label(Dempleo.cargodesempenado) }}</td><td>{{ form_widget(Dempleo.cargodesempenado) }} {{ form_errors(Dempleo.cargodesempenado) }}</td>
+                    </tr>
+                    <tr>
+                        <td> {{ form_label(Dempleo.sueldo) }}</td><td>{{ form_widget(Dempleo.sueldo) }} {{ form_errors(Dempleo.sueldo) }}</td>
+                    </tr>
+                    <tr>
+                        <td> {{ form_label(Dempleo.motivoretiro) }}</td><td>{{ form_widget(Dempleo.motivoretiro) }} {{ form_errors(Dempleo.motivoretiro) }}</td>
+                    </tr>
+                    
+                </table>
+                <br>
+
+                {% endfor %}
+
+               {#} {{ form_row(form.Dempleos[0]) }}
+                {{ form_row(form.Dempleos[1]) }} #}
+
+
+            </fieldset>
+
+            {{ form_rest(form) }}
+
+            <p>Declaro bajo juramento que los datos registrados en la solicitud son  verdaderos y autorizo al Instituto Salvadoreño de Rehabilitacion Integral para su respectiva verificación.</p>
+
+        <p>
+            <button type="submit">Registrar Solicitud</button>
+        </p>
+    </form>
+</fieldset>
+        
+{% endblock %}

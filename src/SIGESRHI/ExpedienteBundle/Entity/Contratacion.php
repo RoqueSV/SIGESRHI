@@ -1,6 +1,6 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -72,9 +72,9 @@ class Contratacion
     private $informacionadicional;
 
     /**
-     * @var \Plaza
+     * @var \SIGESRHI\AdminBundle\Entity\Plaza
      *
-     * @ORM\ManyToOne(targetEntity="Plaza")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      * })
@@ -82,9 +82,9 @@ class Contratacion
     private $idplaza;
 
     /**
-     * @var \Unidadorganizativa
+     * @var \SIGESRHI\AdminBundle\Entity\Unidadorganizativa
      *
-     * @ORM\ManyToOne(targetEntity="Unidadorganizativa")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Unidadorganizativa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idunidad", referencedColumnName="id")
      * })

@@ -1,6 +1,6 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -32,6 +32,10 @@ class Departamento
      */
     private $nombredepartamento;
 
+
+ public function __toString() {
+        return $this->nombredepartamento;
+    } 
 
 
     /**

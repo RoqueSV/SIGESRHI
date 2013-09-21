@@ -44,9 +44,9 @@ class Evaluacion
     private $semestre;
 
     /**
-     * @var \Empleado
+     * @var \SIGESRHI\ExpedienteBundle\Entity\Empleado
      *
-     * @ORM\ManyToOne(targetEntity="Empleado")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Empleado")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idusuario", referencedColumnName="id")
      * })
@@ -54,9 +54,9 @@ class Evaluacion
     private $idusuario;
 
     /**
-     * @var \Empleado
+     * @var \SIGESRHI\ExpedienteBundle\Entity\Empleado
      *
-     * @ORM\ManyToOne(targetEntity="Empleado")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Empleado")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="emp_idusuario", referencedColumnName="id")
      * })
