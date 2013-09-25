@@ -45,8 +45,8 @@ class Plaza
     /**
      * @var integer
      *
-     * @ORM\Column(name="edad", type="integer", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar la edad requerida de la plaza")
+     * @ORM\Column(name="edad", type="integer", nullable=true)
+     * 
      */
     private $edad;
     
@@ -61,8 +61,8 @@ class Plaza
     /**
      * @var integer
      *
-     * @ORM\Column(name="sexo", type="string", nullable=false)
-     * @Assert\NotNull(message="Debe elegir un género")
+     * @ORM\Column(name="sexo", type="string", nullable=true)
+     *
      */
     private $sexo;
 

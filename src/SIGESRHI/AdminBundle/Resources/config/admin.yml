@@ -70,3 +70,9 @@ services:
       tags:
         - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Titulo, show_in_dashboard: false}
       arguments: [null, SIGESRHI\ExpedienteBundle\Entity\Titulo, AdminBundle:TituloAdmin]
+
+   sonata.admin.admin.telefono:
+      class: SIGESRHI\AdminBundle\Admin\TelefonoAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Institución, label: Teléfonos, show_in_dashboard: false}
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Telefono, AdminBundle:TelefonoAdmin]

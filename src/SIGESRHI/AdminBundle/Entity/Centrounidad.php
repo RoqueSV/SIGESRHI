@@ -37,38 +37,54 @@ class Centrounidad
     /**
      * @var string
      *
-     * @ORM\Column(name="especialidad", type="string", length=100, nullable=false)
+     * @ORM\Column(name="especialidad", type="string", length=255, nullable=false)
      * @Assert\NotNull(message="Debe ingresar la Especialidad")
-     * @Assert\Length( max= "100")
+     * @Assert\Length( max= "255")
      */
     private $especialidad;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="direccioncentro", type="string", length=100, nullable=false)
-     * @Assert\Length(max= "170")
+     * @ORM\Column(name="direccioncentro", type="string", length=200, nullable=false)
+     * @Assert\Length(max= "200")
      */
     private $direccioncentro;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefonocentro", type="string", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar el telefono")
-     * @Assert\Length(max="8")
+     * @ORM\Column(name="faxcentro", type="string", length=8, nullable=true)
+     * 
      */
-    private $telefonocentro;
+    private $faxcentro;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="extensioncentro", type="integer", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar la extension")
+     * @ORM\Column(name="pbxcentro", type="string",length=8, nullable=true)
+     * 
      */
-    private $extensioncentro;
-   
-     // ...
+    private $pbxcentro;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="emailcentro", type="string", length=50, nullable=true)
+     * @Assert\Email(
+     * message = "El mail '{{ value }}' ingresado no tiene el formato correcto.")
+     */
+    private $emailcentro;
+    // Uno a muchos con tabla union
+     /**
+     * @ORM\ManyToMany(targetEntity="Telefono")
+     * @ORM\JoinTable(name="telefonocentro",
+     *      joinColumns={@ORM\JoinColumn(name="idcentro", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="idtelefono", referencedColumnName="id", unique=true)}
+     *      )
+     */
+    private $idtelefono;
+     
     /**
      * @ORM\OneToMany(targetEntity="Unidadorganizativa", mappedBy="idcentro")
      */
@@ -156,57 +172,14 @@ class Centrounidad
         return $this->direccioncentro;
     }
 
-    /**
-     * Set telefonocentro
-     *
-     * @param string $telefonocentro
-     * @return Centrounidad
-     */
-    public function setTelefonocentro($telefonocentro)
-    {
-        $this->telefonocentro = $telefonocentro;
     
-        return $this;
-    }
-
-    /**
-     * Get telefonocentro
-     *
-     * @return string 
-     */
-    public function getTelefonocentro()
-    {
-        return $this->telefonocentro;
-    }
-
-    /**
-     * Set extensioncentro
-     *
-     * @param integer $extensioncentro
-     * @return Centrounidad
-     */
-    public function setExtensioncentro($extensioncentro)
-    {
-        $this->extensioncentro = $extensioncentro;
-    
-        return $this;
-    }
-
-    /**
-     * Get extensioncentro
-     *
-     * @return integer 
-     */
-    public function getExtensioncentro()
-    {
-        return $this->extensioncentro;
-    }
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->idunidad = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idtelefono = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -241,4 +214,107 @@ class Centrounidad
     {
         return $this->idunidad;
     }
+
+    /**
+     * Set faxcentro
+     *
+     * @param string $faxcentro
+     * @return Centrounidad
+     */
+    public function setFaxcentro($faxcentro)
+    {
+        $this->faxcentro = $faxcentro;
+    
+        return $this;
+    }
+
+    /**
+     * Get faxcentro
+     *
+     * @return string 
+     */
+    public function getFaxcentro()
+    {
+        return $this->faxcentro;
+    }
+
+    /**
+     * Set pbxcentro
+     *
+     * @param string $pbxcentro
+     * @return Centrounidad
+     */
+    public function setPbxcentro($pbxcentro)
+    {
+        $this->pbxcentro = $pbxcentro;
+    
+        return $this;
+    }
+
+    /**
+     * Get pbxcentro
+     *
+     * @return string 
+     */
+    public function getPbxcentro()
+    {
+        return $this->pbxcentro;
+    }
+
+    /**
+     * Set emailcentro
+     *
+     * @param string $emailcentro
+     * @return Centrounidad
+     */
+    public function setEmailcentro($emailcentro)
+    {
+        $this->emailcentro = $emailcentro;
+    
+        return $this;
+    }
+
+    /**
+     * Get emailcentro
+     *
+     * @return string 
+     */
+    public function getEmailcentro()
+    {
+        return $this->emailcentro;
+    }
+
+     /**
+     * Add idtelefono
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Telefono $idtelefono
+     * @return Centrounidad
+     */
+    public function addIdtelefono(\SIGESRHI\AdminBundle\Entity\Telefono $idtelefono)
+    {
+        $this->idtelefono[] = $idtelefono;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idtelefono
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Telefono $idtelefono
+     */
+    public function removeIdtelefono(\SIGESRHI\AdminBundle\Entity\Telefono $idtelefono)
+    {
+        $this->idtelefono->removeElement($idtelefono);
+    }
+
+    /**
+     * Get idtelefono
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdtelefono()
+    {
+        return $this->idtelefono;
+    }
+
 }

@@ -32,7 +32,7 @@ class Expediente
     /**
      * @var string
      *
-     * @ORM\Column(name="tipoexpediente", type="string", nullable=false)
+     * @ORM\Column(name="tipoexpediente", type="string", length=1, nullable=false)
      */
     private $tipoexpediente;
 

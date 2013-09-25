@@ -22,7 +22,7 @@ class TituloAdmin extends Admin
                                            => array('Educación Media' => 'Educación Media', 
                                                     'Educación Superior' => 'Educación Superior',
                                                     'Postgrado'=>'Postgrado'),
-                                           'required'  => true, 'label'=>'Sexo'))
+                                           'required'  => true, 'label'=>'Nivel'))
             ->setHelps(array('nombretitulo'=>'Ingrese el titulo requerido'))
            
              ;

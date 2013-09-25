@@ -18,15 +18,18 @@ class CentroAdmin extends Admin
     {
         $formMapper
             ->add('nombrecentro', null, array('label' => 'Centro de Atención'))
-            ->add('especialidad')
+            ->add('especialidad','textarea')
             ->add('direccioncentro','textarea', array('label' => 'Dirección'))
-            ->add('telefonocentro',null, array('label' => 'Teléfono', 'max_length'=>'8','attr' => array('class' => ':phone :only_on_blur')))
-            ->add('extensioncentro','integer', array('label' => 'Extensión'))
+            ->add('emailcentro',null, array('label' => 'Email'))
+            ->add('faxcentro',null, array('label' => 'Fax', 'max_length'=>'8'))
+            ->add('pbxcentro',null, array('label' => 'PBX', 'max_length'=>'8'))
+            ->add('idtelefono','sonata_type_model',array('required'=>true,'multiple'=>true,'expanded'=>true ,'label'=>'Teléfono'))
             ->setHelps(array('nombrecentro'=>'Ingrese el nombre de un centro de atención o unidad',
                              'especialidad'=>'Defina la especialidad para centro de atención o unidad',
                              'direccioncentro'=>'Ingrese la dirección del centro',
-                             'telefonocentro'=>'Ingrese un número teléfonico sin guiones',
-                             'extensioncentro'=>'Ingrese la extensión'))
+                             'faxcentro'=>'Ingrese un número de fax sin guiones',
+                             'pbxcentro'=>'Ingrese un número pbx',
+                             'emailcentro'=>'Ingrese el correo eléctronico del centro'))
              ;
     }
     
@@ -49,8 +52,8 @@ class CentroAdmin extends Admin
             ->addIdentifier('nombrecentro', null,array('label' => 'Centro de atención'))
             ->add('especialidad')
             ->add('direccioncentro',null, array('label' => 'Dirección'))
-            ->add('telefonocentro',null, array('label' => 'Teléfono'))
-            ->add('extensioncentro',null, array('label' => 'Extensión'))                
+            ->add('emailcentro',null, array('label' => 'Email'))
+                      
         ;
     }
 }
