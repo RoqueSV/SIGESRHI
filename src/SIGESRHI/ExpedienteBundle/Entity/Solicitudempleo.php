@@ -273,7 +273,7 @@ class Solicitudempleo
     /****************Datos de estudio *************************/
 
 /**
-     * @ORM\OneToMany(targetEntity="informacionacademica", mappedBy="idsolicitudempleo")
+     * @ORM\OneToMany(targetEntity="Informacionacademica", mappedBy="idsolicitudempleo")
      */
     protected $Destudios;
 
