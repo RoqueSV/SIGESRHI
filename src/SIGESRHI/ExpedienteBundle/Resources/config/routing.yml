@@ -22,3 +22,7 @@ ExpedienteBundle_infacademica:
 ExpedienteBundle_titulo:
         resource: "@ExpedienteBundle/Resources/config/routing/titulo.yml"
         prefix:   /titulo
+
+ExpedienteBundle_idioma:
+        resource: "@ExpedienteBundle/Resources/config/routing/idioma.yml"
+        prefix:   /idioma

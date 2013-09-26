@@ -238,6 +238,7 @@ class Solicitudempleo
         $this->Dempleos = new ArrayCollection();
         $this->Dfamiliares = new ArrayCollection();
         $this->Destudios = new ArrayCollection();
+        $this->Idiomas = new ArrayCollection();
     }
 
 
@@ -272,7 +273,7 @@ class Solicitudempleo
 
     /****************Datos de estudio *************************/
 
-/**
+    /**
      * @ORM\OneToMany(targetEntity="Informacionacademica", mappedBy="idsolicitudempleo")
      */
     protected $Destudios;
@@ -287,6 +288,25 @@ class Solicitudempleo
         $this->Destudios = $Destudios;
     }
 
+
+    /************************* Idiomas ***************************/
+
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Idioma", mappedBy="idsolicitudempleo")
+     */
+    protected $Idiomas;
+
+    public function getIdiomas()
+    {
+        return $this->Idiomas;
+    }
+
+    public function setIdiomas(ArrayCollection $Idiomas)
+    {
+        $this->Idiomas = $Idiomas;
+    }
 
 
     /*****************************************************************/

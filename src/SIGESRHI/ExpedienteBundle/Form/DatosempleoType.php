@@ -14,7 +14,7 @@ class DatosempleoType extends AbstractType
             ->add('nombreempresa',null, array('label'=>'Nombre de la Empresa'))
             ->add('direccionempresa',null, array('label'=>'Dirección de la Empresa'))
             ->add('telefonoempresa',null, array('label'=>'Teléfono de la Empresa'))
-            ->add('fechainiciolaboral',null, array('label'=>'Fecha de Inicio Laboral', 'widget' => 'single_text', 'format'=>'dd-MM-yyyy'))
+            ->add('fechainiciolaboral',null, array('label'=>'Fecha de Inicio Laboral', 'widget' => 'single_text', 'format'=>'dd-MM-yyyy','attr' => array('class' => 'date')))
             ->add('fechafinlaboral','date', array('label'=>'Fecha de Fin Laboral', 'widget' => 'single_text', 'format'=>'dd-MM-yyyy','attr' => array('class' => 'date')))
             ->add('jefeinmediato',null, array('label'=>'Nombre del Jefe Inmediato'))
             ->add('cargodesempenado',null, array('label'=>'Cargo Desempeñado'))

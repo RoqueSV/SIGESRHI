@@ -1,0 +1,30 @@
+idioma:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Idioma:index" }
+
+idioma_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Idioma:show" }
+
+idioma_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Idioma:new" }
+
+idioma_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Idioma:create" }
+    requirements: { _method: post }
+
+idioma_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Idioma:edit" }
+
+idioma_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Idioma:update" }
+    requirements: { _method: post|put }
+
+idioma_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Idioma:delete" }
+    requirements: { _method: post|delete }
