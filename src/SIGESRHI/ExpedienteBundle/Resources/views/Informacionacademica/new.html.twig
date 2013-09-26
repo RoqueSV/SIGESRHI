@@ -1,0 +1,123 @@
+{% extends '::base.html.twig' %}
+
+ 
+{% block body -%}
+
+<script src="{{ asset('bundles/expediente/js/jquery-1.10.2.min.js') }}" type="text/javascript"></script>  
+    <h1>Informacionacademica creation</h1>
+
+    <form action="{{ path('infacademica_create') }}" method="post" {{ form_enctype(form) }}>
+        
+
+        
+
+             <ul class="titulo" data-prototype="{{ form_widget(form.Idtitulo.vars.prototype)|e }}">
+
+                   <li> {{form_widget(form.Idtitulo[0])}} </li>
+
+                </ul>
+
+
+                {{ form_rest(form) }}
+  
+        <p>
+            <button type="submit">Create</button>
+        </p>
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('infacademica') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+
+
+
+
+{#
+  #}
+
+
+<script>
+
+
+
+// Obtiene la ul que contiene la colección de etiquetas
+var collectionHolderEst = $('ul.titulo');
+
+// configura una enlace "Agregar una etiqueta"
+var $addTagLinkEst = $('<input type="button" value="Agregar Estudio">');
+var $newLinkLiEst = $('<ul></ul>').append($addTagLinkEst);
+
+jQuery(document).ready(function() {
+    // Añade el ancla "Agregar una etiqueta" y las etiquetas li y ul
+    collectionHolderEst.append($newLinkLiEst);
+
+    // Añade un enlace para eliminar todas las etiquetas existentes
+    // en elementos li del formulario
+    collectionHolderEst.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // cuenta las entradas actuales en el formulario (p. ej. 2),
+    // la usa como índice al insertar un nuevo elemento (p. ej. 2)
+    collectionHolderEst.data('index', collectionHolderEst.find(':input').length);
+
+    $addTagLinkEst.on('click', function(e) {
+        // evita crear el enlace con una "#" en la URL
+        e.preventDefault();
+
+        // añade una nueva etiqueta form (ve el siguiente bloque de código)
+        addTagForm(collectionHolderEst, $newLinkLiEst);
+    });
+});
+
+
+function addTagForm(collectionHolder, $newLinkLi) {
+    // Obtiene los datos del prototipo explicado anteriormente
+    var prototype = collectionHolder.data('prototype');
+
+    // Consigue el nuevo índice
+    var index = collectionHolder.data('index');
+
+    // Sustituye el '__name__' en el prototipo HTML para que
+    // en su lugar sea un número basado en cuántos elementos hay
+    var newForm = prototype.replace(/__name__/g, index);
+
+    // Incrementa en uno el índice para el siguiente elemento
+    collectionHolder.data('index', index + 1);
+
+    // Muestra el formulario en la página en un elemento li,
+    // antes del enlace 'Agregar una etiqueta'
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+
+     // Añade un enlace eliminar el nuevo formulario
+    addTagFormDeleteLink($newFormLi);
+}
+
+function addTagFormDeleteLink($tagFormLi) {
+    var $removeFormA = $('<input type="button" value="Eliminar">');
+    $tagFormLi.append($removeFormA);
+
+    $removeFormA.on('click', function(e) {
+        // evita crear el enlace con una "#" en la URL
+        e.preventDefault();
+
+        // quita el li de la etiqueta del formulario
+        $tagFormLi.remove();
+    });
+}
+
+
+</script>
+
+
+
+
+
+
+
+{% endblock %}

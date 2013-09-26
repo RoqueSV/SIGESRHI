@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo;
 use SIGESRHI\ExpedienteBundle\Entity\Datosempleo;
 use SIGESRHI\ExpedienteBundle\Entity\Datosfamiliares;
+use SIGESRHI\ExpedienteBundle\Entity\Informacionacademica;
+
 use SIGESRHI\ExpedienteBundle\Form\SolicitudempleoType;
 
 /**
@@ -68,10 +70,12 @@ class SolicitudempleoController extends Controller
         //agregamos datos de empleo
         $datosempActual = new Datosempleo();
         $datosempActual->name = 'Empleo Actual';
+        $datosempActual->setTipodatoempleo('Empleo Actual');
         $entity->getDempleos()->add($datosempActual);
 
         $datosempAnterior = new Datosempleo();
         $datosempAnterior->name = 'Empleo Anterior';
+        $datosempAnterior->setTipodatoempleo('Empleo Anterior');
         $entity->getDempleos()->add($datosempAnterior);
         
         //agregamos datos familiares
@@ -80,6 +84,11 @@ class SolicitudempleoController extends Controller
         $entity->getDfamiliares()->add($datosFam);
         //termina pruebas
 
+        //agregamos datos de estudio
+        $datosEst= new Informacionacademica();
+        $datosEst->name = 'Dato studio 1';
+        $entity->getDestudios()->add($datosEst);
+        //termina pruebas
 
         $form   = $this->createForm(new SolicitudempleoType(), $entity);
 

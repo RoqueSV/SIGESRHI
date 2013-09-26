@@ -1,0 +1,30 @@
+titulo:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Titulo:index" }
+
+titulo_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Titulo:show" }
+
+titulo_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Titulo:new" }
+
+titulo_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Titulo:create" }
+    requirements: { _method: post }
+
+titulo_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Titulo:edit" }
+
+titulo_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Titulo:update" }
+    requirements: { _method: post|put }
+
+titulo_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Titulo:delete" }
+    requirements: { _method: post|delete }

@@ -227,6 +227,7 @@ class Solicitudempleo
     //Pruebas de integracion de coleccion de formularios
 
         /*************Datos de empleos****************/
+
     /**
      * @ORM\OneToMany(targetEntity="Datosempleo", mappedBy="idsolicitudempleo")
      */
@@ -236,6 +237,7 @@ class Solicitudempleo
     {
         $this->Dempleos = new ArrayCollection();
         $this->Dfamiliares = new ArrayCollection();
+        $this->Destudios = new ArrayCollection();
     }
 
 
@@ -250,7 +252,8 @@ class Solicitudempleo
     }
 
 
-/*********Datos Familiares*****************/
+    /*********Datos Familiares*****************/
+    
     /**
      * @ORM\OneToMany(targetEntity="Datosfamiliares", mappedBy="idsolicitudempleo")
      */
@@ -265,6 +268,26 @@ class Solicitudempleo
     {
         $this->Dfamiliares = $Dfamiliares;
     }
+
+
+    /****************Datos de estudio *************************/
+
+/**
+     * @ORM\OneToMany(targetEntity="informacionacademica", mappedBy="idsolicitudempleo")
+     */
+    protected $Destudios;
+
+    public function getDestudios()
+    {
+        return $this->Destudios;
+    }
+
+    public function setDestudios(ArrayCollection $Destudios)
+    {
+        $this->Destudios = $Destudios;
+    }
+
+
 
     /*****************************************************************/
 

@@ -5,9 +5,9 @@ namespace SIGESRHI\ExpedienteBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Informaciomacademica
+ * Informacionacademica
  *
- * @ORM\Table(name="informaciomacademica")
+ * @ORM\Table(name="informacionacademica")
  * @ORM\Entity
  */
 class Informacionacademica
@@ -18,7 +18,7 @@ class Informacionacademica
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\SequenceGenerator(sequenceName="informaciomacademica_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\SequenceGenerator(sequenceName="informacionacademica_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
@@ -32,11 +32,12 @@ class Informacionacademica
     /**
      * @var \Solicitudempleo
      *
-     * @ORM\ManyToOne(targetEntity="Solicitudempleo")
+     * @ORM\ManyToOne(targetEntity="Solicitudempleo", inversedBy="Destudios")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idsolicitudempleo", referencedColumnName="id")
      * })
      */
+
     private $idsolicitudempleo;
 
      /**
@@ -54,6 +55,8 @@ class Informacionacademica
      */
     private $idtitulo;
 
+
+
     /**
      * Get id
      *
@@ -68,7 +71,7 @@ class Informacionacademica
      * Set centroestudio
      *
      * @param string $centroestudio
-     * @return Informaciomacademica
+     * @return Informacionacademica
      */
     public function setCentroestudio($centroestudio)
     {
@@ -121,7 +124,7 @@ class Informacionacademica
      * Add idtitulo
      *
      * @param \SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo
-     * @return Informaciomacademica
+     * @return Informacionacademica
      */
     public function addIdtitulo(\SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo)
     {

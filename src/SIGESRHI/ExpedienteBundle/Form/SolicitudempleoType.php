@@ -19,7 +19,7 @@ class SolicitudempleoType extends AbstractType
             ->add('colonia', null, array('label'=>'Colonia '))
             ->add('calle', null, array('label'=>'Numero/Calle/Avenida '))
             ->add('estadocivil', 'choice', array('label'=>'Estado Civil ',
-                'choices' => array('s' => 'Soltero', 'a' => 'Acompañado', 'c' => 'Casado', 'd' => 'Divorciado', 'v' => 'Viudo'),'required'  => false,))
+                'choices' => array('S' => 'Soltero', 'A' => 'Acompañado', 'C' => 'Casado', 'D' => 'Divorciado', 'V' => 'Viudo'),'required'  => true, 'empty_value' => 'Seleccione una opción'))
             ->add('telefonofijo', null, array('label'=>'Teléfono Fijo '))
             ->add('telefonomovil', null, array('label'=>'Teléfono Móvil '))
             ->add('email', null, array('label'=>'Correo Electrónico '))
@@ -33,19 +33,20 @@ class SolicitudempleoType extends AbstractType
             ->add('nup', null, array('label'=>'No NUP '))
             ->add('nip', null, array('label'=>'No NIP '))
             ->add('sexo', 'choice', array('label'=>'Sexo ',
-                'choices' => array('m' => 'Masculino', 'f' => 'Femenino'),'required'  => true,))
+                'choices' => array('M' => 'Masculino', 'F' => 'Femenino'),'required'  => true, 'empty_value' => 'Seleccione una opción'))
             ->add('fotografia', 'file', array('label'=>' Subir Fotografía'))
             ->add('fecharegistro',null, array('widget' => 'single_text', 'format'=>'dd-MM-yyyy'))
             ->add('fechamodificacion',null, array('widget' => 'single_text', 'format'=>'dd-MM-yyyy'))
             ->add('idmunicipio',null,array('required' => true,'label'=>'Municipio' ))
             ->add('departamentos', 'entity', array('class' => 'ExpedienteBundle:Departamento', 'mapped'=>false))
-            ->add('idplaza',null, array('required'=> true, 'label'=>'Plaza'))
+            ->add('idplaza',null, array('required'=> true, 'label'=>'Plaza Solicitada: '))
             ->add('idexpediente');
 
             //agregamos un formulario de otra entidad (datos empleo)
             $builder->add('Dempleos', 'collection', array('type' => new DatosempleoType(),));
-            $builder->add('Dfamiliares', 'collection', array('type' => new DatosfamiliaresType(),));
-        ;
+            $builder->add('Dfamiliares', 'collection', array('type' => new DatosfamiliaresType(), 'allow_add' => true, 'allow_delete' => true,'by_reference' => false,));
+            $builder->add('Destudios', 'collection', array('type' => new InformacionacademicaType(), 'allow_add' => true, 'allow_delete' => true,'by_reference' => false,));
+        ;   
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
