@@ -46,7 +46,7 @@ class Beneficiario
     /**
      * @var \Segurovida
      *
-     * @ORM\ManyToOne(targetEntity="Segurovida")
+     * @ORM\ManyToOne(targetEntity="Segurovida", inversedBy="idbeneficiario")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idsegurovida", referencedColumnName="id")
      * })

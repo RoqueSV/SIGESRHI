@@ -10,6 +10,9 @@
         %}
         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
         {% endstylesheets %}
+        {% javascripts '@MopaBootstrapBundle/Resources/public/js/*' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
         <link href="{{ asset('bundles/expediente/css/jquery-ui.css') }}" type="text/css" rel="stylesheet" />
         <script src="{{ asset('bundles/expediente/js/jquery-1.10.2.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('bundles/expediente/js/jquery-ui.js') }}" type="text/javascript"></script>
@@ -24,32 +27,32 @@
     </body>
     {%block javascriptfoot%}
         <script type="text/javascript">
-          $('.date').datepicker({ 
+              $('.date').datepicker({ 
               dateFormat: 'dd-mm-yy',  
               changeMonth: true,
               changeYear: true,
               yearRange: "-100:+0",});
-          jQuery(function($){
-	  $.datepicker.regional['es'] = {
-		closeText: 'Cerrar',
-		prevText: '&#x3c;Ant',
-		nextText: 'Sig&#x3e;',
-		currentText: 'Hoy',
-		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
-		'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-		monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
-		'Jul','Ago','Sep','Oct','Nov','Dic'],
-		dayNames: ['Domingo','Lunes','Martes','Mi&eacute;rcoles','Jueves','Viernes','S&aacute;bado'],
-		dayNamesShort: ['Dom','Lun','Mar','Mi&eacute;','Juv','Vie','S&aacute;b'],
-		dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','S&aacute;'],
-		weekHeader: 'Sm',
-		dateFormat: 'dd/mm/yy',
-		firstDay: 1,
-		isRTL: false,
-		showMonthAfterYear: false,
-		yearSuffix: ''};
-	  $.datepicker.setDefaults($.datepicker.regional['es']);
-        });
+              jQuery(function($){
+              $.datepicker.regional['es'] = {
+              closeText: 'Cerrar',
+              prevText: '&#x3c;Ant',
+              nextText: 'Sig&#x3e;',
+              currentText: 'Hoy',
+              monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+              'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+              monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+              'Jul','Ago','Sep','Oct','Nov','Dic'],
+              dayNames: ['Domingo','Lunes','Martes','Mi&eacute;rcoles','Jueves','Viernes','S&aacute;bado'],
+              dayNamesShort: ['Dom','Lun','Mar','Mi&eacute;','Juv','Vie','S&aacute;b'],
+              dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','S&aacute;'],
+              weekHeader: 'Sm',
+              dateFormat: 'dd/mm/yy',
+              firstDay: 1,
+              isRTL: false,
+              showMonthAfterYear: false,
+              yearSuffix: ''};
+              $.datepicker.setDefaults($.datepicker.regional['es']);
+              });
      </script>
    {%endblock%}
 </html>

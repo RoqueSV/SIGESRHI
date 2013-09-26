@@ -1,0 +1,123 @@
+{% extends '::base.html.twig' %}
+{#<script src="{{ asset('bundles/expediente/js/jquery-1.10.2.min.js') }}" type="text/javascript"></script> #}
+{% block body -%}
+    <h1>Segurovida creation</h1>
+
+    <form action="{{ path('segurovida_create') }}" class="form-horizontal" method="post" {{ form_enctype(form) }}>
+      {#{{ form_widget(form) }}#}
+       <fieldset>
+        <legend>Datos Generales</legend>
+            <table>
+                <tr>
+                    <td>{{ form_label(form.fechaseguro) }}</td>
+                    <td>{{ form_widget(form.fechaseguro) }} {{ form_errors(form.fechaseguro) }}</td>
+                </tr>
+                <tr>    
+                    <td>{{ form_label(form.estadoseguro) }}</td>
+                    <td>{{ form_widget(form.estadoseguro) }} {{ form_errors(form.estadoseguro) }}</td>
+                </tr> 
+                <tr>   
+                    <td>{{ form_label(form.idexpediente) }}</td>
+                    <td>{{ form_widget(form.idexpediente) }} {{ form_errors(form.idexpediente) }}</td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+                <legend>Beneficiarios</legend>
+                <ul class="Beneficiario" data-prototype="{{ form_widget(form.idbeneficiario.vars.prototype)|e }}">
+                  {# <li> {{form_widget(form.idbeneficiario[0])}}  </li> #}
+                </ul>
+       </fieldset>    
+
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="reset" class="btn">Cancelar</button>
+        </div>
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('segurovida') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+
+<script>
+/************************************* Beneficiarios **********************************/
+
+
+
+// Obtiene la ul que contiene la colección de etiquetas
+var collectionHolderBen = $('ul.Beneficiario');
+
+// configura una enlace "Agregar una etiqueta"
+var $addTagLinkBen = $('<input type="button" value="Agregar Beneficiario">');
+var $newLinkLiBen = $('<ul></ul>').append($addTagLinkBen);
+
+jQuery(document).ready(function() {
+    // Añade el ancla "Agregar una etiqueta" y las etiquetas li y ul
+    collectionHolderBen.append($newLinkLiBen);
+
+    // Añade un enlace para eliminar todas las etiquetas existentes
+    // en elementos li del formulario
+    collectionHolderBen.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // cuenta las entradas actuales en el formulario (p. ej. 2),
+    // la usa como índice al insertar un nuevo elemento (p. ej. 2)
+    collectionHolderBen.data('index', collectionHolderBen.find(':input').length);
+
+    $addTagLinkBen.on('click', function(e) {
+        // evita crear el enlace con una "#" en la URL
+        e.preventDefault();
+
+        // añade una nueva etiqueta form (ve el siguiente bloque de código)
+        addTagForm(collectionHolderBen, $newLinkLiBen);
+    });
+});
+
+/************************* Funciones predefinidas ******************************/
+function addTagForm(collectionHolder, $newLinkLi) {
+    // Obtiene los datos del prototipo explicado anteriormente
+    var prototype = collectionHolder.data('prototype');
+
+    // Consigue el nuevo índice
+    var index = collectionHolder.data('index');
+
+    // Sustituye el '__name__' en el prototipo HTML para que
+    // en su lugar sea un número basado en cuántos elementos hay
+    var newForm = prototype.replace(/__name__/g, index);
+
+    // Incrementa en uno el índice para el siguiente elemento
+    collectionHolder.data('index', index + 1);
+
+    // Muestra el formulario en la página en un elemento li,
+    // antes del enlace 'Agregar una etiqueta'
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+
+     // Añade un enlace eliminar el nuevo formulario
+    addTagFormDeleteLink($newFormLi);
+}
+
+function addTagFormDeleteLink($tagFormLi) {
+    var $removeFormA = $('<input type="button" value="Eliminar">');
+    $tagFormLi.append($removeFormA);
+
+    $removeFormA.on('click', function(e) {
+        // evita crear el enlace con una "#" en la URL
+        e.preventDefault();
+
+        // quita el li de la etiqueta del formulario
+        $tagFormLi.remove();
+    });
+}
+</script>
+
+{% endblock %}
+
+
+

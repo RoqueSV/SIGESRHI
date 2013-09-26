@@ -22,3 +22,11 @@ ExpedienteBundle_infacademica:
 ExpedienteBundle_titulo:
         resource: "@ExpedienteBundle/Resources/config/routing/titulo.yml"
         prefix:   /titulo
+
+ExpedienteBundle_segurovida:
+        resource: "@ExpedienteBundle/Resources/config/routing/segurovida.yml"
+        prefix:   /segurovida
+
+ExpedienteBundle_beneficiario:
+        resource: "@ExpedienteBundle/Resources/config/routing/beneficiario.yml"
+        prefix:   /beneficiario

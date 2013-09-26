@@ -1,0 +1,30 @@
+beneficiario:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Beneficiario:index" }
+
+beneficiario_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Beneficiario:show" }
+
+beneficiario_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Beneficiario:new" }
+
+beneficiario_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Beneficiario:create" }
+    requirements: { _method: post }
+
+beneficiario_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Beneficiario:edit" }
+
+beneficiario_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Beneficiario:update" }
+    requirements: { _method: post|put }
+
+beneficiario_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Beneficiario:delete" }
+    requirements: { _method: post|delete }

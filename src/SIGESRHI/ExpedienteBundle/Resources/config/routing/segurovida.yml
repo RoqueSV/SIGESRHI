@@ -1,0 +1,30 @@
+segurovida:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Segurovida:index" }
+
+segurovida_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Segurovida:show" }
+
+segurovida_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Segurovida:new" }
+
+segurovida_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Segurovida:create" }
+    requirements: { _method: post }
+
+segurovida_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Segurovida:edit" }
+
+segurovida_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Segurovida:update" }
+    requirements: { _method: post|put }
+
+segurovida_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Segurovida:delete" }
+    requirements: { _method: post|delete }
