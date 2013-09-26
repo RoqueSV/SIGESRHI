@@ -219,10 +219,10 @@ class Concurso
     /**
      * Add idusuario
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Empleado $idusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario
      * @return Concurso
      */
-    public function addIdusuario(\SIGESRHI\AdminBundle\Entity\Empleado $idusuario)
+    public function addIdusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario)
     {
         $this->idusuario[] = $idusuario;
     
@@ -232,9 +232,9 @@ class Concurso
     /**
      * Remove idusuario
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Empleado $idusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario
      */
-    public function removeIdusuario(\SIGESRHI\AdminBundle\Entity\Empleado $idusuario)
+    public function removeIdusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario)
     {
         $this->idusuario->removeElement($idusuario);
     }

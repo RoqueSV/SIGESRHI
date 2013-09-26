@@ -323,10 +323,10 @@ class Contratacion
     /**
      * Set idusuario
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Empleado $idusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario
      * @return Contratacion
      */
-    public function setIdusuario(\SIGESRHI\AdminBundle\Entity\Empleado $idusuario = null)
+    public function setIdusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario = null)
     {
         $this->idusuario = $idusuario;
     
@@ -336,7 +336,7 @@ class Contratacion
     /**
      * Get idusuario
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Empleado 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Empleado 
      */
     public function getIdusuario()
     {

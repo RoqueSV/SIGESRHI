@@ -147,10 +147,10 @@ class Evaluacion
     /**
      * Set idusuario
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Empleado $idusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario
      * @return Evaluacion
      */
-    public function setIdusuario(\SIGESRHI\AdminBundle\Entity\Empleado $idusuario = null)
+    public function setIdusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario = null)
     {
         $this->idusuario = $idusuario;
     
@@ -160,7 +160,7 @@ class Evaluacion
     /**
      * Get idusuario
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Empleado 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Empleado 
      */
     public function getIdusuario()
     {
@@ -170,10 +170,10 @@ class Evaluacion
     /**
      * Set empusuario
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Empleado $empusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $empusuario
      * @return Evaluacion
      */
-    public function setEmpusuario(\SIGESRHI\AdminBundle\Entity\Empleado $empusuario = null)
+    public function setEmpusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $empusuario = null)
     {
         $this->empusuario = $empusuario;
     
@@ -183,7 +183,7 @@ class Evaluacion
     /**
      * Get empusuario
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Empleado 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Empleado 
      */
     public function getEmpusuario()
     {

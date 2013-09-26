@@ -107,10 +107,10 @@ class Segurovida
     /**
      * Set idexpediente
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Expediente $idexpediente
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Expediente $idexpediente
      * @return Segurovida
      */
-    public function setIdexpediente(\SIGESRHI\AdminBundle\Entity\Expediente $idexpediente = null)
+    public function setIdexpediente(\SIGESRHI\ExpedienteBundle\Entity\Expediente $idexpediente = null)
     {
         $this->idexpediente = $idexpediente;
     
@@ -120,7 +120,7 @@ class Segurovida
     /**
      * Get idexpediente
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Expediente 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Expediente 
      */
     public function getIdexpediente()
     {

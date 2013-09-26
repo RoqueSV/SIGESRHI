@@ -26,6 +26,8 @@ return array(
     'Sensio\\Bundle\\DistributionBundle' => array($vendorDir . '/sensio/distribution-bundle'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src'),
+    'Mopa\\Bundle\\BootstrapBundle' => array($vendorDir . '/mopa/bootstrap-bundle'),
+    'Mopa\\Bridge\\Composer' => array($vendorDir . '/mopa/composer-bridge/src'),
     'Monolog' => array($vendorDir . '/monolog/monolog/src'),
     'Metadata\\' => array($vendorDir . '/jms/metadata/src'),
     'Knp\\Menu\\' => array($vendorDir . '/knplabs/knp-menu/src'),

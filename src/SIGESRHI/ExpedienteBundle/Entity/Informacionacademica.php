@@ -90,10 +90,10 @@ class Informacionacademica
     /**
      * Set idsolicitudempleo
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Solicitudempleo $idsolicitudempleo
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo $idsolicitudempleo
      * @return Informaciomacademica
      */
-    public function setIdsolicitudempleo(\SIGESRHI\AdminBundle\Entity\Solicitudempleo $idsolicitudempleo = null)
+    public function setIdsolicitudempleo(\SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo $idsolicitudempleo = null)
     {
         $this->idsolicitudempleo = $idsolicitudempleo;
     
@@ -103,7 +103,7 @@ class Informacionacademica
     /**
      * Get idsolicitudempleo
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Solicitudempleo 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo 
      */
     public function getIdsolicitudempleo()
     {

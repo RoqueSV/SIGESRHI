@@ -82,10 +82,10 @@ class Municipio
     /**
      * Set iddepartamento
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Departamento $iddepartamento
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Departamento $iddepartamento
      * @return Municipio
      */
-    public function setIddepartamento(\SIGESRHI\AdminBundle\Entity\Departamento $iddepartamento = null)
+    public function setIddepartamento(\SIGESRHI\ExpedienteBundle\Entity\Departamento $iddepartamento = null)
     {
         $this->iddepartamento = $iddepartamento;
     
@@ -95,7 +95,7 @@ class Municipio
     /**
      * Get iddepartamento
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Departamento 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Departamento 
      */
     public function getIddepartamento()
     {

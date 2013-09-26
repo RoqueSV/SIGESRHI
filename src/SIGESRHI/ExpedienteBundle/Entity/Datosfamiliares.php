@@ -167,10 +167,10 @@ class Datosfamiliares
     /**
      * Set idsolicitudempleo
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Solicitudempleo $idsolicitudempleo
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo $idsolicitudempleo
      * @return Datosfamiliares
      */
-    public function setIdsolicitudempleo(\SIGESRHI\AdminBundle\Entity\Solicitudempleo $idsolicitudempleo = null)
+    public function setIdsolicitudempleo(\SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo $idsolicitudempleo = null)
     {
         $this->idsolicitudempleo = $idsolicitudempleo;
     
@@ -180,7 +180,7 @@ class Datosfamiliares
     /**
      * Get idsolicitudempleo
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Solicitudempleo 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo 
      */
     public function getIdsolicitudempleo()
     {

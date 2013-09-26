@@ -77,10 +77,10 @@ class Memorandum
     /**
      * Set idconcurso
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Concurso $idconcurso
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Concurso $idconcurso
      * @return Memorandum
      */
-    public function setIdconcurso(\SIGESRHI\AdminBundle\Entity\Concurso $idconcurso = null)
+    public function setIdconcurso(\SIGESRHI\ExpedienteBundle\Entity\Concurso $idconcurso = null)
     {
         $this->idconcurso = $idconcurso;
     
@@ -90,7 +90,7 @@ class Memorandum
     /**
      * Get idconcurso
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Concurso 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Concurso 
      */
     public function getIdconcurso()
     {

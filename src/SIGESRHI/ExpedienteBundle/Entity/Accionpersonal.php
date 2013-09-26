@@ -117,10 +117,10 @@ class Accionpersonal
     /**
      * Set idtipoaccion
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Tipoaccion $idtipoaccion
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Tipoaccion $idtipoaccion
      * @return Accionpersonal
      */
-    public function setIdtipoaccion(\SIGESRHI\AdminBundle\Entity\Tipoaccion $idtipoaccion = null)
+    public function setIdtipoaccion(\SIGESRHI\ExpedienteBundle\Entity\Tipoaccion $idtipoaccion = null)
     {
         $this->idtipoaccion = $idtipoaccion;
     
@@ -130,7 +130,7 @@ class Accionpersonal
     /**
      * Get idtipoaccion
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Tipoaccion 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Tipoaccion 
      */
     public function getIdtipoaccion()
     {
@@ -140,10 +140,10 @@ class Accionpersonal
     /**
      * Set idexpediente
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Expediente $idexpediente
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Expediente $idexpediente
      * @return Accionpersonal
      */
-    public function setIdexpediente(\SIGESRHI\AdminBundle\Entity\Expediente $idexpediente = null)
+    public function setIdexpediente(\SIGESRHI\ExpedienteBundle\Entity\Expediente $idexpediente = null)
     {
         $this->idexpediente = $idexpediente;
     
@@ -153,7 +153,7 @@ class Accionpersonal
     /**
      * Get idexpediente
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Expediente 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Expediente 
      */
     public function getIdexpediente()
     {
