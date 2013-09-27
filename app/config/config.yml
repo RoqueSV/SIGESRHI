@@ -98,3 +98,4 @@ sonata_admin:
 
 parameters:
     mopa_bootstrap.form.render_optional_text: false
+

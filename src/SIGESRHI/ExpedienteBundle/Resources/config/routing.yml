@@ -30,3 +30,8 @@ ExpedienteBundle_segurovida:
 ExpedienteBundle_beneficiario:
         resource: "@ExpedienteBundle/Resources/config/routing/beneficiario.yml"
         prefix:   /beneficiario
+
+ExpedienteBundle_idioma:
+        resource: "@ExpedienteBundle/Resources/config/routing/idioma.yml"
+        prefix:   /idioma
+

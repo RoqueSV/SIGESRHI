@@ -52,7 +52,7 @@ class Idioma
     /**
      * @var \Solicitudempleo
      *
-     * @ORM\ManyToOne(targetEntity="Solicitudempleo")
+     * @ORM\ManyToOne(targetEntity="Solicitudempleo", inversedBy="Idiomas")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idsolicitudempleo", referencedColumnName="id")
      * })

@@ -24,10 +24,10 @@ class SolicitudempleoType extends AbstractType
             ->add('telefonomovil', null, array('label'=>'Teléfono Móvil '))
             ->add('email', null, array('label'=>'Correo Electrónico '))
             ->add('lugarnac', null, array('label'=>'Lugar de Nac. '))
-            ->add('fechanac', 'date', array('label'=>'Fecha de Nac. ', 'widget' => 'single_text', 'format'=>'dd-MM-yyyy')) 
+            ->add('fechanac', 'date', array('label'=>'Fecha de Nac. ', 'widget' => 'single_text', 'format'=>'dd-MM-yyyy', 'attr' => array('class' => 'date'),) ) 
             ->add('dui', null, array('label'=>'DUI'))
             ->add('lugardui', null, array('label'=>'Lugar donde se extendió el DUI: '))
-            ->add('fechadui', null, array('label'=>'Fecha se extendió el DUI: ', 'widget' => 'single_text', 'format'=>'dd-MM-yyyy'))
+            ->add('fechadui', null, array('label'=>'Fecha se extendió el DUI: ', 'widget' => 'single_text', 'format'=>'dd-MM-yyyy','attr' => array('class' => 'date'),))
             ->add('nit', null, array('label'=>'No NIT '))
             ->add('isss', null, array('label'=>'No ISSS '))
             ->add('nup', null, array('label'=>'No NUP '))
@@ -46,6 +46,7 @@ class SolicitudempleoType extends AbstractType
             $builder->add('Dempleos', 'collection', array('type' => new DatosempleoType(),));
             $builder->add('Dfamiliares', 'collection', array('type' => new DatosfamiliaresType(), 'allow_add' => true, 'allow_delete' => true,'by_reference' => false,));
             $builder->add('Destudios', 'collection', array('type' => new InformacionacademicaType(), 'allow_add' => true, 'allow_delete' => true,'by_reference' => false,));
+            $builder->add('Idiomas', 'collection', array('type' => new IdiomaType(), 'allow_add' => true, 'allow_delete' => true,'by_reference' => false,));
         ;   
     }
 
