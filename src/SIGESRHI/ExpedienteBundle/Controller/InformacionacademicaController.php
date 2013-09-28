@@ -62,11 +62,12 @@ class InformacionacademicaController extends Controller
     {
         $entity = new Informacionacademica();
 
-        //agregamos datos del titulo
+       /* //agregamos datos del titulo
         $datosTitulo= new Titulo();
         $datosTitulo->name = 'Titulo 1';
         $entity->getIdtitulo()->add($datosTitulo);
         //termina pruebas
+        */
 
         $form   = $this->createForm(new InformacionacademicaType(), $entity);
 

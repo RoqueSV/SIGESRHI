@@ -9,16 +9,10 @@
     <form action="{{ path('infacademica_create') }}" method="post" {{ form_enctype(form) }}>
         
 
-        
-
-             <ul class="titulo" data-prototype="{{ form_widget(form.Idtitulo.vars.prototype)|e }}">
-
-                   <li> {{form_widget(form.Idtitulo[0])}} </li>
-
-                </ul>
+                  <li> {{form_widget(form)}} </li>
 
 
-                {{ form_rest(form) }}
+               {#} {{ form_rest(form) }}  #}
   
         <p>
             <button type="submit">Create</button>

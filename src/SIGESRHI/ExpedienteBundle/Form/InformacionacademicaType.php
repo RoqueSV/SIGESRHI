@@ -14,8 +14,8 @@ class InformacionacademicaType extends AbstractType
             ->add('centroestudio',null, array('label'=> 'Centro de Estudios '))
            // ->add('idsolicitudempleo')
            // ->add('idtitulo', null,array('required' => true,'label'=>'Titulo Obtenido' ))
-            ->add('Idtitulo', 'collection', array('type' => new TituloType(), 'allow_add' => true, 'allow_delete' => true,'by_reference' => false,))
-
+           // ->add('Idtitulo', 'collection', array('type' => new TituloType(), 'allow_add' => true, 'allow_delete' => true,'by_reference' => false,))
+            ->add('idtitulo',null, array('required'=> true, 'label'=>'Título Obtenido: ', 'multiple'=>false))
    ; 
     }
 
