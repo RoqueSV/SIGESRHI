@@ -1,5 +1,4 @@
- {% extends '::base.html.twig' %} 
-
+ {% extends '::base.html.twig' %}  
 
       
 {% block body -%}
@@ -94,7 +93,7 @@
             <fieldset>
                 <legend>Datos de Estudio</legend>
 
-                <ul class="Destudios" data-prototype="{{ form_widget(form.Destudios.vars.prototype)|e }}">
+                <ul class="Destudios unstyled inline" data-prototype="{{ form_widget(form.Destudios.vars.prototype)|e }}">
 
                    <li> {{form_widget(form.Destudios[0])}}  </li>
 
@@ -115,7 +114,7 @@
             <fieldset>
                 <legend>Datos Familiares</legend>
 
-                <ul class="Dfamiliares" data-prototype="{{ form_widget(form.Dfamiliares.vars.prototype)|e }}">
+                <ul class="Dfamiliares unstyled" data-prototype="{{ form_widget(form.Dfamiliares.vars.prototype)|e }}">
 
                    {#<li> {{form_widget(form.Dfamiliares[0])}} </li> #}
 

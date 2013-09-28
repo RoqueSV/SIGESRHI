@@ -205,34 +205,42 @@ class Solicitudempleo
     /**
      * @var string
      *
-     * @ORM\Column(name="nit", type="string", nullable=true)
+     * @ORM\Column(name="nit", type="string", length=14, nullable=true)
      * @Assert\Length(
-     * max = "18",
+     * max = "14",
      * maxMessage = "El NIT no debe exceder los {{limit}} caracteres"
-     * )
+     *)
      */
     private $nit;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="isss", type="string", nullable=true)
+     * @ORM\Column(name="isss", type="string", length=9, nullable=true)
+     * @Assert\Length(
+     * max = "9",
+     * maxMessage = "El N° ISSS no debe exceder los {{limit}} caracteres"
+     *)
      */
     private $isss;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nup", type="string", nullable=true)
+     * @ORM\Column(name="nup", type="string", length=12, nullable=true)
+     * @Assert\Length(
+     * max = "12",
+     * maxMessage = "El NUP no debe exceder los {{limit}} caracteres"
+     *)
      */
     private $nup;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nip", type="string", length=20, nullable=true)
-      * @Assert\Length(
-     * max = "20",
+     * @ORM\Column(name="nip", type="string", length=7, nullable=true)
+     * @Assert\Length(
+     * max = "7",
      * maxMessage = "El NIP no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -242,7 +250,7 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="sexo", type="string", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar el sexo")
+     * @Assert\NotNull(message="Debe seleccionar el sexo")
      */
     private $sexo;
 
@@ -270,10 +278,151 @@ class Solicitudempleo
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fechamodificacion", type="date", nullable=true)
+     * @ORM\Column(name="fechamodificacion", type="date", nullable=false)
      * @Assert\DateTime()
      */
     private $fechamodificacion;
+
+
+
+
+    /************************datos de pariente laborando dentro del ISRI************************/
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombreparinst", type="string", length=50, nullable=true)
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El Nombre no debe exceder los {{limit}} caracteres"
+     * )
+     */
+    private $nombreparinst;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="parentescoparinst", type="string", length=50, nullable=true)
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El Parentesco no debe exceder los {{limit}} caracteres"
+     * )
+     */
+    private $parentescoparinst;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dependenciaparinst", type="string", length=75, nullable=true)
+     * @Assert\Length(
+     * max = "75",
+     * maxMessage = "la dependencia no debe exceder los {{limit}} caracteres"
+     * )
+     */
+    private $dependenciaparinst;
+
+
+
+                /***************** Funciones set y get ***********************/
+
+    /**
+     * Set nombreparinst
+     *
+     * @param string $nombreparinst
+     * @return Solicitudempleo
+     */
+    public function setNombreparinst($nombreparinst)
+    {
+        $this->nombreparinst = $nombreparinst;
+    
+        return $this;
+    }
+
+    
+    /**
+     * Get nombreparinst
+     *
+     * @return string 
+     */
+    public function getNombreparinst()
+    {
+        return $this->nombreparinst;
+    }
+
+
+    /**
+     * Set parentescoparinst
+     *
+     * @param string $parentescoparinst
+     * @return Solicitudempleo
+     */
+    public function setParentescoparinst($parentescoparinst)
+    {
+        $this->parentescoparinst = $parentescoparinst;
+    
+        return $this;
+    }
+
+    
+    /**
+     * Get parentescoparinst
+     *
+     * @return string 
+     */
+    public function getParentescoparinst()
+    {
+        return $this->parentescoparinst;
+    }
+
+
+    /**
+     * Set dependenciaparinst
+     *
+     * @param string $dependenciaparinst
+     * @return Solicitudempleo
+     */
+    public function setDependenciaparinst($dependenciaparinst)
+    {
+        $this->dependenciaparinst = $dependenciaparinst;
+    
+        return $this;
+    }
+
+    
+    /**
+     * Get dependenciaparinst
+     *
+     * @return string 
+     */
+    public function getDependenciaparinst()
+    {
+        return $this->dependenciaparinst;
+    }
+
+
+    /******************************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * @var \Municipio

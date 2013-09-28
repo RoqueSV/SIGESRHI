@@ -19,7 +19,7 @@ class DatosempleoType extends AbstractType
             ->add('jefeinmediato',null, array('label'=>'Nombre del Jefe Inmediato'))
             ->add('cargodesempenado',null, array('label'=>'Cargo Desempeñado'))
             ->add('sueldo', null,array('label'=>'Sueldo'))
-            ->add('motivoretiro',null, array('label'=>'Motivo del Retiro de la Empresa'))
+            ->add('motivoretiro','textarea', array('label'=>'Motivo del Retiro de la Empresa'))
             ->add('tipodatoempleo', 'text', array('label'=>'Tipo de Empleo', 'required'  => false, 'disabled'=>'disabled'))
             //->add('tipodatoempleo', 'choice', array('label'=>'Tipo de Empleo', 'choices' => array('actual' => 'Empleo Actual', 'anterior' => 'Empleo Anterior'),'required'  => false,))
             ->add('idsolicitudempleo')

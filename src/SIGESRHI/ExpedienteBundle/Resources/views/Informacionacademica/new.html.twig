@@ -9,10 +9,16 @@
     <form action="{{ path('infacademica_create') }}" method="post" {{ form_enctype(form) }}>
         
 
-                  <li> {{form_widget(form)}} </li>
+        
+
+            
+
+                   <li> {{form_widget(form)}} </li>
+
+                
 
 
-               {#} {{ form_rest(form) }}  #}
+                {{ form_rest(form) }}
   
         <p>
             <button type="submit">Create</button>
@@ -39,7 +45,7 @@
 
 
 // Obtiene la ul que contiene la colección de etiquetas
-var collectionHolderEst = $('ul.titulo');
+var collectionHolderEst = $('ul.idtitulo');
 
 // configura una enlace "Agregar una etiqueta"
 var $addTagLinkEst = $('<input type="button" value="Agregar Estudio">');
