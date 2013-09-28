@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 
 class CentroAdmin extends Admin
 {
@@ -49,11 +50,24 @@ class CentroAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('nombrecentro', null,array('label' => 'Centro de atención'))
+            ->addIdentifier('nombrecentro', null,array('label' => 'Centro de atención', 'route' => array('name' => 'show')))
             ->add('especialidad')
             ->add('direccioncentro',null, array('label' => 'Dirección'))
             ->add('emailcentro',null, array('label' => 'Email'))
                       
         ;
     }
+
+        protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('nombrecentro', null, array('label' => 'Centro de Atención'))
+            ->add('especialidad')
+            ->add('direccioncentro',null, array('label' => 'Dirección'))
+            ->add('emailcentro',null, array('label' => 'Email'))
+            ->add('faxcentro',null, array('label' => 'Fax'))
+            ->add('pbxcentro',null, array('label' => 'PBX'))
+            ->add('idtelefono','sonata_type_model',array('label'=>'Teléfono'))
+        ;
+     }
 }

@@ -32,7 +32,7 @@ class UserAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('username')
+            ->addIdentifier('username',null,array('route' => array('name' => 'show')))
             ->add('email')
             ->add('groups')
             ->add('enabled', null, array('editable' => true))

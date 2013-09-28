@@ -43,7 +43,10 @@ class Expediente
      * )
      */
     private $tipoexpediente;
-
+    
+    public function __toString(){
+        return $this->getTipoexpediente();
+    }
 
 
     /**

@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Solicitudempleo
  *
  * @ORM\Table(name="solicitudempleo")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Entity\SolicitudempleoRepository")
  */
 class Solicitudempleo
 {
@@ -1027,5 +1027,97 @@ class Solicitudempleo
     public function getIdexpediente()
     {
         return $this->idexpediente;
+    }
+
+    /**
+     * Add Dempleos
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Datosempleo $dempleos
+     * @return Solicitudempleo
+     */
+    public function addDempleo(\SIGESRHI\ExpedienteBundle\Entity\Datosempleo $dempleos)
+    {
+        $this->Dempleos[] = $dempleos;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Dempleos
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Datosempleo $dempleos
+     */
+    public function removeDempleo(\SIGESRHI\ExpedienteBundle\Entity\Datosempleo $dempleos)
+    {
+        $this->Dempleos->removeElement($dempleos);
+    }
+
+    /**
+     * Add Dfamiliares
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Datosfamiliares $dfamiliares
+     * @return Solicitudempleo
+     */
+    public function addDfamiliare(\SIGESRHI\ExpedienteBundle\Entity\Datosfamiliares $dfamiliares)
+    {
+        $this->Dfamiliares[] = $dfamiliares;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Dfamiliares
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Datosfamiliares $dfamiliares
+     */
+    public function removeDfamiliare(\SIGESRHI\ExpedienteBundle\Entity\Datosfamiliares $dfamiliares)
+    {
+        $this->Dfamiliares->removeElement($dfamiliares);
+    }
+
+    /**
+     * Add Destudios
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Informacionacademica $destudios
+     * @return Solicitudempleo
+     */
+    public function addDestudio(\SIGESRHI\ExpedienteBundle\Entity\Informacionacademica $destudios)
+    {
+        $this->Destudios[] = $destudios;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Destudios
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Informacionacademica $destudios
+     */
+    public function removeDestudio(\SIGESRHI\ExpedienteBundle\Entity\Informacionacademica $destudios)
+    {
+        $this->Destudios->removeElement($destudios);
+    }
+
+    /**
+     * Add Idiomas
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Idioma $idiomas
+     * @return Solicitudempleo
+     */
+    public function addIdioma(\SIGESRHI\ExpedienteBundle\Entity\Idioma $idiomas)
+    {
+        $this->Idiomas[] = $idiomas;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Idiomas
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Idioma $idiomas
+     */
+    public function removeIdioma(\SIGESRHI\ExpedienteBundle\Entity\Idioma $idiomas)
+    {
+        $this->Idiomas->removeElement($idiomas);
     }
 }

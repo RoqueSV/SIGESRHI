@@ -17,10 +17,7 @@ class TelefonoAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-             ->add('numtelefono', 'sonata_type_model_list', array(
-                ), array(
-                    'placeholder' => 'No author selected'
-                ))
+            ->add('numtelefono', null, array('attr'=>array('data-bvalidator'=>'phone',)))
             ->setHelps(array('numtelefono'=>'Ingrese un numero teléfonico sin guiones'))
            
              ;

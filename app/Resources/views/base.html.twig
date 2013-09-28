@@ -3,35 +3,48 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+        {# ----------CSS ------ #}
         {% block stylesheets %}
+        {#Bootstrap#}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" /> 
         {% stylesheets filter='cssrewrite,?yui_css'
         '@MopaBootstrapBundle/Resources/bootstrap/bootstrap.css'
         %}
         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
         {% endstylesheets %}
+        {#Calendario#}
+        <link href="{{ asset('bundles/expediente/css/jquery-ui.css') }}" type="text/css" rel="stylesheet" />
+        {#Validador#}
+        <link href="{{ asset('bundles/bValidator-0.71.1/bvalidator.css') }}" rel="stylesheet" type="text/css" />
+        {#<link href="{{ asset('css/form.css') }}" rel="stylesheet" type="text/css" />#}
+        {% endblock %} 
+        
+        {# ---JS--- #}
+        {% block javascripts %}  
+        {#Bootstrap#}
         {% javascripts '@MopaBootstrapBundle/Resources/public/js/*' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
-        <link href="{{ asset('bundles/expediente/css/jquery-ui.css') }}" type="text/css" rel="stylesheet" />
+        {#Calendario#}
         <script src="{{ asset('bundles/expediente/js/jquery-1.10.2.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('bundles/expediente/js/jquery-ui.js') }}" type="text/javascript"></script>
-        {#<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
-         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> #}
-        {% endblock %} 
+        {#Validador#}
+        <script type="text/javascript" src="{{ asset('bundles/bValidator-0.71.1/jquery.bvalidator.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/bValidator-0.71.1/bvalidator.lang.es.js')}}" ></script>
+        {% endblock %}
                
     </head>
     <body>
         {% block body %}{% endblock %}
     </body>
-    {%block javascriptfoot%}
+    {% block javascriptfoot %}
         <script type="text/javascript">
               $('.date').datepicker({ 
               dateFormat: 'dd-mm-yy',  
               changeMonth: true,
               changeYear: true,
               yearRange: "-100:+0",});
+              
               jQuery(function($){
               $.datepicker.regional['es'] = {
               closeText: 'Cerrar',
@@ -53,6 +66,13 @@
               yearSuffix: ''};
               $.datepicker.setDefaults($.datepicker.regional['es']);
               });
-     </script>
-   {%endblock%}
+        </script>
+        <script type="text/javascript">
+              var options = {
+              lang:'es'
+              };
+              $('#seguro_form').bValidator(options);
+        </script>
+     
+   {% endblock %}
 </html>

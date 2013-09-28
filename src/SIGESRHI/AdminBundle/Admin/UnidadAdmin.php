@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 
 class UnidadAdmin extends Admin
 {
@@ -41,11 +42,20 @@ class UnidadAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('nombreunidad', null,array('label' => 'Unidad Organizativa'))
+            ->addIdentifier('nombreunidad', null,array('label' => 'Unidad Organizativa', 'route' => array('name' => 'show')))
             ->add('descripcionunidad', null, array('label' => 'Descripción'))
             ->add('idcentro',null,array('label'=>'Centro Atención'))
        
         ;
     }
+
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('nombreunidad', null, array('label' => 'Unidad Organizativa'))
+            ->add('descripcionunidad', null, array('label' => 'Descripción'))
+            ->add('idcentro',null,array('label'=>'Centro de Atención'))
+        ;
+     }
     
 }

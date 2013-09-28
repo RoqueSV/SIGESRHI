@@ -14,6 +14,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 
 class GroupAdmin extends Admin
 {
@@ -37,7 +38,7 @@ class GroupAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('name')
+            ->addIdentifier('name',null, array('route' => array('name' => 'show')))
             ->add('roles')
             ->add('idacceso', null, array('label'=>'Opciones'))
         ;
@@ -69,4 +70,12 @@ class GroupAdmin extends Admin
            ->add('idacceso','sonata_type_model',array('required'=>false,'multiple'=>true,'expanded'=>true ,'label'=>'Opciones')) 
         ;
     }
+
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('name', null, array('label' => 'Nombre Rol'))
+            ->add('idacceso',null,array('label'=>'Opciones')) 
+        ;
+     }
 }

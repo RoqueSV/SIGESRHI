@@ -57,8 +57,8 @@ class PlazaAdmin extends Admin
     {
         $datagridMapper
             ->add('nombreplaza', null, array('label' => 'Plaza'))
-            ->add('descripcionplaza', null, array('label' => 'Descripción'))
-            ->add('edad', null, array('label' => 'Edad requerida'))
+          //  ->add('descripcionplaza', null, array('label' => 'Descripción'))
+          //->add('edad', null, array('label' => 'Edad requerida'))
             ->add('estadoplaza', null, array('label'=>'Estado'))
             ->add('idarea', null, array('label' => 'Area'))
            // ->add('idconocimiento', null, array('label' => 'Conocimientos'))
@@ -72,15 +72,23 @@ class PlazaAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('nombreplaza',null,array('label'=>'Plaza'))
+            ->addIdentifier('nombreplaza',null,array('label'=>'Plaza','route' => array('name' => 'show')))
             ->add('descripcionplaza', null, array('label' => 'Descripción'))
-            ->add('edad', 'integer', array('label' => 'Edad requerida'))
+          //  ->add('edad', 'integer', array('label' => 'Edad requerida'))
             ->add('estadoplaza', null, array('label'=>'Estado'))
             ->add('idarea', 'textarea', array('label' => 'Area',))
            // ->add('idconocimiento', null, array('label' => 'Conocimientos'))
            // ->add('idfuncion', null, array('label' => 'Funciones'))
            // ->add('idhabilidad', null, array('label' => 'Habilidades')) 
            // ->add('idmanejoequipo', null, array('label' => 'Manejo equipo'))
+
+
+          /* ->add('_action', 'actions', array(
+                'actions' => array(
+                    'view' => array(),
+                    'edit' => array(),
+                )
+            )) */
         ;
     }
     

@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 
 class AccesoAdmin extends Admin
 {
@@ -41,11 +42,22 @@ class AccesoAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('nombrepagina', null,array('label' => 'Opción'))
+            ->addIdentifier('nombrepagina', null,array('label' => 'Opción','route' => array('name' => 'show')))
             ->add('idmodulo',null,array('label'=>'Modulo'))
             ->add('ruta')
             ->add('idrol',null,array('label'=>'Roles'))    
         ;
     }
+
+     protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+         ->add('nombrepagina',null, array('label' => 'Opción'))
+         ->add('idmodulo',null,array('label'=>'Modulo'))
+         ->add('ruta')  
+        ;
+     }
+     
+
 
 }
