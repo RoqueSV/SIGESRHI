@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Refrenda
@@ -26,6 +27,7 @@ class Refrenda
      * @var integer
      *
      * @ORM\Column(name="partida", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la partida")
      */
     private $partida;
 
@@ -33,6 +35,7 @@ class Refrenda
      * @var integer
      *
      * @ORM\Column(name="subpartida", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la subpartida")
      */
     private $subpartida;
 
@@ -40,6 +43,7 @@ class Refrenda
      * @var float
      *
      * @ORM\Column(name="salariominimo", type="float", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el salario minimo")
      */
     private $salariominimo;
 
@@ -47,6 +51,7 @@ class Refrenda
      * @var float
      *
      * @ORM\Column(name="salariomaximo", type="float", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el salario maximo")
      */
     private $salariomaximo;
 
@@ -54,6 +59,7 @@ class Refrenda
      * @var float
      *
      * @ORM\Column(name="sueldoactual", type="float", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el sueldo actual")
      */
     private $sueldoactual;
 
@@ -61,6 +67,11 @@ class Refrenda
      * @var string
      *
      * @ORM\Column(name="unidadpresupuestaria", type="string", length=100, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la unidad presupuestaria")
+     * @Assert\Length(
+     * max = "100",
+     * maxMessage = "La unidad presupuestaria no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $unidadpresupuestaria;
 
@@ -68,6 +79,10 @@ class Refrenda
      * @var string
      *
      * @ORM\Column(name="lineapresupuestaria", type="string", length=100, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar una linea presupuestaria")
+     * max = "100",
+     * maxMessage = "La linea presupuestaria no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $lineapresupuestaria;
 
@@ -75,6 +90,10 @@ class Refrenda
      * @var string
      *
      * @ORM\Column(name="codigolp", type="string", length=25, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el codigo")
+      * max = "25",
+     * maxMessage = "El codigo no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $codigolp;
 

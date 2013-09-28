@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Titulo
@@ -26,6 +27,11 @@ class Titulo
      * @var string
      *
      * @ORM\Column(name="nombretitulo", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del titulo")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre del titulo no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombretitulo;
 
@@ -33,6 +39,11 @@ class Titulo
      * @var string
      *
      * @ORM\Column(name="niveltitulo", type="string", length=20, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nivel del titulo")
+     * @Assert\Length(
+     * max = "20",
+     * maxMessage = "El nivel del titulo no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $niveltitulo;
 

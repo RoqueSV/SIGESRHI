@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Datosempleo
@@ -26,6 +27,11 @@ class Datosempleo
      * @var string
      *
      * @ORM\Column(name="nombreempresa", type="string", length=75, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre de la empresa")
+     * @Assert\Length(
+     * max = "75",
+     * maxMessage = "El nombre de la empresa no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombreempresa;
 
@@ -33,6 +39,11 @@ class Datosempleo
      * @var string
      *
      * @ORM\Column(name="direccionempresa", type="string", length=150, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la direccion de la empresa")
+     * @Assert\Length(
+     * max = "150",
+     * maxMessage = "La direccion de la empresa no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $direccionempresa;
 
@@ -40,6 +51,7 @@ class Datosempleo
      * @var string
      *
      * @ORM\Column(name="telefonoempresa", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el telefono de la empresa")
      */
     private $telefonoempresa;
 
@@ -47,6 +59,8 @@ class Datosempleo
      * @var \DateTime
      *
      * @ORM\Column(name="fechainiciolaboral", type="date", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la fecha de inicio laboral")
+     * @Assert\DateTime()
      */
     private $fechainiciolaboral;
 
@@ -54,6 +68,7 @@ class Datosempleo
      * @var \DateTime
      *
      * @ORM\Column(name="fechafinlaboral", type="date", nullable=true)
+     * @Assert\DateTime()
      */
     private $fechafinlaboral;
 
@@ -61,6 +76,11 @@ class Datosempleo
      * @var string
      *
      * @ORM\Column(name="jefeinmediato", type="string", length=50, nullable=false)
+      * @Assert\NotNull(message="Debe ingresar el nombre del jefe inmediato")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre del jefe inmediato no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $jefeinmediato;
 
@@ -68,6 +88,11 @@ class Datosempleo
      * @var string
      *
      * @ORM\Column(name="cargodesempenado", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el cargo desempeñado")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El cargo desempeñado no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $cargodesempenado;
 
@@ -75,6 +100,7 @@ class Datosempleo
      * @var float
      *
      * @ORM\Column(name="sueldo", type="float", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el sueldo")
      */
     private $sueldo;
 
@@ -82,6 +108,11 @@ class Datosempleo
      * @var string
      *
      * @ORM\Column(name="motivoretiro", type="string", length=200, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el motivo de retiro")
+     * @Assert\Length(
+     * max = "200",
+     * maxMessage = "El motivo de retiro no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $motivoretiro;
 
@@ -89,6 +120,7 @@ class Datosempleo
      * @var string
      *
      * @ORM\Column(name="tipodatoempleo", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el tipo de empleo")
      */
     private $tipodatoempleo;
 

@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Institucioncapacitadora
@@ -26,6 +27,11 @@ class Institucioncapacitadora
      * @var string
      *
      * @ORM\Column(name="nombreinstitucion", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre de la institucion")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre de la institucion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombreinstitucion;
 
@@ -33,6 +39,11 @@ class Institucioncapacitadora
      * @var string
      *
      * @ORM\Column(name="nombrecontacto", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del contacto")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre del contacto no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombrecontacto;
 
@@ -47,6 +58,11 @@ class Institucioncapacitadora
      * @var string
      *
      * @ORM\Column(name="cargocontacto", type="string", length=75, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el cargo")
+     * @Assert\Length(
+     * max = "75",
+     * maxMessage = "El cargo no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $cargocontacto;
 
@@ -54,6 +70,9 @@ class Institucioncapacitadora
      * @var string
      *
      * @ORM\Column(name="emailcontacto", type="string", length=50, nullable=true)
+     * @Assert\Email(
+     *     message = "El correo '{{ value }}' no es valido."
+     * )
      */
     private $emailcontacto;
 

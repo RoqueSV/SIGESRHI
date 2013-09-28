@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Segurovida
@@ -33,6 +34,7 @@ class Segurovida
      * @var string
      *
      * @ORM\Column(name="estadoseguro", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el estado del seguro")
      */
     private $estadoseguro;
 

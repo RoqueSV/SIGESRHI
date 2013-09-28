@@ -28,7 +28,10 @@ class Funcion
      *
      * @ORM\Column(name="nombrefuncion", type="string", length=250, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre de la funcion")
-     * @Assert\Length(max="250")
+          * @Assert\Length(
+     * max = "250",
+     * maxMessage = "El nombre de la funcion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombrefuncion;
     

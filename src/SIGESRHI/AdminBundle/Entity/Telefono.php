@@ -28,7 +28,10 @@ class Telefono
      *
      * @ORM\Column(name="numtelefono", type="string", length=8, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un número telefonico")
-     * @Assert\Length(max="8")
+      * @Assert\Length(
+     * max = "8",
+     * maxMessage = "El numero de telefono no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $numtelefono;
 

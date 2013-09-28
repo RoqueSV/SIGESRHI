@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Plancapacitacion
@@ -33,6 +34,7 @@ class Plancapacitacion
      * @var integer
      *
      * @ORM\Column(name="anoplan", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el año del plan")
      */
     private $anoplan;
 
@@ -40,6 +42,11 @@ class Plancapacitacion
      * @var string
      *
      * @ORM\Column(name="objetivoplan", type="string", length=250, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el objetivo del plan")
+     * @Assert\Length(
+     * max = "250",
+     * maxMessage = "El objetivo del plan no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $objetivoplan;
 
@@ -47,6 +54,10 @@ class Plancapacitacion
      * @var string
      *
      * @ORM\Column(name="descripcionplan", type="string", length=300, nullable=true)
+     * @Assert\Length(
+     * max = "300",
+     * maxMessage = "La descripcion del plan no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $descripcionplan;
 
@@ -54,6 +65,10 @@ class Plancapacitacion
      * @var string
      *
      * @ORM\Column(name="resultadosplan", type="string", length=500, nullable=true)
+     * @Assert\Length(
+     * max = "500",
+     * maxMessage = "Los resultados del plan no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $resultadosplan;
 
@@ -61,6 +76,7 @@ class Plancapacitacion
      * @var string
      *
      * @ORM\Column(name="tipoplan", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar los resultados del plan")
      */
     private $tipoplan;
 

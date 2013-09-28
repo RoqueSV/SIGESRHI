@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Puntaje
@@ -26,6 +27,11 @@ class Puntaje
      * @var string
      *
      * @ORM\Column(name="nombrepuntaje", type="string", length=15, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del puntaje")
+     * @Assert\Length(
+     * max = "15",
+     * maxMessage = "El nombre del puntaje no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombrepuntaje;
 
@@ -33,6 +39,7 @@ class Puntaje
      * @var integer
      *
      * @ORM\Column(name="puntajemin", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el puntaje minimo")
      */
     private $puntajemin;
 
@@ -40,6 +47,7 @@ class Puntaje
      * @var integer
      *
      * @ORM\Column(name="puntajemax", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el puntaje maximo")
      */
     private $puntajemax;
 

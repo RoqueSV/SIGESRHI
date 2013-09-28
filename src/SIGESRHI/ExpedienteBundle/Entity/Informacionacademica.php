@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Informacionacademica
@@ -26,6 +27,11 @@ class Informacionacademica
      * @var string
      *
      * @ORM\Column(name="centroestudio", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del centro de estudio")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre del centro de estudio no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $centroestudio;
 

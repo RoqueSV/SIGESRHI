@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Factorevaluacion
@@ -26,6 +27,11 @@ class Factorevaluacion
      * @var string
      *
      * @ORM\Column(name="nombrefactor", type="string", length=25, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del factor")
+     * @Assert\Length(
+     * max = "25",
+     * maxMessage = "El nombre del factor no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombrefactor;
 
@@ -33,6 +39,11 @@ class Factorevaluacion
      * @var string
      *
      * @ORM\Column(name="descripcionfactor", type="string", length=250, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la descripcion del factor")
+     * @Assert\Length(
+     * max = "250",
+     * maxMessage = "La descripcion del factor no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $descripcionfactor;
 

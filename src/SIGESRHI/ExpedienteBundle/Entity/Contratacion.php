@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Contratacion
@@ -26,6 +27,10 @@ class Contratacion
      * @var string
      *
      * @ORM\Column(name="observaciones", type="string", length=250, nullable=true)
+     * @Assert\Length(
+     * max = "250",
+     * maxMessage = "Las observaciones no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $observaciones;
 
@@ -33,6 +38,7 @@ class Contratacion
      * @var float
      *
      * @ORM\Column(name="sueldoinicial", type="float", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el sueldo inicial")
      */
     private $sueldoinicial;
 
@@ -40,6 +46,7 @@ class Contratacion
      * @var integer
      *
      * @ORM\Column(name="horaslaborales", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar las horas laborales")
      */
     private $horaslaborales;
 
@@ -47,6 +54,7 @@ class Contratacion
      * @var string
      *
      * @ORM\Column(name="jornadalaboral", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la jornada laboral")
      */
     private $jornadalaboral;
 
@@ -54,6 +62,8 @@ class Contratacion
      * @var \DateTime
      *
      * @ORM\Column(name="fechainiciocontratacion", type="date", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la fecha de inicio laboral")
+     * @Assert\DateTime()
      */
     private $fechainiciocontratacion;
 
@@ -61,6 +71,10 @@ class Contratacion
      * @var string
      *
      * @ORM\Column(name="doccontratacion", type="string", length=50, nullable=true)
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre del documento no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $doccontratacion;
 
@@ -68,6 +82,10 @@ class Contratacion
      * @var string
      *
      * @ORM\Column(name="informacionadicional", type="string", length=500, nullable=true)
+     * @Assert\Length(
+     * max = "500",
+     * maxMessage = "La informacion adicional no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $informacionadicional;
 

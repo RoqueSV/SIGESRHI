@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Accionpersonal
@@ -26,6 +27,8 @@ class Accionpersonal
      * @var \DateTime
      *
      * @ORM\Column(name="fecharegistroacccion", type="date", nullable=false)
+     * @Assert\DateTime()
+     * @Assert\NotNull(message="Debe ingresar la fecha de registro")
      */
     private $fecharegistroacccion;
 
@@ -33,6 +36,11 @@ class Accionpersonal
      * @var string
      *
      * @ORM\Column(name="motivoaccion", type="string", length=500, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el motivo de la accion")
+     * @Assert\Length(
+     * max = "500",
+     * maxMessage = "El motivo de la accion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $motivoaccion;
 

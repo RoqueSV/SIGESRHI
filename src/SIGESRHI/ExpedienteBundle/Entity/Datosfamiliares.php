@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Datosfamiliares
@@ -26,6 +27,11 @@ class Datosfamiliares
      * @var string
      *
      * @ORM\Column(name="nombrefamiliar", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del familiar")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre del familiar no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombrefamiliar;
 
@@ -33,6 +39,11 @@ class Datosfamiliares
      * @var string
      *
      * @ORM\Column(name="direccionfamiliar", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la direccion del familiar")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "La direccion del familiar no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $direccionfamiliar;
 
@@ -40,6 +51,11 @@ class Datosfamiliares
      * @var string
      *
      * @ORM\Column(name="telefonofamiliar", type="string", length=9, nullable=false)
+      * @Assert\NotNull(message="Debe ingresar el telefono del familiar")
+     * @Assert\Length(
+     * max = "9",
+     * maxMessage = "El telefono del familiar no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $telefonofamiliar;
 
@@ -47,6 +63,11 @@ class Datosfamiliares
      * @var string
      *
      * @ORM\Column(name="parentesco", type="string", length=15, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el parentezco con el familiar")
+     * @Assert\Length(
+     * max = "15",
+     * maxMessage = "El parentezco con el familiar no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $parentesco;
 

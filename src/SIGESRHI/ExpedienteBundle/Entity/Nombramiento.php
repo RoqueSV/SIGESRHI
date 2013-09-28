@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Nombramiento
@@ -47,6 +48,10 @@ class Nombramiento
      * @var string
      *
      * @ORM\Column(name="observaciones", type="string", length=250, nullable=true)
+     * @Assert\Length(
+     * max = "250",
+     * maxMessage = "Las observaciones del nombramiento no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $observaciones;
 
@@ -54,6 +59,7 @@ class Nombramiento
      * @var float
      *
      * @ORM\Column(name="sueldoinicial", type="float", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el sueldo inicial")
      */
     private $sueldoinicial;
 
@@ -61,6 +67,7 @@ class Nombramiento
      * @var integer
      *
      * @ORM\Column(name="horaslaborales", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar las horas laborales")
      */
     private $horaslaborales;
 
@@ -68,6 +75,7 @@ class Nombramiento
      * @var string
      *
      * @ORM\Column(name="jornadalaboral", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la jornada laboral")
      */
     private $jornadalaboral;
 
@@ -75,6 +83,8 @@ class Nombramiento
      * @var \DateTime
      *
      * @ORM\Column(name="fechainiciocontratacion", type="date", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la fecha de inicio laboral")
+     * @Assert\DateTime()
      */
     private $fechainiciocontratacion;
 
@@ -82,6 +92,10 @@ class Nombramiento
      * @var string
      *
      * @ORM\Column(name="doccontratacion", type="string", length=50, nullable=true)
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre del documento no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $doccontratacion;
 
@@ -89,6 +103,10 @@ class Nombramiento
      * @var string
      *
      * @ORM\Column(name="informacionadicional", type="string", length=500, nullable=true)
+     * @Assert\Length(
+     * max = "500",
+     * maxMessage = "La informacion adicional no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $informacionadicional;
 
@@ -96,6 +114,7 @@ class Nombramiento
      * @var \DateTime
      *
      * @ORM\Column(name="fechafinnom", type="date", nullable=true)
+     * @Assert\DateTime()
      */
     private $fechafinnom;
 
@@ -103,6 +122,8 @@ class Nombramiento
      * @var \DateTime
      *
      * @ORM\Column(name="fechaautorizacion", type="date", nullable=false)
+     * @Assert\DateTime()
+     * @Assert\NotNull(message="Debe ingresar la fecha de autorizacion")
      */
     private $fechaautorizacion;
 
@@ -110,6 +131,7 @@ class Nombramiento
      * @var integer
      *
      * @ORM\Column(name="numoficio", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el numero de oficio")
      */
     private $numoficio;
 

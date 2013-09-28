@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Docpersonal
@@ -26,6 +27,11 @@ class Docpersonal
      * @var string
      *
      * @ORM\Column(name="nombredocpersonal", type="string", length=25, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del documento")
+     * @Assert\Length(
+     * max = "25",
+     * maxMessage = "El nombre del documento no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombredocpersonal;
 
@@ -33,6 +39,7 @@ class Docpersonal
      * @var boolean
      *
      * @ORM\Column(name="entregado", type="boolean", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la opcion entregado")
      */
     private $entregado;
 
@@ -40,6 +47,7 @@ class Docpersonal
      * @var integer
      *
      * @ORM\Column(name="indice", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el indice")
      */
     private $indice;
 

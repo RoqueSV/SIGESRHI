@@ -63,8 +63,7 @@ class Administrador
      * @ORM\Column(name="emailadministrador", type="string", length=50, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un email para el administrador")
      * @Assert\Email(
-     *     message = "El email '{{ value }}' no es valido.",
-     *     checkMX=true
+     *     message = "El email '{{ value }}' no es valido."
      * )
      */
     private $emailadministrador;

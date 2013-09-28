@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Formularioevaluacion
@@ -26,6 +27,7 @@ class Formularioevaluacion
      * @var string
      *
      * @ORM\Column(name="tipoformulario", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el tipo de formulario")
      */
     private $tipoformulario;
 
@@ -33,6 +35,11 @@ class Formularioevaluacion
      * @var string
      *
      * @ORM\Column(name="codigoformulario", type="string", length=5, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el codigo del formulario")
+     * @Assert\Length(
+     * max = "5",
+     * maxMessage = "El codigo del formulario no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $codigoformulario;
     

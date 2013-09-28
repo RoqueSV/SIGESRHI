@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Expediente
@@ -26,6 +27,8 @@ class Expediente
      * @var \DateTime
      *
      * @ORM\Column(name="fechaexpediente", type="date", nullable=false)
+     * @Assert\DateTime()
+     * @Assert\NotNull(message="Debe ingresar la fecha del expediente")
      */
     private $fechaexpediente;
 
@@ -33,6 +36,11 @@ class Expediente
      * @var string
      *
      * @ORM\Column(name="tipoexpediente", type="string", length=1, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el tipo de expediente")
+     * @Assert\Length(
+     * max = "1",
+     * maxMessage = "El tipo de expediente no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $tipoexpediente;
 

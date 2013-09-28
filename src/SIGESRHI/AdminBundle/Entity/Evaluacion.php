@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Evaluacion
@@ -26,6 +27,8 @@ class Evaluacion
      * @var \DateTime
      *
      * @ORM\Column(name="fecharealizacion", type="date", nullable=false)
+     * @Assert\DateTime()
+     * @Assert\NotNull(message="Debe ingresar la fecha de realizacion")
      */
     private $fecharealizacion;
 
@@ -33,6 +36,7 @@ class Evaluacion
      * @var integer
      *
      * @ORM\Column(name="anoevaluado", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el año de la evaluación")
      */
     private $anoevaluado;
 
@@ -40,6 +44,7 @@ class Evaluacion
      * @var string
      *
      * @ORM\Column(name="semestre", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el semestre de la evaluacion")
      */
     private $semestre;
 

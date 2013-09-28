@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Memorandum
@@ -26,6 +27,7 @@ class Memorandum
      * @var integer
      *
      * @ORM\Column(name="correlativo", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el correlativo")
      */
     private $correlativo;
 

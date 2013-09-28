@@ -28,7 +28,10 @@ class Departamento
      *
      * @ORM\Column(name="nombredepartamento", type="string", length=15, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de Departamento")
-     * @Assert\Length(max="15")
+     * @Assert\Length(
+     * max = "15",
+     * maxMessage = "El nombre del departamento no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombredepartamento;
 

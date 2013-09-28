@@ -29,7 +29,10 @@ class Plaza
      *
      * @ORM\Column(name="nombreplaza", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre de la PLaza")
-     * @Assert\Length(max="100")
+     * @Assert\Length(
+     * max = "100",
+     * maxMessage = "El nombre de la plaza no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombreplaza;
 
@@ -38,7 +41,10 @@ class Plaza
      *
      * @ORM\Column(name="descripcionplaza", type="string", length=500, nullable=false)
      * @Assert\NotNull(message="Debe ingresar la descripcion de la plaza")
-     * @Assert\Length(max="500")
+     * @Assert\Length(
+     * max = "500",
+     * maxMessage = "La descripcion de la plaza no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $descripcionplaza;
 
@@ -53,7 +59,7 @@ class Plaza
      /**
      * @var integer
      *
-     * @ORM\Column(name="experiencia", type="integer", nullable=false)
+     * @ORM\Column(name="experiencia", type="integer", nullable=true)
      * @Assert\NotNull(message="Debe ingresar una cantidad para la experiencia requerida")
      */
     private $experiencia;

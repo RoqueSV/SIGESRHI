@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Solicitudcapacitacion
@@ -26,6 +27,8 @@ class Solicitudcapacitacion
      * @var \DateTime
      *
      * @ORM\Column(name="fechasolicitud", type="date", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la fecha de solicitud")
+     * @Assert\DateTime()
      */
     private $fechasolicitud;
 
@@ -40,6 +43,11 @@ class Solicitudcapacitacion
      * @var string
      *
      * @ORM\Column(name="motivosolicitud", type="string", length=500, nullable=true)
+     * @Assert\NotNull(message="Debe ingresar la aprobacion de solicitud")
+     * @Assert\Length(
+     * max = "500",
+     * maxMessage = "El motivo de solicitud no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $motivosolicitud;
 
@@ -47,6 +55,10 @@ class Solicitudcapacitacion
      * @var string
      *
      * @ORM\Column(name="comentariosolicitud", type="string", length=500, nullable=true)
+     * @Assert\Length(
+     * max = "500",
+     * maxMessage = "El comentario de la solicitud no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $comentariosolicitud;
 

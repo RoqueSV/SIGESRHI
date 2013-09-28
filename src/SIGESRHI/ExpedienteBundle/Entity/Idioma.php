@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Idioma
  *
@@ -25,6 +26,11 @@ class Idioma
      * @var string
      *
      * @ORM\Column(name="nombreidioma", type="string", length=25, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del idioma")
+     * @Assert\Length(
+     * max = "25",
+     * maxMessage = "El nombre del idioma no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombreidioma;
 
@@ -32,6 +38,11 @@ class Idioma
      * @var string
      *
      * @ORM\Column(name="nivelescribe", type="string", length=10, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nivel de escritura")
+     * @Assert\Length(
+     * max = "10",
+     * maxMessage = "El nivel de escritura no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nivelescribe;
 
@@ -39,6 +50,11 @@ class Idioma
      * @var string
      *
      * @ORM\Column(name="nivelhabla", type="string", length=10, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nivel habla")
+     * @Assert\Length(
+     * max = "10",
+     * maxMessage = "El nivel habla no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nivelhabla;
 
@@ -46,6 +62,11 @@ class Idioma
      * @var string
      *
      * @ORM\Column(name="nivellee", type="string", length=10, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nivel lectura")
+     * @Assert\Length(
+     * max = "10",
+     * maxMessage = "El nivel lectura no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nivellee;
 

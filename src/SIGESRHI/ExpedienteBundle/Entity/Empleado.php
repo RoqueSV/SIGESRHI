@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Empleado
@@ -33,6 +34,11 @@ class Empleado
      * @var string
      *
      * @ORM\Column(name="codigoempleado", type="string", length=5, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el codigo del empleado")
+     * @Assert\Length(
+     * max = "5",
+     * maxMessage = "El codigo de empleado no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $codigoempleado;
 

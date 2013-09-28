@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Licencia
@@ -26,6 +27,10 @@ class Licencia
      * @var string
      *
      * @ORM\Column(name="concepto", type="string", length=12, nullable=false)
+     * @Assert\Length(
+     * max = "12",
+     * maxMessage = "El concepto de la licencia no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $concepto;
 
@@ -54,6 +59,7 @@ class Licencia
      * @var boolean
      *
      * @ORM\Column(name="congoce", type="boolean", nullable=false)
+     * @Assert\NotNull(message="Debe especificar si la licencia es con goce o no")
      */
     private $congoce;
 
@@ -61,6 +67,7 @@ class Licencia
      * @var \DateTime
      *
      * @ORM\Column(name="fechainiciolic", type="date", nullable=true)
+     * @Assert\DateTime()
      */
     private $fechainiciolic;
 
@@ -68,6 +75,7 @@ class Licencia
      * @var \DateTime
      *
      * @ORM\Column(name="fechafinlic", type="date", nullable=true)
+     * @Assert\DateTime()
      */
     private $fechafinlic;
 
@@ -75,6 +83,7 @@ class Licencia
      * @var \DateTime
      *
      * @ORM\Column(name="horainiciolic", type="time", nullable=true)
+     * @Assert\DateTime()
      */
     private $horainiciolic;
 
@@ -82,6 +91,7 @@ class Licencia
      * @var \DateTime
      *
      * @ORM\Column(name="horafinlic", type="time", nullable=true)
+     * @Assert\DateTime()
      */
     private $horafinlic;
 
@@ -89,6 +99,8 @@ class Licencia
      * @var \DateTime
      *
      * @ORM\Column(name="fechapermiso", type="date", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la fecha de licencia")
+     * @Assert\DateTime()
      */
     private $fechapermiso;
 

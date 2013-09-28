@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Pruebapsicologica
@@ -26,6 +27,11 @@ class Pruebapsicologica
      * @var string
      *
      * @ORM\Column(name="resultadocoeficiente", type="string", length=9, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar los resutados de CI")
+     * @Assert\Length(
+     * max = "9",
+     * maxMessage = "El resultados de CI no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $resultadocoeficiente;
 
@@ -33,6 +39,7 @@ class Pruebapsicologica
      * @var integer
      *
      * @ORM\Column(name="calificacioncoeficiente", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la calificacion de CI")
      */
     private $calificacioncoeficiente;
 
@@ -40,6 +47,11 @@ class Pruebapsicologica
      * @var string
      *
      * @ORM\Column(name="resultadoafectividad", type="string", length=9, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar los resutados de Efectividad")
+     * @Assert\Length(
+     * max = "9",
+     * maxMessage = "los resutados de Efectividad no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $resultadoafectividad;
 
@@ -47,6 +59,11 @@ class Pruebapsicologica
      * @var string
      *
      * @ORM\Column(name="resultadorelaciones", type="string", length=9, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar los resutados de Relaciones")
+     * @Assert\Length(
+     * max = "9",
+     * maxMessage = "los resutados de Relaciones no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $resultadorelaciones;
 
@@ -54,6 +71,11 @@ class Pruebapsicologica
      * @var string
      *
      * @ORM\Column(name="resultadoautoreconocimiento", type="string", length=9, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar los resutados de Conocimiento")
+     * @Assert\Length(
+     * max = "9",
+     * maxMessage = "los resutados de Autoreconocimiento no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $resultadoautoreconocimiento;
 
@@ -61,6 +83,11 @@ class Pruebapsicologica
      * @var string
      *
      * @ORM\Column(name="resultadoseguridad", type="string", length=9, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar los resutados de Seguridad")
+     * @Assert\Length(
+     * max = "9",
+     * maxMessage = "los resutados de Seguridad no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $resultadoseguridad;
 

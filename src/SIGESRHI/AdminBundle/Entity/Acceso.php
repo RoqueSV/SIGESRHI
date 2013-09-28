@@ -28,7 +28,10 @@ class Acceso
      *
      * @ORM\Column(name="nombrepagina", type="string", length=50, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de pagina")
-     * @Assert\Length(max="50")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre de pagina no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombrepagina;
 
@@ -37,7 +40,10 @@ class Acceso
      *
      * @ORM\Column(name="ruta", type="string", length=200, nullable=false)
      * @Assert\NotNull(message="Debe ingresar una ruta para el acceso")
-     * @Assert\Length(max="200")
+     * @Assert\Length(
+     * max = "200",
+     * maxMessage = "La ruta no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $ruta;
     

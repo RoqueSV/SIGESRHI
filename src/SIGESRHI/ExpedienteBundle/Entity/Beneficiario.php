@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Beneficiario
@@ -26,6 +27,10 @@ class Beneficiario
      * @var string
      *
      * @ORM\Column(name="nombrebeneficiario", type="string", length=50, nullable=false)
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre del beneficiario no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombrebeneficiario;
 
@@ -33,6 +38,11 @@ class Beneficiario
      * @var string
      *
      * @ORM\Column(name="parentescobeneficiario", type="string", length=10, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el parentezco del beneficiario")
+     * @Assert\Length(
+     * max = "10",
+     * maxMessage = "El parentezco del beneficiario no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $parentescobeneficiario;
 
@@ -40,6 +50,7 @@ class Beneficiario
      * @var integer
      *
      * @ORM\Column(name="porcentaje", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el porcentaje")
      */
     private $porcentaje;
 

@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Docautorizacionplaza
@@ -26,6 +27,11 @@ class Docautorizacionplaza
      * @var string
      *
      * @ORM\Column(name="numrefdoc", type="string", length=20, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el numero de referencia")
+     * @Assert\Length(
+     * max = "20",
+     * maxMessage = "El numero de referencia no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $numrefdoc;
 
@@ -33,6 +39,7 @@ class Docautorizacionplaza
      * @var string
      *
      * @ORM\Column(name="accionplaza", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la accion")
      */
     private $accionplaza;
 
@@ -40,6 +47,8 @@ class Docautorizacionplaza
      * @var \DateTime
      *
      * @ORM\Column(name="fechaautorizacionplaza", type="date", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la fecha de autorizacion de la plaza")
+     * @Assert\DateTime()
      */
     private $fechaautorizacionplaza;
 

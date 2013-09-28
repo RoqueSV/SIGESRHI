@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Docexpediente
@@ -26,6 +27,11 @@ class Docexpediente
      * @var string
      *
      * @ORM\Column(name="nombredocexp", type="string", length=25, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del doc")
+     * @Assert\Length(
+     * max = "25",
+     * maxMessage = "El nombre del documento no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombredocexp;
 
@@ -33,6 +39,11 @@ class Docexpediente
      * @var string
      *
      * @ORM\Column(name="rutadocexp", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la ruta del doc")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "La ruta del documento no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $rutadocexp;
 
@@ -40,6 +51,8 @@ class Docexpediente
      * @var \DateTime
      *
      * @ORM\Column(name="fechadocexp", type="date", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la fecha del documento")
+     * @Assert\DateTime()
      */
     private $fechadocexp;
 

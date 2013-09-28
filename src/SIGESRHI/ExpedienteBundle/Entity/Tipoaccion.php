@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Tipoaccion
@@ -26,6 +27,11 @@ class Tipoaccion
      * @var string
      *
      * @ORM\Column(name="nombretipoaccion", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del tipo de accion")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre del tipo de accion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombretipoaccion;
 
@@ -33,6 +39,10 @@ class Tipoaccion
      * @var string
      *
      * @ORM\Column(name="descripciontipoaccion", type="string", length=150, nullable=true)
+     * @Assert\Length(
+     * max = "150",
+     * maxMessage = "La descripcion de la accion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $descripciontipoaccion;
 

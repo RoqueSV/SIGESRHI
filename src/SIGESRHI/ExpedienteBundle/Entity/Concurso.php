@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Concurso
@@ -26,6 +27,11 @@ class Concurso
      * @var string
      *
      * @ORM\Column(name="codigoconcurso", type="string", length=15, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el codigo de concurso")
+     * @Assert\Length(
+     * max = "15",
+     * maxMessage = "El codigo del concurso no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $codigoconcurso;
 
@@ -33,6 +39,8 @@ class Concurso
      * @var \DateTime
      *
      * @ORM\Column(name="fechaapertura", type="date", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la fecha de apertura")
+     * @Assert\DateTime()
      */
     private $fechaapertura;
 
@@ -40,6 +48,8 @@ class Concurso
      * @var \DateTime
      *
      * @ORM\Column(name="fechacierre", type="date", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la fecha de cierre")
+     * @Assert\DateTime()
      */
     private $fechacierre;
 

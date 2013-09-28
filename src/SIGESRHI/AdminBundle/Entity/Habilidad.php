@@ -28,7 +28,10 @@ class Habilidad
      *
      * @ORM\Column(name="nombrehabilidad", type="string", length=75, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de Habilidad")
-     * @Assert\Length(max="75")
+     * @Assert\Length(
+     * max = "75",
+     * maxMessage = "El nombre de la habilidad no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombrehabilidad;
     

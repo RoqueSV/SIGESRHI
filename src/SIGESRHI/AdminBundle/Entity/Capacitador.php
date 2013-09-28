@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Capacitador
@@ -26,6 +27,11 @@ class Capacitador
      * @var string
      *
      * @ORM\Column(name="nombrecapacitador", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del capacitador")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre del capacitador no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombrecapacitador;
 
@@ -33,6 +39,11 @@ class Capacitador
      * @var string
      *
      * @ORM\Column(name="telefonocapacitador", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el telefono")
+     * @Assert\Length(
+     * max = "8",
+     * maxMessage = "El numero de telefono no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $telefonocapacitador;
 
@@ -40,6 +51,14 @@ class Capacitador
      * @var string
      *
      * @ORM\Column(name="correocapacitador", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la correo")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El correo del capacitador no debe exceder los {{limit}} caracteres"
+     * )
+     * @Assert\Email(
+     *     message = "El correo del capacitador '{{ value }}' no es un correo valido."
+     * )
      */
     private $correocapacitador;
 
@@ -47,6 +66,11 @@ class Capacitador
      * @var string
      *
      * @ORM\Column(name="tematicacapacitador", type="string", length=250, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la tematica")
+     * @Assert\Length(
+     * max = "250",
+     * maxMessage = "La tematica del capacitador no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $tematicacapacitador;
 

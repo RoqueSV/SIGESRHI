@@ -4,6 +4,7 @@ namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Solicitudempleo
@@ -27,6 +28,7 @@ class Solicitudempleo
      * @var integer
      *
      * @ORM\Column(name="numsolicitud", type="integer", nullable=true)
+     * @Assert\NotNull(message="Debe ingresar el numero de solicitud")
      */
     private $numsolicitud;
 
@@ -34,6 +36,10 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="apellidocasada", type="string", length=20, nullable=true)
+     * @Assert\Length(
+     * max = "20",
+     * maxMessage = "El apellido de casada no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $apellidocasada;
 
@@ -41,6 +47,11 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="primerapellido", type="string", length=20, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el primer apellido")
+     * @Assert\Length(
+     * max = "20",
+     * maxMessage = "El primer apellido no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $primerapellido;
 
@@ -48,6 +59,10 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="segundoapellido", type="string", length=20, nullable=false)
+     * @Assert\Length(
+     * max = "20",
+     * maxMessage = "El segundo apellido no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $segundoapellido;
 
@@ -55,6 +70,11 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="nombres", type="string", length=25, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar los nombres")
+     * @Assert\Length(
+     * max = "25",
+     * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombres;
 
@@ -62,6 +82,11 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="colonia", type="string", length=30, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la colonia")
+     * @Assert\Length(
+     * max = "30",
+     * maxMessage = "La colonia no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $colonia;
 
@@ -69,6 +94,10 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="calle", type="string", length=30, nullable=true)
+     * @Assert\Length(
+     * max = "30",
+     * maxMessage = "La calle no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $calle;
 
@@ -76,6 +105,11 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="estadocivil", type="string", length=12, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el estado civil")
+     * @Assert\Length(
+     * max = "12",
+     * maxMessage = "El estado civil no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $estadocivil;
 
@@ -83,6 +117,11 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="telefonofijo", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el telefono")
+     * @Assert\Length(
+     * max = "8",
+     * maxMessage = "El telefono no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $telefonofijo;
 
@@ -90,6 +129,11 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="telefonomovil", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el telefono movil")
+     * @Assert\Length(
+     * max = "8",
+     * maxMessage = "El telefono movil no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $telefonomovil;
 
@@ -97,6 +141,10 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el correo")
+     * @Assert\Email(
+     *     message = "El correo '{{ value }}' no es un correo valido."
+     * )
      */
     private $email;
 
@@ -104,6 +152,11 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="lugarnac", type="string", length=25, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el lugar de nacimiento")
+     * @Assert\Length(
+     * max = "25",
+     * maxMessage = "El lugar de nacimiento no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $lugarnac;
 
@@ -111,6 +164,8 @@ class Solicitudempleo
      * @var \DateTime
      *
      * @ORM\Column(name="fechanac", type="date", nullable=false)
+     * @Assert\DateTime()
+     * @Assert\NotNull(message="Debe ingresar la fecha de nacimiento")
      */
     private $fechanac;
 
@@ -118,6 +173,11 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="dui", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el DUI")
+     * @Assert\Length(
+     * max = "10",
+     * maxMessage = "El DUI no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $dui;
 
@@ -125,6 +185,11 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="lugardui", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el lugar de emision del DUI")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El lugar de emision del DUI no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $lugardui;
 
@@ -132,6 +197,8 @@ class Solicitudempleo
      * @var \DateTime
      *
      * @ORM\Column(name="fechadui", type="date", nullable=false)
+     * @Assert\DateTime()
+     * @Assert\NotNull(message="Debe ingresar la fecha de emision del DUI")
      */
     private $fechadui;
 
@@ -139,6 +206,10 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="nit", type="string", nullable=true)
+     * @Assert\Length(
+     * max = "18",
+     * maxMessage = "El NIT no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nit;
 
@@ -160,6 +231,10 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="nip", type="string", length=20, nullable=true)
+      * @Assert\Length(
+     * max = "20",
+     * maxMessage = "El NIP no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nip;
 
@@ -167,6 +242,7 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="sexo", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el sexo")
      */
     private $sexo;
 
@@ -174,6 +250,11 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="fotografia", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe cargar una fotografia")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre o ruta de la fotografia no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $fotografia;
 
@@ -181,6 +262,8 @@ class Solicitudempleo
      * @var \DateTime
      *
      * @ORM\Column(name="fecharegistro", type="date", nullable=false)
+     * @Assert\DateTime()
+     * @Assert\NotNull(message="Debe ingresar la fecha de registro")
      */
     private $fecharegistro;
 
@@ -188,6 +271,7 @@ class Solicitudempleo
      * @var \DateTime
      *
      * @ORM\Column(name="fechamodificacion", type="date", nullable=true)
+     * @Assert\DateTime()
      */
     private $fechamodificacion;
 

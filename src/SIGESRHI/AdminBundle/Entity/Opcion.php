@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Opcion
@@ -26,6 +27,11 @@ class Opcion
      * @var string
      *
      * @ORM\Column(name="nombreopcion", type="string", length=2, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre de la opcion")
+     * @Assert\Length(
+     * max = "2",
+     * maxMessage = "El nombre de la opcion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombreopcion;
 
@@ -33,6 +39,11 @@ class Opcion
      * @var string
      *
      * @ORM\Column(name="descripcionopcion", type="string", length=500, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la descripcion de la opcion")
+     * @Assert\Length(
+     * max = "500",
+     * maxMessage = "La descripcion de la opcion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $descripcionopcion;
 

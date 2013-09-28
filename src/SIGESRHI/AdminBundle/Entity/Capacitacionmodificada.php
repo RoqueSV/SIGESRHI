@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Capacitacionmodificada
@@ -26,6 +27,7 @@ class Capacitacionmodificada
      * @var \DateTime
      *
      * @ORM\Column(name="fechamodificada", type="date", nullable=true)
+     * @Assert\DateTime()
      */
     private $fechamodificada;
 
@@ -33,6 +35,7 @@ class Capacitacionmodificada
      * @var \DateTime
      *
      * @ORM\Column(name="horainiciomodificada", type="time", nullable=true)
+     * @Assert\DateTime()
      */
     private $horainiciomodificada;
 
@@ -40,6 +43,7 @@ class Capacitacionmodificada
      * @var \DateTime
      *
      * @ORM\Column(name="horafinmodificada", type="time", nullable=true)
+     * @Assert\DateTime()
      */
     private $horafinmodificada;
 
@@ -47,6 +51,10 @@ class Capacitacionmodificada
      * @var string
      *
      * @ORM\Column(name="lugarmodificado", type="string", length=50, nullable=true)
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El nombre del lugar de capacitacion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $lugarmodificado;
 
@@ -54,6 +62,10 @@ class Capacitacionmodificada
      * @var string
      *
      * @ORM\Column(name="perfilmodificado", type="string", length=150, nullable=true)
+     * @Assert\Length(
+     * max = "150",
+     * maxMessage = "El perfil de capacitacion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $perfilmodificado;
 
@@ -68,6 +80,10 @@ class Capacitacionmodificada
      * @var string
      *
      * @ORM\Column(name="metodologiamodificada", type="string", length=250, nullable=true)
+     * @Assert\Length(
+     * max = "250",
+     * maxMessage = "La metodologia de la capacitacion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $metodologiamodificada;
 
@@ -75,6 +91,10 @@ class Capacitacionmodificada
      * @var string
      *
      * @ORM\Column(name="resultadosmodificados", type="string", length=500, nullable=true)
+     * @Assert\Length(
+     * max = "500",
+     * maxMessage = "Los resultados de la capacitacion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $resultadosmodificados;
 
@@ -89,6 +109,10 @@ class Capacitacionmodificada
      * @var string
      *
      * @ORM\Column(name="contactomodificado", type="string", length=50, nullable=true)
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El contacto de capacitacion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $contactomodificado;
 
@@ -103,6 +127,11 @@ class Capacitacionmodificada
      * @var string
      *
      * @ORM\Column(name="justificacionmodificacion", type="string", length=500, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la Justificacion")
+     * @Assert\Length(
+     * max = "500",
+     * maxMessage = "La justificacion de la capacitacion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $justificacionmodificacion;
 

@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Docnoticia
@@ -26,6 +27,11 @@ class Docnoticia
      * @var string
      *
      * @ORM\Column(name="nombredocnoticia", type="string", length=25, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre de la noticia")
+     * @Assert\Length(
+     * max = "25",
+     * maxMessage = "El nombre de la noticia no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $nombredocnoticia;
 
@@ -33,6 +39,10 @@ class Docnoticia
      * @var string
      *
      * @ORM\Column(name="rutadocnoticia", type="string", length=50, nullable=true)
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "La ruta de la noticia no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $rutadocnoticia;
 

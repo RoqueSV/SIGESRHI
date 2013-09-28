@@ -3,6 +3,7 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Noticia
@@ -26,6 +27,8 @@ class Noticia
      * @var \DateTime
      *
      * @ORM\Column(name="fechanoticia", type="date", nullable=false)
+     * @Assert\DateTime()
+     * @Assert\NotNull(message="Debe ingresar la fecha de la noticia")
      */
     private $fechanoticia;
 
@@ -33,6 +36,11 @@ class Noticia
      * @var string
      *
      * @ORM\Column(name="asuntonoticia", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el asunto de la noticia")
+     * @Assert\Length(
+     * max = "50",
+     * maxMessage = "El asunto de la noticia no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $asuntonoticia;
 
@@ -40,6 +48,8 @@ class Noticia
      * @var \DateTime
      *
      * @ORM\Column(name="fechainicionoticia", type="date", nullable=false)
+     * @Assert\DateTime()
+     * @Assert\NotNull(message="Debe ingresar la fecha de inicio de la noticia")
      */
     private $fechainicionoticia;
 
@@ -47,6 +57,8 @@ class Noticia
      * @var \DateTime
      *
      * @ORM\Column(name="fechafinnoticia", type="date", nullable=true)
+     * @Assert\DateTime()
+     * @Assert\NotNull(message="Debe ingresar la fecha de fin de la noticia")
      */
     private $fechafinnoticia;
 
@@ -54,6 +66,11 @@ class Noticia
      * @var string
      *
      * @ORM\Column(name="contenidonoticia", type="string", length=1000, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el contenido de la noticia")
+     * @Assert\Length(
+     * max = "1000",
+     * maxMessage = "El contenido de la noticia no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $contenidonoticia;
 
