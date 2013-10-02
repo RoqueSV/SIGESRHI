@@ -37,7 +37,7 @@ class Centrounidad
     /**
      * @var string
      *
-     * @ORM\Column(name="especialidad", type="text", length=255, nullable=false)
+     * @ORM\Column(name="especialidad", type="text", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la Especialidad")
      */
     private $especialidad;

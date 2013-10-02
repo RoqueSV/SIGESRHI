@@ -1,5 +1,5 @@
 {% extends '::base.html.twig' %}
-{#<script src="{{ asset('bundles/expediente/js/jquery-1.10.2.min.js') }}" type="text/javascript"></script> #}
+
 {% block body -%}
     <h1>Segurovida creation</h1>
 
@@ -24,15 +24,30 @@
         </fieldset>
         <fieldset>
                 <legend>Beneficiarios</legend>
-                <ul class="Beneficiario" data-prototype="{{ form_widget(form.idbeneficiario.vars.prototype)|e }}">
+                <ul class="Beneficiario unstyled" data-prototype="
+                <table>
+                <tr>
+                <td>{{ form_label(form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}</td>
+                <td>{{ form_label(form.idbeneficiario.vars.prototype.parentescobeneficiario)|e }}</td>
+                <td>{{ form_label(form.idbeneficiario.vars.prototype.porcentaje)|e }}</td>
+                {#{{ form_widget(form.idbeneficiario.vars.prototype)|e }}#}
+                </tr>
+                <tr>
+                <td>{{ form_widget(form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}</td>
+                <td>{{ form_widget(form.idbeneficiario.vars.prototype.parentescobeneficiario)|e }}</td>
+                <td>{{ form_widget(form.idbeneficiario.vars.prototype.porcentaje)|e }}</td>
+                </tr>
+                </table>
+                ">
                   {# <li> {{form_widget(form.idbeneficiario[0])}}  </li> #}
+
                 </ul>
        </fieldset>    
 
-
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset" class="btn">Cancelar</button>
+            <button type="reset"  class="btn tool" title="ola k ace!">Cancelar</button>
+            
         </div>
     </form>
 
@@ -44,10 +59,8 @@
     </li>
 </ul>
 
-<script>
+<script>   
 /************************************* Beneficiarios **********************************/
-
-
 
 // Obtiene la ul que contiene la colección de etiquetas
 var collectionHolderBen = $('ul.Beneficiario');

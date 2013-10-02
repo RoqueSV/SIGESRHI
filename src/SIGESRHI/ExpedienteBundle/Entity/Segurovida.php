@@ -52,6 +52,9 @@ class Segurovida
      */
     private $idbeneficiario;
     
+    public function __toString(){
+        return $this->getEstadoseguro();
+    }
     /**
      * Get id
      *

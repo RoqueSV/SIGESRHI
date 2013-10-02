@@ -61,7 +61,9 @@ class Informacionacademica
      */
     private $idtitulo;
 
-
+    public function __toString(){
+        return $this-> getCentroestudio();
+    }
 
     /**
      * Get id

@@ -11,9 +11,9 @@ class SegurovidaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fechaseguro')
-            ->add('estadoseguro',null, array('attr'=>array('data-bvalidator'=>'phone',)))
-            ->add('idexpediente',null,array('class'=>'ExpedienteBundle:Expediente','multiple' => true, ))
+            ->add('fechaseguro', 'date', array('label'=>'Fecha de Nac. ', 'widget' => 'single_text', 'format'=>'dd-MM-yyyy', 'attr' => array('class' => 'date'))) 
+            ->add('estadoseguro',null, array('attr'=>array('data-bvalidator'=>'email','class'=>'input-small')))
+            ->add('idexpediente',null,array('label'=>'Expediente', ))
             ->add('idbeneficiario', 'collection', array(
                 'type' => new BeneficiarioType(),
                 'label' => 'Beneficiarios',
@@ -22,7 +22,7 @@ class SegurovidaType extends AbstractType
                 'allow_delete' => true,
 
                 //'by_reference' => false,
-                ))
+                )) 
         ;
     }
 

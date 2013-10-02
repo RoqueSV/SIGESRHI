@@ -34,4 +34,3 @@ ExpedienteBundle_beneficiario:
 ExpedienteBundle_idioma:
         resource: "@ExpedienteBundle/Resources/config/routing/idioma.yml"
         prefix:   /idioma
-
