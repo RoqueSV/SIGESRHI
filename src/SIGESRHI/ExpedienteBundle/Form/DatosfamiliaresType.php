@@ -16,7 +16,7 @@ class DatosfamiliaresType extends AbstractType
             ->add('nombrefamiliar',null, array('label'=>'Nombre '))
             ->add('direccionfamiliar',null, array('label'=>'Dirección '))
             ->add('telefonofamiliar',null, array('label'=>'Teléfono '))
-            //->add('idsolicitudempleo')
+            ->add('idsolicitudempleo')
         ;
     }
 

@@ -3,6 +3,10 @@
 {% block body -%}
     <h1>Datosfamiliares</h1>
 
+{% for mensaje in app.session.flashbag.get('info') %}
+<p class="info">{{ mensaje }}</p>
+{% endfor %}
+
     <table class="record_properties">
         <tbody>
             <tr>

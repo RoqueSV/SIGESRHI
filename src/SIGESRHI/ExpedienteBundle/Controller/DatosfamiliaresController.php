@@ -44,13 +44,18 @@ class DatosfamiliaresController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->setFlash('info', '¡Enhorabuena! Datos Familiares registrados.');
+
             return $this->redirect($this->generateUrl('datosfamiliares_show', array('id' => $entity->getId())));
         }
 
+            
         return $this->render('ExpedienteBundle:Datosfamiliares:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
+
+        
     }
 
     /**

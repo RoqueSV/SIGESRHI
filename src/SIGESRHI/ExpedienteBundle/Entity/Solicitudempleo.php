@@ -6,11 +6,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\ExecutionContext;
+
+
 /**
  * Solicitudempleo
  *
  * @ORM\Table(name="solicitudempleo")
- * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Entity\SolicitudempleoRepository")
+ * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Repositorio\SolicitudempleoRepository")
+ * @Assert\Callback(methods={"esDuiValido"})
+ * @Assert\Callback(methods={"esNitValido"})
  */
 class Solicitudempleo
 {
@@ -407,7 +413,9 @@ class Solicitudempleo
 
 
 
-
+     public function __toString() {
+        return $this->getNombres();
+    } 
 
 
 
@@ -543,6 +551,111 @@ class Solicitudempleo
 
 
     /*****************************************************************/
+
+
+    /******************** Validacion del dui y nit ******************/
+
+
+    
+        public function esDuiValido(ExecutionContext $context)
+            {
+            
+            $pDui = $this->getDui();
+
+
+        $i= 0;
+        $suma = 0;
+        $digito = 0;
+
+        if($pDui == '000000000'||$pDui=='' || strlen($pDui) != 9){
+
+            $context->addViolationAtSubPath('dui', 'El DUI introducido no tiene
+                el formato correcto (9 digitos), sin guiones y
+                sin dejar ningún espacio en blanco)', array(), null);
+                return;
+
+        }
+                
+
+        $digito = substr($pDui,8);
+
+        for($i=1;$i<strlen($pDui);$i++){
+                $suma = $suma + ((substr($pDui,$i-1,1))*(10-$i));
+                //echo "$suma<br>";
+        }//fin for
+
+        $validar = 0;
+        $validar = (10-($suma%10)) % 10;
+        //echo "<br><br>".$validar."==".$digito."<br><br>";
+       
+        if($digito != $validar){
+
+            $context->addViolationAtSubPath('dui', 'El digito verificador no coincide con el
+                número del DUI. DUI ingresado Inválido.',array(), null);
+
+        }//fin if
+                
+            }//fin funcion esDuiValido()
+
+
+
+    //Funcion validar NIT
+
+            
+            public function esNitValido(){
+
+                $nit= $this->getNit();
+
+    if(preg_match('/(^\d{14})/',$nit)){
+        $verificador = (int) substr($nit,13,1);
+        $valida = false;
+        $suma = 0;
+        if(( (int)substr($nit,10,3) ) <= 100){
+            for($i = 1; $i <= 13; $i++){
+                $suma += ( (int) substr($nit,( $i - 1 ),1) ) * ( 15 - $i );
+            }
+            $valida = ($suma%11);
+
+            if($valida == 10){
+                $valida = 0;
+            }
+        }else{
+            for($i = 1; $i <= 13; $i++){
+                $factor = (3 + (6 * floor(abs(( $i + 4 ) / 6)))) - $i;
+                $suma += ( (int) substr($nit,( $i - 1 ),1) ) * $factor;
+            }
+            $mod = ($suma%11);
+            if($mod > 1){
+                $valida = 11 - $mod;
+            }else{
+                $valida = 0;
+            }
+        }
+        if($valida != $verificador) 
+             $context->addViolationAtSubPath('nit', 'El NIT introducido no es válido
+                No hay coincidencia con el digito verificador.', array(), null);
+                return;
+   }
+   
+    $context->addViolationAtSubPath('nit', 'El NIT introducido no tiene
+                el formato correcto (14 digitos), sin guiones y
+                sin dejar ningún espacio en blanco)', array(), null);
+                return;
+
+}//fin validar NIT
+
+
+
+
+
+
+
+
+    /****************************************************************/
+
+
+
+
 
 
 

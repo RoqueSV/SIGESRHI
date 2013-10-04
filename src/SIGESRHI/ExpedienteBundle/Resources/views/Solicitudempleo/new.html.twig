@@ -93,16 +93,21 @@
             <fieldset>
                 <legend>Datos de Estudio</legend>
 
-                <ul class="Destudios unstyled inline" data-prototype="{{ form_widget(form.Destudios.vars.prototype)|e }}">
+                <ul class="Destudios unstyled" data-prototype="{{ form_widget(form.Destudios.vars.prototype)|e }}">
 
                    <li> {{form_widget(form.Destudios[0])}}  </li>
 
                 </ul>
 
                 <p>Idiomas que domina:</p>
-                <ul class="Idiomas" data-prototype="{{ form_widget(form.Idiomas.vars.prototype)|e }}">
+                <ul class="Idiomas unstyled" data-prototype="{{ form_widget(form.Idiomas.vars.prototype)|e }}">
 
-                   <li> {{form_widget(form.Idiomas[0])}} </li>
+                 {#  <li> {{form_widget(form.Idiomas[0])}} </li> #}
+
+                    {{form_widget(form.Idiomas[0].nombreidioma)}}
+                    {{form_widget(form.Idiomas[0].nivelescribe)}}
+                    {{form_widget(form.Idiomas[0].nivelhabla)}}
+                    {{form_widget(form.Idiomas[0].nivellee)}}                 
 
                 </ul>
 
@@ -116,25 +121,30 @@
 
                 <ul class="Dfamiliares unstyled" data-prototype="{{ form_widget(form.Dfamiliares.vars.prototype)|e }}">
 
-                   {#<li> {{form_widget(form.Dfamiliares[0])}} </li> #}
+                   <li> {{form_widget(form.Dfamiliares[0])}} </li> 
 
                 </ul>
 
-                {#}
-                <table border="1">
-                    <tr><td>Parentesco</td><td>Nombre</td><td>Dirección</td><td>Teléfono</td></tr>
-                    
-                    <tr>
-            <td>{{ form_widget(form.Dfamiliares[0].parentesco) }} {{ form_errors(form.Dfamiliares[0].parentesco) }}</td>
-            <td>{{ form_widget(form.Dfamiliares[0].nombrefamiliar) }} {{ form_errors(form.Dfamiliares[0].nombrefamiliar) }}</td>
-            <td>{{ form_widget(form.Dfamiliares[0].direccionfamiliar) }} {{ form_errors(form.Dfamiliares[0].direccionfamiliar) }}</td>
-            <td>{{ form_widget(form.Dfamiliares[0].telefonofamiliar) }} {{ form_errors(form.Dfamiliares[0].telefonofamiliar) }}</td>
-                    </tr>
-                
-                </table>
-                  #}                 
+                <fieldset>
+                    <legend> Pariente dentro de la institución</legend>
 
-                {# {{ form_row(form.Dfamiliares[0]) }} #}
+                {#}    {{form_row(form.nombreparinst)}}
+                    {{form_row(form.parentescoparinst)}}
+                    {{form_row(form.dependenciaparinst)}}
+
+                #}
+
+                Nombre del Pariente Parentesco dependencia
+                    {{form_widget(form.nombreparinst)}}
+                    {{form_widget(form.parentescoparinst)}}
+                    {{form_widget(form.dependenciaparinst)}}
+
+                    {{form_errors(form.nombreparinst)}}
+                    {{form_errors(form.parentescoparinst)}}
+                    {{form_errors(form.dependenciaparinst)}}
+                
+
+                </fieldset> 
 
             </fieldset>
 
@@ -191,9 +201,12 @@
 
             <p>Declaro bajo juramento que los datos registrados en la solicitud son  verdaderos y autorizo al Instituto Salvadoreño de Rehabilitacion Integral para su respectiva verificación.</p>
 
+
+    <div class="form-actions">
         <p>
-            <button type="submit">Registrar Solicitud</button>
+            <button type="submit"  class="btn btn-primary">Registrar Solicitud</button>
         </p>
+    </div>
     </form>
 </fieldset>
         

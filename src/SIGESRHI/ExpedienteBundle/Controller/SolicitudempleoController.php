@@ -79,12 +79,12 @@ class SolicitudempleoController extends Controller
         $datosempAnterior->setTipodatoempleo('Empleo Anterior');
         $entity->getDempleos()->add($datosempAnterior);
         
-      /*  //agregamos datos familiares
+        //agregamos datos familiares
         $datosFam= new Datosfamiliares();
         $datosFam->name = 'Dato Familiar 1';
         $entity->getDfamiliares()->add($datosFam);
         //termina pruebas
-*/
+
         //agregamos datos de estudio
         $datosEst= new Informacionacademica();
         $datosEst->name = 'Dato studio 1';
@@ -96,7 +96,7 @@ class SolicitudempleoController extends Controller
         $Idioma->name = 'Idioma 1';
         $entity->getIdiomas()->add($Idioma);
         //termina pruebas
-
+    
         $form   = $this->createForm(new SolicitudempleoType(), $entity);
 
         return $this->render('ExpedienteBundle:Solicitudempleo:new.html.twig', array(
