@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo;
@@ -10,6 +11,10 @@ use SIGESRHI\ExpedienteBundle\Entity\Datosempleo;
 use SIGESRHI\ExpedienteBundle\Entity\Datosfamiliares;
 use SIGESRHI\ExpedienteBundle\Entity\Informacionacademica;
 use SIGESRHI\ExpedienteBundle\Entity\Idioma;
+
+use SIGESRHI\ExpedienteBundle\Entity\Municipio;
+use SIGESRHI\ExpedienteBundle\Entity\Departamento;
+use SIGESRHI\ExpedienteBundle\Repositorio\departamentoRepository;
 
 use SIGESRHI\ExpedienteBundle\Form\SolicitudempleoType;
 
@@ -220,4 +225,48 @@ class SolicitudempleoController extends Controller
             ->getForm()
         ;
     }
-}
+
+
+    /************Funcion consultar municipios**************/
+
+ public function consultarMunicipiosJSONAction(){
+
+    $request = $this->getRequest();
+    $idDpto = $request->get('departamento');
+    //$departamDao = new DepartamentoRepository($this->getDoctrine());
+    //$municipios = $departamDao->consultarMunicipioDpto($idDpto);
+    $em=$this->getDoctrine()->getEntityManager(); //agregado
+    $departamDao = $em->getRepository('ExpedienteBundle:Departamento')->find($idDpto); //agregado
+    $municipios = $departamDao->getMunicipios();  //agregado
+   
+    $numfilas = count($municipios);
+
+    $muni = new Municipio();
+    $i = 0;
+
+    foreach ($municipios as $muni){
+        $rows[$i]['id'] = $muni->getId();
+        $rows[$i]['cell'] = array($muni->getId(), 
+            $muni->getNombremunicipio(),
+            $muni->getIddepartamento());
+        $i++;
+    }
+
+    $datos = json_encode($rows);
+    $pages = floor($numfilas / 10) +1;
+
+    $jsonresponse = '{
+        "page":"1",
+        "total":"'.$pages.'",
+        "records":"'.$numfilas.'",
+        "rows":'.$datos.'}';
+
+        $response= new Response($jsonresponse);
+        return $response;
+}//fin funcion
+
+
+}//fin clase
+
+
+

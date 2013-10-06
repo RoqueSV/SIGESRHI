@@ -1,5 +1,6 @@
- {% extends '::base.html.twig' %}  
+  {% extends '::base.html.twig' %}  
 
+{# <script src="{{ asset('bundles/expediente/js/jquery-1.10.2.min.js') }}" type="text/javascript"></script> #}
       
 {% block body -%}
 
@@ -210,13 +211,41 @@
     </form>
 </fieldset>
         
-{% endblock %}
 
-{% block javascriptfoot%}
 
-{{ parent() }}
+
 
 <script>
+
+    /******************************* Select dependientes *********************************/
+
+
+    $(document).ready(function(){
+        $('#sigesrhi_expedientebundle_solicitudempleotype_departamentos').change(function(){
+            $('#sigesrhi_expedientebundle_solicitudempleotype_idmunicipio').children().remove();
+
+            $.getJSON('consultarMunicipiosJSON?departamento='+$('#sigesrhi_expedientebundle_solicitudempleotype_departamentos').val(),
+             function(data){
+                var i=0;
+                $.each(data, function(key, val){
+                    if(key=='rows'){
+                        $.each(val, function(id, registro){
+                            $('#sigesrhi_expedientebundle_solicitudempleotype_idmunicipio').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+                        });
+
+                    }
+
+                });
+
+//$('#sigesrhi_expedientebundle_solicitudempleotype_departamentos').children().remove(); //probando
+             });
+
+
+        });//#departamento
+
+    });//document
+
+
 
 
 /*********************************** Datos Familiares ****************************************/
