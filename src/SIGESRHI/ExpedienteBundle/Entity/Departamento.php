@@ -1,6 +1,7 @@
 <?php
 
 namespace SIGESRHI\ExpedienteBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -9,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Departamento
  *
  * @ORM\Table(name="departamento")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Repositorio\DepartamentoRepository")
  */
 class Departamento
 {
@@ -72,5 +73,52 @@ class Departamento
     public function getNombredepartamento()
     {
         return $this->nombredepartamento;
+    }
+
+
+
+     /**
+     * @ORM\OneToMany(targetEntity="Municipio", mappedBy="iddepartamento")
+     */
+    protected $Municipios;
+
+    public function __construct()
+    {
+        $this->Municipios = new ArrayCollection();
+        
+    }
+
+
+      /**
+     * Add Municipios
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Municipio $municipios
+     * @return Departamento
+     */
+    public function addMunicipio(\SIGESRHI\ExpedienteBundle\Entity\Municipio $municipios)
+    {
+        $this->Municipios[] = $municipios;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Municipios
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Municipio $municipios
+     */
+    public function removeMunicipio(\SIGESRHI\ExpedienteBundle\Entity\Municipio $municipios)
+    {
+        $this->Municipios->removeElement($municipios);
+    }
+
+    /**
+     * Get Municipios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMunicipios()
+    {
+        return $this->Municipios;
     }
 }

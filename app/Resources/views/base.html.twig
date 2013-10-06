@@ -8,7 +8,7 @@
         {#Bootstrap#}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" /> 
         {% stylesheets filter='cssrewrite,?yui_css'
-        '@MopaBootstrapBundle/Resources/bootstrap/bootstrap.css'
+        '@MopaBootstrapBundle/Resources/bootstrap/bootstrap.css' output='js/compiled/main.js'
         %}
         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
         {% endstylesheets %}
@@ -16,7 +16,7 @@
         <link href="{{ asset('bundles/expediente/css/jquery-ui.css') }}" type="text/css" rel="stylesheet" />
         {#Validador#}
         <link href="{{ asset('bundles/bValidator-0.71.1/bvalidator.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('css/form.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/form.css') }}" rel="stylesheet" type="text/css" /> 
         {% endblock %} 
         
         {# ---JS--- #}
@@ -32,7 +32,7 @@
         {#Validador#}
         <script type="text/javascript" src="{{ asset('bundles/bValidator-0.71.1/jquery.bvalidator.js')}}"></script>
         <script type="text/javascript" src="{{ asset('bundles/bValidator-0.71.1/bvalidator.lang.es.js')}}" ></script>
-        <script type="text/javascript" src="{{ asset('js/utilidades.js')}}" ></script>
+        <script type="text/javascript" src="{{ asset('js/utilidades.js')}}" ></script> 
         {% endblock %}
                
     </head>

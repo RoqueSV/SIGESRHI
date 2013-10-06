@@ -33,4 +33,8 @@ ExpedienteBundle_beneficiario:
 
 ExpedienteBundle_idioma:
         resource: "@ExpedienteBundle/Resources/config/routing/idioma.yml"
-        prefix:   /idioma
+        prefix:   /
+
+ExpedienteBundle_consultarMunicipiosJSON:
+    pattern:  /solicitud/consultarMunicipiosJSON    
+    defaults: { _controller: ExpedienteBundle:solicitudempleo:consultarMunicipiosJSON }
