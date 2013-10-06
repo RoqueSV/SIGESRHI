@@ -43,6 +43,12 @@ $(document).ready(function(){
               yearSuffix: ''};
               $.datepicker.setDefaults($.datepicker.regional['es']);
               });
+
+  /***** Telefono ****/
+    jQuery(function ($) {
+         $(".telefono").mask("99999999",{placeholder:" "});
+    });
+
 });
 
 

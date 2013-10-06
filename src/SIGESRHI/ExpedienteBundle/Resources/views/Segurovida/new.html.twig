@@ -1,6 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+
     <h1>Segurovida creation</h1>
 
     <form action="{{ path('segurovida_create') }}" id= "seguro_form" class="form-horizontal" method="post" {{ form_enctype(form) }}>
