@@ -2,6 +2,10 @@ expediente_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: ExpedienteBundle:Default:index }
 
+reporteprueba:
+    pattern:  /hello/reporte/prueba1
+    defaults: { _controller: ExpedienteBundle:Default:reportePrueba }
+
 
 ExpedienteBundle_solicitud:
         resource: "@ExpedienteBundle/Resources/config/routing/solicitudempleo.yml"
