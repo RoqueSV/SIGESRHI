@@ -23,6 +23,7 @@
                 </tr>
             </table>
         </fieldset>
+
         <fieldset>
                 <legend>Beneficiarios</legend>
                 <ul class="Beneficiario unstyled" data-prototype="
@@ -44,7 +45,7 @@
 
                 </ul>
        </fieldset>    
-
+        {{ form_rest(form) }}
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Guardar</button>
             <button type="reset"  class="btn tool" title="ola k ace!">Cancelar</button>
@@ -67,7 +68,7 @@
 var collectionHolderBen = $('ul.Beneficiario');
 
 // configura una enlace "Agregar una etiqueta"
-var $addTagLinkBen = $('<input type="button" value="Agregar Beneficiario">');
+var $addTagLinkBen = $('<a href="#" class="add_tag_link">Agregar Beneficiario</a>');
 var $newLinkLiBen = $('<ul></ul>').append($addTagLinkBen);
 
 jQuery(document).ready(function() {
@@ -118,7 +119,7 @@ function addTagForm(collectionHolder, $newLinkLi) {
 }
 
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormA = $('<input type="button" value="Eliminar">');
+    var $removeFormA = $('<a href="#">Eliminar</a>');
     $tagFormLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {

@@ -147,22 +147,22 @@ class Segurovida
      * @param \SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario
      * @return Segurovida
      */
-    public function addIdbeneficiario(\SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario)
+    /*public function addIdbeneficiario(\SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario)
     {
         $this->idbeneficiario[] = $idbeneficiario;
     
         return $this;
-    }
+    }*/
 
     /**
      * Remove idbeneficiario
      *
      * @param \SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario
      */
-    public function removeIdbeneficiario(\SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario)
+    /*public function removeIdbeneficiario(\SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario)
     {
         $this->idbeneficiario->removeElement($idbeneficiario);
-    }
+    }*/
 
     /**
      * Get idbeneficiario
@@ -174,8 +174,11 @@ class Segurovida
         return $this->idbeneficiario;
     }
 
-    public function setIdBeneficiario(ArrayCollection $idbeneficiario)
+    public function setIdBeneficiario(\Doctrine\Common\Collections\Collection $idbeneficiario)
     {
         $this->idbeneficiario = $idbeneficiario;
+        foreach ($idbeneficiario as $beneficiario) {
+            $beneficiario->setIdsegurovida($this);
+        }
     }
 }

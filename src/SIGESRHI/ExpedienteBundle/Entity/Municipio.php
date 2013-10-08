@@ -38,7 +38,7 @@ class Municipio
     /**
      * @var \Departamento
      *
-     * @ORM\ManyToOne(targetEntity="Departamento")
+     * @ORM\ManyToOne(targetEntity="Departamento", inversedBy="Municipios")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="iddepartamento", referencedColumnName="id")
      * })

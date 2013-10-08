@@ -37,4 +37,4 @@ ExpedienteBundle_idioma:
 
 ExpedienteBundle_consultarMunicipiosJSON:
     pattern:  /solicitud/consultarMunicipiosJSON    
-    defaults: { _controller: ExpedienteBundle:solicitudempleo:consultarMunicipiosJSON }
+    defaults: { _controller: ExpedienteBundle:Solicitudempleo:consultarMunicipiosJSON }
