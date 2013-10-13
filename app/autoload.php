@@ -10,6 +10,7 @@ if (!function_exists('intl_get_error_code')) {
 }
 
 $loader->add('Application', __DIR__);
+$loader->add('Pagerfanta', __DIR__.'/../vendor/pagerfanta/src');
 
 AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 

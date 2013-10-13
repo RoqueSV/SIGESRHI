@@ -1,30 +1,42 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-
-    <h1>Segurovida creation</h1>
+{% block principal -%}
+    
+    <!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+    
+    <h3 class="text-center">Ingreso de seguro de vida</h3>
+    
+    <!-- Contenido ayuda -->
+    <div id="help" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="helpLabel" aria-hidden="true">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+       <h3 id="helpLabel">Seguro de vida</h3>
+      </div>
+      <div class="modal-body">
+       <p>¿Cómo llenar este formulario?</p>
+       <p>Se describen a continuación los pasos necesarios</p>
+      </div>
+      <div class="modal-footer">
+       <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+      </div>
+    </div>
+    <!-- fin Ayuda -->
 
     <form action="{{ path('segurovida_create') }}" id= "seguro_form" class="form-horizontal" method="post" {{ form_enctype(form) }}>
-      {#{{ form_widget(form) }}#}
+    
+    {#Formulario principal#}
        <fieldset>
-        <legend>Datos Generales</legend>
-            <table>
-                <tr>
-                    <td>{{ form_label(form.fechaseguro) }}</td>
-                    <td>{{ form_widget(form.fechaseguro) }} {{ form_errors(form.fechaseguro) }}</td>
-                </tr>
-                <tr>    
-                    <td>{{ form_label(form.estadoseguro) }}</td>
-                    <td>{{ form_widget(form.estadoseguro) }} {{ form_errors(form.estadoseguro) }}</td>
-                </tr> 
-                <tr>   
-                    <td>{{ form_label(form.idexpediente) }}</td>
-                    <td>{{ form_widget(form.idexpediente) }} {{ form_errors(form.idexpediente) }}</td>
-                </tr>
-            </table>
-        </fieldset>
-
-        <fieldset>
+           <legend>Datos Generales</legend>
+            <div>
+                {{ form_row(form.fechaseguro)}}
+                {{ form_row(form.estadoseguro)}}
+                {{ form_row(form.idexpediente)}}
+           </div>
+       </fieldset>
+    
+    {#Formulario embebido#}
+       <fieldset>
                 <legend>Beneficiarios</legend>
                 <ul class="Beneficiario unstyled" data-prototype="
                 <table>
@@ -32,7 +44,7 @@
                 <td>{{ form_label(form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}</td>
                 <td>{{ form_label(form.idbeneficiario.vars.prototype.parentescobeneficiario)|e }}</td>
                 <td>{{ form_label(form.idbeneficiario.vars.prototype.porcentaje)|e }}</td>
-                {#{{ form_widget(form.idbeneficiario.vars.prototype)|e }}#}
+                
                 </tr>
                 <tr>
                 <td>{{ form_widget(form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}</td>
@@ -41,25 +53,16 @@
                 </tr>
                 </table>
                 ">
-                  {# <li> {{form_widget(form.idbeneficiario[0])}}  </li> #}
+                 <li> {{form_widget(form.idbeneficiario[0])}} </li>
 
                 </ul>
        </fieldset>    
-        {{ form_rest(form) }}
-        <div class="form-actions">
+        <div class="centered">
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset"  class="btn tool" title="ola k ace!">Cancelar</button>
-            
+            <button type="reset"  class="btn">Cancelar</button> 
         </div>
+    {{ form_rest(form) }}
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('segurovida') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
 
 <script>   
 /************************************* Beneficiarios **********************************/
@@ -68,7 +71,7 @@
 var collectionHolderBen = $('ul.Beneficiario');
 
 // configura una enlace "Agregar una etiqueta"
-var $addTagLinkBen = $('<a href="#" class="add_tag_link">Agregar Beneficiario</a>');
+var $addTagLinkBen = $('<a href="#" class="add_tag_link btn tool" title="Agregar beneficiario"><i class="icon-plus-sign"></i></a>');
 var $newLinkLiBen = $('<ul></ul>').append($addTagLinkBen);
 
 jQuery(document).ready(function() {
@@ -93,43 +96,6 @@ jQuery(document).ready(function() {
         addTagForm(collectionHolderBen, $newLinkLiBen);
     });
 });
-
-/************************* Funciones predefinidas ******************************/
-function addTagForm(collectionHolder, $newLinkLi) {
-    // Obtiene los datos del prototipo explicado anteriormente
-    var prototype = collectionHolder.data('prototype');
-
-    // Consigue el nuevo índice
-    var index = collectionHolder.data('index');
-
-    // Sustituye el '__name__' en el prototipo HTML para que
-    // en su lugar sea un número basado en cuántos elementos hay
-    var newForm = prototype.replace(/__name__/g, index);
-
-    // Incrementa en uno el índice para el siguiente elemento
-    collectionHolder.data('index', index + 1);
-
-    // Muestra el formulario en la página en un elemento li,
-    // antes del enlace 'Agregar una etiqueta'
-    var $newFormLi = $('<li></li>').append(newForm);
-    $newLinkLi.before($newFormLi);
-
-     // Añade un enlace eliminar el nuevo formulario
-    addTagFormDeleteLink($newFormLi);
-}
-
-function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormA = $('<a href="#">Eliminar</a>');
-    $tagFormLi.append($removeFormA);
-
-    $removeFormA.on('click', function(e) {
-        // evita crear el enlace con una "#" en la URL
-        e.preventDefault();
-
-        // quita el li de la etiqueta del formulario
-        $tagFormLi.remove();
-    });
-}
 </script>
 
 {% endblock %}

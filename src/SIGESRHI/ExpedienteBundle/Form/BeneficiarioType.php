@@ -14,7 +14,7 @@ class BeneficiarioType extends AbstractType
             ->add('nombrebeneficiario')
             ->add('parentescobeneficiario')
             ->add('porcentaje')
-            ->add('idsegurovida')
+            //->add('idsegurovida')
         ;
     }
 

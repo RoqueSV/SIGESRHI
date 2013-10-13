@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
             new SIGESRHI\ExpedienteBundle\ExpedienteBundle(),
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
+            new APY\DataGridBundle\APYDataGridBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

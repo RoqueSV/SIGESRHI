@@ -18,8 +18,8 @@ security:
         main:
             pattern:    ^/
             form_login:
-                check_path: /admin/login_check
-                login_path: /admin/login
+                check_path: /login_check
+                login_path: /inicio
                 provider: fos_userbundle
             logout:
                 path:   /admin/logout

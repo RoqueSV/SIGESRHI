@@ -50,5 +50,6 @@ return array(
     'Doctrine\\Bundle\\DoctrineBundle' => array($vendorDir . '/doctrine/doctrine-bundle'),
     'CG\\' => array($vendorDir . '/jms/cg/src'),
     'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
+    'APY\\DataGridBundle' => array($vendorDir . '/apy/datagrid-bundle'),
     '' => array($baseDir . '/src'),
 );

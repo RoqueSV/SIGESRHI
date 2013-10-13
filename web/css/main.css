@@ -1,7 +1,8 @@
+/***** Principa Base ****/
 * {
 margin: 0px;
 padding: 0px;
-font-family: arial, sans-serif;
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .titulo1 {
@@ -23,12 +24,12 @@ text-shadow: 0.2em 0.2em 0.3em black;
 
 }
 
-header, section, footer, aside, nav, article, figure, figcaption,
-hgroup{
-display: block;
-}
 
 body {
+margin: 0;
+font-size: 14px;
+line-height: 20px;
+color: #333333;
 text-align: center;
 background: #ECE9D8;
 }
@@ -51,11 +52,12 @@ border-radius: 10px;
 }
 
 #menu {
-background: #CCCCCC;
-padding: 5px 5px;
+padding: 5px 0px;
+/*background: #CCCCCC;*/
+/*padding: 5px 5px;
 -moz-border-radius: 10px;
 -webkit-border-radius: 10px;
-border-radius: 10px;
+border-radius: 10px;*/
 } 
 
 /*
@@ -71,7 +73,7 @@ font: bold 14px arial, sans-serif;
 background: #CCCCCC;
 float: left;
 width: 680px;
-margin: 10px 0px 10px 10px;
+margin: 3px 0px 10px 10px;
 padding: 10px 10px;
 
 /*
@@ -89,8 +91,8 @@ border-radius: 10px;
 #columna {
 float: left;
 width: 210px; /*220*/
-margin: 10px 0px; /*20px 0px*/
-padding: 20px;
+margin: 3px 0px; /*20px 0px*/
+padding: 20px 20px 5px 20px;
 background: #CCCCCC;
 -moz-border-radius: 10px;
 -webkit-border-radius: 10px;
@@ -105,5 +107,38 @@ padding: 20px;
 border-top: 2px solid #999999;
 }
 
+/***** Para formularios ******/
 
+/*** Centrado ***/
+.centered
+{
+    text-align:center;
+}
 
+/** botón circular **/
+.btn-cir {
+background-color: #f5f5f5;
+*background-color: #e6e6e6;
+display: inline-block;
+*display: inline;
+padding: 2px 8px 2px 8px;
+margin-bottom: 0;
+*margin-left: .3em;
+border: 1px solid #cccccc;
+*border: 0;
+border-radius: 100%;
+cursor: pointer;
+}
+
+/* Acciones */
+.btn-cir:hover,
+.btn-cir:focus,
+.btn-cir:active,
+.btn-cir.active,
+.btn-cir.disabled,
+.btn-cir[disabled] {
+color: #333333;
+background-color: #e6e6e6;
+*background-color: #d9d9d9;
+}
+/********************/
