@@ -3,8 +3,8 @@
 namespace SIGESRHI\ExpedienteBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use \Java;
-use \JavaClass;
+//use \Java;
+//use \JavaClass;
 
 class DefaultController extends Controller
 {

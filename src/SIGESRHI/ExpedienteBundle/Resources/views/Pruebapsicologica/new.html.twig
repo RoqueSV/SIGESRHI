@@ -1,0 +1,89 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+<fieldset><legend>Resultados de prueba Psicológica</legend>
+    <h1>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h1>
+    <fieldset><legend>Datos Generales del evaluado</legend>
+    <table>
+    <tr>
+        <td>Fecha:</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Nombre:</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Escolaridad:</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Plaza a la que aplica:</td>
+        <td></td>
+    </tr>
+    </table>
+    </fieldset>
+
+    <form action="{{ path('pruebapsicologica_create') }}" id= "pruebapsicologica_form" class="form-horizontal" method="post" {{ form_enctype(form) }}>
+        {#{{ form_widget(form) }}#}        
+        <fieldset>
+        <legend>Resultados</legend>
+        <p>Para la evaluación psicológica se tomo en cuenta los siguientes aspectos:</p>
+            <table>
+            <tr>
+            <th align="center">Criterios</th>
+            <th  width="250">Rangos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Resultado</th>            
+            <th>Calificación</th>
+            </tr>            
+            <tr>
+                <td>{{ form_label(form.resultadocoeficiente) }}</td>
+                <td>
+                <table>
+                {% for child in form.resultadocoeficiente %}
+                <tr>
+                <td>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
+                <tr>
+                {% endfor %}
+                </table>
+                </td>
+                <td>{{ form_widget(form.calificacioncoeficiente) }} {{form_errors(form.calificacioncoeficiente)}}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.resultadoafectividad) }}</td>
+                <td>{{ form_widget(form.resultadoafectividad) }} {{form_errors(form.resultadoafectividad)}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.resultadorelaciones) }}</td>
+                <td>{{ form_widget(form.resultadorelaciones) }} {{form_errors(form.resultadorelaciones)}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.resultadoautoreconocimiento) }}</td>
+                <td>{{ form_widget(form.resultadoautoreconocimiento) }} {{form_errors(form.resultadoautoreconocimiento)}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.resultadoseguridad) }}</td>
+                <td>{{ form_widget(form.resultadoseguridad) }} {{form_errors(form.resultadoseguridad)}}</td>
+                <td></td>
+            </tr>
+            </table>
+        <fieldset>
+        {{ form_rest(form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="reset"  class="btn tool">Cancelar</button>
+        </div>
+        
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('pruebapsicologica') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+</fieldset>
+{% endblock %}
