@@ -5,6 +5,7 @@ namespace SIGESRHI\ExpedienteBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use SIGESRHI\ExpedienteBundle\Repositorio\ExpedienteRepository;
 use SIGESRHI\ExpedienteBundle\Entity\Expediente;
 use SIGESRHI\ExpedienteBundle\Entity\Pruebapsicologica;
 use SIGESRHI\ExpedienteBundle\Form\PruebapsicologicaType;
@@ -69,14 +70,21 @@ class PruebapsicologicaController extends Controller
      * Displays a form to create a new Pruebapsicologica entity.
      *
      */
-    public function newAction()
+    public function newAction($idexp)
     {
         $entity = new Pruebapsicologica();
         $form   = $this->createForm(new PruebapsicologicaType(), $entity);
 
+        //$em = $this->getDoctrine()->getManager();
+        //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+        
+        $em = $this->getDoctrine()->getManager();
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedientes($idexp);
+
         return $this->render('ExpedienteBundle:Pruebapsicologica:new.html.twig', array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'expediente' => $expediente,
+            'form'   => $form->createView(),            
         ));
     }
 

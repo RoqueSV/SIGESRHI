@@ -5,22 +5,24 @@
     <h1>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h1>
     <fieldset><legend>Datos Generales del evaluado</legend>
     <table>
+    {% for exp in expediente %}
     <tr>
-        <td>Fecha:</td>
+        <td>Fecha:<b> {{ exp.fechaexpediente | date('d-m-Y') }} </b></td>
         <td></td>
     </tr>
     <tr>
-        <td>Nombre:</td>
+        <td>Nombre:<b> {{ exp.nombres  }}</b></td>
         <td></td>
     </tr>
     <tr>
-        <td>Escolaridad:</td>
+        <td>Escolaridad:<b> {{ exp.nombretitulo }}</b></td>
         <td></td>
     </tr>
     <tr>
-        <td>Plaza a la que aplica:</td>
+        <td>Plaza a la que aplica: <b>{{ exp.nombreplaza }}</b></td>
         <td></td>
     </tr>
+    {% endfor %}
     </table>
     </fieldset>
 

@@ -104,4 +104,6 @@ class Expediente
     {
         return $this->tipoexpediente;
     }
+
+    
 }
