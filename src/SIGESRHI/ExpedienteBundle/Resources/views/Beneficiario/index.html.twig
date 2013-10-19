@@ -3,13 +3,16 @@
 {% block principal -%}
 
 
-    <h1>Beneficiario list</h1>
+    <h1>Beneficiarios</h1>
     
-    {{ grid_search(grid) }}
+    {#{{ grid_search(grid) }}
 
-    {{ grid(grid,_self) }}
+    {{ grid(grid,_self) }}#}
     
-    {#{{grid (grid)}}#}
+    {{ grid_search(grid, 'APYDataGridBundle::blocks.html.twig') }}
+
+    {{ grid(grid,_self, 'APYDataGridBundle::blocks_js.jquery.html.twig') }}
+
 
     {% block grid_filters %}{% endblock %}
     
@@ -53,13 +56,32 @@
         </li>
     </ul>#}
 
+     <script type="text/javascript">
+    function doFilter (id) {
+
+        var data = {};
+
+        var name = $('#'+id).attr('name');
+
+        data[name] = $('#'+id).val();
+
+        $.ajax({
+              type: "POST",
+              url: "{{ path('beneficiario_new') }}",
+              data: data,  
+            }).done(function( msg ) {
+              $('#grid').html(msg);
+            });
+    }
+    </script>
     <script type="text/javascript">
-      function doPage (url) { 
-          $.ajax({
+     function doPage (url) {
+
+    $.ajax({
           url: url,
-          }).done(function( msg ) {
+        }).done(function( msg ) {
           $('#grid').html(msg);
-          });
-          }
+        });
+    }
     </script>
     {% endblock %}

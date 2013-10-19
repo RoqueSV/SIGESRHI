@@ -81,7 +81,7 @@ class Beneficiario
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idsegurovida", referencedColumnName="id")
      * })
-     *@GRID\Column(field="idsegurovida.id", title="Cod_seguro", filter="input")
+     *@GRID\Column(field="idsegurovida.estadoseguro", title="Cod_seguro", filter="input")
      */
     private $idsegurovida;
 

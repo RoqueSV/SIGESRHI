@@ -1,7 +1,7 @@
 .grid table
 {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: separate;
+    border-collapse: collapse;
     color: #555555;
     font-size: 1em;
     width: 100%;
@@ -67,7 +67,8 @@ width: 150px;
 }
 
 .grid .pager{
- margin-bottom: 10px;
+ margin: 0px 0px 10px 0px;
+ /*color: #0088cc;*/
 }
 
 .grid .pager select{
@@ -77,6 +78,7 @@ width: 150px;
     padding: 0px;
     margin:0px;
     text-align: center;
+
 
 }
 .grid .prev{ 

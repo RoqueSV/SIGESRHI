@@ -650,6 +650,8 @@ a:focus {
 
 p {
   margin: 0px;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 
 .lead {

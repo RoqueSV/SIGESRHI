@@ -24,7 +24,7 @@ class BeneficiarioController extends Controller
      * Lists all Beneficiario entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         // Creates simple grid based on your entity (ORM)
         $source = new Entity('ExpedienteBundle:Beneficiario');
@@ -36,10 +36,10 @@ class BeneficiarioController extends Controller
         $grid->setSource($source);
         
         // Configuration of the grid
-        // Create an Actions Column
         
         // Attach a rowAction to the Actions Column
         $rowAction1 = new RowAction('Mostrar', 'beneficiario_show');
+        $rowAction1->setRouteParameters(array('id'));
         $rowAction1->setColumn('info_column');
         $grid->addRowAction($rowAction1);
         
@@ -53,12 +53,11 @@ class BeneficiarioController extends Controller
         $grid->addMassAction(new DeleteMassAction());
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
-        
+        $grid->setPersistence(true);
         // Manage the grid redirection, exports and the response of the controller
-        return $grid->getGridResponse('ExpedienteBundle:Beneficiario:index.html.twig');
-
+        //return $grid->getGridResponse('ExpedienteBundle:Beneficiario:index.html.twig');
         //ajax version
-        //return $grid->getGridResponse($request->isXmlHttpRequest() ? 'ExpedienteBundle:Beneficiario:index.html.twig' : 'ExpedienteBundle:Segurovida:index.html.twig');
+        return $grid->getGridResponse($request->isXmlHttpRequest() ?  'ExpedienteBundle:Segurovida:index.html.twig':'ExpedienteBundle:Beneficiario:index.html.twig');
     }
     
     /*public function indexAction()
