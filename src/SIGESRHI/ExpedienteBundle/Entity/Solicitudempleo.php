@@ -8,17 +8,21 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\ExecutionContext;
 
+use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Solicitudempleo
  *
  * @ORM\Table(name="solicitudempleo")
  * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Repositorio\SolicitudempleoRepository")
+ * @ORM\HasLifecycleCallbacks
  * @Assert\Callback(methods={"esDuiValido"})
  * @Assert\Callback(methods={"esNitValido"})
  */
+
+
 class Solicitudempleo
 {
     /**
@@ -65,7 +69,7 @@ class Solicitudempleo
     /**
      * @var string
      *
-     * @ORM\Column(name="segundoapellido", type="string", length=20, nullable=false)
+     * @ORM\Column(name="segundoapellido", type="string", length=20, nullable=true)
      * @Assert\Length(
      * max = "20",
      * maxMessage = "El segundo apellido no debe exceder los {{limit}} caracteres"
@@ -171,8 +175,7 @@ class Solicitudempleo
      * @var \DateTime
      *
      * @ORM\Column(name="fechanac", type="date", nullable=false)
-     * @Assert\DateTime()
-     * @Assert\NotNull(message="Debe ingresar la fecha de nacimiento")
+     * 
      */
     private $fechanac;
 
@@ -204,15 +207,14 @@ class Solicitudempleo
      * @var \DateTime
      *
      * @ORM\Column(name="fechadui", type="date", nullable=false)
-     * @Assert\DateTime()
-     * @Assert\NotNull(message="Debe ingresar la fecha de emision del DUI")
-     */
+     * 
+      */
     private $fechadui;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nit", type="string", length=14, nullable=true)
+     * @ORM\Column(name="nit", type="string", length=14, nullable=false)
      * @Assert\Length(
      * max = "14",
      * maxMessage = "El NIT no debe exceder los {{limit}} caracteres"
@@ -273,12 +275,22 @@ class Solicitudempleo
      */
     private $fotografia;
 
+    
+    /**
+     * @Assert\File(
+     * maxSize="2048k",
+     * mimeTypes = {"image/jpeg", "image/png"},
+     * mimeTypesMessage = "Por favor suba una fotografía valida (formato jpeg o png)."
+     * )
+     */
+    private $file;
+
+
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecharegistro", type="date", nullable=false)
-     * @Assert\DateTime()
-     * @Assert\NotNull(message="Debe ingresar la fecha de registro")
+     * 
      */
     private $fecharegistro;
 
@@ -286,7 +298,7 @@ class Solicitudempleo
      * @var \DateTime
      *
      * @ORM\Column(name="fechamodificacion", type="date", nullable=false)
-     * @Assert\DateTime()
+     * 
      */
     private $fechamodificacion;
 
@@ -329,6 +341,8 @@ class Solicitudempleo
      * )
      */
     private $dependenciaparinst;
+
+   public $aceptar;
 
 
 
@@ -412,25 +426,9 @@ class Solicitudempleo
     /******************************************************************************************/
 
 
-
-
      public function __toString() {
         return $this->getNombres();
     } 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
@@ -468,12 +466,7 @@ class Solicitudempleo
     /****************************************************************/
     //Pruebas de integracion de coleccion de formularios
 
-        /*************Datos de empleos****************/
-
-    /**
-     * @ORM\OneToMany(targetEntity="Datosempleo", mappedBy="idsolicitudempleo")
-     */
-    protected $Dempleos;
+       
 
     public function __construct()
     {
@@ -484,50 +477,83 @@ class Solicitudempleo
     }
 
 
+ /*************Datos de empleos****************/
+
+    /**
+     * @ORM\OneToMany(targetEntity="Datosempleo", mappedBy="idsolicitudempleo", cascade={"persist", "remove"})
+     */
+    protected $Dempleos;
+
+
+    /**
+     * Get Dempleos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
      public function getDempleos()
     {
         return $this->Dempleos;
     }
 
-    public function setDempleos(ArrayCollection $Dempleos)
+    public function setDempleos(ArrayCollection $dempleos)
     {
-        $this->Dempleos = $Dempleos;
+        $this->Dempleos = $dempleos;
+        foreach ($dempleos as $empleo) {
+            $empleo->setIdsolicitudempleo($this);
+        }
     }
 
 
     /*********Datos Familiares*****************/
     
     /**
-     * @ORM\OneToMany(targetEntity="Datosfamiliares", mappedBy="idsolicitudempleo")
+     * @ORM\OneToMany(targetEntity="Datosfamiliares", mappedBy="idsolicitudempleo", cascade={"persist","remove"})
      */
     protected $Dfamiliares;
 
+   /**
+     * Get Dfamiliares
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
     public function getDfamiliares()
     {
         return $this->Dfamiliares;
     }
 
-    public function setDfamiliares(ArrayCollection $Dfamiliares)
+  
+    public function setDfamiliares(\Doctrine\Common\Collections\Collection $dfamiliares)
     {
-        $this->Dfamiliares = $Dfamiliares;
+        $this->Dfamiliares = $dfamiliares;
+        foreach ($dfamiliares as $familiar) {
+            $familiar->setIdsolicitudempleo($this);
+        }
     }
 
 
     /****************Datos de estudio *************************/
 
     /**
-     * @ORM\OneToMany(targetEntity="Informacionacademica", mappedBy="idsolicitudempleo")
+     * @ORM\OneToMany(targetEntity="Informacionacademica", mappedBy="idsolicitudempleo", cascade={"persist", "remove"})
      */
     protected $Destudios;
 
+    /**
+     * Get Destudios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
     public function getDestudios()
     {
         return $this->Destudios;
     }
 
-    public function setDestudios(ArrayCollection $Destudios)
+    public function setDestudios(\Doctrine\Common\Collections\Collection $destudios)
     {
-        $this->Destudios = $Destudios;
+        $this->Destudios = $destudios;
+        foreach ($destudios as $estudio) {
+            $estudio->setIdsolicitudempleo($this);
+        }
     }
 
 
@@ -536,18 +562,26 @@ class Solicitudempleo
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Idioma", mappedBy="idsolicitudempleo")
+     * @ORM\OneToMany(targetEntity="Idioma", mappedBy="idsolicitudempleo", cascade={"persist", "remove"})
      */
     protected $Idiomas;
 
+    /**
+     * Get Idiomas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
     public function getIdiomas()
     {
         return $this->Idiomas;
     }
 
-    public function setIdiomas(ArrayCollection $Idiomas)
+    public function setIdiomas(ArrayCollection $idiomas)
     {
-        $this->Idiomas = $Idiomas;
+        $this->Idiomas = $idiomas;
+        foreach ($idiomas as $idioma) {
+            $idioma->setIdsolicitudempleo($this);
+        }
     }
 
 
@@ -558,9 +592,9 @@ class Solicitudempleo
 
 
     
-        public function esDuiValido(ExecutionContext $context)
+        public function esDuiValido(ExecutionContextInterface $context)
             {
-            
+           
             $pDui = $this->getDui();
 
 
@@ -570,7 +604,7 @@ class Solicitudempleo
 
         if($pDui == '000000000'||$pDui=='' || strlen($pDui) != 9){
 
-            $context->addViolationAtSubPath('dui', 'El DUI introducido no tiene
+            $context->addViolationAt('dui', 'El DUI introducido no tiene
                 el formato correcto (9 digitos), sin guiones y
                 sin dejar ningún espacio en blanco)', array(), null);
                 return;
@@ -591,11 +625,11 @@ class Solicitudempleo
        
         if($digito != $validar){
 
-            $context->addViolationAtSubPath('dui', 'El digito verificador no coincide con el
-                número del DUI. DUI ingresado Inválido.',array(), null);
+            $context->addViolationAt('dui', 'DUI ingresado Inválido.',array(), null);
 
         }//fin if
-                
+
+    
             }//fin funcion esDuiValido()
 
 
@@ -603,7 +637,7 @@ class Solicitudempleo
     //Funcion validar NIT
 
             
-            public function esNitValido(){
+            public function esNitValido(ExecutionContextInterface $context){
 
                 $nit= $this->getNit();
 
@@ -633,15 +667,13 @@ class Solicitudempleo
             }
         }
         if($valida != $verificador) 
-             $context->addViolationAtSubPath('nit', 'El NIT introducido no es válido
-                No hay coincidencia con el digito verificador.', array(), null);
-                return;
+             $context->addViolationAt('nit', 'El NIT introducido no es válido.', array(), null);
+            
    }
-   
-    $context->addViolationAtSubPath('nit', 'El NIT introducido no tiene
-                el formato correcto (14 digitos), sin guiones y
+   else{
+    $context->addViolationAt('nit', 'NIT no tiene el formato correcto (14 digitos), sin guiones y
                 sin dejar ningún espacio en blanco)', array(), null);
-                return;
+    }
 
 }//fin validar NIT
 
@@ -1292,95 +1324,131 @@ class Solicitudempleo
         return $this->idexpediente;
     }
 
-    /**
-     * Add Dempleos
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Datosempleo $dempleos
-     * @return Solicitudempleo
-     */
-    public function addDempleo(\SIGESRHI\ExpedienteBundle\Entity\Datosempleo $dempleos)
-    {
-        $this->Dempleos[] = $dempleos;
+        
     
-        return $this;
+///////////////////////////////////////////////////////////////////////
+
+    // Funciones para subida de archivos (fotografias)
+    // *propiedad fotografia aqui path*
+
+    public function getAbsolutePath()
+    {
+        return null === $this->fotografia
+            ? null
+            : $this->getUploadRootDir().'/'.$this->fotografia;
     }
 
-    /**
-     * Remove Dempleos
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Datosempleo $dempleos
-     */
-    public function removeDempleo(\SIGESRHI\ExpedienteBundle\Entity\Datosempleo $dempleos)
+    public function getWebPath()
     {
-        $this->Dempleos->removeElement($dempleos);
+        return null === $this->fotografia
+            ? null
+            : $this->getUploadDir().'/'.$this->fotografia;
     }
 
-    /**
-     * Add Dfamiliares
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Datosfamiliares $dfamiliares
-     * @return Solicitudempleo
-     */
-    public function addDfamiliare(\SIGESRHI\ExpedienteBundle\Entity\Datosfamiliares $dfamiliares)
+    protected function getUploadRootDir()
     {
-        $this->Dfamiliares[] = $dfamiliares;
+        // la ruta absoluta del directorio donde se deben
+        // guardar los archivos cargados
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // se deshace del __DIR__ para no meter la pata
+        // al mostrar el documento/imagen cargada en la vista.
+        return 'uploads/fotografias';
+    }
+
+
+// funciones para la propiedad virtual file
+// (ayuda a manejar la subida del archivo)
+
     
-        return $this;
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+
+     /*******Funciones para retrollamadas (subida de archivos)**********/
+
+    private $temp;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->fotografia)) {
+            // store the old name to delete after the update
+            $this->temp = $this->fotografia;
+            $this->fotografia = null;
+        } else {
+            $this->fotografia = 'initial';
+        }
     }
 
     /**
-     * Remove Dfamiliares
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Datosfamiliares $dfamiliares
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
      */
-    public function removeDfamiliare(\SIGESRHI\ExpedienteBundle\Entity\Datosfamiliares $dfamiliares)
+    public function preUpload()
     {
-        $this->Dfamiliares->removeElement($dfamiliares);
+        if (null !== $this->getFile()) {
+            // haz lo que quieras para generar un nombre único
+            $filename = substr(sha1(uniqid(mt_rand(), true)),0,6).$this->getFile()->getClientOriginalName();
+            $this->fotografia = $filename;
+        }
     }
 
     /**
-     * Add Destudios
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Informacionacademica $destudios
-     * @return Solicitudempleo
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
      */
-    public function addDestudio(\SIGESRHI\ExpedienteBundle\Entity\Informacionacademica $destudios)
+    public function upload()
     {
-        $this->Destudios[] = $destudios;
-    
-        return $this;
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // si hay un error al mover el archivo, move() automáticamente
+        // envía una excepción. This will properly prevent
+        // the entity from being persisted to the database on error
+        
+        $this->getFile()->move($this->getUploadRootDir(), $this->fotografia);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+
+        $this->file = null;
     }
 
     /**
-     * Remove Destudios
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Informacionacademica $destudios
+     * @ORM\PostRemove()
      */
-    public function removeDestudio(\SIGESRHI\ExpedienteBundle\Entity\Informacionacademica $destudios)
+    public function removeUpload()
     {
-        $this->Destudios->removeElement($destudios);
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
     }
 
-    /**
-     * Add Idiomas
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Idioma $idiomas
-     * @return Solicitudempleo
-     */
-    public function addIdioma(\SIGESRHI\ExpedienteBundle\Entity\Idioma $idiomas)
-    {
-        $this->Idiomas[] = $idiomas;
-    
-        return $this;
-    }
 
-    /**
-     * Remove Idiomas
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Idioma $idiomas
-     */
-    public function removeIdioma(\SIGESRHI\ExpedienteBundle\Entity\Idioma $idiomas)
-    {
-        $this->Idiomas->removeElement($idiomas);
-    }
-}
+//////////////////////////////////////////////////////////////////////////////
+
+
+}//fin class

@@ -12,11 +12,11 @@ class SegurovidaType extends AbstractType
     {
         $builder
             ->add('fechaseguro', null, array('label'=>'Fecha de Nac.')) 
-            ->add('estadoseguro',null, array('label'=>'Estado'))
+            ->add('estadoseguro',null, array('label'=>'Estado', 'attr'=>array('data-bvalidator'=>'phone,required','class'=>'telefono')))
             ->add('idexpediente',null,array('label'=>'Expediente', ))
             ->add('idbeneficiario', 'collection', array(
                 'type' => new BeneficiarioType(),
-                'label' => 'Beneficiarios',
+                'label' => ' ',
                 'by_reference' => false,
                 'allow_add' => true, 
                 'allow_delete' => true,

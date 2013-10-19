@@ -11,6 +11,7 @@ use SIGESRHI\ExpedienteBundle\Entity\Datosempleo;
 use SIGESRHI\ExpedienteBundle\Entity\Datosfamiliares;
 use SIGESRHI\ExpedienteBundle\Entity\Informacionacademica;
 use SIGESRHI\ExpedienteBundle\Entity\Idioma;
+use SIGESRHI\ExpedienteBundle\Entity\Expediente;
 
 use SIGESRHI\ExpedienteBundle\Entity\Municipio;
 use SIGESRHI\ExpedienteBundle\Entity\Departamento;
@@ -46,10 +47,28 @@ class SolicitudempleoController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Solicitudempleo();
+        
+
         $form = $this->createForm(new SolicitudempleoType(), $entity);
         $form->bind($request);
 
+       
         if ($form->isValid()) {
+/*
+            //creamos la instancia de expediente con la cual se relacionara la solicitud.
+        $expediente = new Expediente();
+        $expediente->setFechaexpediente(new \datetime(date('d-m-Y')));
+        $expediente->setTipoexpediente('I');
+
+         $em = $this->getDoctrine()->getManager();
+         $em->persist($expediente);
+*/
+         //$num=$expediente->getId();
+        //establecer fechas de creacion/modificacion (para este caso las misma)
+        $entity->setFecharegistro(new \Datetime(date('d-m-Y')));
+        $entity->setFechamodificacion(new \Datetime(date('d-m-Y')));
+        $entity->setnumsolicitud(8);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -71,37 +90,42 @@ class SolicitudempleoController extends Controller
     {
         $entity = new Solicitudempleo();
 
-        //empieza pruebas
         
-        //agregamos datos de empleo
+        //empieza pruebas
+
+
+     
+  /*      //agregamos datos de empleo
         $datosempActual = new Datosempleo();
         $datosempActual->name = 'Empleo Actual';
         $datosempActual->setTipodatoempleo('Empleo Actual');
         $entity->getDempleos()->add($datosempActual);
-
+ 
         $datosempAnterior = new Datosempleo();
         $datosempAnterior->name = 'Empleo Anterior';
         $datosempAnterior->setTipodatoempleo('Empleo Anterior');
         $entity->getDempleos()->add($datosempAnterior);
         
+*/
+       
         //agregamos datos familiares
         $datosFam= new Datosfamiliares();
         $datosFam->name = 'Dato Familiar 1';
         $entity->getDfamiliares()->add($datosFam);
         //termina pruebas
 
-        //agregamos datos de estudio
+         //agregamos datos de estudio
         $datosEst= new Informacionacademica();
         $datosEst->name = 'Dato studio 1';
         $entity->getDestudios()->add($datosEst);
         //termina pruebas
-
+/*
         //agregamos un Idioma
         $Idioma= new Idioma();
         $Idioma->name = 'Idioma 1';
         $entity->getIdiomas()->add($Idioma);
         //termina pruebas
-    
+   */ 
         $form   = $this->createForm(new SolicitudempleoType(), $entity);
 
         return $this->render('ExpedienteBundle:Solicitudempleo:new.html.twig', array(
@@ -225,6 +249,8 @@ class SolicitudempleoController extends Controller
             ->getForm()
         ;
     }
+
+
 
 
     /************Funcion consultar municipios**************/

@@ -12,11 +12,11 @@ class IdiomaType extends AbstractType
     {
         $builder
             ->add('nombreidioma',null, array('label'=>'Idioma: '))
-            ->add('nivelescribe', 'choice', array('label'=>'Escribe', 
+            ->add('nivelescribe', 'choice', array('label'=>'Nivel Escribe: ', 
                 'choices' => array('NO'=>'NO', 'Básico' => 'Básico', 'Intermedio' => 'Intermedio', 'Avanzado'=>'Avanzado'), 'required'  => true, 'empty_value' => 'Seleccione una opción'))
-            ->add('nivelhabla', 'choice', array('label'=>'Habla', 
+            ->add('nivelhabla', 'choice', array('label'=>'Nivel Habla: ', 
                 'choices' => array('No'=>'NO', 'Básico' => 'Básico', 'Intermedio' => 'Intermedio', 'Avanzado'=>'Avanzado'), 'required'  => true, 'empty_value' => 'Seleccione una opción'))
-            ->add('nivellee', 'choice', array('label'=>'Lee', 
+            ->add('nivellee', 'choice', array('label'=>'Nivel Lee: ', 
                 'choices' => array('NO'=>'NO', 'Básico' => 'Básico', 'Intermedio' => 'Intermedio', 'Avanzado'=>'Avanzado'), 'required'  => true, 'empty_value' => 'Seleccione una opción'))
             //->add('idsolicitudempleo')
         ;

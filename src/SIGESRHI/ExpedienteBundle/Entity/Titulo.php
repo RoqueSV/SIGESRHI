@@ -50,7 +50,7 @@ class Titulo
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Informacionacademica", mappedBy="idtitulo")
+     * @ORM\oneToMany(targetEntity="Informacionacademica", mappedBy="idtitulo")
      */
     private $idinformacionacademica;
 

@@ -63,9 +63,9 @@ class SegurovidaController extends Controller
         $entity = new Segurovida();
 
         /*Agregamos datos de beneficiario*/
-        //$datosBeneficiario = new Beneficiario();
-        //$datosBeneficiario->name = 'Beneficiarios';
-        //$entity->getIdBeneficiario()->add($datosBeneficiario);
+        $datosBeneficiario = new Beneficiario();
+        $datosBeneficiario->name = 'Beneficiarios';
+        $entity->getIdBeneficiario()->add($datosBeneficiario);
 
         
         $form   = $this->createForm(new SegurovidaType(), $entity);

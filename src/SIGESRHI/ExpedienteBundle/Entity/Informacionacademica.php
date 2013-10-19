@@ -49,15 +49,10 @@ class Informacionacademica
      /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Titulo", inversedBy="idinformacionacademica")
-     * @ORM\JoinTable(name="tituloinformacion",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idinformacion", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idtitulo", referencedColumnName="id")
-     *   }
-     * )
+     * @ORM\ManyToOne(targetEntity="Titulo", inversedBy="idinformacionacademica")
+     * @ORM\JoinColumns({
+     * @ORM\JoinColumn(name="idtitulo", referencedColumnName="id")
+     *})
      */
     private $idtitulo;
 
@@ -128,28 +123,7 @@ class Informacionacademica
         $this->idtitulo = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
-    /**
-     * Add idtitulo
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo
-     * @return Informacionacademica
-     */
-    public function addIdtitulo(\SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo)
-    {
-        $this->idtitulo[] = $idtitulo;
-    
-        return $this;
-    }
-
-    /**
-     * Remove idtitulo
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo
-     */
-    public function removeIdtitulo(\SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo)
-    {
-        $this->idtitulo->removeElement($idtitulo);
-    }
+   
 
     /**
      * Get idtitulo
@@ -159,5 +133,13 @@ class Informacionacademica
     public function getIdtitulo()
     {
         return $this->idtitulo;
+    }
+
+
+    //agregado manualmente
+    public function setIdtitulo($idtitulo)
+    {
+        $this->idtitulo = $idtitulo;
+        
     }
 }

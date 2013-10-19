@@ -5,37 +5,49 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {# ----------CSS ------ #}
         {% block stylesheets %}
-        {#Bootstrap#}
+        
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" /> 
-        {% stylesheets filter='cssrewrite,?yui_css'
+
+        {#Bootstrap#}
+        <link href="{{ asset('bundles/mopabootstrap/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+        <link rel="apple-touch-icon"  href="{{ asset('bundles/mopabootstrap/img/glyphicons-halflings.png')}}" />
+        {#{% stylesheets 
         '@MopaBootstrapBundle/Resources/bootstrap/bootstrap.css' output='css/compiled/main.css'
         %}
         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
-        {% endstylesheets %}
+        {% endstylesheets %}#}
         {#Calendario#}
         <link href="{{ asset('bundles/expediente/css/jquery-ui.css') }}" type="text/css" rel="stylesheet" />
         {#Validador#}
         <link href="{{ asset('bundles/bValidator-0.71.1/bvalidator.css') }}" rel="stylesheet" type="text/css" />
+        {#Estilos propios#}
         <link href="{{ asset('css/form.css') }}" rel="stylesheet" type="text/css" /> 
         {% endblock %} 
         
         {# ---JS--- #}
         {% block javascripts %}  
         {#Bootstrap#}
-        {#{% javascripts '@MopaBootstrapBundle/Resources/public/js/*'
-                       '@MopaBootstrapBundle/Resources/bootstrap/js/*' output='js/compiled/main.js' %}
+        {% javascripts 
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-modal.js' output='js/compiled/main.js'
+        %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}#}
-        {#Calendario#}
+        {% endjavascripts %}
+        
+        {#jQuery#}
         <script src="{{ asset('bundles/expediente/js/jquery-1.10.2.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('bundles/expediente/js/jquery-ui.js') }}" type="text/javascript"></script>
         <script src="{{ asset('js/jquery_maskedinput.js')}}" type="text/javascript" ></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script>
         {#Validador#}
         <script type="text/javascript" src="{{ asset('bundles/bValidator-0.71.1/jquery.bvalidator.js')}}"></script>
         <script type="text/javascript" src="{{ asset('bundles/bValidator-0.71.1/bvalidator.lang.es.js')}}" ></script>
+        {#Propios#}
         <script type="text/javascript" src="{{ asset('js/utilidades.js')}}" ></script> 
         {% endblock %}
- 
+
+
+        
+        
     </head>
     <body>
         {% block body %}{% endblock %}
