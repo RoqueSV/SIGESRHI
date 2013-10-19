@@ -60,7 +60,7 @@ class Datosempleo
      *
      * @ORM\Column(name="fechainiciolaboral", type="date", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la fecha de inicio laboral")
-     * @Assert\DateTime()
+     * 
      */
     private $fechainiciolaboral;
 
@@ -68,7 +68,7 @@ class Datosempleo
      * @var \DateTime
      *
      * @ORM\Column(name="fechafinlaboral", type="date", nullable=true)
-     * @Assert\DateTime()
+     * 
      */
     private $fechafinlaboral;
 

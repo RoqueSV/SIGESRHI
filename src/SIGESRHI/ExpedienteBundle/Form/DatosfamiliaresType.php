@@ -12,11 +12,11 @@ class DatosfamiliaresType extends AbstractType
     {
         $builder
             ->add('parentesco', 'choice', array('label'=>'Parentesco ',
-                'choices' => array('Padre' => 'Padre', 'Madre' => 'Madre', 'Esposa/o' => 'Esposa/o', 'Hijo/a' => 'Hijo/a'),'required'  => true,))
+                'choices' => array('Padre' => 'Padre', 'Madre' => 'Madre', 'Esposa/o' => 'Esposa/o', 'Hijo/a' => 'Hijo/a'),'required'  => true,'empty_value' => 'Seleccione una opción', ))
             ->add('nombrefamiliar',null, array('label'=>'Nombre '))
             ->add('direccionfamiliar',null, array('label'=>'Dirección '))
-            ->add('telefonofamiliar',null, array('label'=>'Teléfono '))
-            ->add('idsolicitudempleo')
+            ->add('telefonofamiliar',null, array('label'=>'Teléfono ', 'max_length'=>'8', 'attr'=>array('class'=>'input-small')))
+           // ->add('idsolicitudempleo')
         ;
     }
 

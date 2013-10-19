@@ -137,4 +137,11 @@ class Unidadorganizativa
     {
         return $this->idcentro;
     }
+
+
+         public function __toString() {
+        return $this->getNombreunidad();
+    } 
+
+
 }
