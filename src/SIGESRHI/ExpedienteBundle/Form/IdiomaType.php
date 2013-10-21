@@ -11,13 +11,13 @@ class IdiomaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombreidioma',null, array('label'=>'Idioma: '))
+            ->add('nombreidioma',null, array('label'=>'Idioma: ', 'attr'=>array('class'=>'input-large')))
             ->add('nivelescribe', 'choice', array('label'=>'Nivel Escribe: ', 
-                'choices' => array('NO'=>'NO', 'Básico' => 'Básico', 'Intermedio' => 'Intermedio', 'Avanzado'=>'Avanzado'), 'required'  => true, 'empty_value' => 'Seleccione una opción'))
+                'choices' => array('No Aplica'=>'No Aplica', 'Básico' => 'Básico', 'Intermedio' => 'Intermedio', 'Avanzado'=>'Avanzado'), 'required'  => true, 'empty_value' => 'Seleccione', 'attr'=>array('class'=>'input-medium')))
             ->add('nivelhabla', 'choice', array('label'=>'Nivel Habla: ', 
-                'choices' => array('No'=>'NO', 'Básico' => 'Básico', 'Intermedio' => 'Intermedio', 'Avanzado'=>'Avanzado'), 'required'  => true, 'empty_value' => 'Seleccione una opción'))
+                'choices' => array('No Aplica'=>'No Aplica', 'Básico' => 'Básico', 'Intermedio' => 'Intermedio', 'Avanzado'=>'Avanzado'), 'required'  => true, 'empty_value' => 'Seleccione','attr'=>array('class'=>'input-medium')))
             ->add('nivellee', 'choice', array('label'=>'Nivel Lee: ', 
-                'choices' => array('NO'=>'NO', 'Básico' => 'Básico', 'Intermedio' => 'Intermedio', 'Avanzado'=>'Avanzado'), 'required'  => true, 'empty_value' => 'Seleccione una opción'))
+                'choices' => array('No Aplica'=>'No Aplica', 'Básico' => 'Básico', 'Intermedio' => 'Intermedio', 'Avanzado'=>'Avanzado'), 'required'  => true, 'empty_value' => 'Seleccione','attr'=>array('class'=>'input-medium')))
             //->add('idsolicitudempleo')
         ;
     }

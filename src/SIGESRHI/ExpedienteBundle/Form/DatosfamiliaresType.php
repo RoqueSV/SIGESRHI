@@ -11,11 +11,11 @@ class DatosfamiliaresType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('parentesco', 'choice', array('label'=>'Parentesco ',
-                'choices' => array('Padre' => 'Padre', 'Madre' => 'Madre', 'Esposa/o' => 'Esposa/o', 'Hijo/a' => 'Hijo/a'),'required'  => true,'empty_value' => 'Seleccione una opción', ))
-            ->add('nombrefamiliar',null, array('label'=>'Nombre '))
-            ->add('direccionfamiliar',null, array('label'=>'Dirección '))
-            ->add('telefonofamiliar',null, array('label'=>'Teléfono ', 'max_length'=>'8', 'attr'=>array('class'=>'input-small')))
+            ->add('parentesco', 'choice', array('label'=>'Parentesco: ',
+                'choices' => array('Padre' => 'Padre', 'Madre' => 'Madre', 'Esposa/o' => 'Esposa/o', 'Hijo/a' => 'Hijo/a'),'required'  => true,'empty_value' => 'Seleccione', 'attr'=>array('class'=>'input-medium')))
+            ->add('nombrefamiliar',null, array('label'=>'Nombre: ', 'attr'=>array('class' =>'input-xlarge')))
+            ->add('direccionfamiliar',null, array('label'=>'Dirección:  ', 'attr'=>array('class'=>'input-xxlarge')))
+            ->add('telefonofamiliar',null, array('label'=>'Teléfono: ', 'max_length'=>'8', 'attr'=>array('class'=>'input-small')))
            // ->add('idsolicitudempleo')
         ;
     }

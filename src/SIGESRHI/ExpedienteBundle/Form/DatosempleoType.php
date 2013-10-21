@@ -14,7 +14,7 @@ class DatosempleoType extends AbstractType
             ->add('nombreempresa',null, array('label'=>'Nombre de la Empresa', 'attr' => array('class' => 'input-xlarge')))
             ->add('direccionempresa', 'textarea', array('label'=>'Dirección de la Empresa',  'attr' => array('class' => 'input-xlarge')))
             ->add('telefonoempresa',null, array('label'=>'Teléfono de la Empresa',  'attr' => array('class' => 'input-small')))
-            ->add('fechainiciolaboral', 'date', array('label'=>'Fecha de Inicio Laboral', 'widget' => 'single_text', 'format'=>'dd-MM-yyyy','attr' => array('class' => 'date input-small hasDatepicker', 'readonly'=>true)))
+            ->add('fechainiciolaboral', 'date', array('label'=>'Fecha de Inicio Laboral', 'widget' => 'single_text', 'format'=>'dd-MM-yyyy','attr' => array('class' => 'date input-small hasDatepicker', 'readonly'=>true, )))
             ->add('fechafinlaboral','date', array('label'=>'Fecha de Fin Laboral', 'widget' => 'single_text', 'format'=>'dd-MM-yyyy','attr' => array('class' => 'date input-small hasDatepicker', 'readonly'=>true)))
             ->add('jefeinmediato',null, array('label'=>'Nombre del Jefe Inmediato',  'attr' => array('class' => 'input-xlarge')))
             ->add('cargodesempenado',null, array('label'=>'Cargo Desempeñado', 'attr' => array('class' => 'input-xlarge')))

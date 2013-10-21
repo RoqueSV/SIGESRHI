@@ -142,3 +142,24 @@ background-color: #e6e6e6;
 *background-color: #d9d9d9;
 }
 /********************/
+
+/*  Justificar Texto */
+.justifyText{
+text-align : justify;
+margin: 10px 25px 10px 10px;
+}
+
+
+/* Fotografía Solicitud*/
+
+.fotoSol {
+    height: 192px;
+    width: 150px;
+    vertical-align: middle;
+    border: 5px;
+}
+
+/* Evitar cambiar tamaño a los texarea*/
+textarea {
+    resize: none;
+}

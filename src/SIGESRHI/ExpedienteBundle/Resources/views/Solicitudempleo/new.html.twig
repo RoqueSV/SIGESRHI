@@ -1,15 +1,16 @@
-  {% extends '::base.html.twig' %}  
+  {% extends '::PrincipalBase.html.twig' %}  
 
 
       
-{% block body %}
+{% block principal %}
 
+<a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
     
 
 <div id="help" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="helpLabel" aria-hidden="true">
   <div class="modal-header">
    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-   <h3 id="helpLabel">Seguro de vida</h3>
+   <h3 id="helpLabel">Solicitud de Empleo</h3>
   </div>
   <div class="modal-body">
    <p>¿Cómo llenar este formulario?</p>
@@ -22,14 +23,33 @@
 
         
     <fieldset>
-    <form action="{{ path('solicitud_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('solicitud_create') }}" method="post" {{ form_enctype(form) }} id="subearchivos" >
 
         
-    <h1>SOLICITUD DE EMPLEO</h1>
-<a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
-    <p> <b>Nota Importante:</b> La solicitud de empleo no implica compromiso por parte del ISRI con el interesado, solamente es un requisito indispensable que debe llenar toda persona que aspira a prestar sus servicios a la institución.</p>
+    <h4 class="text-center">REGISTRO DE SOLICITUD DE EMPLEO</h4>
+
+    <table border="0">
+        <tr>
+            <td width="70%"><p class="justifyText"> <b>Nota Importante:</b> La solicitud de empleo no implica compromiso por parte del ISRI con el interesado, solamente es un requisito indispensable que debe llenar toda persona que aspira a prestar sus servicios a la institución.</p>
+            </td>
+            <td Width="30%">
+                <table border="1" width="150px" height="192px"><tr><td id="vista_previa"> </td></tr></table>
+            </td>
+        </tr>
        {# {{ form_widget(form) }}#}
-           {{ form_row(form.file) }} 
+       <br>
+           
+        <table >
+            <tr>
+                <td>{{ form_label(form.file) }} </td>
+                <td>{{ form_widget(form.file) }} {{ form_errors(form.file) }}</td>               
+            </tr>
+        </table>
+
+        {#<div id="vista_previa"> </div> #}
+           
+           <br>
+
             <fieldset>
                 <legend>Datos Personales</legend>
 
@@ -49,17 +69,22 @@
                 </table>
                 
                 
-                Dirección Particular:
+              <h5>  Dirección Particular: </h5>
                 <table>
                     <tr>
                         <td>{{ form_label(form.departamentos) }} </td>
                         <td>{{ form_label(form.idmunicipio) }}</td>
-                        <td>{{ form_label(form.colonia) }}</td>
-                        <td>{{ form_label(form.calle) }}</td>
                     </tr>
                     <tr>
                         <td>{{ form_widget(form.departamentos) }} {{ form_errors(form.departamentos) }}</td>
                         <td>{{ form_widget(form.idmunicipio) }} {{ form_errors(form.idmunicipio) }}</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.colonia) }}</td>
+                        <td>{{ form_label(form.calle) }}</td>
+                    </tr>
+                    <tr>
                         <td>{{ form_widget(form.colonia) }} {{ form_errors(form.colonia) }}</td>
                         <td>{{ form_widget(form.calle) }} {{ form_errors(form.calle) }}</td>
                     </tr>
@@ -69,6 +94,8 @@
                     <tr>
                         <td>{{ form_label(form.estadocivil) }}</td>
                         <td>{{ form_widget(form.estadocivil) }} {{ form_errors(form.estadocivil) }}</td>
+                    </tr>
+                    <tr>
                         <td>{{ form_label(form.telefonofijo) }}</td>
                         <td>{{ form_widget(form.telefonofijo) }} {{ form_errors(form.telefonofijo) }}</td>
                         <td>{{ form_label(form.telefonomovil) }}</td>
@@ -83,18 +110,16 @@
                                 
                 {{ form_row(form.sexo) }}
 
-                Documentos de Identidad Personal:
+                <h5>Documentos de Identidad Personal:</h5>
 
                 <table>
                     <tr>
-                        <td>{{ form_label(form.dui) }}</td>
                         <td>{{ form_label(form.nit) }}</td>
                         <td>{{ form_label(form.isss) }}</td>
                         <td>{{ form_label(form.nup) }}</td>
                         <td>{{ form_label(form.nip) }}</td>
                     </tr>
                      <tr>
-                        <td>{{ form_widget(form.dui) }} {{ form_errors(form.dui) }}</td>
                         <td>{{ form_widget(form.nit) }} {{ form_errors(form.nit) }}</td>
                         <td>{{ form_widget(form.isss) }} {{ form_errors(form.isss) }}</td>
                         <td>{{ form_widget(form.nup) }} {{ form_errors(form.nup) }}</td>
@@ -103,18 +128,19 @@
                 </table>
                 
                 
-               <table><tr><td>{{ form_row(form.lugardui) }}</td><td>{{ form_row(form.fechadui) }}</td></tr></table>
+               <table><tr><td><td>{{ form_row(form.dui) }}</td></td><td>{{ form_row(form.lugardui) }}</td><td>{{ form_row(form.fechadui) }}</td></tr></table>
                 
             </fieldset>
 
-            <hr>
+            <br>
 
             <fieldset>
                 <legend>Datos de Estudio</legend>
 
                 {# <ul class="Destudios unstyled" data-prototype="{{ form_widget(form.Destudios.vars.prototype)|e }}"> #}
-
-                <table>
+                
+               
+                 <table>
                     <tr>
                         <td>{{form_row(form.Destudios[0].idtitulo)}}</td>
                         <td>{{form_row(form.Destudios[0].centroestudio)}}</td>
@@ -129,16 +155,16 @@
                     <tr>
                 <table>
                 ">
+            
 
                    {#<li> {{form_widget(form.Destudios[0])}}  </li> #}
 
                 </ul>
 
-                <br>
-                <hr>
+
                 <br>
 
-               <p>Idiomas que domina:</p>
+               <h5>Idiomas que domina:</h5>
                 {#<ul class="Idiomas unstyled" data-prototype="{{ form_widget(form.Idiomas.vars.prototype)|e }}"> #}
 
                  <ul class="Idiomas unstyled" data-prototype="
@@ -159,7 +185,7 @@
 
             </fieldset> 
 
-            <hr>
+            <br>
             
 
             <fieldset>
@@ -172,10 +198,13 @@
               <table>
                 <tr>
                     <td>{{form_row(form.Dfamiliares[0].parentesco)}}</td>
-                
                     <td>{{form_row(form.Dfamiliares[0].nombrefamiliar)}}</td>
-                    <td>{{form_row(form.Dfamiliares[0].direccionfamiliar)}}</td>
                     <td>{{form_row(form.Dfamiliares[0].telefonofamiliar)}}</td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>{{form_row(form.Dfamiliares[0].direccionfamiliar)}}</td>
                 </tr>
             </table>
                
@@ -183,54 +212,38 @@
             <table>
                 <tr>
                     <td>{{form_row(form.Dfamiliares.vars.prototype.parentesco)|e}}</td>
-                
                     <td>{{form_row(form.Dfamiliares.vars.prototype.nombrefamiliar)|e}}</td>
-                    <td>{{form_row(form.Dfamiliares.vars.prototype.direccionfamiliar)|e}}</td>
                     <td>{{form_row(form.Dfamiliares.vars.prototype.telefonofamiliar)|e}}</td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td>{{form_row(form.Dfamiliares.vars.prototype.direccionfamiliar)|e}}</td>
                 </tr>
             </table>
                ">
                
                 </fieldset>
 
-                <hr>
-
+                <br>
                 <fieldset>
                     <legend> Pariente dentro de la institución</legend>
 
-                {#    {{form_row(form.nombreparinst)}}
-                    {{form_row(form.parentescoparinst)}}
-                    {{form_row(form.dependenciaparinst)}}
-
-                #}
-
-                
+                              
                 <table>
                     <tr>
-                        <td>{{form_label(form.nombreparinst)}}</td>
-                        <td>{{form_label(form.parentescoparinst)}}</td>
-                        <td>{{form_label(form.dependenciaparinst)}}</td>
+                        <td>{{form_row(form.nombreparinst)}}</td>
+                        <td>{{form_row(form.parentescoparinst)}}</td>
                     </tr>
                     <tr>
-                        <td>
-                            {{form_widget(form.nombreparinst)}}
-                            {{form_errors(form.nombreparinst)}}
-                        </td>
-                        <td>
-                            {{form_widget(form.parentescoparinst)}}
-                            {{form_errors(form.parentescoparinst)}}
-                        </td>
-                        <td>
-                            {{form_widget(form.dependenciaparinst)}}
-                            {{form_errors(form.dependenciaparinst)}}
-                        </td>
+                        <td colspan="2">{{form_row(form.dependenciaparinst)}}</td>
                     </tr>
                 </table>
 
                 </fieldset> 
 
-            <hr>
 
+                <br>
           <fieldset>
                 <legend>Datos de Empleo</legend>
                 
@@ -325,16 +338,17 @@
            </fieldset> 
 
 
-            
+            <hr>
             {{form_widget(form.aceptar)}}
-            Declaro bajo juramento que los datos registrados en la solicitud son  verdaderos y autorizo al Instituto Salvadoreño de Rehabilitacion Integral para su respectiva verificación.
-                    
+        
+        <br>                      
 
             {{ form_rest(form) }}
-    <div class="form-actions">
-        <p>
+    <div class="centered">
+        
             <button type="submit"  class="btn btn-primary">Registrar Solicitud</button>
-        </p>
+            <input type="button" value="Cancelar" id="" class="btn">
+        
     </div>
     
     </form>
@@ -346,9 +360,30 @@
 
 <script>
 
+////////////////////////// Vista Previa de la imagen subida///////////////////////////////
+    if (window.FileReader) {
+      function seleccionArchivo(evt) {
+        var files = evt.target.files;
+        var f = files[0];
+        var leerArchivo = new FileReader();
+         
+            leerArchivo.onload = (function(elArchivo) {
+            return function(e) {
+              document.getElementById('vista_previa').innerHTML = '<img src="'+ e.target.result +'" alt="Fotografía" width="150px" height="150px" class="fotoSol" />';
+            };
+          })(f);
+   
+          leerArchivo.readAsDataURL(f);
+      }
+     } else {
+      document.getElementById('vista_previa').innerHTML = "El navegador no soporta vista previa";
+    }
+   
+      document.getElementById('sigesrhi_expedientebundle_solicitudempleotype_file').addEventListener('change', seleccionArchivo, false);
+     
+
+
     /******************************* Select dependientes *********************************/
-
-
 
 
     $(document).ready(function(){
@@ -511,44 +546,6 @@ jQuery(document).ready(function() {
         addTagForm(collectionHolderIdio, $newLinkLiIdio);
     });
 });
-
-
-/********************** Funciones ******************************/
-function addTagForm(collectionHolder, $newLinkLi) {
-    // Obtiene los datos del prototipo explicado anteriormente
-    var prototype = collectionHolder.data('prototype');
-
-    // Consigue el nuevo índice
-    var index = collectionHolder.data('index');
-
-    // Sustituye el '__name__' en el prototipo HTML para que
-    // en su lugar sea un número basado en cuántos elementos hay
-    var newForm = prototype.replace(/__name__/g, index);
-
-    // Incrementa en uno el índice para el siguiente elemento
-    collectionHolder.data('index', index + 1);
-
-    // Muestra el formulario en la página en un elemento li,
-    // antes del enlace 'Agregar una etiqueta'
-    var $newFormLi = $('<li></li>').append(newForm);
-    $newLinkLi.before($newFormLi);
-
-     // Añade un enlace eliminar el nuevo formulario
-    addTagFormDeleteLink($newFormLi);
-}
-
-function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormA = $('<input type="button" value="Eliminar">');
-    $tagFormLi.append($removeFormA);
-
-    $removeFormA.on('click', function(e) {
-        // evita crear el enlace con una "#" en la URL
-        e.preventDefault();
-
-        // quita el li de la etiqueta del formulario
-        $tagFormLi.remove();
-    });
-}
 
 
 </script>
