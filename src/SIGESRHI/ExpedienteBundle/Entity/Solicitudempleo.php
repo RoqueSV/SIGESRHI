@@ -344,6 +344,7 @@ class Solicitudempleo
 
    private $aceptar;
 
+
     public function setAceptar($aceptar){
  
     $this->aceptar = $aceptar;

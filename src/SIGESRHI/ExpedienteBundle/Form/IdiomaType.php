@@ -11,7 +11,7 @@ class IdiomaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombreidioma',null, array('label'=>'Idioma: ', 'attr'=>array('class'=>'input-large')))
+            ->add('nombreidioma',null, array('label'=>'Idioma: ', 'attr'=>array('class'=>'input-medium')))
             ->add('nivelescribe', 'choice', array('label'=>'Nivel Escribe: ', 
                 'choices' => array('No Aplica'=>'No Aplica', 'Básico' => 'Básico', 'Intermedio' => 'Intermedio', 'Avanzado'=>'Avanzado'), 'required'  => true, 'empty_value' => 'Seleccione', 'attr'=>array('class'=>'input-medium')))
             ->add('nivelhabla', 'choice', array('label'=>'Nivel Habla: ', 
