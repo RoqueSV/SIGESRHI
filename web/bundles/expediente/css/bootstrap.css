@@ -650,8 +650,6 @@ a:focus {
 
 p {
   margin: 0px;
-  word-wrap: break-word;
-  overflow: hidden;
 }
 
 .lead {
@@ -1032,18 +1030,23 @@ form {
 
 fieldset {
   padding: 0;
-  margin: 0;
+  margin-bottom: 20px;
   border: 0;
 }
+
+/*legend {
+  font-weight: 700;
+}*/
 
 legend {
   display: block;
   width: 100%;
   padding: 0;
   margin-bottom: 20px;
-  font-size: 21px;
+  font-size: 15px;
+  font-weight: bold;
   line-height: 40px;
-  color: #333333;
+  color: #000000;
   border: 0;
   border-bottom: 1px solid #e5e5e5;
 }

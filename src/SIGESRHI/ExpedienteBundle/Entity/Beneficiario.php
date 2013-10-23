@@ -5,12 +5,15 @@ namespace SIGESRHI\ExpedienteBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use APY\DataGridBundle\Grid\Mapping as GRID;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Beneficiario
  *
  * @ORM\Table(name="beneficiario")
  * @ORM\Entity
+ * @Vich\Uploadable 
  */
 class Beneficiario
 {
@@ -85,7 +88,74 @@ class Beneficiario
      */
     private $idsegurovida;
 
+    /*** Ejemplo vich uploader --  Será removido ***/
+     
+     /**
+     * @Assert\File(
+     *     maxSize="1M",
+     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg", "application/pdf", "application/x-pdf"}
+     * )
+     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName")
+     *
+     * @var File $image
+     */
+    protected $image;
 
+    /**
+     * @ORM\Column(type="string", length=255, name="image_name")
+     *
+     * @var string $imageName
+     */
+    protected $imageName;
+
+     /*** Metodos setter y getter ***/
+
+     /**
+     * Set imageName
+     *
+     * @param string $imageName
+     * @return Beneficiario
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * Get imageName
+     *
+     * @return string 
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setImage(UploadedFile $image = null)
+    {
+        $this->image = $image;
+        
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getImage()
+    {
+        return $this->image;
+        
+    }
+
+    /********************* Aqui termina ejemplo ***************************/
 
     /**
      * Get id

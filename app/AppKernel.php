@@ -34,6 +34,9 @@ class AppKernel extends Kernel
             new SIGESRHI\ExpedienteBundle\ExpedienteBundle(),
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new APY\DataGridBundle\APYDataGridBundle(),
+            new SIGESRHI\ReporteBundle\ReporteBundle(),
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -5,7 +5,7 @@
     <!-- Botón ayuda -->
     <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
     
-    <h3 class="text-center">Ingreso de seguro de vida</h3>
+    <h3 class="text-center">Ingreso de seguro colectivo de vida</h3>
     
     <!-- Contenido ayuda -->
     <div id="help" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="helpLabel" aria-hidden="true">
@@ -23,12 +23,12 @@
     </div>
     <!-- fin Ayuda -->
 
-    <form action="{{ path('segurovida_create') }}" id= "seguro_form" class="form-horizontal" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('segurovida_create') }}" id= "seguro_form"  method="post" {{ form_enctype(form) }}>
     
     {#Formulario principal#}
        <fieldset>
            <legend>Datos Generales</legend>
-            <div>
+            <div class="form-horizontal">
                 {{ form_row(form.fechaseguro)}}
                 {{ form_row(form.estadoseguro)}}
                 {{ form_row(form.idexpediente)}}
@@ -38,14 +38,18 @@
     {#Formulario embebido#}
        <fieldset>
                 <legend>Beneficiarios</legend>
+                <table>
+                 
+                 <tr>
+                     <td class="text-center">{{ form_row(form.idbeneficiario[0].nombrebeneficiario) }}</td>
+                     <td class="text-center">{{ form_row(form.idbeneficiario[0].parentescobeneficiario) }}</td>
+                     <td class="text-center">{{ form_row(form.idbeneficiario[0].porcentaje) }}</td>
+                 </tr>
+                 
+                </table>
+
                 <ul class="Beneficiario unstyled" data-prototype="
                 <table>
-                <tr>
-                <td>{{ form_label(form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}</td>
-                <td>{{ form_label(form.idbeneficiario.vars.prototype.parentescobeneficiario)|e }}</td>
-                <td>{{ form_label(form.idbeneficiario.vars.prototype.porcentaje)|e }}</td>
-                
-                </tr>
                 <tr>
                 <td>{{ form_widget(form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}</td>
                 <td>{{ form_widget(form.idbeneficiario.vars.prototype.parentescobeneficiario)|e }}</td>
@@ -53,11 +57,9 @@
                 </tr>
                 </table>
                 ">
-                 <li> {{form_widget(form.idbeneficiario[0])}} </li>
-
                 </ul>
        </fieldset>    
-        <div class="centered">
+        <div class="text-center">
             <button type="submit" class="btn btn-primary">Guardar</button>
             <button type="reset"  class="btn">Cancelar</button> 
         </div>

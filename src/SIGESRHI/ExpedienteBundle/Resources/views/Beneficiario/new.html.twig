@@ -4,22 +4,22 @@
     <h1>Beneficiario creation</h1>
 
     <form action="{{ path('beneficiario_create') }}" method="post" {{ form_enctype(form) }}>
-       {# {{ form_widget(form) }} #}
+        {{ form_widget(form) }} 
 
-        <table>
+        {#<table>
                 <tr>
                     <td>{{ form_label(form.nombrebeneficiario) }}</td>
                     <td>{{ form_label(form.parentescobeneficiario) }}</td>
                     <td>{{ form_label(form.porcentaje) }}</td>
-                    <td>{{ form_label(form.idsegurovida) }}</td>
+                    <td>{{ form_label(form.idsegurovida) }}</td> 
                 </tr>
                 <tr>
                     <td>{{ form_widget(form.nombrebeneficiario) }} {{ form_errors(form.nombrebeneficiario) }}</td>
                     <td>{{ form_widget(form.parentescobeneficiario) }} {{ form_errors(form.parentescobeneficiario) }}</td>
                     <td>{{ form_widget(form.porcentaje) }} {{ form_errors(form.porcentaje) }}</td>
-                    <td>{{ form_widget(form.idsegurovida) }} {{ form_errors(form.idsegurovida) }}</td>
+                    <td>{{ form_widget(form.idsegurovida) }} {{ form_errors(form.idsegurovida) }}</td> 
                 </tr>
-                </table>
+                </table> #}
         <p>
             <button type="submit">Create</button>
         </p>
