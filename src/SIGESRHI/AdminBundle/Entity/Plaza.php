@@ -113,6 +113,11 @@ class Plaza
     private $idtitulo;
 
     /**
+     * @ORM\OneToMany(targetEntity="SIGESRHI\ExpedienteBundle\Entity\Contratacion", mappedBy="idplaza")
+     */
+    private $idcontratacion;
+    
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Conocimiento", inversedBy="idplaza")
@@ -125,6 +130,7 @@ class Plaza
      *   }
      * )
      */
+
     private $idconocimiento;
 
     /**
@@ -214,12 +220,13 @@ class Plaza
      */
     public function __construct()
     {
-       // $this->idarea = new \Doctrine\Common\Collections\ArrayCollection();
+       
         $this->idconocimiento = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idfuncion = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idhabilidad = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idmanejoequipo = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idtitulo = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idcontratacion = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -777,5 +784,38 @@ class Plaza
     public function getIdtitulo()
     {
         return $this->idtitulo;
+    }
+
+    /**
+     * Add idcontratacion
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion
+     * @return Plaza
+     */
+    public function addIdcontratacion(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion)
+    {
+        $this->idcontratacion[] = $idcontratacion;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idcontratacion
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion
+     */
+    public function removeIdcontratacion(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion)
+    {
+        $this->idcontratacion->removeElement($idcontratacion);
+    }
+
+    /**
+     * Get idcontratacion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdcontratacion()
+    {
+        return $this->idcontratacion;
     }
 }

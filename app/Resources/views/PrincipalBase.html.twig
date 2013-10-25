@@ -93,7 +93,7 @@
 			{% endblock %}
 		</ul>	
 	</nav>	
-
+    {% block extendido %}
 	<aside id="columna">
 		{% block seccion %}
 		{% if app.user %}
@@ -115,7 +115,7 @@
 				
 		{% endblock %}
 	</section>
-
+    {% endblock %}
 
 	
 	<footer id="pie">

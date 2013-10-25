@@ -81,7 +81,7 @@ class Contratacion
     /**
      * @var string
      *
-     * @ORM\Column(name="informacionadicional", type="string", length=500, nullable=true)
+     * @ORM\Column(name="informacionadicional", type="text", length=500, nullable=true)
      * @Assert\Length(
      * max = "500",
      * maxMessage = "La informacion adicional no debe exceder los {{limit}} caracteres"
@@ -89,10 +89,48 @@ class Contratacion
      */
     private $informacionadicional;
 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="tipocontratacion", type="string", length=1, nullable=false)
+     * 
+     */
+    private $tipocontratacion;
+
+     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechafinnom", type="date", nullable=true)
+     * 
+     */
+    private $fechafinnom;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechaautorizacion", type="date", nullable=true)
+     */
+
+    private $fechaautorizacion;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="numoficio", type="integer", nullable=true)
+     */
+    private $numoficio;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechafincontrato", type="date", nullable=true)
+     */
+    private $fechafincontrato;
+
     /**
      * @var \SIGESRHI\AdminBundle\Entity\Plaza
      *
-     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza", inversedBy="idcontratacion")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      * })
@@ -102,7 +140,7 @@ class Contratacion
     /**
      * @var \SIGESRHI\AdminBundle\Entity\Unidadorganizativa
      *
-     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Unidadorganizativa")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Unidadorganizativa", inversedBy="idcontratacion")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idunidad", referencedColumnName="id")
      * })
@@ -112,13 +150,12 @@ class Contratacion
     /**
      * @var \Empleado
      *
-     * @ORM\ManyToOne(targetEntity="Empleado")
+     * @ORM\ManyToOne(targetEntity="Empleado", inversedBy="idcontratacion")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idusuario", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idempleado", referencedColumnName="id")
      * })
      */
-    private $idusuario;
-
+    private $idempleado;   
 
 
     /**
@@ -293,6 +330,121 @@ class Contratacion
     }
 
     /**
+     * Set tipocontratacion
+     *
+     * @param string $tipocontratacion
+     * @return Contratacion
+     */
+    public function setTipocontratacion($tipocontratacion)
+    {
+        $this->tipocontratacion = $tipocontratacion;
+    
+        return $this;
+    }
+
+    /**
+     * Get tipocontratacion
+     *
+     * @return string 
+     */
+    public function getTipocontratacion()
+    {
+        return $this->tipocontratacion;
+    }
+
+    /**
+     * Set fechafinnom
+     *
+     * @param \DateTime $fechafinnom
+     * @return Contratacion
+     */
+    public function setFechafinnom($fechafinnom)
+    {
+        $this->fechafinnom = $fechafinnom;
+    
+        return $this;
+    }
+
+    /**
+     * Get fechafinnom
+     *
+     * @return \DateTime 
+     */
+    public function getFechafinnom()
+    {
+        return $this->fechafinnom;
+    }
+
+    /**
+     * Set fechaautorizacion
+     *
+     * @param \DateTime $fechaautorizacion
+     * @return Contratacion
+     */
+    public function setFechaautorizacion($fechaautorizacion)
+    {
+        $this->fechaautorizacion = $fechaautorizacion;
+    
+        return $this;
+    }
+
+    /**
+     * Get fechaautorizacion
+     *
+     * @return \DateTime 
+     */
+    public function getFechaautorizacion()
+    {
+        return $this->fechaautorizacion;
+    }
+
+    /**
+     * Set numoficio
+     *
+     * @param integer $numoficio
+     * @return Contratacion
+     */
+    public function setNumoficio($numoficio)
+    {
+        $this->numoficio = $numoficio;
+    
+        return $this;
+    }
+
+    /**
+     * Get numoficio
+     *
+     * @return integer 
+     */
+    public function getNumoficio()
+    {
+        return $this->numoficio;
+    }
+
+    /**
+     * Set fechafincontrato
+     *
+     * @param \DateTime $fechafincontrato
+     * @return Contratacion
+     */
+    public function setFechafincontrato($fechafincontrato)
+    {
+        $this->fechafincontrato = $fechafincontrato;
+    
+        return $this;
+    }
+
+    /**
+     * Get fechafincontrato
+     *
+     * @return \DateTime 
+     */
+    public function getFechafincontrato()
+    {
+        return $this->fechafincontrato;
+    }
+
+    /**
      * Set idplaza
      *
      * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
@@ -339,25 +491,25 @@ class Contratacion
     }
 
     /**
-     * Set idusuario
+     * Set idempleado
      *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado
      * @return Contratacion
      */
-    public function setIdusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario = null)
+    public function setIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado = null)
     {
-        $this->idusuario = $idusuario;
+        $this->idempleado = $idempleado;
     
         return $this;
     }
 
     /**
-     * Get idusuario
+     * Get idempleado
      *
      * @return \SIGESRHI\ExpedienteBundle\Entity\Empleado 
      */
-    public function getIdusuario()
+    public function getIdempleado()
     {
-        return $this->idusuario;
+        return $this->idempleado;
     }
 }

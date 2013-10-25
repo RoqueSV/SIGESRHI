@@ -64,7 +64,23 @@ class Accionpersonal
      */
     private $idexpediente;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipoacuerdo", type="string", length=1, nullable=false)
+     */
+    private $tipoacuerdo;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numacuerdo", type="string", length=15, nullable=true)
+     * @Assert\Length(
+     * max = "15",
+     * maxMessage = "El numero de acuerdo no debe exceder los {{limit}} caracteres"
+     * )
+     */
+    private $numacuerdo;
 
     /**
      * Get id
@@ -166,5 +182,51 @@ class Accionpersonal
     public function getIdexpediente()
     {
         return $this->idexpediente;
+    }
+
+    /**
+     * Set tipoacuerdo
+     *
+     * @param string $tipoacuerdo
+     * @return Accionpersonal
+     */
+    public function setTipoacuerdo($tipoacuerdo)
+    {
+        $this->tipoacuerdo = $tipoacuerdo;
+    
+        return $this;
+    }
+
+    /**
+     * Get tipoacuerdo
+     *
+     * @return string 
+     */
+    public function getTipoacuerdo()
+    {
+        return $this->tipoacuerdo;
+    }
+
+    /**
+     * Set numacuerdo
+     *
+     * @param string $numacuerdo
+     * @return Accionpersonal
+     */
+    public function setNumacuerdo($numacuerdo)
+    {
+        $this->numacuerdo = $numacuerdo;
+    
+        return $this;
+    }
+
+    /**
+     * Get numacuerdo
+     *
+     * @return string 
+     */
+    public function getNumacuerdo()
+    {
+        return $this->numacuerdo;
     }
 }

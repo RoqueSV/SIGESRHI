@@ -76,11 +76,11 @@ class Concurso
      *     @ORM\JoinColumn(name="idconcurso", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idusuario", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="idempleado", referencedColumnName="id")
      *   }
      * )
      */
-    private $idusuario;
+    private $idempleado;
 
     /**
      * @var \SIGESRHI\AdminBundle\Entity\Plaza
@@ -97,7 +97,7 @@ class Concurso
      */
     public function __construct()
     {
-        $this->idusuario = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idempleado = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -227,36 +227,36 @@ class Concurso
     }
 
     /**
-     * Add idusuario
+     * Add idempleado
      *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado
      * @return Concurso
      */
-    public function addIdusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario)
+    public function addIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado)
     {
-        $this->idusuario[] = $idusuario;
+        $this->idempleado[] = $idempleado;
     
         return $this;
     }
 
     /**
-     * Remove idusuario
+     * Remove idempleado
      *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado
      */
-    public function removeIdusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario)
+    public function removeIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado)
     {
-        $this->idusuario->removeElement($idusuario);
+        $this->idempleado->removeElement($idempleado);
     }
 
     /**
-     * Get idusuario
+     * Get idempleado
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getIdusuario()
+    public function getIdempleado()
     {
-        return $this->idusuario;
+        return $this->idempleado;
     }
 
     /**

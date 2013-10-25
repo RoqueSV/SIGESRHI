@@ -24,13 +24,6 @@ class Empleado
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="idrol", type="integer", nullable=false)
-     */
-    private $idrol;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="codigoempleado", type="string", length=5, nullable=false)
@@ -42,10 +35,10 @@ class Empleado
      */
     private $codigoempleado;
 
-        /**
+    /**
      * @var \Expediente
      *
-     * @ORM\ManyToOne(targetEntity="Expediente")
+     * @ORM\OneToOne(targetEntity="Expediente")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
      * })
@@ -57,10 +50,25 @@ class Empleado
      *
      * @ORM\ManyToOne(targetEntity="Empleado")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="emp_idusuario", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idjefe", referencedColumnName="id")
      * })
      */
-    private $empusuario;
+    private $idjefe;
+
+    /**
+     * @var \Usuario
+     *
+     * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idusuario", referencedColumnName="id")
+     * })
+     */
+    private $idusuario;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Contratacion", mappedBy="idempleado")
+     */
+    private $idcontratacion;
 
          public function __toString() {
   return $this->codigoempleado;
@@ -74,29 +82,6 @@ class Empleado
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set idrol
-     *
-     * @param integer $idrol
-     * @return Empleado
-     */
-    public function setIdrol($idrol)
-    {
-        $this->idrol = $idrol;
-    
-        return $this;
-    }
-
-    /**
-     * Get idrol
-     *
-     * @return integer 
-     */
-    public function getIdrol()
-    {
-        return $this->idrol;
     }
 
     /**
@@ -146,25 +131,88 @@ class Empleado
     }
 
     /**
-     * Set empusuario
+     * Set idjefe
      *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $empusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idjefe
      * @return Empleado
      */
-    public function setEmpusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $empusuario = null)
+    public function setIdjefe(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idjefe = null)
     {
-        $this->empusuario = $empusuario;
+        $this->idjefe = $idjefe;
     
         return $this;
     }
 
     /**
-     * Get empusuario
+     * Get idjefe
      *
      * @return \SIGESRHI\ExpedienteBundle\Entity\Empleado 
      */
-    public function getEmpusuario()
+    public function getIdjefe()
     {
-        return $this->empusuario;
+        return $this->idjefe;
+    }
+
+    /**
+     * Set idusuario
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $idusuario
+     * @return Empleado
+     */
+    public function setIdusuario(\Application\Sonata\UserBundle\Entity\User $idusuario = null)
+    {
+        $this->idusuario = $idusuario;
+    
+        return $this;
+    }
+
+    /**
+     * Get idusuario
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getIdusuario()
+    {
+        return $this->idusuario;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idcontratacion = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idcontratacion
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion
+     * @return Empleado
+     */
+    public function addIdcontratacion(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion)
+    {
+        $this->idcontratacion[] = $idcontratacion;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idcontratacion
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion
+     */
+    public function removeIdcontratacion(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion)
+    {
+        $this->idcontratacion->removeElement($idcontratacion);
+    }
+
+    /**
+     * Get idcontratacion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdcontratacion()
+    {
+        return $this->idcontratacion;
     }
 }
