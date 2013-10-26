@@ -7,7 +7,7 @@
 <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
     
 
-        {{ include('ExpedienteBundle:Ayuda/Solicitudempleo:registro.html.twig')}} 
+        {{ include('ExpedienteBundle:Ayuda/SolicitudEmpleo:registro.html.twig')}} 
 
         
     
@@ -39,20 +39,14 @@
            <br>
 
             <fieldset>
-                <legend>Datos Personales</legend>
+                <legend>I. Datos Personales</legend>
 
                 <table>
                 <tr>
-                    <td>{{ form_label(form.apellidocasada) }}</td>
-                    <td>{{ form_label(form.primerapellido) }}</td>
-                    <td>{{ form_label(form.segundoapellido) }}</td>
-                    <td>{{ form_label(form.nombres) }}</td>
-                </tr>
-                <tr>
-                    <td align="center">{{ form_widget(form.apellidocasada) }} {{ form_errors(form.apellidocasada) }}</td>
-                    <td align="center">{{ form_widget(form.primerapellido) }} {{ form_errors(form.primerapellido) }}</td>
-                    <td align="center">{{ form_widget(form.segundoapellido) }} {{ form_errors(form.segundoapellido) }}</td>
-                    <td align="center">{{ form_widget(form.nombres) }} {{ form_errors(form.nombres) }}</td>
+                    <td>{{ form_row(form.apellidocasada) }}</td><td>&nbsp;&nbsp;</td>
+                    <td>{{ form_row(form.primerapellido) }}</td><td>&nbsp;&nbsp;</td>
+                    <td>{{ form_row(form.segundoapellido) }}</td><td>&nbsp;&nbsp;</td>
+                    <td>{{ form_row(form.nombres) }}</td>
                 </tr>
                 </table>
                 
@@ -61,10 +55,7 @@
                 <table border="0">
                     <tr>
                         <td>{{ form_row(form.departamentos) }} </td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_row(form.idmunicipio) }}</td>
-                    </tr>
-                    
-                    <tr>
+                        <td>{{ form_row(form.idmunicipio) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
                         <td>{{ form_row(form.colonia) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
                         <td>{{ form_row(form.calle) }}</td>
                     </tr>
@@ -88,8 +79,14 @@
                         <td>{{ form_row(form.fechanac) }}</td>
                     </tr>
                 </table>
-                                
-                {{ form_row(form.sexo) }}
+                  
+              
+                    <table>
+                        <tr>
+                            <td width="50">{{form_label(form.sexo)}}</td><td>{{form_widget(form.sexo)}}</td>
+                        </tr>
+                    </table>
+        
 
                 <h5>Documentos de Identidad Personal:</h5>
 
@@ -108,6 +105,7 @@
                     </tr>
                 </table>
                 
+                <br>
                 
                <table>
                     <tr>
@@ -122,7 +120,7 @@
             <br>
 
             <fieldset>
-                <legend>Datos de Estudio</legend>
+                <legend>II. Datos de Estudio</legend>
 
                 {# <ul class="Destudios unstyled" data-prototype="{{ form_widget(form.Destudios.vars.prototype)|e }}"> #}
                 
@@ -137,8 +135,8 @@
                 <ul class="Destudios unstyled" data-prototype="
                 <table>
                     <tr>
-                        <td>{{form_row(form.Destudios.vars.prototype.idtitulo)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{form_row(form.Destudios.vars.prototype.centroestudio)|e}}</td>
+                        <td>{{form_widget(form.Destudios.vars.prototype.idtitulo)|e}} {{form_errors(form.Destudios.vars.prototype.idtitulo)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{form_widget(form.Destudios.vars.prototype.centroestudio)|e}} {{form_errors(form.Destudios.vars.prototype.centroestudio)|e}}</td>
                     <tr>
                 <table>
                 ">
@@ -157,9 +155,9 @@
                  <ul class="Idiomas unstyled" data-prototype="
                  <table>
                     <tr>
-                        <td>{{form_row(form.Idiomas.vars.prototype.nombreidioma)|e}}</td><td>&nbsp;&nbsp;&nbsp;<td>
-                        <td>{{form_row(form.Idiomas.vars.prototype.nivelescribe)|e}}</td><td>&nbsp;&nbsp;&nbsp;<td>
-                        <td>{{form_row(form.Idiomas.vars.prototype.nivelhabla)|e}}</td><td>&nbsp;&nbsp;&nbsp;<td>
+                        <td>{{form_row(form.Idiomas.vars.prototype.nombreidioma)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{form_row(form.Idiomas.vars.prototype.nivelescribe)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{form_row(form.Idiomas.vars.prototype.nivelhabla)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
                         <td>{{form_row(form.Idiomas.vars.prototype.nivellee)|e}}</td>
                     </tr>
                 </table>
@@ -176,32 +174,30 @@
             
 
             <fieldset>
-                <legend>Datos Familiares</legend>
+                <legend>III. Datos Familiares</legend>
 
               <table>
                 <tr>
-                    <td>{{form_row(form.Dfamiliares[0].parentesco)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                    <td>{{form_row(form.Dfamiliares[0].nombrefamiliar)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                    <td>{{form_row(form.Dfamiliares[0].parentesco)}}</td>
+                    <td>&nbsp;&nbsp;&nbsp;</td>
+                    <td>{{form_row(form.Dfamiliares[0].nombrefamiliar)}}</td>
+                    <td>&nbsp;&nbsp;&nbsp;</td>
                     <td>{{form_row(form.Dfamiliares[0].telefonofamiliar)}}</td>
-                </tr>
-            </table>
-            <table>
-                <tr>
+                    <td>&nbsp;&nbsp;&nbsp;</td>
                     <td>{{form_row(form.Dfamiliares[0].direccionfamiliar)}}</td>
                 </tr>
             </table>
+            
                
               <ul class="Dfamiliares unstyled" data-prototype="
             <table>
                 <tr>
-                    <td>{{form_row(form.Dfamiliares.vars.prototype.parentesco)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                    <td>{{form_row(form.Dfamiliares.vars.prototype.nombrefamiliar)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                    <td>{{form_row(form.Dfamiliares.vars.prototype.telefonofamiliar)|e}}</td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td>{{form_row(form.Dfamiliares.vars.prototype.direccionfamiliar)|e}}</td>
+                    <td>{{form_widget(form.Dfamiliares.vars.prototype.parentesco)|e}} {{form_errors(form.Dfamiliares.vars.prototype.parentesco)|e}}</td>
+                    <td>&nbsp;&nbsp;&nbsp;</td>
+                    <td>{{form_widget(form.Dfamiliares.vars.prototype.nombrefamiliar)|e}} {{form_errors(form.Dfamiliares.vars.prototype.nombrefamiliar)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                    <td>{{form_widget(form.Dfamiliares.vars.prototype.telefonofamiliar)|e}} {{form_errors(form.Dfamiliares.vars.prototype.telefonofamiliar)|e}}</td>
+                    <td>&nbsp;&nbsp;&nbsp;</td>
+                    <td>{{form_widget(form.Dfamiliares.vars.prototype.direccionfamiliar)|e}} {{form_errors(form.Dfamiliares.vars.prototype.direccionfamiliar)|e}}</td>
                 </tr>
             </table>
                ">
@@ -228,14 +224,14 @@
 
                 <br>
           <fieldset>
-                <legend>Datos de Empleo</legend>
+                <legend>IV. Datos de Empleo</legend>
 
                 
                 
                  <ul class="Dempleos unstyled" data-prototype="
             <table >
                 <tr>
-                    <td>{{form_label(form.Dempleos.vars.prototype.tipodatoempleo)|e}}</td>
+                    <td width='225px'>{{form_label(form.Dempleos.vars.prototype.tipodatoempleo)|e}}</td>
                     <td>{{form_widget(form.Dempleos.vars.prototype.tipodatoempleo)|e}} {{form_errors(form.Dempleos.vars.prototype.tipodatoempleo)|e}}</td>
                 </tr>
                 <tr>                

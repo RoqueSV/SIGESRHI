@@ -35,7 +35,7 @@ background: #ECE9D8;
 }
 
 #agrupar {
-width: 960px;
+width: 1024px; /*960px*/
 margin: 15px auto;
 text-align: left;
 }
@@ -69,10 +69,19 @@ font: bold 14px arial, sans-serif;
 }
 */
 
+#camino_miga{
+padding: 5px 0px;
+background: #CCCCCC;
+
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+border-radius: 10px;
+}
+
 #seccion {
 background: #CCCCCC;
 float: left;
-width: 680px;
+width: 744px; /* con acho de agrupar de 960px -> 680*/
 margin: 3px 0px 10px 10px;
 padding: 10px 10px;
 

@@ -12,9 +12,9 @@ class DatosfamiliaresType extends AbstractType
     {
         $builder
             ->add('parentesco', 'choice', array('label'=>'Parentesco: ',
-                'choices' => array('Padre' => 'Padre', 'Madre' => 'Madre', 'Esposa/o' => 'Esposa/o', 'Hijo/a' => 'Hijo/a'),'required'  => true,'empty_value' => 'Seleccione', 'attr'=>array('class'=>'input-medium')))
-            ->add('nombrefamiliar',null, array('label'=>'Nombre: ', 'attr'=>array('class' =>'input-xlarge')))
-            ->add('direccionfamiliar',null, array('label'=>'Dirección:  ', 'attr'=>array('class'=>'input-xxlarge')))
+                'choices' => array('Padre' => 'Padre', 'Madre' => 'Madre', 'Esposa/o' => 'Esposa/o', 'Hijo/a' => 'Hijo/a'),'required'  => true,'empty_value' => 'Seleccione', 'attr'=>array('class'=>'input-small')))
+            ->add('nombrefamiliar',null, array('label'=>'Nombre: ', 'attr'=>array('class' =>'input-large')))
+            ->add('direccionfamiliar',null, array('label'=>'Dirección:  ', 'attr'=>array('class'=>'input-xlarge')))
             ->add('telefonofamiliar',null, array('label'=>'Teléfono: ', 'max_length'=>'8', 'attr'=>array('class'=>'input-small telefono', 'data-bvalidator'=>'phone,required')))
            // ->add('idsolicitudempleo') 
         ;
