@@ -6,10 +6,17 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+
 class PruebapsicologicaType extends AbstractType
 {
+    protected $expediente;
+    public function __construct ($expediente)
+    {
+        $this->expediente = $expediente;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        
         $builder
             ->add('resultadocoeficiente','choice',array(
                 'choices' => array('superior'=>'Superior de 120 a 129','alto'=>'Promedio Alto de 110 a 119','normal'=>'Promedio normal de 90 a 110','bajo'=>'Nivel bajo-torpe de 80 a 89'),
@@ -37,7 +44,9 @@ class PruebapsicologicaType extends AbstractType
                 'expanded'=>true,
                 'label'=>'Seguridad',
                 ))
-            ->add('idexpediente')
+            ->add('idexpediente','hidden',array(
+                'data' => $this->expediente,
+                ))
         ;
     }
 

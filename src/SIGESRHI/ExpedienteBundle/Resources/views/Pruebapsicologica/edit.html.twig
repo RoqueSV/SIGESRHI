@@ -1,28 +1,116 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Pruebapsicologica edit</h1>
+{% block principal -%}
+    <h4 class='text-center'>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h4>
+    <fieldset><legend>Datos Generales del evaluado</legend>
+    <table>
+    {% for exp in expediente %}
+    <tr>
+        <td>Fecha:<b> {{ exp.fechaexpediente | date('d-m-Y') }} </b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Nombre:<b> {{ exp.nombres  }}</b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Escolaridad:<b> {{ exp.nombretitulo }}</b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Plaza a la que aplica: <b>{{ exp.nombreplaza }}</b></td>
+        <td></td>
+    </tr>
+    {% endfor %}
+    </table>
+    </fieldset>
 
-    <form action="{{ path('pruebapsicologica_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <form action="{{ path('pruebapsicologica_update', { 'id': entity.id }) }}" method="post" class="form-horizontal" {{ form_enctype(edit_form) }}>
+       <fieldset>
+        <legend>Resultados</legend>
+        <p>Para la evaluación psicológica se tomo en cuenta los siguientes aspectos:</p>
+        <div class='centered'>
+            <table class='table-striped text-center' border='1' width='85%'>    
+            <tr>
+            <th align="center">Criterios</th>
+            <th  width="250">Resultado&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rangos</th>
+            <th>Calificación</th>
+            </tr>            
+            <tr>
+                <td>{{ form_label(edit_form.resultadocoeficiente) }}</td>
+                <td>
+                <table width='100%'>
+                {% for child in edit_form.resultadocoeficiente %}
+                <tr>
+                <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
+                <tr>
+                {% endfor %}
+                </table>
+                </td>
+                <td>{{ form_widget(edit_form.calificacioncoeficiente) }} {{form_errors(edit_form.calificacioncoeficiente)}}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(edit_form.resultadoafectividad) }}</td>
+                <td>
+                <table width='100%'>
+                {% for child in edit_form.resultadoafectividad %}
+                <tr>
+                <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
+                <tr>
+                {% endfor %}
+                </table>
+                </td>                
+                <td></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(edit_form.resultadorelaciones) }}</td>
+                <td>
+                <table width='100%'>
+                {% for child in edit_form.resultadorelaciones %}
+                <tr>
+                <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
+                <tr>
+                {% endfor %}
+                </table>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(edit_form.resultadoautoreconocimiento) }}</td>
+                <td>
+                <table width='100%'>
+                {% for child in edit_form.resultadoautoreconocimiento %}
+                <tr>
+                <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
+                <tr>
+                {% endfor %}
+                </table>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>{{ form_label(edit_form.resultadoseguridad) }}</td>
+                <td>
+                <table width='100%'>
+                {% for child in edit_form.resultadoseguridad %}
+                <tr>
+                <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
+                <tr>
+                {% endfor %}
+                </table>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+        </div>
+        <fieldset>
         <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Guardar</button>
-        </p>
+        {#{ form_widget(edit_form) }#}
+        <div class='text-center'>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="reset"  class="btn tool">Cancelar</button>            
+        </div>
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('pruebapsicologica') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('pruebapsicologica_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+        
 {% endblock %}

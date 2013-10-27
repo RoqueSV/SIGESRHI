@@ -114,6 +114,10 @@ border-top: 2px solid #999999;
 {
     text-align:center;
 }
+.centered table{
+       margin: 0 auto;
+       text-align: center;
+}
 
 /** botón circular **/
 .btn-cir {
