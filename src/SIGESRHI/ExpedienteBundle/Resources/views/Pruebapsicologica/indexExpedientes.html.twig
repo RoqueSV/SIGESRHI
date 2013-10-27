@@ -1,29 +1,18 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block stylesheets %}
-    {{parent()}}
-        <link href="{{asset('bundles/expediente/css/ui.jqgrid.css')}}" rel="stylesheet"  type="text/css" media="all"/>
-        
-        
-{% endblock %}
+{% block principal -%}
+<h4 class='text-center'>SELECCIONE UN ASPIRANTE</h4>
+{{ grid_search(grid) }}
 
-{% block javascripts %}
-        {{ parent() }}
-        <script type="text/javascript" src="{{ asset('bundles/expediente/js/jquery-1.10.2.min.js') }}"></script>
+    {{ grid(grid,_self) }}
+    
+    {#{{grid (grid)}}#}
 
-        <script type="text/javascript" src="{{ asset('bundles/expediente/js/index.js') }}"></script>
-        
-
-        <script type="text/javascript" src="{{asset('bundles/expediente/js/i18n/grid.locale-es.js')}}"></script>
-
-        <script type="text/javascript" src="{{asset('bundles/expediente/js/jquery.jqGrid.min.js')}}" ></script>
-{% endblock %}
-
-
-{% block body -%}
-    <h1>Expediente- Pruebapsicologica list</h1>
-
-    <table class="listado_expedientes" id="listado_expedientes">
+    {% block grid_filters %}{% endblock %}
+{#<fieldset><legend>Resultados de prueba Psicológica</legend>
+    <h3>Expediente- Pruebapsicologica list</h3>
+    <fieldset><legend>Buscar Aspirante</legend>
+    <table class="record_list">
         <thead>
             <tr>
                 <th>Id</th>
@@ -34,21 +23,17 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('pruebapsicologica_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('pruebapsicologica_new', { 'idexp': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.fechaexpediente | date("d/m/Y")}}</td>
                 <td>{{ entity.tipoexpediente }}</td>                        
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    </fieldset>
+    <p>
+        <button type="reset"  class="btn tool">Cancelar</button>
+    </p>
+</fieldset>#}
     
-    <div id='pagerEstudiantes' ></div>
-    <div id='resultado' ></div>
-        <ul>
-        <li>
-            <a href="{{ path('pruebapsicologica_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+{% endblock %}
