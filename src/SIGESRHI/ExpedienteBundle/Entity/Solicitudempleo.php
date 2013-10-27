@@ -404,9 +404,19 @@ class Solicitudempleo
      */
     private $dependenciaparinst;
 
-   public $aceptar;
+   private $aceptar;
 
 
+    public function setAceptar($aceptar){
+ 
+    $this->aceptar = $aceptar;
+    
+        return $this;
+   }
+
+   public function getAceptar(){
+    return $this->aceptar;
+   }
 
                 /***************** Funciones set y get ***********************/
 

@@ -53,20 +53,20 @@ class Evaluacion
      *
      * @ORM\ManyToOne(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Empleado")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idusuario", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idempleado", referencedColumnName="id")
      * })
      */
-    private $idusuario;
+    private $idempleado;
 
     /**
      * @var \SIGESRHI\ExpedienteBundle\Entity\Empleado
      *
      * @ORM\ManyToOne(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Empleado")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="emp_idusuario", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idjefe", referencedColumnName="id")
      * })
      */
-    private $empusuario;
+    private $idjefe;
 
 
 
@@ -150,48 +150,48 @@ class Evaluacion
     }
 
     /**
-     * Set idusuario
+     * Set idempleado
      *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado
      * @return Evaluacion
      */
-    public function setIdusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario = null)
+    public function setIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado = null)
     {
-        $this->idusuario = $idusuario;
+        $this->idempleado = $idempleado;
     
         return $this;
     }
 
     /**
-     * Get idusuario
+     * Get idempleado
      *
      * @return \SIGESRHI\ExpedienteBundle\Entity\Empleado 
      */
-    public function getIdusuario()
+    public function getIdempleado()
     {
-        return $this->idusuario;
+        return $this->idempleado;
     }
 
     /**
-     * Set empusuario
+     * Set idjefe
      *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $empusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idjefe
      * @return Evaluacion
      */
-    public function setEmpusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $empusuario = null)
+    public function setIdjefe(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idjefe = null)
     {
-        $this->empusuario = $empusuario;
+        $this->idjefe = $idjefe;
     
         return $this;
     }
 
     /**
-     * Get empusuario
+     * Get idjefe
      *
      * @return \SIGESRHI\ExpedienteBundle\Entity\Empleado 
      */
-    public function getEmpusuario()
+    public function getIdjefe()
     {
-        return $this->empusuario;
+        return $this->idjefe;
     }
 }

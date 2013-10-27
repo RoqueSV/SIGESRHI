@@ -1,0 +1,27 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{%block principal -%}
+
+<h3>Generación de reportes </h2>
+
+<div class="text-center"> De click para generar el pdf</div>
+
+<br />
+
+<form class="form-inline" action="{{ path('reporte_create') }}" id="reporte_form" method="post" >
+<div class="text-center">
+<label>Seleccione el empleado:</label>
+
+{% for expediente in expedientes %}
+ <select id='idemp' name='idemp'>
+  <option value="{{expediente.idexp}}" >{{expediente.nombre}}</option>
+ </select>
+{% endfor %}
+
+<br /><br />
+<input type="submit" value="Generar" class='btn'/> 
+</div>
+</form>
+
+</div>
+{%endblock%}

@@ -11,10 +11,11 @@ class BeneficiarioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombrebeneficiario')
-            ->add('parentescobeneficiario')
-            ->add('porcentaje')
+            ->add('nombrebeneficiario',null, array('label' => 'Nombres y apellidos: ', 'attr'=>array('class' => 'input-large')))
+            ->add('parentescobeneficiario',null, array('label' => 'Parentesco: ', 'attr'=>array('class' => 'input-large')))
+            ->add('porcentaje',null, array('label' => '%', 'attr'=>array('class' => 'input-small')))
             //->add('idsegurovida')
+            ->add('image'); //ejemplo-sera removido
         ;
     }
 

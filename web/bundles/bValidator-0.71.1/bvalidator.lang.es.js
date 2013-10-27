@@ -18,17 +18,19 @@ var bValidatorOptions = {
 			'max':        'Por favor, introduzca un numero menor o igual que {0}.',
 			'between':    'Por favor, introducza un numero entre {0} y {1}.',
 			'required':   'Este campo es obligatorio.',
-			'alpha':      'Por favor, introduzca sólo caracteres alfabéticos.',
-			'alphanum':   'Por favor, introduzca sólo caracteres alfanuméricos.',
-			'digit':      'Por favor, introduzca sólo dígitos.',
+			'alpha':      'Por favor, introduzca s\xF3lo caracteres alfab\xE9ticos.',
+			'alphanum':   'Por favor, introduzca s\xF3lo caracteres alfanuméricos.',
+			'digit':      'Por favor, introduzca s\xF3lo d\xEDgitos.',
 			'number':     'Por favor, introduzca un número v\xE1lido.',
 			'email':      'Por favor, introduzca un e-mail v\xE1lido.',
-			'image':      'Este campo sólo debería contener imágenes',
+			'image':      'Este campo sólo deber\xEDa contener imágenes',
 			'url':        'Por favor, introduza una URL v\xE1lida.',
 			'ip4':        'Por favor, introduzca una dirección IPv4 válida',
 			'ip6':        'Por favor, introduzca una dirección IPv6 válida',
 			'date':       'Por favor, introduzca una fecha válida con el formato {0}.',
-			'phone':      'Por favor, introduzca un tel\xe9fono v\xe1lido.'
+			'phone':      'Por favor, introduzca un tel\xE9fono v\xE1lido.'
 		}
-	}
+
+    } 
 };
+

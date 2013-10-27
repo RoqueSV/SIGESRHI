@@ -14,8 +14,11 @@ $(document).ready(function(){
 /***** Validador *****/
      var opcionesVal = {lang:'es'};
               $('#seguro_form').bValidator(opcionesVal);
+              $('#solicitud_form').bValidator(opcionesVal);
+
 
 /***** Calendario ****/
+
     $('.date').datepicker({ 
               dateFormat: 'dd-mm-yy',  
               changeMonth: true,
@@ -44,9 +47,22 @@ $(document).ready(function(){
               $.datepicker.setDefaults($.datepicker.regional['es']);
               });
 
+
+
   /***** Telefono ****/
-    $(".telefono").mask("99999999",{placeholder:" "});
+    $(".telefono").mask("99999999",{placeholder:""});
+    $(".isss").mask("999999999",{placeholder:""});
+    $(".nup").mask("999999999999",{placeholder:""});
+    $(".nip").mask("9999999",{placeholder:""});
+    $(".dui").mask("999999999",{placeholder:""});
+    $(".nit").mask("99999999999999",{placeholder:""});
     
+    
+/******** Validacion con MaskMoney ***************/
+    $(".dinero").maskMoney();
+  
+
+
   /**** Ayuda *******/
     var opcioneshelp = {
         show: false,  // Mostrar sólo por medio del boton
@@ -91,8 +107,21 @@ function addTagFormDeleteLink($tagFormLi) {
         // quita el li de la etiqueta del formulario
         $tagFormLi.remove();
     });
-}
+//calendario
 
+$(function() {
+$('.date').datepicker({ 
+              dateFormat: 'dd-mm-yy',  
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "-100:+0",});
+
+$(".telefono").mask("99999999",{placeholder:" "});
+$(".sueldo").mask("/^[0-9]+(\.+[0-9]+[0-9])$/",{placeholder:" "});
+$(".dinero").maskMoney();
+});
+
+}
 
 
 

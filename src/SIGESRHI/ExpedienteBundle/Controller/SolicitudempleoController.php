@@ -48,26 +48,33 @@ class SolicitudempleoController extends Controller
     {
         $entity  = new Solicitudempleo();
         
+        //establecer fechas de creacion/modificacion (para este caso las misma)
+        $entity->setFecharegistro(new \Datetime(date('d-m-Y')));
+        $entity->setFechamodificacion(new \Datetime(date('d-m-Y')));
+        //$entity->setnumsolicitud(8);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery('SELECT (max(s.numsolicitud)+1) numsolicitud FROM ExpedienteBundle:Solicitudempleo s');
+        $num = $query->getSingleResult();
+        $entity->setnumsolicitud($num['numsolicitud']);
 
         $form = $this->createForm(new SolicitudempleoType(), $entity);
         $form->bind($request);
 
        
         if ($form->isValid()) {
-/*
+
             //creamos la instancia de expediente con la cual se relacionara la solicitud.
         $expediente = new Expediente();
         $expediente->setFechaexpediente(new \datetime(date('d-m-Y')));
         $expediente->setTipoexpediente('I');
 
-         $em = $this->getDoctrine()->getManager();
          $em->persist($expediente);
-*/
-         //$num=$expediente->getId();
-        //establecer fechas de creacion/modificacion (para este caso las misma)
-        $entity->setFecharegistro(new \Datetime(date('d-m-Y')));
-        $entity->setFechamodificacion(new \Datetime(date('d-m-Y')));
-        $entity->setnumsolicitud(8);
+         $em->flush();
+       
+       //asignamos a solicitud el id del nuevo expediente
+        $entity->setIdexpediente($expediente);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
@@ -95,8 +102,8 @@ class SolicitudempleoController extends Controller
 
 
      
-  /*      //agregamos datos de empleo
-        $datosempActual = new Datosempleo();
+        //agregamos datos de empleo
+ /*       $datosempActual = new Datosempleo();
         $datosempActual->name = 'Empleo Actual';
         $datosempActual->setTipodatoempleo('Empleo Actual');
         $entity->getDempleos()->add($datosempActual);
@@ -106,8 +113,7 @@ class SolicitudempleoController extends Controller
         $datosempAnterior->setTipodatoempleo('Empleo Anterior');
         $entity->getDempleos()->add($datosempAnterior);
         
-*/
-       
+*/       
         //agregamos datos familiares
         $datosFam= new Datosfamiliares();
         $datosFam->name = 'Dato Familiar 1';

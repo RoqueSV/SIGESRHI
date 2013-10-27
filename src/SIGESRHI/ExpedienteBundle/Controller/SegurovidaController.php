@@ -41,6 +41,7 @@ class SegurovidaController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
+            $entity->setFechaseguro(new \DateTime("now"));
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();

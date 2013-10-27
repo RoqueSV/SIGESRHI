@@ -57,7 +57,10 @@ class Unidadorganizativa
      */
     private $idcentro;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="SIGESRHI\ExpedienteBundle\Entity\Contratacion", mappedBy="idunidad")
+     */
+    private $idcontratacion;
 
     /**
      * Get id
@@ -144,4 +147,44 @@ class Unidadorganizativa
     } 
 
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idcontratacion = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idcontratacion
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion
+     * @return Unidadorganizativa
+     */
+    public function addIdcontratacion(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion)
+    {
+        $this->idcontratacion[] = $idcontratacion;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idcontratacion
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion
+     */
+    public function removeIdcontratacion(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion)
+    {
+        $this->idcontratacion->removeElement($idcontratacion);
+    }
+
+    /**
+     * Get idcontratacion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdcontratacion()
+    {
+        return $this->idcontratacion;
+    }
 }

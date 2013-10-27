@@ -77,10 +77,10 @@ class Solicitudcapacitacion
      *
      * @ORM\ManyToOne(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Empleado")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idusuario", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idempleado", referencedColumnName="id")
      * })
      */
-    private $idusuario;
+    private $idempleado;
 
 
 
@@ -210,25 +210,25 @@ class Solicitudcapacitacion
     }
 
     /**
-     * Set idusuario
+     * Set idempleado
      *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado
      * @return Solicitudcapacitacion
      */
-    public function setIdusuario(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario = null)
+    public function setIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario = null)
     {
-        $this->idusuario = $idusuario;
+        $this->idempleado = $idempleado;
     
         return $this;
     }
 
     /**
-     * Get idusuario
+     * Get idempleado
      *
      * @return \SIGESRHI\ExpedienteBundle\Entity\Empleado 
      */
-    public function getIdusuario()
+    public function getIdempleado()
     {
-        return $this->idusuario;
+        return $this->idempleado;
     }
 }

@@ -1,0 +1,7 @@
+{# Aqui mostraremos todos los pdf generados #}
+
+{% extends '::PrincipalBase.html.twig' %}
+
+{%block extendido -%}
+<embed src="{{ asset('uploads/reportes/'~ reportes) }}" class="pdf"></embed>
+{%endblock%}

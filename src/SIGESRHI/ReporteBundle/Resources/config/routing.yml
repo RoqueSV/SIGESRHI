@@ -1,0 +1,11 @@
+reporte_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: ReporteBundle:Default:index }
+
+reporte_prueba:
+    pattern:  /reporteprueba
+    defaults: { _controller: ReporteBundle:Reporte:index }
+
+reporte_create:
+    pattern:  /reportecreate
+    defaults: { _controller: ReporteBundle:Reporte:create }

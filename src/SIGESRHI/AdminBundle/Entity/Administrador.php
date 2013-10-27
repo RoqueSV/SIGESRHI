@@ -24,14 +24,6 @@ class Administrador
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="idrol", type="integer", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar un rol")
-     */
-    private $idrol;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="nombreadministrador", type="string", length=25, nullable=false)
@@ -68,7 +60,15 @@ class Administrador
      */
     private $emailadministrador;
 
-
+    /**
+     * @var \Usuario
+     *
+     * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idusuario", referencedColumnName="id")
+     * })
+     */
+    private $idusuario;
 
     /**
      * Get id
@@ -78,29 +78,6 @@ class Administrador
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set idrol
-     *
-     * @param integer $idrol
-     * @return Administrador
-     */
-    public function setIdrol($idrol)
-    {
-        $this->idrol = $idrol;
-    
-        return $this;
-    }
-
-    /**
-     * Get idrol
-     *
-     * @return integer 
-     */
-    public function getIdrol()
-    {
-        return $this->idrol;
     }
 
     /**
@@ -170,5 +147,28 @@ class Administrador
     public function getEmailadministrador()
     {
         return $this->emailadministrador;
+    }
+
+    /**
+     * Set idusuario
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $idusuario
+     * @return Empleado
+     */
+    public function setIdusuario(\Application\Sonata\UserBundle\Entity\User $idusuario = null)
+    {
+        $this->idusuario = $idusuario;
+    
+        return $this;
+    }
+
+    /**
+     * Get idusuario
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getIdusuario()
+    {
+        return $this->idusuario;
     }
 }
