@@ -3043,5 +3043,51 @@
             "file uploads",
             "upload"
         ]
+    },
+    {
+        "name": "whiteoctober/breadcrumbs-bundle",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "target-dir": "WhiteOctober/BreadcrumbsBundle",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/whiteoctober/BreadcrumbsBundle.git",
+            "reference": "823cd10b428377b164fba80c78b608cff4da1a94"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/whiteoctober/BreadcrumbsBundle/zipball/823cd10b428377b164fba80c78b608cff4da1a94",
+            "reference": "823cd10b428377b164fba80c78b608cff4da1a94",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2",
+            "symfony/framework-bundle": "2.*"
+        },
+        "time": "2013-09-10 17:26:20",
+        "type": "symfony-bundle",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "WhiteOctober\\BreadcrumbsBundle": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Rich Sage",
+                "email": "rich.sage@gmail.com",
+                "homepage": "http://www.richsage.co.uk/"
+            }
+        ],
+        "description": "A small breadcrumbs bundle for Symfony2",
+        "homepage": "https://github.com/whiteoctober/BreadcrumbsBundle",
+        "keywords": [
+            "breadcrumbs",
+            "symfony"
+        ]
     }
 ]

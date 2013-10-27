@@ -464,7 +464,7 @@ class Solicitudempleo
     /**
      * @var \Expediente
      *
-     * @ORM\ManyToOne(targetEntity="Expediente")
+     * @ORM\OneToOne(targetEntity="Expediente", inversedBy="idsolicitudempleo")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
      * })

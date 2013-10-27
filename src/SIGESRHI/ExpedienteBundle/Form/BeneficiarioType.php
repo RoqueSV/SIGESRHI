@@ -15,8 +15,7 @@ class BeneficiarioType extends AbstractType
             ->add('parentescobeneficiario',null, array('label' => 'Parentesco: ', 'attr'=>array('class' => 'input-large')))
             ->add('porcentaje',null, array('label' => '%', 'attr'=>array('class' => 'input-small')))
             //->add('idsegurovida')
-            ->add('image'); //ejemplo-sera removido
-        ;
+           ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

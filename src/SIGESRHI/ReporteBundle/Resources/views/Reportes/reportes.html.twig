@@ -12,11 +12,13 @@
 <div class="text-center">
 <label>Seleccione el empleado:</label>
 
-{% for expediente in expedientes %}
+
  <select id='idemp' name='idemp'>
+  {% for expediente in expedientes %}
   <option value="{{expediente.idexp}}" >{{expediente.nombre}}</option>
+  {% endfor %}
  </select>
-{% endfor %}
+
 
 <br /><br />
 <input type="submit" value="Generar" class='btn'/> 

@@ -97,7 +97,7 @@ function addTagForm(collectionHolder, $newLinkLi) {
 }
 
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormA = $('<a href="#">Eliminar</a>');
+    var $removeFormA = $('<a href="#" style="padding-left: 40px;">Eliminar</a>');
     $tagFormLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {

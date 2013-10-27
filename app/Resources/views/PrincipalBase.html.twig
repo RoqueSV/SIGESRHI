@@ -21,7 +21,7 @@
     <link href="{{ asset('bundles/bValidator-0.71.1/bvalidator.css') }}" rel="stylesheet" type="text/css" />
     {#Estilos propios#}
     <link href="{{ asset('css/grid.css') }}" rel="stylesheet" type="text/css" />
-    {#<link href="{{ asset('css/form.css') }}" rel="stylesheet" type="text/css" /> #}
+
 	{#   ------------    #}
 	{% endblock %}
     
@@ -61,11 +61,11 @@
 		<table class="tabla_cabecera">
 			<tr>
 				<td>
-		<img src="{{ asset('images/Logo_ISRI.png') }}" alt="ISRI" height="150px" width="150px" />
+		            <img src="{{ asset('images/Logo_ISRI.png') }}" alt="ISRI" height="150px" width="150px" />
 				</td>
 				<td align="center">
 					<p class="titulo1"> Instituto Salvadoreño de Rehabilitación Integral </p>
-					<br>
+					<br />
 					<p class="titulo1"> Sistema Informático de Gestión de Recurso Humano </p>
 				</td>
 				<td>
@@ -95,8 +95,7 @@
 	</nav>
 
 	<nav id="camino_miga">
-
-			
+      {{ wo_render_breadcrumbs() }}
 	</nav>	
     {% block extendido %}
 	<aside id="columna">
@@ -116,7 +115,7 @@
 	</aside>
 	<section id="seccion"> 
 		{% block principal %}
-			Aqui va el contenido de las páginas.
+			
 				
 		{% endblock %}
 	</section>

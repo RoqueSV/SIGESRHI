@@ -129,3 +129,10 @@ vich_uploader:
             delete_on_remove: true
             delete_on_update: true
 
+white_october_breadcrumbs: 
+    separator:          /
+    separatorClass:     divider
+    listId:             wo-breadcrumbs
+    listClass:          breadcrumb          
+
+
