@@ -80,7 +80,8 @@ class SolicitudempleoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('solicitud_show', array('id' => $entity->getId())));
+           // return $this->redirect($this->generateUrl('solicitud_show', array('id' => $entity->getId())));
+             return $this->redirect($this->generateUrl('docdigital_new', array('id' => $expediente->getId())));
         }
 
         return $this->render('ExpedienteBundle:Solicitudempleo:new.html.twig', array(

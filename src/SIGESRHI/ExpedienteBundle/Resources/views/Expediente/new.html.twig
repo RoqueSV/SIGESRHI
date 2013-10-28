@@ -1,0 +1,70 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal %}
+    <h1>Expediente creation</h1>
+
+    <form action="{{ path('expediente_create') }}" method="post" {{ form_enctype(form) }}>
+        
+        {{form_row(form.fechaexpediente)}}
+
+        {{form_row(form.tipoexpediente)}}
+
+
+          <ul class="Docs_expediente unstyled" data-prototype="
+                <table>
+                    <tr>
+                        <td>{{form_row(form.Docs_expediente.vars.prototype.nombredocexp)|e}} </td>
+                        <td>{{form_row(form.Docs_expediente.vars.prototype.file)|e}} </td>
+                        <td>{{form_row(form.Docs_expediente.vars.prototype.fechadocexp)|e}} </td>
+                    <tr>
+                <table>
+                ">
+
+                </ul>
+
+{{ form_rest(form) }}
+
+        <p>
+            <button type="submit">Create</button>
+        </p>
+    </form>
+
+
+<script>
+
+/*********************************** Datos de Empleo ****************************************/
+// Obtiene la ul que contiene la colección de etiquetas
+var collectionHolderDoc = $('ul.Docs_expediente');
+
+// configura una enlace "Agregar una etiqueta"
+var $addTagLinkDoc = $('<input type="button" value="Agregar Documento">');
+var $newLinkLiDoc = $('<ul></ul>').append($addTagLinkDoc);
+
+jQuery(document).ready(function() {
+    // Añade el ancla "Agregar una etiqueta" y las etiquetas li y ul
+    collectionHolderDoc.append($newLinkLiDoc);
+
+    // Añade un enlace para eliminar todas las etiquetas existentes
+    // en elementos li del formulario
+    collectionHolderDoc.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // cuenta las entradas actuales en el formulario (p. ej. 2),
+    // la usa como índice al insertar un nuevo elemento (p. ej. 2)
+    collectionHolderDoc.data('index', collectionHolderDoc.find(':input').length);
+
+    $addTagLinkDoc.on('click', function(e) {
+        // evita crear el enlace con una "#" en la URL
+        e.preventDefault();
+
+        // añade una nueva etiqueta form (ve el siguiente bloque de código)
+        addTagForm(collectionHolderDoc, $newLinkLiDoc);
+
+
+    });
+ });
+
+</script>
+      
+{% endblock %}

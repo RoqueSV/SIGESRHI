@@ -1,6 +1,7 @@
 <?php
 
 namespace SIGESRHI\ExpedienteBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -27,8 +28,6 @@ class Expediente
      * @var \DateTime
      *
      * @ORM\Column(name="fechaexpediente", type="date", nullable=false)
-     * @Assert\DateTime()
-     * @Assert\NotNull(message="Debe ingresar la fecha del expediente")
      */
     private $fechaexpediente;
 
@@ -105,5 +104,71 @@ class Expediente
         return $this->tipoexpediente;
     }
 
+
+public function __construct(){
+
+$this->Docs_expediente = new ArrayCollection();
+}
+
+/********* Documentos de Expediente *****************/
     
+    /**
+     * @ORM\OneToMany(targetEntity="Docexpediente", mappedBy="idexpediente", cascade={"persist", "remove"})
+     */
+    protected $Docs_expediente;
+
+   /**
+     * Get Docs_expediente
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+  /*  public function getDocs_expediente()
+    {
+        return $this->Docs_expediente;
+    }
+
+  */
+    public function setDocsexpediente(\Doctrine\Common\Collections\Collection $dexpedientes)
+    {
+        $this->Docs_expediente = $dexpedientes;
+
+        foreach ($dexpedientes as $dexpediente) {
+        $dexpediente->setIdexpediente($this); 
+    }   
+        }
+    
+ 
+
+    /**
+     * Add Docs_expediente
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente
+     * @return Expediente
+     */
+  /*  public function addDocsExpediente(\SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente)
+    {
+        $this->Docs_expediente[] = $docsExpediente;
+    
+        return $this;
+    }
+*/
+    /**
+     * Remove Docs_expediente
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente
+     */
+  /*  public function removeDocsExpediente(\SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente)
+    {
+        $this->Docs_expediente->removeElement($docsExpediente);
+    }
+*/
+    /**
+     * Get Docs_expediente
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDocsExpediente()
+    {
+        return $this->Docs_expediente;
+    }
 }

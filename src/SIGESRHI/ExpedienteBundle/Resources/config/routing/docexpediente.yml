@@ -1,0 +1,30 @@
+docdigital:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:index" }
+
+docdigital_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:show" }
+
+docdigital_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:new" }
+
+docdigital_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:create" }
+    requirements: { _method: post }
+
+docdigital_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:edit" }
+
+docdigital_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:update" }
+    requirements: { _method: post|put }
+
+docdigital_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:delete" }
+    requirements: { _method: post|delete }
