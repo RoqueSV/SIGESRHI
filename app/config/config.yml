@@ -26,7 +26,8 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
 
-# Assetic Configuration
+
+# Assetic Configuratio
 assetic:
     debug:          %kernel.debug%
     use_controller: false
@@ -109,22 +110,34 @@ parameters:
 
 knp_gaufrette:
     adapters:
-        product_adapter:
+        docsexp_adapter:
             local:
-                directory: %kernel.root_dir%/../web/uploads/documents
+                directory: %kernel.root_dir%/../web/uploads/docs_expediente
+        fotografia_adapter:
+            local:
+                directory: %kernel.root_dir%/../web/uploads/fotografias
 
     filesystems:
-        product_image_fs:
-            adapter:    product_adapter
+        docs_exp_fs:
+            adapter:    docsexp_adapter
+        fotografia_fs:
+            adapter:    fotografia_adapter
 
 vich_uploader:
     db_driver: orm
     gaufrette: true
     storage: vich_uploader.storage.gaufrette
     mappings:
-        product_image:
-            uri_prefix: /Web/SIGESRHICopy/web/uploads/documents
-            upload_destination: product_image_fs 
+        docs_expediente:
+            uri_prefix: docsexp_adapter
+            upload_destination: docs_exp_fs 
+            namer: vich_uploader.namer_origname
+            delete_on_remove: true
+            delete_on_update: true
+
+        fotografias:
+            uri_prefix: fotografia_adapter
+            upload_destination: fotografia_fs 
             namer: vich_uploader.namer_origname
             delete_on_remove: true
             delete_on_update: true

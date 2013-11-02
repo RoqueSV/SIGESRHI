@@ -1,0 +1,46 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Docexpediente</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombredocexp</th>
+                <td>{{ entity.nombredocexp }}</td>
+            </tr>
+            <tr>
+                <th>Rutadocexp</th>
+                <td>{{ entity.rutadocexp }}</td>
+            </tr>
+            <tr>
+                <th>Fechadocexp</th>
+                <td>{{ entity.fechadocexp|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('docdigital') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('docdigital_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('docdigital_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

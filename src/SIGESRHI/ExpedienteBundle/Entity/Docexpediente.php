@@ -4,12 +4,15 @@ namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Docexpediente
  *
  * @ORM\Table(name="docexpediente")
  * @ORM\Entity
+ * @Vich\Uploadable
  */
 class Docexpediente
 {
@@ -38,12 +41,7 @@ class Docexpediente
     /**
      * @var string
      *
-     * @ORM\Column(name="rutadocexp", type="string", length=50, nullable=false)
-     * @Assert\NotNull(message="Debe ingresar la ruta del doc")
-     * @Assert\Length(
-     * max = "50",
-     * maxMessage = "La ruta del documento no debe exceder los {{limit}} caracteres"
-     * )
+     * @ORM\Column(name="rutadocexp", type="string", length=50)
      */
     private $rutadocexp;
 
@@ -51,20 +49,51 @@ class Docexpediente
      * @var \DateTime
      *
      * @ORM\Column(name="fechadocexp", type="date", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar la fecha del documento")
-     * @Assert\DateTime()
      */
     private $fechadocexp;
 
     /**
      * @var \Expediente
      *
-     * @ORM\ManyToOne(targetEntity="Expediente")
+     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="Docs_expediente")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
      * })
      */
     private $idexpediente;
+
+    /**
+     * @Assert\File(
+     *     maxSize="2M",
+     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg", "application/pdf", "application/x-pdf"}
+     * )
+     * @Vich\UploadableField(mapping="docs_expediente", fileNameProperty="rutadocexp")
+     *
+     * @var File $file
+     */
+    protected $file;
+
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
 
 
 

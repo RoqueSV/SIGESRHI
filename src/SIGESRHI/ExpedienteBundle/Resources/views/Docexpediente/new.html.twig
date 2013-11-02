@@ -1,0 +1,33 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal %}
+    <h4 class="text-center">AGREGAR DOCUMENTOS DIGITALES</h4>
+
+    <form action="{{ path('docdigital_create', {'id':id}) }}" method="post" {{ form_enctype(form) }}>
+        
+        <br>
+        
+<table border="0">
+    <tr>
+        <td><h5>{{form_label(form.nombredocexp)}}</h5></td>
+        <td><h5>{{form_label(form.file)}}</h5></td>
+    </tr>
+    <tr>
+        <td>{{form_widget(form.nombredocexp)}} {{form_errors(form.nombredocexp)}} </td>
+        <td>{{form_widget(form.file)}} {{form_errors(form.file)}} </td>
+    </tr>
+</table>
+
+        {{ form_rest(form) }}
+        <br>
+
+        <div class="centered">
+        
+            <button type="submit"  class="btn btn-primary">Guardar Documentos</button>
+            <input type="button" value="Cancelar" id="" class="btn">
+        
+        </div>
+    </form>
+
+       
+{% endblock %}

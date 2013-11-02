@@ -1,0 +1,34 @@
+expediente:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Expediente:index" }
+
+expediente_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Expediente:show" }
+
+expediente_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Expediente:new" }
+
+expediente_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Expediente:create" }
+    requirements: { _method: post }
+
+expediente_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Expediente:edit" }
+
+expediente_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Expediente:update" }
+    requirements: { _method: post|put }
+
+expediente_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Expediente:delete" }
+    requirements: { _method: post|delete }
+
+expediente_RegistraDocDigi:
+    pattern:  /{id}/DocDigital
+    defaults: { _controller: "ExpedienteBundle:Expediente:RegistraDocumentosD" }

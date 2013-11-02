@@ -5,3 +5,11 @@ services:
 #    expediente.example:
 #        class: %expediente.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+
+# src/Acme/DemoBundle/Resources/config/services.yml
+
+    acme.twig.acme_extension:
+        class: SIGESRHI\ExpedienteBundle\Twig\FechaExtension
+        tags:
+                - { name: twig.extension }

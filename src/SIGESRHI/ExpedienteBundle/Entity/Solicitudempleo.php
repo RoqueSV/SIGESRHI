@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 use Symfony\Component\Validator\ExecutionContextInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Solicitudempleo
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\HasLifecycleCallbacks
  * @Assert\Callback(methods={"esDuiValido"})
  * @Assert\Callback(methods={"esNitValido"})
+ * @Vich\Uploadable
  *
  * @GRID\Source(columns="id,nombres, primerapellido, segundoapellido,idexpediente.tipoexpediente,idexpediente.id,idplaza.nombreplaza",groups={"grupo_pruebapsicologica"})
  */
@@ -313,10 +315,10 @@ class Solicitudempleo
     /**
      * @var string
      *
-     * @ORM\Column(name="fotografia", type="string", length=50, nullable=false)
+     * @ORM\Column(name="fotografia", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe cargar una fotografia")
      * @Assert\Length(
-     * max = "50",
+     * max = "100",
      * maxMessage = "El nombre o ruta de la fotografia no debe exceder los {{limit}} caracteres"
      * )
      *
@@ -329,8 +331,11 @@ class Solicitudempleo
      * @Assert\File(
      * maxSize="2048k",
      * mimeTypes = {"image/jpeg", "image/png"},
+     * maxSizeMessage = "El tamaño maximo permitido para la fotografia es 2MB.",
      * mimeTypesMessage = "Por favor suba una fotografía valida (formato jpeg o png)."
      * )
+     *
+     * @Vich\UploadableField(mapping="docs_expediente", fileNameProperty="fotografia")
      *
      * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
@@ -558,6 +563,8 @@ class Solicitudempleo
  /*************Datos de empleos****************/
 
     /**
+     * @ORM\OneToMany(targetEntity="Datosempleo", mappedBy="idsolicitudempleo", cascade={"persist","remove"})
+     *@Assert\Valid
      */
     protected $Dempleos;
 
@@ -572,7 +579,7 @@ class Solicitudempleo
         return $this->Dempleos;
     }
 
-    public function setDempleos(ArrayCollection $dempleos)
+    public function setDempleos(\Doctrine\Common\Collections\Collection $dempleos)
     {
         $this->Dempleos = $dempleos;
         foreach ($dempleos as $empleo) {
@@ -585,6 +592,7 @@ class Solicitudempleo
     
     /**
      * @ORM\OneToMany(targetEntity="Datosfamiliares", mappedBy="idsolicitudempleo", cascade={"persist","remove"})
+     * @Assert\Valid
      */
     protected $Dfamiliares;
 
@@ -612,7 +620,7 @@ class Solicitudempleo
 
     /**
      * @ORM\OneToMany(targetEntity="Informacionacademica", mappedBy="idsolicitudempleo", cascade={"persist", "remove"})
-     *
+     * @Assert\Valid
      */
     protected $Destudios;
 
@@ -641,6 +649,7 @@ class Solicitudempleo
 
     /**
      * @ORM\OneToMany(targetEntity="Idioma", mappedBy="idsolicitudempleo", cascade={"persist", "remove"})
+     * @Assert\Valid
      */
     protected $Idiomas;
 
@@ -654,7 +663,7 @@ class Solicitudempleo
         return $this->Idiomas;
     }
 
-    public function setIdiomas(ArrayCollection $idiomas)
+    public function setIdiomas(\Doctrine\Common\Collections\Collection $idiomas)
     {
         $this->Idiomas = $idiomas;
         foreach ($idiomas as $idioma) {
@@ -1403,45 +1412,7 @@ class Solicitudempleo
     }
 
         
-    
-///////////////////////////////////////////////////////////////////////
-
-    // Funciones para subida de archivos (fotografias)
-    // *propiedad fotografia aqui path*
-
-    public function getAbsolutePath()
-    {
-        return null === $this->fotografia
-            ? null
-            : $this->getUploadRootDir().'/'.$this->fotografia;
-    }
-
-    public function getWebPath()
-    {
-        return null === $this->fotografia
-            ? null
-            : $this->getUploadDir().'/'.$this->fotografia;
-    }
-
-    protected function getUploadRootDir()
-    {
-        // la ruta absoluta del directorio donde se deben
-        // guardar los archivos cargados
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-
-    protected function getUploadDir()
-    {
-        // se deshace del __DIR__ para no meter la pata
-        // al mostrar el documento/imagen cargada en la vista.
-        return 'uploads/fotografias';
-    }
-
-
-// funciones para la propiedad virtual file
-// (ayuda a manejar la subida del archivo)
-
-    
+        
     /**
      * Get file.
      *
@@ -1453,10 +1424,6 @@ class Solicitudempleo
     }
 
 
-     /*******Funciones para retrollamadas (subida de archivos)**********/
-
-    private $temp;
-
     /**
      * Sets file.
      *
@@ -1465,68 +1432,8 @@ class Solicitudempleo
     public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
-        // check if we have an old image path
-        if (isset($this->fotografia)) {
-            // store the old name to delete after the update
-            $this->temp = $this->fotografia;
-            $this->fotografia = null;
-        } else {
-            $this->fotografia = 'initial';
-        }
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload()
-    {
-        if (null !== $this->getFile()) {
-            // haz lo que quieras para generar un nombre único
-            $filename = substr(sha1(uniqid(mt_rand(), true)),0,6).$this->getFile()->getClientOriginalName();
-            $this->fotografia = $filename;
-        }
-    }
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-        if (null === $this->getFile()) {
-            return;
-        }
-
-        // si hay un error al mover el archivo, move() automáticamente
-        // envía una excepción. This will properly prevent
-        // the entity from being persisted to the database on error
-        
-        $this->getFile()->move($this->getUploadRootDir(), $this->fotografia);
-
-        // check if we have an old image
-        if (isset($this->temp)) {
-            // delete the old image
-            unlink($this->getUploadRootDir().'/'.$this->temp);
-            // clear the temp image path
-            $this->temp = null;
-        }
-
-        $this->file = null;
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeUpload()
-    {
-        if ($file = $this->getAbsolutePath()) {
-            unlink($file);
-        }
-    }
-
-
-//////////////////////////////////////////////////////////////////////////////
 
 
 }//fin class

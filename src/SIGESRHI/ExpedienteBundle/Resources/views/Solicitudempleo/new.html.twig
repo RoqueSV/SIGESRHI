@@ -18,14 +18,13 @@
 
     <table border="0">
         <tr>
-            <td width="70%"><p class="justifyText"> <b>Nota Importante:</b> La solicitud de empleo no implica compromiso por parte del ISRI con el interesado, solamente es un requisito indispensable que debe llenar toda persona que aspira a prestar sus servicios a la institución.</p>
+            <td width="80%"><p class="justifyText"> <b>Nota Importante:</b> La solicitud de empleo no implica compromiso por parte del ISRI con el interesado, solamente es un requisito indispensable que debe llenar toda persona que aspira a prestar sus servicios a la institución.</p>
             </td>
-            <td Width="30%">
+            <td>
                 <table border="3" width="150px" height="192px"><tr><td id="vista_previa"> </td></tr></table>
             </td>
         </tr>
-       {# {{ form_widget(form) }}#}
-       
+              
            
         <table >
             <tr>
@@ -34,13 +33,12 @@
             </tr>
         </table>
 
-        {#<div id="vista_previa"> </div> #}
-           
+                   
            <br>
 
-            <fieldset>
+            <fieldset> 
                 <legend>I. Datos Personales</legend>
-
+                <br>
                 <table>
                 <tr>
                     <td>{{ form_row(form.apellidocasada) }}</td><td>&nbsp;&nbsp;</td>
@@ -62,6 +60,8 @@
                     
                 </table>
                 
+                <br>
+
                 <table>
                     <tr>
                         <td>{{ form_row(form.estadocivil) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
@@ -76,32 +76,20 @@
                 <table>
                     <tr>
                         <td>{{ form_row(form.lugarnac) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_row(form.fechanac) }}</td>
+                        <td>{{ form_row(form.fechanac) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{form_row(form.sexo)}}</td>
                     </tr>
                 </table>
                   
               
-                    <table>
-                        <tr>
-                            <td width="50">{{form_label(form.sexo)}}</td><td>{{form_widget(form.sexo)}}</td>
-                        </tr>
-                    </table>
-        
-
                 <h5>Documentos de Identidad Personal:</h5>
 
                 <table>
                     <tr>
-                        <td>{{ form_label(form.nit) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_label(form.isss) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_label(form.nup) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_label(form.nip) }}</td>
-                    </tr>
-                     <tr>
-                        <td>{{ form_widget(form.nit) }} {{ form_errors(form.nit) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_widget(form.isss) }} {{ form_errors(form.isss) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_widget(form.nup) }} {{ form_errors(form.nup) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_widget(form.nip) }} {{ form_errors(form.nip) }}</td>
+                        <td>{{ form_row(form.nit) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{ form_row(form.isss) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{ form_row(form.nup) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{ form_row(form.nip) }}</td>
                     </tr>
                 </table>
                 
@@ -115,22 +103,20 @@
                     </tr>
                 </table>
                 
-            </fieldset>
+           </fieldset> 
 
             <br>
 
-            <fieldset>
+           <fieldset>
                 <legend>II. Datos de Estudio</legend>
-
-                {# <ul class="Destudios unstyled" data-prototype="{{ form_widget(form.Destudios.vars.prototype)|e }}"> #}
-                
+                <br>
                
-                 <table>
+                <table>
                     <tr>
                         <td>{{form_row(form.Destudios[0].idtitulo)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
                         <td>{{form_row(form.Destudios[0].centroestudio)}}</td>
                     <tr>
-                <table>
+                </table>
 
                 <ul class="Destudios unstyled" data-prototype="
                 <table>
@@ -140,18 +126,14 @@
                     <tr>
                 <table>
                 ">
-            
-
-                   {#<li> {{form_widget(form.Destudios[0])}}  </li> #}
 
                 </ul>
 
-
                 <br>
 
+                
                <h5>Idiomas que domina:</h5>
-                {#<ul class="Idiomas unstyled" data-prototype="{{ form_widget(form.Idiomas.vars.prototype)|e }}"> #}
-
+                <br>
                  <ul class="Idiomas unstyled" data-prototype="
                  <table>
                     <tr>
@@ -166,16 +148,16 @@
                 </ul>
                         <br>
 
-                        {{form_row(form.idplaza)}}
+                        {{form_row(form.idplaza)}} 
 
-            </fieldset> 
+        
+           </fieldset>  
 
-            <br>
-            
+                <br>
 
             <fieldset>
-                <legend>III. Datos Familiares</legend>
-
+                <legend>III. Datos Familiares</legend> 
+                <br>
               <table>
                 <tr>
                     <td>{{form_row(form.Dfamiliares[0].parentesco)}}</td>
@@ -201,13 +183,15 @@
                 </tr>
             </table>
                ">
+
+           </ul>
                
-                </fieldset>
+               </fieldset>
 
                 <br>
                 <fieldset>
                     <legend>¿Posee algún pariente dentro de la institución?</legend>
-
+                    <br>
                               
                 <table>
                     <tr>
@@ -225,8 +209,7 @@
                 <br>
           <fieldset>
                 <legend>IV. Datos de Empleo</legend>
-
-                
+                <br>               
                 
                  <ul class="Dempleos unstyled" data-prototype="
             <table >
@@ -274,47 +257,7 @@
             </table>
                ">
                 
-                {# itera sobre cada etiqueta existente y reproduce su único campo: name #}
-{#            {% for Dempleo in form.Dempleos %} 
-                    
-                <table>
-                    <tr><td>{{ form_widget(Dempleo.tipodatoempleo) }}</td></tr>
-                    <tr>
-                        <td> {{ form_label(Dempleo.nombreempresa) }}</td><td>{{ form_widget(Dempleo.nombreempresa) }} {{ form_errors(Dempleo.nombreempresa) }}</td>
-                    </tr>
-                    <tr>
-                        <td> {{ form_label(Dempleo.direccionempresa) }}</td><td>{{ form_widget(Dempleo.direccionempresa) }} {{ form_errors(Dempleo.direccionempresa) }}</td>
-                    </tr>
-                    <tr>
-                        <td> {{ form_label(Dempleo.telefonoempresa) }}</td><td>{{ form_widget(Dempleo.telefonoempresa) }} {{ form_errors(Dempleo.telefonoempresa) }}</td>
-                    </tr>
-                    <tr>
-                        <td> {{ form_label(Dempleo.fechainiciolaboral) }}</td><td>{{ form_widget(Dempleo.fechainiciolaboral) }} {{ form_errors(Dempleo.fechainiciolaboral)}}</td>
-                    </tr>
-                    <tr>
-                        <td> {{ form_label(Dempleo.fechafinlaboral) }}</td><td>{{ form_widget(Dempleo.fechafinlaboral) }} {{ form_errors(Dempleo.fechafinlaboral) }}</td>
-                    </tr>
-                    <tr>
-                        <td> {{ form_label(Dempleo.jefeinmediato) }}</td><td>{{ form_widget(Dempleo.jefeinmediato) }} {{ form_errors(Dempleo.jefeinmediato) }}</td>
-                    </tr>
-                    <tr>
-                        <td> {{ form_label(Dempleo.cargodesempenado) }}</td><td>{{ form_widget(Dempleo.cargodesempenado) }} {{ form_errors(Dempleo.cargodesempenado) }}</td>
-                    </tr>
-                    <tr>
-                        <td> {{ form_label(Dempleo.sueldo) }}</td><td>{{ form_widget(Dempleo.sueldo) }} {{ form_errors(Dempleo.sueldo) }}</td>
-                    </tr>
-                    <tr>
-                        <td> {{ form_label(Dempleo.motivoretiro) }}</td><td>{{ form_widget(Dempleo.motivoretiro) }} {{ form_errors(Dempleo.motivoretiro) }}</td>
-                    </tr>
-                    
-                </table>
-                <br>
-
-                {% endfor %}
-            #}
-               {# {{ form_row(form.Dempleos[0]) }}
-                {{ form_row(form.Dempleos[1]) }} #}
-
+      
             </ul>
            </fieldset> 
 
@@ -401,7 +344,7 @@
 var collectionHolderEmp = $('ul.Dempleos');
 
 // configura una enlace "Agregar una etiqueta"
-var $addTagLinkEmp = $('<input type="button" value="Agregar Empleo">');
+var $addTagLinkEmp = $('<input type="button" value="Agregar Empleo" class="btn">');
 var $newLinkLiEmp = $('<ul></ul>').append($addTagLinkEmp);
 
 jQuery(document).ready(function() {
@@ -436,7 +379,7 @@ jQuery(document).ready(function() {
 var collectionHolderFam = $('ul.Dfamiliares');
 
 // configura una enlace "Agregar una etiqueta"
-var $addTagLinkFam = $('<input type="button" value="Agregar familiar">');
+var $addTagLinkFam = $('<input type="button" value="Agregar familiar" class="btn">');
 var $newLinkLiFam = $('<ul></ul>').append($addTagLinkFam);
 
 jQuery(document).ready(function() {
@@ -470,7 +413,7 @@ jQuery(document).ready(function() {
 var collectionHolderEst = $('ul.Destudios');
 
 // configura una enlace "Agregar una etiqueta"
-var $addTagLinkEst = $('<input type="button" value="Agregar Estudio">');
+var $addTagLinkEst = $('<input type="button" value="Agregar Estudio" class="btn">');
 var $newLinkLiEst = $('<ul></ul>').append($addTagLinkEst);
 
 jQuery(document).ready(function() {
@@ -504,7 +447,7 @@ jQuery(document).ready(function() {
 var collectionHolderIdio = $('ul.Idiomas');
 
 // configura una enlace "Agregar una etiqueta"
-var $addTagLinkIdio = $('<input type="button" value="Agregar Idioma">');
+var $addTagLinkIdio = $('<input type="button" value="Agregar Idioma" class="btn">');
 var $newLinkLiIdio = $('<ul></ul>').append($addTagLinkIdio);
 
 jQuery(document).ready(function() {

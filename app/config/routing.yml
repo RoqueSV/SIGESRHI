@@ -4,7 +4,7 @@ reporte:
 
 expediente:
     resource: "@ExpedienteBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /expediente
 
 _user_bundle:
     resource: "@AdminBundle/Resources/config/routing.yml"

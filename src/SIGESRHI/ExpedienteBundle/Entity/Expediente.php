@@ -1,6 +1,7 @@
 <?php
 
 namespace SIGESRHI\ExpedienteBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 use APY\DataGridBundle\Grid\Mapping as GRID;
@@ -30,8 +31,7 @@ class Expediente
      * @var \DateTime
      *
      * @ORM\Column(name="fechaexpediente", type="date", nullable=false)
-     * @Assert\DateTime()
-     * @Assert\NotNull(message="Debe ingresar la fecha del expediente")
+     * @GRID\Column(filterable=false, groups="grupo_segurovida", visible=false)
      */
     private $fechaexpediente;
 
@@ -132,7 +132,41 @@ class Expediente
         return $this->tipoexpediente;
     }
 
+
+public function __construct(){
+
+$this->Docs_expediente = new ArrayCollection();
+}
+
+/********* Documentos de Expediente *****************/
     
+
+    /**
+     * @ORM\OneToMany(targetEntity="Docexpediente", mappedBy="idexpediente", cascade={"persist", "remove"})
+     */
+    protected $Docs_expediente;
+
+  
+    public function setDocsexpediente(\Doctrine\Common\Collections\Collection $dexpedientes)
+    {
+        $this->Docs_expediente = $dexpedientes;
+
+        foreach ($dexpedientes as $dexpediente) {
+        $dexpediente->setIdexpediente($this); 
+    }   
+        }
+    
+    
+    /**
+     * Get Docs_expediente
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDocsExpediente()
+    {
+        return $this->Docs_expediente;
+    }
+
 
     /**
      * Set idsolicitudempleo
@@ -178,6 +212,7 @@ class Expediente
     public function getIdempleado()
     {
         return $this->idempleado;
+
     }
 
     /**
