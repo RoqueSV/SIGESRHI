@@ -26,10 +26,10 @@ class Conocimiento
     /**
      * @var string
      *
-     * @ORM\Column(name="nombreconocimiento", type="string", length=50, nullable=false)
+     * @ORM\Column(name="nombreconocimiento", type="string", length=200, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de conocimiento")
      * @Assert\Length(
-     * max = "50",
+     * max = "200",
      * maxMessage = "El nombre del conocimiento no debe exceder los {{limit}} caracteres"
      * )
      */

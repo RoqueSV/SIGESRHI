@@ -1,21 +1,30 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-    
+
     <!-- Botón ayuda -->
     <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
 
     {{ include('ExpedienteBundle:Ayuda/SeguroColectivo:registro.html.twig')}} 
     
+    {% if app.session.started %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+    <br /><br />
+    <div class="alert alert-danger">
+    <p>{{ flashMessage }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
+    
     <h3 class="text-center">Ingreso de seguro colectivo de vida</h3>
     
-    <form action="{{ path('segurovida_create') }}" id= "seguro_form"  method="post" {{ form_enctype(form) }}>
+    {% for exp in expediente %}
+    <form action="{{ path('segurovida_create', {'id':exp.idexp}) }}" method="post" {{ form_enctype(form) }}>
     
     {#Formulario principal#}
     <fieldset>
         <legend>Datos Generales</legend>
          <table class="mitable">
-         {% for exp in expediente %}
            <tr>
             <th>Nombre del asegurado:</th><td> {{ exp.nombre }} </td>
            </tr>
@@ -37,36 +46,49 @@
            <tr>
             <th>Unidad secundaria: </th><td> INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL </td>
            </tr>
-         {% endfor %}
          </table>
-     
-          {# <legend>Datos Generales</legend>
-            <div class="form-horizontal">
-                {{ form_row(form.fechaseguro)}}
-                {{ form_row(form.estadoseguro)}}
-                {{ form_row(form.idexpediente)}}
-           </div> #}
     </fieldset>
-    
+    {% endfor %}
+
+
     {#Formulario embebido#}
        <fieldset>
                 <legend>Beneficiarios</legend>
                 <table width=100%>
-                 
                  <tr>
                      <td class="text-center">{{ form_row(form.idbeneficiario[0].nombrebeneficiario) }}</td>
                      <td class="text-center">{{ form_row(form.idbeneficiario[0].parentescobeneficiario) }}</td>
-                     <td class="text-center">{{ form_row(form.idbeneficiario[0].porcentaje) }}</td>
+                     <td class="text-center">{{ form_row(form.idbeneficiario[0].porcentaje) }}</td>   
+                 </tr>
+                </table>
+         {#En caso de error construyo todos los beneficiarios asociados#}
+         {% if app.session.started %}
+                 {% set longitud =  (entity.idbeneficiario|length)-1  %} {#Obtengo numero de beneficiarios#}
+                 {% for i in 1..longitud if longitud > 0 %}
+                 
+                 <table width=100% style="margin-bottom:10px;">
+                 
+                 <tr class="text-center">
+                 <td class="text-center">{{ form_widget(form.idbeneficiario[i].nombrebeneficiario) }}
+                 {{ form_errors(form.idbeneficiario[i].nombrebeneficiario) }}</td>
+                 <td class="text-center">{{ form_widget(form.idbeneficiario[i].parentescobeneficiario) }}
+                 {{ form_errors(form.idbeneficiario[i].parentescobeneficiario) }}</td>
+                 <td class="text-center">{{ form_widget(form.idbeneficiario[i].porcentaje) }}
+                 {{ form_errors(form.idbeneficiario[i].porcentaje) }}</td>
                  </tr>
                  
-                </table>
+                 </table>
+                 {% endfor %}
+         {% endif %}
           
                 <ul class="Beneficiario unstyled" data-prototype="
                 <table width=100%>
                 <tr>
-                <td class='text-center'>{{ form_widget(form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}</td>
-                <td class='text-center'>{{ form_widget(form.idbeneficiario.vars.prototype.parentescobeneficiario)|e }}</td>
-                <td class='text-center'>{{ form_widget(form.idbeneficiario.vars.prototype.porcentaje)|e }}</td>
+                <td class='text-center'>{{ form_widget(form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}
+                   {{form_errors(form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}</td>
+                <td class='text-center'>{{ form_widget(form.idbeneficiario.vars.prototype.parentescobeneficiario)|e }}   {{form_errors(form.idbeneficiario.vars.prototype.parentescobeneficiario)|e }}</td>
+                <td class='text-center'>{{ form_widget(form.idbeneficiario.vars.prototype.porcentaje)|e }}
+                   {{form_errors(form.idbeneficiario.vars.prototype.porcentaje)|e }}</td>
                 </tr>
                 </table>
                 ">
@@ -74,8 +96,9 @@
        </fieldset>    
         <div class="text-center">
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset"  class="btn">Cancelar</button> 
+            <button type="button" class="btn" onclick="location.href='{{ path ('segurovida') }}'">Cancelar</button>
         </div>
+    
     {{ form_rest(form) }}
     </form>
 
@@ -86,7 +109,7 @@
 var collectionHolderBen = $('ul.Beneficiario');
 
 // configura una enlace "Agregar una etiqueta"
-var $addTagLinkBen = $('<input style="margin-left: 40px;" type="button" class="btn" value="Agregar Beneficiario">');
+var $addTagLinkBen = $('<input style="margin-left: 40px;" type="button" class="btn" value="Agregar Beneficiario"><br /><br />');
 var $newLinkLiBen = $('<ul></ul>').append($addTagLinkBen);
 
 jQuery(document).ready(function() {

@@ -1,42 +1,28 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Segurovida</h1>
+{% block principal -%}
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Fechaseguro</th>
-                <td>{{ entity.fechaseguro|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Estadoseguro</th>
-                <td>{{ entity.estadoseguro }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('segurovida') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('segurovida_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('segurovida_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+{% if app.session.started %}
+{% for flashMessage in app.session.flashbag.get('aviso') %}
+<div class="alert alert-success">
+<p>{{ flashMessage }}</p>
+</div>
+{% endfor %}
+{% endif %}
+
+   
+<br />
+<h3 class="text-center">¿Qué acción desea realizar?</h3><br /><br />
+
+    <form class="form-inline" action="{{ path('reporte_segurovida') }}" method="post" >
+     <div class="text-center">
+     <input type="hidden" id='idexp' name='idexp' value={{ idexpediente[0].idexp }} />
+     <button type="submit" class="btn btn-primary">Generar PDF</button>
+     <button type="button" class="btn" onclick="location.href='{{ path ('segurovida') }}'">Regresar al listado</button>
+     <a href="{{ path('segurovida_edit', { 'id': entity.id }) }}" class="btn">Editar Registro</a>
+     </div>
+        
+    </form>
+
 {% endblock %}

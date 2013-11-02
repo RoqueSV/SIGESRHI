@@ -1,7 +1,16 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-    <h1>Segurovida list</h1>
+{% if app.session.started %}
+{% for flashMessage in app.session.flashbag.get('delete') %}
+<div class="alert alert-danger">
+<p>{{ flashMessage }}</p>
+</div>
+{% endfor %}
+{% endif %}
+
+    <h3 class="text-center">Registro de seguro colectivo de vida</h3>
+    <p>Seleccione un empleado de la lista</p>
      {{ grid_search(grid) }} 
      {{ grid(grid,_self) }}  
      {% block grid_filters %}{% endblock %} 

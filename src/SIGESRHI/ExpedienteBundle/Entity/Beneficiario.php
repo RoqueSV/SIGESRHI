@@ -3,7 +3,6 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use APY\DataGridBundle\Grid\Mapping as GRID;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -22,9 +21,6 @@ class Beneficiario
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="beneficiario_id_seq", allocationSize=1, initialValue=1)
-     *
-     *
-     * @GRID\Column(title="Codigo", filter="input", searchOnClick="true")
      * 
      * 
      */
@@ -40,10 +36,6 @@ class Beneficiario
      * maxMessage = "El nombre del beneficiario no debe exceder los {{limit}} caracteres"
      * )
      *
-     *
-     * @GRID\Column(title="Nombre", filter="input")
-     * 
-     * 
      */
     private $nombrebeneficiario;
 
@@ -57,8 +49,6 @@ class Beneficiario
      * maxMessage = "El parentezco del beneficiario no debe exceder los {{limit}} caracteres"
      * )
      *
-     *
-     * @GRID\Column(title="Parentesco", filterable=false)
      */
     private $parentescobeneficiario;
 
@@ -67,10 +57,12 @@ class Beneficiario
      *
      * @ORM\Column(name="porcentaje", type="integer", nullable=false)
      * @Assert\NotNull(message="Debe ingresar el porcentaje")
-     *
-     *
-     * @GRID\Column(title="%", filterable=false)
-     * 
+     * @Assert\Range(
+     *      min = "1",
+     *      max = "100",
+     *      minMessage = "Debe ingresar un valor mayor a 0",
+     *      maxMessage = "Valores mayores a 100 no están permitidos"
+     * )
      * 
      */
     private $porcentaje;
@@ -82,10 +74,13 @@ class Beneficiario
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idsegurovida", referencedColumnName="id")
      * })
-     *@GRID\Column(field="idsegurovida.estadoseguro", title="Cod_seguro", filter="input")
      */
     private $idsegurovida;
+    
 
+    public function __toString(){
+        return $this->getNombrebeneficiario();
+    }
     /**
      * Get id
      *

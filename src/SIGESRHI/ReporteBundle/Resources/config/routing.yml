@@ -9,3 +9,7 @@ reporte_prueba:
 reporte_create:
     pattern:  /reportecreate
     defaults: { _controller: ReporteBundle:Reporte:create }
+
+reporte_segurovida:
+    pattern:  /reporteseguro
+    defaults: { _controller: ReporteBundle:Reporte:ReporteSeguroVida }

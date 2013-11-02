@@ -13,9 +13,7 @@ $(document).ready(function(){
 
 /***** Validador *****/
      var opcionesVal = {lang:'es'};
-              $('#seguro_form').bValidator(opcionesVal);
-              $('#solicitud_form').bValidator(opcionesVal);
-
+              $('form').bValidator(opcionesVal);
 
 /***** Calendario ****/
 
@@ -49,7 +47,7 @@ $(document).ready(function(){
 
 
 
-  /***** Telefono ****/
+  /***** Validaciones de máscara ****/
     $(".telefono").mask("99999999",{placeholder:""});
     $(".isss").mask("999999999",{placeholder:""});
     $(".nup").mask("999999999999",{placeholder:""});
@@ -107,6 +105,8 @@ function addTagFormDeleteLink($tagFormLi) {
         // quita el li de la etiqueta del formulario
         $tagFormLi.remove();
     });
+
+/** Validaciones en embebidos */
 //calendario
 
 $(function() {

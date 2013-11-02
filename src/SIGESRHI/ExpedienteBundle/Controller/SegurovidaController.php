@@ -24,17 +24,29 @@ class SegurovidaController extends Controller
      *
      */
     public function indexAction()
-        {
-        // Creates simple grid based on your entity (ORM)
+    {
+        
         $source = new Entity('ExpedienteBundle:Expediente','grupo_segurovida');
 
-        // Get a grid instance
         $grid = $this->get('grid');
 
-        // Attach the source to the grid
+        $source->manipulateRow(
+            function ($row)
+            {
+                        
+            // Mostrar solo los expedientes sin seguro de vida
+            if ($row->getField('idsegurovida.id')>0 ) {
+            return null;
+            }
+            
+            return $row;
+            }
+        );
+
+
         $grid->setSource($source);
 
-        // Attach a rowAction to the Actions Column
+        // Crear
         $rowAction1 = new RowAction('Crear', 'segurovida_new');
         $rowAction1->setRouteParameters(array('id'));
         $rowAction1->setColumn('info_column');
@@ -53,25 +65,69 @@ class SegurovidaController extends Controller
      * Creates a new Segurovida entity.
      *
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, $id)
     {
+
         $entity  = new Segurovida();
+
+        // Asignando valores
+        $entity->setFechaseguro(new \DateTime("now"));
+        $entity->setEstadoseguro('V');
+        
+        //Obteniendo idexpediente
+        $em = $this->getDoctrine()->getManager();
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);
+        $entity->setIdexpediente($expediente);
+        
+        //Asignando estado, dependiendo si el expediente ya tiene un segurovida
+
+        /*if(count($entity->getIdexpediente()->getIdsegurovida())>=1){
+            $entity->setEstadoseguro('N');
+        }
+        else {$entity->setEstadoseguro('V');}*/
+
+        
+        //Form
         $form = $this->createForm(new SegurovidaType(), $entity);
         $form->bind($request);
-
+        
+        //Validando que la suma sea 100%
+        $beneficiarios=$entity->getIdbeneficiario();
+        $sum=0;  
+        foreach ($beneficiarios as $beneficiario) {
+           $sum=$sum+$beneficiario->getPorcentaje();
+            }
+        if($sum!=100){
+        $this->get('session')->getFlashBag()->add('error', 'Error. La suma de los porcentajes debe ser igual a 100.');
+        /* Obtener datos expediente para mostrar nuevamente en caso de error */
+        $em = $this->getDoctrine()->getManager();
+        $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($id);
+        return $this->render('ExpedienteBundle:Segurovida:new.html.twig', array(
+            'entity' => $entity,
+            'expediente' => $expediente,
+            'form'   => $form->createView(),));
+        }// Fin validación
+         
         if ($form->isValid()) {
-            $entity->setFechaseguro(new \DateTime("now"));
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            
+            $this->get('session')->getFlashBag()->add('aviso', 'Seguro colectivo registrado correctamente');
+            
             return $this->redirect($this->generateUrl('segurovida_show', array('id' => $entity->getId())));
         }
-
+        
+        $this->get('session')->getFlashBag()->add('error', 'Hubo un error en el procesamiento de los datos. Revise e intente nuevamente.');
+        /* Obtener datos expediente para mostrar nuevamente en caso de error */
+        $em = $this->getDoctrine()->getManager();
+        $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($id);
         return $this->render('ExpedienteBundle:Segurovida:new.html.twig', array(
             'entity' => $entity,
+            'expediente' => $expediente,
             'form'   => $form->createView(),
         ));
+
     }
 
     /**
@@ -80,7 +136,7 @@ class SegurovidaController extends Controller
      */
     public function newAction()
     {
-        $request = $this->getRequest();     //Recibir valores por get
+        $request = $this->getRequest();     //Recibir id enviado desde grid
         $entity = new Segurovida();
         
         /*Agregamos datos de beneficiario*/
@@ -91,9 +147,11 @@ class SegurovidaController extends Controller
         /* Obtener datos expediente */
         $em = $this->getDoctrine()->getManager();
         $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($request->query->get('id'));
-        
+      
+        //Crear form
         $form   = $this->createForm(new SegurovidaType(), $entity);
         
+        //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
         $breadcrumbs->addItem("Registro", $this->get("router")->generate("segurovida_new"));
@@ -115,15 +173,25 @@ class SegurovidaController extends Controller
 
         $entity = $em->getRepository('ExpedienteBundle:Segurovida')->find($id);
 
+        // Obtengo id expediente de un seguro de vida especifico
+        $query = $em->createQuery('
+          SELECT e.id idexp FROM ExpedienteBundle:Segurovida s
+          JOIN s.idexpediente e
+          WHERE s.id = :idseguro'
+        )->setParameter('idseguro', $id);
+        $idexpediente = $query->getResult();
+        
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Segurovida entity.');
         }
+        
 
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ExpedienteBundle:Segurovida:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'entity'       => $entity,
+            'idexpediente' => $idexpediente,
+            'delete_form'  => $deleteForm->createView(),        ));
     }
 
     /**
@@ -142,11 +210,19 @@ class SegurovidaController extends Controller
 
         $editForm = $this->createForm(new SegurovidaType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
+         
+        // Obtengo id expediente del seguro de vida
+        $idexpediente = $entity->getIdexpediente();
 
+        /* Obtener datos expediente */
+        $em = $this->getDoctrine()->getManager();
+        $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($idexpediente);
+        
         return $this->render('ExpedienteBundle:Segurovida:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'expediente'  => $expediente,
         ));
     }
 
@@ -163,22 +239,74 @@ class SegurovidaController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Segurovida entity.');
         }
+        
 
+        //Eliminando los embebidos
+        // Crea un arreglo del los objetos 'Beneficiario' actualmente en la base de datos
+        $originalBeneficiario = array();
+        foreach ($entity->getIdbeneficiario() as $beneficiario) {
+           $originalBeneficiario[] = $beneficiario;
+         } // Fin eliminar embebidos
+       
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new SegurovidaType(), $entity);
         $editForm->bind($request);
+        
+        //Validando que envía al menos un registro de beneficiario
+        $cantidad = count($entity->getIdbeneficiario());
+        if($cantidad<1){
+            $this->get('session')->getFlashBag()->add('erroredit', 'Error. Debe registrar al menos un beneficiario!');
+            return $this->redirect($this->generateUrl('segurovida_edit', array('id' => $id)));
+        }//Fin validacion cantidad
+
+        //Validando que la suma sea 100%
+        $beneficiarios=$entity->getIdbeneficiario();
+        $sum=0;  
+        foreach ($beneficiarios as $beneficiario) {
+           $sum=$sum+$beneficiario->getPorcentaje();
+            }
+        if($sum!=100){
+            $this->get('session')->getFlashBag()->add('erroredit', 'Error. El porcentaje asignado debe ser igual al 100%. Repita la operación');
+            return $this->redirect($this->generateUrl('segurovida_edit', array('id' => $id)));
+        }// Fin validación suma 100
 
         if ($editForm->isValid()) {
+
+          /* Eliminar Embebidos */
+           // Filtra $originalBeneficiario para que contenga los beneficiarios que ya no están presentes
+            foreach ($entity->getIdbeneficiario() as $beneficiario) {
+                foreach ($originalBeneficiario as $key => $toDel) {
+                    if ($toDel->getId() === $beneficiario->getId()) {
+                        unset($originalBeneficiario[$key]);
+                    }
+                }
+            }
+
+          // Elimina la relación entre beneficiario y segurodevida
+            foreach ($originalBeneficiario as $beneficiario) {
+                  $beneficiario->setIdsegurovida(null);
+                 $em->remove($beneficiario);
+         
+             }
+
             $em->persist($entity);
             $em->flush();
-
+            
+            $this->get('session')->getFlashBag()->add('edit', 'Seguro colectivo modificado correctamente');
             return $this->redirect($this->generateUrl('segurovida_edit', array('id' => $id)));
-        }
+        
+        } //fin isValid
 
+        /* Obtener datos expediente */
+        $idexpediente = $entity->getIdexpediente();
+        $em = $this->getDoctrine()->getManager();
+        $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($idexpediente);
+        
         return $this->render('ExpedienteBundle:Segurovida:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'expediente'  => $expediente,
         ));
     }
 
@@ -202,7 +330,7 @@ class SegurovidaController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->get('session')->getFlashBag()->add('delete', 'Seguro de vida eliminado');
         return $this->redirect($this->generateUrl('segurovida'));
     }
 

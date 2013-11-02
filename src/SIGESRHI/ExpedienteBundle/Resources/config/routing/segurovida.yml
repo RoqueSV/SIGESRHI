@@ -11,7 +11,7 @@ segurovida_new:
     defaults: { _controller: "ExpedienteBundle:Segurovida:new" }
 
 segurovida_create:
-    pattern:  /create
+    pattern:  /{id}/create
     defaults: { _controller: "ExpedienteBundle:Segurovida:create" }
     requirements: { _method: post }
 
