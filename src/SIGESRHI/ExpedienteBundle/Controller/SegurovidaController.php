@@ -12,6 +12,7 @@ use SIGESRHI\ExpedienteBundle\Form\SegurovidaType;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Grid;
+use APY\DataGridBundle\Grid\Column\TextColumn;
 
 /**
  * Segurovida controller.
@@ -39,18 +40,30 @@ class SegurovidaController extends Controller
             return null;
             }
             
+            // Mostrar solo empleados activos
+            if ($row->getField('tipoexpediente')!='E' ) {
+            return null;
+            }
+            //concat columns
+          // $row->setField('idsolicitudempleo.nombres', $row->getField('idsolicitudempleo.nombres')." ".$row->getField('idsolicitudempleo.primerapellido')." ".$row->getField('idsolicitudempleo.segundoapellido'));
             return $row;
             }
         );
 
-
+        
         $grid->setSource($source);
+                               
 
+        
         // Crear
-        $rowAction1 = new RowAction('Crear', 'segurovida_new');
+        $rowAction1 = new RowAction('Crear', 'segurovida_new',true,'_self');
         $rowAction1->setRouteParameters(array('id'));
+        $rowAction1->SetConfirmMessage('Are you sure?');
         $rowAction1->setColumn('info_column');
         $grid->addRowAction($rowAction1);
+        
+         $MyMappedColumn = new TextColumn(array('id' => 'Nombre', 'field' => $this->getField('idsolicitudempleo.nombres')." ".$this->getField('idsolicitudempleo.primerapellido'),'source' => true, 'title' => 'Nombre Completo', 'joinType'=>'inner'));
+         $grid->addColumn($MyMappedColumn); 
 
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
