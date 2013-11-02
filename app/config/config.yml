@@ -26,7 +26,8 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
 
-# Assetic Configuration
+
+# Assetic Configuratio
 assetic:
     debug:          %kernel.debug%
     use_controller: false
@@ -112,20 +113,39 @@ knp_gaufrette:
         docsexp_adapter:
             local:
                 directory: %kernel.root_dir%/../web/uploads/docs_expediente
+        fotografia_adapter:
+            local:
+                directory: %kernel.root_dir%/../web/uploads/fotografias
 
     filesystems:
         docs_exp_fs:
             adapter:    docsexp_adapter
+        fotografia_fs:
+            adapter:    fotografia_adapter
 
 vich_uploader:
     db_driver: orm
-   # gaufrette: true
-    #storage: vich_uploader.storage.gaufrette
+    gaufrette: true
+    storage: vich_uploader.storage.gaufrette
     mappings:
         docs_expediente:
             uri_prefix: docsexp_adapter
-            upload_destination: %kernel.root_dir%/../web/uploads/docs_expediente #docs_exp_fs 
+            upload_destination: docs_exp_fs 
             namer: vich_uploader.namer_origname
             delete_on_remove: true
             delete_on_update: true
+
+        fotografias:
+            uri_prefix: fotografia_adapter
+            upload_destination: fotografia_fs 
+            namer: vich_uploader.namer_origname
+            delete_on_remove: true
+            delete_on_update: true
+
+white_october_breadcrumbs: 
+    separator:          /
+    separatorClass:     divider
+    listId:             wo-breadcrumbs
+    listClass:          breadcrumb          
+
 

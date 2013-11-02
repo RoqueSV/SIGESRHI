@@ -4,6 +4,7 @@ namespace SIGESRHI\ExpedienteBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,6 +22,7 @@ class Expediente
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="expediente_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(filterable=false, groups="grupo_segurovida", visible=false)
      */
     private $id;
 
@@ -28,6 +30,7 @@ class Expediente
      * @var \DateTime
      *
      * @ORM\Column(name="fechaexpediente", type="date", nullable=false)
+     * @GRID\Column(filterable=false, groups="grupo_segurovida", visible=false)
      */
     private $fechaexpediente;
 
@@ -40,8 +43,24 @@ class Expediente
      * max = "1",
      * maxMessage = "El tipo de expediente no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(filterable=false, groups="grupo_segurovida", visible=false)
      */
     private $tipoexpediente;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Empleado", mappedBy="idexpediente")
+     * @GRID\Column(field="idempleado.codigoempleado", groups="grupo_segurovida" ,title="Codigo", filter="input", searchOnClick="true")
+     * @GRID\Column(field="idempleado.idcontratacion.idplaza.nombreplaza", type="text", title="Plaza")
+     */
+    private $idempleado;
+
+    /**
+     * @var \Solicitudempleo
+     * @ORM\OneToOne(targetEntity="Solicitudempleo", mappedBy="idexpediente")
+     * @GRID\Column(field="idsolicitudempleo.nombres", groups="grupo_segurovida" ,title="Nombres", filterable=false)
+     */
+    private $idsolicitudempleo;
+
     
     public function __toString(){
         return $this->getTipoexpediente();
@@ -112,22 +131,13 @@ $this->Docs_expediente = new ArrayCollection();
 
 /********* Documentos de Expediente *****************/
     
+
     /**
      * @ORM\OneToMany(targetEntity="Docexpediente", mappedBy="idexpediente", cascade={"persist", "remove"})
      */
     protected $Docs_expediente;
 
-   /**
-     * Get Docs_expediente
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-  /*  public function getDocs_expediente()
-    {
-        return $this->Docs_expediente;
-    }
-
-  */
+  
     public function setDocsexpediente(\Doctrine\Common\Collections\Collection $dexpedientes)
     {
         $this->Docs_expediente = $dexpedientes;
@@ -137,31 +147,7 @@ $this->Docs_expediente = new ArrayCollection();
     }   
         }
     
- 
-
-    /**
-     * Add Docs_expediente
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente
-     * @return Expediente
-     */
-  /*  public function addDocsExpediente(\SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente)
-    {
-        $this->Docs_expediente[] = $docsExpediente;
     
-        return $this;
-    }
-*/
-    /**
-     * Remove Docs_expediente
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente
-     */
-  /*  public function removeDocsExpediente(\SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente)
-    {
-        $this->Docs_expediente->removeElement($docsExpediente);
-    }
-*/
     /**
      * Get Docs_expediente
      *
@@ -170,5 +156,53 @@ $this->Docs_expediente = new ArrayCollection();
     public function getDocsExpediente()
     {
         return $this->Docs_expediente;
+    }
+
+
+    /**
+     * Set idsolicitudempleo
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo $idsolicitudempleo
+     * @return Expediente
+     */
+    public function setIdsolicitudempleo(\SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo $idsolicitudempleo = null)
+    {
+        $this->idsolicitudempleo = $idsolicitudempleo;
+    
+        return $this;
+    }
+
+    /**
+     * Get idsolicitudempleo
+     *
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo 
+     */
+    public function getIdsolicitudempleo()
+    {
+        return $this->idsolicitudempleo;
+    }
+
+    /**
+     * Set idempleado
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado
+     * @return Expediente
+     */
+    public function setIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado = null)
+    {
+        $this->idempleado = $idempleado;
+    
+        return $this;
+    }
+
+    /**
+     * Get idempleado
+     *
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Empleado 
+     */
+    public function getIdempleado()
+    {
+        return $this->idempleado;
+
     }
 }

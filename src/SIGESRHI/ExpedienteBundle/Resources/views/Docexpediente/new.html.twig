@@ -3,7 +3,7 @@
 {% block principal %}
     <h4 class="text-center">AGREGAR DOCUMENTOS DIGITALES</h4>
 
-    <form action="{{ path('docdigital_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('docdigital_create', {'id':id}) }}" method="post" {{ form_enctype(form) }}>
         
         <br>
         

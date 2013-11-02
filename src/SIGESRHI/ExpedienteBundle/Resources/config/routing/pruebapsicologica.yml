@@ -11,7 +11,7 @@ pruebapsicologica_show:
     defaults: { _controller: "ExpedienteBundle:Pruebapsicologica:show" }
 
 pruebapsicologica_new:
-    pattern:  /{idexp}/new
+    pattern:  /new
     defaults: { _controller: "ExpedienteBundle:Pruebapsicologica:new" }
 
 pruebapsicologica_create:

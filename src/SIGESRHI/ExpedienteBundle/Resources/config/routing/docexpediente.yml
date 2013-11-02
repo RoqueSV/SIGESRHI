@@ -11,7 +11,7 @@ docdigital_new:
     defaults: { _controller: "ExpedienteBundle:Docexpediente:new" }
 
 docdigital_create:
-    pattern:  /create
+    pattern:  /{id}/create
     defaults: { _controller: "ExpedienteBundle:Docexpediente:create" }
     requirements: { _method: post }
 

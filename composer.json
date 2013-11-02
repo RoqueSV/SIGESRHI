@@ -29,7 +29,8 @@
         "apy/datagrid-bundle": "dev-master",
         "KnpLabs/Gaufrette": "dev-master",
         "knplabs/knp-gaufrette-bundle": "dev-master",
-        "vich/uploader-bundle": "dev-master"
+        "vich/uploader-bundle": "dev-master",
+        "whiteoctober/breadcrumbs-bundle": "dev-master"
         
     },
     "scripts": {

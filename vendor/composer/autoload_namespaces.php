@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'WhiteOctober\\BreadcrumbsBundle' => array($vendorDir . '/whiteoctober/breadcrumbs-bundle'),
     'Vich\\UploaderBundle' => array($vendorDir . '/vich/uploader-bundle'),
     'Twig_Extensions_' => array($vendorDir . '/twig/extensions/lib'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),

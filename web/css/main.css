@@ -41,38 +41,23 @@ text-align: left;
 }
 
 #cabecera {
-/* background: #004C80; */
 background: -webkit-linear-gradient(top, #FFFFFF, #004C80);
 background: -moz-linear-gradient(top, #FFFFFF, #004C80);
 border: 1px solid #999999;
-padding: 20px;
+padding: 10px;
 -moz-border-radius: 10px;
 -webkit-border-radius: 10px;
 border-radius: 10px;
 }
 
 #menu {
-padding: 5px 0px;
-/*background: #CCCCCC;*/
-/*padding: 5px 5px;
--moz-border-radius: 10px;
--webkit-border-radius: 10px;
-border-radius: 10px;*/
+padding: 2px 0px 3px 0px;
 } 
 
-/*
-#menu li {
-display: inline-block;
-list-style: none;
-padding: 5px;
-font: bold 14px arial, sans-serif;
-}
-*/
-
 #camino_miga{
-padding: 5px 0px;
+padding: 3px 0px 3px 0px;
 background: #CCCCCC;
-
+margin-bottom: 0px;
 -moz-border-radius: 10px;
 -webkit-border-radius: 10px;
 border-radius: 10px;
@@ -118,11 +103,17 @@ border-top: 2px solid #999999;
 
 /***** Para formularios ******/
 
+
 /*** Centrado ***/
 .centered
 {
     text-align:center;
 }
+.centered table{
+       margin: 0 auto;
+       text-align: center;
+}
+
 
 /** botón circular **/
 .btn-cir {
@@ -165,7 +156,7 @@ margin: 10px 25px 10px 10px;
     height: 192px;
     width: 150px;
     vertical-align: middle;
-    border: 5px;
+    border: 2px;
 }
 
 /* Evitar cambiar tamaño a los texarea*/
@@ -175,6 +166,22 @@ textarea {
 
 /* Mostrar pdf */
 .pdf {
-width: 100%;
-height: 400px;
+    width: 100%;
+    height: 400px;
 } 
+
+/* Tablas en form */
+.mitable { 
+	border-collapse: collapse; 
+	text-align: left; 
+	width: 100%;
+	margin: 10px 0px; 
+} 
+
+.mitable td, .mitable th { 
+    padding: 5px 5px; 
+ }
+
+.mitable th{
+	font-weight: bold;
+}

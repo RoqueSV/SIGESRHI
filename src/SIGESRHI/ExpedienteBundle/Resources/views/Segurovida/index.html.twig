@@ -1,9 +1,11 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
+{% block principal -%}
     <h1>Segurovida list</h1>
-
-    <table class="records_list">
+     {{ grid_search(grid) }} 
+     {{ grid(grid,_self) }}  
+     {% block grid_filters %}{% endblock %} 
+    {#<table class="records_list">
         <thead>
             <tr>
                 <th>Id</th>
@@ -39,5 +41,5 @@
                 Create a new entry
             </a>
         </li>
-    </ul>
+    </ul>#}
     {% endblock %}

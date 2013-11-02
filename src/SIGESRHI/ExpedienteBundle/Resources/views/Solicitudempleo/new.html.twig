@@ -18,9 +18,9 @@
 
     <table border="0">
         <tr>
-            <td width="70%"><p class="justifyText"> <b>Nota Importante:</b> La solicitud de empleo no implica compromiso por parte del ISRI con el interesado, solamente es un requisito indispensable que debe llenar toda persona que aspira a prestar sus servicios a la institución.</p>
+            <td width="80%"><p class="justifyText"> <b>Nota Importante:</b> La solicitud de empleo no implica compromiso por parte del ISRI con el interesado, solamente es un requisito indispensable que debe llenar toda persona que aspira a prestar sus servicios a la institución.</p>
             </td>
-            <td Width="30%">
+            <td>
                 <table border="3" width="150px" height="192px"><tr><td id="vista_previa"> </td></tr></table>
             </td>
         </tr>
@@ -38,7 +38,7 @@
 
             <fieldset> 
                 <legend>I. Datos Personales</legend>
-      
+                <br>
                 <table>
                 <tr>
                     <td>{{ form_row(form.apellidocasada) }}</td><td>&nbsp;&nbsp;</td>
@@ -86,16 +86,10 @@
 
                 <table>
                     <tr>
-                        <td>{{ form_label(form.nit) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_label(form.isss) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_label(form.nup) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_label(form.nip) }}</td>
-                    </tr>
-                     <tr>
-                        <td>{{ form_widget(form.nit) }} {{ form_errors(form.nit) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_widget(form.isss) }} {{ form_errors(form.isss) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_widget(form.nup) }} {{ form_errors(form.nup) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                        <td>{{ form_widget(form.nip) }} {{ form_errors(form.nip) }}</td>
+                        <td>{{ form_row(form.nit) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{ form_row(form.isss) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{ form_row(form.nup) }}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>{{ form_row(form.nip) }}</td>
                     </tr>
                 </table>
                 
@@ -115,7 +109,7 @@
 
            <fieldset>
                 <legend>II. Datos de Estudio</legend>
-
+                <br>
                
                 <table>
                     <tr>
@@ -139,7 +133,7 @@
 
                 
                <h5>Idiomas que domina:</h5>
-
+                <br>
                  <ul class="Idiomas unstyled" data-prototype="
                  <table>
                     <tr>
@@ -163,7 +157,7 @@
 
             <fieldset>
                 <legend>III. Datos Familiares</legend> 
-            
+                <br>
               <table>
                 <tr>
                     <td>{{form_row(form.Dfamiliares[0].parentesco)}}</td>
@@ -197,7 +191,7 @@
                 <br>
                 <fieldset>
                     <legend>¿Posee algún pariente dentro de la institución?</legend>
-
+                    <br>
                               
                 <table>
                     <tr>
@@ -215,8 +209,7 @@
                 <br>
           <fieldset>
                 <legend>IV. Datos de Empleo</legend>
-
-                
+                <br>               
                 
                  <ul class="Dempleos unstyled" data-prototype="
             <table >
@@ -351,7 +344,7 @@
 var collectionHolderEmp = $('ul.Dempleos');
 
 // configura una enlace "Agregar una etiqueta"
-var $addTagLinkEmp = $('<input type="button" value="Agregar Empleo">');
+var $addTagLinkEmp = $('<input type="button" value="Agregar Empleo" class="btn">');
 var $newLinkLiEmp = $('<ul></ul>').append($addTagLinkEmp);
 
 jQuery(document).ready(function() {
@@ -386,7 +379,7 @@ jQuery(document).ready(function() {
 var collectionHolderFam = $('ul.Dfamiliares');
 
 // configura una enlace "Agregar una etiqueta"
-var $addTagLinkFam = $('<input type="button" value="Agregar familiar">');
+var $addTagLinkFam = $('<input type="button" value="Agregar familiar" class="btn">');
 var $newLinkLiFam = $('<ul></ul>').append($addTagLinkFam);
 
 jQuery(document).ready(function() {
@@ -420,7 +413,7 @@ jQuery(document).ready(function() {
 var collectionHolderEst = $('ul.Destudios');
 
 // configura una enlace "Agregar una etiqueta"
-var $addTagLinkEst = $('<input type="button" value="Agregar Estudio">');
+var $addTagLinkEst = $('<input type="button" value="Agregar Estudio" class="btn">');
 var $newLinkLiEst = $('<ul></ul>').append($addTagLinkEst);
 
 jQuery(document).ready(function() {
@@ -454,7 +447,7 @@ jQuery(document).ready(function() {
 var collectionHolderIdio = $('ul.Idiomas');
 
 // configura una enlace "Agregar una etiqueta"
-var $addTagLinkIdio = $('<input type="button" value="Agregar Idioma">');
+var $addTagLinkIdio = $('<input type="button" value="Agregar Idioma" class="btn">');
 var $newLinkLiIdio = $('<ul></ul>').append($addTagLinkIdio);
 
 jQuery(document).ready(function() {

@@ -38,7 +38,7 @@ class Empleado
     /**
      * @var \Expediente
      *
-     * @ORM\OneToOne(targetEntity="Expediente")
+     * @ORM\OneToOne(targetEntity="Expediente", inversedBy="idempleado")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
      * })

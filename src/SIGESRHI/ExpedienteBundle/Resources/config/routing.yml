@@ -47,6 +47,10 @@ ExpedienteBundle_consultarMunicipiosJSON:
     pattern:  /solicitud/consultarMunicipiosJSON    
     defaults: { _controller: ExpedienteBundle:Solicitudempleo:consultarMunicipiosJSON }
 
+ExpedienteBundle_Editar_consultarMunicipiosJSON:
+    pattern:  /solicitud/{slug}/consultarMunicipiosJSON    
+    defaults: { _controller: ExpedienteBundle:Solicitudempleo:consultarMunicipiosJSON }
+
 ExpedienteBundle_docdigital:
        resource: "@ExpedienteBundle/Resources/config/routing/docexpediente.yml"
        prefix:   /docdigital

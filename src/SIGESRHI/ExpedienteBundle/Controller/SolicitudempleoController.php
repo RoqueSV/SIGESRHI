@@ -19,6 +19,8 @@ use SIGESRHI\ExpedienteBundle\Repositorio\departamentoRepository;
 
 use SIGESRHI\ExpedienteBundle\Form\SolicitudempleoType;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * Solicitudempleo controller.
  *
@@ -55,8 +57,15 @@ class SolicitudempleoController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery('SELECT (max(s.numsolicitud)+1) numsolicitud FROM ExpedienteBundle:Solicitudempleo s');
+        $query = $em->createQuery('SELECT (max(COALESCE(s.numsolicitud,0))+1) numsolicitud FROM ExpedienteBundle:Solicitudempleo s');
         $num = $query->getSingleResult();
+
+        if(!$num['numsolicitud']){
+
+            $num['numsolicitud']=1;
+        }
+
+
         $entity->setnumsolicitud($num['numsolicitud']);
 
         $form = $this->createForm(new SolicitudempleoType(), $entity);
@@ -97,24 +106,7 @@ class SolicitudempleoController extends Controller
     public function newAction()
     {
         $entity = new Solicitudempleo();
-
-        
-        //empieza pruebas
-
-
      
-        //agregamos datos de empleo
- /*       $datosempActual = new Datosempleo();
-        $datosempActual->name = 'Empleo Actual';
-        $datosempActual->setTipodatoempleo('Empleo Actual');
-        $entity->getDempleos()->add($datosempActual);
- 
-        $datosempAnterior = new Datosempleo();
-        $datosempAnterior->name = 'Empleo Anterior';
-        $datosempAnterior->setTipodatoempleo('Empleo Anterior');
-        $entity->getDempleos()->add($datosempAnterior);
-        
-*/       
         //agregamos datos familiares
         $datosFam= new Datosfamiliares();
         $datosFam->name = 'Dato Familiar 1';
@@ -126,13 +118,7 @@ class SolicitudempleoController extends Controller
         $datosEst->name = 'Dato studio 1';
         $entity->getDestudios()->add($datosEst);
         //termina pruebas
-/*
-        //agregamos un Idioma
-        $Idioma= new Idioma();
-        $Idioma->name = 'Idioma 1';
-        $entity->getIdiomas()->add($Idioma);
-        //termina pruebas
-   */ 
+
         $form   = $this->createForm(new SolicitudempleoType(), $entity);
 
         return $this->render('ExpedienteBundle:Solicitudempleo:new.html.twig', array(
@@ -140,6 +126,7 @@ class SolicitudempleoController extends Controller
             'form'   => $form->createView(),
         ));
     }
+
 
     /**
      * Finds and displays a Solicitudempleo entity.
@@ -172,6 +159,13 @@ class SolicitudempleoController extends Controller
 
         $entity = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($id);
 
+        //obtenemos el id del departamento que se registro
+        $query=$em->createQuery('SELECT d.id depto, m.id muni FROM ExpedienteBundle:Municipio m
+        join m.iddepartamento d
+        WHERE m.id = :municipio'
+        )->setParameter('municipio', $entity->getIdmunicipio());
+        $locacion = $query->getResult();
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Solicitudempleo entity.');
         }
@@ -183,6 +177,7 @@ class SolicitudempleoController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'locacion' => $locacion,
         ));
     }
 
@@ -199,22 +194,73 @@ class SolicitudempleoController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Solicitudempleo entity.');
         }
+        $entity->setFechamodificacion(new \Datetime(date('d-m-Y')));
+        // $entity->preUpload(); //probando llamada explicita a la funcion de subida de archivos
+         //Eliminando los embebidos
+        // Crea un arreglo del los objetos 'Destudios' actualmente en la base de datos
+        $originalDestudios = array();
+        foreach ($entity->getDestudios() as $Destudio) {
+           $originalDestudios[] = $Destudio;
+         }
+        
+        // Fin eliminar embebidos
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new SolicitudempleoType(), $entity);
         $editForm->bind($request);
 
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
+        $numEstudios=count($entity->getDestudios());
 
+        if($numEstudios<1){
+        $this->get('session')->getFlashBag()->add('erroredit', 'Debe almacenar por lo menos un dato de estudio.'); 
             return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
         }
 
-        return $this->render('ExpedienteBundle:Solicitudempleo:edit.html.twig', array(
+        if ($editForm->isValid()) {
+          
+            foreach ($entity->getDestudios() as $Destudio) {
+                foreach ($originalDestudios as $key => $toDel) {
+                    if ($toDel->getId() === $Destudio->getId()) {
+                        unset($originalDestudios[$key]);
+                    }
+                }
+            }
+
+            // Elimina la relación entre Destudio y Solicitud
+            foreach ($originalDestudios as $Destudio) {
+                
+                //Elimina el beneficiario de seguro de vida
+                //$beneficiario->getIdsegurovida()->removeElement($entity);
+
+                // Si se tratara de una relación MuchosAUno, elimina la relación con esto
+                 $Destudio->setIdsolicitudempleo(null);
+
+                //$em->persist($beneficiario);
+
+                //Si deseas eliminar la etiqueta completamente, también lo puedes hacer
+                 $em->remove($Destudio);
+             }
+
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('edit', 'Solicitud de empleo modificada correctamente'); 
+            return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
+        }
+
+        //obtenemos el id del departamento que se registro
+        $query=$em->createQuery('SELECT d.id depto, m.id muni FROM ExpedienteBundle:Municipio m
+        join m.iddepartamento d
+        WHERE m.id = :municipio'
+        )->setParameter('municipio', $entity->getIdmunicipio());
+        $locacion = $query->getResult();
+
+     //   return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
+        $this->get('session')->getFlashBag()->add('edit', 'Ha ocurrido un error con los datos ingresados.'); 
+      return $this->render('ExpedienteBundle:Solicitudempleo:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'locacion'=> $locacion,
         ));
     }
 

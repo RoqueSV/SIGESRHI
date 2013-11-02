@@ -33,21 +33,25 @@ class DocexpedienteController extends Controller
      * Creates a new Docexpediente entity.
      *
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, $id)
     {
-        //recibimos el id del expediente creado al cual se le asociara los documentos
-        $request = $this->getRequest();
-        $id= $request->query->get('id');
-
+        
         $entity  = new Docexpediente();
 
         $entity->setFechadocexp(new \Datetime(date('d-m-Y')));
+        
+        //recuperamos el expediente que corresponde a id
+        $em = $this->getDoctrine()->getManager();
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);
 
-        $form = $this->createForm(new DocexpedienteType($id), $entity);
+        //establecemos el id del expediente
+        $entity->setIdexpediente($expediente);
+
+        $form = $this->createForm(new DocexpedienteType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            
             $em->persist($entity);
             $em->flush();
 
@@ -71,11 +75,12 @@ class DocexpedienteController extends Controller
         $id= $request->query->get('id');
 
         $entity = new Docexpediente();
-        $form   = $this->createForm(new DocexpedienteType($id), $entity);
+        $form   = $this->createForm(new DocexpedienteType(), $entity);
 
         return $this->render('ExpedienteBundle:Docexpediente:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'id' => $id
         ));
     }
 

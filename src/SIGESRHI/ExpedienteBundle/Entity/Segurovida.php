@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="segurovida")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Repositorio\SegurovidaRepository")
  */
 class Segurovida
 {
@@ -182,26 +183,4 @@ class Segurovida
         }
     }
 
-    /**
-     * Add idbeneficiario
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario
-     * @return Segurovida
-     */
-    public function addIdbeneficiario(\SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario)
-    {
-        $this->idbeneficiario[] = $idbeneficiario;
-    
-        return $this;
-    }
-
-    /**
-     * Remove idbeneficiario
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario
-     */
-    public function removeIdbeneficiario(\SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario)
-    {
-        $this->idbeneficiario->removeElement($idbeneficiario);
-    }
 }

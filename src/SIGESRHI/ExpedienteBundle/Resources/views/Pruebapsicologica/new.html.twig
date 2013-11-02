@@ -1,8 +1,7 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-<fieldset><legend>Resultados de prueba Psicológica</legend>
-    <h1>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h1>
+{% block principal -%}
+    <h4 class='text-center'>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h4>
     <fieldset><legend>Datos Generales del evaluado</legend>
     <table>
     {% for exp in expediente %}
@@ -31,19 +30,20 @@
         <fieldset>
         <legend>Resultados</legend>
         <p>Para la evaluación psicológica se tomo en cuenta los siguientes aspectos:</p>
-            <table>
+        <div class='centered'>
+            <table class='table-striped text-center' border='1' width='85%'>    
             <tr>
             <th align="center">Criterios</th>
-            <th  width="250">Rangos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Resultado</th>            
+            <th  width="250">Resultado&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rangos</th>
             <th>Calificación</th>
             </tr>            
             <tr>
                 <td>{{ form_label(form.resultadocoeficiente) }}</td>
                 <td>
-                <table>
+                <table width='100%'>
                 {% for child in form.resultadocoeficiente %}
                 <tr>
-                <td>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
+                <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
                 <tr>
                 {% endfor %}
                 </table>
@@ -52,40 +52,64 @@
             </tr>
             <tr>
                 <td>{{ form_label(form.resultadoafectividad) }}</td>
-                <td>{{ form_widget(form.resultadoafectividad) }} {{form_errors(form.resultadoafectividad)}}</td>
+                <td>
+                <table width='100%'>
+                {% for child in form.resultadoafectividad %}
+                <tr>
+                <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
+                <tr>
+                {% endfor %}
+                </table>
+                </td>                
                 <td></td>
             </tr>
             <tr>
                 <td>{{ form_label(form.resultadorelaciones) }}</td>
-                <td>{{ form_widget(form.resultadorelaciones) }} {{form_errors(form.resultadorelaciones)}}</td>
+                <td>
+                <table width='100%'>
+                {% for child in form.resultadorelaciones %}
+                <tr>
+                <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
+                <tr>
+                {% endfor %}
+                </table>
+                </td>
                 <td></td>
             </tr>
             <tr>
                 <td>{{ form_label(form.resultadoautoreconocimiento) }}</td>
-                <td>{{ form_widget(form.resultadoautoreconocimiento) }} {{form_errors(form.resultadoautoreconocimiento)}}</td>
+                <td>
+                <table width='100%'>
+                {% for child in form.resultadoautoreconocimiento %}
+                <tr>
+                <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
+                <tr>
+                {% endfor %}
+                </table>
+                </td>
                 <td></td>
             </tr>
             <tr>
                 <td>{{ form_label(form.resultadoseguridad) }}</td>
-                <td>{{ form_widget(form.resultadoseguridad) }} {{form_errors(form.resultadoseguridad)}}</td>
+                <td>
+                <table width='100%'>
+                {% for child in form.resultadoseguridad %}
+                <tr>
+                <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
+                <tr>
+                {% endfor %}
+                </table>
+                </td>
                 <td></td>
             </tr>
             </table>
+        </div>
         <fieldset>
-        {{ form_rest(form) }}
-        <div class="form-actions">
+        {{ form_widget(form.idexpediente) }}
+        <div class='text-center'>
             <button type="submit" class="btn btn-primary">Guardar</button>
             <button type="reset"  class="btn tool">Cancelar</button>
         </div>
         
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('pruebapsicologica') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
-</fieldset>
 {% endblock %}
