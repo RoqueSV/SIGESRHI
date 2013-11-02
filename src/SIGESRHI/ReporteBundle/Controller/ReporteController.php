@@ -55,24 +55,60 @@ class ReporteController extends Controller
      $request=$this->getRequest();
      $idEmp=$request->get('idemp');           
      
-    // Nombre reporte
-    $filename= 'Hoja de servicio.pdf';
-    
-	  //Llamando la funcion JRU de la libreria php-jru
-	  $jru=new JRU();
-	  //Ruta del reporte compilado Jasper generado por IReports
-	  $Reporte=__DIR__.'/../Resources/reportes/Hojadeservicio.jasper';
-	  //Ruta a donde deseo Guardar mi archivo de salida Pdf
-	  $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
-	  //Parametro en caso de que el reporte no este parametrizado
-	  $Parametro=new java('java.util.HashMap');
-	  $Parametro->put("idexp", new java("java.lang.Integer", $idEmp));
-	  //Funcion de Conexion a Base de datos 
-	  $Conexion = $this->crearConexion();
-	  //Generamos la Exportacion del reporte
-	  $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
-		
-	return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+     // Nombre reporte
+     $filename= 'Hoja de servicio.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Hojadeservicio.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Parametro en caso de que el reporte no este parametrizado
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("idexp", new java("java.lang.Integer", $idEmp));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+
+
+   public function ReporteSeguroVidaAction()
+    {
+
+    //Incluimos camino de migas
+      
+      $breadcrumbs = $this->get("white_october_breadcrumbs");
+      $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
+      $breadcrumbs->addItem("PDF Seguro de vida", $this->get("router")->generate("reporte_segurovida"));
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idExp=$request->get('idexp');           
+     
+     // Nombre reporte
+     $filename= 'Seguro de vida.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/SeguroVida/Segurocolectivo_de_vida.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("id_exp", new java("java.lang.Integer", $idExp));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
    }
 
  }

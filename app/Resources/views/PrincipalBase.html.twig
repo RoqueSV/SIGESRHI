@@ -103,14 +103,11 @@
 		{% if app.user %}
 		
 		<p>Usuario: {{ app.user.username }} <a href="{{path('sonata_user_admin_security_logout')}}">Salir</a></p>
-		
-		{#<blockquote>Mensaje uno</blockquote>
-		<blockquote>Mensaje dos</blockquote> #}
-		
+			
 		
 		{% else %}
 		{{ render(controller('FOSUserBundle:Security:login')) }}
-		{% endif %}
+		{% endif %} 
 		{% endblock %}
 	</aside>
 	<section id="seccion"> 
@@ -124,10 +121,10 @@
 	
 	<footer id="pie">
 		{% block pie_pagina %}
-		<p class="text-center"> Instituto Salvadore&ntilde;o de Rehabilitaci&oacute;n Integral - ISRI<br/>
+		<div class="text-center"> Instituto Salvadore&ntilde;o de Rehabilitaci&oacute;n Integral - ISRI<br/>
 		    Colonia Costa Rica Avenida Irazu # 181, San Salvador, El Salvador, C.A.<br/> 
 		    Tel. (503) 2521 - 8600 <br/>
-			Derechos Reservados &copy; - ISRI - 2013 </p>
+			Derechos Reservados &copy; - ISRI - 2013 </div>
 		{% endblock %}
 	</footer>
 

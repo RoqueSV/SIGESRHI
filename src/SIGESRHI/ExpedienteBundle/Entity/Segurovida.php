@@ -42,7 +42,7 @@ class Segurovida
     /**
      * @var \Expediente
      *
-     * @ORM\ManyToOne(targetEntity="Expediente")
+     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="idsegurovida")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
      * })
@@ -50,6 +50,9 @@ class Segurovida
     private $idexpediente;
     /**
      * @ORM\OneToMany(targetEntity="Beneficiario", mappedBy="idsegurovida", cascade={"persist","remove"})
+     * @Assert\Valid
+     * 
+     *
      */
     private $idbeneficiario;
     

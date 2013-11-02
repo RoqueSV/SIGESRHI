@@ -7,12 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use SIGESRHI\ExpedienteBundle\Entity\Beneficiario;
 use SIGESRHI\ExpedienteBundle\Form\BeneficiarioType;
-use APY\DataGridBundle\Grid\Source\Entity;
-use APY\DataGridBundle\Grid\Action\RowAction;
-use APY\DataGridBundle\Grid\Column\ActionsColumn;
-use APY\DataGridBundle\Grid\Export\ExcelExport;
-use APY\DataGridBundle\Grid\Action\DeleteMassAction;
-use APY\DataGridBundle\Grid\Grid;
 
 /**
  * Beneficiario controller.
@@ -24,43 +18,8 @@ class BeneficiarioController extends Controller
      * Lists all Beneficiario entities.
      *
      */
-    public function indexAction(Request $request)
-    {
-        // Creates simple grid based on your entity (ORM)
-        $source = new Entity('ExpedienteBundle:Beneficiario');
-
-        // Get a grid instance
-        $grid = $this->get('grid');
-
-        // Attach the source to the grid
-        $grid->setSource($source);
-        
-        // Configuration of the grid
-        
-        // Attach a rowAction to the Actions Column
-        $rowAction1 = new RowAction('Mostrar', 'beneficiario_show');
-        $rowAction1->setRouteParameters(array('id'));
-        $rowAction1->setColumn('info_column');
-        $grid->addRowAction($rowAction1);
-        
-        // Attach a rowAction to the Actions Column
-        $rowAction2 = new RowAction('Editar', 'beneficiario_edit');
-        $rowAction2->setColumn('info_column');
-        $grid->addRowAction($rowAction2);
-
-        
-        $grid->addExport(new ExcelExport('Exportar a Excel'));
-        $grid->addMassAction(new DeleteMassAction());
-        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
-        
-        $grid->setPersistence(true);
-        // Manage the grid redirection, exports and the response of the controller
-        //return $grid->getGridResponse('ExpedienteBundle:Beneficiario:index.html.twig');
-        //ajax version
-        return $grid->getGridResponse($request->isXmlHttpRequest() ?  'ExpedienteBundle:Segurovida:index.html.twig':'ExpedienteBundle:Beneficiario:index.html.twig');
-    }
     
-    /*public function indexAction()
+    public function indexAction()
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -70,7 +29,7 @@ class BeneficiarioController extends Controller
         return $this->render('ExpedienteBundle:Beneficiario:index.html.twig', array(
             'entities' => $entities,
         ));
-    }*/
+    }
 
     /**
      * Creates a new Beneficiario entity.

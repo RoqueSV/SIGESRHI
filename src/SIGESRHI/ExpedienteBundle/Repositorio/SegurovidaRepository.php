@@ -15,7 +15,8 @@ class SegurovidaRepository extends EntityRepository
 	public function obtenerDatosGenerales($idexp)
     {
 		return $this->getEntityManager()
-			->createQuery("SELECT concat(se.nombres,concat(' ',concat(se.primerapellido,concat(' ',se.segundoapellido)))) nombre, 
+			->createQuery("SELECT e.id idexp,
+				                  concat(se.nombres,concat(' ',concat(se.primerapellido,concat(' ',se.segundoapellido)))) nombre, 
 				                  se.dui, 
 				                  se.lugarnac, 
 				                  se.fechanac, 
