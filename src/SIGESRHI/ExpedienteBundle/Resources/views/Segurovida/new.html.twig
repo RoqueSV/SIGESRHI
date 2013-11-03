@@ -35,7 +35,7 @@
             <th>Lugar de Nacimiento:</th><td> {{ exp.lugarnac }} </td>
            </tr>
            <tr>
-            <th>Fecha de Nacimiento: </th><td>{{ exp.fechanac | date('d-m-Y') }} </td>
+            <th>Fecha de Nacimiento: </th><td>{{ (exp.fechanac | date('d-m-Y'))|fecha }} </td>
            </tr>
            <tr>
             <th>Direccion: </th><td> {{ exp.direccion }} </td>

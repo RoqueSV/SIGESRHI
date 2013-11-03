@@ -62,8 +62,8 @@ class SegurovidaController extends Controller
         $rowAction1->setColumn('info_column');
         $grid->addRowAction($rowAction1);
         
-         $MyMappedColumn = new TextColumn(array('id' => 'Nombre', 'field' => $this->getField('idsolicitudempleo.nombres')." ".$this->getField('idsolicitudempleo.primerapellido'),'source' => true, 'title' => 'Nombre Completo', 'joinType'=>'inner'));
-         $grid->addColumn($MyMappedColumn); 
+        // $MyMappedColumn = new TextColumn(array('id' => 'Nombre', 'field' => $this->getField('idsolicitudempleo.nombres')." ".$this->getField('idsolicitudempleo.primerapellido'),'source' => true, 'title' => 'Nombre Completo', 'joinType'=>'inner'));
+        // $grid->addColumn($MyMappedColumn); 
 
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
