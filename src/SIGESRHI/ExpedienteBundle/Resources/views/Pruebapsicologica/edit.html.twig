@@ -1,6 +1,19 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+    <!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+    {{ include('ExpedienteBundle:Ayuda/PruebaPsicologica:registro.html.twig')}}
+    {% for flashMessage in app.session.flashbag.get('edit') %}
+        <div class="alert alert-success">
+            <p> {{ 'flashMessage' }} </p>
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('editerror') %}
+        <div class="alert alert-danger">
+            <p> {{ 'flashMessage' }} </p>
+        </div>
+    {% endfor %}
     <h4 class='text-center'>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h4>
     <fieldset><legend>Datos Generales del evaluado</legend>
     <table>
@@ -21,11 +34,11 @@
         <td>Plaza a la que aplica: <b>{{ exp.nombreplaza }}</b></td>
         <td></td>
     </tr>
-    {% endfor %}
     </table>
     </fieldset>
 
-    <form action="{{ path('pruebapsicologica_update', { 'id': entity.id }) }}" method="post" class="form-horizontal" {{ form_enctype(edit_form) }}>
+    <form action="{{ path('pruebapsicologica_update', { 'id' : entity.id, 'exp' : exp.id } ) }}" method="post" class="form-horizontal" {{ form_enctype(edit_form) }}>
+    {% endfor %}
        <fieldset>
         <legend>Resultados</legend>
         <p>Para la evaluación psicológica se tomo en cuenta los siguientes aspectos:</p>
@@ -45,6 +58,7 @@
                 <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
                 <tr>
                 {% endfor %}
+                {{form_errors(edit_form.resultadocoeficiente)}}
                 </table>
                 </td>
                 <td>{{ form_widget(edit_form.calificacioncoeficiente) }} {{form_errors(edit_form.calificacioncoeficiente)}}</td>
@@ -58,6 +72,7 @@
                 <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
                 <tr>
                 {% endfor %}
+                {{form_errors(edit_form.resultadoafectividad)}}
                 </table>
                 </td>                
                 <td></td>
@@ -71,6 +86,7 @@
                 <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
                 <tr>
                 {% endfor %}
+                {{form_errors(edit_form.resultadorelaciones)}}
                 </table>
                 </td>
                 <td></td>
@@ -84,6 +100,7 @@
                 <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
                 <tr>
                 {% endfor %}
+                {{form_errors(edit_form.resultadoautoreconocimiento)}}
                 </table>
                 </td>
                 <td></td>
@@ -97,6 +114,7 @@
                 <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
                 <tr>
                 {% endfor %}
+                {{form_errors(edit_form.resultadoseguridad)}}
                 </table>
                 </td>
                 <td></td>
@@ -106,9 +124,10 @@
         <fieldset>
         <input type="hidden" name="_method" value="PUT" />
         {#{ form_widget(edit_form) }#}
+        {{ form_rest(edit_form) }}
         <div class='text-center'>
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset"  class="btn tool">Cancelar</button>            
+            <a  href="{{ path('pruebapsicologica') }}" class="btn">Cancelar</a>            
         </div>
     </form>
 

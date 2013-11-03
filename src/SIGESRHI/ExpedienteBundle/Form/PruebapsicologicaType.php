@@ -9,11 +9,11 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PruebapsicologicaType extends AbstractType
 {
-    protected $expediente;
+    /*protected $expediente;
     public function __construct ($expediente)
     {
         $this->expediente = $expediente;
-    }
+    }*/
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         
@@ -43,9 +43,6 @@ class PruebapsicologicaType extends AbstractType
                 'choices'=>array('alta'=>'Alta','media'=>'Media','baja'=>'Baja'),
                 'expanded'=>true,
                 'label'=>'Seguridad',
-                ))
-            ->add('idexpediente','hidden',array(
-                'data' => $this->expediente,
                 ))
         ;
     }

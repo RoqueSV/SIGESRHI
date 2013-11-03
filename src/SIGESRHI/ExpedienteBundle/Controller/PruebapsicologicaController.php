@@ -58,7 +58,7 @@ class PruebapsicologicaController extends Controller
         );
 
         $em = $this->getDoctrine()->getManager();
-        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedientes2();
+        //$expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedientes2();
         //$source->initQueryBuilder($expedienteinfo);
         // Attach the source to the grid
         $grid->setSource($source);  
@@ -67,21 +67,29 @@ class PruebapsicologicaController extends Controller
         $source->manipulateRow(
             function ($row)
             {
-                // Change the ouput of the column quantity if anarticle is sold out
+                // Change the ouput of the column
                 if( ($row->getField('idexpediente.tipoexpediente')=='I') || ($row->getField('idexpediente.tipoexpediente')=='A') ) {
                     if($row->getField('idexpediente.tipoexpediente')=='I'){
-                        $row->setField('idexpediente.tipoexpediente', 'Invalido');                    
+                        $row->setField('idexpediente.tipoexpediente', 'Invalido')
+                             ->setClass('text-error');                    
                     }
                     if($row->getField('idexpediente.tipoexpediente')=='A'){
-                        $row->setField('idexpediente.tipoexpediente', 'Válido');                       
+                        $row->setField('idexpediente.tipoexpediente', 'Válido');                  
                     }
                 }
                 else{                    
                     return null;
                 }
+                //concat columns
+                $row->setField('nombres', $row->getField('nombres')." ".$row->getField('primerapellido')." ".$row->getField('segundoapellido') );                       
                 return $row;
             }
         );
+        //Manipular columna
+        /*$grid->getColumn('idexpediente.tipoexpediente')->setTitle(
+            'title'
+        );*/
+        
         // Attach a rowAction to the Actions Column
         $rowAction1 = new RowAction('Ingresar', 'pruebapsicologica_new');
         $rowAction1->setColumn('info_column');
@@ -91,7 +99,7 @@ class PruebapsicologicaController extends Controller
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
-                if ($row->getField('idexpediente.tipoexpediente') == 'Válido') {
+                if ($row->getField('idexpediente.idpruebapsicologica.id') != NULL) {
                     $action->setTitle('Editar')
                            ->setRoute('pruebapsicologica_edit');                            
                 }
@@ -103,8 +111,7 @@ class PruebapsicologicaController extends Controller
             }
         );
         $grid->addRowAction($rowAction1);     
-
-        $grid->addExport(new ExcelExport('Exportar a Excel'));
+        //$grid->addExport(new ExcelExport('Exportar a Excel'));
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
          // Manage the grid redirection, exports and the response of the controller
         return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientes.html.twig');
@@ -116,20 +123,29 @@ class PruebapsicologicaController extends Controller
      */
     public function createAction(Request $request)
     {
+        //$request = $this->getRequest();
+        $idexp=$request->get('exp');
+
+        $em = $this->getDoctrine()->getManager();
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpediente($request->query->get('exp'));
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+
         $entity  = new Pruebapsicologica();
-        $form = $this->createForm(new PruebapsicologicaType(), $entity);
+        $entity->setIdexpediente($expediente);
+        $form = $this->createForm(new PruebapsicologicaType(), $entity);        
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('new','Prueba Psicologica Registrada correctamente');
             return $this->redirect($this->generateUrl('pruebapsicologica_show', array('id' => $entity->getId())));
         }
-
+        $this->get('session')->getFlashBag()->add('errornew','Errores en la Prueba Psicologica registrada');
         return $this->render('ExpedienteBundle:Pruebapsicologica:new.html.twig', array(
             'entity' => $entity,
+            'expediente' => $expedienteinfo,
             'form'   => $form->createView(),
         ));
     }
@@ -147,7 +163,8 @@ class PruebapsicologicaController extends Controller
         $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
 
         $entity = new Pruebapsicologica();
-        $form   = $this->createForm(new PruebapsicologicaType($expediente), $entity);
+        $entity->setIdexpediente($expediente);
+        $form   = $this->createForm(new PruebapsicologicaType(), $entity);
 
         //$em = $this->getDoctrine()->getManager();
         //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);        
@@ -177,7 +194,8 @@ class PruebapsicologicaController extends Controller
 
         return $this->render('ExpedienteBundle:Pruebapsicologica:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'delete_form' => $deleteForm->createView(),        
+            ));
     }
 
     /**
@@ -195,7 +213,7 @@ class PruebapsicologicaController extends Controller
         $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Pruebapsicologica entity.');
+            throw $this->createNotFoundException('No fue posible cargar el formulario, Intentelo de nuevo.');
         }
 
         $editForm = $this->createForm(new PruebapsicologicaType($expediente), $entity);
@@ -212,14 +230,17 @@ class PruebapsicologicaController extends Controller
      * Edits an existing Pruebapsicologica entity.
      *
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $id = $request->query->get('id');
+        $exp = $request->query->get('exp');
         $entity = $em->getRepository('ExpedienteBundle:Pruebapsicologica')->find($id);
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpediente($exp);
+        //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Pruebapsicologica entity.');
+            throw $this->createNotFoundException('No fue posible cargar el formulario, Intentelo de nuevo.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -229,14 +250,14 @@ class PruebapsicologicaController extends Controller
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('pruebapsicologica_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('edit','Prueba Psicologica ingresada correctamente');
+            return $this->redirect($this->generateUrl('pruebapsicologica_edit', array('id' => $id,'exp'=>$exp)));
         }
-
+        $this->get('session')->getFlashBag()->add('editerror','Error en la información de la Prueba Psicologica');
         return $this->render('ExpedienteBundle:Pruebapsicologica:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'expediente'  =>$expedienteinfo,
         ));
     }
 

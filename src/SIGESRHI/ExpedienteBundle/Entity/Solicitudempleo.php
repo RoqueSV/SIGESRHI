@@ -23,7 +23,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Assert\Callback(methods={"esNitValido"})
  * @Vich\Uploadable
  *
- * @GRID\Source(columns="id,nombres, primerapellido, segundoapellido,idexpediente.tipoexpediente,idexpediente.id,idplaza.nombreplaza",groups={"grupo_pruebapsicologica"})
+ * @GRID\Source(columns="id,nombres, primerapellido, segundoapellido,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica"})
  */
 
 
@@ -74,7 +74,7 @@ class Solicitudempleo
      * maxMessage = "El primer apellido no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(title="Apellido", filter="input",type="text", groups={"grupo_pruebapsicologica","apellidos"}, operators={"like","eq"})
+     * @GRID\Column(title="Apellido", filter="input",type="text", groups={"grupo_pruebapsicologica","apellidos"}, operators={"like","eq"},visible=false)
      */
     private $primerapellido;
 
@@ -87,7 +87,7 @@ class Solicitudempleo
      * maxMessage = "El segundo apellido no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(title="Apellido", filter="input", type="text", groups={"grupo_pruebapsicologica","apellidos"}, operators={"like","eq"})
+     * @GRID\Column(title="Apellido", filter="input", type="text", groups={"grupo_pruebapsicologica","apellidos"}, operators={"like","eq"},visible=false)
      */
     private $segundoapellido;
 
@@ -101,7 +101,7 @@ class Solicitudempleo
      * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(title="Nombres", filter="input", groups={"grupo_pruebapsicologica"}, type="text", operators={"like","eq"})
+     * @GRID\Column(title="Nombre", filter="input", groups={"grupo_pruebapsicologica"}, type="text", operators={"like","eq"})
      *
      */
     private $nombres;
@@ -540,6 +540,7 @@ class Solicitudempleo
      *
      * @GRID\Column(primary=true, field="idexpediente.id", title="Idexpediente", joinType="inner",visible=false, filterable=false)
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false)
+     * @GRID\Column(field="idexpediente.idpruebapsicologica.id", title="Prueba", filterable=false,visible=false, groups={"grupo_pruebapsicologica"})
      *
      */
     private $idexpediente;

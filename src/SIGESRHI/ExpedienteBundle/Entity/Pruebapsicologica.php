@@ -94,7 +94,7 @@ class Pruebapsicologica
     /**
      * @var \Expediente
      *
-     * @ORM\ManyToOne(targetEntity="Expediente")
+     * @ORM\OneToOne(targetEntity="Expediente", inversedBy="idpruebapsicologica")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
      * })

@@ -1,6 +1,20 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+    <!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+    {{ include('ExpedienteBundle:Ayuda/PruebaPsicologica:registro.html.twig')}}
+
+    {% for flashMessage in app.session.flashbag.get('new') %}
+        <div class="alert alert-success">
+            <p> {{ 'flashMessage' }} </p>
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('errornew') %}
+        <div class="alert alert-danger">
+            <p> {{ 'flashMessage' }} </p>
+        </div>
+    {% endfor %}
     <h4 class='text-center'>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h4>
     <fieldset><legend>Datos Generales del evaluado</legend>
     <table>
@@ -21,11 +35,12 @@
         <td>Plaza a la que aplica: <b>{{ exp.nombreplaza }}</b></td>
         <td></td>
     </tr>
-    {% endfor %}
+    {#% endfor %#}
     </table>
     </fieldset>
 
-    <form action="{{ path('pruebapsicologica_create') }}" id= "pruebapsicologica_form" class="form-horizontal" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('pruebapsicologica_create',{'exp':exp.id}) }}" id= "pruebapsicologica_form" class="form-horizontal" method="post" {{ form_enctype(form) }}>
+    {% endfor %}
         {#{{ form_widget(form) }}#}        
         <fieldset>
         <legend>Resultados</legend>
@@ -46,6 +61,7 @@
                 <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
                 <tr>
                 {% endfor %}
+                {{form_errors(form.resultadocoeficiente)}}
                 </table>
                 </td>
                 <td>{{ form_widget(form.calificacioncoeficiente) }} {{form_errors(form.calificacioncoeficiente)}}</td>
@@ -59,6 +75,7 @@
                 <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
                 <tr>
                 {% endfor %}
+                {{form_errors(form.resultadoafectividad)}}
                 </table>
                 </td>                
                 <td></td>
@@ -72,6 +89,7 @@
                 <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
                 <tr>
                 {% endfor %}
+                {{form_errors(form.resultadorelaciones)}}
                 </table>
                 </td>
                 <td></td>
@@ -85,6 +103,7 @@
                 <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
                 <tr>
                 {% endfor %}
+                {{form_errors(form.resultadoautoreconocimiento)}}
                 </table>
                 </td>
                 <td></td>
@@ -98,6 +117,7 @@
                 <td width='210'>{{ child.vars.label }}</td><td>{{ form_widget(child) }}</td>
                 <tr>
                 {% endfor %}
+                {{form_errors(form.resultadoseguridad)}}
                 </table>
                 </td>
                 <td></td>
@@ -105,10 +125,11 @@
             </table>
         </div>
         <fieldset>
-        {{ form_widget(form.idexpediente) }}
+        {#{ form_widget(form.idexpediente) }#}
+        {{ form_rest(form) }}
         <div class='text-center'>
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset"  class="btn tool">Cancelar</button>
+            <a  href="{{ path('pruebapsicologica') }}" class="btn" onclick="return confirm('Si cancela, perderá los datos del formulario actual ¿Está seguro de cancelar? ')">Cancelar</a>            
         </div>
         
     </form>
