@@ -24,7 +24,7 @@ pruebapsicologica_edit:
     defaults: { _controller: "ExpedienteBundle:Pruebapsicologica:edit" }
 
 pruebapsicologica_update:
-    pattern:  /{id}/update
+    pattern:  /update
     defaults: { _controller: "ExpedienteBundle:Pruebapsicologica:update" }
     requirements: { _method: post|put }
 

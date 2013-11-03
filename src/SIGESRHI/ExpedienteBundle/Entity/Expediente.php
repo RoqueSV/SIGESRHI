@@ -70,6 +70,10 @@ class Expediente
      */
     private $idsegurovida;
 
+    /*
+     * @ORM\OneToOne(targetEntity="Pruebapsicologica", mappedBy="idexpediente")
+     */
+    private $idpruebapsicologica;
     
     public function __toString(){
         return $this->getTipoexpediente();

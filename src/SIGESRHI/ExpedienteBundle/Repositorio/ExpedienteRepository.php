@@ -17,7 +17,7 @@ class ExpedienteRepository extends EntityRepository
 	public function obtenerExpediente($idexp)
     {
 		return $this->getEntityManager()
-			->createQuery('SELECT e.fechaexpediente fechaexpediente, s.nombres nombres, p.nombreplaza nombreplaza, t.nombretitulo nombretitulo,e.tipoexpediente
+			->createQuery('SELECT e.fechaexpediente fechaexpediente, s.nombres nombres, p.nombreplaza nombreplaza, t.nombretitulo nombretitulo,e.tipoexpediente,e.id id
                            FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN s.idplaza p JOIN s.Destudios i JOIN i.idtitulo t
                            WHERE e.id=:idexp order by t.niveltitulo DESC
                            ')
