@@ -28,3 +28,7 @@ solicitud_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "ExpedienteBundle:Solicitudempleo:delete" }
     requirements: { _method: post|delete }
+
+solicitud_grid_edit:
+    pattern:  /{tipo}/grid_edit
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:indexEdit" }

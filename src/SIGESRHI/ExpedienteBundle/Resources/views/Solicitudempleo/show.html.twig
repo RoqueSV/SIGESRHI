@@ -1,112 +1,323 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Solicitudempleo</h1>
+{% block principal -%}
 
-    <table class="record_properties">
-        <tbody>
+    <h4 class="text-center">DATOS REGISTRADOS DE SOLICITUD DE EMPLEO</h4>
+    <br>
+
+<table width="100%">
+    <tr>
+        <td width="80%">
+
+    <table border="2" class="table table-bordered table-hover">
+                
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
+                <th>Numero de solicitud: </th>
+                <td><b>{{ entity.numsolicitud }}</b></td>
+                
             </tr>
             <tr>
-                <th>Numsolicitud</th>
-                <td>{{ entity.numsolicitud }}</td>
+                <th>Fecha de registro:</th>
+                <td>{{ (entity.fecharegistro|date('d-m-Y'))|fecha }}</td>
             </tr>
             <tr>
-                <th>Apellidocasada</th>
-                <td>{{ entity.apellidocasada }}</td>
+                  <th>Fecha de modificaci&oacute;n: </th>
+                <td>{{ (entity.fechamodificacion|date('d-m-Y'))|fecha }}</td>
             </tr>
+            
+    </table>
+
+        </td>
+        <td width="20%">
+            <img src="{{asset('uploads/fotografias/' ~ entity.fotografia)}}" width="150px" height="150px" class="fotoSol"/>
+        </td>
+    </tr>
+</table>
+
+    <table border="2" class="table table-bordered table-hover">
             <tr>
-                <th>Primerapellido</th>
-                <td>{{ entity.primerapellido }}</td>
-            </tr>
-            <tr>
-                <th>Segundoapellido</th>
-                <td>{{ entity.segundoapellido }}</td>
-            </tr>
-            <tr>
+                <th>Apellido de casada</th>
+                <th>Primer apellido</th>
+                <th>Segundo apellido</th>
                 <th>Nombres</th>
+                
+            </tr>
+            <tr>
+                <td>{{ entity.apellidocasada }}</td>
+                <td>{{ entity.primerapellido }}</td>
+                <td>{{ entity.segundoapellido }}</td>
                 <td>{{ entity.nombres }}</td>
             </tr>
+        </table>
+
+        <table border="2" class="table table-bordered table-hover">    
             <tr>
+                <th>Departamento</th>
+                <th>Municipio</th>
                 <th>Colonia</th>
-                <td>{{ entity.colonia }}</td>
+                <th>Calle/pasaje/avenida</th>
+                
+                
             </tr>
             <tr>
-                <th>Calle</th>
+                <td>{{ entity.idmunicipio.getIddepartamento() }}</td>
+                <td>{{ entity.idmunicipio }}</td>
+                <td>{{ entity.colonia }}</td>
                 <td>{{ entity.calle }}</td>
             </tr>
+        </table>
+
+        <table border="2" class="table table-bordered table-hover">
             <tr>
-                <th>Estadocivil</th>
-                <td>{{ entity.estadocivil }}</td>
+                <th>Estado civil:</th>
+                <th>Telefono fijo:</th>
+                <th>Telefono m&oacute;vil:</th>
+                
             </tr>
             <tr>
-                <th>Telefonofijo</th>
+                <td>
+                    {% if entity.estadocivil == 'S' %} Soltero {% endif %}
+                    {% if entity.estadocivil == 'A' %} Acompañado {% endif %}
+                    {% if entity.estadocivil == 'C' %} Casado {% endif %}
+                    {% if entity.estadocivil == 'D' %} Divorciado {% endif %}
+                    {% if entity.estadocivil == 'V' %} Viudo {% endif %}
+                </td>
                 <td>{{ entity.telefonofijo }}</td>
-            </tr>
-            <tr>
-                <th>Telefonomovil</th>
                 <td>{{ entity.telefonomovil }}</td>
             </tr>
+        </table>
+
+        <table border="2" class="table table-bordered table-hover">
             <tr>
-                <th>Email</th>
+                <th colspan="3">Correo electr&oacute;nico</th>
+            </tr>
+            <tr>
                 <td>{{ entity.email }}</td>
             </tr>
+        </table>
+          
+        <table border="2" class="table table-bordered table-hover">
             <tr>
-                <th>Lugarnac</th>
-                <td>{{ entity.lugarnac }}</td>
+                    <th>Lugar de nacimiento: </th>
+                    <th>fecha de nacimiento:</th>
+                    <th>Sexo</th>
             </tr>
             <tr>
-                <th>fechanac</th>
-                <td>{{ entity.fechanac|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ entity.lugarnac }}</td>
+                    <td>{{ (entity.fechanac|date('d-m-Y'))|fecha }}</td>
+                    <td> 
+                        {% if entity.sexo == 'M' %} Masculino {% endif %}
+                        {% if entity.sexo == 'F' %} Femenino {% endif %}
+                    </td>
+            </tr>
+       </table>
+
+      <b> Documentos de identidad personal:</b>
+       <table border="2" class="table table-bordered table-hover">
+            <tr>
+                <th>NIT: </th>
+                <th>ISSS: </th>
+                <th>NUP: </th>
+                <th>NIP: </th>
             </tr>
             <tr>
-                <th>Dui</th>
-                <td>{{ entity.dui }}</td>
-            </tr>
-            <tr>
-                <th>Lugardui</th>
-                <td>{{ entity.lugardui }}</td>
-            </tr>
-            <tr>
-                <th>Fechadui</th>
-                <td>{{ entity.fechadui|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Nit</th>
                 <td>{{ entity.nit }}</td>
-            </tr>
-            <tr>
-                <th>Isss</th>
                 <td>{{ entity.isss }}</td>
-            </tr>
-            <tr>
-                <th>Nup</th>
                 <td>{{ entity.nup }}</td>
-            </tr>
-            <tr>
-                <th>Nip</th>
                 <td>{{ entity.nip }}</td>
             </tr>
+       </table>
+
+        <table border="2" class="table table-bordered table-hover">
             <tr>
-                <th>Sexo</th>
-                <td>{{ entity.sexo }}</td>
+                <th>DUI: </th>
+                <th>Lugar de expedición: </th>
+                <th>Fecha de expedición: </th>
+                
             </tr>
             <tr>
-                <th>Fotografia</th>
-                <td>{{ entity.fotografia }}</td>
+                <td>{{ entity.dui }}</td>
+                <td>{{ entity.lugardui }}</td>
+                <td>{{ (entity.fechadui|date('d-m-Y'))|fecha }}</td>
             </tr>
+        </table>
+
+
+        {# DATOS DE ESTUDIO #}
+
+        <b>Datos de Estudio</b>
+            <br>
+        
+        {% if entity.Destudios|length > 0 %}
+
+            <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>Titulo Obtenido</th>
+                        <th>Centro de Estudio</th>
+                    </tr>
+                    
+
+            {% for Destudio in entity.Destudios %}
+                    <tr>
+                        <td>{{Destudio.idtitulo}}</td>
+                        <td>{{Destudio.centroestudio}}</td>
+                    </tr>      
+            {% endfor %}
+             
+                </table>
+
+        {% else %}
+
+        No hay datos que mostrar.
+
+        {% endif %}
+
+
+        {# IDIOMAS #}
+
+        <b>Idiomas que domina </b>
+        <br>
+
+        {% if entity.Idiomas|length > 0 %}
+        
+            <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>Idioma</th>
+                        <th>Nivel escribe</th>
+                        <th>Nivel habla</th>
+                        <th>Nivel lee</th>
+                    </tr>
+
+            {% for Idioma in entity.Idiomas %}
+                    <tr>
+                        <td>{{Idioma.nombreidioma}}</td>
+                        <td>{{Idioma.nivelescribe}}</td>
+                        <td>{{Idioma.nivelhabla}}</td>
+                        <td>{{Idioma.nivellee}}</td>
+                    </tr>
+            {% endfor %}
+
+            </table>
+
+            {% else %}
+
+            No hay datos que mostrar.
+
+            {% endif %}
+
+
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>Plaza solicitada:</th>
+                </tr>
+                <tr>
+                    <td>{{entity.idplaza}}</td>
+                </tr>
+            </table>
+
+    <b>Datos familiares: </b>
+
+    {% if entity.Dfamiliares|length > 0 %}
+
+          <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>Parentesco: </th>
+                        <th>Nombre: </th>
+                        <th>Tel&eacute;fono: </th>
+                        <th>Direcci&oacute;n: </th>
+                    </tr>
+
+            {% for Dfamiliar in entity.Dfamiliares %}
+
             <tr>
-                <th>Fecharegistro</th>
-                <td>{{ entity.fecharegistro|date('Y-m-d H:i:s') }}</td>
+                <td>{{Dfamiliar.parentesco}}</td>
+                <td>{{Dfamiliar.nombrefamiliar}}</td>
+                <td>{{Dfamiliar.telefonofamiliar}}</td>
+                <td>{{Dfamiliar.direccionfamiliar}}</td>
             </tr>
-            <tr>
-                <th>Fechamodificacion</th>
-                <td>{{ entity.fechamodificacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
+
+            {% endfor %}
+
+        </table>
+
+    {% else %}
+        No hay datos que mostrar.
+    {% endif %}
+
+
+    <b>Datos de Pariente dentro de la instituci&oacute;n: </b>
+
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>Nombre pariente: </th>
+            <th>Parentesco: </th>
+            <th>Dependencia donde labora: </th>
+        </tr>
+        <tr>
+            <td>&nbsp;{{entity.nombreparinst}}</td>
+            <td>&nbsp;{{entity.parentescoparinst}}</td>
+            <td>&nbsp;{{entity.dependenciaparinst}}</td>
+        </tr>
     </table>
+
+
+    <b>Datos Antecedentes de Empleo: </b>
+    <br>
+
+    {% if entity.Dempleos|length > 0 %}
+
+
+        {% for Dempleo in entity.Dempleos %}
+
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>Tipo de Empleo: </th>
+                    <td>{{Dempleo.tipodatoempleo}}</td>
+                </tr>
+                <tr>
+                    <th>Nombre de la empresa: </th>
+                    <td>{{Dempleo.nombreempresa}}</td>
+                </tr>
+                <tr>
+                    <th>Direcci&oacute;n de la empresa: </th>
+                    <td>{{Dempleo.direccionempresa}}</td>
+                </tr>
+                <tr>
+                    <th>Tel&eacute;fono: </th>
+                    <td>{{Dempleo.telefonoempresa}}</td>
+                </tr>
+                <tr>
+                    <th>Fecha de inicio laboral:</th>
+                    <td>{{(Dempleo.fechainiciolaboral|date('d-m-Y'))|fecha}}</td>
+                </tr>
+                <tr>
+                    <th>Fecha de fin laboral</th>
+                    <td>{{(Dempleo.fechafinlaboral|date('d-m-Y'))|fecha}}</td>
+                </tr>
+                <tr>
+                    <th>Jefe inmediato: </th>
+                    <td>{{Dempleo.jefeinmediato}}</td>
+                </tr>
+                <tr>
+                    <th>Cargo desempe&ntilde;ado: </th>
+                    <td>{{Dempleo.cargodesempenado}}</td>
+                </tr>
+                <tr>
+                    <th>Sueldo: </th>
+                    <td>{{Dempleo.sueldo}}</td>
+                </tr>
+                <tr>
+                    <th>Motivo de su retiro: </th>
+                    <td>{{Dempleo.motivoretiro}}</td>
+                </tr>
+            </table>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+    {#}        
 
         <ul class="record_actions">
     <li>
@@ -127,4 +338,6 @@
         </form>
     </li>
 </ul>
+
+#}
 {% endblock %}

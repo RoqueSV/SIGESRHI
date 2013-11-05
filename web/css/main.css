@@ -181,3 +181,8 @@ textarea {
 .mitable th{
 	font-weight: bold;
 }
+
+.input-xmlarge
+{
+    width: 400px;
+}

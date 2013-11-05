@@ -7,21 +7,23 @@
         
         <br>
         
-<table border="0">
+<table border="0" width="100%" class="form-inline centered-table">
     <tr>
-        <td><h5>{{form_label(form.nombredocexp)}}</h5></td>
-        <td><h5>{{form_label(form.file)}}</h5></td>
+        <td width="40%"><b>{{form_label(form.nombredocexp)}}</b></td>
+        <td><b>{{form_label(form.file)}}</b></td>
     </tr>
     <tr>
         <td>{{form_widget(form.nombredocexp)}} {{form_errors(form.nombredocexp)}} </td>
-        <td>{{form_widget(form.file)}} {{form_errors(form.file)}} </td>
+        <td> {{form_widget(form.file)}} {{form_errors(form.file)}} </td>
     </tr>
 </table>
+
+<br>
 
         {{ form_rest(form) }}
         <br>
 
-        <div class="centered">
+        <div class="text-center">
         
             <button type="submit"  class="btn btn-primary">Guardar Documentos</button>
             <input type="button" value="Cancelar" id="" class="btn">

@@ -20,6 +20,12 @@ use SIGESRHI\ExpedienteBundle\Repositorio\departamentoRepository;
 use SIGESRHI\ExpedienteBundle\Form\SolicitudempleoType;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Action\RowAction;
+use APY\DataGridBundle\Grid\Column\ActionsColumn;
+use APY\DataGridBundle\Grid\Export\ExcelExport;
+use APY\DataGridBundle\Grid\Action\DeleteMassAction;
+use APY\DataGridBundle\Grid\Grid;
 
 /**
  * Solicitudempleo controller.
@@ -31,6 +37,7 @@ class SolicitudempleoController extends Controller
      * Lists all Solicitudempleo entities.
      *
      */
+   
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -41,6 +48,54 @@ class SolicitudempleoController extends Controller
             'entities' => $entities,
         ));
     }
+
+   
+    public function indexEditAction($tipo)
+    {
+        $source = new Entity('ExpedienteBundle:Solicitudempleo', 'solicitud_empleo');
+        // Get a grid instance
+        $grid = $this->get('grid');
+
+        $source->manipulateRow(
+            function ($row) use ($tipo)
+            {
+            
+            // Mostrar solo las solicitud de expedientes invalidos
+            if ($row->getField('idexpediente.tipoexpediente') != $tipo) {
+                return null;
+            }
+            
+            return $row;
+
+            //concat columns
+            $row->setField('nombres', $row->getField('nombres')." ".$row->getField('primerapellido')." ".$row->getField('segundoapellido')." ".$row->getField('apellidocasada') );
+
+            }
+        );
+
+        // Attach the source to the grid
+        $grid->setSource($source);
+
+
+        $em = $this->getDoctrine()->getManager();
+        
+          
+        $grid->setNoDataMessage("No se encontraron resultados");
+        
+        $rowAction1 = new RowAction('Modificar', 'solicitud_edit');
+        $rowAction1->setColumn('info_column');
+
+
+
+        $grid->addRowAction($rowAction1);     
+        //$grid->addExport(new ExcelExport('Exportar a Excel'));
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+    // Manage the grid redirection, exports and the response of the controller
+    return $grid->getGridResponse('ExpedienteBundle:Solicitudempleo:grid_editar.html.twig');
+
+    }
+
 
     /**
      * Creates a new Solicitudempleo entity.
@@ -57,6 +112,7 @@ class SolicitudempleoController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        //establecemos el id de la solicitud
         $query = $em->createQuery('SELECT (max(COALESCE(s.numsolicitud,0))+1) numsolicitud FROM ExpedienteBundle:Solicitudempleo s');
         $num = $query->getSingleResult();
 
@@ -65,11 +121,26 @@ class SolicitudempleoController extends Controller
             $num['numsolicitud']=1;
         }
 
-
+       
         $entity->setnumsolicitud($num['numsolicitud']);
 
         $form = $this->createForm(new SolicitudempleoType(), $entity);
         $form->bind($request);
+
+         //establecemos el nombre completo al campo
+        $nombres= $entity->getNombres();
+        $primapell= $entity->getPrimerapellido();
+        $segapell= $entity->getSegundoapellido();
+        $apellcasada= $entity->getApellidocasada();
+        if(is_null($apellcasada)){
+            $completo= $nombres." ".$primapell." ".$segapell;
+        }
+        else
+        {
+            $completo= $nombres." ".$primapell." de ".$apellcasada;
+        }
+    
+        $entity->setNombrecompleto($completo);
 
        
         if ($form->isValid()) {
@@ -159,6 +230,10 @@ class SolicitudempleoController extends Controller
 
         $entity = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($id);
 
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Solicitudempleo entity.');
+        }
+
         //obtenemos el id del departamento que se registro
         $query=$em->createQuery('SELECT d.id depto, m.id muni FROM ExpedienteBundle:Municipio m
         join m.iddepartamento d
@@ -166,10 +241,7 @@ class SolicitudempleoController extends Controller
         )->setParameter('municipio', $entity->getIdmunicipio());
         $locacion = $query->getResult();
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Solicitudempleo entity.');
-        }
-
+        
         $editForm = $this->createForm(new SolicitudempleoType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -195,12 +267,20 @@ class SolicitudempleoController extends Controller
             throw $this->createNotFoundException('Unable to find Solicitudempleo entity.');
         }
         $entity->setFechamodificacion(new \Datetime(date('d-m-Y')));
-        // $entity->preUpload(); //probando llamada explicita a la funcion de subida de archivos
-         //Eliminando los embebidos
+        
+        
+        // ** Para Eliminar embebidos ** //
+        
         // Crea un arreglo del los objetos 'Destudios' actualmente en la base de datos
         $originalDestudios = array();
         foreach ($entity->getDestudios() as $Destudio) {
            $originalDestudios[] = $Destudio;
+         }
+
+         // Crea un arreglo del los objetos 'Dfamiliares' actualmente en la base de datos
+         $originalDfamiliares = array();
+        foreach ($entity->getDfamiliares() as $Dfamiliar) {
+           $originalDfamiliar[] = $Dfamiliar;
          }
         
         // Fin eliminar embebidos
@@ -209,10 +289,32 @@ class SolicitudempleoController extends Controller
         $editForm = $this->createForm(new SolicitudempleoType(), $entity);
         $editForm->bind($request);
 
+        //establecemos el nombre completo al campo
+        $nombres= $entity->getNombres();
+        $primapell= $entity->getPrimerapellido();
+        $segapell= $entity->getSegundoapellido();
+        $apellcasada= $entity->getApellidocasada();
+        if(is_null($apellcasada)){
+            $completo= $nombres." ".$primapell." ".$segapell;
+        }
+        else
+        {
+            $completo= $nombres." ".$primapell." de ".$apellcasada;
+        }
+    
+        $entity->setNombrecompleto($completo);
+        // fin establecer nombre completo
+
         $numEstudios=count($entity->getDestudios());
+        $numFamiliares=count($entity->getDfamiliares());
 
         if($numEstudios<1){
         $this->get('session')->getFlashBag()->add('erroredit', 'Debe almacenar por lo menos un dato de estudio.'); 
+            return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
+        }
+
+        if($numFamiliares<1){
+        $this->get('session')->getFlashBag()->add('erroredit', 'Debe almacenar por lo menos los datos de un familiar'); 
             return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
         }
 
