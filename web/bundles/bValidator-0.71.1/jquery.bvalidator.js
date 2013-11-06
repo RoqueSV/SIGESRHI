@@ -441,7 +441,7 @@
 			},
 
 			alpha: function(v){
-				return validator.regex(v, /^[a-z ._\-]+$/i);
+				return validator.regex(v, /^[a-z áéíóúAÉÍÓÚÑñ._\-]+$/i);
 			},
 			
 			alphanum: function(v){

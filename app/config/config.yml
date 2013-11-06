@@ -68,11 +68,22 @@ swiftmailer:
     password:  %mailer_password%
     spool:     { type: memory }
 
+#FOS User
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Application\Sonata\UserBundle\Entity\User
+    group:
+        group_class:  Application\Sonata\UserBundle\Entity\Group
 
+    profile:  # Authentication Form
+        form:
+            type:               fos_user_profile
+            handler:            fos_user.profile.form.handler.default
+            name:               fos_user_profile_form
+            validation_groups:  [Authentication] 
+
+#Sonata admin & user
 sonata_block:
     default_contexts: [cms]
     blocks:
@@ -84,8 +95,8 @@ sonata_block:
         sonata.block.service.rss:    ~
 
 sonata_admin:
-    title:      'SIGESRHI-Admin'
-    #title_logo: Logo_ISRI.png
+    title:      'SISTEMA INFORMATICO PARA LA GESTION DEL RECURSO HUMANO - ISRI'
+    title_logo: images/Logo_ISRI.png
     templates:
         # plantillas globales predefinidas
         ajax:    SonataAdminBundle::ajax_layout.html.twig
@@ -93,21 +104,21 @@ sonata_admin:
     dashboard:
         blocks:
            - { position: left, type: sonata.admin.block.admin_list }
-
            - { position: right, type: sonata.block.service.text, settings: { content: "<h2>Area de administración</h2> <p style='font-size:16px' >En esta sección podra llevar a cabo las configuraciones para usuarios, roles y sus respectivos accesos a modulos del sistema. <br /><br /> De igual forma podrá realizar la gestión de los centros de atención, unidades organizativas y la administración para el manual de puestos de la institución.</p>"} }
-         #  - { position: right, type: sonata.block.service.rss, settings: { title: SIGESRHI Repository, url: http://www.elsalvador.com/ultimahora/Rss.xml }}
+        
+sonata_user:
+    profile:
+      form:
+            type:               sonata_user_profile
+            handler:            sonata.user.profile.form.handler.default
+            name:               sonata_user_profile_form
+            validation_groups:  [Profile]
 
+#Bootstrap
 parameters:
     mopa_bootstrap.form.render_optional_text: false
 
-#apy_data_grid:
- #   pagerfanta:
-  #      enable: true    #default false
-   #     view_class: Pagerfanta\View\TwitterBootstrapView #default    Pagerfanta\View\DefaultView
-    #    options:            #all options of pager fanta view constructor
-     #      prev_message : «
-      #     next_message : »
-
+# Vich
 knp_gaufrette:
     adapters:
         docsexp_adapter:
@@ -142,6 +153,7 @@ vich_uploader:
             delete_on_remove: true
             delete_on_update: true
 
+#Breadcrumbs
 white_october_breadcrumbs: 
     separator:          /
     separatorClass:     divider

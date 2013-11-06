@@ -62,6 +62,16 @@ class Acceso
      * })
      */
     private $idmodulo;
+
+    /**
+     * @var \Acceso
+     *
+     * @ORM\ManyToOne(targetEntity="Acceso")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idaccesosup", referencedColumnName="id")
+     * })
+     */
+    private $idaccesosup;
     
        public function __toString()
     {

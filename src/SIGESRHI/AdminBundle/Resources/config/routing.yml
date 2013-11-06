@@ -1,7 +1,7 @@
 fos_user_security:
    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-fos_user_profile:
-   resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+sonata_user_profile:
+   resource: "@SonataUserBundle/Resources/config/routing/profile.xml"
    prefix: /profile
 fos_user_register:
    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
@@ -12,15 +12,18 @@ fos_user_resetting:
 fos_user_change_password:
    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
    prefix: /change-password
+fos_user_group:
+   resource: "@FOSUserBundle/Resources/config/routing/group.xml"
+   prefix: /group
 
 sonata_user:
    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
    prefix: /admin
 sonata_user_impersonating:
-    pattern: /
-    defaults: { _controller: AdminBundle:Default:index }
+   pattern: /
+   defaults: { _controller: AdminBundle:Default:index }
 
 hello_page:
-    path:  /inicio
-    defaults: { _controller: AdminBundle:Default:index }
+   path:  /inicio
+   defaults: { _controller: AdminBundle:Default:index }
     

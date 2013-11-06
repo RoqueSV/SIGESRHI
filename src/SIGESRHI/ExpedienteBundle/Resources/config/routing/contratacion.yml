@@ -1,0 +1,30 @@
+contratacion:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Contratacion:index" }
+
+contratacion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Contratacion:show" }
+
+contratacion_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Contratacion:new" }
+
+contratacion_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Contratacion:create" }
+    requirements: { _method: post }
+
+contratacion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Contratacion:edit" }
+
+contratacion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Contratacion:update" }
+    requirements: { _method: post|put }
+
+contratacion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Contratacion:delete" }
+    requirements: { _method: post|delete }

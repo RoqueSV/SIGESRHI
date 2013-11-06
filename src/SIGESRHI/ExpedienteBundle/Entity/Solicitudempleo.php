@@ -13,6 +13,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+
 /**
  * Solicitudempleo
  *
@@ -24,6 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  *
  * @GRID\Source(columns="id,nombres, primerapellido, segundoapellido,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
+ * @GRID\Source(columns="id,numsolicitud, nombres, primerapellido, segundoapellido, apellidocasada, idexpediente.tipoexpediente,idplaza.nombreplaza",groups={"solicitud_empleo"})
  */
 
 
@@ -37,7 +39,7 @@ class Solicitudempleo
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="solicitudempleo_id_seq", allocationSize=1, initialValue=1)
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica","vista_basica_expediente"}, visible=false)
+     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica,"solicitud_empleo","vista_basica_expediente"}, visible=false)
      */
     private $id;
 
@@ -48,6 +50,7 @@ class Solicitudempleo
      * @Assert\NotNull(message="Debe ingresar el numero de solicitud")
      *
      * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
+     * @GRID\Column(filterable=false, title="Num. Solicitud", groups={"solicitud_empleo"}, visible=true)
      */
     private $numsolicitud;
 
@@ -61,6 +64,7 @@ class Solicitudempleo
      * )
      *
      * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
+     * @GRID\Column(filterable=false, groups={"solicitud_empleo"}, visible=false)
      */
     private $apellidocasada;
 
@@ -74,7 +78,7 @@ class Solicitudempleo
      * maxMessage = "El primer apellido no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(title="Apellido", filter="input",type="text", groups={"grupo_pruebapsicologica","apellidos","vista_basica_expediente"}, operators={"like","eq"},visible=false)
+     * @GRID\Column(title="Apellido", filterable=false, groups={"grupo_pruebapsicologica","apellidos", "solicitud_empleo","vista_basica_expediente"}, operators={"like","eq"},visible=false)
      */
     private $primerapellido;
 
@@ -87,7 +91,7 @@ class Solicitudempleo
      * maxMessage = "El segundo apellido no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(title="Apellido", filter="input", type="text", groups={"grupo_pruebapsicologica","apellidos","vista_basica_expediente"}, operators={"like","eq"},visible=false)
+     * @GRID\Column(title="Apellido", filterable=false, type="text", groups={"grupo_pruebapsicologica","apellidos", "solicitud_empleo","vista_basica_expediente"}, operators={"like","eq"},visible=false)
      */
     private $segundoapellido;
 
@@ -101,10 +105,18 @@ class Solicitudempleo
      * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(title="Nombre", groups={"grupo_pruebapsicologica","vista_basica_expediente"}, type="text",  visible=true, operators={"like"}, filter="input")
+     * @GRID\Column(title="Nombre", filter="input", groups={"grupo_pruebapsicologica", "solicitud_empleo","vista_basica_expediente"}, type="text", operators={"like","eq"})
      *
      */
     private $nombres;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombrecompleto", type="string", length=100, nullable=true)
+     *
+     */
+    private $nombrecompleto;
 
     /**
      * @var string
@@ -541,7 +553,7 @@ class Solicitudempleo
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica"})
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, visible=false, groups={"vista_basica_expediente"})
      * @GRID\Column(field="idexpediente.idpruebapsicologica.id", title="Prueba", filterable=false,visible=false, groups={"grupo_pruebapsicologica"})
-     *
+     * @GRID\Column(field="idexpediente.tipoexpediente", joinType="inner", filterable=false, groups={"solicitud_empleo"}, visible=false)
      */
     private $idexpediente;
 
@@ -905,6 +917,31 @@ class Solicitudempleo
     {
         return $this->nombres;
     }
+
+
+    /**
+     * Set nombrecompleto
+     *
+     * @param string $nombrecompleto
+     * @return Solicitudempleo
+     */
+    public function setNombrecompleto($nombrecompleto)
+    {
+        $this->nombrecompleto = $nombrecompleto;
+    
+        return $this;
+    }
+
+    /**
+     * Get nombrecompleto
+     *
+     * @return string 
+     */
+    public function getNombrecompleto()
+    {
+        return $this->nombrecompleto;
+    }
+
 
     /**
      * Set colonia

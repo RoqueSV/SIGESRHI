@@ -1,0 +1,13 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    <h1>Solicitudempleo list</h1>
+
+
+{{ grid_search(grid) }} 
+<br>
+{{ grid(grid,_self) }}  
+<br>
+{% block grid_filters %}{% endblock %} 
+
+ {% endblock %}

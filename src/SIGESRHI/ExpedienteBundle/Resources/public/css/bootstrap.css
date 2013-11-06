@@ -2018,11 +2018,12 @@ table {
   line-height: 20px;
   text-align: left;
   vertical-align: top;
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #666666;
 }
 
 .table th {
   font-weight: bold;
+  background-color: #E1E1E1;
 }
 
 .table thead th {
@@ -2052,7 +2053,7 @@ table {
 }
 
 .table-bordered {
-  border: 1px solid #dddddd;
+  border: 1px solid #666666;
   border-collapse: separate;
   *border-collapse: collapse;
   border-left: 0;
@@ -2063,7 +2064,7 @@ table {
 
 .table-bordered th,
 .table-bordered td {
-  border-left: 1px solid #dddddd;
+  border-left: 1px solid #666666;
 }
 
 .table-bordered caption + thead tr:first-child th,
