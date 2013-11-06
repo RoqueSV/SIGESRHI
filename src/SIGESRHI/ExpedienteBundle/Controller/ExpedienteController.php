@@ -38,7 +38,7 @@ class ExpedienteController extends Controller
                     return $row;
                 }
             );
-            $rowAction1 = new RowAction('Validar', 'pruebapsicologica_new');
+            $rowAction1 = new RowAction('Validar', 'expediente_validar');
             $rowAction1->setColumn('info_column');
             $rowAction1->manipulateRender(
                 function ($action, $row)
@@ -236,6 +236,27 @@ public function RegistraDocumentosDAction($id)
         return $this->render('ExpedienteBundle:Expediente:RegistraDocDigi.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
+        ));
+    }
+
+/* Registra una solicitud como valida */
+public function validarAction()
+    {
+        $request = $this->getRequest();
+        
+        $em = $this->getDoctrine()->getManager();
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteInvalido($request->query->get('exp'));
+        //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
+
+        //$entity = new Pruebapsicologica();
+        //$entity->setIdexpediente($expediente);
+        //$form   = $this->createForm(new PruebapsicologicaType(), $entity);
+
+        //$em = $this->getDoctrine()->getManager();
+        //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);        
+
+        return $this->render('ExpedienteBundle:Expediente:validar.html.twig', array(          
+            'expediente' => $expedienteinfo,
         ));
     }
 
