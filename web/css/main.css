@@ -182,3 +182,8 @@ textarea {
 	font-weight: bold;
     background-color: #4F76A3;
 }
+
+.input-xmlarge
+{
+    width: 400px;
+}

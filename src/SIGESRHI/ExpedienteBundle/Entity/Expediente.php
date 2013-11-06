@@ -139,10 +139,10 @@ class Expediente
 
 
     public function __construct(){
-
     $this->Docs_expediente = new ArrayCollection();
     $this->idsegurovida = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
 
 /********* Documentos de Expediente *****************/
     
@@ -220,7 +220,6 @@ class Expediente
         return $this->idempleado;
 
     }
-   
     /**
      * Add idsegurovida
      *

@@ -33,7 +33,7 @@ class Docexpediente
      * @Assert\NotNull(message="Debe ingresar el nombre del doc")
      * @Assert\Length(
      * max = "25",
-     * maxMessage = "El nombre del documento no debe exceder los {{limit}} caracteres"
+     * maxMessage = "El nombre registrado del documento no debe exceder los {{limit}} caracteres"
      * )
      */
     private $nombredocexp;
@@ -41,7 +41,7 @@ class Docexpediente
     /**
      * @var string
      *
-     * @ORM\Column(name="rutadocexp", type="string", length=50)
+     * @ORM\Column(name="rutadocexp", type="string")
      */
     private $rutadocexp;
 

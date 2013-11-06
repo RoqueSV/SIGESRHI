@@ -1,0 +1,82 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Contratacion</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ entity.observaciones }}</td>
+            </tr>
+            <tr>
+                <th>Sueldoinicial</th>
+                <td>{{ entity.sueldoinicial }}</td>
+            </tr>
+            <tr>
+                <th>Horaslaborales</th>
+                <td>{{ entity.horaslaborales }}</td>
+            </tr>
+            <tr>
+                <th>Jornadalaboral</th>
+                <td>{{ entity.jornadalaboral }}</td>
+            </tr>
+            <tr>
+                <th>Fechainiciocontratacion</th>
+                <td>{{ entity.fechainiciocontratacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Doccontratacion</th>
+                <td>{{ entity.doccontratacion }}</td>
+            </tr>
+            <tr>
+                <th>Informacionadicional</th>
+                <td>{{ entity.informacionadicional }}</td>
+            </tr>
+            <tr>
+                <th>Tipocontratacion</th>
+                <td>{{ entity.tipocontratacion }}</td>
+            </tr>
+            <tr>
+                <th>Fechafinnom</th>
+                <td>{{ entity.fechafinnom|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fechaautorizacion</th>
+                <td>{{ entity.fechaautorizacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Numoficio</th>
+                <td>{{ entity.numoficio }}</td>
+            </tr>
+            <tr>
+                <th>Fechafincontrato</th>
+                <td>{{ entity.fechafincontrato|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('contratacion') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('contratacion_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('contratacion_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

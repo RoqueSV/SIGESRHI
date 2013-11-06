@@ -24,6 +24,10 @@
         <td width="80%">
             <table>
                 <tr>
+                    <td><p class="justifyText"><b>Numero de Solicitud: </b></p></td>
+                    <td>{{entity.numsolicitud}}</td>
+                </tr>
+                <tr>
                     <td><p class="justifyText"><b>Fecha de Registro:</b></p></td>
                     <td>{{(entity.fecharegistro| date('d-m-Y'))|fecha }}</td>
                 </tr>
@@ -178,17 +182,17 @@
                         <td>{{form_row(edit_form.Idiomas.vars.prototype.nivelhabla)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
                         <td>{{form_row(edit_form.Idiomas.vars.prototype.nivellee)|e}}</td>
                     </tr>
-                </table>
-                 ">
+                </table>">
+
             {% if edit_form.Idiomas|length > 0 %}
                 {% for idioma in edit_form.Idiomas %}
                     <li>
                         <table>
                             <tr>
-                                <td>{{form_row(idioma.nombreidioma)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                                <td>{{form_row(idioma.nivelescribe)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                                <td>{{form_row(idioma.nivelhabla)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
-                                <td>{{form_row(idioma.nivellee)|e}}</td>
+                                <td>{{form_row(idioma.nombreidioma)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>{{form_row(idioma.nivelescribe)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>{{form_row(idioma.nivelhabla)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>{{form_row(idioma.nivellee)}}</td>
                             </tr>
                         </table>
                     </li>
@@ -298,7 +302,7 @@
                 </tr>
                 <tr>                
                     <td>{{form_label(edit_form.Dempleos.vars.prototype.sueldo)|e}}</td>
-                    <td>{{form_widget(edit_form.Dempleos.vars.prototype.sueldo)|e }} {{form_errors(edit_form.Dempleos.vars.prototype.sueldo)|e }}</td>
+                    <td>{{ form_widget(edit_form.Dempleos.vars.prototype.sueldo)|e }} {{form_errors(edit_form.Dempleos.vars.prototype.sueldo)|e }}</td>
                 </tr>
                 <tr>                
                     <td>{{form_label(edit_form.Dempleos.vars.prototype.motivoretiro)|e}}</td>
@@ -312,44 +316,44 @@
                <li>
                 <table >
                 <tr>
-                    <td width='225px'>{{form_label(Dempleo.tipodatoempleo)|e}}</td>
-                    <td>{{form_widget(Dempleo.tipodatoempleo)|e}} {{form_errors(Dempleo.tipodatoempleo)|e}}</td>
+                    <td width='225px'>{{form_label(Dempleo.tipodatoempleo)}}</td>
+                    <td>{{form_widget(Dempleo.tipodatoempleo)}} {{form_errors(Dempleo.tipodatoempleo)}}</td>
                 </tr>
                 <tr>                
-                    <td>{{form_label(Dempleo.nombreempresa)|e}}</td>
-                    <td>{{form_widget(Dempleo.nombreempresa)|e }} {{form_errors(Dempleo.nombreempresa)|e }}</td>
+                    <td>{{form_label(Dempleo.nombreempresa)}}</td>
+                    <td>{{form_widget(Dempleo.nombreempresa) }} {{form_errors(Dempleo.nombreempresa) }}</td>
                 </tr>
                 <tr>                
-                    <td>{{form_label(Dempleo.direccionempresa)|e}}</td>
-                    <td>{{form_widget(Dempleo.direccionempresa)|e }} {{form_errors(Dempleo.direccionempresa)|e }}</td>
+                    <td>{{form_label(Dempleo.direccionempresa)}}</td>
+                    <td>{{form_widget(Dempleo.direccionempresa) }} {{form_errors(Dempleo.direccionempresa) }}</td>
                 </tr>
                 <tr>                
-                    <td>{{form_label(Dempleo.telefonoempresa)|e}}</td>
-                    <td>{{form_widget(Dempleo.telefonoempresa)|e }} {{form_errors(Dempleo.telefonoempresa)|e }}</td>
+                    <td>{{form_label(Dempleo.telefonoempresa)}}</td>
+                    <td>{{form_widget(Dempleo.telefonoempresa) }} {{form_errors(Dempleo.telefonoempresa) }}</td>
                 </tr>
                 <tr>                
-                    <td>{{form_label(Dempleo.fechainiciolaboral)|e}}</td>
-                    <td>{{form_widget(Dempleo.fechainiciolaboral)|e }} {{form_errors(Dempleo.fechainiciolaboral)|e }}</td>
+                    <td>{{form_label(Dempleo.fechainiciolaboral)}}</td>
+                    <td>{{form_widget(Dempleo.fechainiciolaboral) }} {{form_errors(Dempleo.fechainiciolaboral) }}</td>
                 </tr>
                 <tr>                
-                    <td>{{form_label(Dempleo.fechafinlaboral)|e}}</td>
-                    <td>{{form_widget(Dempleo.fechafinlaboral)|e }} {{form_errors(Dempleo.fechafinlaboral)|e }}</td>
+                    <td>{{form_label(Dempleo.fechafinlaboral) }}</td>
+                    <td>{{form_widget(Dempleo.fechafinlaboral) }} {{form_errors(Dempleo.fechafinlaboral) }}</td>
                 </tr>
                 <tr>                
-                    <td>{{form_label(Dempleo.jefeinmediato)|e}}</td>
-                    <td>{{form_widget(Dempleo.jefeinmediato)|e }} {{form_errors(Dempleo.jefeinmediato)|e }}</td>
+                    <td>{{form_label(Dempleo.jefeinmediato)}}</td>
+                    <td>{{form_widget(Dempleo.jefeinmediato) }} {{form_errors(Dempleo.jefeinmediato) }}</td>
                 </tr>
                 <tr>                
-                    <td>{{form_label(Dempleo.cargodesempenado)|e}}</td>
-                    <td>{{form_widget(Dempleo.cargodesempenado)|e }} {{form_errors(Dempleos.cargodesempenado)|e }}</td>
+                    <td>{{form_label(Dempleo.cargodesempenado)}}</td>
+                    <td>{{form_widget(Dempleo.cargodesempenado) }} {{form_errors(Dempleo.cargodesempenado) }}</td>
                 </tr>
                 <tr>                
-                    <td>{{form_label(Dempleo.sueldo)|e}}</td>
-                    <td>{{form_widget(Dempleo.sueldo)|e }} {{form_errors(Dempleo.sueldo)|e }}</td>
+                    <td>{{form_label(Dempleo.sueldo) }}</td>
+                    <td>{{form_widget(Dempleo.sueldo) }} {{form_errors(Dempleo.sueldo) }}</td>
                 </tr>
                 <tr>                
-                    <td>{{form_label(Dempleo.motivoretiro)|e}}</td>
-                    <td>{{form_widget(Dempleo.motivoretiro)|e }} {{form_errors(Dempleo.motivoretiro)|e }}</td>
+                    <td>{{form_label(Dempleo.motivoretiro) }}</td>
+                    <td>{{form_widget(Dempleo.motivoretiro) }} {{form_errors(Dempleo.motivoretiro) }}</td>
                 </tr>
             </table>
                </li>
@@ -358,14 +362,14 @@
             </ul>
            </fieldset> 
         
-         {{form_widget(edit_form.aceptar, {'required': false})}}
+         {{form_widget(edit_form.aceptar, {'required': false, 'hidden': true})}}
 
 
 
 
         {{ form_rest(edit_form) }}
         
-        <div class="centered">
+        <div class="text-center">
             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
             <input type="button" value="Cancelar" id="" class="btn">
         </div>
@@ -425,7 +429,9 @@
 
         
             $('#sigesrhi_expedientebundle_solicitudempleotype_departamentos').ready(function(){
+
             document.getElementById('sigesrhi_expedientebundle_solicitudempleotype_departamentos').value={{locacion[0].depto}};
+
             $('#sigesrhi_expedientebundle_solicitudempleotype_idmunicipio').children().remove();
 
             $.getJSON('consultarMunicipiosJSON?departamento='+$('#sigesrhi_expedientebundle_solicitudempleotype_departamentos').val(),

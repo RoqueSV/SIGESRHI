@@ -20,7 +20,7 @@ class FechaExtension extends \Twig_Extension
     
     //$test = new \DateTime($fecha);
     //$test=$fecha;
-    return $dias[date('w',strtotime($fecha))]." ".strftime("%d de ".$meses[date('n',strtotime($fecha))-1]." del %Y",strtotime($fecha));
+    return $dias[date('w',strtotime($fecha))]." ".strftime("%d de ".$meses[date('n',strtotime($fecha))-1]." de %Y",strtotime($fecha));
 
         
     }
