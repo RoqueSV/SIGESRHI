@@ -1,6 +1,7 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+
 {% if app.session.started %}
 {% for flashMessage in app.session.flashbag.get('delete') %}
 <div class="alert alert-danger">
@@ -8,47 +9,11 @@
 </div>
 {% endfor %}
 {% endif %}
+     
+     <h3 class="text-center">Registro de seguro colectivo de vida</h3>
+     <p class="text-center">Seleccione un empleado de la lista</p>
+     {{ grid_search(grid) }}
+     {{ grid(grid,_self, 'APYDataGridBundle::blocks_js.jquery.html.twig') }} 
+     {% block grid_filters %}{% endblock %}
 
-    <h3 class="text-center">Registro de seguro colectivo de vida</h3>
-    <p>Seleccione un empleado de la lista</p>
-     {{ grid_search(grid) }} 
-     {{ grid(grid,_self) }}  
-     {% block grid_filters %}{% endblock %} 
-    {#<table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Fechaseguro</th>
-                <th>Estadoseguro</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('segurovida_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{% if entity.fechaseguro %}{{ entity.fechaseguro|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.estadoseguro }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('segurovida_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('segurovida_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('segurovida_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>#}
-    {% endblock %}
+{% endblock %}

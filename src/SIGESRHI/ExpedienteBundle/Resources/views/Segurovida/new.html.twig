@@ -22,9 +22,8 @@
     <form action="{{ path('segurovida_create', {'id':exp.idexp}) }}" method="post" {{ form_enctype(form) }}>
     
     {#Formulario principal#}
-    <fieldset>
-        <legend>Datos Generales</legend>
-         <table class="mitable">
+        
+         <table class="table table-bordered table-hover">
            <tr>
             <th>Nombre del asegurado:</th><td> {{ exp.nombre }} </td>
            </tr>
@@ -47,7 +46,6 @@
             <th>Unidad secundaria: </th><td> INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL </td>
            </tr>
          </table>
-    </fieldset>
     {% endfor %}
 
 

@@ -12,7 +12,7 @@ use SIGESRHI\ExpedienteBundle\Form\SegurovidaType;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Grid;
-use APY\DataGridBundle\Grid\Column\TextColumn;
+
 
 /**
  * Segurovida controller.
@@ -22,55 +22,48 @@ class SegurovidaController extends Controller
 {
     /**
      * Lists all Segurovida entities.
-     *
      */
     public function indexAction()
     {
-        
+             
         $source = new Entity('ExpedienteBundle:Expediente','grupo_segurovida');
-
+        
         $grid = $this->get('grid');
-
+   
         $source->manipulateRow(
-            function ($row)
+            function ($row) 
             {
                         
             // Mostrar solo los expedientes sin seguro de vida
-            if ($row->getField('idsegurovida.id')>0 ) {
+            if ($row->getField('idsegurovida.id')!=NULL) {
             return null;
             }
             
             // Mostrar solo empleados activos
-            if ($row->getField('tipoexpediente')!='E' ) {
+            if ($row->getField('tipoexpediente')!='E') {
             return null;
             }
             //concat columns
-          // $row->setField('idsolicitudempleo.nombres', $row->getField('idsolicitudempleo.nombres')." ".$row->getField('idsolicitudempleo.primerapellido')." ".$row->getField('idsolicitudempleo.segundoapellido'));
+            //$row->setField('idsolicitudempleo.nombres', $row->getField('idsolicitudempleo.nombres')." ".$row->getField('idsolicitudempleo.primerapellido')." ".$row->getField('idsolicitudempleo.segundoapellido'));
             return $row;
             }
         );
-
         
-        $grid->setSource($source);
-                               
-
+        //$grid->setId('grid_segurovida');
+        $grid->setSource($source);              
         
         // Crear
-        $rowAction1 = new RowAction('Crear', 'segurovida_new',true,'_self');
+        $rowAction1 = new RowAction('Registrar', 'segurovida_new');
         $rowAction1->setRouteParameters(array('id'));
-        $rowAction1->SetConfirmMessage('Are you sure?');
         $rowAction1->setColumn('info_column');
         $grid->addRowAction($rowAction1);
         
-        // $MyMappedColumn = new TextColumn(array('id' => 'Nombre', 'field' => $this->getField('idsolicitudempleo.nombres')." ".$this->getField('idsolicitudempleo.primerapellido'),'source' => true, 'title' => 'Nombre Completo', 'joinType'=>'inner'));
-        // $grid->addColumn($MyMappedColumn); 
-
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
-
+        
         return $grid->getGridResponse('ExpedienteBundle:Segurovida:index.html.twig');
     }
 
@@ -186,13 +179,11 @@ class SegurovidaController extends Controller
 
         $entity = $em->getRepository('ExpedienteBundle:Segurovida')->find($id);
 
-        // Obtengo id expediente de un seguro de vida especifico
-        $query = $em->createQuery('
-          SELECT e.id idexp FROM ExpedienteBundle:Segurovida s
-          JOIN s.idexpediente e
-          WHERE s.id = :idseguro'
-        )->setParameter('idseguro', $id);
-        $idexpediente = $query->getResult();
+        // Obtengo id expediente del seguro de vida
+        $idexpediente = $entity->getIdexpediente();
+        /* Obtener datos expediente */
+        $em = $this->getDoctrine()->getManager();
+        $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($idexpediente);
         
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Segurovida entity.');
@@ -203,7 +194,7 @@ class SegurovidaController extends Controller
 
         return $this->render('ExpedienteBundle:Segurovida:show.html.twig', array(
             'entity'       => $entity,
-            'idexpediente' => $idexpediente,
+            'expediente'   => $expediente,
             'delete_form'  => $deleteForm->createView(),        ));
     }
 

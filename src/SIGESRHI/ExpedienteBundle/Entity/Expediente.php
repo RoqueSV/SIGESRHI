@@ -12,7 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="expediente")
  * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Repositorio\ExpedienteRepository")
- * @GRID\Source(columns="id,idempleado.codigoempleado, idsolicitudempleo.nombres, idsolicitudempleo.primerapellido, idsolicitudempleo.segundoapellido, idempleado.idcontratacion.idplaza.nombreplaza, idsegurovida.id, tipoexpediente", groups={"grupo_segurovida"})
+ * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombres,idsolicitudempleo.primerapellido, idsolicitudempleo.segundoapellido, idempleado.idcontratacion.idplaza.nombreplaza, idsegurovida.id, tipoexpediente", groups={"grupo_segurovida"})
+ * @GRID\Source(columns="id,idsolicitudempleo.nombres,idsolicitudempleo.primerapellido, idsolicitudempleo.segundoapellido, idempleado.idcontratacion.idplaza.nombreplaza, tipoexpediente", groups={"grupo_contratacion"})
  */
 class Expediente
 {
@@ -23,7 +24,7 @@ class Expediente
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="expediente_id_seq", allocationSize=1, initialValue=1)
-     * @GRID\Column(filterable=false, groups="grupo_segurovida", visible=false)
+     * @GRID\Column(filterable=false, groups={"grupo_segurovida","grupo_contratacion"}, visible=false)
      */
     private $id;
 
@@ -31,7 +32,7 @@ class Expediente
      * @var \DateTime
      *
      * @ORM\Column(name="fechaexpediente", type="date", nullable=false)
-     * @GRID\Column(filterable=false, groups="grupo_segurovida", visible=false)
+     * @GRID\Column(filterable=false, groups="grupo_contratacion", visible=false)
      */
     private $fechaexpediente;
 
@@ -51,14 +52,14 @@ class Expediente
     /**
      * @ORM\OneToOne(targetEntity="Empleado", mappedBy="idexpediente")
      * @GRID\Column(field="idempleado.codigoempleado", groups="grupo_segurovida" ,title="Codigo", filter="input", operators={"eq","like"}, defaultOperator="eq", searchOnClick="true", joinType="inner")
-     * @GRID\Column(field="idempleado.idcontratacion.idplaza.nombreplaza", type="text", title="Plaza", filterable=false)
+     * @GRID\Column(field="idempleado.idcontratacion.idplaza.nombreplaza", type="text", title="Plaza", filterable=false, joinType="inner")
      */
     private $idempleado;
 
     /**
      * @var \Solicitudempleo
      * @ORM\OneToOne(targetEntity="Solicitudempleo", mappedBy="idexpediente")
-     * @GRID\Column(field="idsolicitudempleo.nombres", groups="grupo_segurovida" ,title="Nombres", filterable=false, joinType="inner")
+     * @GRID\Column(field="idsolicitudempleo.nombres", groups="grupo_segurovida" ,title="Nombres", filterable=true, joinType="inner",visible=true)
      * @GRID\Column(field="idsolicitudempleo.primerapellido", groups="grupo_segurovida" ,title="Primer Apellido", filterable=false, joinType="inner", visible=false)
      * @GRID\Column(field="idsolicitudempleo.segundoapellido", groups="grupo_segurovida" ,title="Segundo Apellido", filterable=false, joinType="inner", visible=false)
      */
@@ -70,7 +71,7 @@ class Expediente
      */
     private $idsegurovida;
 
-    /*
+    /**
      * @ORM\OneToOne(targetEntity="Pruebapsicologica", mappedBy="idexpediente")
      */
     private $idpruebapsicologica;
@@ -251,5 +252,28 @@ class Expediente
     public function getIdsegurovida()
     {
         return $this->idsegurovida;
+    }
+
+    /**
+     * Add Docs_expediente
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente
+     * @return Expediente
+     */
+    public function addDocsExpediente(\SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente)
+    {
+        $this->Docs_expediente[] = $docsExpediente;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Docs_expediente
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente
+     */
+    public function removeDocsExpediente(\SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente)
+    {
+        $this->Docs_expediente->removeElement($docsExpediente);
     }
 }

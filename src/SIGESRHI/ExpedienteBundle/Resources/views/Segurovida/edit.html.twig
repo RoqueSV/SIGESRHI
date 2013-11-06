@@ -29,9 +29,8 @@ function eliminar() {
       
     {#Datos#}
     {% for exp in expediente %}
-    <fieldset>
-        <legend>Datos Generales</legend>
-         <table class="mitable">
+
+         <table class="table table-bordered table-hover">
            <tr>
             <th>Nombre del asegurado:</th><td> {{ exp.nombre }} </td>
            </tr>
@@ -42,7 +41,7 @@ function eliminar() {
             <th>Lugar de Nacimiento:</th><td> {{ exp.lugarnac }} </td>
            </tr>
            <tr>
-            <th>Fecha de Nacimiento: </th><td>{{ exp.fechanac | date('d-m-Y') }} </td>
+            <th>Fecha de Nacimiento: </th><td>{{ exp.fechanac | date('d-m-Y') |fecha }} </td>
            </tr>
            <tr>
             <th>Direccion: </th><td> {{ exp.direccion }} </td>
@@ -53,15 +52,16 @@ function eliminar() {
            <tr>
             <th>Unidad secundaria: </th><td> INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL </td>
            </tr>
-         </table>
-    </fieldset>       
+         </table>   
 
 
 
     {#Beneficiarios#}   
+    <fieldset>
+     <legend>Beneficiarios</legend>
       <ul class="Beneficiario unstyled" data-prototype="
 
-        <table width=80% class='centered-table'>
+        <table width=100% class='centered-table'>
             <tr>
               <td class='text-center'>{{ form_widget(edit_form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}
                    {{form_errors(edit_form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}</td>
@@ -75,7 +75,7 @@ function eliminar() {
                 {% set longitud =  (entity.idbeneficiario|length)-1 %} {#Obtengo numero de beneficiarios#}
                 {% for i in 0..longitud if longitud >= 0 %}
                 <li>     
-                <table width=80% class='centered-table'>
+                <table width=100% class='centered-table'>
                       
                 <tr class='text-center'>
                 <td class='text-center'>{{ form_row(edit_form.idbeneficiario[i].nombrebeneficiario) }}
@@ -90,7 +90,7 @@ function eliminar() {
                </li>
                {% endfor %}
       </ul>
-
+     </fieldset> 
         <br /> <br />
       <div class="text-center">
         

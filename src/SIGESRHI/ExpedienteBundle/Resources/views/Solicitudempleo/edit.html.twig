@@ -425,6 +425,7 @@
 
         
             $('#sigesrhi_expedientebundle_solicitudempleotype_departamentos').ready(function(){
+            document.getElementById('sigesrhi_expedientebundle_solicitudempleotype_departamentos').value={{locacion[0].depto}};
             $('#sigesrhi_expedientebundle_solicitudempleotype_idmunicipio').children().remove();
 
             $.getJSON('consultarMunicipiosJSON?departamento='+$('#sigesrhi_expedientebundle_solicitudempleotype_departamentos').val(),
@@ -439,7 +440,7 @@
                 });
 
              });
-            window.setTimeout("document.getElementById('sigesrhi_expedientebundle_solicitudempleotype_idmunicipio').value={{locacion[0].muni}}",6000);
+           window.setTimeout("document.getElementById('sigesrhi_expedientebundle_solicitudempleotype_idmunicipio').value={{locacion[0].muni}}",700);
         });//#departamento
 
 
