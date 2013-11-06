@@ -23,7 +23,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Assert\Callback(methods={"esNitValido"})
  * @Vich\Uploadable
  *
- * @GRID\Source(columns="id,nombres, primerapellido, segundoapellido,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica"})
+ * @GRID\Source(columns="id,nombres, primerapellido, segundoapellido,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
  */
 
 
@@ -37,7 +37,7 @@ class Solicitudempleo
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="solicitudempleo_id_seq", allocationSize=1, initialValue=1)
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
+     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica","vista_basica_expediente"}, visible=false)
      */
     private $id;
 
@@ -74,7 +74,7 @@ class Solicitudempleo
      * maxMessage = "El primer apellido no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(title="Apellido", filter="input",type="text", groups={"grupo_pruebapsicologica","apellidos"}, operators={"like","eq"},visible=false)
+     * @GRID\Column(title="Apellido", filter="input",type="text", groups={"grupo_pruebapsicologica","apellidos","vista_basica_expediente"}, operators={"like","eq"},visible=false)
      */
     private $primerapellido;
 
@@ -87,7 +87,7 @@ class Solicitudempleo
      * maxMessage = "El segundo apellido no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(title="Apellido", filter="input", type="text", groups={"grupo_pruebapsicologica","apellidos"}, operators={"like","eq"},visible=false)
+     * @GRID\Column(title="Apellido", filter="input", type="text", groups={"grupo_pruebapsicologica","apellidos","vista_basica_expediente"}, operators={"like","eq"},visible=false)
      */
     private $segundoapellido;
 
@@ -101,7 +101,7 @@ class Solicitudempleo
      * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(title="Nombre", filter="input", groups={"grupo_pruebapsicologica"}, type="text", operators={"like","eq"})
+     * @GRID\Column(title="Nombre", groups={"grupo_pruebapsicologica","vista_basica_expediente"}, type="text",  visible=true, operators={"like"}, filter="input")
      *
      */
     private $nombres;
@@ -316,7 +316,6 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="fotografia", type="string", length=100, nullable=false)
-     * @Assert\NotNull(message="Debe cargar una fotografia")
      * @Assert\Length(
      * max = "100",
      * maxMessage = "El nombre o ruta de la fotografia no debe exceder los {{limit}} caracteres"
@@ -335,7 +334,7 @@ class Solicitudempleo
      * mimeTypesMessage = "Por favor suba una fotografía valida (formato jpeg o png)."
      * )
      *
-     * @Vich\UploadableField(mapping="docs_expediente", fileNameProperty="fotografia")
+     * @Vich\UploadableField(mapping="fotografias", fileNameProperty="fotografia")
      *
      * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
@@ -526,7 +525,7 @@ class Solicitudempleo
      *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      * })
      *
-     * @GRID\Column(field="idplaza.nombreplaza", title="Puesto al que aplica", joinType="inner", filterable=false)
+     * @GRID\Column(field="idplaza.nombreplaza", title="Puesto al que aplica", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica","vista_basica_expediente"})
      */
     private $idplaza;
 
@@ -538,8 +537,9 @@ class Solicitudempleo
      *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
      * })
      *
-     * @GRID\Column(primary=true, field="idexpediente.id", title="Idexpediente", joinType="inner",visible=false, filterable=false)
-     * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false)
+     * @GRID\Column(primary=true, field="idexpediente.id", title="Idexpediente", joinType="inner",visible=false, filterable=false, groups={"grupo_pruebapsicologica","vista_basica_expediente"})
+     * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica"})
+     * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, visible=false, groups={"vista_basica_expediente"})
      * @GRID\Column(field="idexpediente.idpruebapsicologica.id", title="Prueba", filterable=false,visible=false, groups={"grupo_pruebapsicologica"})
      *
      */

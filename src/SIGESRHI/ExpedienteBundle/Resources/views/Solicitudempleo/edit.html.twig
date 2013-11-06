@@ -426,7 +426,7 @@
         
             $('#sigesrhi_expedientebundle_solicitudempleotype_departamentos').ready(function(){
             $('#sigesrhi_expedientebundle_solicitudempleotype_idmunicipio').children().remove();
-
+            document.getElementById('sigesrhi_expedientebundle_solicitudempleotype_departamentos').value={{locacion[0].depto}};
             $.getJSON('consultarMunicipiosJSON?departamento='+$('#sigesrhi_expedientebundle_solicitudempleotype_departamentos').val(),
              function(data){
                 var i=0;

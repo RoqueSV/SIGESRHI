@@ -12,9 +12,10 @@ use SIGESRHI\ExpedienteBundle\Form\PruebapsicologicaType;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
-use APY\DataGridBundle\Grid\Export\ExcelExport;
-use APY\DataGridBundle\Grid\Action\DeleteMassAction;
 use APY\DataGridBundle\Grid\Grid;
+use APY\DataGridBundle\Grid\Column\BlankColumn;
+use APY\DataGridBundle\Grid\Column\TextColumn;
+use APY\DataGridBundle\Grid\Column;
 
 /**
  * Pruebapsicologica controller.
@@ -63,6 +64,11 @@ class PruebapsicologicaController extends Controller
         // Attach the source to the grid
         $grid->setSource($source);  
         $grid->setNoDataMessage("No se encontraron resultados");
+        
+        //crear columna
+        //$miColumna = new TextColumn(array('id' => 'nombrecompleto', 'title' => 'Nombres', 'filterable'=> true, 'filter'=> 'input', 'size' => '-1', 'type'=>'text', 'selectFrom'=>'nombres'));
+        //$grid->addColumn($miColumna, 3);
+        
         //Manipular Fila
         $source->manipulateRow(
             function ($row)
@@ -82,6 +88,7 @@ class PruebapsicologicaController extends Controller
                 }
                 //concat columns
                 $row->setField('nombres', $row->getField('nombres')." ".$row->getField('primerapellido')." ".$row->getField('segundoapellido') );                       
+                //$row->setField('nombrecompleto', $row->getField('nombres'));
                 return $row;
             }
         );
@@ -89,6 +96,8 @@ class PruebapsicologicaController extends Controller
         /*$grid->getColumn('idexpediente.tipoexpediente')->setTitle(
             'title'
         );*/
+        
+        //$grid->getColumn('nombrecompleto')->setFilterable(true);
         
         // Attach a rowAction to the Actions Column
         $rowAction1 = new RowAction('Ingresar', 'pruebapsicologica_new');
@@ -115,6 +124,7 @@ class PruebapsicologicaController extends Controller
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
          // Manage the grid redirection, exports and the response of the controller
         return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientes.html.twig');
+
     }
 
     /**
@@ -135,12 +145,44 @@ class PruebapsicologicaController extends Controller
         $form = $this->createForm(new PruebapsicologicaType(), $entity);        
         $form->bind($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('new','Prueba Psicologica Registrada correctamente');
-            return $this->redirect($this->generateUrl('pruebapsicologica_show', array('id' => $entity->getId())));
+        if ($form->isValid()) {            
+            $band=0;
+            switch ($entity->getResultadocoeficiente()) {
+                 case 'superior':
+                     if($entity-> getCalificacioncoeficiente()<120 || $entity-> getCalificacioncoeficiente()>129){
+                        $band=1;
+                     }
+                     break;
+                 case 'alto':
+                     if($entity-> getCalificacioncoeficiente()<110 || $entity-> getCalificacioncoeficiente()>119){
+                        $band=1;
+                     }
+                     break;
+                 case 'normal':
+                     if($entity-> getCalificacioncoeficiente()<90 || $entity-> getCalificacioncoeficiente()>109){
+                        $band=1;
+                     }                     
+                     break;
+                 case 'bajo':
+                    if($entity-> getCalificacioncoeficiente()<80 || $entity-> getCalificacioncoeficiente()>89){
+                        $band=1;
+                     }
+                     break;
+                 default:
+                        $band=1;
+                     break;
+             }         
+            if($band==0){
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('new','Prueba Psicologica Registrada correctamente');
+                return $this->redirect($this->generateUrl('pruebapsicologica_show', array('id' => $entity->getId())));
+            }
+            else{
+                $this->get('session')->getFlashBag()->add('calificacion','No corresponde al rango');
+            }   
         }
         $this->get('session')->getFlashBag()->add('errornew','Errores en la Prueba Psicologica registrada');
         return $this->render('ExpedienteBundle:Pruebapsicologica:new.html.twig', array(

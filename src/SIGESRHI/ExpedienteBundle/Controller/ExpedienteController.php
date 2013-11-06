@@ -8,6 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use SIGESRHI\ExpedienteBundle\Entity\Expediente;
 use SIGESRHI\ExpedienteBundle\Form\ExpedienteType;
 use SIGESRHI\ExpedienteBundle\Form\ExpDocumentoDigitalType;
+use APY\DataGridBundle\Grid\Grid;
+use APY\DataGridBundle\Grid\Column\ActionsColumn;
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Action\RowAction;
 
 /**
  * Expediente controller.
@@ -21,14 +25,44 @@ class ExpedienteController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+            $source = new Entity('ExpedienteBundle:SolicitudEmpleo','vista_basica_expediente');
+            $grid = $this->get('grid');
+            $grid->setSource($source);  
+            $grid->setNoDataMessage("No se encontraron resultados");
+            $source->manipulateRow(
+                function ($row)
+                {                    
+                    if($row->getField('idexpediente.tipoexpediente')!='I'){
+                        return null;
+                    }
+                    return $row;
+                }
+            );
+            $rowAction1 = new RowAction('Validar', 'pruebapsicologica_new');
+            $rowAction1->setColumn('info_column');
+            $rowAction1->manipulateRender(
+                function ($action, $row)
+                {
+                    $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id') ));
+                    return $action; 
+                }
+            );
+            $grid->addRowAction($rowAction1); 
 
-        $entities = $em->getRepository('ExpedienteBundle:Expediente')->findAll();
+            $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+            
+            return $grid->getGridResponse('ExpedienteBundle:Expediente:index.html.twig');
 
-        return $this->render('ExpedienteBundle:Expediente:index.html.twig', array(
-            'entities' => $entities,
-        ));
-    }
+        }
+    
+    /*      $em = $this->getDoctrine()->getManager();
+
+            $entities = $em->getRepository('ExpedienteBundle:Expediente')->findAll();
+
+            return $this->render('ExpedienteBundle:Expediente:index.html.twig', array(
+                'entities' => $entities,
+            ));*/
+    
 
     /**
      * Creates a new Expediente entity.

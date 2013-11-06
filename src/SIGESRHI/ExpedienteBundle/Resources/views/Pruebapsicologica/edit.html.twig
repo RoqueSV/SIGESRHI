@@ -6,12 +6,12 @@
     {{ include('ExpedienteBundle:Ayuda/PruebaPsicologica:registro.html.twig')}}
     {% for flashMessage in app.session.flashbag.get('edit') %}
         <div class="alert alert-success">
-            <p> {{ 'flashMessage' }} </p>
+            <p> {{ flashMessage }} </p>
         </div>
     {% endfor %}
     {% for flashMessage in app.session.flashbag.get('editerror') %}
         <div class="alert alert-danger">
-            <p> {{ 'flashMessage' }} </p>
+            <p> {{ flashMessage }} </p>
         </div>
     {% endfor %}
     <h4 class='text-center'>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h4>
@@ -19,7 +19,7 @@
     <table>
     {% for exp in expediente %}
     <tr>
-        <td>Fecha:<b> {{ exp.fechaexpediente | date('d-m-Y') }} </b></td>
+        <td>Fecha:<b> {{ exp.fechaexpediente | date('d-m-Y') | fecha}} </b></td>
         <td></td>
     </tr>
     <tr>
@@ -131,5 +131,8 @@
         </div>
     </form>
 
+<script>
+
+</script>
         
 {% endblock %}

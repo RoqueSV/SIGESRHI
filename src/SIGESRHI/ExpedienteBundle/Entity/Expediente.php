@@ -69,7 +69,7 @@ class Expediente
      */
     private $idsegurovida;
 
-    /*
+    /**
      * @ORM\OneToOne(targetEntity="Pruebapsicologica", mappedBy="idexpediente")
      */
     private $idpruebapsicologica;
@@ -139,6 +139,7 @@ class Expediente
 public function __construct(){
 
 $this->Docs_expediente = new ArrayCollection();
+$this->idsegurovida = new \Doctrine\Common\Collections\ArrayCollection();
 }
 
 /********* Documentos de Expediente *****************/
@@ -216,14 +217,6 @@ $this->Docs_expediente = new ArrayCollection();
     {
         return $this->idempleado;
 
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idsegurovida = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**

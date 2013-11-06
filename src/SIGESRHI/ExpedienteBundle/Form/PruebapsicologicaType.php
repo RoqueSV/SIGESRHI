@@ -19,7 +19,7 @@ class PruebapsicologicaType extends AbstractType
         
         $builder
             ->add('resultadocoeficiente','choice',array(
-                'choices' => array('superior'=>'Superior de 120 a 129','alto'=>'Promedio Alto de 110 a 119','normal'=>'Promedio normal de 90 a 110','bajo'=>'Nivel bajo-torpe de 80 a 89'),
+                'choices' => array('superior'=>'Superior de 120 a 129','alto'=>'Promedio Alto de 110 a 119','normal'=>'Promedio normal de 90 a 109','bajo'=>'Nivel bajo-torpe de 80 a 89'),
                 'expanded' => true,
                 'label'=>'Coeficiente Intelectual (C.I.)',            
                 ))

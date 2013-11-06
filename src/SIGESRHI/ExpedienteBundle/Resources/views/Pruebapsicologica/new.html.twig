@@ -7,12 +7,12 @@
 
     {% for flashMessage in app.session.flashbag.get('new') %}
         <div class="alert alert-success">
-            <p> {{ 'flashMessage' }} </p>
+            <p> {{ flashMessage }} </p>
         </div>
     {% endfor %}
     {% for flashMessage in app.session.flashbag.get('errornew') %}
         <div class="alert alert-danger">
-            <p> {{ 'flashMessage' }} </p>
+            <p> {{ flashMessage }} </p>
         </div>
     {% endfor %}
     <h4 class='text-center'>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h4>
@@ -20,7 +20,7 @@
     <table>
     {% for exp in expediente %}
     <tr>
-        <td>Fecha:<b> {{ exp.fechaexpediente | date('d-m-Y') }} </b></td>
+        <td>Fecha:<b> {{ exp.fechaexpediente | date('d-m-Y') | fecha }} </b></td>
         <td></td>
     </tr>
     <tr>
@@ -64,7 +64,13 @@
                 {{form_errors(form.resultadocoeficiente)}}
                 </table>
                 </td>
-                <td>{{ form_widget(form.calificacioncoeficiente) }} {{form_errors(form.calificacioncoeficiente)}}</td>
+                <td>{{ form_widget(form.calificacioncoeficiente) }} {{form_errors(form.calificacioncoeficiente)}}
+                    {% for flashMessage in app.session.flashbag.get('calificacion') %}
+                        <div class="alert alert-danger">
+                            <p> {{ flashMessage }} </p>
+                        </div>
+                    {% endfor %}
+                </td>
             </tr>
             <tr>
                 <td>{{ form_label(form.resultadoafectividad) }}</td>
@@ -133,4 +139,21 @@
         </div>
         
     </form>
+<script type="text/javascript">
+$( document ).ready(function() {
+    $("#sigesrhi_expedientebundle_pruebapsicologicatype_calificacioncoeficiente").attr("disabled","disabled");
+    $("#sigesrhi_expedientebundle_pruebapsicologicatype_resultadocoeficiente_0").click(function(){
+        $("#sigesrhi_expedientebundle_pruebapsicologicatype_calificacioncoeficiente").removeAttr("disabled");
+    });
+    $("#sigesrhi_expedientebundle_pruebapsicologicatype_resultadocoeficiente_1").click(function(){
+        $("#sigesrhi_expedientebundle_pruebapsicologicatype_calificacioncoeficiente").removeAttr("disabled");
+    });
+    $("#sigesrhi_expedientebundle_pruebapsicologicatype_resultadocoeficiente_2").click(function(){
+        $("#sigesrhi_expedientebundle_pruebapsicologicatype_calificacioncoeficiente").removeAttr("disabled");
+    });
+    $("#sigesrhi_expedientebundle_pruebapsicologicatype_resultadocoeficiente_3").click(function(){
+        $("#sigesrhi_expedientebundle_pruebapsicologicatype_calificacioncoeficiente").removeAttr("disabled");
+    });
+});
+</script>
 {% endblock %}
