@@ -39,7 +39,7 @@ class Solicitudempleo
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="solicitudempleo_id_seq", allocationSize=1, initialValue=1)
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica,"solicitud_empleo","vista_basica_expediente"}, visible=false)
+     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica","solicitud_empleo","vista_basica_expediente"}, visible=false)
      */
     private $id;
 
