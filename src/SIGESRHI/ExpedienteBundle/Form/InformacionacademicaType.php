@@ -12,11 +12,10 @@ class InformacionacademicaType extends AbstractType
     {
         $builder
             ->add('centroestudio',null, array('label'=> 'Centro de Estudios ', 'attr' =>array('class'=> 'input-xlarge')))
-            ->add('idtitulo',null, array('required'=> true, 'label'=>'Título Obtenido: ', 'empty_value' => 'Seleccione una opción', 'multiple'=>false, 'attr' =>array('class'=> 'input-xlarge')))
-            //->add('idtitulo','shtumi_ajax_autocomplete', array('required'=> true,'entity_alias'=>'titulo', 'label'=>'Título Obtenido: ', 'attr' =>array('class'=> 'input-xlarge')))
-           /*->add('idtitulo', 'genemu_jqueryselect2_entity', array(
+            //->add('idtitulo',null, array('required'=> true, 'label'=>'Título Obtenido: ', 'empty_value' => 'Seleccione una opción', 'multiple'=>false, 'attr' =>array('class'=> 'input-xlarge')))
+           ->add('idtitulo', 'genemu_jqueryselect2_entity', array(
             'class' => 'ExpedienteBundle:Titulo', 'label'=> 'Titulo Obtenido'
-        ))*/
+        ))
    ; 
     }
 
