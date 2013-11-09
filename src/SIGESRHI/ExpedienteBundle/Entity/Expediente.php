@@ -141,7 +141,6 @@ class Expediente
     $this->idsegurovida = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
 /********* Documentos de Expediente *****************/
     
 

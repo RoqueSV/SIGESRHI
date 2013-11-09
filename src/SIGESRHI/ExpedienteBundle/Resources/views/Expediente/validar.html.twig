@@ -1,0 +1,78 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    <!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+    {{ include('ExpedienteBundle:Ayuda/PruebaPsicologica:registro.html.twig')}}
+
+    {% for flashMessage in app.session.flashbag.get('new') %}
+        <div class="alert alert-success">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('errornew') %}
+        <div class="alert alert-danger">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+    <h4 class='text-center'>Registrar Como Aspirante válido de banco de datos institucional.</h4>
+    <fieldset><legend>Datos Generales del Aspirante</legend>
+    <table>
+    {% for exp in expediente %}
+    <tr>
+        <td rowspan="8" width="152"><img src="{{asset('uploads/fotografias/' ~ exp.fotografia)}}" width="150px" height="150px" class="fotoSol"/></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Nombre:<b> {{ exp.nombres  }}</b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Direccion:<b> {{ exp.direccion }}</b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Estado civil: <b>{{ exp.estadocivil }}</b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Telefono(fijo): <b>{{ exp.telefonofijo }}</b></td>
+        <td>Telefono(movil): <b>{{ exp.telefonomovil }}</b></td>
+    </tr>
+    <tr>
+        <td>Correo electrónico: <b>{{ exp.email }}</b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Lugar de nacimiento:<b> {{ exp.lugarnac }} </b></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Fecha de nacimiento:<b> {{ exp.fechanac | date('d-m-Y') | fecha }} </b></td>
+        <td></td>
+    </tr>
+    {#% endfor %#}
+    </table>
+    </fieldset><legend>Documentos de identidad Personal</legend>
+    <table class="table table-bordered table-hover">
+    <tr>
+        <th>No. DUI</th>
+        <th>No. NIT</th>
+        <th>No. ISSS</th>
+        <th>No. NUP</th>
+        <th>No. NIP (docentes)</th>
+    </tr>
+    <tr>
+        <td>{{ exp.dui }}</td>
+        <td>{{ exp.nit }}</td>
+        <td>{{ exp.isss }}</td>
+        <td>{{ exp.nup }}</td>
+        <td>{{ exp.nip }}</td>
+    </tr>
+    </table>
+    <fieldset>
+
+    </fieldset>
+    {% endfor %}
+{% endblock %}

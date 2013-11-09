@@ -25,6 +25,18 @@ class ExpedienteRepository extends EntityRepository
             ->setParameter('idexp',$idexp)
             ->getResult();
 	}
+
+  public function obtenerExpedienteInvalido($idexp)
+    {
+    return $this->getEntityManager()
+      ->createQuery("SELECT s.nombres, CONCAT(s.calle,CONCAT(', ',s.colonia)) as direccion, s.estadocivil, s.telefonofijo, s.telefonomovil, s.email, s.lugarnac, s.fechanac, s.fotografia,
+                            s.dui,s.nit,s.isss,s.nup,s.nip
+                           FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e
+                           WHERE e.id=:idexp
+                           ")
+            ->setParameter('idexp',$idexp)
+            ->getResult();
+  }
 /**
 *
 * @GRID\Column(field="fechaexpediente", type="date")
