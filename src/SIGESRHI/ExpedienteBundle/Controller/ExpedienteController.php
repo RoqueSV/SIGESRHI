@@ -25,7 +25,7 @@ class ExpedienteController extends Controller
      */
     public function indexAction()
     {
-            $source = new Entity('ExpedienteBundle:SolicitudEmpleo','vista_basica_expediente');
+            $source = new Entity('ExpedienteBundle:Solicitudempleo','vista_basica_expediente');
             $grid = $this->get('grid');
             $grid->setSource($source);  
             $grid->setNoDataMessage("No se encontraron resultados");
