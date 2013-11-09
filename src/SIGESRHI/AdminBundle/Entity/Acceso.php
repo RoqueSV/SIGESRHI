@@ -196,4 +196,27 @@ class Acceso
     {
         return $this->idmodulo;
     }
+
+    /**
+     * Set idaccesosup
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Acceso $idaccesosup
+     * @return Acceso
+     */
+    public function setIdaccesosup(\SIGESRHI\AdminBundle\Entity\Acceso $idaccesosup = null)
+    {
+        $this->idaccesosup = $idaccesosup;
+    
+        return $this;
+    }
+
+    /**
+     * Get idaccesosup
+     *
+     * @return \SIGESRHI\AdminBundle\Entity\Acceso 
+     */
+    public function getIdaccesosup()
+    {
+        return $this->idaccesosup;
+    }
 }

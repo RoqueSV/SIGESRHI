@@ -115,14 +115,6 @@ class Informacionacademica
     {
         return $this->idsolicitudempleo;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idtitulo = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
    
 
     /**
@@ -137,9 +129,11 @@ class Informacionacademica
 
 
     //agregado manualmente
-    public function setIdtitulo($idtitulo)
+    public function setIdtitulo(\SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo = null)
     {
-        $this->idtitulo = $idtitulo;
+         $this->idtitulo = $idtitulo;
+    
+        return $this;
         
     }
 }

@@ -70,11 +70,6 @@ $(document).ready(function(){
 
 });
 
-/** Funcion confirmar cancelar ***/
-function cancelar() {
-    if(confirm('Si cancela perder\xE1 los datos del formulario actual.\n\xbfEst\xE1 seguro de cancelar?'));
-}
-
 /****** Funciones predefinidas Formularios embebidos ************/
 function addTagForm(collectionHolder, $newLinkLi) {
     // Obtiene los datos del prototipo explicado anteriormente

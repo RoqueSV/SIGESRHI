@@ -26,6 +26,10 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
 
+    form:
+        resources:
+            - ShtumiUsefulBundle::fields.html.twig
+
 
 # Assetic Configuratio
 assetic:
@@ -95,7 +99,7 @@ sonata_block:
         sonata.block.service.rss:    ~
 
 sonata_admin:
-    title:      'SISTEMA INFORMATICO PARA LA GESTION DEL RECURSO HUMANO - ISRI'
+    title:      'SISTEMA INFORMATICO PARA LA GESTION DEL RECURSO HUMANO'
     title_logo: images/Logo_ISRI.png
     templates:
         # plantillas globales predefinidas
@@ -160,4 +164,6 @@ white_october_breadcrumbs:
     listId:             wo-breadcrumbs
     listClass:          breadcrumb          
 
-
+genemu_form:
+    select2: ~
+    autocomplete: ~

@@ -33,8 +33,8 @@ class ContratacionController extends Controller
             function ($row) 
             {
                                    
-            // Mostrar solo empleados activos
-            if ($row->getField('tipoexpediente')!='E') {
+            // Mostrar solo aspirantes validos
+            if ($row->getField('tipoexpediente')!='A') {
             return null;
             }
         
@@ -46,7 +46,7 @@ class ContratacionController extends Controller
         $grid->setSource($source);              
         
         // Crear
-        $rowAction1 = new RowAction('Registrar', 'segurovida_new');
+        $rowAction1 = new RowAction('Seleccionar', 'contratacion_new');
         $rowAction1->setRouteParameters(array('id'));
         $rowAction1->setColumn('info_column');
         $grid->addRowAction($rowAction1);

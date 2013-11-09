@@ -62,10 +62,11 @@ class GroupAdmin extends Admin
     {
         $formMapper
             ->add('name')
-            ->add('roles', 'sonata_security_roles', array(
+            ->add('roles', 'sonata_type_roles', array(
                 'expanded' => true,
                 'multiple' => true,
-                'required' => false
+                'required' => false,
+                'label' => 'Asigar rol',
             ))
            ->add('idacceso','sonata_type_model',array('required'=>false,'multiple'=>true,'expanded'=>true ,'label'=>'Opciones')) 
         ;

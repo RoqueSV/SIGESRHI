@@ -12,8 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="expediente")
  * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Repositorio\ExpedienteRepository")
- * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombres,idsolicitudempleo.primerapellido, idsolicitudempleo.segundoapellido, idempleado.idcontratacion.idplaza.nombreplaza, idsegurovida.id, tipoexpediente", groups={"grupo_segurovida"})
- * @GRID\Source(columns="id,idsolicitudempleo.nombres,idsolicitudempleo.primerapellido, idsolicitudempleo.segundoapellido, idempleado.idcontratacion.idplaza.nombreplaza, tipoexpediente", groups={"grupo_contratacion"})
+ * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto,idempleado.idcontratacion.idplaza.nombreplaza, idsegurovida.id, tipoexpediente", groups={"grupo_segurovida"})
+ * @GRID\Source(columns="id,idsolicitudempleo.nombrecompleto, idsolicitudempleo.idplaza.nombreplaza, tipoexpediente", groups={"grupo_contratacion"})
  */
 class Expediente
 {
@@ -32,7 +32,6 @@ class Expediente
      * @var \DateTime
      *
      * @ORM\Column(name="fechaexpediente", type="date", nullable=false)
-     * @GRID\Column(filterable=false, groups="grupo_contratacion", visible=false)
      */
     private $fechaexpediente;
 
@@ -45,23 +44,22 @@ class Expediente
      * max = "1",
      * maxMessage = "El tipo de expediente no debe exceder los {{limit}} caracteres"
      * )
-     * @GRID\Column(filterable=false, groups="grupo_segurovida", visible=false)
+     * @GRID\Column(filterable=false, groups={"grupo_segurovida","grupo_contratacion"}, visible=false)
      */
     private $tipoexpediente;
 
     /**
      * @ORM\OneToOne(targetEntity="Empleado", mappedBy="idexpediente")
      * @GRID\Column(field="idempleado.codigoempleado", groups="grupo_segurovida" ,title="Codigo", filter="input", operators={"eq","like"}, defaultOperator="eq", searchOnClick="true", joinType="inner")
-     * @GRID\Column(field="idempleado.idcontratacion.idplaza.nombreplaza", type="text", title="Plaza", filterable=false, joinType="inner")
+     * @GRID\Column(field="idempleado.idcontratacion.idplaza.nombreplaza", groups="grupo_segurovida",type="text", title="Plaza", filterable=false, joinType="inner")
      */
     private $idempleado;
 
     /**
      * @var \Solicitudempleo
      * @ORM\OneToOne(targetEntity="Solicitudempleo", mappedBy="idexpediente")
-     * @GRID\Column(field="idsolicitudempleo.nombres", groups="grupo_segurovida" ,title="Nombres", filterable=true, joinType="inner",visible=true)
-     * @GRID\Column(field="idsolicitudempleo.primerapellido", groups="grupo_segurovida" ,title="Primer Apellido", filterable=false, joinType="inner", visible=false)
-     * @GRID\Column(field="idsolicitudempleo.segundoapellido", groups="grupo_segurovida" ,title="Segundo Apellido", filterable=false, joinType="inner", visible=false)
+     * @GRID\Column(field="idsolicitudempleo.nombrecompleto", groups={"grupo_segurovida","grupo_contratacion"} ,title="Nombres", operators={"eq","like"}, joinType="inner")
+     * @GRID\Column(field="idsolicitudempleo.idplaza.nombreplaza", groups="grupo_contratacion",type="text", title="Plaza solicitada", operators={"eq","like"}, joinType="inner")
      */
     private $idsolicitudempleo;
 

@@ -16,7 +16,7 @@ class SegurovidaRepository extends EntityRepository
     {
 		return $this->getEntityManager()
 			->createQuery("SELECT e.id idexp,
-				                  concat(se.nombres,concat(' ',concat(se.primerapellido,concat(' ',se.segundoapellido)))) nombre, 
+				                  se.nombrecompleto nombre, 
 				                  se.dui, 
 				                  se.lugarnac, 
 				                  se.fechanac, 

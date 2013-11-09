@@ -12,10 +12,11 @@ class InformacionacademicaType extends AbstractType
     {
         $builder
             ->add('centroestudio',null, array('label'=> 'Centro de Estudios ', 'attr' =>array('class'=> 'input-xlarge')))
-            //->add('idsolicitudempleo')
-           // ->add('idtitulo', null,array('required' => true,'label'=>'Titulo Obtenido' ))
-           // ->add('Idtitulo', 'collection', array('type' => new TituloType(), 'allow_add' => true, 'allow_delete' => true,'by_reference' => false,))
             ->add('idtitulo',null, array('required'=> true, 'label'=>'Título Obtenido: ', 'empty_value' => 'Seleccione una opción', 'multiple'=>false, 'attr' =>array('class'=> 'input-xlarge')))
+            //->add('idtitulo','shtumi_ajax_autocomplete', array('required'=> true,'entity_alias'=>'titulo', 'label'=>'Título Obtenido: ', 'attr' =>array('class'=> 'input-xlarge')))
+           /*->add('idtitulo', 'genemu_jqueryselect2_entity', array(
+            'class' => 'ExpedienteBundle:Titulo', 'label'=> 'Titulo Obtenido'
+        ))*/
    ; 
     }
 
@@ -28,6 +29,6 @@ class InformacionacademicaType extends AbstractType
 
     public function getName()
     {
-        return 'sigesrhi_expedientebundle_informacionacademicatype';
+        return 'informacionacademica';
     }
 }

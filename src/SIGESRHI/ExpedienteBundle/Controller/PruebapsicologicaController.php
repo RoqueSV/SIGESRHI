@@ -43,7 +43,7 @@ class PruebapsicologicaController extends Controller
         //$entities = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedientes();
         //return $this->render('ExpedienteBundle:Pruebapsicologica:indexExpedientes.html.twig', array('entities' => $entities,));
         // Creates simple grid based on your entity (ORM)
-        $source = new Entity('ExpedienteBundle:SolicitudEmpleo','grupo_pruebapsicologica');
+        $source = new Entity('ExpedienteBundle:Solicitudempleo','grupo_pruebapsicologica');
 
         // Get a grid instance
         $grid = $this->get('grid');

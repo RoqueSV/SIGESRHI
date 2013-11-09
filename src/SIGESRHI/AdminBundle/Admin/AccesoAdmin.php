@@ -22,6 +22,7 @@ class AccesoAdmin extends Admin
             ->add('nombrepagina', null, array('label' => 'Opción'))
             ->add('idmodulo','sonata_type_model',array('required'=>'required', 'label'=>'Modulo'))
             ->add('ruta')
+            ->add('idaccesosup', null , array('label'=>'Acceso superior'))
             ->setHelps(array('nombrepagina'=>'Ingrese una opción de acceso',
                              'ruta'=>'Identificador de la ruta, p.ej. hello_page'))
            
@@ -45,6 +46,7 @@ class AccesoAdmin extends Admin
             ->addIdentifier('nombrepagina', null,array('label' => 'Opción','route' => array('name' => 'show')))
             ->add('idmodulo',null,array('label'=>'Modulo'))
             ->add('ruta')
+            ->add('idaccesosup',null, array('label'=>'Acceso superior'))
             ->add('idrol',null,array('label'=>'Roles'))    
         ;
     }
@@ -55,6 +57,7 @@ class AccesoAdmin extends Admin
          ->add('nombrepagina',null, array('label' => 'Opción'))
          ->add('idmodulo',null,array('label'=>'Modulo'))
          ->add('ruta')  
+         ->add('idaccesosup',null, array('label'=>'Acceso superior'))
         ;
      }
      

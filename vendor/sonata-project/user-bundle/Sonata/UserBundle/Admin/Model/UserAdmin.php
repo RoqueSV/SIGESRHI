@@ -150,12 +150,12 @@ class UserAdmin extends Admin
                         'expanded' => true,
                         'multiple' => true,
                         'required' => false,
-                        'label' => 'Tipo'
+                        'label' => 'Asignación'
                     ))
-                    ->add('locked', null, array('required' => false))
-                    ->add('expired', null, array('required' => false))
-                    ->add('enabled', null, array('required' => false))
-                    ->add('credentialsExpired', null, array('required' => false))
+                    ->add('locked', null, array('required' => false,'label' => 'Bloqueado',))
+                    ->add('expired', null, array('required' => false, 'label'=>'Expirado'))
+                    ->add('enabled', null, array('required' => false, 'label'=>'Habilitado'))
+                    ->add('credentialsExpired', null, array('required' => false, 'label'=>'Credenciales caducadas'))
                 ->end()
             ;
         }

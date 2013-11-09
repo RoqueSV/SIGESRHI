@@ -30,7 +30,9 @@
         "KnpLabs/Gaufrette": "dev-master",
         "knplabs/knp-gaufrette-bundle": "dev-master",
         "vich/uploader-bundle": "dev-master",
-        "whiteoctober/breadcrumbs-bundle": "dev-master"
+        "whiteoctober/breadcrumbs-bundle": "dev-master",
+        "shtumi/useful-bundle": "dev-master",
+        "genemu/form-bundle": "2.1.*"
         
     },
     "scripts": {

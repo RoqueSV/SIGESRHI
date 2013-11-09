@@ -53,7 +53,7 @@ class SecurityRolesType extends ChoiceType
         $attr = $view->vars['attr'];
 
         if (isset($attr['class']) && empty($attr['class'])) {
-            $attr['class'] = 'sonata-medium';
+            $attr['class'] = 'sonata-bccheckbox';
         }
 
         $view->vars['attr'] = $attr;
@@ -104,7 +104,7 @@ class SecurityRolesType extends ChoiceType
             if ($securityContext->isGranted($name)) {
                 $roles[$name] = $name . ': ' . implode(', ', $rolesHierarchy);
 
-                foreach ($rolesHierarchy as $role) {
+               foreach ($rolesHierarchy as $role) {
                     if (!isset($roles[$role])) {
                         $roles[$role] = $role;
                     }

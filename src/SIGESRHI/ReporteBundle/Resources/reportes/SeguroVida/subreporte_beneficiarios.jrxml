@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte_beneficiarios" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="023d0b7a-5cf9-4065-ba37-84ec21a727b7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_exp" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select e.id,nombrebeneficiario,parentescobeneficiario,porcentaje,estadoseguro from expediente e join segurovida sv on(e.id=sv.idexpediente) join beneficiario b on(sv.id=b.idsegurovida) where e.id=$P{id_exp} and estadoseguro='V']]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="nombrebeneficiario" class="java.lang.String"/>
+	<field name="parentescobeneficiario" class="java.lang.String"/>
+	<field name="porcentaje" class="java.lang.Integer"/>
+	<field name="estadoseguro" class="java.lang.String"/>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="aed57432-ff5b-4e4f-a335-d0ae0eef8dd0" x="19" y="0" width="541" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="5c7e2168-32e0-480b-8f26-0ee5c4cba703" x="48" y="0" width="142" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRES Y APELLIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8c330ab7-d152-4096-968c-6258756f765e" x="368" y="0" width="82" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PARENTESCO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="30c939f7-a4fd-4f63-a202-1087c1c0f058" x="490" y="0" width="61" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="f6af708f-a0b6-4f73-8662-3a7fdc32e39b" x="328" y="0" width="1" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="576e317d-bb58-4691-b553-81e82ffc932a" x="482" y="0" width="1" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="1a0bdace-0716-4c9d-8b47-5eff67f3eef8" x="19" y="0" width="541" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement uuid="2c1cf789-9590-4b5a-ba28-7c9e24500bea" x="30" y="3" width="17" height="17"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}+' -']]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="9c2edd60-3660-49d5-bb68-06c3fbdb23a0" x="328" y="0" width="1" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="2a414daf-ad01-487d-9f8b-7dac257d4601" x="482" y="0" width="1" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="a1b4202f-56bf-48cb-bb2c-a5089a4b241c" x="48" y="3" width="260" height="17"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrebeneficiario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="632d9d8c-27cc-4c0e-a6ce-be0e5d52062f" x="343" y="0" width="124" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{parentescobeneficiario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9d485534-a0a3-4fd9-b292-80beb5573416" x="486" y="0" width="69" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{porcentaje}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
