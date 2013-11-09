@@ -1,7 +1,7 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-
+{{ form_javascript(edit_form) }}
     {% for flashMessage in app.session.flashbag.get('edit') %}
     <div class="alert alert-success">
         <p> {{ flashMessage }} </p>
@@ -139,7 +139,7 @@
                 <legend>II. Datos de Estudio</legend>
                 <br>
                 <ul class="Destudios unstyled" data-prototype="
-                <table>
+                <table class='form-inline' style='margin-bottom:8px;'>
                     <tr>
                         <td>{{form_widget(edit_form.Destudios.vars.prototype.idtitulo)|e}} {{form_errors(edit_form.Destudios.vars.prototype.idtitulo)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
                         <td>{{form_widget(edit_form.Destudios.vars.prototype.centroestudio)|e}} {{form_errors(edit_form.Destudios.vars.prototype.centroestudio)|e}}</td>
@@ -152,7 +152,7 @@
         {% for estudio in edit_form.Destudios %}
 
             <li>
-               <table>
+               <table class="form-inline" style="margin-bottom:8px;">
                     <tr>
                         <td>{{form_row(estudio.idtitulo)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
                         <td>{{form_row(estudio.centroestudio)}}</td>
@@ -623,7 +623,43 @@ jQuery(document).ready(function() {
     });
 });
 
+function triggerJavascript(id)
+    {
+      $field = $('#' + id);
 
+      {{ form_javascript(edit_form.Destudios.vars.prototype.idtitulo, true) }}
+    }
+
+    function addTagForm(collectionHolder, $newLinkLi) {
+    // Obtiene los datos del prototipo explicado anteriormente
+    var prototype = collectionHolder.data('prototype');
+
+    // Consigue el nuevo índice
+    var index = collectionHolder.data('index');
+
+    // Sustituye el '__name__' en el prototipo HTML para que
+    // en su lugar sea un número basado en cuántos elementos hay
+    var newForm = prototype.replace(/__name__/g, index);
+
+    // Incrementa en uno el índice para el siguiente elemento
+    collectionHolder.data('index', index + 1);
+    
+    // Muestra el formulario en la página en un elemento li,
+    // antes del enlace 'Agregar una etiqueta'
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+
+     // Añade un enlace eliminar el nuevo formulario
+    addTagFormDeleteLink($newFormLi);
+
+    // Dynamically add the form and get its id
+    var id = '{{ edit_form.Destudios.vars.id }}_'+index+'_idtitulo';
+
+    // Once HTML has been added, let's trigger the javascript on it
+    triggerJavascript(id);
+
+
+}
 </script>
 
 {% endblock %}

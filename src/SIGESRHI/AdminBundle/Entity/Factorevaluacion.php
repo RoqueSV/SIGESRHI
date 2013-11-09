@@ -26,10 +26,10 @@ class Factorevaluacion
     /**
      * @var string
      *
-     * @ORM\Column(name="nombrefactor", type="string", length=50, nullable=false)
+     * @ORM\Column(name="nombrefactor", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre del factor")
      * @Assert\Length(
-     * max = "50",
+     * max = "100",
      * maxMessage = "El nombre del factor no debe exceder los {{limit}} caracteres"
      * )
      */

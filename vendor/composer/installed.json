@@ -3091,55 +3091,6 @@
         ]
     },
     {
-        "name": "shtumi/useful-bundle",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "target-dir": "Shtumi/UsefulBundle",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/shtumi/ShtumiUsefulBundle.git",
-            "reference": "e8527357ddfc043fc63a82e4a5d0f060ea07068e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/shtumi/ShtumiUsefulBundle/zipball/e8527357ddfc043fc63a82e4a5d0f060ea07068e",
-            "reference": "e8527357ddfc043fc63a82e4a5d0f060ea07068e",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.2"
-        },
-        "suggest": {
-            "sonata-project/admin-bundle": "master-dev",
-            "sonata-project/doctrine-orm-admin-bundle": "master-dev"
-        },
-        "time": "2013-11-05 08:26:05",
-        "type": "symfony-bundle",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Shtumi\\UsefulBundle": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Mikhail Shtukin",
-                "email": "shtumi@tut.by"
-            }
-        ],
-        "description": "Symfony ShtumiUsefulBundle",
-        "keywords": [
-            "Ajax Autocomplete form type",
-            "Dependent filtered form type",
-            "daterange",
-            "shtumi"
-        ]
-    },
-    {
         "name": "genemu/form-bundle",
         "version": "v2.1.4",
         "version_normalized": "2.1.4.0",
@@ -3210,6 +3161,55 @@
         "keywords": [
             "extra form",
             "form"
+        ]
+    },
+    {
+        "name": "shtumi/useful-bundle",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "target-dir": "Shtumi/UsefulBundle",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/shtumi/ShtumiUsefulBundle.git",
+            "reference": "e8527357ddfc043fc63a82e4a5d0f060ea07068e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/shtumi/ShtumiUsefulBundle/zipball/e8527357ddfc043fc63a82e4a5d0f060ea07068e",
+            "reference": "e8527357ddfc043fc63a82e4a5d0f060ea07068e",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "suggest": {
+            "sonata-project/admin-bundle": "master-dev",
+            "sonata-project/doctrine-orm-admin-bundle": "master-dev"
+        },
+        "time": "2013-11-05 08:26:05",
+        "type": "symfony-bundle",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Shtumi\\UsefulBundle": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mikhail Shtukin",
+                "email": "shtumi@tut.by"
+            }
+        ],
+        "description": "Symfony ShtumiUsefulBundle",
+        "keywords": [
+            "Ajax Autocomplete form type",
+            "Dependent filtered form type",
+            "daterange",
+            "shtumi"
         ]
     }
 ]

@@ -111,7 +111,7 @@
                 <legend>II. Datos de Estudio</legend>
                 <br>
                
-                <table>
+                <table class="form-inline" style="margin-bottom:8px;">
                     <tr>
                         <td>{{form_row(form.Destudios[0].idtitulo)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
                         <td>{{form_row(form.Destudios[0].centroestudio)}}</td>
@@ -119,7 +119,7 @@
                 </table>
 
                 <ul class="Destudios unstyled" data-prototype="
-                <table>
+                <table class='form-inline' style='margin-bottom:8px;'>
                     <tr>
                         <td>{{form_widget(form.Destudios.vars.prototype.idtitulo)|e}} {{form_errors(form.Destudios.vars.prototype.idtitulo)|e}}</td><td>&nbsp;&nbsp;&nbsp;</td>
                         <td>{{form_widget(form.Destudios.vars.prototype.centroestudio)|e}} {{form_errors(form.Destudios.vars.prototype.centroestudio)|e}}</td>

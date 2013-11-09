@@ -40,7 +40,7 @@
 </div>
 {% endblock grid %}
 {# --------------------------------------------------- grid_no_data ------------------------------------------------- #}
-{% block grid_no_data %}<p class="no_data">{{ grid.noDataMessage|default('No data')|trans|raw }}</p>{% endblock grid_no_data %}
+{% block grid_no_data %}<p class="no_data" style="text-align: center;">{{ grid.noDataMessage|default('No data')|trans|raw }}</p>{% endblock grid_no_data %}
 {# --------------------------------------------------- grid_no_result ------------------------------------------------- #}
 {% block grid_no_result %}
 {% spaceless %}

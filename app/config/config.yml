@@ -26,6 +26,10 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
 
+    form:
+        resources:
+            - ShtumiUsefulBundle::fields.html.twig
+
 # Assetic Configuratio
 assetic:
     debug:          %kernel.debug%
@@ -159,6 +163,14 @@ white_october_breadcrumbs:
     listId:             wo-breadcrumbs
     listClass:          breadcrumb          
 
+#Autocomplete
 genemu_form:
     select2: ~
     autocomplete: ~
+
+shtumi_useful:
+    autocomplete_entities:
+        centros:
+            class: ExpedienteBundle:Informacionacademica
+            property: centroestudio
+            search: contains

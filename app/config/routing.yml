@@ -18,3 +18,6 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
+
+shtumi_useful:
+    resource: '@ShtumiUsefulBundle/Resources/config/routing.xml'
