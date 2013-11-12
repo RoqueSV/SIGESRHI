@@ -7,9 +7,9 @@
 
 <table width="100%">
     <tr>
-        <td width="80%">
+        <td width="65%">
 
-    <table border="2" class="table table-bordered table-hover">
+    <table border="2" class="table table-bordered table-hover" width="90%">
                 
             <tr>
                 <th>Numero de solicitud: </th>
@@ -28,12 +28,19 @@
     </table>
 
         </td>
-        <td width="20%">
-            <img src="{{asset('uploads/fotografias/' ~ entity.fotografia)}}" width="150px" height="150px" class="fotoSol"/>
+        <td width="35%" align="center">
+            <table border="3" class="text-center">
+                <tr>
+                    <td>
+                        <img src="{{asset('uploads/fotografias/' ~ entity.fotografia)}}" width="150px" height="150px" class="fotoSol"/>
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 </table>
 
+    <b>Datos Generales: </b>
     <table border="2" class="table table-bordered table-hover">
             <tr>
                 <th>Apellido de casada</th>
@@ -121,7 +128,7 @@
                 <th>NIP: </th>
             </tr>
             <tr>
-                <td>{{ entity.nit }}</td>
+                <td>{{ entity.nit|slice(0,4) ~ '-' ~ entity.nit|slice(4,6) ~ '-' ~ entity.nit|slice(10,3) ~ '-' ~ entity.nit|slice(13,1) }}</td> {# 0712-300488-101-0 #}
                 <td>{{ entity.isss }}</td>
                 <td>{{ entity.nup }}</td>
                 <td>{{ entity.nip }}</td>
@@ -136,7 +143,7 @@
                 
             </tr>
             <tr>
-                <td>{{ entity.dui }}</td>
+                <td>{{ entity.dui|slice(0,8) ~ '-' ~ entity.dui|slice(8,1) }}</td> {# 03930981-3#}
                 <td>{{ entity.lugardui }}</td>
                 <td>{{ (entity.fechadui|date('d-m-Y'))|fecha }}</td>
             </tr>
@@ -145,7 +152,7 @@
 
         {# DATOS DE ESTUDIO #}
 
-        <b>Datos de Estudio</b>
+        <b>Datos de Estudio: </b>
             <br>
         
         {% if entity.Destudios|length > 0 %}
@@ -175,7 +182,7 @@
 
         {# IDIOMAS #}
 
-        <b>Idiomas que domina </b>
+        <b>Idiomas que domina: </b>
         <br>
 
         {% if entity.Idiomas|length > 0 %}
@@ -340,4 +347,19 @@
 </ul>
 
 #}
+
+
+<h4 class="text-center">¿Qué acción desea realizar?</h4><br />
+
+    <form class="form-inline" action="reporte_solicitudempelo" method="post" >
+     <div class="text-center">
+     <input type="hidden" id='idsol' name='idsol' value={{ entity.id }} />
+     <button type="submit" class="btn btn-primary">Generar PDF</button>
+     <button type="button" class="btn" onclick="location.href='{{ path ('solicitud', {'tipo':entity.idexpediente.tipoexpediente}) }}'">Regresar al listado</button>
+     <a href="{{ path('solicitud_edit', { 'id': entity.id }) }}" class="btn">Editar Registro</a>
+     </div>
+        
+    </form>
+
+
 {% endblock %}

@@ -103,7 +103,16 @@
 		{% if app.user %}
 		
 		<p>Usuario: {{ app.user.username }} <a href="{{path('sonata_user_admin_security_logout')}}">Salir</a></p>
+
+		{# Secciones #}		
+		<br>
 			
+		<div  class="menu-seccion">
+		<ul>
+		{{ render(controller('AdminBundle:Default:Secciones', { 'idacceso': app.session.get('seccion'), 'nombreUsuario': app.user.username })) }} 
+		</ul>
+		</div>
+		<br>
 		
 		{% else %}
 		{{ render(controller('FOSUserBundle:Security:login')) }}

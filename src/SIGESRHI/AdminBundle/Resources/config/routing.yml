@@ -24,6 +24,10 @@ sonata_user_impersonating:
    defaults: { _controller: AdminBundle:Default:index }
 
 hello_page:
-   path:  /inicio
+   path:  /inicio/
    defaults: { _controller: AdminBundle:Default:index }
+
+cambia_opcion:
+   path: /inicio/{acceso}
+   defaults: {_controller: AdminBundle:Default:cambiaopcion}
     
