@@ -36,3 +36,11 @@ expediente_RegistraDocDigi:
 expediente_validar:
     pattern:  /validar
     defaults: { _controller: "ExpedienteBundle:Expediente:validar" }
+
+expediente_confirm_valid:
+    pattern:  /{id}/validar
+    defaults: { _controller: "ExpedienteBundle:Expediente:confirmarValido" }
+
+expediente_aspirantes:
+    pattern:  /aspirantes
+    defaults: { _controller: "ExpedienteBundle:Expediente:indexAspirantes" }

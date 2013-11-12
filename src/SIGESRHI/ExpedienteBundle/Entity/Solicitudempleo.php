@@ -24,7 +24,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Assert\Callback(methods={"esNitValido"})
  * @Vich\Uploadable
  *
- * @GRID\Source(columns="id,nombres, primerapellido, segundoapellido,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
+ * @GRID\Source(columns="id,nombrecompleto,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
  * @GRID\Source(columns="id,numsolicitud, nombres, primerapellido, segundoapellido, apellidocasada, idexpediente.tipoexpediente,idplaza.nombreplaza",groups={"solicitud_empleo"})
  */
 
@@ -114,6 +114,7 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="nombrecompleto", type="string", length=100, nullable=true)
+     * @GRID\Column(title="Nombre", filter="input", groups={"grupo_pruebapsicologica", "solicitud_empleo","vista_basica_expediente"}, type="text", operators={"like"}, operatorsVisible=false)
      *
      */
     private $nombrecompleto;

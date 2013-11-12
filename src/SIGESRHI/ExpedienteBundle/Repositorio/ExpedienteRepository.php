@@ -17,7 +17,7 @@ class ExpedienteRepository extends EntityRepository
 	public function obtenerExpediente($idexp)
     {
 		return $this->getEntityManager()
-			->createQuery('SELECT e.fechaexpediente fechaexpediente, s.nombres nombres, p.nombreplaza nombreplaza, t.nombretitulo nombretitulo,e.tipoexpediente,e.id id
+			->createQuery('SELECT e.fechaexpediente fechaexpediente, s.nombrecompleto nombres, p.nombreplaza nombreplaza, t.nombretitulo nombretitulo,e.tipoexpediente,e.id id
                            FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN s.idplaza p JOIN s.Destudios i JOIN i.idtitulo t
                            WHERE e.id=:idexp order by t.niveltitulo DESC
                            ')
@@ -29,8 +29,8 @@ class ExpedienteRepository extends EntityRepository
   public function obtenerExpedienteInvalido($idexp)
     {
     return $this->getEntityManager()
-      ->createQuery("SELECT s.nombres, CONCAT(s.calle,CONCAT(', ',s.colonia)) as direccion, s.estadocivil, s.telefonofijo, s.telefonomovil, s.email, s.lugarnac, s.fechanac, s.fotografia,
-                            s.dui,s.nit,s.isss,s.nup,s.nip
+      ->createQuery("SELECT s.id,e.id as idexpediente,s.nombrecompleto, CONCAT(s.calle,CONCAT(', ',s.colonia)) as direccion, s.estadocivil, s.telefonofijo,
+                            s.telefonomovil, s.email,s.lugarnac, s.fechanac, s.fotografia,s.dui,s.nit,s.isss,s.nup,s.nip,s.sexo,s.fechadui,s.lugardui
                            FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e
                            WHERE e.id=:idexp
                            ")
@@ -46,7 +46,7 @@ class ExpedienteRepository extends EntityRepository
   public function obtenerExpedientes()
     {
     return $this->getEntityManager()
-      ->createQuery('SELECT e.fechaexpediente fechaexpediente, s.nombres nombres, p.nombreplaza nombreplaza, t.nombretitulo nombretitulo,e.tipoexpediente
+      ->createQuery('SELECT e.fechaexpediente fechaexpediente, s.nombrecompleto nombres, p.nombreplaza nombreplaza, t.nombretitulo nombretitulo,e.tipoexpediente
                            FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN s.idplaza p JOIN s.Destudios i JOIN i.idtitulo t
                            order by t.niveltitulo DESC
                            ')    
@@ -70,5 +70,15 @@ class ExpedienteRepository extends EntityRepository
         return $qb->getQuery();
                   
    }
+
+  public function registrarValido($idexp)
+    {
+    return $this->getEntityManager()
+      ->createQuery("UPDATE ExpedienteBundle:Expediente e SET e.tipoexpediente='A'
+                           WHERE e.id=:idexp
+                           ")
+            ->setParameter('idexp',$idexp)
+            ->getResult();
+  }
 
 }

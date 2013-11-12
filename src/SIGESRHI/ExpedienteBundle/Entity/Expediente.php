@@ -149,7 +149,14 @@ class Expediente
      */
     protected $Docs_expediente;
 
-  
+/********* Documentos personales *********************/
+
+    /**
+    * @ORM\OneToMany(targetEntity="Docpersonal", mappedBy="idexpediente", cascade={"persist", "remove"})
+    *
+    */ 
+    protected $Docs_personal;
+     
     public function setDocsexpediente(\Doctrine\Common\Collections\Collection $dexpedientes)
     {
         $this->Docs_expediente = $dexpedientes;
@@ -271,5 +278,61 @@ class Expediente
     public function removeDocsExpediente(\SIGESRHI\ExpedienteBundle\Entity\Docexpediente $docsExpediente)
     {
         $this->Docs_expediente->removeElement($docsExpediente);
+    }
+
+    /**
+     * Set idpruebapsicologica
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Pruebapsicologica $idpruebapsicologica
+     * @return Expediente
+     */
+    public function setIdpruebapsicologica(\SIGESRHI\ExpedienteBundle\Entity\Pruebapsicologica $idpruebapsicologica = null)
+    {
+        $this->idpruebapsicologica = $idpruebapsicologica;
+    
+        return $this;
+    }
+
+    /**
+     * Get idpruebapsicologica
+     *
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Pruebapsicologica 
+     */
+    public function getIdpruebapsicologica()
+    {
+        return $this->idpruebapsicologica;
+    }
+
+    /**
+     * Add Docs_personal
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Docpersonal $docsPersonal
+     * @return Expediente
+     */
+    public function addDocsPersonal(\SIGESRHI\ExpedienteBundle\Entity\Docpersonal $docsPersonal)
+    {
+        $this->Docs_personal[] = $docsPersonal;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Docs_personal
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Docpersonal $docsPersonal
+     */
+    public function removeDocsPersonal(\SIGESRHI\ExpedienteBundle\Entity\Docpersonal $docsPersonal)
+    {
+        $this->Docs_personal->removeElement($docsPersonal);
+    }
+
+    /**
+     * Get Docs_personal
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDocsPersonal()
+    {
+        return $this->Docs_personal;
     }
 }

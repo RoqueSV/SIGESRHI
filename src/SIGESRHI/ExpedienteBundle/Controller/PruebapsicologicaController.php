@@ -53,8 +53,11 @@ class PruebapsicologicaController extends Controller
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias){
-                $query->andWhere($tableAlias.'.nombres != :es')
-                      ->setParameter('es','I');
+                $query->Join($tableAlias.'.idexpediente','e')
+                       ->andWhere('e.tipoexpediente = :inv')
+                       ->orWhere('e.tipoexpediente = :val')
+                       ->setParameter('inv','I')
+                       ->setParameter('val','A');
             }
         );
 
@@ -83,11 +86,8 @@ class PruebapsicologicaController extends Controller
                         $row->setField('idexpediente.tipoexpediente', 'Válido');                  
                     }
                 }
-                else{                    
-                    return null;
-                }
                 //concat columns
-                $row->setField('nombres', $row->getField('nombres')." ".$row->getField('primerapellido')." ".$row->getField('segundoapellido') );                       
+                //$row->setField('nombres', $row->getField('nombres')." ".$row->getField('primerapellido')." ".$row->getField('segundoapellido') );                       
                 //$row->setField('nombrecompleto', $row->getField('nombres'));
                 return $row;
             }
@@ -123,6 +123,12 @@ class PruebapsicologicaController extends Controller
         //$grid->addExport(new ExcelExport('Exportar a Excel'));
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
          // Manage the grid redirection, exports and the response of the controller
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", "hello_page");
+        $breadcrumbs->addItem("Gestion de Aspirantes", "");
+        $breadcrumbs->addItem("Registrar resultados Prueba Psicologica", $this->get("router")->generate("pruebapsicologica"));
+
         return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientes.html.twig');
 
     }
@@ -210,6 +216,12 @@ class PruebapsicologicaController extends Controller
 
         //$em = $this->getDoctrine()->getManager();
         //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);        
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", "hello_page");
+        $breadcrumbs->addItem("Gestion de Aspirantes", "");
+        $breadcrumbs->addItem("Registrar Prueba Psicologica","");
+
 
         return $this->render('ExpedienteBundle:Pruebapsicologica:new.html.twig', array(
             'entity' => $entity,
@@ -260,6 +272,12 @@ class PruebapsicologicaController extends Controller
 
         $editForm = $this->createForm(new PruebapsicologicaType($expediente), $entity);
         $deleteForm = $this->createDeleteForm($request->query->get('exp'));
+
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", "hello_page");
+        $breadcrumbs->addItem("Gestion de Aspirantes", "");
+        $breadcrumbs->addItem("Editar resultados Prueba Psicologica","");
 
         return $this->render('ExpedienteBundle:Pruebapsicologica:edit.html.twig', array(
             'entity'      => $entity,

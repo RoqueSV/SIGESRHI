@@ -25,44 +25,59 @@ class ExpedienteController extends Controller
      */
     public function indexAction()
     {
-            $source = new Entity('ExpedienteBundle:Solicitudempleo','vista_basica_expediente');
-            $grid = $this->get('grid');
-            $grid->setSource($source);  
-            $grid->setNoDataMessage("No se encontraron resultados");
-            $source->manipulateRow(
-                function ($row)
-                {                    
-                    if($row->getField('idexpediente.tipoexpediente')!='I'){
-                        return null;
-                    }
-                    return $row;
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('ExpedienteBundle:Expediente')->findAll();
+
+        return $this->render('ExpedienteBundle:Expediente:index.html.twig', array(
+            'entities' => $entities,
+        ));    
+    }
+
+    public function indexAspirantesAction()
+    {
+        $source = new Entity('ExpedienteBundle:Solicitudempleo','vista_basica_expediente');
+        $grid = $this->get('grid');
+        $grid->setSource($source);  
+        $grid->setNoDataMessage("No se encontraron resultados");
+
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->Join($tableAlias.'.idexpediente','e')
+                       ->andWhere('e.tipoexpediente = :inv')
+                       ->setParameter('inv','I');
+            }
+        );
+    /*    $source->manipulateRow(
+            function ($row)
+            {                    
+                if($row->getField('idexpediente.tipoexpediente')!='I'){
+                    return null;
                 }
-            );
-            $rowAction1 = new RowAction('Validar', 'expediente_validar');
-            $rowAction1->setColumn('info_column');
-            $rowAction1->manipulateRender(
-                function ($action, $row)
-                {
-                    $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id') ));
-                    return $action; 
-                }
-            );
-            $grid->addRowAction($rowAction1); 
+                return $row;
+            }
+        );*/
+        $rowAction1 = new RowAction('Validar', 'expediente_validar');
+        $rowAction1->setColumn('info_column');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id') ));
+                return $action; 
+            }
+        );
+        $grid->addRowAction($rowAction1); 
 
-            $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
-            
-            return $grid->getGridResponse('ExpedienteBundle:Expediente:index.html.twig');
-
-        }
-    
-    /*      $em = $this->getDoctrine()->getManager();
-
-            $entities = $em->getRepository('ExpedienteBundle:Expediente')->findAll();
-
-            return $this->render('ExpedienteBundle:Expediente:index.html.twig', array(
-                'entities' => $entities,
-            ));*/
-    
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", "hello_page");
+        $breadcrumbs->addItem("Gestion de Aspirantes","");
+        $breadcrumbs->addItem("Registrar como expediente valido de banco de datos institucional",  $this->get("router")->generate("expediente_aspirantes"));
+        
+        return $grid->getGridResponse('ExpedienteBundle:Expediente:index.html.twig');
+    }    
 
     /**
      * Creates a new Expediente entity.
@@ -239,7 +254,7 @@ public function RegistraDocumentosDAction($id)
         ));
     }
 
-/* Registra una solicitud como valida */
+/* Formulario para registrar una solicitud como valida */
 public function validarAction()
     {
         $request = $this->getRequest();
@@ -254,10 +269,27 @@ public function validarAction()
 
         //$em = $this->getDoctrine()->getManager();
         //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);        
-
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", "hello_page");
+        $breadcrumbs->addItem("Gestion de Aspirantes","");
+        $breadcrumbs->addItem("Registrar como expediente valido de banco de datos institucional",  $this->get("router")->generate("expediente_aspirantes"));
         return $this->render('ExpedienteBundle:Expediente:validar.html.twig', array(          
             'expediente' => $expedienteinfo,
         ));
+    }
+
+/* Confirma un expediente de aspirante como valido*/
+public function confirmarValidoAction($id)
+    {
+        $request = $this->getRequest();
+        
+        $em = $this->getDoctrine()->getManager();
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->registrarValido($id);
+        //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
+        $this->get('session')->getFlashBag()->add('confirm','Expediente de aspirante validado');
+        return $this->redirect($this->generateUrl("expediente_aspirantes"));
+        
     }
 
 }
