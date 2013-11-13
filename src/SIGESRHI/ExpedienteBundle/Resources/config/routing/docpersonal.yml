@@ -1,0 +1,30 @@
+docpersonal:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Docpersonal:index" }
+
+docpersonal_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Docpersonal:show" }
+
+docpersonal_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Docpersonal:new" }
+
+docpersonal_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Docpersonal:create" }
+    requirements: { _method: post }
+
+docpersonal_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Docpersonal:edit" }
+
+docpersonal_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Docpersonal:update" }
+    requirements: { _method: post|put }
+
+docpersonal_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Docpersonal:delete" }
+    requirements: { _method: post|delete }

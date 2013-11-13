@@ -29,13 +29,45 @@ class DocpersonalController extends Controller
     /**
      * Lists all Docpersonal entities.
      *
-     * @Route("/", name="docpersonal")
-     * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
+        $source = new Entity('ExpedienteBundle:Solicitudempleo','vista_basica_expediente');
+        $grid = $this->get('grid');
 
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->Join($tableAlias.'.idexpediente','e')
+                       ->andWhere('e.tipoexpediente = :inv')
+                       ->orWhere('e.tipoexpediente = :val')
+                       ->setParameter('inv','I')
+                       ->setParameter('val','A');
+            }
+        );
+
+        $grid->setSource($source);  
+        $grid->setNoDataMessage("No se encontraron resultados");
+
+        $rowAction1 = new RowAction('Ingresar', 'docpersonal_new');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id') ));
+                return $action;
+            }
+        );
+
+        $grid->addRowAction($rowAction1);     
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", "hello_page");
+        $breadcrumbs->addItem("Gestion de Aspirantes", "hello_page");
+        $breadcrumbs->addItem("Registrar documentos de expediente Personal", "");
+
+        return $grid->getGridResponse('ExpedienteBundle:Docpersonal:index.html.twig');
 
     /*    $em = $this->getDoctrine()->getManager();
 
@@ -49,54 +81,87 @@ class DocpersonalController extends Controller
     /**
      * Creates a new Docpersonal entity.
      *
-     * @Route("/", name="docpersonal_create")
-     * @Method("POST")
-     * @Template("ExpedienteBundle:Docpersonal:new.html.twig")
      */
     public function createAction(Request $request)
     {
+        $idexp=$request->get('exp');
+        $em = $this->getDoctrine()->getManager();
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpediente($request->query->get('exp'));
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+
+        $Documentos = $em->getRepository('ExpedienteBundle:Docpersonal')->find($request->query->get('exp'));
+
         $entity  = new Docpersonal();
+        $entity->setIdexpediente($expediente);
+        $entity->setentregado(1);
         $form = $this->createForm(new DocpersonalType(), $entity);
         $form->bind($request);
+
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", "hello_page");
+        $breadcrumbs->addItem("Gestion de Aspirantes", "hello_page");
+        $breadcrumbs->addItem("Registrar documentos de expediente Personal","");
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('docpersonal_show', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add('new','Documento Registrada correctamente');
+            //return $this->redirect($this->generateUrl('docpersonal_show', array('id' => $entity->getId())));
+            return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
+            'entity' => $entity,
+            'expediente' => $expedienteinfo,
+            'documentos' => $Documentos,
+            'form'   => $form->createView(),
+        ));
         }
 
-        return array(
+        $this->get('session')->getFlashBag()->add('errornew','Errores en el Documento registrado');
+        return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
             'entity' => $entity,
+            'expediente' => $expedienteinfo,
+            'documentos' => $Documentos,
             'form'   => $form->createView(),
-        );
+        ));
     }
 
     /**
      * Displays a form to create a new Docpersonal entity.
      *
-     * @Route("/new", name="docpersonal_new")
-     * @Method("GET")
-     * @Template()
      */
     public function newAction()
     {
+        $request = $this->getRequest();        
+        $em = $this->getDoctrine()->getManager();
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpediente($request->query->get('exp'));
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
+
+        $Documentos = $em->getRepository('ExpedienteBundle:Docpersonal')->find($request->query->get('exp'));
+
         $entity = new Docpersonal();
+        $entity->setIdexpediente($expediente);
+        $entity->setentregado(1);
         $form   = $this->createForm(new DocpersonalType(), $entity);
 
-        return array(
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", "hello_page");
+        $breadcrumbs->addItem("Gestion de Aspirantes", "hello_page");
+        $breadcrumbs->addItem("Registrar documentos de expediente Personal","");
+
+        return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
             'entity' => $entity,
+            'expediente' => $expedienteinfo,
+            'documentos' => $Documentos,
             'form'   => $form->createView(),
-        );
+        ));
     }
 
     /**
      * Finds and displays a Docpersonal entity.
      *
-     * @Route("/{id}", name="docpersonal_show")
-     * @Method("GET")
-     * @Template()
      */
     public function showAction($id)
     {
@@ -119,9 +184,6 @@ class DocpersonalController extends Controller
     /**
      * Displays a form to edit an existing Docpersonal entity.
      *
-     * @Route("/{id}/edit", name="docpersonal_edit")
-     * @Method("GET")
-     * @Template()
      */
     public function editAction($id)
     {
@@ -146,9 +208,6 @@ class DocpersonalController extends Controller
     /**
      * Edits an existing Docpersonal entity.
      *
-     * @Route("/{id}", name="docpersonal_update")
-     * @Method("PUT")
-     * @Template("ExpedienteBundle:Docpersonal:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -181,8 +240,6 @@ class DocpersonalController extends Controller
     /**
      * Deletes a Docpersonal entity.
      *
-     * @Route("/{id}", name="docpersonal_delete")
-     * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
     {

@@ -11,10 +11,18 @@ class DocpersonalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombredocpersonal')
-            ->add('entregado')
-            ->add('indice')
-            ->add('idexpediente')
+            ->add('nombredocpersonal','text',array(
+                'label' => 'Nombre del documento',
+                'attr'=>array('class' => 'input-xlarge',
+                                'data-bvalidator'=>'alphanum'
+                )))
+            //->add('entregado')
+            ->add('indice','text',array(
+                'label' => 'N° Correlativo',
+                'attr'=>array('class' => 'input-small',
+                              'data-bvalidator'=>'number'
+                )))
+            //->add('idexpediente')
         ;
     }
 

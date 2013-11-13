@@ -1,6 +1,13 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
+{% block principal -%}
+<h4 class='text-center'>SELECCIONE UN ASPIRANTE</h4>
+{{ grid_search(grid) }}
+
+    {{ grid(grid,_self) }}
+
+    {% block grid_filters %}{% endblock %}
+{#% block body -%}
     <h1>Docpersonal list</h1>
 
     <table class="records_list">
@@ -42,4 +49,5 @@
             </a>
         </li>
     </ul>
-    {% endblock %}
+    {% endblock %#}
+{% endblock %}

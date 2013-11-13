@@ -63,4 +63,8 @@ ExpedienteBundle_contratacion:
         resource: "@ExpedienteBundle/Resources/config/routing/contratacion.yml"
         prefix:   /contratacion
 
+ExpedienteBundle_docpersonal:
+        resource: "@ExpedienteBundle/Resources/config/routing/docpersonal.yml"
+        prefix:   /docpersonal
+
 
