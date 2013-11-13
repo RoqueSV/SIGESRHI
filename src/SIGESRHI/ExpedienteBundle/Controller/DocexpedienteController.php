@@ -212,4 +212,21 @@ class DocexpedienteController extends Controller
             ->getForm()
         ;
     }
+
+
+    public function verDigitalAction($iddoc){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('ExpedienteBundle:Docexpediente')->find($iddoc);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('No se puede encontrar la entidad de Documento Digital.');
+        }
+
+        return $this->render('ExpedienteBundle:Docexpediente:verDigital.html.twig', array(
+            'entity'      => $entity,
+        ));
+
+    }//fin function VerDigitalAction()
 }

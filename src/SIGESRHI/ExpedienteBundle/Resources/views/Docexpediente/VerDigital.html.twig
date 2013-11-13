@@ -1,0 +1,20 @@
+{# vista para visualizar los documentos digitales que han sido registrados#}
+
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal %}
+
+
+
+<div class="text-center">
+	
+	<h4>{{entity.nombredocexp}}</h4>
+	<br>
+
+<img src="{{asset('uploads/docs_expediente/' ~ entity.rutadocexp)}}" width="150px" height="150px" class="fotoSol"/>
+<br>
+<br>
+
+<button type="button" class="btn" onclick="javascript: window.history.back(1)">Regresar al listado</button>
+</div>
+{% endblock %}

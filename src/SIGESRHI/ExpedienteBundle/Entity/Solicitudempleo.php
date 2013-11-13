@@ -50,7 +50,7 @@ class Solicitudempleo
      * @Assert\NotNull(message="Debe ingresar el numero de solicitud")
      *
      * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
-     * @GRID\Column(filterable=false, title="Num. Solicitud", groups={"solicitud_empleo"}, visible=true)
+     * @GRID\Column(filterable=true, align="center", type="number", title="Num. Solicitud", groups={"solicitud_empleo"}, visible=true, operatorsVisible=false)
      */
     private $numsolicitud;
 

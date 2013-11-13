@@ -1,6 +1,6 @@
 solicitud:
     pattern:  /{tipo}/grid_consultar
-    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:index" }
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:index", tipo:'I' }
 
 solicitud_show:
     pattern:  /{id}/show
@@ -31,4 +31,4 @@ solicitud_delete:
 
 solicitud_grid_edit:
     pattern:  /{tipo}/grid_edit
-    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:indexEdit" }
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:indexEdit", tipo:'I' }
