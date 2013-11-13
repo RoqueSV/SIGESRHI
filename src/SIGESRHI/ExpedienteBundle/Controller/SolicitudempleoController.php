@@ -60,8 +60,8 @@ class SolicitudempleoController extends Controller
         $source->manipulateQuery(
         function($query) use ($tableAlias, $tipo){
             $query->join($tableAlias.".idexpediente ", "s")
-            ->andWhere("s.tipoexpediente = 'I'");
-            //->setParameter('var',$tipo);
+            ->andWhere("s.tipoexpediente = :var" )
+            ->setParameter('var',$tipo);
         }
             );
 

@@ -1,12 +1,7 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-<style type="text/css">
-    .grid .last-column
-      {
-       text-align: center;
-      }
-</style>
+
 {% if app.session.started %}
 {% for flashMessage in app.session.flashbag.get('delete') %}
 <div class="alert alert-danger">

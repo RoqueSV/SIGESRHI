@@ -32,17 +32,22 @@
 .grid tr.even
 {
     background-color: #FCFDFE;
-    text-align: justify;
 }
 
 .grid tr.odd {
     background-color: #F7F9FC;
-    text-align: justify;
 }
 
 .grid td{
-  text-align: justify;
+  text-align:justify;
+  text-justify:newspaper;
 }
+
+.grid .last-column
+  {
+   text-align: center;
+}
+
 
 /**********/
 .grid tr:hover {

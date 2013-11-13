@@ -36,7 +36,7 @@ class Plaza
      * max = "100",
      * maxMessage = "El nombre de la plaza no debe exceder los {{limit}} caracteres"
      * )
-     * @GRID\Column(groups="grupo_plaza",title="Nombre puesto", align="center", filter="input", operators={"like"}, operatorsVisible=false)
+     * @GRID\Column(groups="grupo_plaza",title="Nombre puesto", filter="input", operators={"like"}, operatorsVisible=false, align="center")
      */
     private $nombreplaza;
 
