@@ -31,7 +31,7 @@ expediente_delete:
 
 expediente_RegistraDocDigi:
     pattern:  /{id}/DocDigital
-    defaults: { _controller: "ExpedienteBundle:Expediente:RegistraDocumentosD" }
+    defaults: { _controller: "ExpedienteBundle:Expediente:registraDocDigi" }
 
 expediente_validar:
     pattern:  /validar
@@ -44,3 +44,4 @@ expediente_confirm_valid:
 expediente_aspirantes:
     pattern:  /aspirantes
     defaults: { _controller: "ExpedienteBundle:Expediente:indexAspirantes" }
+

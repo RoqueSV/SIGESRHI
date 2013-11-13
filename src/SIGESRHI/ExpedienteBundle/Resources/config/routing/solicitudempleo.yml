@@ -1,5 +1,5 @@
 solicitud:
-    pattern:  /
+    pattern:  /{tipo}/grid_consultar
     defaults: { _controller: "ExpedienteBundle:Solicitudempleo:index" }
 
 solicitud_show:

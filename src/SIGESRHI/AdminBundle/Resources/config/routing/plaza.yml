@@ -1,0 +1,10 @@
+plaza:
+    pattern:  /
+    defaults: { _controller: "AdminBundle:Plaza:index" }
+
+plaza_ver:
+    pattern:  /{id}/show
+    defaults: { _controller: "AdminBundle:Plaza:show" }
+
+
+

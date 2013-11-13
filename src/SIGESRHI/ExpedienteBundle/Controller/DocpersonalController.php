@@ -138,7 +138,9 @@ class DocpersonalController extends Controller
         $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpediente($request->query->get('exp'));
         $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
 
-        $Documentos = $em->getRepository('ExpedienteBundle:Docpersonal')->find($request->query->get('exp'));
+        $Documentos = $em->getRepository('ExpedienteBundle:Docpersonal')->findBy(array(
+                                                                                    'idexpediente' => $request->query->get('exp'),
+                                                                                    ));
 
         $entity = new Docpersonal();
         $entity->setIdexpediente($expediente);

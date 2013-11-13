@@ -1,0 +1,14 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+     <h3 class="text-center">Listado de puestos</h3>
+     <p class="text-center">Seleccione el nombre del puesto para el cual desea registrar la solicitud de empleo</p>
+     {{ grid_search(grid) }}
+     {{ grid(grid,_self) }} 
+     {% block grid_filters %}{% endblock %}
+     <br />
+     <div class="text-center">
+            <a href="{{ path('hello_page') }}" class="btn">Cancelar</a>
+      </div>
+{% endblock %}

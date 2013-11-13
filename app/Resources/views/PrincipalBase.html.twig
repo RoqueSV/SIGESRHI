@@ -65,7 +65,7 @@
 				<td align="center">
 					<p class="titulo1"> Instituto Salvadoreño de Rehabilitación Integral </p>
 					<br />
-					<p class="titulo1"> Sistema Informático de Gestión de Recurso Humano </p>
+					<p class="titulo1"> Sistema Informático para la Gestión de Recurso Humano </p>
 				</td>
 				<td>
 					<img src="{{ asset('images/Escudo_El_Salvador.png') }}" alt="El Salvador" height="150px" width="150px" /> 
@@ -85,11 +85,10 @@
 			{{ render(controller('AdminBundle:Default:menu', { 'nombreUsuario': app.user.username })) }}
 
 			{% else %}
-			<li><a href="#">Inicio </a></li>
-			<li><a href="#">Consultar Plaza </a></li>
-			<li><a href="#">Llenar Solicitud </a></li>
+			<li><a href="{{ path('hello_page') }} ">Inicio </a></li>
+			<li><a href="{{ path('plaza') }}">Consultar Plaza </a></li>
+			<li><a href="{{ path('solicitud_new') }} ">Llenar Solicitud </a></li>
 			{% endif %} 
-				
 			{% endblock %}
 		</ul>	
 	</nav>
@@ -101,11 +100,27 @@
 	<aside id="columna">
 		{% block seccion %}
 		{% if app.user %}
-		
-		<p>Usuario: {{ app.user.username }} <a href="{{path('sonata_user_admin_security_logout')}}">Salir</a></p>
+
+		<div class="text-center">
+		<p>{{ render(controller('AdminBundle:Default:rol', { 'nombreUsuario': app.user.username })) }}</p>
+		<img src="{{ asset('images/user.png') }}" alt="user" />
+		<p>Usuario:<b> {{ app.user.username }}</b> (<a href="{{path('sonata_user_admin_security_logout')}}">Salir</a>)</p>
+		</div>		
+		{# Secciones #}		
+		<br>
 			
+		<div  class="menu-seccion">
+		<ul>
+		{{ render(controller('AdminBundle:Default:Secciones', { 'idacceso': app.session.get('seccion'), 'nombreUsuario': app.user.username })) }} 
+		</ul>
+		</div>
+		<br>
 		
 		{% else %}
+		<div class="text-center">
+		<p><b>Usuarios registrados</b></p>
+		Entre aqui usando su nombre de usuario y contraseña
+	    </div><br />
 		{{ render(controller('FOSUserBundle:Security:login')) }}
 		{% endif %} 
 		{% endblock %}

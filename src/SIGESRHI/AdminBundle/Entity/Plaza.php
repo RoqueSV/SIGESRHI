@@ -5,11 +5,13 @@ namespace SIGESRHI\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 /**
  * Plaza
  *
  * @ORM\Table(name="plaza")
  * @ORM\Entity
+ * @GRID\Source(columns="id,nombreplaza,descripcionplaza", groups={"grupo_plaza"})
  * @ORM\HasLifecycleCallbacks
  */
 class Plaza
@@ -21,6 +23,7 @@ class Plaza
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="plaza_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(filterable=false, groups="grupo_plaza", visible=false)
      */
     private $id;
 
@@ -33,6 +36,7 @@ class Plaza
      * max = "100",
      * maxMessage = "El nombre de la plaza no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(groups="grupo_plaza",title="Nombre puesto", align="center", filter="input", operators={"like"}, operatorsVisible=false)
      */
     private $nombreplaza;
 
@@ -52,6 +56,7 @@ class Plaza
      * max = "500",
      * maxMessage = "La descripcion de la plaza no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(filterable=false, groups="grupo_plaza", title="Descripción")
      */
     private $descripcionplaza;
 

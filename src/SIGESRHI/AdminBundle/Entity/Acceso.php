@@ -26,10 +26,10 @@ class Acceso
     /**
      * @var string
      *
-     * @ORM\Column(name="nombrepagina", type="string", length=50, nullable=false)
+     * @ORM\Column(name="nombrepagina", type="string", length=150, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de pagina")
      * @Assert\Length(
-     * max = "50",
+     * max = "150",
      * maxMessage = "El nombre de pagina no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -196,6 +196,7 @@ class Acceso
     {
         return $this->idmodulo;
     }
+
 
     /**
      * Set idaccesosup

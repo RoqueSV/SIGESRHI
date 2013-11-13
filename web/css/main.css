@@ -111,40 +111,16 @@ border-top: 2px solid #999999;
 }
 
 
-/** botón circular **/
-.btn-cir {
-background-color: #f5f5f5;
-*background-color: #e6e6e6;
-display: inline-block;
-*display: inline;
-padding: 2px 8px 2px 8px;
-margin-bottom: 0;
-*margin-left: .3em;
-border: 1px solid #cccccc;
-*border: 0;
-border-radius: 100%;
-cursor: pointer;
-}
-
-/* Acciones */
-.btn-cir:hover,
-.btn-cir:focus,
-.btn-cir:active,
-.btn-cir.active,
-.btn-cir.disabled,
-.btn-cir[disabled] {
-color: #333333;
-background-color: #e6e6e6;
-*background-color: #d9d9d9;
-}
-/********************/
-
 /*  Justificar Texto */
 .justifyText{
 text-align : justify;
 margin: 10px 25px 10px 10px;
 }
 
+/* Justificar en columnas de tabla */
+.justifyColum{
+text-align : justify;
+}
 
 /* Fotografía Solicitud*/
 
@@ -165,23 +141,6 @@ textarea {
     width: 100%;
     height: 400px;
 } 
-
-/* Tablas en form */
-.mitable { 
-	border-collapse: collapse; 
-	text-align: left; 
-	width: 100%;
-	margin: 10px 0px; 
-} 
-
-.mitable td, .mitable th { 
-    padding: 5px 5px; 
- }
-
-.mitable th{
-	font-weight: bold;
-    background-color: #4F76A3;
-}
 
 .input-xmlarge
 {
