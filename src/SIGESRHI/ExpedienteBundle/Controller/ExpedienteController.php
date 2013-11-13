@@ -319,7 +319,7 @@ public function confirmarValidoAction($id)
         
         $rowAction1 = new RowAction('Registrar', 'docdigital_new');
         $rowAction1->setColumn('info_column');
-
+        
         $grid->addRowAction($rowAction1);     
         //$grid->addExport(new ExcelExport('Exportar a Excel'));
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));

@@ -31,4 +31,8 @@ docdigital_delete:
 
 grid_nuevo:
     pattern:  /{tipo}/gridnuevo
-    defaults: { _controller: "ExpedienteBundle:Expediente:agregarDigitales" }
+    defaults: { _controller: "ExpedienteBundle:Expediente:agregarDigitales", tipo:'I' }
+
+ver_docdigital:
+    pattern:  /documento/{iddoc}
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:verDigital" }

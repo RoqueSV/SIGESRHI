@@ -29,18 +29,25 @@
             <button type="button" onclick="cancelar();" class="btn">Cancelar</button>
         
         </div>
+        <br>
 
         {% if documentos|length > 0 %}
         <div class="text-center">
             <h3>Documentos Registrados</h3>
 
-            <table>
+            <table width="100%" border="2" class="table table-bordered table-hover">
+                <tr>
+                    <th>Nombre del Archivo:</th>
+                    <th>Fecha de Registro: </th>
+                    <th>Archivo:</th>
+                </tr>
 
                 {% for documento in documentos %}
 
                 <tr>
                     <td>{{documento.nombredocexp}}</td>
-                    <td>{{documento.rutadocexp}}</td>
+                    <td> {{(documento.fechadocexp|date('d-m-Y'))|fecha}} </td>
+                    <td><a href="{{path('ver_docdigital', {'iddoc': documento.id})}}" > Ver </a></td>
                 </tr>
 
                 {% endfor %}
