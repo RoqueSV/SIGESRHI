@@ -13,13 +13,6 @@ use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 
-use APY\DataGridBundle\Grid\Source\Entity;
-use APY\DataGridBundle\Grid\Action\RowAction;
-use APY\DataGridBundle\Grid\Column\ActionsColumn;
-use APY\DataGridBundle\Grid\Export\ExcelExport;
-use APY\DataGridBundle\Grid\Action\DeleteMassAction;
-use APY\DataGridBundle\Grid\Grid;
-
 /**
  * Expediente controller.
  *
@@ -299,9 +292,6 @@ public function confirmarValidoAction($id)
         return $this->redirect($this->generateUrl("expediente_aspirantes"));
         
     }
-
-}
-
 
 //funcion de grid para agregar documentos digitales a un expediente (Docexpediente)
     public function agregarDigitalesAction($tipo)
