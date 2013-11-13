@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Solicitud de Empleo subreport4" language="groovy" pageWidth="572" pageHeight="752" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="48f1a53c-2f1a-4d72-b3f1-89b6c1ba442a">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="sol_empleo" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select nombreempresa,direccionempresa,telefonoempresa,to_char(fechainiciolaboral,'DD "de" TMMonth "de" YYYY')as fechainiciolaboral,to_char(fechafinlaboral,'DD "de" TMMonth "de" YYYY')as fechafinlaboral,jefeinmediato,cargodesempenado,to_char(sueldo,'$9,999.00')as sueldo,motivoretiro,tipodatoempleo from datosEmpleo de join solicitudEmpleo se on(se.id=de.idsolicitudempleo) where se.id=$P{sol_empleo}]]>
+	</queryString>
+	<field name="nombreempresa" class="java.lang.String"/>
+	<field name="direccionempresa" class="java.lang.String"/>
+	<field name="telefonoempresa" class="java.lang.String"/>
+	<field name="fechainiciolaboral" class="java.lang.String"/>
+	<field name="fechafinlaboral" class="java.lang.String"/>
+	<field name="jefeinmediato" class="java.lang.String"/>
+	<field name="cargodesempenado" class="java.lang.String"/>
+	<field name="sueldo" class="java.lang.String"/>
+	<field name="motivoretiro" class="java.lang.String"/>
+	<field name="tipodatoempleo" class="java.lang.String"/>
+	<variable name="empleo" class="java.lang.String">
+		<variableExpression><![CDATA[($F{tipodatoempleo}=="Empleo Anterior")? "Fecha que laboró en la Empresa":"Fecha desde cuando labora en la Empresa"]]></variableExpression>
+	</variable>
+	<group name="Empleos">
+		<groupExpression><![CDATA[$F{tipodatoempleo}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement uuid="1e6088b4-29a3-4273-a60f-a4e056d2f12a" x="12" y="4" width="544" height="16"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tipodatoempleo}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<detail>
+		<band height="177" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="d3e82668-0f89-45e6-97d4-7fbb78c56996" x="149" y="3" width="407" height="20"/>
+				<box leftPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreempresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f5516603-681b-4dae-b365-91966e6ed4f9" x="12" y="92" width="137" height="20"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Cargo que desempeña:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1c980419-5eac-4ffd-86ff-9e9ddb377362" x="12" y="72" width="137" height="20"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Jefe inmediato:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da08e148-749a-4628-bbfc-3fbf039a2242" x="12" y="112" width="137" height="20"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Sueldo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c65356bb-5298-4603-b9d7-263edf4346e1" x="149" y="92" width="407" height="20"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cargodesempenado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="51c8cd36-eef8-4ed6-a1c9-9fadecb0634a" x="149" y="43" width="407" height="29"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechainiciolaboral}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="5d0bc0e2-692f-4b15-bfb3-09c8c920da51" x="149" y="23" width="407" height="20"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{direccionempresa}.concat(",  Tel. " ).concat( $F{telefonoempresa} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7c544c74-41e1-4bf7-9fdd-02f26c24893c" x="149" y="72" width="407" height="20"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jefeinmediato}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c5ac8810-7c25-4015-9e59-9963ac325ec4" x="12" y="23" width="137" height="20"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Direccion y Teléfono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2d8407aa-7e79-44cf-b073-f4e1e4ade194" x="12" y="3" width="137" height="20"/>
+				<box leftPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Nombre de la empresa:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="e0747974-9cd6-46c0-904c-d0533d80c717" x="149" y="132" width="407" height="45"/>
+				<box topPadding="3" leftPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivoretiro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2ced6d3b-483d-4a01-bce5-72cf514466d9" x="12" y="132" width="137" height="45"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Motivo para dejar el empleo]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4121ab57-b9e9-436c-b542-1d079117e754" x="149" y="112" width="407" height="20"/>
+				<box topPadding="3" leftPadding="3">
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sueldo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0356451a-2386-41ff-bf4e-e659532942b5" x="12" y="43" width="137" height="29"/>
+				<box topPadding="1" leftPadding="2" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{empleo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

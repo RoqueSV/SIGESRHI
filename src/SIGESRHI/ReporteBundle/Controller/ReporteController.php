@@ -111,4 +111,38 @@ class ReporteController extends Controller
      return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
    }
 
+   public function ReporteSolicitudAction()
+    {
+
+    //Incluimos camino de migas
+      
+      $breadcrumbs = $this->get("white_october_breadcrumbs");
+      $breadcrumbs->addItem("Solicitud", $this->get("router")->generate("solicitud"));
+      $breadcrumbs->addItem("PDF Solicitudempleo", $this->get("router")->generate("reporte_segurovida"));
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idSol=$request->get('idsol');           
+     
+     // Nombre reporte
+     $filename= 'Solicitud de empleo.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/SolicitudEmpleo/Solicitud de Empleo.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("sol_empleo", new java("java.lang.Integer", $idSol));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
  }

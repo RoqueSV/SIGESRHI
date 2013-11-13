@@ -13,3 +13,7 @@ reporte_create:
 reporte_segurovida:
     pattern:  /reporteseguro
     defaults: { _controller: ReporteBundle:Reporte:ReporteSeguroVida }
+
+reporte_solicitudempleo:
+    pattern:  /reportesolicitud
+    defaults: { _controller: ReporteBundle:Reporte:ReporteSolicitud }

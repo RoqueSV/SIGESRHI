@@ -32,12 +32,12 @@
 .grid tr.even
 {
     background-color: #FCFDFE;
-    text-align: left;
+    text-align: justify;
 }
 
 .grid tr.odd {
     background-color: #F7F9FC;
-    text-align: left;
+    text-align: justify;
 }
 
 .grid td{

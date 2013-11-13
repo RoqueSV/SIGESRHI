@@ -5,7 +5,6 @@ namespace SIGESRHI\AdminBundle\Controller;
 use SIGESRHI\AdminBundle\Entity\Usuario;
 use SIGESRHI\AdminBundle\Entity\Rol;
 use SIGESRHI\AdminBundle\Entity\Acceso;
-//use SIGESRHI\AdminBundle\Entity\Modulo;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -19,7 +18,7 @@ class DefaultController extends Controller
 
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("sonata_user_impersonating"));
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
 
         $session = $this->getRequest()->getSession();
         $session->set('seccion',0);

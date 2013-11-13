@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Solicitud de Empleo_subreport1" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="44123270-f914-4911-9057-acd51c27aa91">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="sol_empleo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select idsolicitudEmpleo,t.nombretitulo,centroestudio, substr(niveltitulo,3) as niveltitulo
+from informacionAcademica ia join titulo t on(ia.idtitulo=t.id) where idsolicitudempleo=$P{sol_empleo}]]>
+	</queryString>
+	<field name="idsolicitudempleo" class="java.lang.Integer"/>
+	<field name="nombretitulo" class="java.lang.String"/>
+	<field name="centroestudio" class="java.lang.String"/>
+	<field name="niveltitulo" class="java.lang.String"/>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement uuid="f43d55bd-7596-435e-827f-64211da79d17" mode="Opaque" x="117" y="1" width="260" height="19" backcolor="#CCCCCC"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Titulo obtenido o grado aprobado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c2578727-0055-44cd-b209-8ec2b42dec03" mode="Opaque" x="15" y="1" width="102" height="19" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clase de Estudio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ad67c2e5-8067-484d-801f-94ed7fe2206e" mode="Opaque" x="377" y="1" width="182" height="19" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Centro de Estudio]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
+				<reportElement uuid="61e84e38-021a-4e0e-a633-16dd0f45d0a7" x="15" y="0" width="102" height="24" isRemoveLineWhenBlank="true"/>
+				<box topPadding="1" leftPadding="3">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{niveltitulo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="1f715342-4ce5-4f9d-ad95-bd506d388f3d" stretchType="RelativeToTallestObject" x="377" y="0" width="182" height="24"/>
+				<box topPadding="1" leftPadding="2" bottomPadding="1" rightPadding="1">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{centroestudio}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="fe31d4be-b485-4d25-b861-b753ef589ab0" stretchType="RelativeToTallestObject" x="117" y="0" width="261" height="24"/>
+				<box topPadding="2" leftPadding="3">
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombretitulo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
