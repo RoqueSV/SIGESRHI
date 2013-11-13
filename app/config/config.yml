@@ -30,6 +30,7 @@ twig:
         resources:
             - ShtumiUsefulBundle::fields.html.twig
 
+
 # Assetic Configuratio
 assetic:
     debug:          %kernel.debug%

@@ -23,8 +23,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
-use APY\DataGridBundle\Grid\Export\ExcelExport;
-use APY\DataGridBundle\Grid\Action\DeleteMassAction;
 use APY\DataGridBundle\Grid\Grid;
 
 /**
@@ -38,7 +36,7 @@ class SolicitudempleoController extends Controller
      *
      */
    
-    public function indexAction()
+   /* public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -48,30 +46,60 @@ class SolicitudempleoController extends Controller
             'entities' => $entities,
         ));
     }
+*/
 
+    //Metodo para establecer grid de consulta de solicitudes de empleo
+    public function indexAction($tipo)
+    {
+        $source = new Entity('ExpedienteBundle:Solicitudempleo', 'solicitud_empleo');
+        // Get a grid instance
+        $grid = $this->get('grid');
+
+       
+          $tableAlias=$source->getTableAlias();
+        $source->manipulateQuery(
+        function($query) use ($tableAlias, $tipo){
+            $query->join($tableAlias.".idexpediente ", "s")
+            ->andWhere("s.tipoexpediente = 'I'");
+            //->setParameter('var',$tipo);
+        }
+            );
+
+        // Attach the source to the grid
+        $grid->setSource($source);
+
+        $em = $this->getDoctrine()->getManager();
+          
+        $grid->setNoDataMessage("No se encontraron resultados");
+        $grid->setDefaultOrder('numsolicitud', 'asc');
+        
+        $rowAction1 = new RowAction('Mostrar', 'solicitud_show');
+        $rowAction1->setColumn('info_column');
+
+        $grid->addRowAction($rowAction1);     
+        //$grid->addExport(new ExcelExport('Exportar a Excel'));
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+    // Manage the grid redirection, exports and the response of the controller
+    return $grid->getGridResponse('ExpedienteBundle:Solicitudempleo:index.html.twig');
+    }
    
+
+
     public function indexEditAction($tipo)
     {
         $source = new Entity('ExpedienteBundle:Solicitudempleo', 'solicitud_empleo');
         // Get a grid instance
         $grid = $this->get('grid');
 
-        $source->manipulateRow(
-            function ($row) use ($tipo)
-            {
-            
-            // Mostrar solo las solicitud de expedientes invalidos
-            if ($row->getField('idexpediente.tipoexpediente') != $tipo) {
-                return null;
-            }
-            
-            return $row;
-
-            //concat columns
-            $row->setField('nombres', $row->getField('nombres')." ".$row->getField('primerapellido')." ".$row->getField('segundoapellido')." ".$row->getField('apellidocasada') );
-
-            }
-        );
+        $tableAlias=$source->getTableAlias();
+        $source->manipulateQuery(
+        function($query) use ($tableAlias, $tipo){
+            $query->join($tableAlias.".idexpediente ", "s")
+            ->andWhere("s.tipoexpediente = :var")
+            ->setParameter('var',$tipo);
+        }
+            );
 
         // Attach the source to the grid
         $grid->setSource($source);
@@ -85,15 +113,12 @@ class SolicitudempleoController extends Controller
         $rowAction1 = new RowAction('Modificar', 'solicitud_edit');
         $rowAction1->setColumn('info_column');
 
-
-
         $grid->addRowAction($rowAction1);     
         //$grid->addExport(new ExcelExport('Exportar a Excel'));
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
 
     // Manage the grid redirection, exports and the response of the controller
     return $grid->getGridResponse('ExpedienteBundle:Solicitudempleo:grid_editar.html.twig');
-
     }
 
 
@@ -225,7 +250,7 @@ class SolicitudempleoController extends Controller
         $entity = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Solicitudempleo entity.');
+            throw $this->createNotFoundException('No se puede encontrar la entidad de Solicitud de Empleo .');
         }
 
         $deleteForm = $this->createDeleteForm($id);

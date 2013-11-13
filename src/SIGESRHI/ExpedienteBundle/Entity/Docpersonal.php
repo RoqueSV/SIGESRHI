@@ -54,7 +54,7 @@ class Docpersonal
     /**
      * @var \Expediente
      *
-     * @ORM\ManyToOne(targetEntity="Expediente")
+     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="Docs_personal")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
      * })

@@ -13,6 +13,13 @@ use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Action\RowAction;
+use APY\DataGridBundle\Grid\Column\ActionsColumn;
+use APY\DataGridBundle\Grid\Export\ExcelExport;
+use APY\DataGridBundle\Grid\Action\DeleteMassAction;
+use APY\DataGridBundle\Grid\Grid;
+
 /**
  * Expediente controller.
  *
@@ -25,44 +32,59 @@ class ExpedienteController extends Controller
      */
     public function indexAction()
     {
-            $source = new Entity('ExpedienteBundle:Solicitudempleo','vista_basica_expediente');
-            $grid = $this->get('grid');
-            $grid->setSource($source);  
-            $grid->setNoDataMessage("No se encontraron resultados");
-            $source->manipulateRow(
-                function ($row)
-                {                    
-                    if($row->getField('idexpediente.tipoexpediente')!='I'){
-                        return null;
-                    }
-                    return $row;
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('ExpedienteBundle:Expediente')->findAll();
+
+        return $this->render('ExpedienteBundle:Expediente:index.html.twig', array(
+            'entities' => $entities,
+        ));    
+    }
+
+    public function indexAspirantesAction()
+    {
+        $source = new Entity('ExpedienteBundle:Solicitudempleo','vista_basica_expediente');
+        $grid = $this->get('grid');
+        $grid->setSource($source);  
+        $grid->setNoDataMessage("No se encontraron resultados");
+
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->Join($tableAlias.'.idexpediente','e')
+                       ->andWhere('e.tipoexpediente = :inv')
+                       ->setParameter('inv','I');
+            }
+        );
+    /*    $source->manipulateRow(
+            function ($row)
+            {                    
+                if($row->getField('idexpediente.tipoexpediente')!='I'){
+                    return null;
                 }
-            );
-            $rowAction1 = new RowAction('Validar', 'expediente_validar');
-            $rowAction1->setColumn('info_column');
-            $rowAction1->manipulateRender(
-                function ($action, $row)
-                {
-                    $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id') ));
-                    return $action; 
-                }
-            );
-            $grid->addRowAction($rowAction1); 
+                return $row;
+            }
+        );*/
+        $rowAction1 = new RowAction('Validar', 'expediente_validar');
+        $rowAction1->setColumn('info_column');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id') ));
+                return $action; 
+            }
+        );
+        $grid->addRowAction($rowAction1); 
 
-            $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
-            
-            return $grid->getGridResponse('ExpedienteBundle:Expediente:index.html.twig');
-
-        }
-    
-    /*      $em = $this->getDoctrine()->getManager();
-
-            $entities = $em->getRepository('ExpedienteBundle:Expediente')->findAll();
-
-            return $this->render('ExpedienteBundle:Expediente:index.html.twig', array(
-                'entities' => $entities,
-            ));*/
-    
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", "hello_page");
+        $breadcrumbs->addItem("Gestion de Aspirantes","");
+        $breadcrumbs->addItem("Registrar como expediente valido de banco de datos institucional",  $this->get("router")->generate("expediente_aspirantes"));
+        
+        return $grid->getGridResponse('ExpedienteBundle:Expediente:index.html.twig');
+    }    
 
     /**
      * Creates a new Expediente entity.
@@ -221,14 +243,14 @@ class ExpedienteController extends Controller
 
 
 /* Registra los documentos digitales para un expediente*/
-public function RegistraDocumentosDAction($id)
+public function registraDocDigAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Expediente entity.');
+            throw $this->createNotFoundException('No se puede encontrar la entidad expediente.');
         }
 
         $editForm = $this->createForm(new ExpDocumentoDigitalType(), $entity);
@@ -239,7 +261,8 @@ public function RegistraDocumentosDAction($id)
         ));
     }
 
-/* Registra una solicitud como valida */
+
+/* Formulario para registrar una solicitud como valida */
 public function validarAction()
     {
         $request = $this->getRequest();
@@ -254,10 +277,67 @@ public function validarAction()
 
         //$em = $this->getDoctrine()->getManager();
         //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);        
-
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", "hello_page");
+        $breadcrumbs->addItem("Gestion de Aspirantes","");
+        $breadcrumbs->addItem("Registrar como expediente valido de banco de datos institucional",  $this->get("router")->generate("expediente_aspirantes"));
         return $this->render('ExpedienteBundle:Expediente:validar.html.twig', array(          
             'expediente' => $expedienteinfo,
         ));
     }
 
+/* Confirma un expediente de aspirante como valido*/
+public function confirmarValidoAction($id)
+    {
+        $request = $this->getRequest();
+        
+        $em = $this->getDoctrine()->getManager();
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->registrarValido($id);
+        //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
+        $this->get('session')->getFlashBag()->add('confirm','Expediente de aspirante validado');
+        return $this->redirect($this->generateUrl("expediente_aspirantes"));
+        
+    }
+
 }
+
+
+//funcion de grid para agregar documentos digitales a un expediente (Docexpediente)
+    public function agregarDigitalesAction($tipo)
+    {
+        $source = new Entity('ExpedienteBundle:Expediente', 'grupo_docdigital');
+        // Get a grid instance
+        $grid = $this->get('grid');
+
+
+        $tableAlias=$source->getTableAlias();
+        $source->manipulateQuery(
+        function($query) use ($tableAlias, $tipo){
+            $query->andWhere($tableAlias.".tipoexpediente = :var")
+            ->setParameter('var',$tipo);
+        }
+            );
+
+        // Attach the source to the grid
+        $grid->setSource($source);
+
+        $em = $this->getDoctrine()->getManager();
+          
+        $grid->setNoDataMessage("No se encontraron resultados");
+        $grid->setDefaultOrder('idsolicitudempleo.numsolicitud', 'asc');
+        
+        $rowAction1 = new RowAction('Registrar', 'docdigital_new');
+        $rowAction1->setColumn('info_column');
+
+        $grid->addRowAction($rowAction1);     
+        //$grid->addExport(new ExcelExport('Exportar a Excel'));
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+    // Manage the grid redirection, exports and the response of the controller
+    return $grid->getGridResponse('ExpedienteBundle:Docexpediente:grid_agregar.html.twig');
+
+    }
+
+}
+

@@ -197,6 +197,7 @@ class Acceso
         return $this->idmodulo;
     }
 
+
     /**
      * Set idaccesosup
      *

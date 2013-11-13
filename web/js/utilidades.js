@@ -70,6 +70,16 @@ $(document).ready(function(){
 
 });
 
+
+/** Funcion confirmar cancelar ***/
+function cancelar() {
+
+ var decision= confirm('Si cancela perder\xE1 los datos del formulario actual.\n\xbfEst\xE1 seguro de cancelar?');
+    if(decision){
+      window.history.back(1);
+    }
+}
+
 /****** Funciones predefinidas Formularios embebidos ************/
 function addTagForm(collectionHolder, $newLinkLi) {
     // Obtiene los datos del prototipo explicado anteriormente
@@ -117,8 +127,7 @@ $('.date').datepicker({
               yearRange: "-100:+0",});
 
 $(".telefono").mask("99999999",{placeholder:" "});
-$(".sueldo").mask("/^[0-9]+(\.+[0-9]+[0-9])$/",{placeholder:" "});
-$(".dinero").maskMoney();
+$(".dinero").maskMoney({thousands:'', decimal:'.'});
 });
 
 }

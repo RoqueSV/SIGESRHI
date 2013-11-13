@@ -24,8 +24,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Assert\Callback(methods={"esNitValido"})
  * @Vich\Uploadable
  *
- * @GRID\Source(columns="id,nombres, primerapellido, segundoapellido,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
- * @GRID\Source(columns="id,numsolicitud, nombres, primerapellido, segundoapellido, apellidocasada, idexpediente.tipoexpediente,idplaza.nombreplaza",groups={"solicitud_empleo"})
+ * @GRID\Source(columns="id,nombrecompleto,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
+ * @GRID\Source(columns="id,numsolicitud, nombrecompleto, idexpediente.tipoexpediente,idplaza.nombreplaza",groups={"solicitud_empleo"})
  */
 
 
@@ -64,7 +64,6 @@ class Solicitudempleo
      * )
      *
      * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
-     * @GRID\Column(filterable=false, groups={"solicitud_empleo"}, visible=false)
      */
     private $apellidocasada;
 
@@ -79,6 +78,7 @@ class Solicitudempleo
      * )
      *
      * @GRID\Column(title="Apellido", filterable=false, groups={"grupo_pruebapsicologica","apellidos", "solicitud_empleo","vista_basica_expediente"}, operators={"like","eq"},visible=false)
+     * @GRID\Column(title="Apellido", filterable=false, groups={"grupo_pruebapsicologica","apellidos"}, operators={"like","eq"},visible=false)
      */
     private $primerapellido;
 
@@ -91,7 +91,6 @@ class Solicitudempleo
      * maxMessage = "El segundo apellido no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(title="Apellido", filterable=false, type="text", groups={"grupo_pruebapsicologica","apellidos", "solicitud_empleo","vista_basica_expediente"}, operators={"like","eq"},visible=false)
      */
     private $segundoapellido;
 
@@ -105,8 +104,6 @@ class Solicitudempleo
      * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(title="Nombre", filter="input", groups={"grupo_pruebapsicologica", "solicitud_empleo","vista_basica_expediente"}, type="text", operators={"like","eq"})
-     *
      */
     private $nombres;
 
@@ -114,7 +111,9 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="nombrecompleto", type="string", length=100, nullable=true)
+     * @GRID\Column(title="Nombre", filter="input", groups={"grupo_pruebapsicologica", "solicitud_empleo","vista_basica_expediente"}, type="text", operators={"like"}, operatorsVisible=false)
      *
+     * @GRID\Column(title="Nombre", filter="input", groups={"solicitud_empleo"}, type="text", operators={"like"}, operatorsVisible=false)
      */
     private $nombrecompleto;
 
