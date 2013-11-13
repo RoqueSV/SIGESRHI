@@ -1,0 +1,138 @@
+{% extends '::PrincipalBase.html.twig' %}
+{% block principal -%}
+    <h3 class="text-center">Consultar perfil del puesto</h3>
+
+   <h4>Identificación del puesto</h4>
+    <table class="table table-bordered table-hover">
+        <tbody>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombreplaza }}</td>
+            </tr>
+            <tr>
+                <th>Descripción</th>
+                <td><p class="justifyColum">{{ entity.descripcionplaza }}</p></td>
+            </tr>
+             <tr>
+                <th>Area</th>
+                <td>{{ entity.idarea}} </td>
+            </tr>
+            <tr>
+                <th>Edad requerida</th>
+                <td>{{ entity.edad }} años</td>
+            </tr>
+            <tr>
+                <th>Experiencia requerida</th>
+                <td>{{ entity.experiencia }} años</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{%if (entity.sexo =='A') %} Ambos {% elseif (entity.sexo =='F') %} Femenino {% else %} Masculino {% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>Funciones generales</h4>
+     {% if entity.idfuncion|length > 0 %}
+
+            <table class="table table-bordered table-hover">                   
+
+            {% for funcion in entity.idfuncion %}
+                    <tr>
+                       <td> &#8226; {{funcion.nombrefuncion}} </td>
+                    </tr>      
+            {% endfor %}
+             
+            </table>
+
+        {% else %}
+
+        <p>No aplica.</p>
+
+        {% endif %}
+    <fieldset>
+    <legend>Requisitos del puesto</legend>
+    <h4>Formacion académica</h4>
+     {% if entity.idtitulo|length > 0 %}
+
+            <table class="table table-bordered table-hover">                   
+
+            {% for titulo in entity.idtitulo %}
+                    <tr>
+                       <td> &#8226; {{titulo.nombretitulo}} </td>
+                    </tr>      
+            {% endfor %}
+             
+            </table>
+
+        {% else %}
+
+        <p>No aplica.</p>
+
+        {% endif %}
+
+    <h4>Habilidades</h4>
+     {% if entity.idhabilidad|length > 0 %}
+
+            <table class="table table-bordered table-hover">                   
+
+            {% for habilidad in entity.idhabilidad %}
+                    <tr>
+                       <td> &#8226; {{habilidad.nombrehabilidad}} </td>
+                    </tr>      
+            {% endfor %}
+             
+            </table>
+
+        {% else %}
+
+        <p>No aplica.</p>
+
+        {% endif %}
+
+    <h4>Conocimientos</h4>
+     {% if entity.idconocimiento|length > 0 %}
+
+            <table class="table table-bordered table-hover">                   
+
+            {% for conocimiento in entity.idconocimiento %}
+                    <tr>
+                       <td> &#8226; {{conocimiento.nombreconocimiento}} </td>
+                    </tr>      
+            {% endfor %}
+             
+            </table>
+
+        {% else %}
+
+        <p>No aplica.</p>
+
+    {% endif %}
+
+    <h4>Manejo de equipo</h4>
+     {% if entity.idmanejoequipo|length > 0 %}
+
+            <table class="table table-bordered table-hover">                   
+
+            {% for manejo in entity.idmanejoequipo %}
+                    <tr>
+                       <td> &#8226; {{manejo.nombremanejo}} </td>
+                    </tr>      
+            {% endfor %}
+             
+            </table>
+
+        {% else %}
+
+        <p>No aplica.</p>
+
+    {% endif %}
+
+   </fieldset>
+
+    <div class="text-center">
+     <a href="{{ path('solicitud_new', { 'id': entity.id }) }}" class="btn btn-primary">Registrar solicitud</a>
+     <a href="{{ path('sonata_user_impersonating') }}" class="btn">Cancelar</a>
+     </div>
+
+{% endblock %}

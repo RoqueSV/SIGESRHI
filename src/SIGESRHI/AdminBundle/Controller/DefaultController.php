@@ -10,11 +10,15 @@ use SIGESRHI\AdminBundle\Entity\Acceso;
 use Doctrine\ORM\EntityRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
     public function indexAction()
     {
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("sonata_user_impersonating"));
         return $this->render('AdminBundle:Default:index.html.twig');
     }
 
@@ -31,8 +35,28 @@ class DefaultController extends Controller
         )->setParameter('username', $nombreUsuario);
 
         $opciones = $query->getResult();
-               
+
         return $this->render('::menuBase.html.twig',array('opciones'=>$opciones));
     
     }
+
+    public function rolAction($nombreUsuario)
+    {
+     $em = $this->getDoctrine()->getManager();
+     $query = $em->createQuery('
+          SELECT g.id rol FROM ApplicationSonataUserBundle:User u
+          join u.groups g
+          WHERE u.username = :username'
+        )->setParameter('username', $nombreUsuario);
+        try {
+        $id = $query->getSingleResult(); 
+        }
+        catch(\Doctrine\ORM\NoResultException $e) {
+        $id=null;
+        }
+        $rol = $em->getRepository('ApplicationSonataUserBundle:Group')->findOneById($id);
+
+        return new Response($rol);
+    }
 }
+

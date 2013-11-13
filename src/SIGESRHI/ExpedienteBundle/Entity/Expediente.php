@@ -50,7 +50,7 @@ class Expediente
 
     /**
      * @ORM\OneToOne(targetEntity="Empleado", mappedBy="idexpediente")
-     * @GRID\Column(field="idempleado.codigoempleado", groups="grupo_segurovida" ,title="Codigo", filter="input", operators={"eq","like"}, defaultOperator="eq", searchOnClick="true", joinType="inner")
+     * @GRID\Column(field="idempleado.codigoempleado", groups="grupo_segurovida" ,title="Codigo", filter="input", align="center", operators={"like"}, operatorsVisible=false, joinType="inner")
      * @GRID\Column(field="idempleado.idcontratacion.idplaza.nombreplaza", groups="grupo_segurovida",type="text", title="Plaza", filterable=false, joinType="inner")
      */
     private $idempleado;
@@ -58,8 +58,8 @@ class Expediente
     /**
      * @var \Solicitudempleo
      * @ORM\OneToOne(targetEntity="Solicitudempleo", mappedBy="idexpediente")
-     * @GRID\Column(field="idsolicitudempleo.nombrecompleto", groups={"grupo_segurovida","grupo_contratacion"} ,title="Nombres", operators={"eq","like"}, joinType="inner")
-     * @GRID\Column(field="idsolicitudempleo.idplaza.nombreplaza", groups="grupo_contratacion",type="text", title="Plaza solicitada", operators={"eq","like"}, joinType="inner")
+     * @GRID\Column(field="idsolicitudempleo.nombrecompleto", groups={"grupo_segurovida","grupo_contratacion"} ,title="Nombres", operators={"like"}, operatorsVisible=false, joinType="inner")
+     * @GRID\Column(field="idsolicitudempleo.idplaza.nombreplaza", groups="grupo_contratacion",type="text", title="Plaza solicitada", operators={"like"}, operatorsVisible=false, joinType="inner")
      */
     private $idsolicitudempleo;
 

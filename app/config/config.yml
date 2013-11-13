@@ -98,7 +98,7 @@ sonata_block:
         sonata.block.service.rss:    ~
 
 sonata_admin:
-    title:      'SISTEMA INFORMATICO PARA LA GESTION DEL RECURSO HUMANO'
+    title:      'SIGESRHI - Administrador'
     title_logo: images/Logo_ISRI.png
     templates:
         # plantillas globales predefinidas
@@ -173,4 +173,9 @@ shtumi_useful:
         centros:
             class: ExpedienteBundle:Informacionacademica
             property: centroestudio
+            search: contains
+
+        empleados:
+            class: ExpedienteBundle:Solicitudempleo
+            property: nombrecompleto
             search: contains

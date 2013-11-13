@@ -26,4 +26,8 @@ sonata_user_impersonating:
 hello_page:
    path:  /inicio
    defaults: { _controller: AdminBundle:Default:index }
+
+AdminBundle_plaza:
+   resource: "@AdminBundle/Resources/config/routing/plaza.yml"
+   prefix:   /plaza
     

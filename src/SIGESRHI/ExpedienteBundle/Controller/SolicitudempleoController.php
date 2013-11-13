@@ -189,7 +189,22 @@ class SolicitudempleoController extends Controller
         $datosEst->name = 'Dato studio 1';
         $entity->getDestudios()->add($datosEst);
         //termina pruebas
-
+        
+        //incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+       
+        //Verificamos si se hizo búsqueda de plaza
+        if(isset($_GET['id'])){
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+        $plaza = $em->getRepository('AdminBundle:Plaza')->find($request->get('id'));
+        $entity->setIdplaza($plaza);
+        $breadcrumbs->addItem("Seleccionar plaza", $this->get("router")->generate("plaza"));
+        $breadcrumbs->addItem("Consultar plaza", $this->get("router")->generate("plaza_ver",array("id"=>$request->get('id'))));
+        }
+        $breadcrumbs->addItem("Registrar solicitud", $this->get("router")->generate("solicitud_new"));      
+         
         $form   = $this->createForm(new SolicitudempleoType(), $entity);
 
         return $this->render('ExpedienteBundle:Solicitudempleo:new.html.twig', array(
