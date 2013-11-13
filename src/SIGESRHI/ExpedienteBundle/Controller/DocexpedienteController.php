@@ -44,6 +44,8 @@ class DocexpedienteController extends Controller
         $em = $this->getDoctrine()->getManager();
         $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);
 
+        $Documentos = $em->getRepository('ExpedienteBundle:Docexpediente')->findBy(array('idexpediente' => $expediente->getId()));
+
         //establecemos el id del expediente
         $entity->setIdexpediente($expediente);
 
@@ -55,7 +57,12 @@ class DocexpedienteController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('docdigital_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('docdigital_new', array('id' => $entity->getIdexpediente()->getId())));
+            /* return $this->render('ExpedienteBundle:Docexpediente:new.html.twig', array(
+            'id' => $entity->getIdexpediente(),
+            'form'   => $form->createView(),
+            'documentos' => $Documentos,
+        ));*/
         }
 
         return $this->render('ExpedienteBundle:Docexpediente:new.html.twig', array(
@@ -77,10 +84,16 @@ class DocexpedienteController extends Controller
         $entity = new Docexpediente();
         $form   = $this->createForm(new DocexpedienteType(), $entity);
 
+        //agregado para obtener todos los documentos digitales registrados para un expediente
+         $em = $this->getDoctrine()->getManager();
+        $Documentos = $em->getRepository('ExpedienteBundle:Docexpediente')->findBy(array('idexpediente' => $id));
+        //$Documentos= $em->getRepository('ExpedienteBundle:Docexpediente')->find($id);
+
         return $this->render('ExpedienteBundle:Docexpediente:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            'id' => $id
+            'id' => $id,
+            'documentos' => $Documentos
         ));
     }
 

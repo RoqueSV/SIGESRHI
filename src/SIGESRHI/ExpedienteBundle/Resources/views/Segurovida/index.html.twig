@@ -1,7 +1,12 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-
+<style type="text/css">
+    .grid .last-column
+      {
+       text-align: center;
+      }
+</style>
 {% if app.session.started %}
 {% for flashMessage in app.session.flashbag.get('delete') %}
 <div class="alert alert-danger">
@@ -13,7 +18,7 @@
      <h3 class="text-center">Registro de seguro colectivo de vida</h3>
      <p class="text-center">Seleccione un empleado de la lista</p>
      {{ grid_search(grid) }}
-     {{ grid(grid,_self, 'APYDataGridBundle::blocks_js.jquery.html.twig') }} 
+     {{ grid(grid,_self) }} 
      {% block grid_filters %}{% endblock %}
 
 {% endblock %}

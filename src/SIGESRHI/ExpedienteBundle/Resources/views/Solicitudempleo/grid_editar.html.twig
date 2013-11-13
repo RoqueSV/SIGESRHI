@@ -1,7 +1,10 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-    <h1>Solicitudempleo list</h1>
+
+<div class="text-center">
+    <h3> Editar Datos de Solicitud </h3>
+</div>
 
 
 {{ grid_search(grid) }} 
@@ -10,4 +13,7 @@
 <br>
 {% block grid_filters %}{% endblock %} 
 
+<div class="text-center">
+<a href="{{path('hello_page')}}" class="btn"> Cancelar </a>
+</div>
  {% endblock %}

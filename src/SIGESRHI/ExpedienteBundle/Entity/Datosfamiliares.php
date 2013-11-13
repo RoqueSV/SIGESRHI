@@ -38,10 +38,10 @@ class Datosfamiliares
     /**
      * @var string
      *
-     * @ORM\Column(name="direccionfamiliar", type="string", length=50, nullable=false)
+     * @ORM\Column(name="direccionfamiliar", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar la direccion del familiar")
      * @Assert\Length(
-     * max = "50",
+     * max = "100",
      * maxMessage = "La direccion del familiar no debe exceder los {{limit}} caracteres"
      * )
      */

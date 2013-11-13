@@ -14,6 +14,7 @@ use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Grid;
 
 
+
 /**
  * Segurovida controller.
  *
@@ -29,39 +30,41 @@ class SegurovidaController extends Controller
         $source = new Entity('ExpedienteBundle:Expediente','grupo_segurovida');
         
         $grid = $this->get('grid');
-   
-        $source->manipulateRow(
+
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query//->Join($tableAlias.'.idsegurovida', 'e')
+                      //->andWhere($tableAlias.'.idsegurovida IS NOT NULL')
+                      ->andWhere($tableAlias.'.tipoexpediente = :tipo')
+                      //->setParameter('es',NULL)
+                      ->setParameter('tipo','E');
+            }
+        );
+      
+       $source->manipulateRow(
             function ($row) 
-            {
-                        
-            // Mostrar solo los expedientes sin seguro de vida
-            if ($row->getField('idsegurovida.id')!=NULL) {
-            return null;
-            }
-            
-            // Mostrar solo empleados activos
-            if ($row->getField('tipoexpediente')!='E') {
-            return null;
-            }
-            //concat columns
-            //$row->setField('idsolicitudempleo.nombres', $row->getField('idsolicitudempleo.nombres')." ".$row->getField('idsolicitudempleo.primerapellido')." ".$row->getField('idsolicitudempleo.segundoapellido'));
+            {           
+              // Mostrar solo los expedientes sin seguro de vida
+              if ($row->getField('idsegurovida.id')!=NULL) {
+               return null;
+              }
             return $row;
             }
         );
         
-        //$grid->setId('grid_segurovida');
+        $grid->setId('grid_segurovida');
         $grid->setSource($source);              
-        
+        $grid->setDefaultOrder('idempleado.codigoempleado', 'asc'); 
         // Crear
         $rowAction1 = new RowAction('Registrar', 'segurovida_new');
-        $rowAction1->setRouteParameters(array('id'));
-        $rowAction1->setColumn('info_column');
         $grid->addRowAction($rowAction1);
         
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("sonata_user_impersonating"));
         $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
         
         return $grid->getGridResponse('ExpedienteBundle:Segurovida:index.html.twig');
@@ -106,7 +109,6 @@ class SegurovidaController extends Controller
         if($sum!=100){
         $this->get('session')->getFlashBag()->add('error', 'Error. La suma de los porcentajes debe ser igual a 100.');
         /* Obtener datos expediente para mostrar nuevamente en caso de error */
-        $em = $this->getDoctrine()->getManager();
         $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($id);
         return $this->render('ExpedienteBundle:Segurovida:new.html.twig', array(
             'entity' => $entity,
@@ -126,7 +128,6 @@ class SegurovidaController extends Controller
         
         $this->get('session')->getFlashBag()->add('error', 'Hubo un error en el procesamiento de los datos. Revise e intente nuevamente.');
         /* Obtener datos expediente para mostrar nuevamente en caso de error */
-        $em = $this->getDoctrine()->getManager();
         $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($id);
         return $this->render('ExpedienteBundle:Segurovida:new.html.twig', array(
             'entity' => $entity,
@@ -159,6 +160,7 @@ class SegurovidaController extends Controller
         
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("sonata_user_impersonating"));
         $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
         $breadcrumbs->addItem("Registro", $this->get("router")->generate("segurovida_new"));
 
@@ -178,18 +180,16 @@ class SegurovidaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ExpedienteBundle:Segurovida')->find($id);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('No existe el registro seleccionado.');
+        }
 
         // Obtengo id expediente del seguro de vida
         $idexpediente = $entity->getIdexpediente();
         /* Obtener datos expediente */
-        $em = $this->getDoctrine()->getManager();
         $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($idexpediente);
-        
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Segurovida entity.');
-        }
-        
-
+              
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ExpedienteBundle:Segurovida:show.html.twig', array(
@@ -219,7 +219,6 @@ class SegurovidaController extends Controller
         $idexpediente = $entity->getIdexpediente();
 
         /* Obtener datos expediente */
-        $em = $this->getDoctrine()->getManager();
         $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($idexpediente);
         
         return $this->render('ExpedienteBundle:Segurovida:edit.html.twig', array(

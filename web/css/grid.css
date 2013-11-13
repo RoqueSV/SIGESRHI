@@ -32,14 +32,18 @@
 .grid tr.even
 {
     background-color: #FCFDFE;
-    text-align: center;
+    text-align: left;
 }
 
 .grid tr.odd {
     background-color: #F7F9FC;
-    text-align: center;
-
+    text-align: left;
 }
+
+.grid td{
+  text-align: justify;
+}
+
 /**********/
 .grid tr:hover {
  background: #D5EAFF;
@@ -150,7 +154,7 @@ th div {
 
 /* Alignement */
 .grid .align-left {
-    text-align: center;
+    text-align: left;
 }
 
 .grid .align-center {
@@ -158,7 +162,7 @@ th div {
 }
 
 .grid .align-right {
-    text-align: center;
+    text-align: right;
 }
 
 /* Column filter */
@@ -187,9 +191,11 @@ th div {
     width: 80px;
     display: inline-block;
     text-align: right;
+    color: #4F76A3;
+    font-weight: bold;
 }
 
 .grid-search select, .grid-search .grid-filter-input-query input {
-    width: 150px;
+    width: 300px;
 }
 

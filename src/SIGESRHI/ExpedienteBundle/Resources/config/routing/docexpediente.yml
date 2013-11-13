@@ -28,3 +28,7 @@ docdigital_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "ExpedienteBundle:Docexpediente:delete" }
     requirements: { _method: post|delete }
+
+grid_nuevo:
+    pattern:  /{tipo}/gridnuevo
+    defaults: { _controller: "ExpedienteBundle:Expediente:agregarDigitales" }

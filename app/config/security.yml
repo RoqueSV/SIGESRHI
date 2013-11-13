@@ -19,8 +19,10 @@ security:
             pattern:    ^/
             form_login:
                 check_path: /login_check
-                login_path: /inicio
+                login_path: /
                 provider: fos_userbundle
+                use_referer: true
+                success_handler: security.authentication.success_handler
             logout:
                 path:   /admin/logout
                 target: /
