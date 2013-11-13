@@ -38,7 +38,7 @@ class Docpersonal
     /**
      * @var boolean
      *
-     * @ORM\Column(name="entregado", type="boolean", nullable=false)
+     * @ORM\Column(name="entregado", type="boolean", nullable=true)
      * @Assert\NotNull(message="Debe ingresar la opcion entregado")
      */
     private $entregado;

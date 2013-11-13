@@ -1,20 +1,62 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Docpersonal creation</h1>
+{% block principal -%}
+    <!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+    {{ include('ExpedienteBundle:Ayuda/Docpersonal:registro.html.twig')}}
 
-    <form action="{{ path('docpersonal_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
+    {% for flashMessage in app.session.flashbag.get('new') %}
+        <div class="alert alert-success">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('errornew') %}
+        <div class="alert alert-danger">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+
+    <h4 class='text-centered'>RECORD DEL EXPEDIENTE PERSONAL</h4>
+    {% for exp in expediente %}
+    <p>Nombre: <b>{{exp.nombres}}</b><p>
+    <form action="{{ path('docpersonal_create',{'exp':exp.id}) }}" id= "docpersonal_form" method="post" class="form-horizontal" {{ form_enctype(form) }}>
+    {% endfor %}
+        {#{ form_widget(form) }#}
+        <fieldset><legend>Agregar Documento Personal</legend>
+            <div class='centered'>
+            <table class='text-center' width='60%'>
+                <tr>
+                    <td>{{ form_label(form.nombredocpersonal) }}</td>
+                    <td width='100'>{{ form_label(form.indice) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_widget(form.nombredocpersonal) }}</td>
+                    <td>{{ form_widget(form.indice) }}</td>
+                </tr>
+            </table>            
+            </div>
+        </fieldset>
+        {{ form_rest(form) }}
+        <div class='text-center'>
+            <button type="submit" class="btn btn-primary">Agregar</button>
+            <a  href="{{ path('docpersonal') }}" class="btn">Cancelar</a>
+        <div>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('docpersonal') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    
+    <fieldset><legend>Documentos Registrados</legend>
+    <div class='centered'>
+        <table class='table-striped text-center' border='1' width='100%' align='center'>
+            <tr>
+                <th>Nombre del documento</th>
+                <th width='150px'>N° Correlativo</th>
+            </tr>
+    {% for doc in documentos%}
+            <tr>
+                <td>{{ doc.nombredocpersonal }}</td>
+                <td>{{ doc.indice }}</td>
+            </tr>
+    {% endfor %}
+        </table>
+    </div>
+    </fieldset>
 {% endblock %}
