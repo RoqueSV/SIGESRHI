@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Solicitud de Empleo" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="14" bottomMargin="20" uuid="b71055dc-4258-4c24-9069-a03267bff9f9">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="429"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Formularios\\"]]></defaultValueExpression>
 	</parameter>
@@ -185,7 +185,7 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,segundoApellido
 				<reportElement uuid="17d7c243-11a1-4a86-add5-64832d4b8a10" x="135" y="274" width="88" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="32bcfd2c-ec0c-4155-881a-07396642a297" x="230" y="274" width="65" height="20"/>
+				<reportElement uuid="32bcfd2c-ec0c-4155-881a-07396642a297" x="230" y="274" width="72" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
@@ -205,7 +205,7 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,segundoApellido
 				<reportElement uuid="2d5801fe-724e-4dca-a5d9-8ab777b69e7b" x="112" y="300" width="444" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="b59a69b3-f071-455d-890b-f17e3dd81610" x="11" y="325" width="180" height="20"/>
+				<reportElement uuid="b59a69b3-f071-455d-890b-f17e3dd81610" x="11" y="325" width="204" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
@@ -257,7 +257,7 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,segundoApellido
 				<text><![CDATA[No. NIP(Docentes)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6497e7a2-6395-4a57-842d-7915ee27f2d4" x="12" y="446" width="117" height="20"/>
+				<reportElement uuid="6497e7a2-6395-4a57-842d-7915ee27f2d4" x="12" y="446" width="169" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -422,7 +422,7 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,segundoApellido
 				<textFieldExpression><![CDATA[$F{sexo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="5462c0ed-a271-4e93-844e-68cd1b057ded" x="11" y="421" width="182" height="16"/>
+				<reportElement uuid="5462c0ed-a271-4e93-844e-68cd1b057ded" x="11" y="421" width="187" height="16"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
@@ -469,7 +469,7 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,segundoApellido
 				<reportElement uuid="a974f1aa-b7d7-44e3-bf82-bd2556a4681b" x="297" y="274" width="88" height="20"/>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="9e112c8d-a9d4-40e5-aa0e-33cecb33811e" x="389" y="274" width="76" height="20"/>
+				<reportElement uuid="9e112c8d-a9d4-40e5-aa0e-33cecb33811e" x="391" y="274" width="87" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
@@ -533,14 +533,14 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,segundoApellido
 				<reportElement uuid="e749a599-ca32-4df1-9833-49306b639212" positionType="Float" x="13" y="485" width="543" height="31"/>
 			</rectangle>
 			<staticText>
-				<reportElement uuid="a4062028-a30d-448c-b048-65c341aa8f9f" positionType="Float" x="19" y="481" width="123" height="20"/>
+				<reportElement uuid="a4062028-a30d-448c-b048-65c341aa8f9f" positionType="Float" x="19" y="481" width="179" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[EMPLEO QUE SOLICITA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="cd3865ce-ac5a-4b03-aae2-59458bbd77bb" x="14" y="85" width="104" height="20"/>
+				<reportElement uuid="cd3865ce-ac5a-4b03-aae2-59458bbd77bb" x="13" y="85" width="113" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -608,7 +608,7 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,segundoApellido
 				<textFieldExpression><![CDATA["N° "+$F{numsolicitud}]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement uuid="092c3a1a-7a80-4029-9591-dfaae6bef967" x="14" y="85" width="446" height="38"/>
+				<reportElement uuid="092c3a1a-7a80-4029-9591-dfaae6bef967" x="11" y="86" width="446" height="38"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -688,7 +688,7 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,segundoApellido
 				</textField>
 			</frame>
 			<staticText>
-				<reportElement uuid="7dfdcc1e-5c95-4f82-9f2b-c2d81338e75a" positionType="Float" x="15" y="7" width="117" height="20"/>
+				<reportElement uuid="7dfdcc1e-5c95-4f82-9f2b-c2d81338e75a" positionType="Float" x="15" y="7" width="134" height="20"/>
 				<textElement>
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -751,8 +751,8 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,segundoApellido
 				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="11de2398-6edb-4dda-8f45-499ee6426f6a" positionType="Float" x="380" y="221" width="34" height="20"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement uuid="11de2398-6edb-4dda-8f45-499ee6426f6a" positionType="Float" x="379" y="227" width="34" height="17"/>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
 					<font fontName="SansSerif"/>
 				</textElement>
 				<text><![CDATA[Fecha:]]></text>
@@ -765,7 +765,7 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,segundoApellido
 				<textFieldExpression><![CDATA[$F{nomcompleto}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="44e84360-f884-4c08-8211-56d80e33308d" positionType="Float" x="198" y="133" width="151" height="20"/>
+				<reportElement uuid="44e84360-f884-4c08-8211-56d80e33308d" positionType="Float" x="198" y="133" width="187" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -779,8 +779,8 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,segundoApellido
 				<text><![CDATA[IV.Datos de Empleo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="1edcb254-bad7-4f59-947e-93112a897a3a" positionType="Float" x="414" y="221" width="147" height="20"/>
-				<textElement verticalAlignment="Middle"/>
+				<reportElement uuid="1edcb254-bad7-4f59-947e-93112a897a3a" positionType="Float" x="413" y="227" width="147" height="17"/>
+				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{fechaactual}]]></textFieldExpression>
 			</textField>
 		</band>

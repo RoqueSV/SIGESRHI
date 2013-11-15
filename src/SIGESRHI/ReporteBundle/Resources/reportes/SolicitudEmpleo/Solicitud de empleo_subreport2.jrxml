@@ -29,7 +29,7 @@
 				<text><![CDATA[Escribe]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="eb050c5a-2f0b-4e92-9e20-8bdc8bba646c" mode="Opaque" x="15" y="0" width="100" height="20" backcolor="#CCCCCC"/>
+				<reportElement uuid="eb050c5a-2f0b-4e92-9e20-8bdc8bba646c" mode="Opaque" x="15" y="0" width="108" height="20" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -55,7 +55,7 @@
 				<text><![CDATA[Habla]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fc6921f3-960d-44d5-9d3d-f028f5989f92" mode="Opaque" x="115" y="0" width="137" height="20" backcolor="#CCCCCC"/>
+				<reportElement uuid="fc6921f3-960d-44d5-9d3d-f028f5989f92" mode="Opaque" x="123" y="0" width="129" height="20" backcolor="#CCCCCC"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -72,7 +72,7 @@
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="673db0c6-5b40-44d9-9e31-be91357322ab" x="15" y="-1" width="100" height="20"/>
+				<reportElement uuid="673db0c6-5b40-44d9-9e31-be91357322ab" x="15" y="-1" width="108" height="20"/>
 				<box leftPadding="3">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -95,7 +95,7 @@
 				<textFieldExpression><![CDATA[$F{nivelhabla}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="0774efab-e9cd-4e75-998e-bfbc9adf1eb0" x="115" y="-1" width="138" height="20"/>
+				<reportElement uuid="0774efab-e9cd-4e75-998e-bfbc9adf1eb0" x="123" y="-1" width="130" height="20"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
