@@ -17,23 +17,23 @@
     {% endfor %}
     <h4 class='text-center'>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h4>
     <fieldset><legend>Datos Generales del evaluado</legend>
-    <table>
+    <table class="table table-bordered table-hover">
     {% for exp in expediente %}
     <tr>
-        <td>Fecha:<b> {{ exp.fechaexpediente | date('d-m-Y') | fecha }} </b></td>
-        <td></td>
+        <th>Fecha:</th>
+        <td><b> {{ exp.fechaexpediente | date('d-m-Y') | fecha }} </b></td>
     </tr>
     <tr>
-        <td>Nombre:<b> {{ exp.nombres  }}</b></td>
-        <td></td>
+        <th>Nombre:</th>
+        <td><b> {{ exp.nombres  }}</b></td>
     </tr>
     <tr>
-        <td>Escolaridad:<b> {{ exp.nombretitulo }}</b></td>
-        <td></td>
+        <th>Escolaridad:</th>
+        <td><b> {{ exp.nombretitulo }}</b></td>
     </tr>
     <tr>
-        <td>Plaza a la que aplica: <b>{{ exp.nombreplaza }}</b></td>
-        <td></td>
+        <th>Plaza a la que aplica:</th>
+        <td><b>{{ exp.nombreplaza }}</b></td>
     </tr>
     {#% endfor %#}
     </table>
@@ -142,6 +142,10 @@
 <script type="text/javascript">
 $( document ).ready(function() {
     $("#sigesrhi_expedientebundle_pruebapsicologicatype_calificacioncoeficiente").attr("disabled","disabled");
+    //alert(document.getElementById("sigesrhi_expedientebundle_pruebapsicologicatype_calificacioncoeficiente").value);
+    if(document.getElementById("sigesrhi_expedientebundle_pruebapsicologicatype_calificacioncoeficiente").value!=""){
+        $("#sigesrhi_expedientebundle_pruebapsicologicatype_calificacioncoeficiente").removeAttr("disabled");
+    }
     $("#sigesrhi_expedientebundle_pruebapsicologicatype_resultadocoeficiente_0").click(function(){
         $("#sigesrhi_expedientebundle_pruebapsicologicatype_calificacioncoeficiente").removeAttr("disabled");
     });

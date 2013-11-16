@@ -23,7 +23,10 @@ class PruebapsicologicaType extends AbstractType
                 'expanded' => true,
                 'label'=>'Coeficiente Intelectual (C.I.)',            
                 ))
-            ->add('calificacioncoeficiente',null,array('attr'=>array('class' => 'input-small'),'max_length'=>'3'))
+            ->add('calificacioncoeficiente',null,array(
+                'attr'=>array('class' => 'input-small',
+                            'data-bvalidator'=>'number'),
+                'max_length'=>'3'))
             ->add('resultadoafectividad','choice',array(
                 'choices' => array('estable'=>'Estable','promedio'=>'Promedio','inestable'=>'Inestable'),
                 'expanded' => true,

@@ -16,28 +16,28 @@
     {% endfor %}
     <h4 class='text-center'>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h4>
     <fieldset><legend>Datos Generales del evaluado</legend>
-    <table>
+    <table class="table table-bordered table-hover">
     {% for exp in expediente %}
     <tr>
-        <td>Fecha:<b> {{ exp.fechaexpediente | date('d-m-Y') | fecha}} </b></td>
-        <td></td>
+        <th>Fecha:</th>
+        <td><b> {{ exp.fechaexpediente | date('d-m-Y') | fecha}} </b></td>
     </tr>
     <tr>
-        <td>Nombre:<b> {{ exp.nombres  }}</b></td>
-        <td></td>
+        <th>Nombre:</th>
+        <td><b> {{ exp.nombres  }}</b></td>
     </tr>
     <tr>
-        <td>Escolaridad:<b> {{ exp.nombretitulo }}</b></td>
-        <td></td>
+        <th>Escolaridad:</th>
+        <td><b> {{ exp.nombretitulo }}</b></td>
     </tr>
     <tr>
-        <td>Plaza a la que aplica: <b>{{ exp.nombreplaza }}</b></td>
-        <td></td>
+        <th>Plaza a la que aplica:</th>
+        <td><b>{{ exp.nombreplaza }}</b></td>
     </tr>
     </table>
     </fieldset>
 
-    <form action="{{ path('pruebapsicologica_update', { 'id' : entity.id, 'exp' : exp.id } ) }}" method="post" class="form-horizontal" {{ form_enctype(edit_form) }}>
+    <form action="{{ path('pruebapsicologica_update', { 'id' : entity.id, 'exp' : exp.id, 'pr' : prueba.id } ) }}" method="post" class="form-horizontal" {{ form_enctype(edit_form) }}>
     {% endfor %}
        <fieldset>
         <legend>Resultados</legend>
@@ -61,7 +61,13 @@
                 {{form_errors(edit_form.resultadocoeficiente)}}
                 </table>
                 </td>
-                <td>{{ form_widget(edit_form.calificacioncoeficiente) }} {{form_errors(edit_form.calificacioncoeficiente)}}</td>
+                <td>{{ form_widget(edit_form.calificacioncoeficiente) }} {{form_errors(edit_form.calificacioncoeficiente)}}
+                {% for flashMessage in app.session.flashbag.get('calificacion') %}
+                        <div class="alert alert-danger">
+                            <p> {{ flashMessage }} </p>
+                        </div>
+                    {% endfor %}
+                </td>
             </tr>
             <tr>
                 <td>{{ form_label(edit_form.resultadoafectividad) }}</td>
@@ -127,7 +133,7 @@
         {{ form_rest(edit_form) }}
         <div class='text-center'>
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <a  href="{{ path('pruebapsicologica') }}" class="btn">Cancelar</a>            
+            <a  href="{{ path('pruebapsicologica_index_edit') }}" class="btn">Cancelar</a>            
         </div>
     </form>
 

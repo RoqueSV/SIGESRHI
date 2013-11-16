@@ -4,12 +4,18 @@ namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Docpersonal
  *
  * @ORM\Table(name="docpersonal")
  * @ORM\Entity
+  * @UniqueEntity(
+ *     fields={"indice"},
+ *     errorPath="indice",
+ *     message="Este indice ya fue ingresado"
+ * )
  */
 class Docpersonal
 {

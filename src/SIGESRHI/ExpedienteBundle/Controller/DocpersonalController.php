@@ -63,9 +63,9 @@ class DocpersonalController extends Controller
 
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", "hello_page");
-        $breadcrumbs->addItem("Gestion de Aspirantes", "hello_page");
-        $breadcrumbs->addItem("Registrar documentos de expediente Personal", "");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal"));
 
         return $grid->getGridResponse('ExpedienteBundle:Docpersonal:index.html.twig');
 
@@ -86,10 +86,12 @@ class DocpersonalController extends Controller
     {
         $idexp=$request->get('exp');
         $em = $this->getDoctrine()->getManager();
-        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpediente($request->query->get('exp'));
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpediente($idexp);
         $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
 
-        $Documentos = $em->getRepository('ExpedienteBundle:Docpersonal')->find($request->query->get('exp'));
+        $Documentos = $em->getRepository('ExpedienteBundle:Docpersonal')->findBy(array(
+                                                                                    'idexpediente' => $idexp,
+                                                                                    ));
 
         $entity  = new Docpersonal();
         $entity->setIdexpediente($expediente);
@@ -108,8 +110,8 @@ class DocpersonalController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('new','Documento Registrada correctamente');
-            //return $this->redirect($this->generateUrl('docpersonal_show', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add('new','Documento Registrado correctamente');
+            return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $entity->getId(), 'exp' => $idexp )));
             return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
             'entity' => $entity,
             'expediente' => $expedienteinfo,
@@ -149,9 +151,10 @@ class DocpersonalController extends Controller
 
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", "hello_page");
-        $breadcrumbs->addItem("Gestion de Aspirantes", "hello_page");
-        $breadcrumbs->addItem("Registrar documentos de expediente Personal","");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal"));
+        $breadcrumbs->addItem("Ingresar", "");
 
         return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
             'entity' => $entity,

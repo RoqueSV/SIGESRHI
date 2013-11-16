@@ -96,7 +96,11 @@
                         { 'id': exp.id }
                         )
                     }}">Consultar solicitud de empleo registrada</a></td>
-            <td><a href="">Consultar Documentación registrada</a></td>
+            <td><a href="{{ 
+                    path('docpersonal_new',
+                        { 'id': exp.id , 'exp': exp.idexpediente}                    
+                        )
+                    }}">Consultar Documentación registrada</a></td>
         </tr><tr></tr>
         <tr>
             <td colspan="2" align="center">Para aprobar la solicitud como válida del banco de datos institucional haga click en Aceptar.</td>

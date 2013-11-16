@@ -38,11 +38,8 @@ class PruebapsicologicaController extends Controller
         ));
     }
 
-    public function indexExpedientesAction()
+    public function indexExpedientesEditAction()
     {
-        //$em = $this->getDoctrine()->getManager();
-        //$entities = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedientes();
-        //return $this->render('ExpedienteBundle:Pruebapsicologica:indexExpedientes.html.twig', array('entities' => $entities,));
         // Creates simple grid based on your entity (ORM)
         $source = new Entity('ExpedienteBundle:Solicitudempleo','grupo_pruebapsicologica');
 
@@ -54,6 +51,7 @@ class PruebapsicologicaController extends Controller
         $source->manipulateQuery(
             function($query) use ($tableAlias){
                 $query->Join($tableAlias.'.idexpediente','e')
+                        ->Join('e.idpruebapsicologica','p')
                        ->andWhere('e.tipoexpediente = :inv')
                        ->orWhere('e.tipoexpediente = :val')
                        ->setParameter('inv','I')
@@ -62,8 +60,6 @@ class PruebapsicologicaController extends Controller
         );
 
         $em = $this->getDoctrine()->getManager();
-        //$expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedientes2();
-        //$source->initQueryBuilder($expedienteinfo);
         // Attach the source to the grid
         $grid->setSource($source);  
         $grid->setNoDataMessage("No se encontraron resultados");
@@ -79,8 +75,79 @@ class PruebapsicologicaController extends Controller
                 // Change the ouput of the column
                 if( ($row->getField('idexpediente.tipoexpediente')=='I') || ($row->getField('idexpediente.tipoexpediente')=='A') ) {
                     if($row->getField('idexpediente.tipoexpediente')=='I'){
-                        $row->setField('idexpediente.tipoexpediente', 'Invalido')
-                             ->setClass('text-error');                    
+                        $row->setField('idexpediente.tipoexpediente', 'Invalido');
+                             //->setClass('text-error');                    
+                    }
+                    if($row->getField('idexpediente.tipoexpediente')=='A'){
+                        $row->setField('idexpediente.tipoexpediente', 'Válido');                  
+                    }
+                }
+                return $row;
+            }
+        );
+        
+        // Attach a rowAction to the Actions Column
+        $rowAction1 = new RowAction('Ingresar', 'pruebapsicologica_new');
+        $rowAction1->setColumn('info_column');
+        //Setear parametros al route
+        //manipulamos la presentacion del rowaction
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                if ($row->getField('idexpediente.idpruebapsicologica.id') != NULL) {
+                    $action->setTitle('Editar')
+                           ->setRoute('pruebapsicologica_edit');     
+                       }
+                $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id'),'pr'=> $row->getField('idexpediente.idpruebapsicologica.id') ));
+                return $action;
+            }
+        );
+        $grid->addRowAction($rowAction1);     
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Prueba Psicologica", $this->get("router")->generate("pruebapsicologica"));
+
+        return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientes.html.twig');
+
+    }
+
+    /**
+    *Muestra expedientes de empleados para ingresar nueva prueba psicologica
+    *
+    */
+    public function indexExpedientesAction()
+    {
+        $source = new Entity('ExpedienteBundle:Solicitudempleo','grupo_pruebapsicologica');
+        $grid = $this->get('grid');
+
+        //manipulando la Consulta del grid
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->Join($tableAlias.'.idexpediente','e')
+                        ->leftJoin('e.idpruebapsicologica','p')
+                       ->andWhere('e.tipoexpediente = :inv')
+                       ->orWhere('e.tipoexpediente = :val')
+                       ->andWhere($query->expr()->isNull('p.id'))
+                       ->setParameter('inv','I')
+                       ->setParameter('val','A');
+            }
+        );
+
+        $grid->setSource($source);  
+        $grid->setNoDataMessage("No se encontraron resultados");
+        //Manipular Fila
+        $source->manipulateRow(
+            function ($row)
+            {
+                // Change the ouput of the column
+                if( ($row->getField('idexpediente.tipoexpediente')=='I') || ($row->getField('idexpediente.tipoexpediente')=='A') ) {
+                    if($row->getField('idexpediente.tipoexpediente')=='I'){
+                        $row->setField('idexpediente.tipoexpediente', 'Invalido');
+                            // ->setClass('text-error');                    
                     }
                     if($row->getField('idexpediente.tipoexpediente')=='A'){
                         $row->setField('idexpediente.tipoexpediente', 'Válido');                  
@@ -92,13 +159,6 @@ class PruebapsicologicaController extends Controller
                 return $row;
             }
         );
-        //Manipular columna
-        /*$grid->getColumn('idexpediente.tipoexpediente')->setTitle(
-            'title'
-        );*/
-        
-        //$grid->getColumn('nombrecompleto')->setFilterable(true);
-        
         // Attach a rowAction to the Actions Column
         $rowAction1 = new RowAction('Ingresar', 'pruebapsicologica_new');
         $rowAction1->setColumn('info_column');
@@ -115,19 +175,17 @@ class PruebapsicologicaController extends Controller
                 else{
 
                 }
-                $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id') ));
+                $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id'),'pr'=> $row->getField('idexpediente.idpruebapsicologica.id') ));
                 return $action;
             }
         );
         $grid->addRowAction($rowAction1);     
-        //$grid->addExport(new ExcelExport('Exportar a Excel'));
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
-         // Manage the grid redirection, exports and the response of the controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", "hello_page");
-        $breadcrumbs->addItem("Gestion de Aspirantes", "");
-        $breadcrumbs->addItem("Registrar resultados Prueba Psicologica", $this->get("router")->generate("pruebapsicologica"));
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Psicologica", $this->get("router")->generate("pruebapsicologica"));
 
         return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientes.html.twig');
 
@@ -184,13 +242,13 @@ class PruebapsicologicaController extends Controller
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('new','Prueba Psicologica Registrada correctamente');
-                return $this->redirect($this->generateUrl('pruebapsicologica_show', array('id' => $entity->getId())));
+                return $this->redirect($this->generateUrl('pruebapsicologica_show', array('id'=> $entity->getId(),'exp'=>$idexp)));
             }
             else{
                 $this->get('session')->getFlashBag()->add('calificacion','No corresponde al rango');
             }   
         }
-        $this->get('session')->getFlashBag()->add('errornew','Errores en la Prueba Psicologica registrada');
+        $this->get('session')->getFlashBag()->add('errornew','Errores en la Prueba Psicologica');
         return $this->render('ExpedienteBundle:Pruebapsicologica:new.html.twig', array(
             'entity' => $entity,
             'expediente' => $expedienteinfo,
@@ -218,9 +276,10 @@ class PruebapsicologicaController extends Controller
         //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);        
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", "hello_page");
-        $breadcrumbs->addItem("Gestion de Aspirantes", "");
-        $breadcrumbs->addItem("Registrar Prueba Psicologica","");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Prueba Psicologica",$this->get("router")->generate("pruebapsicologica"));
+        $breadcrumbs->addItem("Registrar","");
 
 
         return $this->render('ExpedienteBundle:Pruebapsicologica:new.html.twig', array(
@@ -236,18 +295,20 @@ class PruebapsicologicaController extends Controller
      */
     public function showAction($id)
     {
+        $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
-
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpediente($request->query->get('exp'));
         $entity = $em->getRepository('ExpedienteBundle:Pruebapsicologica')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Pruebapsicologica entity.');
+            throw $this->createNotFoundException('No existe entidad Pruebapsicologica.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ExpedienteBundle:Pruebapsicologica:show.html.twig', array(
             'entity'      => $entity,
+            'expediente' => $expedienteinfo,
             'delete_form' => $deleteForm->createView(),        
             ));
     }
@@ -261,11 +322,9 @@ class PruebapsicologicaController extends Controller
         $request = $this->getRequest();
 
         $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ExpedienteBundle:Pruebapsicologica')->find($request->query->get('exp'));
         $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpediente($request->query->get('exp'));
         $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
-
+        $entity = $em->getRepository('ExpedienteBundle:Pruebapsicologica')->find($request->query->get('pr'));
         if (!$entity) {
             throw $this->createNotFoundException('No fue posible cargar el formulario, Intentelo de nuevo.');
         }
@@ -275,14 +334,16 @@ class PruebapsicologicaController extends Controller
 
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", "hello_page");
-        $breadcrumbs->addItem("Gestion de Aspirantes", "");
-        $breadcrumbs->addItem("Editar resultados Prueba Psicologica","");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Prueba Psicologica",$this->get("router")->generate("pruebapsicologica_index_edit"));
+        $breadcrumbs->addItem("Modificar","");
 
         return $this->render('ExpedienteBundle:Pruebapsicologica:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'expediente'  =>$expedienteinfo,
+            'prueba' => $entity,
         ));
     }
 
@@ -295,7 +356,8 @@ class PruebapsicologicaController extends Controller
         $em = $this->getDoctrine()->getManager();
         $id = $request->query->get('id');
         $exp = $request->query->get('exp');
-        $entity = $em->getRepository('ExpedienteBundle:Pruebapsicologica')->find($id);
+        $pr = $request->query->get('pr');
+        $entity = $em->getRepository('ExpedienteBundle:Pruebapsicologica')->find($pr);
         $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpediente($exp);
         //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
 
@@ -308,16 +370,50 @@ class PruebapsicologicaController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('edit','Prueba Psicologica ingresada correctamente');
-            return $this->redirect($this->generateUrl('pruebapsicologica_edit', array('id' => $id,'exp'=>$exp)));
+            $band=0;
+            switch ($entity->getResultadocoeficiente()) {
+                 case 'superior':
+                     if($entity-> getCalificacioncoeficiente()<120 || $entity-> getCalificacioncoeficiente()>129){
+                        $band=1;
+                     }
+                     break;
+                 case 'alto':
+                     if($entity-> getCalificacioncoeficiente()<110 || $entity-> getCalificacioncoeficiente()>119){
+                        $band=1;
+                     }
+                     break;
+                 case 'normal':
+                     if($entity-> getCalificacioncoeficiente()<90 || $entity-> getCalificacioncoeficiente()>109){
+                        $band=1;
+                     }                     
+                     break;
+                 case 'bajo':
+                    if($entity-> getCalificacioncoeficiente()<80 || $entity-> getCalificacioncoeficiente()>89){
+                        $band=1;
+                     }
+                     break;
+                 default:
+                        $band=1;
+                     break;
+             }  
+             if($band==0){
+                $em->persist($entity);
+                $em->flush();
+                
+                $this->get('session')->getFlashBag()->add('new','Prueba Psicologica modificada correctamente');
+                return $this->redirect($this->generateUrl('pruebapsicologica_show', array('id' => $id,'exp'=>$exp)));                
+             }  
+             else{
+                $this->get('session')->getFlashBag()->add('calificacion','No corresponde al rango');                
+             } 
+
         }
         $this->get('session')->getFlashBag()->add('editerror','Error en la información de la Prueba Psicologica');
         return $this->render('ExpedienteBundle:Pruebapsicologica:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'expediente'  =>$expedienteinfo,
+            'prueba' => $entity,
         ));
     }
 
