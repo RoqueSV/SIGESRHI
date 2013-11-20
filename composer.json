@@ -32,7 +32,8 @@
         "vich/uploader-bundle": "dev-master",
         "whiteoctober/breadcrumbs-bundle": "dev-master",
         "shtumi/useful-bundle": "dev-master",
-        "genemu/form-bundle": "2.1.*"
+        "genemu/form-bundle": "2.1.*",
+        "pcdummy/ajaxcomplete-bundle": "dev-master"
         
     },
     "scripts": {

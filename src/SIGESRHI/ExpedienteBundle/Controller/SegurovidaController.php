@@ -12,7 +12,7 @@ use SIGESRHI\ExpedienteBundle\Form\SegurovidaType;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Grid;
-
+use APY\DataGridBundle\Grid\Column\TextColumn;
 
 
 /**
@@ -30,41 +30,38 @@ class SegurovidaController extends Controller
         $source = new Entity('ExpedienteBundle:Expediente','grupo_segurovida');
         
         $grid = $this->get('grid');
-
+        
+        /* Empleados activos que no tengan seguro registrado */
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias){
-                $query//->Join($tableAlias.'.idsegurovida', 'e')
-                      //->andWhere($tableAlias.'.idsegurovida IS NOT NULL')
+                $query->leftJoin($tableAlias.'.idsegurovida', 'e')
                       ->andWhere($tableAlias.'.tipoexpediente = :tipo')
-                      //->setParameter('es',NULL)
+                      ->andWhere($query->expr()->isNull('e.id'))
                       ->setParameter('tipo','E');
-            }
-        );
-      
-       $source->manipulateRow(
-            function ($row) 
-            {           
-              // Mostrar solo los expedientes sin seguro de vida
-              if ($row->getField('idsegurovida.id')!=NULL) {
-               return null;
-              }
-            return $row;
             }
         );
         
         $grid->setId('grid_segurovida');
         $grid->setSource($source);              
-        $grid->setDefaultOrder('idempleado.codigoempleado', 'asc'); 
+
+        //Columnas para filtrar
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','align'=>'center','title' => 'Código',"operatorsVisible"=>false));
+        $grid->addColumn($CodigoEmpleados,2);
+        $grid->addColumn($NombreEmpleados,3);
+        
+
         // Crear
         $rowAction1 = new RowAction('Registrar', 'segurovida_new');
         $grid->addRowAction($rowAction1);
         
+        $grid->setDefaultOrder('codigos', 'asc');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("sonata_user_impersonating"));
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
         
         return $grid->getGridResponse('ExpedienteBundle:Segurovida:index.html.twig');

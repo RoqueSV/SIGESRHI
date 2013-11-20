@@ -40,6 +40,7 @@ class AppKernel extends Kernel
             new Vich\UploaderBundle\VichUploaderBundle(),
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            new Pcdummy\AjaxCompleteBundle\PcdummyAjaxCompleteBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

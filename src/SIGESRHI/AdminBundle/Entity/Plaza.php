@@ -216,8 +216,8 @@ class Plaza
     /**
      * @Assert\File(
      *     maxSize = "6000000",
-     *     mimeTypes = {"application/pdf", "application/x-pdf"},
-     *     mimeTypesMessage = "El archivo debe estar en formato pdf")
+     *     mimeTypes = {"image/png", "image/jpeg", "image/pjpeg", "application/pdf", "application/x-pdf"},
+     *     mimeTypesMessage = "El archivo debe ser una imagen o archivo pdf")
      */
     private $file;
     /**
@@ -566,7 +566,7 @@ class Plaza
     {
         // se deshace del __DIR__ para no meter la pata
         // al mostrar el documento/imagen cargada en la vista.
-        return 'uploads/documents';
+        return 'uploads/documentos_plaza';
     }
     
     /*  fin directorio **/

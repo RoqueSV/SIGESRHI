@@ -80,15 +80,15 @@ class ReporteController extends Controller
    public function ReporteSeguroVidaAction()
     {
 
-    //Incluimos camino de migas
-      
-      $breadcrumbs = $this->get("white_october_breadcrumbs");
-      $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
-      $breadcrumbs->addItem("PDF Seguro de vida", $this->get("router")->generate("reporte_segurovida"));
-
+  
      /* Obtengo parametros */
      $request=$this->getRequest();
      $idExp=$request->get('idexp');           
+
+     //Incluimos camino de migas 
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida_show",array("id"=>$request->get('id'))));
+     $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_segurovida"));
      
      // Nombre reporte
      $filename= 'Seguro de vida.pdf';
@@ -130,6 +130,41 @@ class ReporteController extends Controller
      //Paso los parametros necesarios
      $Parametro=new java('java.util.HashMap');
      $Parametro->put("sol_empleo", new java("java.lang.Integer", $idSol));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+
+   public function ReportePruebaPsicologicaAction()
+    {
+
+    //Incluimos camino de migas
+      
+      $breadcrumbs = $this->get("white_october_breadcrumbs");
+      $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
+      $breadcrumbs->addItem("PDF Seguro de vida", $this->get("router")->generate("reporte_segurovida"));
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idExp=$request->get('idexp');           
+     
+     // Nombre reporte
+     $filename= 'Prueba psicologica.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/PruebaPsicologica/pruebapsicologica.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("id_exp", new java("java.lang.Integer", $idExp));
      $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
      //Funcion de Conexion a Base de datos 
      $Conexion = $this->crearConexion();

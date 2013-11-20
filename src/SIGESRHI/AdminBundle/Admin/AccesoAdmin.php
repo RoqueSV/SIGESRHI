@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Doctrine\ORM\EntityRepository;
 
 class AccesoAdmin extends Admin
 {
@@ -22,9 +23,19 @@ class AccesoAdmin extends Admin
             ->add('nombrepagina', null, array('label' => 'Opción'))
             ->add('idmodulo','sonata_type_model',array('required'=>'required', 'label'=>'Modulo'))
             ->add('ruta')
-            ->add('idaccesosup', null , array('label'=>'Acceso superior'))
+            ->add('idaccesosup', 'entity' , array('required' => false,
+                                                  'label'=>'Acceso superior',
+                                                  'class' => 'AdminBundle:Acceso',
+                                                  'query_builder' => function(EntityRepository $er) {
+                                                                 return $er->createQueryBuilder('a')
+                                                                           ->where('a.idaccesosup is null')
+                                                                           ->orderBy('a.nombrepagina', 'ASC');
+                                                                            },                
+                                                                           ))
+            
             ->setHelps(array('nombrepagina'=>'Ingrese una opción de acceso',
-                             'ruta'=>'Identificador de la ruta, p.ej. hello_page'))
+                             'ruta'=>'Identificador de la ruta, p.ej. hello_page',
+                             'idaccesosup'=>'Elija solo si la opción registrada es dependiente de otra'))
            
              ;
     }

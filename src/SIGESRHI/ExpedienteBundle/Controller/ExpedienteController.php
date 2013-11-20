@@ -12,6 +12,7 @@ use APY\DataGridBundle\Grid\Grid;
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
+use APY\DataGridBundle\Grid\Column\TextColumn;
 
 /**
  * Expediente controller.
@@ -310,21 +311,20 @@ public function confirmarValidoAction($id)
             );
 
         // Attach the source to the grid
+        $grid->setId('grid_docdigital');
         $grid->setSource($source);
-
-        $em = $this->getDoctrine()->getManager();
+        
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $grid->addColumn($NombreEmpleados,3);
           
         $grid->setNoDataMessage("No se encontraron resultados");
         $grid->setDefaultOrder('idsolicitudempleo.numsolicitud', 'asc');
         
-        $rowAction1 = new RowAction('Registrar', 'docdigital_new');
-        $rowAction1->setColumn('info_column');
-        
+        $rowAction1 = new RowAction('Registrar', 'docdigital_new');        
         $grid->addRowAction($rowAction1);     
-        //$grid->addExport(new ExcelExport('Exportar a Excel'));
+ 
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
 
-    // Manage the grid redirection, exports and the response of the controller
     return $grid->getGridResponse('ExpedienteBundle:Docexpediente:grid_agregar.html.twig');
 
     }

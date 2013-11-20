@@ -146,29 +146,6 @@ class Segurovida
     }
     
     /**
-     * Add idbeneficiario
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario
-     * @return Segurovida
-     */
-    /*public function addIdbeneficiario(\SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario)
-    {
-        $this->idbeneficiario[] = $idbeneficiario;
-    
-        return $this;
-    }*/
-
-    /**
-     * Remove idbeneficiario
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario
-     */
-    /*public function removeIdbeneficiario(\SIGESRHI\ExpedienteBundle\Entity\Beneficiario $idbeneficiario)
-    {
-        $this->idbeneficiario->removeElement($idbeneficiario);
-    }*/
-
-    /**
      * Get idbeneficiario
      *
      * @return \Doctrine\Common\Collections\Collection 

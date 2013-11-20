@@ -29,6 +29,7 @@ twig:
     form:
         resources:
             - ShtumiUsefulBundle::fields.html.twig
+            - PcdummyAjaxCompleteBundle::fields.html.twig
 
 
 # Assetic Configuratio
@@ -171,12 +172,15 @@ genemu_form:
 
 shtumi_useful:
     autocomplete_entities:
-        centros:
-            class: ExpedienteBundle:Informacionacademica
-            property: centroestudio
-            search: contains
-
         empleados:
             class: ExpedienteBundle:Solicitudempleo
             property: nombrecompleto
+            search: contains
+        codigos:
+            class: ExpedienteBundle:Empleado
+            property: codigoempleado
+            search: contains
+        plazas:
+            class: AdminBundle:Plaza
+            property: nombreplaza
             search: contains

@@ -51,7 +51,7 @@ class Expediente
 
     /**
      * @ORM\OneToOne(targetEntity="Empleado", mappedBy="idexpediente")
-     * @GRID\Column(field="idempleado.codigoempleado", groups="grupo_segurovida" ,title="Codigo", filter="input", align="center", operators={"like"}, operatorsVisible=false, joinType="inner")
+     * @GRID\Column(field="idempleado.codigoempleado",groups="grupo_segurovida" ,title="Codigo", visible=false, joinType="inner", filterable=false)
      * @GRID\Column(field="idempleado.idcontratacion.idplaza.nombreplaza", groups="grupo_segurovida",type="text", title="Plaza", filterable=false, joinType="inner")
      */
     private $idempleado;
@@ -60,9 +60,9 @@ class Expediente
      * @var \Solicitudempleo
      * @ORM\OneToOne(targetEntity="Solicitudempleo", mappedBy="idexpediente")
      * @GRID\Column(field="idsolicitudempleo.idplaza.nombreplaza", groups="grupo_contratacion",type="text", title="Plaza solicitada", operators={"like"}, operatorsVisible=false, joinType="inner")
-     * @GRID\Column(field="idsolicitudempleo.nombrecompleto", groups={"grupo_segurovida","grupo_contratacion", "grupo_docdigital"} ,title="Nombres", operators={"like"}, operatorsVisible=false, joinType="inner")
+     * @GRID\Column(field="idsolicitudempleo.nombrecompleto", groups={"grupo_segurovida","grupo_contratacion", "grupo_docdigital"} ,visible=false, joinType="inner", filterable=false)
      * @GRID\Column(field="idsolicitudempleo.fecharegistro", align="center", type="date", groups={"grupo_docdigital"}, title="Registrado",  joinType="inner", filterable=false)
-     * @GRID\Column(field="idsolicitudempleo.numsolicitud", align="center", type="number", groups={"grupo_docdigital"}, title="Num. Solicitud", joinType="inner", filterable=true, operatorsVisible=false )
+     * @GRID\Column(field="idsolicitudempleo.numsolicitud", align="center", type="number", groups={"grupo_docdigital"}, title="Solicitud", joinType="inner", filterable=false, size="100")
      */
     private $idsolicitudempleo;
 

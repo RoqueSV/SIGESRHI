@@ -3211,5 +3211,53 @@
             "daterange",
             "shtumi"
         ]
+    },
+    {
+        "name": "pcdummy/ajaxcomplete-bundle",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "target-dir": "Pcdummy/AjaxCompleteBundle",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/pcdummy/AjaxCompleteBundle.git",
+            "reference": "4a92369eab4755fbebaa0e47bcec49b3159d28dc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/pcdummy/AjaxCompleteBundle/zipball/4a92369eab4755fbebaa0e47bcec49b3159d28dc",
+            "reference": "4a92369eab4755fbebaa0e47bcec49b3159d28dc",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2",
+            "symfony/framework-bundle": ">2.0"
+        },
+        "suggest": {
+            "sonata-project/admin-bundle": "master-dev",
+            "sonata-project/doctrine-orm-admin-bundle": "master-dev"
+        },
+        "time": "2013-07-19 08:56:54",
+        "type": "symfony-bundle",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Pcdummy\\AjaxCompleteBundle": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "René Kistl",
+                "email": "rene@kistl.at"
+            }
+        ],
+        "description": "Symfony AjaxCompleteBundle",
+        "keywords": [
+            "Ajax Autocomplete form type",
+            "Ajax Many 2 Many form type"
+        ]
     }
 ]

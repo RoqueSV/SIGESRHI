@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Doctrine\ORM\EntityRepository;
 
 class GroupAdmin extends Admin
 {
@@ -60,6 +61,14 @@ class GroupAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+
+        $em = $this->modelManager->getEntityManager('AdminBundle:Acceso');
+
+        $query = $em->createQueryBuilder('a')
+                     ->select('a')
+                     ->from('AdminBundle:Acceso', 'a')
+                     ->orderBy('a.nombrepagina', 'ASC');
+
         $formMapper
             ->add('name')
             ->add('roles', 'sonata_security_roles', array(
@@ -67,7 +76,13 @@ class GroupAdmin extends Admin
                 'multiple' => true,
                 'required' => false
             ))
-            ->add('idacceso','sonata_type_model',array('required'=>false,'multiple'=>true,'expanded'=>true ,'label'=>'Opciones')) 
+            ->add('idacceso','sonata_type_model',
+                  array('required'=>false,
+                        'multiple'=>true,
+                        'expanded'=>true ,
+                        'label'=>'Opciones',
+                        'help' => 'Seleccione las opciones correspondientes al rol. Asegurese de seleccionar los niveles superiores para cada opción, si esta lo requiere',
+                        'query'=>$query))   
         ;
     }
 

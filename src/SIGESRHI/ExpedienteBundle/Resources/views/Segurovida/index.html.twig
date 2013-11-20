@@ -1,19 +1,84 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+<script>
+        jQuery(function() {
+
+            jQuery("#grid_grid_segurovida__empleados__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "empleados"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
+
+            jQuery("#grid_grid_segurovida__codigos__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "codigos"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
+
+        });
+</script>
 
 {% if app.session.started %}
-{% for flashMessage in app.session.flashbag.get('delete') %}
-<div class="alert alert-danger">
-<p>{{ flashMessage }}</p>
-</div>
-{% endfor %}
+   {% for flashMessage in app.session.flashbag.get('delete') %}
+     <div class="alert alert-danger">
+       <p>{{ flashMessage }}</p>
+     </div>
+   {% endfor %}
 {% endif %}
      
-     <h3 class="text-center">Registro de seguro colectivo de vida</h3>
-     <p class="text-center">Seleccione un empleado de la lista</p>
+<h3 class="text-center">Registro de seguro colectivo de vida</h3>
+<p class="text-center">Seleccione un empleado de la lista</p>
      {{ grid_search(grid) }}
      {{ grid(grid,_self) }} 
      {% block grid_filters %}{% endblock %}
+
+
 
 {% endblock %}

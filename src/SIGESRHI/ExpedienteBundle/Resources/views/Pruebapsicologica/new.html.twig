@@ -16,7 +16,7 @@
         </div>
     {% endfor %}
     <h4 class='text-center'>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h4>
-    <fieldset><legend>Datos Generales del evaluado</legend>
+    <h5> Datos Generales del evaluado</h5>
     <table class="table table-bordered table-hover">
     {% for exp in expediente %}
     <tr>
@@ -37,19 +37,17 @@
     </tr>
     {#% endfor %#}
     </table>
-    </fieldset>
 
     <form action="{{ path('pruebapsicologica_create',{'exp':exp.id}) }}" id= "pruebapsicologica_form" class="form-horizontal" method="post" {{ form_enctype(form) }}>
     {% endfor %}
         {#{{ form_widget(form) }}#}        
         <fieldset>
         <legend>Resultados</legend>
-        <p>Para la evaluación psicológica se tomo en cuenta los siguientes aspectos:</p>
-        <div class='centered'>
-            <table class='table-striped text-center' border='1' width='85%'>    
+        <p>Para la evaluación psicológica se tomo en cuenta los siguientes aspectos:</p><br />
+            <table class='centered-table table-bordered' border='1' width='85%'>    
             <tr>
-            <th align="center">Criterios</th>
-            <th  width="250">Resultado&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rangos</th>
+            <th>Criterios</th>
+            <th  width="250">Rangos</th>
             <th>Calificación</th>
             </tr>            
             <tr>
@@ -129,8 +127,7 @@
                 <td></td>
             </tr>
             </table>
-        </div>
-        <fieldset>
+        </fieldset>
         {#{ form_widget(form.idexpediente) }#}
         {{ form_rest(form) }}
         <div class='text-center'>

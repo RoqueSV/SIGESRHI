@@ -17,3 +17,7 @@ reporte_segurovida:
 reporte_solicitudempleo:
     pattern:  /reportesolicitud
     defaults: { _controller: ReporteBundle:Reporte:ReporteSolicitud }
+
+reporte_pruebapsicologica:
+    pattern:  /reportepruebapsicologica
+    defaults: { _controller: ReporteBundle:Reporte:ReportePruebaPsicologica }

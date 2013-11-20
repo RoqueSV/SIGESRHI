@@ -18,7 +18,7 @@ class ConocimientoAdmin extends Admin
     {
         $formMapper
             ->add('nombreconocimiento', 'textarea', array('label' => 'Descripción conocimiento'))
-            ->setHelps(array('nombreconocimiento'=>'Ingresa la descripción de conocimientos requeridos'))
+            ->setHelps(array('nombreconocimiento'=>'Ingresa la descripción del conocimiento requerido'))
            
              ;
     }

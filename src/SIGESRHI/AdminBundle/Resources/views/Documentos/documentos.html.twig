@@ -1,0 +1,11 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block field%}
+  {% if(object.path) %}  
+    <div>    
+       <embed src="{{ asset('uploads/documentos_plaza/'~ object.path) }}" width="300" height="300"></embed>
+    </div>
+   {% else %}
+   No existen documentos que mostrar
+   {% endif %}
+{% endblock %}

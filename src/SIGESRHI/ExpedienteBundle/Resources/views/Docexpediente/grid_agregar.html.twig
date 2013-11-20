@@ -1,6 +1,43 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+
+<script>
+        jQuery(function() {
+
+            jQuery("#grid_grid_docdigital__empleados__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "empleados"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
+        });
+</script>
+
+
+
     <div class="text-center">
     <h3> Agregar Documentos Digitales a Expediente</h3>
     </div>

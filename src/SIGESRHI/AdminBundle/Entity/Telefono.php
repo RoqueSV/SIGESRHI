@@ -35,6 +35,17 @@ class Telefono
      */
     private $numtelefono;
 
+    /**
+     * @var \Centrounidad
+     *
+     * @ORM\ManyToOne(targetEntity="Centrounidad", inversedBy="idtelefono")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idcentro", referencedColumnName="id")
+     * })
+     */
+    private $idcentro;
+    
+
 
     public function __toString(){
         return $this->getNumtelefono();
@@ -72,4 +83,28 @@ class Telefono
         return $this->numtelefono;
     }
 
+
+
+    /**
+     * Set idcentro
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Centrounidad $idcentro
+     * @return Telefono
+     */
+    public function setIdcentro(\SIGESRHI\AdminBundle\Entity\Centrounidad $idcentro = null)
+    {
+        $this->idcentro = $idcentro;
+    
+        return $this;
+    }
+
+    /**
+     * Get idcentro
+     *
+     * @return \SIGESRHI\AdminBundle\Entity\Centrounidad 
+     */
+    public function getIdcentro()
+    {
+        return $this->idcentro;
+    }
 }

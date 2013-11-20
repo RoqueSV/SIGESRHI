@@ -17,7 +17,7 @@ class TelefonoAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('numtelefono', null, array('attr'=>array('data-bvalidator'=>'phone',)))
+            ->add('numtelefono', null, array('label'=>'Teléfono','attr'=>array('data-bvalidator'=>'phone',)))
             ->setHelps(array('numtelefono'=>'Ingrese un numero teléfonico sin guiones'))
            
              ;

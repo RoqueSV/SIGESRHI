@@ -96,7 +96,7 @@ function eliminar() {
         
             <button type="submit" class="btn btn-primary">Modificar</button>
             <a href="{{ path('segurovida') }}" class="btn">Regresar al listado</a>
-            <a href="{{ path('reporte_segurovida', { 'idexp': exp.idexp }) }}" class="btn">Generar PDF</a>
+            <a href="{{ path('reporte_segurovida', { 'idexp': exp.idexp, 'id':entity.id }) }}" class="btn">Generar PDF</a>
             <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
         
         {%endfor%}

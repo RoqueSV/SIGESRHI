@@ -17,6 +17,8 @@ class CentroAdmin extends Admin
     //Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
+        
+
         $formMapper
             ->add('nombrecentro', null, array('label' => 'Centro de Atención'))
             ->add('especialidad','textarea')
@@ -24,8 +26,18 @@ class CentroAdmin extends Admin
             ->add('emailcentro',null, array('label' => 'Email'))
             ->add('faxcentro',null, array('label' => 'Fax', 'max_length'=>'8'))
             ->add('pbxcentro',null, array('label' => 'PBX', 'max_length'=>'8'))
-            ->add('idtelefono','sonata_type_model',array('required'=>true,'multiple'=>true,'expanded'=>true ,'label'=>'Teléfono'))
-            ->setHelps(array('nombrecentro'=>'Ingrese el nombre de un centro de atención o unidad',
+            ->add('idtelefono', 'sonata_type_collection', 
+             array('by_reference'=>false,'required'=>false,'label'=>'Teléfonos'
+                // Prevents the "Delete" option from being displayed
+                //'type_options' => array('delete' => false)
+                  ), 
+             array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable' => 'position',
+            ))
+
+             ->setHelps(array('nombrecentro'=>'Ingrese el nombre de un centro de atención o unidad',
                              'especialidad'=>'Defina la especialidad para centro de atención o unidad',
                              'direccioncentro'=>'Ingrese la dirección del centro',
                              'faxcentro'=>'Ingrese un número de fax sin guiones',
@@ -40,9 +52,6 @@ class CentroAdmin extends Admin
         $datagridMapper
             ->add('nombrecentro', null, array('label' => 'Centro de Atención'))
             ->add('especialidad')
-          /* ->add('direccioncentro',null, array('label' => 'Dirección'))  */
-          /*  ->add('telefonocentro',null, array('label' => 'Teléfono'))   */
-          /*  ->add('extensioncentro',null, array('label' => 'Extensión')) */
         ;
     }
     
@@ -67,7 +76,7 @@ class CentroAdmin extends Admin
             ->add('emailcentro',null, array('label' => 'Email'))
             ->add('faxcentro',null, array('label' => 'Fax'))
             ->add('pbxcentro',null, array('label' => 'PBX'))
-            ->add('idtelefono','sonata_type_model',array('label'=>'Teléfono'))
+            ->add('idtelefono','sonata_type_model',array('label'=>'Teléfono(s)'))
         ;
      }
 }

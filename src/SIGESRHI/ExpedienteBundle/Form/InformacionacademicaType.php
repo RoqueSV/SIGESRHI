@@ -11,12 +11,12 @@ class InformacionacademicaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           ->add('centroestudio',null, array('label'=> 'Centro de Estudios','attr' =>array('class'=> 'input-xlarge')))
-            //->add('idtitulo',null, array('required'=> true, 'label'=>'Título Obtenido: ', 'empty_value' => 'Seleccione una opción', 'multiple'=>false, 'attr' =>array('class'=> 'input-xlarge')))
+           ->add('centroestudio','genemu_jqueryautocomplete_entity', array('class' => 'ExpedienteBundle:Informacionacademica','label'=> 'Centro de Estudios','attr' =>array('class'=> 'input-xlarge')))
            ->add('idtitulo', 'genemu_jqueryselect2_entity', array(
             'class' => 'ExpedienteBundle:Titulo', 'label'=> 'Titulo Obtenido',
             'empty_value' => 'Seleccione una opción',
-            'required'=> true
+            'required'=> true,
+            'attr' =>array('class'=> 'input-xmlarge')
             ))
    ; 
     }

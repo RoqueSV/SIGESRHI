@@ -86,15 +86,16 @@ class Centrounidad
      * message = "El mail '{{ value }}' ingresado no tiene el formato correcto.")
      */
     private $emailcentro;
-    // Uno a muchos con tabla union
+    
+
      /**
-     * @ORM\ManyToMany(targetEntity="Telefono")
-     * @ORM\JoinTable(name="telefonocentro",
-     *      joinColumns={@ORM\JoinColumn(name="idcentro", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="idtelefono", referencedColumnName="id", unique=true)}
-     *      )
+     * @ORM\OneToMany(targetEntity="Telefono", mappedBy="idcentro", cascade={"persist","remove"}, orphanRemoval=true)
+     * @Assert\Valid
+     * 
+     *
      */
     private $idtelefono;
+    
      
     /**
      * @ORM\OneToMany(targetEntity="Unidadorganizativa", mappedBy="idcentro")
@@ -303,8 +304,12 @@ class Centrounidad
      */
     public function addIdtelefono(\SIGESRHI\AdminBundle\Entity\Telefono $idtelefono)
     {
-        $this->idtelefono[] = $idtelefono;
+        /*$this->idtelefono[] = $idtelefono;
     
+        return $this;*/
+        $idtelefono->setIdcentro($this);
+        $this->idtelefono->add($idtelefono);
+
         return $this;
     }
 
@@ -318,6 +323,7 @@ class Centrounidad
         $this->idtelefono->removeElement($idtelefono);
     }
 
+   
     /**
      * Get idtelefono
      *
@@ -327,5 +333,6 @@ class Centrounidad
     {
         return $this->idtelefono;
     }
+
 
 }

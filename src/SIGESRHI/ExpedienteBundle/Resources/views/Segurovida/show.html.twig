@@ -47,6 +47,7 @@
     <form class="form-inline" action="{{ path('reporte_segurovida') }}" method="post" >
      <div class="text-center">
      <input type="hidden" id='idexp' name='idexp' value={{ expediente[0].idexp }} />
+     <input type="hidden" id='id' name='id' value={{ entity.id }} />
      <button type="submit" class="btn btn-primary">Generar PDF</button>
      <button type="button" class="btn" onclick="location.href='{{ path ('segurovida') }}'">Regresar al listado</button>
      <a href="{{ path('segurovida_edit', { 'id': entity.id }) }}" class="btn">Editar Registro</a>
