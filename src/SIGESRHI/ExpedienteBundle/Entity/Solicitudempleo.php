@@ -25,7 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  *
  * @GRID\Source(columns="id,nombrecompleto,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
- * @GRID\Source(columns="id,numsolicitud, nombrecompleto, idexpediente.tipoexpediente,idplaza.nombreplaza",groups={"solicitud_empleo"})
+ * @GRID\Source(columns="id,numsolicitud, nombrecompleto,idplaza.nombreplaza, idexpediente.tipoexpediente",groups={"solicitud_empleo"})
  */
 
 
@@ -44,13 +44,13 @@ class Solicitudempleo
     private $id;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="numsolicitud", type="integer", nullable=true)
+     * @ORM\Column(name="numsolicitud", type="string", length=9, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el numero de solicitud")
      *
      * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
-     * @GRID\Column(filterable=true, align="center", type="number", title="Num. Solicitud", groups={"solicitud_empleo"}, visible=true, operatorsVisible=false)
+     * @GRID\Column(filterable=false, align="center", title="Solicitud", groups={"solicitud_empleo"}, visible=false)
      */
     private $numsolicitud;
 
@@ -134,9 +134,9 @@ class Solicitudempleo
     /**
      * @var string
      *
-     * @ORM\Column(name="calle", type="string", length=30, nullable=true)
+     * @ORM\Column(name="calle", type="string", length=100, nullable=true)
      * @Assert\Length(
-     * max = "30",
+     * max = "100",
      * maxMessage = "La calle no debe exceder los {{limit}} caracteres"
      * )
      *
@@ -407,17 +407,15 @@ class Solicitudempleo
 
 
     /**
-     * @var string
+     * @var \SIGESRHI\AdminBundle\Entity\Centrounidad
      *
-     * @ORM\Column(name="dependenciaparinst", type="string", length=75, nullable=true)
-     * @Assert\Length(
-     * max = "75",
-     * maxMessage = "la dependencia no debe exceder los {{limit}} caracteres"
-     * )
-     *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
-     */
+     * @ORM\OneToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Centrounidad")
+     *      @ORM\JoinColumns({
+     * @ORM\JoinColumn(name="dependenciaparinst", referencedColumnName="id")
+     * })
+     **/
     private $dependenciaparinst;
+
 
    private $aceptar;
 
@@ -488,26 +486,26 @@ class Solicitudempleo
     /**
      * Set dependenciaparinst
      *
-     * @param string $dependenciaparinst
+     * @param \SIGESRHI\AdminBundle\Entity\Centrounidad $dependenciaparinst
      * @return Solicitudempleo
      */
-    public function setDependenciaparinst($dependenciaparinst)
+    public function setDependenciaparinst(\SIGESRHI\AdminBundle\Entity\Centrounidad $dependenciaparinst = null)
     {
         $this->dependenciaparinst = $dependenciaparinst;
     
         return $this;
     }
 
-    
     /**
      * Get dependenciaparinst
      *
-     * @return string 
+     * @return \SIGESRHI\AdminBundle\Entity\Centrounidad
      */
     public function getDependenciaparinst()
     {
         return $this->dependenciaparinst;
     }
+
 
 
     /******************************************************************************************/
@@ -536,7 +534,7 @@ class Solicitudempleo
      *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      * })
      *
-     * @GRID\Column(field="idplaza.nombreplaza", title="Puesto al que aplica", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica","vista_basica_expediente"})
+     * @GRID\Column(field="idplaza.nombreplaza", title="Puesto al que aplica", joinType="inner", filterable=true, groups={"grupo_pruebapsicologica","vista_basica_expediente", "solicitud_empleo"}, operators={"like"}, operatorsVisible=false)
      */
     private $idplaza;
 
@@ -552,7 +550,7 @@ class Solicitudempleo
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica"})
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, visible=false, groups={"vista_basica_expediente"})
      * @GRID\Column(field="idexpediente.idpruebapsicologica.id", title="Prueba", filterable=false,visible=false, groups={"grupo_pruebapsicologica"})
-     * @GRID\Column(field="idexpediente.tipoexpediente", joinType="inner", filterable=false, groups={"solicitud_empleo"}, visible=false)
+     * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, groups={"solicitud_empleo"}, visible=true, filter="Select", operatorsVisible=false )
      */
     private $idexpediente;
 
@@ -805,7 +803,7 @@ class Solicitudempleo
     /**
      * Set numsolicitud
      *
-     * @param integer $numsolicitud
+     * @param string $numsolicitud
      * @return Solicitudempleo
      */
     public function setNumsolicitud($numsolicitud)
@@ -818,7 +816,7 @@ class Solicitudempleo
     /**
      * Get numsolicitud
      *
-     * @return integer 
+     * @return string
      */
     public function getNumsolicitud()
     {

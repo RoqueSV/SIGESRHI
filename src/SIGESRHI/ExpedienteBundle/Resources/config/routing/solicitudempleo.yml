@@ -1,6 +1,6 @@
-solicitud:
-    pattern:  /{tipo}/grid_consultar
-    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:index", tipo:'I' }
+solicitud_caspirante:
+    pattern:  /consultaraspirante
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:index" }
 
 solicitud_show:
     pattern:  /{id}/show
@@ -30,5 +30,9 @@ solicitud_delete:
     requirements: { _method: post|delete }
 
 solicitud_grid_edit:
-    pattern:  /{tipo}/grid_edit
-    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:indexEdit", tipo:'I' }
+    pattern:  /solicitud_grid_edit
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:indexEdit" }
+
+solicitud_pruebanumsol:
+    pattern:  /pruebanumsol/{id}
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:asignarNumsol" }

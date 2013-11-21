@@ -83,16 +83,29 @@ class DefaultController extends Controller
     public function SeccionesAction($idacceso, $nombreUsuario)
     {
       $em = $this->getDoctrine()->getManager();
+      //consulta de prueba recuperar los nombres de opciones
       $query = $em->createQuery('
-          SELECT a.nombrepagina pagina, a.ruta ruta, a.id acceso, IDENTITY(a.idaccesosup) padre, m.nombremodulo modulo, 
-          (SELECT a2.nombrepagina FROM AdminBundle:Acceso a2 where a2.id = :idacceso)  opcionpadre
+        select a1.nombrepagina hijo, 
+                a2.nombrepagina padre, 
+                a3.nombrepagina abuelo
+                from AdminBundle:Acceso a1 
+                left join a1.idaccesosup a2 
+                left join a2.idaccesosup a3 
+                ');
+
+   /*   $query = $em->createQuery('
+          SELECT a1.nombrepagina pagina_padre, a2.nombrepagina pagina, a2.ruta ruta, 
+          (SELECT COUNT(a4.id) from AdminBundle:Acceso a4 where a4.idaccesosup = a2.id) numhijos,
+          a3.nombrepagina pagina_nieto, a3.ruta ruta_nieto, m.nombremodulo modulo
           From ApplicationSonataUserBundle:User u
           join u.groups g
-          join g.idacceso a 
-          join a.idmodulo m
-          WHERE a.idaccesosup = :idacceso and u.username = :username order by m.nombremodulo'
-        )->setParameter('idacceso', $idacceso)->setParameter('username', $nombreUsuario);
-  
+          join g.idacceso a1 
+          join a1.idmodulo m
+          left join a1.idaccesosup a2 with a1.id=a2.idaccesosup
+          left join a2.idaccesosup a3 with a2.id=a3.idaccesosup
+          WHERE a3.id = :idacceso and u.username = :username'
+          )->setParameter('idacceso', $idacceso)->setParameter('username', $nombreUsuario);
+  */
         $opciones = $query->getResult();
                
         return $this->render('::menuSecciones.html.twig',array('opciones'=>$opciones));
@@ -100,3 +113,25 @@ class DefaultController extends Controller
     }
 }
 
+/* trabajada
+
+select a1.nombrepagina Padre, a2.nombrepagina Hijo, (select count(a4.id) from acceso a4 where a4.idaccesosup=a2.id) hijos, a3.nombrepagina Nieto
+from acceso a1 left 
+join acceso a2 on (a1.id=a2.idaccesosup) 
+left join acceso a3 on (a2.id=a3.idaccesosup) 
+where a1.id=1
+group by a1.nombrepagina, a2.id,a2.nombrepagina, a3.nombrepagina; 
+
+
+SELECT a1.nombrepagina pagina_padre, a2.nombrepagina pagina, a2.ruta ruta, 
+          (SELECT COUNT(a4.id) from AdminBundle:Acceso a4 where a4.idaccesosup = a2.id) numhijos,
+          a3.nombrepagina pagina_nieto, a3.ruta ruta_nieto, m.nombremodulo modulo
+          From ApplicationSonataUserBundle:User u
+          join u.groups g
+          join g.idacceso a1 
+          join a1.idmodulo m
+          left join a1.idaccesosup a2
+          left join a2.idaccesosup a3
+          WHERE a1.id = :idacceso and u.username = :username order by m.nombremodulo'
+         
+*/

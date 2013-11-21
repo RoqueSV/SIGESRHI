@@ -43,7 +43,7 @@ class SolicitudempleoType extends AbstractType
             //->add('idexpediente')
             ->add('nombreparinst', null, array('label'=>'Nombre del Pariente: ', 'attr'=>array('class'=>'input-xlarge')))
             ->add('parentescoparinst',null, array('label'=>'Parentesco: ', 'required'=>false , 'attr'=>array('class'=>'input-medium')))
-            ->add('dependenciaparinst', 'entity', array( 'label'=>'Dependencia donde labora: ','class'=>'AdminBundle:Unidadorganizativa', 'empty_value'=>'Seleccione una opción', 'mapped'=>false, 'required'=>false, 'attr' =>array('class'=> 'input-xxlarge')))
+            ->add('dependenciaparinst', null, array( 'label'=>'Dependencia donde labora: ', 'empty_value'=>'Seleccione una opción', 'required'=>false, 'attr' =>array('class'=> 'input-xxlarge')))
             ->add('aceptar', 'checkbox', array ('label' => 'Declaro bajo juramento que los datos registrados en la solicitud son verdaderos y autorizo al Instituto Salvadoreño de Rehabilitacion Integral para su respectiva verificación.'
                 ,'required' => true, ))
             ;

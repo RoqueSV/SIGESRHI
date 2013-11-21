@@ -62,7 +62,7 @@ class Expediente
      * @GRID\Column(field="idsolicitudempleo.idplaza.nombreplaza", groups="grupo_contratacion",type="text", title="Plaza solicitada", operators={"like"}, operatorsVisible=false, joinType="inner")
      * @GRID\Column(field="idsolicitudempleo.nombrecompleto", groups={"grupo_segurovida","grupo_contratacion", "grupo_docdigital"} ,visible=false, joinType="inner", filterable=false)
      * @GRID\Column(field="idsolicitudempleo.fecharegistro", align="center", type="date", groups={"grupo_docdigital"}, title="Registrado",  joinType="inner", filterable=false)
-     * @GRID\Column(field="idsolicitudempleo.numsolicitud", align="center", type="number", groups={"grupo_docdigital"}, title="Solicitud", joinType="inner", filterable=false, size="100")
+     * @GRID\Column(field="idsolicitudempleo.numsolicitud", align="center", groups={"grupo_docdigital"}, title="Solicitud", joinType="inner", filterable=false )
      */
     private $idsolicitudempleo;
 

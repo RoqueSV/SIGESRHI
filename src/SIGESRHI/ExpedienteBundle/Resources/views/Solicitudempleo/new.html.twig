@@ -3,8 +3,16 @@
 
       
 {% block principal %}
+
   {{ form_javascript(form) }}
-  {{ form_stylesheet(form) }}
+
+    {% for flashMessage in app.session.flashbag.get('new_error') %}
+    <div class="alert alert-danger">
+       <p> {{ flashMessage }}</p>
+    </div>
+{% endfor %}
+
+ 
 <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
     
 
@@ -17,11 +25,11 @@
         
     <h4 class="text-center">REGISTRO DE SOLICITUD DE EMPLEO</h4>
 
-    <table border="0">
+    <table border="0" width="100%">
         <tr>
-            <td width="80%"><p class="justifyText"> <b>Nota Importante:</b> La solicitud de empleo no implica compromiso por parte del ISRI con el interesado, solamente es un requisito indispensable que debe llenar toda persona que aspira a prestar sus servicios a la institución.</p>
+            <td width="70%"><p class="justifyText"> <b>Nota Importante:</b> La solicitud de empleo no implica compromiso por parte del ISRI con el interesado, solamente es un requisito indispensable que debe llenar toda persona que aspira a prestar sus servicios a la institución.</p>
             </td>
-            <td>
+            <td> &nbsp;&nbsp;&nbsp;
                 <table border="3" width="150px" height="192px"><tr><td id="vista_previa"> </td></tr></table>
             </td>
         </tr>
@@ -128,6 +136,27 @@
                 <table>
                 ">
 
+                {# 
+                    Bloque de codigo, para cargar el formulario embebido para cuando hay un error en el registro del formulario (new) se carguen
+                    En la vista con el estilo predefinido.
+                #}
+
+                {% if form.Destudios|length > 1 %}
+                    {% for estudio in form.Destudios %}
+                    {# Comprobacion para evitar que se imprima el Destudios # 1 (ya impreso) #}
+                    {% if loop.index0 > 0 %}
+                    <li>
+                        <table class="form-inline" style="margin-bottom:8px;">
+                            <tr>
+                                <td>{{form_widget(estudio.idtitulo)}} {{form_errors(estudio.idtitulo)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>{{form_widget(estudio.centroestudio)}} {{form_errors(estudio.centroestudio)}}</td>
+                            </tr>
+                        </table>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                {% endif %}
+
                 </ul>
 
                 <br>
@@ -145,6 +174,24 @@
                     </tr>
                 </table>
                  ">
+                 
+                 {#
+                    Bloque de codigo para cuando hay un error en el ingreso de datos, se cargue la informacion ingresada en los formularios embebidos
+                 #}
+            {% if form.Idiomas|length > 0 %}
+                {% for idioma in form.Idiomas %}
+                    <li>
+                        <table>
+                            <tr>
+                                <td>{{form_row(idioma.nombreidioma)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>{{form_row(idioma.nivelescribe)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>{{form_row(idioma.nivelhabla)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
+                                <td>{{form_row(idioma.nivellee)}}</td>
+                            </tr>
+                        </table>
+                    </li>
+                {% endfor %}
+            {% endif %}
 
                 </ul>
                         <br>
@@ -173,6 +220,7 @@
             
                
               <ul class="Dfamiliares unstyled" data-prototype="
+
             <table>
                 <tr>
                     <td>{{form_widget(form.Dfamiliares.vars.prototype.parentesco)|e}} {{form_errors(form.Dfamiliares.vars.prototype.parentesco)|e}}</td>
@@ -185,6 +233,25 @@
             </table>
                ">
 
+                 {% if form.Dfamiliares|length > 1 %}
+                    {% for Dfamiliar in form.Dfamiliares %}
+                    {% if loop.index0 > 0 %}
+                        <li>
+                            <table>
+                                <tr>
+                                    <td>{{form_widget(Dfamiliar.parentesco)}} {{form_errors(Dfamiliar.parentesco)}}</td>
+                                    <td>&nbsp;&nbsp;&nbsp;</td>
+                                    <td>{{form_widget(Dfamiliar.nombrefamiliar)}} {{form_errors(Dfamiliar.nombrefamiliar)}}</td>
+                                    <td>&nbsp;&nbsp;&nbsp;</td>
+                                    <td>{{form_widget(Dfamiliar.telefonofamiliar)}} {{form_errors(Dfamiliar.telefonofamiliar)}}</td>
+                                    <td>&nbsp;&nbsp;&nbsp;</td>
+                                    <td>{{form_widget(Dfamiliar.direccionfamiliar)}} {{form_errors(Dfamiliar.direccionfamiliar)}}</td>
+                                </tr>
+                            </table>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
            </ul>
                
                </fieldset>
@@ -214,6 +281,7 @@
                 <br>               
                 
                  <ul class="Dempleos unstyled" data-prototype="
+                 <br>
             <table >
                 <tr>
                     <td width='225px'>{{form_label(form.Dempleos.vars.prototype.tipodatoempleo)|e}}</td>
@@ -237,7 +305,7 @@
                 </tr>
                 <tr>                
                     <td>{{form_label(form.Dempleos.vars.prototype.fechafinlaboral)|e}}</td>
-                    <td>{{form_widget(form.Dempleos.vars.prototype.fechafinlaboral)|e }} {{form_errors(form.Dempleos.vars.prototype.fechafinlaboral)|e }}</td>
+                    <td>{{form_widget(form.Dempleos.vars.prototype.fechafinlaboral)|e }} {{form_errors(form.Dempleos.vars.prototype.fechafinlaboral)|e }} * Solo para empleos anteriores.</td>
                 </tr>
                 <tr>                
                     <td>{{form_label(form.Dempleos.vars.prototype.jefeinmediato)|e}}</td>
@@ -258,14 +326,64 @@
 
             </table>
                ">
+
+               {% if form.Dempleos|length > 0 %}
+                    {% for Dempleo in form.Dempleos %}
+               <li>
+                <table >
+                <tr>
+                    <td width='225px'>{{form_label(Dempleo.tipodatoempleo)}}</td>
+                    <td>{{form_widget(Dempleo.tipodatoempleo)}} {{form_errors(Dempleo.tipodatoempleo)}}</td>
+                </tr>
+                <tr>                
+                    <td>{{form_label(Dempleo.nombreempresa)}}</td>
+                    <td>{{form_widget(Dempleo.nombreempresa) }} {{form_errors(Dempleo.nombreempresa) }}</td>
+                </tr>
+                <tr>                
+                    <td>{{form_label(Dempleo.direccionempresa)}}</td>
+                    <td>{{form_widget(Dempleo.direccionempresa) }} {{form_errors(Dempleo.direccionempresa) }}</td>
+                </tr>
+                <tr>                
+                    <td>{{form_label(Dempleo.telefonoempresa)}}</td>
+                    <td>{{form_widget(Dempleo.telefonoempresa) }} {{form_errors(Dempleo.telefonoempresa) }}</td>
+                </tr>
+                <tr>                
+                    <td>{{form_label(Dempleo.fechainiciolaboral)}}</td>
+                    <td>{{form_widget(Dempleo.fechainiciolaboral) }} {{form_errors(Dempleo.fechainiciolaboral) }}</td>
+                </tr>
+                <tr>                
+                    <td>{{form_label(Dempleo.fechafinlaboral) }}</td>
+                    <td>{{form_widget(Dempleo.fechafinlaboral) }} {{form_errors(Dempleo.fechafinlaboral) }} * Solo para empleos anteriores.</td>
+                </tr>
+                <tr>                
+                    <td>{{form_label(Dempleo.jefeinmediato)}}</td>
+                    <td>{{form_widget(Dempleo.jefeinmediato) }} {{form_errors(Dempleo.jefeinmediato) }}</td>
+                </tr>
+                <tr>                
+                    <td>{{form_label(Dempleo.cargodesempenado)}}</td>
+                    <td>{{form_widget(Dempleo.cargodesempenado) }} {{form_errors(Dempleo.cargodesempenado) }}</td>
+                </tr>
+                <tr>                
+                    <td>{{form_label(Dempleo.sueldo) }}</td>
+                    <td>{{form_widget(Dempleo.sueldo) }} {{form_errors(Dempleo.sueldo) }}</td>
+                </tr>
+                <tr>                
+                    <td>{{form_label(Dempleo.motivoretiro) }}</td>
+                    <td>{{form_widget(Dempleo.motivoretiro) }} {{form_errors(Dempleo.motivoretiro) }}</td>
+                </tr>
+            </table>
+               </li>
+               
+               <hr>
+
+                 {% endfor %}
+                {% endif %}
                 
-      
             </ul>
            </fieldset> 
 
 
-            <hr>
-            {{form_widget(form.aceptar)}}
+                        {{form_widget(form.aceptar)}}
         
         <br>                      
 

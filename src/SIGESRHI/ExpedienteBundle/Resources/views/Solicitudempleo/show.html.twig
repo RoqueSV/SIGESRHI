@@ -12,8 +12,14 @@
     <table border="2" class="table table-bordered table-hover" width="90%">
                 
             <tr>
-                <th>Numero de solicitud: </th>
-                <td><b>{{ entity.numsolicitud }}</b></td>
+                <th>Número de solicitud: </th>
+                <td><b>
+                    {% if entity.numsolicitud != 0 %}
+                    {{ entity.numsolicitud }}
+                    {% else %}
+                    No asignado
+                    {% endif %}
+                </b></td>
                 
             </tr>
             <tr>
@@ -29,10 +35,10 @@
 
         </td>
         <td width="35%" align="center">
-            <table border="3" class="text-center">
+            <table border="3" align="center" width="150px" height="192px">
                 <tr>
                     <td>
-                        <img src="{{asset('uploads/fotografias/' ~ entity.fotografia)}}" width="150px" height="150px" class="fotoSol"/>
+                        <img src="{{asset('uploads/fotografias/' ~ entity.fotografia)}}"  class="fotoSol"/>
                     </td>
                 </tr>
             </table>
@@ -96,7 +102,7 @@
 
         <table border="2" class="table table-bordered table-hover">
             <tr>
-                <th colspan="3">Correo electr&oacute;nico</th>
+                <th colspan="3">Correo electr&oacute;nico: </th>
             </tr>
             <tr>
                 <td>{{ entity.email }}</td>
@@ -107,7 +113,7 @@
             <tr>
                     <th>Lugar de nacimiento: </th>
                     <th>fecha de nacimiento:</th>
-                    <th>Sexo</th>
+                    <th>Sexo: </th>
             </tr>
             <tr>
                     <td>{{ entity.lugarnac }}</td>
@@ -159,8 +165,8 @@
 
             <table class="table table-bordered table-hover">
                     <tr>
-                        <th>Titulo Obtenido</th>
-                        <th>Centro de Estudio</th>
+                        <th>Titulo Obtenido: </th>
+                        <th>Centro de Estudio: </th>
                     </tr>
                     
 
@@ -263,7 +269,12 @@
         <tr>
             <td>&nbsp;{{entity.nombreparinst}}</td>
             <td>&nbsp;{{entity.parentescoparinst}}</td>
-            <td>&nbsp;{{entity.dependenciaparinst}}</td>
+            <td>&nbsp;
+                {% if entity.dependenciaparinst is not null %}
+                        {{entity.dependenciaparinst.getNombrecentro()}}
+                {% endif %}
+
+            </td>
         </tr>
     </table>
 
@@ -321,6 +332,9 @@
 
         {% endfor %}
 
+    {% else %}
+    No hay datos que mostrar.
+
     {% endif %}
 
 
@@ -355,8 +369,11 @@
      <div class="text-center">
      <input type="hidden" id='idsol' name='idsol' value={{ entity.id }} />
      <button type="submit" class="btn btn-primary">Generar PDF</button>
-     <button type="button" class="btn" onclick="location.href='{{ path ('solicitud', {'tipo':entity.idexpediente.tipoexpediente}) }}'">Regresar al listado</button>
+     <button type="button" class="btn" onclick="location.href='{{ path ('solicitud_caspirante', {'tipo':entity.idexpediente.tipoexpediente}) }}'">Regresar al listado</button>
      <a href="{{ path('solicitud_edit', { 'id': entity.id }) }}" class="btn">Editar Registro</a>
+     {% if entity.numsolicitud == 0 %}
+     <a href="{{ path('solicitud_pruebanumsol', { 'id': entity.id }) }}" class="btn">Asignar Numero de Solicitud</a>
+     {% endif %}
      </div>
         
     </form>

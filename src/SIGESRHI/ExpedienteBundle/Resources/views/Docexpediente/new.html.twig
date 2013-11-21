@@ -26,7 +26,7 @@
         <div class="text-center">
         
             <button type="submit"  class="btn btn-primary">Guardar Documentos</button>
-            <button type="button" onclick="cancelar();" class="btn">Cancelar</button>
+            <a href="{{path('hello_page')}}" class="btn"> Cancelar </a>
         
         </div>
         <br>
@@ -47,7 +47,7 @@
                 <tr>
                     <td>{{documento.nombredocexp}}</td>
                     <td> {{(documento.fechadocexp|date('d-m-Y'))|fecha}} </td>
-                    <td><a href="{{path('ver_docdigital', {'iddoc': documento.id})}}" > Ver </a></td>
+                    <td><a href="{{path('docdigital_ver_docdigital', {'iddoc': documento.id})}}" > Ver </a></td>
                 </tr>
 
                 {% endfor %}

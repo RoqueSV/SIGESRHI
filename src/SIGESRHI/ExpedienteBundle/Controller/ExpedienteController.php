@@ -295,7 +295,7 @@ public function confirmarValidoAction($id)
     }
 
 //funcion de grid para agregar documentos digitales a un expediente (Docexpediente)
-    public function agregarDigitalesAction($tipo)
+    public function agregarDigitalesAction()
     {
         $source = new Entity('ExpedienteBundle:Expediente', 'grupo_docdigital');
         // Get a grid instance
@@ -304,9 +304,8 @@ public function confirmarValidoAction($id)
 
         $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
-        function($query) use ($tableAlias, $tipo){
-            $query->andWhere($tableAlias.".tipoexpediente = :var")
-            ->setParameter('var',$tipo);
+        function($query) use ($tableAlias){
+            $query->andWhere($tableAlias.".tipoexpediente = 'I' ");
         }
             );
 
