@@ -104,6 +104,9 @@ ul, ol {
 
   /********* Estilos para menu de secciones *********/
 
+/* nav menu styles */
+
+/*_______________________Estilo menus-seccion___________________________________*/
 .menu-seccion ul {
 
 font-family: Tahoma;
@@ -123,7 +126,7 @@ height: 10px;
 font-size: 11px; 
 text-decoration: none;
 color: black;
-padding: 10px ;                /*padding: 10.5px 11px;*/
+padding: 10px ;               
 margin: 3px ;
 background-color: #CCCCCC;
 display:block;
@@ -138,4 +141,3 @@ color: white;
 background-color: #004C80;
 border-radius: 5px 5px 5px 5px;
 }
-

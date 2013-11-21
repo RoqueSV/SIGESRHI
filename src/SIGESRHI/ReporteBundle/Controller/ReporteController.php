@@ -123,7 +123,7 @@ class ReporteController extends Controller
     //Incluimos camino de migas 
      $breadcrumbs = $this->get("white_october_breadcrumbs");
      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-     $breadcrumbs->addItem("Solicitud de empleo", $this->get("router")->generate("solicitud"));
+     $breadcrumbs->addItem("Solicitud de empleo", $this->get("router")->generate("solicitud_caspirante"));
      $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("solicitud_show",array("id"=>$idSol)));
      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_solicitudempleo"));
 

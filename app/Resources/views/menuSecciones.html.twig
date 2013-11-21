@@ -1,29 +1,47 @@
+{#  Secciones anterior( bueno)
 
 <br>
 {% if opciones|length > 0 %}
-<div class="text-center" ><b><ins>{{ opciones[0].modulo|title }}</ins></b></div>
+<div class="text-center" ><b><ins>{{ opciones[0].modulo|capitalize }}</ins></b></div>
 
 <div class="text-center">
 <table border="0" border="2">
 	<tr>
 		<td><b> Opci&oacute;n: </b></td>
-		<td>&nbsp;{{opciones[0].opcionpadre|title}}</td>
+		<td>&nbsp;{{opciones[0].opcionpadre|capitalize}}</td>
 	</tr>
 </table>
 </div>
 
+<br>
 {% endif %}
 
 
 {% for opcion in opciones %}
 
-<li><a href="{{path(opcion.ruta)}}">{{ opcion.pagina|title}} </a></li>
+<li><a href="{{path(opcion.ruta)}}">{{ opcion.pagina|capitalize}} </a></li>
 
 {% endfor %}
 
-{#
-
-{{ opcion.acceso }}
-{{ opcion.padre }}
 
 #}
+
+
+{% for opcion in opciones %}
+Abuelo: {{opcion.abuelo}}
+Padre: {{opcion.padre}}
+Hijo: {{opcion.hijo}}
+* <br>
+
+{#
+{{ opcion.pagina_padre }}
+{{ opcion.pagina }}
+{{ opcion.ruta }}
+{{ opcion.numhijos }}
+{{ opcion.pagina_nieto }}
+{{ opcion.ruta_nieto}}
+{{ opcion.modulo }}
+#}
+<br>
+
+{% endfor %}

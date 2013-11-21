@@ -14,6 +14,7 @@ use SIGESRHI\ExpedienteBundle\Entity\Idioma;
 use SIGESRHI\ExpedienteBundle\Entity\Expediente;
 
 use SIGESRHI\ExpedienteBundle\Entity\Municipio;
+use SIGESRHI\ExpedienteBundle\Entity\Centrounidad;
 use SIGESRHI\ExpedienteBundle\Entity\Departamento;
 use SIGESRHI\ExpedienteBundle\Repositorio\departamentoRepository;
 
@@ -60,10 +61,27 @@ class SolicitudempleoController extends Controller
         $source->manipulateQuery(
         function($query) use ($tableAlias){
             $query->join($tableAlias.".idexpediente ", "s")
-            ->andWhere("s.tipoexpediente = :var" )
-            ->setParameter('var',"I");
-        }
+            ->andWhere("s.tipoexpediente = 'I' or s.tipoexpediente = 'A'" );
+             }
             );
+
+        //Manipular Fila
+        $source->manipulateRow(
+            function ($row)
+            {
+                // Change the ouput of the column
+                if( ($row->getField('idexpediente.tipoexpediente')=='I') || ($row->getField('idexpediente.tipoexpediente')=='A') ) {
+                    if($row->getField('idexpediente.tipoexpediente')=='I'){
+                        $row->setField('idexpediente.tipoexpediente', 'Invalido');                   
+                    }
+                    if($row->getField('idexpediente.tipoexpediente')=='A'){
+                        $row->setField('idexpediente.tipoexpediente', 'Válido');                  
+                    }
+                }
+                
+                return $row;
+            }
+        );
 
         // Attach the source to the grid
         $grid->setSource($source);
@@ -86,7 +104,7 @@ class SolicitudempleoController extends Controller
    
 
 
-    public function indexEditAction($tipo)
+    public function indexEditAction()
     {
         $source = new Entity('ExpedienteBundle:Solicitudempleo', 'solicitud_empleo');
         // Get a grid instance
@@ -94,12 +112,29 @@ class SolicitudempleoController extends Controller
 
         $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
-        function($query) use ($tableAlias, $tipo){
+        function($query) use ($tableAlias){
             $query->join($tableAlias.".idexpediente ", "s")
-            ->andWhere("s.tipoexpediente = :var")
-            ->setParameter('var',$tipo);
+            ->andWhere("s.tipoexpediente = 'I' ");
         }
             );
+
+        //Manipular Fila
+        $source->manipulateRow(
+            function ($row)
+            {
+                // Change the ouput of the column
+                if( ($row->getField('idexpediente.tipoexpediente')=='I') || ($row->getField('idexpediente.tipoexpediente')=='A') ) {
+                    if($row->getField('idexpediente.tipoexpediente')=='I'){
+                        $row->setField('idexpediente.tipoexpediente', 'Invalido');                   
+                    }
+                    if($row->getField('idexpediente.tipoexpediente')=='A'){
+                        $row->setField('idexpediente.tipoexpediente', 'Válido');                  
+                    }
+                }
+                
+                return $row;
+            }
+        );
 
         // Attach the source to the grid
         $grid->setSource($source);
@@ -137,17 +172,9 @@ class SolicitudempleoController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        //establecemos el id de la solicitud
-        $query = $em->createQuery('SELECT (max(COALESCE(s.numsolicitud,0))+1) numsolicitud FROM ExpedienteBundle:Solicitudempleo s');
-        $num = $query->getSingleResult();
-
-        if(!$num['numsolicitud']){
-
-            $num['numsolicitud']=1;
-        }
-
-       
-        $entity->setnumsolicitud($num['numsolicitud']);
+       //Por defecto asignamos un numero solicitud 0, ya que personal de RRHH decidira asignarle su
+       //correspondiente numero de solicitud en formato correlativo/año ej.  325-2013      
+        $entity->setnumsolicitud("0");
 
         $form = $this->createForm(new SolicitudempleoType(), $entity);
         $form->bind($request);
@@ -168,6 +195,18 @@ class SolicitudempleoController extends Controller
         $entity->setNombrecompleto($completo);
 
        
+        // Verificamos la cantidad de datos de empleo ingresados
+         $numEmpleos = count($entity->getDempleos());
+
+         if($numEmpleos > 2 ){
+            $this->get('session')->getFlashBag()->add('new_error', 'Unicamente debe registrar datos de 2 empleos como máximo.'); 
+            return $this->render('ExpedienteBundle:Solicitudempleo:new.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+         }
+
+
         if ($form->isValid()) {
 
             //creamos la instancia de expediente con la cual se relacionara la solicitud.
@@ -189,6 +228,7 @@ class SolicitudempleoController extends Controller
              return $this->redirect($this->generateUrl('docdigital_new', array('id' => $expediente->getId())));
         }
 
+        $this->get('session')->getFlashBag()->add('new_error', 'Ha ocurrido un error con los datos ingresados.'); 
         return $this->render('ExpedienteBundle:Solicitudempleo:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -320,10 +360,31 @@ class SolicitudempleoController extends Controller
          // Crea un arreglo del los objetos 'Dfamiliares' actualmente en la base de datos
          $originalDfamiliares = array();
         foreach ($entity->getDfamiliares() as $Dfamiliar) {
-           $originalDfamiliar[] = $Dfamiliar;
+           $originalDfamiliares[] = $Dfamiliar;
          }
         
+        // Crea un arreglo del los objetos 'Dempleos' actualmente en la base de datos
+        $originalDempleos = array();
+        foreach ($entity->getDempleos() as $Dempleo) {
+           $originalDempleos[] = $Dempleo;
+         }
+        
+        // Crea un arreglo del los objetos 'Idiomas' actualmente en la base de datos
+        $originalIdiomas = array();
+        foreach ($entity->getidiomas() as $Idioma) {
+           $originalIdiomas[] = $Idioma;
+         }
+
         // Fin eliminar embebidos
+
+
+         //obtenemos el id del departamento que se registro
+        $query=$em->createQuery('SELECT d.id depto, m.id muni FROM ExpedienteBundle:Municipio m
+        join m.iddepartamento d
+        WHERE m.id = :municipio'
+        )->setParameter('municipio', $entity->getIdmunicipio());
+        $locacion = $query->getResult();
+
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new SolicitudempleoType(), $entity);
@@ -347,19 +408,49 @@ class SolicitudempleoController extends Controller
 
         $numEstudios=count($entity->getDestudios());
         $numFamiliares=count($entity->getDfamiliares());
+        $numEmpleos = count($entity->getDempleos());
 
+        //se valida que se ingrese por lo menos un registro de estudios
         if($numEstudios<1){
         $this->get('session')->getFlashBag()->add('erroredit', 'Debe almacenar por lo menos un dato de estudio.'); 
-            return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
+           // return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
+            return $this->render('ExpedienteBundle:Solicitudempleo:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'locacion'=> $locacion,
+        ));
+
         }
 
+        //se valida que se ingrese por lo menos un registro de  familiar
         if($numFamiliares<1){
         $this->get('session')->getFlashBag()->add('erroredit', 'Debe almacenar por lo menos los datos de un familiar'); 
-            return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
+            //return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
+            return $this->render('ExpedienteBundle:Solicitudempleo:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'locacion'=> $locacion,
+        ));
         }
 
+        //validamos que como mucho sean 2 registros de datos de empleo ingresados
+        if($numEmpleos > 2){
+        $this->get('session')->getFlashBag()->add('erroredit', 'Solo debe ingresar como máximo 2 datos de empleo.'); 
+            //return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
+            return $this->render('ExpedienteBundle:Solicitudempleo:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+            'locacion'=> $locacion,
+        ));
+        }
+
+
         if ($editForm->isValid()) {
-          
+
+    /*   Bloque de eliminacion de los datos de Estudio. */
             foreach ($entity->getDestudios() as $Destudio) {
                 foreach ($originalDestudios as $key => $toDel) {
                     if ($toDel->getId() === $Destudio->getId()) {
@@ -370,17 +461,61 @@ class SolicitudempleoController extends Controller
 
             // Elimina la relación entre Destudio y Solicitud
             foreach ($originalDestudios as $Destudio) {
-                
-                //Elimina el beneficiario de seguro de vida
-                //$beneficiario->getIdsegurovida()->removeElement($entity);
-
                 // Si se tratara de una relación MuchosAUno, elimina la relación con esto
                  $Destudio->setIdsolicitudempleo(null);
-
-                //$em->persist($beneficiario);
-
                 //Si deseas eliminar la etiqueta completamente, también lo puedes hacer
                  $em->remove($Destudio);
+             }
+
+    /* Bloque de eliminacion de los datos familiares. */
+            foreach ($entity->getDfamiliares() as $Dfamiliar) {
+                foreach ($originalDfamiliares as $key => $toDel) {
+                    if ($toDel->getId() === $Dfamiliar->getId()) {
+                        unset($originalDfamiliares[$key]);
+                    }
+                }
+            }
+
+            // Elimina la relación entre Dfamiliares y Solicitud
+            foreach ($originalDfamiliares as $Dfamiliar) {
+                // Si se tratara de una relación MuchosAUno, elimina la relación con esto
+                 $Dfamiliar->setIdsolicitudempleo(null);
+                //Si deseas eliminar la etiqueta completamente, también lo puedes hacer
+                 $em->remove($Dfamiliar);
+             }
+
+    /* Bloque de eliminacion de los datos de empleo. */
+            foreach ($entity->getDempleos() as $Dempleo) {
+                foreach ($originalDempleos as $key => $toDel) {
+                    if ($toDel->getId() === $Dempleo->getId()) {
+                        unset($originalDempleos[$key]);
+                    }
+                }
+            }
+
+            // Elimina la relación entre Dempleo y Solicitud
+            foreach ($originalDempleos as $Dempleo) {
+                // Si se tratara de una relación MuchosAUno, elimina la relación con esto
+                 $Dempleo->setIdsolicitudempleo(null);
+                //Si deseas eliminar la etiqueta completamente, también lo puedes hacer
+                 $em->remove($Dempleo);
+             }
+
+    /* Bloque de eliminacion de los datos de idiomas. */
+            foreach ($entity->getIdiomas() as $Idioma) {
+                foreach ($originalIdiomas as $key => $toDel) {
+                    if ($toDel->getId() === $Idioma->getId()) {
+                        unset($originalIdiomas[$key]);
+                    }
+                }
+            }
+
+            // Elimina la relación entre Dempleo y Solicitud
+            foreach ($originalIdiomas as $Idioma) {
+                // Si se tratara de una relación MuchosAUno, elimina la relación con esto
+                 $Idioma->setIdsolicitudempleo(null);
+                //Si deseas eliminar la etiqueta completamente, también lo puedes hacer
+                 $em->remove($Idioma);
              }
 
             $em->persist($entity);
@@ -388,13 +523,6 @@ class SolicitudempleoController extends Controller
             $this->get('session')->getFlashBag()->add('edit', 'Solicitud de empleo modificada correctamente'); 
             return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
         }
-
-        //obtenemos el id del departamento que se registro
-        $query=$em->createQuery('SELECT d.id depto, m.id muni FROM ExpedienteBundle:Municipio m
-        join m.iddepartamento d
-        WHERE m.id = :municipio'
-        )->setParameter('municipio', $entity->getIdmunicipio());
-        $locacion = $query->getResult();
 
      //   return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
         $this->get('session')->getFlashBag()->add('edit', 'Ha ocurrido un error con los datos ingresados.'); 
@@ -427,7 +555,7 @@ class SolicitudempleoController extends Controller
             $em->flush();
         }
         $this->get('session')->getFlashBag()->add('delete', 'Registro eliminado correctamente');
-        return $this->redirect($this->generateUrl('solicitud'));
+        return $this->redirect($this->generateUrl('solicitud_caspirante'));
     }
 
     /**
@@ -486,6 +614,44 @@ class SolicitudempleoController extends Controller
         return $response;
 }//fin funcion
 
+
+public function asignarNumsolAction($id){
+
+        $numSolicitud;
+        $em = $this->getDoctrine()->getManager();
+        
+        //establecemos el id de la solicitud
+       $query = $em->createQuery("SELECT COUNT(s.numsolicitud) AS  numsolicitud 
+        FROM ExpedienteBundle:Solicitudempleo s 
+        where  substring(s.numsolicitud,locate('-',s.numsolicitud)+1, 4) = :actual")
+       ->setParameter('actual', date('Y'));
+
+       //$query = $em->createQuery('SELECT substring(s.numsolicitud,0,locate("-",s.numsolicitud)) correlativo, (max(COALESCE(s.numsolicitud,0))+1) numsolicitud FROM ExpedienteBundle:Solicitudempleo s');
+        $Resultado = $query->getsingleResult();
+
+        $num=$Resultado['numsolicitud'];
+
+        if($num==0){
+
+            $numsolicitud="1-".date('Y');
+        }
+        if($num > 0){
+            $num++;
+            $numsolicitud = $num."-".date('Y');
+        }
+
+        $entity = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($id);
+
+        $num_anterior=$entity->getnumsolicitud();
+        if($num_anterior == 0 ){
+        $entity->setnumsolicitud($numsolicitud);
+        $em->persist($entity);
+        $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('solicitud_show', array('id' => $entity->getId())));
+
+}//fin funcion
 
 }//fin clase
 

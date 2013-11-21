@@ -23,7 +23,7 @@
 
 <table border="0" width="100%">
     <tr>
-        <td width="80%">
+        <td width="70%">
             <table>
                 <tr>
                     <td><p class="justifyText"><b>Numero de Solicitud: </b></p></td>
@@ -45,15 +45,15 @@
             
             <br>
            <b> ¿Desea cambiar la fotografía?</b>
-        <table >
+        <table border="0">
             <tr>
                 <td>{{ form_row(edit_form.file, {'required': false, 'label': ' '} ) }} </td>
                 
             </tr>
         </table>  
         </td>
-        <td>
-            <table border="3" width="150px" height="192px">
+        <td align="center">
+            <table border="3" width="150px" height="192px" align="center">
                 <tr>
                     <td id="vista_previa"><img src="{{asset('uploads/fotografias/' ~ edit_form.fotografia.vars.value)}}" width="150px" height="150px" class="fotoSol"/></td>
                 </tr>
@@ -158,7 +158,7 @@
                     <tr>
                         <td>{{form_row(estudio.idtitulo)}}</td><td>&nbsp;&nbsp;&nbsp;</td>
                         <td>{{form_row(estudio.centroestudio)}}</td>
-                    <tr>
+                    </tr>
                 </table>
             </li>
             {#<li>{{ form_row(estudio.centroestudio) }}</li> #}
@@ -339,7 +339,7 @@
                 </tr>
                 <tr>                
                     <td>{{form_label(Dempleo.fechafinlaboral) }}</td>
-                    <td>{{form_widget(Dempleo.fechafinlaboral) }} {{form_errors(Dempleo.fechafinlaboral) }}</td>
+                    <td>{{form_widget(Dempleo.fechafinlaboral) }} {{form_errors(Dempleo.fechafinlaboral) }} * Solo para empleos anteriores.</td>
                 </tr>
                 <tr>                
                     <td>{{form_label(Dempleo.jefeinmediato)}}</td>
@@ -359,6 +359,9 @@
                 </tr>
             </table>
                </li>
+               
+               <hr>
+
                  {% endfor %}
                 {% endif %}
             </ul>
@@ -426,7 +429,7 @@
                 });
 
              });
-           window.setTimeout("document.getElementById('sigesrhi_expedientebundle_solicitudempleotype_idmunicipio').value={{locacion[0].muni}}",7000);
+           window.setTimeout("document.getElementById('sigesrhi_expedientebundle_solicitudempleotype_idmunicipio').value={{locacion[0].muni}}",9000);
         });//#departamento
 
 
