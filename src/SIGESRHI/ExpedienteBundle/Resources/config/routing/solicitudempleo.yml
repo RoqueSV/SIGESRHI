@@ -1,6 +1,6 @@
 solicitud:
-    pattern:  /{tipo}/grid_consultar
-    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:index", tipo:'I' }
+    pattern:  /grid_consultar
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:index"}
 
 solicitud_show:
     pattern:  /{id}/show

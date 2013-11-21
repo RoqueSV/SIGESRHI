@@ -2,6 +2,15 @@
 
 {% block principal -%}
 
+<script type='text/javascript'>
+function eliminar() {
+
+    if(confirm('\xbfEsta seguro que desea eliminar este registro?')) {
+        document.getElementById('form_borrar').submit();
+}
+}
+</script>
+
     <h4 class="text-center">DATOS REGISTRADOS DE SOLICITUD DE EMPLEO</h4>
     <br>
 
@@ -351,12 +360,18 @@
 
 <h4 class="text-center">¿Qué acción desea realizar?</h4><br />
 
-    <form class="form-inline" action="{{ path('reporte_solicitudempleo') }}" method="post" >
+    
      <div class="text-center">
-     <input type="hidden" id='idsol' name='idsol' value={{ entity.id }} />
-     <button type="submit" class="btn btn-primary">Generar PDF</button>
+     
+     <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id }) }}" class="btn btn-primary">Generar PDF</a>
      <button type="button" class="btn" onclick="location.href='{{ path ('solicitud', {'tipo':entity.idexpediente.tipoexpediente}) }}'">Regresar al listado</button>
      <a href="{{ path('solicitud_edit', { 'id': entity.id }) }}" class="btn">Editar Registro</a>
+     <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
+            
+      <form action="{{ path('solicitud_delete', { 'id': entity.id }) }}"  id="form_borrar" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+             <div class="invisible"> {{ form_widget(delete_form) }} </div>
+      </form>
      </div>
         
     </form>

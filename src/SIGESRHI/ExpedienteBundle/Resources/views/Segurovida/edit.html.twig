@@ -1,20 +1,8 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-<script type='text/javascript'>
-function eliminar() {
 
-    if(confirm('\xbfEsta seguro que desea eliminar este registro?')) {
-        document.getElementById('form_borrar').submit();
-}
-}
-</script>
 {% if app.session.started %}
-{% for flashMessage in app.session.flashbag.get('edit') %}
-<div class="alert alert-success">
-<p>{{ flashMessage }}</p>
-</div>
-{% endfor %}
 {% for flashMessage in app.session.flashbag.get('erroredit') %}
 <div class="alert alert-danger">
 <p>{{ flashMessage }}</p>
@@ -24,7 +12,7 @@ function eliminar() {
 
     <h3 class="text-center">Modificar seguro colectivo de vida</h4><br />
 
-    <form action="{{ path('segurovida_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+  <form action="{{ path('segurovida_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
       
     {#Datos#}
@@ -91,25 +79,15 @@ function eliminar() {
                {% endfor %}
       </ul>
      </fieldset> 
+  {%endfor%}
+  {{form_rest(edit_form)}}  
+
         <br /> <br />
       <div class="text-center">
-        
             <button type="submit" class="btn btn-primary">Modificar</button>
-            <a href="{{ path('segurovida') }}" class="btn">Regresar al listado</a>
-            <a href="{{ path('reporte_segurovida', { 'idexp': exp.idexp, 'id':entity.id }) }}" class="btn">Generar PDF</a>
-            <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
-        
-        {%endfor%}
-     {{form_rest(edit_form)}}  
-    </form>
-
-        <form action="{{ path('segurovida_delete', { 'id': entity.id }) }}"  id="form_borrar" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-             <div class="invisible"> {{ form_widget(delete_form) }} </div>
-            {#<button type="submit" class="btn btn-danger">Borrar</button>#}
-        </form>
+            <button type="button" onclick="cancelar();" class="btn">Cancelar</button>
       </div>
-
+  </form>
 <script>   
 /************************************* + Beneficiarios **********************************/
 

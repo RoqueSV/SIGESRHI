@@ -189,6 +189,12 @@ class SegurovidaController extends Controller
               
         $deleteForm = $this->createDeleteForm($id);
 
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
+        $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("segurovida_show",array("id"=>$id)));
+
         return $this->render('ExpedienteBundle:Segurovida:show.html.twig', array(
             'entity'       => $entity,
             'expediente'   => $expediente,
@@ -218,6 +224,12 @@ class SegurovidaController extends Controller
         /* Obtener datos expediente */
         $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($idexpediente);
         
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
+        $breadcrumbs->addItem("Editar registro", $this->get("router")->generate("segurovida_edit",array("id"=>$id)));
+
         return $this->render('ExpedienteBundle:Segurovida:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -293,7 +305,7 @@ class SegurovidaController extends Controller
             $em->flush();
             
             $this->get('session')->getFlashBag()->add('edit', 'Seguro colectivo modificado correctamente');
-            return $this->redirect($this->generateUrl('segurovida_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('segurovida_show', array('id' => $id)));
         
         } //fin isValid
 
@@ -330,7 +342,7 @@ class SegurovidaController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-        $this->get('session')->getFlashBag()->add('delete', 'Seguro de vida eliminado');
+        $this->get('session')->getFlashBag()->add('delete', 'Registro eliminado correctamente');
         return $this->redirect($this->generateUrl('segurovida'));
     }
 

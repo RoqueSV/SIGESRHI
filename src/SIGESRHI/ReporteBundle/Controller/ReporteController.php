@@ -87,7 +87,9 @@ class ReporteController extends Controller
 
      //Incluimos camino de migas 
      $breadcrumbs = $this->get("white_october_breadcrumbs");
-     $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida_show",array("id"=>$request->get('id'))));
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
+     $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("segurovida_show",array("id"=>$request->get('id'))));
      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_segurovida"));
      
      // Nombre reporte
@@ -118,6 +120,13 @@ class ReporteController extends Controller
      $request=$this->getRequest();
      $idSol=$request->get('idsol');           
      
+    //Incluimos camino de migas 
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Solicitud de empleo", $this->get("router")->generate("solicitud"));
+     $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("solicitud_show",array("id"=>$idSol)));
+     $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_solicitudempleo"));
+
      // Nombre reporte
      $filename= 'Solicitud de empleo.pdf';
      
@@ -146,8 +155,9 @@ class ReporteController extends Controller
     //Incluimos camino de migas
       
       $breadcrumbs = $this->get("white_october_breadcrumbs");
-      $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
-      $breadcrumbs->addItem("PDF Seguro de vida", $this->get("router")->generate("reporte_segurovida"));
+      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+      $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
+      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_pruebapsicologica"));
 
      /* Obtengo parametros */
      $request=$this->getRequest();

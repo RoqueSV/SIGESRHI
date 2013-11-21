@@ -49,7 +49,7 @@ class SolicitudempleoController extends Controller
 */
 
     //Metodo para establecer grid de consulta de solicitudes de empleo
-    public function indexAction($tipo)
+    public function indexAction()
     {
         $source = new Entity('ExpedienteBundle:Solicitudempleo', 'solicitud_empleo');
         // Get a grid instance
@@ -58,10 +58,10 @@ class SolicitudempleoController extends Controller
        
           $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
-        function($query) use ($tableAlias, $tipo){
+        function($query) use ($tableAlias){
             $query->join($tableAlias.".idexpediente ", "s")
             ->andWhere("s.tipoexpediente = :var" )
-            ->setParameter('var',$tipo);
+            ->setParameter('var',"I");
         }
             );
 
@@ -426,7 +426,7 @@ class SolicitudempleoController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->get('session')->getFlashBag()->add('delete', 'Registro eliminado correctamente');
         return $this->redirect($this->generateUrl('solicitud'));
     }
 

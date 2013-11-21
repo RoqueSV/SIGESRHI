@@ -1,6 +1,13 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+
+{% for flashMessage in app.session.flashbag.get('delete') %}
+     <div class="alert alert-danger">
+       <p>{{ flashMessage }}</p>
+     </div>
+{% endfor %}
+
     <div class="text-center">
     <h3> Consultar Solicitud de empleo Aspirantes Inválidos</h3>
     </div>

@@ -1,8 +1,10 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+
 {{ form_javascript(edit_form) }}
-    {% for flashMessage in app.session.flashbag.get('edit') %}
+
+{% for flashMessage in app.session.flashbag.get('edit') %}
     <div class="alert alert-success">
         <p> {{ flashMessage }} </p>
     </div>
@@ -369,36 +371,13 @@
 
         {{ form_rest(edit_form) }}
         
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <div class="text-center">
+            <button type="submit" class="btn btn-primary">Modificar</button>
             <button type="button" onclick="cancelar();" class="btn">Cancelar</button>
-            
-        </div>
-    </form>
-
+    </div>
+</form>
+  
         
-{#
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('solicitud') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-
-        
-        <form action="{{ path('solicitud_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-          <div class="invisible">  {{ form_widget(delete_form) }} </div>
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-
-</ul>
-#}
-
-
 
 <script>
 
