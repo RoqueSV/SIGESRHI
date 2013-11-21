@@ -34,28 +34,28 @@
     <table class="table table-bordered table-hover">
         <tbody>
             <tr>
-                <th>Resultadocoeficiente</th>
-                <td>{{ entity.resultadocoeficiente }}</td>
+                <th>Coeficiente Intelectual (C.I.)</th>
+                <td>{{ entity.resultadocoeficiente | capitalize }}</td>
             </tr>
             <tr>
-                <th>Calificacioncoeficiente</th>
+                <th>Calificación C.I.</th>
                 <td>{{ entity.calificacioncoeficiente }}</td>
             </tr>
             <tr>
-                <th>Resultadoafectividad</th>
-                <td>{{ entity.resultadoafectividad }}</td>
+                <th>Afectividad</th>
+                <td>{{ entity.resultadoafectividad | capitalize}}</td>
             </tr>
             <tr>
-                <th>Resultadorelaciones</th>
-                <td>{{ entity.resultadorelaciones }}</td>
+                <th>Relaciones Interpersonales</th>
+                <td>{{ entity.resultadorelaciones | capitalize}}</td>
             </tr>
             <tr>
-                <th>Resultadoautoreconocimiento</th>
-                <td>{{ entity.resultadoautoreconocimiento }}</td>
+                <th>Autoreconocimiento</th>
+                <td>{{ entity.resultadoautoreconocimiento | capitalize}}</td>
             </tr>
             <tr>
-                <th>Resultadoseguridad</th>
-                <td>{{ entity.resultadoseguridad }}</td>
+                <th>Seguridad</th>
+                <td>{{ entity.resultadoseguridad | capitalize}}</td>
             </tr>
         </tbody>
     </table>

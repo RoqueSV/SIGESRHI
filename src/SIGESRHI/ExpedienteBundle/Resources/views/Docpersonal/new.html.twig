@@ -16,14 +16,14 @@
         </div>
     {% endfor %}
 
-    <h4 class='text-centered'>RECORD DEL EXPEDIENTE PERSONAL</h4>
+    <h4 class='text-center'>RECORD DEL EXPEDIENTE PERSONAL</h4>
     {% for exp in expediente %}
     <p>Nombre: <b>{{exp.nombres}}</b><p>
     <form action="{{ path('docpersonal_create',{'exp':exp.id}) }}" id= "docpersonal_form" method="post" class="form-horizontal" {{ form_enctype(form) }}>
     {% endfor %}
         {#{ form_widget(form) }#}
         <fieldset><legend>Agregar Documento Personal</legend>
-            <div class='centered'>
+            <div class='text-center'>
             <table class='text-center' width='80%'>
                 <tr>
                     <td>{{ form_label(form.nombredocpersonal) }}</td>

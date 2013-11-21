@@ -45,3 +45,10 @@ expediente_aspirantes:
     pattern:  /aspirantes
     defaults: { _controller: "ExpedienteBundle:Expediente:indexAspirantes" }
 
+expediente_elim_ant:
+    pattern:  /aspirantes/ant
+    defaults: { _controller: "ExpedienteBundle:Expediente:antAspirantes" }
+
+expediente_elim_indv:
+    pattern:  /aspirantes/indv
+    defaults: { _controller: "ExpedienteBundle:Expediente:indvAspirantes" }

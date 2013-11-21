@@ -1,6 +1,38 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+<script>
+    jQuery(function() {
+        jQuery("#grid_grid_pruebapsicologica__nombrecompleto__query__from").autocomplete({
+            source: function( request, response ) {
+                jQuery.ajax({
+                    url: "{{ path('shtumi_ajaxautocomplete') }}",
+                    dataType: "json",
+                    data: {
+                        maxRows: 12,
+                        letters: request.term,
+                        entity_alias: "empleados"
+                    },
+                    success: function( data ) {
+                        response( jQuery.map( data, function( item ) {
+                            return {
+                                label: item,
+                                value: item
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 2,
+            open: function() {
+                jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+            },
+            close: function() {
+                jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+            }
+        });
+    });
+</script>
 <h4 class='text-center'>INGRESE EL NOMBRE DEL ASPIRANTE Y SELECCIONELO DE LA LISTA</h4>
 {{ grid_search(grid) }}
 
@@ -35,5 +67,7 @@
         <button type="reset"  class="btn tool">Cancelar</button>
     </p>
 </fieldset>#}
-    
+<div align='center'>
+<a  href="{{ path('hello_page') }}" class="btn">Cancelar</a>            
+</div>   
 {% endblock %}

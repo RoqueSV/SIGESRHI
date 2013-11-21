@@ -102,7 +102,8 @@ class PruebapsicologicaController extends Controller
                 return $action;
             }
         );
-        $grid->addRowAction($rowAction1);     
+        $grid->addRowAction($rowAction1);  
+        $grid->setId('grid_pruebapsicologica');   
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
@@ -241,7 +242,7 @@ class PruebapsicologicaController extends Controller
                 $em->persist($entity);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('new','Prueba Psicologica Registrada correctamente');
+                $this->get('session')->getFlashBag()->add('new','Prueba Psicologica registrada correctamente');
                 return $this->redirect($this->generateUrl('pruebapsicologica_show', array('id'=> $entity->getId(),'exp'=>$idexp)));
             }
             else{
@@ -305,6 +306,12 @@ class PruebapsicologicaController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Prueba Psicologica",$this->get("router")->generate("pruebapsicologica_index_edit"));
+        $breadcrumbs->addItem("Mostrar","");
 
         return $this->render('ExpedienteBundle:Pruebapsicologica:show.html.twig', array(
             'entity'      => $entity,

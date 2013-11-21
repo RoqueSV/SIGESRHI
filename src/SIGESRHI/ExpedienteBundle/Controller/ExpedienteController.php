@@ -327,6 +327,11 @@ public function confirmarValidoAction($id)
     return $grid->getGridResponse('ExpedienteBundle:Docexpediente:grid_agregar.html.twig');
 
     }
+//Funcion para seleccionar el periodo a eliminar expediente aspirantes antiguos
+    public function antAspirantesAction()
+    {
+        return $grid->getGridResponse('ExpedienteBundle:Docexpediente:.html.twig');
+    }
 
 }
 
