@@ -2,6 +2,42 @@
 
 {% block principal -%}
 
+<script>
+        jQuery(function() {
+
+            jQuery("#grid_grid_plaza__nombreplaza__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "plazas"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
+
+        });
+</script>
+
+
      <h3 class="text-center">Listado de puestos</h3>
      <p class="text-center">Seleccione el nombre del puesto para el cual desea registrar la solicitud de empleo</p>
      {{ grid_search(grid) }}

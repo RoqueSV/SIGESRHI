@@ -6,5 +6,9 @@ plaza_ver:
     pattern:  /{id}/show
     defaults: { _controller: "AdminBundle:Plaza:show" }
 
+documentacion_solicitada:
+    pattern:  /documentacion
+    defaults: { _controller: "AdminBundle:Plaza:documentacion" }
+
 
 

@@ -78,4 +78,15 @@ class PlazaController extends Controller
         ));
     }
 
+    public function documentacionAction()
+    {
+
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Documentació solicitada", $this->get("router")->generate("documentacion_solicitada"));
+
+        return $this->render('AdminBundle:Plaza:documentacion.html.twig');
+    }
+
 }
