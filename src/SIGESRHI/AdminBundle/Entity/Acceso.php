@@ -72,6 +72,12 @@ class Acceso
      * })
      */
     private $idaccesosup;
+
+    /**
+      * @ORM\OneToMany(targetEntity="Acceso", mappedBy="idaccesosup")
+      */
+
+    private $idaccesohija;
     
        public function __toString()
     {

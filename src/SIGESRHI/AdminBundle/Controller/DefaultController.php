@@ -85,13 +85,17 @@ class DefaultController extends Controller
       $em = $this->getDoctrine()->getManager();
       //consulta de prueba recuperar los nombres de opciones
       $query = $em->createQuery('
-        select a1.nombrepagina hijo, 
-                a2.nombrepagina padre, 
-                a3.nombrepagina abuelo
-                from AdminBundle:Acceso a1 
-                left join a1.idaccesosup a2 
-                left join a2.idaccesosup a3 
-                ');
+        select a1.nombrepagina pagina_abuelo, (SELECT COUNT(a5.id) FROM AdminBundle:Acceso a5 where a5.idaccesosup = a1.id) hijos_abuelo,
+                a2.nombrepagina pagina_padre, a2.ruta ruta_padre, (SELECT COUNT(a4.id) FROM AdminBundle:Acceso a4 where a4.idaccesosup = a2.id) hijos_padre,
+                a3.nombrepagina pagina_hijo, a3.ruta ruta_hijo, m.nombremodulo modulo
+                from ApplicationSonataUserBundle:User u
+                join u.groups g
+                join g.idacceso a1
+                join a1.idmodulo m
+                left join a1.idaccesohija a2 
+                left join a2.idaccesohija a3
+                WHERE a1.id = :idacceso and u.username = :username'
+          )->setParameter('idacceso', $idacceso)->setParameter('username', $nombreUsuario);;
 
    /*   $query = $em->createQuery('
           SELECT a1.nombrepagina pagina_padre, a2.nombrepagina pagina, a2.ruta ruta, 

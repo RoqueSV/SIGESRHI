@@ -109,13 +109,11 @@
 		{# Secciones #}		
 		<br>
 			
-		<div  class="">
+		<div  id="accordian">
 			<ul>
-				<li>
-					<ul>
+				
 						{{ render(controller('AdminBundle:Default:Secciones', { 'idacceso': app.session.get('seccion'), 'nombreUsuario': app.user.username })) }} 
-					</ul>
-				</li>
+				
 			</ul>
 		</div>
 		<br>

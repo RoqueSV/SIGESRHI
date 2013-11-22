@@ -23,25 +23,39 @@
 
 {% endfor %}
 
-
 #}
 
 
-{% for opcion in opciones %}
-Abuelo: {{opcion.abuelo}}
-Padre: {{opcion.padre}}
-Hijo: {{opcion.hijo}}
-* <br>
+{# Nuevo Menú #}
 
 {#
-{{ opcion.pagina_padre }}
-{{ opcion.pagina }}
-{{ opcion.ruta }}
-{{ opcion.numhijos }}
-{{ opcion.pagina_nieto }}
-{{ opcion.ruta_nieto}}
-{{ opcion.modulo }}
+	variables:
+	pagina_abuelo, hijos_abuelo, pagina_padre, ruta_padre, hijos_padre, pagina_hijo, ruta_hijo, modulo
+
 #}
+
+{% if opciones|length > 0 %}
+<div class="text-center" ><b><ins>{{ opciones[0].modulo|capitalize }}</ins></b></div>
+
+<div class="text-center"><b> Opci&oacute;n: </b>{{opciones[0].pagina_abuelo|capitalize}}</div>
 <br>
 
+{% for opcion in opciones %}
+<li><a href="{% if opcion.ruta_hijo is not null %}{{path(opcion.ruta_hijo)}}{% endif %}">{{ opcion.pagina_hijo|capitalize}} </a></li>
 {% endfor %}
+
+{% endif %}
+
+
+{#
+{% for opcion in opciones %}
+Abuelo: {{opcion.abuelo}} 
+Abuelo: {{opcion.pagina_abuelo}}
+Num. Hijos: {{opcion.hijos_abuelo}}
+Padre: {{opcion.pagina_padre}} 
+Num. Hijos: {{opcion.hijos_padre}}
+Hijo: {{opcion.pagina_hijo}} 
+
+* <br>
+{% endfor %}
+#}
