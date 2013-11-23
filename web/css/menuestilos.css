@@ -104,96 +104,64 @@ ul, ol {
 
   /********* Estilos para menu de secciones *********/
 
-/* nav menu styles */
 
 /*_______________________Estilo menus-seccion___________________________________*/
 
-/*
-.menu-seccion ul {
-
-font-family: Tahoma;
-font-size: 12px;
-margin: 0;
-padding: 0;
-width: 100%;
-list-style-type: none;
-
-}
- 
-.menu-seccion ul li a {
-border: 1px solid gray;
-border-radius:  5px 5px 5px 5px;
-font-weight: bold;
-height: 10px;
-font-size: 11px; 
-text-decoration: none;
-color: black;
-padding: 10px ;               
-margin: 3px ;
-background-color: #CCCCCC;
-display:block;
-}
- 
-.menu-seccion ul li a:visited {
-.color: white;
-}
- 
-.menu-seccion ul li a:hover, .menu_simple ul li .current {
-color: white;
-background-color: #004C80;
-border-radius: 5px 5px 5px 5px;
-}
-*/
-
+#accordian * {margin: 0; padding: 0;}
 
 #accordian {
-  background: #004050;
+  background: #CCCCCC;
   width: 100%;
   margin: 10px auto 0 auto;
   color: white;
-  /*Some cool shadow and glow effect*/
-  box-shadow: 
-    0 5px 15px 1px rgba(0, 0, 0, 0.6), 
-    0 0 200px 1px rgba(255, 255, 255, 0.5);
-}
+  }
+
 /*heading styles*/
 #accordian h3 {
+  font-weight: normal;
   font-size: 12px;
+  font-family: Tahoma;
   line-height: 34px;
   padding: 0 10px;
+  margin: 2px;
   cursor: pointer;
   /*fallback for browsers not supporting gradients*/
-  background: #003040; 
-  background: linear-gradient(#003040, #002535);
+ /* background: #003040; 
+  background: linear-gradient(#003040, #002535); */
+    background: #555;
+    background: linear-gradient(#555,#222);
+    border-radius: 5px;
 }
+
 /*heading hover effect*/
 #accordian h3:hover {
-  text-shadow: 0 0 1px rgba(255, 255, 255, 0.7);
+  /* text-shadow: 0 0 1px rgba(255, 255, 255, 0.7); */
+  background: #004C80; border-radius: 5px;
 }
-/*iconfont styles*/
-#accordian h3 span {
-  font-size: 16px;
-  margin-right: 10px;
-}
+
 /*list items*/
 #accordian li {
   list-style-type: none;
 }
 /*links*/
 #accordian ul ul li a {
+  border-radius: 5px;
+  background: gray; /* #72828B; */
+  font-family: Tahoma;
   color: white;
   text-decoration: none;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 27px;
   display: block;
   padding: 0 15px;
+  margin: 2px;
   /*transition for smooth hover animation*/
   transition: all 0.15s;
 }
 /*hover effect on links*/
 #accordian ul ul li a:hover {
-  background: #003545;
-  border-left: 5px solid lightgreen;
+  background: #004C80;
+  border-left: 5px solid black;
 }
 /*Lets hide the non active LIs by default*/
 #accordian ul ul {
@@ -202,3 +170,9 @@ border-radius: 5px 5px 5px 5px;
 #accordian li.active ul {
   display: block;
 }
+
+#accordian h3 a {
+  color: white;
+  text-decoration: none;
+}
+

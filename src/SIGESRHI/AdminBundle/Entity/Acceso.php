@@ -66,7 +66,7 @@ class Acceso
     /**
      * @var \Acceso
      *
-     * @ORM\ManyToOne(targetEntity="Acceso")
+     * @ORM\ManyToOne(targetEntity="Acceso", inversedBy="idaccesohija")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idaccesosup", referencedColumnName="id")
      * })
