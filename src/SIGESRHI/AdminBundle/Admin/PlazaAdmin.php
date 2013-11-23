@@ -171,7 +171,7 @@ class PlazaAdmin extends Admin
            ->with('Manejo de Equipo')
              ->add('idmanejoequipo',null,array('label'=>'Manejo de Equipo'))
            ->end()
-           ->with('Documentación (Si existe)')
+           ->with('Documentación')
              ->add('name',null, array('label'=>'Nombre documento'))
              ->add('path', 'string',array('label'=>'Documento','template' => 'AdminBundle:Documentos:documentos.html.twig'))
              ->add('observaciones',null, array('label'=>'Observaciones'))

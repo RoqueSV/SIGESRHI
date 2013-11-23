@@ -65,7 +65,69 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+<script>
+        jQuery(function() {
 
+            jQuery("#grid_grid_contratacion__empleados__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "empleados"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
+
+            jQuery("#grid_grid_contratacion__plazas__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "plazas"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
+
+        });
+</script>
 {% if app.session.started %}
 {% for flashMessage in app.session.flashbag.get('delete') %}
 <div class="alert alert-danger">
@@ -75,7 +137,7 @@
 {% endif %}
      
      <h3 class="text-center"> Consulta de aspirantes </h3>
-     <p class="text-center">De click en seleccionar para registrar un empleado</p>
+     <p class="text-center">De click en seleccionar para registrar un aspirante como empleado</p>
      {{ grid_search(grid) }}
      {{ grid(grid,_self, 'APYDataGridBundle::blocks_js.jquery.html.twig') }} 
      {% block grid_filters %}{% endblock %}

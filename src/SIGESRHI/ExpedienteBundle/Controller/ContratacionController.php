@@ -11,6 +11,7 @@ use SIGESRHI\ExpedienteBundle\Entity\Expediente;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Grid;
+use APY\DataGridBundle\Grid\Column\TextColumn;
 
 /**
  * Contratacion controller.
@@ -28,34 +29,36 @@ class ContratacionController extends Controller
         $source = new Entity('ExpedienteBundle:Expediente','grupo_contratacion');
         
         $grid = $this->get('grid');
-   
-        $source->manipulateRow(
-            function ($row) 
-            {
-                                   
-            // Mostrar solo aspirantes validos
-            if ($row->getField('tipoexpediente')!='A') {
-            return null;
+
+
+        /* Aspirantes validos */
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->andWhere($tableAlias.'.tipoexpediente = :tipo')
+                      ->setParameter('tipo','A');
             }
+        );   
         
-            return $row;
-            }
-        );
-        
-        //$grid->setId('grid_segurovida');
-        $grid->setSource($source);              
+        $grid->setId('grid_contratacion');
+        $grid->setSource($source);       
+
+         //Columnas para filtrar
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre','operatorsVisible'=>false));
+        $grid->addColumn($NombreEmpleados,2);  
+        $NombrePlazas = new TextColumn(array('id' => 'plazas','source' => true,'field'=>'idsolicitudempleo.idplaza.nombreplaza','title' => 'Plaza','operatorsVisible'=>false,'joinType'=>'inner'));
+        $grid->addColumn($NombrePlazas,3);      
         
         // Crear
         $rowAction1 = new RowAction('Seleccionar', 'contratacion_new');
-        $rowAction1->setRouteParameters(array('id'));
-        $rowAction1->setColumn('info_column');
         $grid->addRowAction($rowAction1);
         
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Seleccionar aspirante", $this->get("router")->generate("contratacion"));
         
         return $grid->getGridResponse('ExpedienteBundle:Contratacion:index.html.twig');
     }
