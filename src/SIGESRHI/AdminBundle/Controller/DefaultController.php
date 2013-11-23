@@ -94,8 +94,10 @@ class DefaultController extends Controller
                 join a1.idmodulo m
                 left join a1.idaccesohija a2 
                 left join a2.idaccesohija a3
-                WHERE a1.id = :idacceso and u.username = :username'
-          )->setParameter('idacceso', $idacceso)->setParameter('username', $nombreUsuario);;
+                WHERE a2.id in (select a7.id from ApplicationSonataUserBundle:User u2 join u2.groups g2 join g2.idacceso a7 where u2.username= :username)
+                and (a3.id in (select a6.id from ApplicationSonataUserBundle:User u3 join u3.groups g3 join g3.idacceso a6 where u3.username= :username) or a3.id is null)
+                and a1.id = :idacceso and u.username = :username'
+          )->setParameter('idacceso', $idacceso)->setParameter('username', $nombreUsuario);
 
    /*   $query = $em->createQuery('
           SELECT a1.nombrepagina pagina_padre, a2.nombrepagina pagina, a2.ruta ruta, 
