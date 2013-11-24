@@ -29,10 +29,10 @@ class Docexpediente
     /**
      * @var string
      *
-     * @ORM\Column(name="nombredocexp", type="string", length=25, nullable=false)
+     * @ORM\Column(name="nombredocexp", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre del doc")
      * @Assert\Length(
-     * max = "25",
+     * max = "100",
      * maxMessage = "El nombre registrado del documento no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -64,8 +64,10 @@ class Docexpediente
 
     /**
      * @Assert\File(
-     *     maxSize="2M",
-     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg", "application/pdf", "application/x-pdf"}
+     * maxSize="5M",
+     * mimeTypes = {"image/png", "image/jpeg", "application/pdf", "application/zip"},
+     * maxSizeMessage = "El tamaño maximo permitido para el archivo es de 5MB.",
+     * mimeTypesMessage = "El tipo de archivo cargado no es válido."
      * )
      * @Vich\UploadableField(mapping="docs_expediente", fileNameProperty="rutadocexp")
      *

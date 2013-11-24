@@ -10,8 +10,21 @@
 	
 	<h4>{{entity.nombredocexp}}</h4>
 	<br>
+	{% if extension|lower == "jpg" or extension|lower == "png" %}
+	Es una imagen: {{entity.rutadocexp}}
+	{% endif %}
 
-<img src="{{asset('uploads/docs_expediente/' ~ entity.rutadocexp)}}" width="150px" height="150px" class="fotoSol"/>
+	{% if extension|lower == "pdf" %}
+	Es un documento pdf {{entity.rutadocexp}}
+	{% endif %}
+
+	{% if extension|lower == "rar" or extension|lower == "zip" %}
+	Es un archivo comprimido: {{entity.rutadocexp}}
+	{% endif %}
+
+	2. Es un archivo: {{entity.rutadocexp}}
+
+<img src="{{asset('uploads/docs_expediente/' ~ entity.rutadocexp)}}" />
 <br>
 <br>
 

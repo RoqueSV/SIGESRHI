@@ -65,9 +65,14 @@ class DocexpedienteController extends Controller
         ));*/
         }
 
+        //agregado para obtener todos los documentos digitales registrados para un expediente
+        $Documentos = $em->getRepository('ExpedienteBundle:Docexpediente')->findBy(array('idexpediente' => $id));
+
         return $this->render('ExpedienteBundle:Docexpediente:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'id' => $entity->getIdexpediente()->getId(),
+            'documentos' => $Documentos,
         ));
     }
 
@@ -224,8 +229,12 @@ class DocexpedienteController extends Controller
             throw $this->createNotFoundException('No se puede encontrar la entidad de Documento Digital.');
         }
 
+        //extraer el formato del archivo amacenado
+        $extension=substr($entity->getRutadocexp(),-3,3);
+
         return $this->render('ExpedienteBundle:Docexpediente:VerDigital.html.twig', array(
             'entity'      => $entity,
+            'extension' => $extension,
         ));
 
     }//fin function VerDigitalAction()

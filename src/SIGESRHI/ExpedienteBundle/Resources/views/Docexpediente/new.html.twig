@@ -1,7 +1,18 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal %}
+
+{% for flashMessage in app.session.flashbag.get('new') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+
     <h4 class="text-center">AGREGAR DOCUMENTOS DIGITALES</h4>
+
+    <br>
+    <p class="help-block"> Registre los documentos digitales ingresando uno a la vez y seleccionando guardar, los registros aparecen en la parte de abajo, dando la posibilidad de registrar un nuevo archivo cada vez.</p>
+    <p class="help-block"> Los Archivos permitidos son: Imagenes (png/jpg) - Documentos (pdf) - Archivos comprimidos (rar, zip)</p>
 
     <form action="{{ path('docdigital_create', {'id':id}) }}" method="post" {{ form_enctype(form) }}>
         
@@ -33,7 +44,7 @@
 
         {% if documentos|length > 0 %}
         <div class="text-center">
-            <h3>Documentos Registrados</h3>
+            <h3>Documentos Digitales Registrados</h3>
 
             <table width="100%" border="2" class="table table-bordered table-hover">
                 <tr>
@@ -47,7 +58,7 @@
                 <tr>
                     <td>{{documento.nombredocexp}}</td>
                     <td> {{(documento.fechadocexp|date('d-m-Y'))|fecha}} </td>
-                    <td><a href="{{path('docdigital_ver_docdigital', {'iddoc': documento.id})}}" > Ver </a></td>
+                    <td><a href="{{path('docdigital_ver_docdigital', {'iddoc': documento.id})}}" > Ver Archivo registrado</a></td>
                 </tr>
 
                 {% endfor %}

@@ -306,7 +306,7 @@ public function confirmarValidoAction($id)
         $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
         function($query) use ($tableAlias){
-            $query->andWhere($tableAlias.".tipoexpediente = 'I' ");
+            $query->andWhere($tableAlias.".tipoexpediente = 'I' or ".$tableAlias.".tipoexpediente = 'A'");
         }
             );
 
