@@ -15,64 +15,79 @@
             <p> {{ flashMessage }} </p>
         </div>
     {% endfor %}
-    <h4 class='text-center'>Registrar Como Aspirante válido de banco de datos institucional.</h4>
-    <fieldset><legend>Datos Generales del Aspirante</legend>
-    <table class="table-center">
+    <h4 class='text-center'>Registrar como aspirante válido de banco de datos institucional.</h4><br>
+    <h5>Datos Generales del Aspirante</h5>
+    <table width="100%">
     {% for exp in expediente %}
     <tr>
-        <td rowspan="8" width="152"><img src="{{asset('uploads/fotografias/' ~ exp.fotografia)}}" width="150px" height="150px" class="fotoSol"/></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>Nombre:</td>
-        <td><b> {{ exp.nombrecompleto  }}</b></td>
-    </tr>
-    <tr>
-        <td>Direccion:</td>
-        <td><b> {{ exp.direccion }}</b></td>
-    </tr>
-    <tr>
-        <td>Estado civil:</td>
+       <td width="25%"> 
+        <table border="3" width="150px" height="192px">
+                <tr>
+                    <td>
+                        <img src="{{asset('uploads/fotografias/' ~ exp.fotografia)}}"  class="fotoSol"/>
+                    </td>
+                </tr>
+        </table>
+      </td>
+      <td>
+        <table class="table table-bordered table-hover">
+           <tr>
+          <th>Nombre:</th>
+           <td>{{ exp.nombrecompleto  }}</td>
+        </tr>
+        
+       <tr>
+        <th>Estado civil:</th>
         <td>
             {% set gen='o' %}
             {% if exp.sexo=='F' %}
                 {% set gen='a' %}
             {% endif %} 
             {% if exp.estadocivil=='C' %}
-                <b> Casad{{gen}} </b>
+                 Casad{{gen}}
             {% elseif exp.estadocivil=='S' %}
-                <b> Solter{{gen}} </b>
+                 Solter{{gen}}
             {% elseif exp.estadocivil=='D' %}
-                <b> Divorciad{{gen}} </b>
+                 Divorciad{{gen}}
             {% elseif exp.estadocivil=='A' %}
-                <b> Acompañad{{gen}} </b>
+                 Acompañad{{gen}}
             {% elseif exp.estadocivil=='V' %}
-                <b> Viud{{gen}} </b>
+                 Viud{{gen}}
             {% endif %}
         </td>
     </tr>
     <tr>
-        <td>Telefono(fijo):</td>
-        <td><b>{{ exp.telefonofijo }}</b></td>
-        <td>Telefono(movil):</td>
-        <td> <b>{{ exp.telefonomovil }}</b></td>
+        <th>Telefono(fijo):</th>
+        <td>{{ exp.telefonofijo }}</td>
+    </tr>
+    <tr>    
+        <th>Telefono(movil):</th>
+        <td>{{ exp.telefonomovil }}</td>
     </tr>
     <tr>
-        <td>Correo electrónico:</td>
-        <td> <b>{{ exp.email }}</b></td>
+        <th>Correo electrónico:</th>
+        <td>{{ exp.email }}</td>
     </tr>
-    <tr>
-        <td>Lugar de nacimiento:</td>
-        <td><b> {{ exp.lugarnac }} </b></td>
-    </tr>
-    <tr>
-        <td>Fecha de nacimiento:</td>
-        <td><b> {{ exp.fechanac | date('d-m-Y') | fecha }} </b></td>
-    </tr>
-    {#% endfor %#}
+    
     </table>
-    </fieldset><legend>Documentos de identidad Personal</legend>
+  </td>
+</tr>
+</table><br>
+<table  class="table table-bordered table-hover">
+    <tr>
+          <th>Direccion:</th>
+          <td>{{ exp.direccion }}</td>
+    </tr>
+    <tr>
+        <th>Lugar de nacimiento:</th>
+        <td> {{ exp.lugarnac }} </td>
+    </tr>
+    <tr>
+        <th>Fecha de nacimiento:</th>
+        <td>{{ exp.fechanac | date('d-m-Y') | fecha }}</td>
+    </tr>
+</table>
+    <h5>Documentos de identidad personal</h5>
     <table class="table table-bordered table-hover">
     <tr>
         <th>No. DUI</th>
@@ -88,8 +103,10 @@
         <td>{{ exp.nup }}</td>
         <td>{{ exp.nip }}</td>
     </tr>
+    <tr>
+        <td colspan="5"><b>Lugar y fecha de expedición de DUI:</b> {{ exp.lugardui }}, {{ exp.fechadui | date('d-m-Y') | fecha }}</td>
+    <tr>
     </table>
-    <p>Lugar y fecha de expedición de DUI: <b>{{ exp.lugardui }} .{{ exp.fechadui | date('d-m-Y') | fecha }}</b></p>
     <br>
     <table width="100%">
         <tr align="center">
@@ -103,16 +120,16 @@
                         { 'id': exp.id , 'exp': exp.idexpediente}                    
                         )
                     }}">Consultar Documentación registrada</a></td>
-        </tr><tr></tr>
+        </tr><tr><td>&nbsp;</td></tr>
         <tr>
             <td colspan="2" align="center">Para aprobar la solicitud como válida del banco de datos institucional haga click en Aceptar.</td>
-        </tr><tr></tr>
+        </tr><tr><td>&nbsp;</td></tr>
         <tr align="center">
             <td><a href="{{ 
                     path('expediente_confirm_valid',
                         { 'id': exp.idexpediente }
                         )
-                    }}" onclick="return confirm('¿Está seguro de registrarlo como válido? ')" class="btn">Aceptar</a></td>
+                    }}" onclick="return confirm('¿Está seguro de registrarlo como válido? ')" class="btn btn-primary">Aceptar</a></td>
             <td><a href="#" onclick="history.back()" class="btn">Cancelar</a></td>
         </tr>
     </table>

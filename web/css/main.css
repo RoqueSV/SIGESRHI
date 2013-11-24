@@ -146,3 +146,9 @@ textarea {
 {
     width: 400px;
 }
+
+/* Disminuir altura columnas tabla */
+.mitable td,
+.mitable th{
+  padding: 5px;
+}

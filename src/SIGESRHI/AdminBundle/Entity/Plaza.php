@@ -566,7 +566,7 @@ class Plaza
     {
         // se deshace del __DIR__ para no meter la pata
         // al mostrar el documento/imagen cargada en la vista.
-        return 'uploads/documentos_plaza';
+        return 'uploads/docs_plaza';
     }
     
     /*  fin directorio **/

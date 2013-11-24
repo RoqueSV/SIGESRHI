@@ -73,8 +73,8 @@ class ExpedienteController extends Controller
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", "hello_page");
-        $breadcrumbs->addItem("Gestion de Aspirantes","");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Gestion de Aspirantes",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Registrar como expediente valido de banco de datos institucional",  $this->get("router")->generate("expediente_aspirantes"));
         
         return $grid->getGridResponse('ExpedienteBundle:Expediente:index.html.twig');
@@ -273,9 +273,10 @@ public function validarAction()
         //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);        
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", "hello_page");
-        $breadcrumbs->addItem("Gestion de Aspirantes","");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Gestion de Aspirantes",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Registrar como expediente valido de banco de datos institucional",  $this->get("router")->generate("expediente_aspirantes"));
+        
         return $this->render('ExpedienteBundle:Expediente:validar.html.twig', array(          
             'expediente' => $expedienteinfo,
         ));

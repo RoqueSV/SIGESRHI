@@ -4,21 +4,40 @@
 
 {% block titulo %}
 <h3 id="helpLabel">Solicitud de Empleo</h3>
-<p>Este formulario permite registrar una solicitud de empleo por parte de un aspirate.  </p>
+<p>Este formulario permite a un aspirante registrar una solicitud de empleo.</p>
 {% endblock %}
 
 
 {% block contenido %}
 <p><h4>¿Cómo llenar este formulario?</h4></p>
-<p>Se describen a continuación los pasos necesarios:</p>
-<p>
-1. Subir fotografia:<br> 
-En este campo se recomienda subir una fotografia tamaño cedula, formato requeridos(.jpg .png)
-</p><br>
-2. Ingresar datos personales
-<img src="{{asset('images/images_ayuda/anombres.jpg') }}" alt="ISRI"/>
-<p>
+Se describen acontinuaci&oacute;n los pasos necesarios:
+	<ul style="list-style-type:decimal; margin-left:25px">
+		<li> Seleccione una fotograf&iacute;a para anexar a la solicitud:</li> 
+		<img src="{{asset('images/images_ayuda/subirfoto.jpg') }}" alt="ISRI"/><br>
+		<div class="justifyText"> Mediante el bot&oacute;n examinar, seleccione una imagen que preferentemente cumpla con los siguientes requisitos:tama&ntilde;o cedula (3.5x4.5cm) y formatos(.jpg, .png)</div><br>
 
-</p>
+		<li> Ingrese sus datos personales </li>
+		<img src="{{asset('images/images_ayuda/nombre.jpg') }}" alt="ISRI"/>
+		<div class="justifyText"> Al ingresar esta informaci&oacute;n, debe hacerlo seg&uacute;n su documento &uacute;nico de identidad (DUI), recuerde que estos datos ser&aacute;n comparados posteriormente por el Depto. RRHH con su respectiva documentaci&oacute;n f&iacute;sica.Para el campo apellido de casada, completelo si ud. desea utilizar el apellido de su c&oacute;nyuge, sino d&eacute;jelo en blanco.</div><br>
+		
+		<li> Ingrese datos de Estudio</li>
+		<img src="{{asset('images/images_ayuda/estudio.jpg') }}" alt="ISRI"/>
+		<div class="justifyText">Esta secci&oacute;n permite registrar los titulos acad&eacute;micos obtenidos, as&iacute como la instituciones formadoras. Los titulos pueden ser seleccionados directamente de una lista desplegables o a trav&eacute;s de una b&uacute;squeda, introduciendo el nombre del titulo.</div>
+		<img src="{{asset('images/images_ayuda/agregareliminar.jpg') }}" alt="ISRI"/>
+		<div class="justifyText">Puede agregar n titulos, dando click en el bot&oacute;n "Agregar Estudio". De igual manera puede Eliminar un titulo de su lista de titulos registrados.</div><br>
+
+		<li> Ingrese datos familiares</li>
+		<img src="{{asset('images/images_ayuda/familiares.jpg') }}" alt="ISRI"/>
+		<div class="justifyText"> En esta secci&oacute;n ingrese  los datos de sus familiares(nombres, tel&eacute;fono y direcci&oacute;n) que servir&aacute;n en la solicitud como referencias personales.</div><br>
+
+		<li> Ingrese datos de empleo</li>
+		<img src="{{asset('images/images_ayuda/empleo.jpg') }}" alt="ISRI"/>
+		<div class="justifyText">Para completar su informaci&oacute;n laboral, primero indique en el campo "Tipo de Empleo" si la informaci&oacute;n a introducir corresponde a su empleo actual o empleo anterior.<br> 
+		<b>Nota</b>: La solicitud permite &uacute;nicamente un registro de cada tipo de empleo. </div>
+	
+		<img src="{{asset('images/images_ayuda/declaracion.jpg') }}" alt="ISRI"/>
+	</ul>
+
+
 
 {% endblock %}

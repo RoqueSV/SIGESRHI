@@ -75,7 +75,7 @@ class PruebapsicologicaController extends Controller
                 // Change the ouput of the column
                 if( ($row->getField('idexpediente.tipoexpediente')=='I') || ($row->getField('idexpediente.tipoexpediente')=='A') ) {
                     if($row->getField('idexpediente.tipoexpediente')=='I'){
-                        $row->setField('idexpediente.tipoexpediente', 'Invalido');
+                        $row->setField('idexpediente.tipoexpediente', 'Inválido');
                              //->setClass('text-error');                    
                     }
                     if($row->getField('idexpediente.tipoexpediente')=='A'){
@@ -109,7 +109,7 @@ class PruebapsicologicaController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Prueba Psicologica", $this->get("router")->generate("pruebapsicologica"));
+        $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica"));
 
         return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientes.html.twig');
 
@@ -147,7 +147,7 @@ class PruebapsicologicaController extends Controller
                 // Change the ouput of the column
                 if( ($row->getField('idexpediente.tipoexpediente')=='I') || ($row->getField('idexpediente.tipoexpediente')=='A') ) {
                     if($row->getField('idexpediente.tipoexpediente')=='I'){
-                        $row->setField('idexpediente.tipoexpediente', 'Invalido');
+                        $row->setField('idexpediente.tipoexpediente', 'Inválido');
                             // ->setClass('text-error');                    
                     }
                     if($row->getField('idexpediente.tipoexpediente')=='A'){
@@ -186,7 +186,7 @@ class PruebapsicologicaController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Psicologica", $this->get("router")->generate("pruebapsicologica"));
+        $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica"));
 
         return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientes.html.twig');
 

@@ -547,7 +547,7 @@ class Solicitudempleo
      * })
      *
      * @GRID\Column(primary=true, field="idexpediente.id", title="Idexpediente", joinType="inner",visible=false, filterable=false, groups={"grupo_pruebapsicologica","vista_basica_expediente"})
-     * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica"})
+     * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", align="center", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica"})
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, visible=false, groups={"vista_basica_expediente"})
      * @GRID\Column(field="idexpediente.idpruebapsicologica.id", title="Prueba", filterable=false,visible=false, groups={"grupo_pruebapsicologica"})
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, groups={"solicitud_empleo"}, visible=true, filter="Select", operatorsVisible=false )
