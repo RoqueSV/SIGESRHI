@@ -1,0 +1,23 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    <h4 class='text-center'>Eliminar Información de Aspirantes</h4>
+    <div align="center">
+    <fieldset><legend>Seleccione el tipo de eliminación de aspirantes</legend>
+	<form action="{{ path('eliminar_aspirantes') }}" method="post">   
+		<br>
+		<table>
+		<tr>
+			<td><input type="radio" name="tipo" value="0" required></td><td>Eliminación de forma individual</td>
+		</tr>
+		<tr>
+			<td><input type="radio" name="tipo" value="1" required></td><td>Eliminación por antigüedad de registro</td>
+		</tr>
+		</table>
+		<br>
+		<input class="btn btn-primary" type="submit" name="seleccionar" Value="Seleccionar">
+        <a href="#" onclick="history.back()" class="btn" >Cancelar</a>
+	</form>
+    </fieldset>      
+    </div>
+{% endblock %}

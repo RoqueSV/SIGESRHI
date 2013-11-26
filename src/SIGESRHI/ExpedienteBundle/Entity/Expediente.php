@@ -58,7 +58,8 @@ class Expediente
 
     /**
      * @var \Solicitudempleo
-     * @ORM\OneToOne(targetEntity="Solicitudempleo", mappedBy="idexpediente")
+     * @ORM\OneToOne(targetEntity="Solicitudempleo", mappedBy="idexpediente", cascade="remove")
+     * @GRID\Column(field="idsolicitudempleo.idplaza.nombreplaza", groups="grupo_contratacion",type="text", title="Plaza solicitada", operators={"like"}, operatorsVisible=false, joinType="inner")
      * @GRID\Column(field="idsolicitudempleo.nombrecompleto", groups={"grupo_segurovida","grupo_contratacion", "grupo_docdigital"} ,visible=false, joinType="inner", filterable=false)
      * @GRID\Column(field="idsolicitudempleo.fecharegistro", align="center", type="date", groups={"grupo_docdigital"}, title="Registrado",  joinType="inner", filterable=false)
      * @GRID\Column(field="idsolicitudempleo.numsolicitud", align="center", groups={"grupo_docdigital"}, title="Solicitud", joinType="inner", filterable=false )

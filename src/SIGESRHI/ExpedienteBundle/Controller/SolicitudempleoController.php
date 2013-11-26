@@ -140,7 +140,7 @@ class SolicitudempleoController extends Controller
         $grid->setSource($source);
 
 
-        $em = $this->getDoctrine()->getManager();
+        //$em = $this->getDoctrine()->getManager();
         
           
         $grid->setNoDataMessage("No se encontraron resultados");
