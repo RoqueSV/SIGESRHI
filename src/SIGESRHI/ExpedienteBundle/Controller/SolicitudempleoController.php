@@ -140,7 +140,7 @@ class SolicitudempleoController extends Controller
         $grid->setSource($source);
 
 
-        $em = $this->getDoctrine()->getManager();
+        //$em = $this->getDoctrine()->getManager();
         
           
         $grid->setNoDataMessage("No se encontraron resultados");
@@ -225,6 +225,8 @@ class SolicitudempleoController extends Controller
             $em->flush();
 
            // return $this->redirect($this->generateUrl('solicitud_show', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add('new', 'La solicitud de empleo se ha registrado correctamente.'); 
+            $this->get('session')->getFlashBag()->add('new', 'Si desea puede registrar sus documentos en formato digital en esta página.'); 
              return $this->redirect($this->generateUrl('docdigital_new', array('id' => $expediente->getId())));
         }
 
@@ -520,8 +522,8 @@ class SolicitudempleoController extends Controller
 
             $em->persist($entity);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('edit', 'Solicitud de empleo modificada correctamente'); 
-            return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('show', 'Solicitud de empleo modificada correctamente'); 
+            return $this->redirect($this->generateUrl('solicitud_show', array('id' => $id)));
         }
 
      //   return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));

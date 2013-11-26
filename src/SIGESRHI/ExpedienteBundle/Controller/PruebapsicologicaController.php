@@ -67,6 +67,8 @@ class PruebapsicologicaController extends Controller
         //crear columna
         //$miColumna = new TextColumn(array('id' => 'nombrecompleto', 'title' => 'Nombres', 'filterable'=> true, 'filter'=> 'input', 'size' => '-1', 'type'=>'text', 'selectFrom'=>'nombres'));
         //$grid->addColumn($miColumna, 3);
+        $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false));
+        $grid->addColumn($plaza,3);
         
         //Manipular Fila
         $source->manipulateRow(

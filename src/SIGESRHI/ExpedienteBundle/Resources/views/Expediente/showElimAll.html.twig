@@ -1,0 +1,15 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    <h4 class='text-center'>Aspirantes a Eliminar</h4>
+    <div align="center">
+    {{ grid_search(grid) }}     
+
+    {{ grid(grid,_self) }}
+    
+    {#{{grid (grid)}}#}
+
+    {% block grid_filters %}{% endblock %}
+        <a href="#" onclick="history.back()" class="btn" >Cancelar</a>
+    </div>
+{% endblock %}

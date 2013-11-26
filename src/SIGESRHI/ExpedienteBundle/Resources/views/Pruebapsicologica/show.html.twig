@@ -61,7 +61,7 @@
     </table>
     <br /><br />
     <h4 class="text-center">¿Qué acción desea realizar?</h4><br />
-    <form class="form-inline" action="{{ path('reporte_pruebapsicologica') }}" method="post" >
+    <form class="form-inline" action="{{ path('reporte_pruebapsicologica', { 'idexp':exp.id }) }}" method="post" >
      <div class="text-center">
      <input type="hidden" id='idexp' name='idexp' value={{ exp.id }} />
      <button type="submit" class="btn btn-primary">Generar PDF</button>

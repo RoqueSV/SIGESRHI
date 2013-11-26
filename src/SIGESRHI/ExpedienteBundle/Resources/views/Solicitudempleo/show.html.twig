@@ -2,14 +2,11 @@
 
 {% block principal -%}
 
-<script type='text/javascript'>
-function eliminar() {
-
-    if(confirm('\xbfEsta seguro que desea eliminar este registro?')) {
-        document.getElementById('form_borrar').submit();
-}
-}
-</script>
+{% for flashMessage in app.session.flashbag.get('show') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
 
     <h4 class="text-center">DATOS REGISTRADOS DE SOLICITUD DE EMPLEO</h4>
     <br>
@@ -227,6 +224,7 @@ function eliminar() {
 
             {% endif %}
 
+            <br>
 
             <table class="table table-bordered table-hover">
                 <tr>
@@ -298,7 +296,7 @@ function eliminar() {
 
             <table class="table table-bordered table-hover">
                 <tr>
-                    <th>Tipo de Empleo: </th>
+                    <th width="200px">Tipo de Empleo: </th>
                     <td>{{Dempleo.tipodatoempleo}}</td>
                 </tr>
                 <tr>
@@ -319,7 +317,7 @@ function eliminar() {
                 </tr>
                 <tr>
                     <th>Fecha de fin laboral</th>
-                    <td>{{(Dempleo.fechafinlaboral|date('d-m-Y'))|fecha}}</td>
+                    <td> {% if Dempleo.fechafinlaboral is not null %} {{(Dempleo.fechafinlaboral|date('d-m-Y'))|fecha}} {% else %} - - - - - {% endif %}</td>
                 </tr>
                 <tr>
                     <th>Jefe inmediato: </th>
@@ -378,18 +376,11 @@ function eliminar() {
      <div class="text-center">
      
      <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id }) }}" class="btn btn-primary">Generar PDF</a>
-     <button type="button" class="btn" onclick="location.href='{{ path ('solicitud_caspirante', {'tipo':entity.idexpediente.tipoexpediente}) }}'">Regresar al listado</button>
+     <button type="button" class="btn" onclick="location.href='{% if entity.idexpediente.tipoexpediente == 'I' or entity.idexpediente.tipoexpediente == 'A' %} {{ path ('solicitud_caspirante') }} {% endif %}'">Regresar al listado</button>
      <a href="{{ path('solicitud_edit', { 'id': entity.id }) }}" class="btn">Editar Registro</a>
      {% if entity.numsolicitud == 0 %}
      <a href="{{ path('solicitud_pruebanumsol', { 'id': entity.id }) }}" class="btn">Asignar Numero de Solicitud</a>
      {% endif %}
-     <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
-            
-      <form action="{{ path('solicitud_delete', { 'id': entity.id }) }}"  id="form_borrar" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-             <div class="invisible"> {{ form_widget(delete_form) }} </div>
-      </form>
-
      </div>
 
 

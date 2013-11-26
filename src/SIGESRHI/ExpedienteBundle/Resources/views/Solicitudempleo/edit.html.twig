@@ -27,7 +27,11 @@
             <table>
                 <tr>
                     <td><p class="justifyText"><b>Numero de Solicitud: </b></p></td>
-                    <td>{{entity.numsolicitud}}</td>
+                    <td>{% if entity.numsolicitud != 0 %}
+                    {{ entity.numsolicitud }}
+                    {% else %}
+                    No asignado
+                    {% endif %}</td>
                 </tr>
                 <tr>
                     <td><p class="justifyText"><b>Fecha de Registro:</b></p></td>
@@ -376,7 +380,7 @@
         
     <div class="text-center">
             <button type="submit" class="btn btn-primary">Modificar</button>
-            <button type="button" onclick="cancelar();" class="btn">Cancelar</button>
+            <a href="{{path('solicitud_show', {'id': entity.id})}}" class="btn">Cancelar</a>
     </div>
 </form>
   

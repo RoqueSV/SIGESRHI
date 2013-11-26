@@ -45,10 +45,22 @@ expediente_aspirantes:
     pattern:  /aspirantes
     defaults: { _controller: "ExpedienteBundle:Expediente:indexAspirantes" }
 
+eliminar_aspirantes:
+    pattern: /aspirantes/eliminar
+    defaults: { _controller: "ExpedienteBundle:Expediente:eliminarAspirante" }
+
 expediente_elim_ant:
-    pattern:  /aspirantes/ant
+    pattern:  /aspirantes/eliminar/ant
     defaults: { _controller: "ExpedienteBundle:Expediente:antAspirantes" }
 
 expediente_elim_indv:
-    pattern:  /aspirantes/indv
+    pattern:  /aspirantes/eliminar/indv
     defaults: { _controller: "ExpedienteBundle:Expediente:indvAspirantes" }
+
+expediente_aelim:
+    pattern: /aspirantes/eliminar/ant/list
+    defaults: { _controller: "ExpedienteBundle:Expediente:showElim" }
+
+eliminar_aspirantes_confirm:
+    pattern: /aspirantes/eliminar/confirmar
+    defaults: { _controller: "ExpedienteBundle:Expediente:confirmarEliminacion" }
