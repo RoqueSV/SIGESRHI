@@ -29,9 +29,9 @@ class ExpedienteRepository extends EntityRepository
   public function obtenerExpedienteInvalido($idexp)
     {
     return $this->getEntityManager()
-      ->createQuery("SELECT s.id,e.id as idexpediente,s.nombrecompleto, CONCAT(s.calle,CONCAT(', ',s.colonia)) as direccion, s.estadocivil, s.telefonofijo,
-                            s.telefonomovil, s.email,s.lugarnac, s.fechanac, s.fotografia,s.dui,s.nit,s.isss,s.nup,s.nip,s.sexo,s.fechadui,s.lugardui
-                           FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e
+      ->createQuery("SELECT s.id,e.id as idexpediente,s.nombrecompleto, CONCAT(COALESCE(s.calle,''),CONCAT(', ',s.colonia)) as direccion, s.estadocivil, s.telefonofijo,
+                            s.telefonomovil, s.email,s.lugarnac, s.fechanac, s.fotografia,s.dui,s.nit,s.isss,s.nup,s.nip,s.sexo,s.fechadui,s.lugardui,p.nombreplaza
+                           FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e join s.idplaza p
                            WHERE e.id=:idexp
                            ")
             ->setParameter('idexp',$idexp)

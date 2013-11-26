@@ -6,6 +6,10 @@ segurovida_show:
     pattern:  /{id}/show
     defaults: { _controller: "ExpedienteBundle:Segurovida:show" }
 
+segurovida_show_consultar:
+    pattern:  /{id}/ver
+    defaults: { _controller: "ExpedienteBundle:Segurovida:showConsultar" }
+
 segurovida_new:
     pattern:  /new
     defaults: { _controller: "ExpedienteBundle:Segurovida:new" }
@@ -28,3 +32,7 @@ segurovida_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "ExpedienteBundle:Segurovida:delete" }
     requirements: { _method: post|delete }
+
+segurovida_consultar:
+    pattern:  /consultar
+    defaults: { _controller: "ExpedienteBundle:Segurovida:consultar" }

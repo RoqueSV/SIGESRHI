@@ -22,7 +22,7 @@ use APY\DataGridBundle\Grid\Column\TextColumn;
 class SegurovidaController extends Controller
 {
     /**
-     * Lists all Segurovida entities.
+     * Registrar nuevos seguros colectivos.
      */
     public function indexAction()
     {
@@ -62,10 +62,62 @@ class SegurovidaController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
+        $breadcrumbs->addItem("Seguro colectivo de vida", $this->get("router")->generate("segurovida"));
         
         return $grid->getGridResponse('ExpedienteBundle:Segurovida:index.html.twig');
     }
+    
+
+    /**
+     * Consultar seguros colectivos.
+     */
+    public function consultarAction()
+    {
+             
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_segurovida');
+        
+        $grid = $this->get('grid');
+        
+        /* Empleados activos que tengan seguro registrado */
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->Join($tableAlias.'.idsegurovida', 'e')
+                      ->andWhere($tableAlias.'.tipoexpediente = :tipo')
+                      ->andWhere('e.estadoseguro = :estado')
+                      ->andWhere($query->expr()->isNotNull('e.id'))
+                      ->setParameter('tipo','E')
+                      ->setParameter('estado','V');
+            }
+        );
+        
+        $grid->setId('grid_segurovida');
+        $grid->setSource($source);              
+
+        //Columnas para filtrar
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','align'=>'center','title' => 'Código',"operatorsVisible"=>false));
+        $grid->addColumn($CodigoEmpleados,2);
+        $grid->addColumn($NombreEmpleados,3);
+        
+
+        // Mostrar
+        $rowAction1 = new RowAction('Mostrar', 'segurovida_show_consultar');
+        $grid->addRowAction($rowAction1);
+
+        
+        $grid->setDefaultOrder('codigos', 'asc');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Seguro colectivo de vida", $this->get("router")->generate("segurovida_consultar"));
+        
+        return $grid->getGridResponse('ExpedienteBundle:Segurovida:index.html.twig');
+    }
+
+
 
     /**
      * Creates a new Segurovida entity.
@@ -196,6 +248,34 @@ class SegurovidaController extends Controller
         $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("segurovida_show",array("id"=>$id)));
 
         return $this->render('ExpedienteBundle:Segurovida:show.html.twig', array(
+            'entity'       => $entity,
+            'expediente'   => $expediente,
+            'delete_form'  => $deleteForm->createView(),        ));
+    }
+
+    public function showConsultarAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        //Obtener seguro vida según idexpediente
+        $entity = $em->getRepository('ExpedienteBundle:Segurovida')->findOneByIdexpediente($id);
+        
+        if (!$entity) {
+            throw $this->createNotFoundException('No existe el registro seleccionado.');
+        }
+
+        /* Obtener datos expediente */
+        $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($id);
+              
+        $deleteForm = $this->createDeleteForm($id);
+
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
+        $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("segurovida_show",array("id"=>$id)));
+
+        return $this->render('ExpedienteBundle:Segurovida:show_consultar.html.twig', array(
             'entity'       => $entity,
             'expediente'   => $expediente,
             'delete_form'  => $deleteForm->createView(),        ));

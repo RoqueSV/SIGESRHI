@@ -27,4 +27,26 @@ class SegurovidaRepository extends EntityRepository
             ->setParameter('idexp',$idexp)
             ->getResult();
 	}
+
+	public function obtenerBeneficiarios($idexp,$estado)
+    {
+		return $this->getEntityManager()
+			->createQuery("SELECT se.nombrecompleto,
+				                  s.id idseguro,
+				                  s.fechaseguro
+				                  b.nombrebeneficiario beneficiario,
+				                  b.parentesco,
+				                  b.porcentaje  
+				           FROM ExpedienteBundle:Beneficiario b 
+				           JOIN b.idsegurovida s
+				           JOIN s.idexpediente e
+                           JOIN e.idsolicitudempleo se
+ 				           WHERE s.estadoseguro =:estado
+				           AND e.id=:idexp 
+                           ")
+            ->setParameter('idexp',$idexp)
+            ->setParameter('estado',$estado)
+            ->getResult();
+	}
+
 }

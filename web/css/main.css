@@ -151,4 +151,5 @@ textarea {
 .mitable td,
 .mitable th{
   padding: 5px;
+  line-height: 15px;
 }

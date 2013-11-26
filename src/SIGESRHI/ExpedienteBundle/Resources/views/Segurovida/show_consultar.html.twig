@@ -1,0 +1,74 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+<script type='text/javascript'>
+function eliminar() {
+
+    if(confirm('\xbfEsta seguro que desea eliminar este registro?')) {
+        document.getElementById('form_borrar').submit();
+}
+}
+</script>
+
+{% if app.session.started %}
+  {% for flashMessage in app.session.flashbag.get('aviso') %}
+    <div class="alert alert-success">
+      <p>{{ flashMessage }}</p>
+    </div>
+  {% endfor %}
+  {% for flashMessage in app.session.flashbag.get('edit') %}
+    <div class="alert alert-success">
+      <p>{{ flashMessage }}</p>
+    </div>
+  {% endfor %}
+{% endif %}
+{% set seguros =  (entity|length)%}
+{% set longitud =  (entity.idbeneficiario|length)-1 %} {#Obtengo numero de beneficiarios#}             
+<h3 class="text-center"> Datos registrados </h3>
+
+ <table class="table table-bordered table-hover">
+        
+        	  <tr>
+        		    <th>Nombre empleado:</th><td>{{expediente[0].nombre}}</td>
+            </tr>
+            <tr>
+                <th>Fecha de registro:</th><td>{{ entity.fechaseguro|date('Y-m-d')|fecha }}</td>
+            </tr>
+             <tr>
+                <th>Numero de seguros:</th><td>{{ seguros }}</td>
+            </tr>
+
+ </table>
+
+        <h5>Beneficiarios: </h5>
+        <table class="table table-bordered table-hover">
+          <tr>        
+          	<th>Nombre beneficiario</th>
+          	<th class="text-center">Parentesco</th>
+          	<th class="text-center">Porcentaje</th>
+          </tr>           
+            {% for i in 0..longitud if longitud >= 0 %}
+           <tr>
+            <td>{{ entity.idbeneficiario[i].nombrebeneficiario }}</td>
+            <td class="text-center">{{ entity.idbeneficiario[i].parentescobeneficiario }}</td>
+            <td class="text-center">{{ entity.idbeneficiario[i].porcentaje }}%</td>
+           </tr>
+             {% endfor %} 
+        </table>
+      <br /><br />
+
+<h4 class="text-center">¿Qué acción desea realizar?</h4><br />
+
+    
+    <div class="text-center">
+     <a href="{{ path('reporte_segurovida', { 'idexp': expediente[0].idexp, 'id':entity.id }) }}" class="btn btn-primary">Imprimir actual</a>
+     <button type="button" class="btn" onclick="location.href='{{ path ('segurovida') }}'">Regresar al listado</button>
+     <a href="{{ path('segurovida_edit', { 'id': entity.id }) }}" class="btn">Editar Registro</a>
+     <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
+            
+      <form action="{{ path('segurovida_delete', { 'id': entity.id }) }}"  id="form_borrar" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+             <div class="invisible"> {{ form_widget(delete_form) }} </div>
+      </form>
+    </div>
+{% endblock %}

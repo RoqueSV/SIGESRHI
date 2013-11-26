@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Segurocolectivo_de_vida" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f6e1398a-65ed-4868-9343-f00f0752f03b">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="753"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="id_exp" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -11,7 +11,7 @@
 	</parameter>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select e.id,concat(nombres,' ',primerApellido,' ',coalesce(nullif(concat('de ',apellidocasada),'de '),segundoapellido)) as nombre_completo,concat(substr(dui,1, 8),'-',substr(dui,9))as dui,lugarnac,to_char(current_date,'DD"/"MM"/"YYYY') as horaactual,to_char(fechaNac,'D "de" TMMonth "de" YYYY') as fechanac,(colonia||' '||coalesce(calle,'')) as direcccion,estadoseguro from expediente e join solicitudEmpleo se on(se.idexpediente=e.id) join segurovida sv on(e.id=sv.idexpediente) where e.id=$P{id_exp}]]>
+		<![CDATA[select e.id,concat(nombres,' ',primerApellido,' ',coalesce(nullif(concat('de ',apellidocasada),'de '),segundoapellido)) as nombre_completo,concat(substr(dui,1, 8),'-',substr(dui,9))as dui,lugarnac,to_char(current_date,'DD"/"MM"/"YYYY') as horaactual,to_char(fechaNac,'D "de" TMMonth "de" YYYY') as fechanac,(colonia||' '||coalesce(calle,'')) as direcccion,estadoseguro from expediente e join solicitudEmpleo se on(se.idexpediente=e.id) join segurovida sv on(e.id=sv.idexpediente) where e.id=$P{id_exp} and estadoseguro='V']]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="nombre_completo" class="java.lang.String"/>

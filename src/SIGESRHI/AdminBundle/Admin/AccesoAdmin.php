@@ -28,7 +28,7 @@ class AccesoAdmin extends Admin
                                                   'class' => 'AdminBundle:Acceso',
                                                   'query_builder' => function(EntityRepository $er) {
                                                                  return $er->createQueryBuilder('a')
-                                                                           ->where('a.idaccesosup is null')
+                                                                           //->where('a.idaccesosup is null')
                                                                            ->orderBy('a.nombrepagina', 'ASC');
                                                                             },                
                                                                            ))

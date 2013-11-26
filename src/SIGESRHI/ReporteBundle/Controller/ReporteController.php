@@ -88,7 +88,7 @@ class ReporteController extends Controller
      //Incluimos camino de migas 
      $breadcrumbs = $this->get("white_october_breadcrumbs");
      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-     $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
+     $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida_consultar"));
      $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("segurovida_show",array("id"=>$request->get('id'))));
      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_segurovida"));
      
