@@ -22,25 +22,26 @@ function eliminar() {
     </div>
   {% endfor %}
 {% endif %}
-{% set seguros =  (entity|length)%}
-{% set longitud =  (entity.idbeneficiario|length)-1 %} {#Obtengo numero de beneficiarios#}             
+          
 <h3 class="text-center"> Datos registrados </h3>
-
+{% for entity in entities %}
+{% if (entity.estadoseguro == 'V') %}
+  <h4 class="text-info"> Seguro colectivo de vida actual </h4>
+{% else %}
+  <h4 class="text-info"> Seguro colectivo de vida histórico </h4>
+{% endif %}
+{{ loop.index }}
  <table class="table table-bordered table-hover">
         
         	  <tr>
-        		    <th>Nombre empleado:</th><td>{{expediente[0].nombre}}</td>
+        		    <th>Nombre empleado:</th><td>{{seguroActual[0].nombre}}</td>
             </tr>
             <tr>
                 <th>Fecha de registro:</th><td>{{ entity.fechaseguro|date('Y-m-d')|fecha }}</td>
             </tr>
-             <tr>
-                <th>Numero de seguros:</th><td>{{ seguros }}</td>
-            </tr>
-
  </table>
-
         <h5>Beneficiarios: </h5>
+        {% set longitud =  (entity.idbeneficiario|length)-1 %} {#Obtengo numero de beneficiarios#}   
         <table class="table table-bordered table-hover">
           <tr>        
           	<th>Nombre beneficiario</th>
@@ -55,20 +56,21 @@ function eliminar() {
            </tr>
              {% endfor %} 
         </table>
-      <br /><br />
-
+      <br />
+  
+{% endfor %}
+<br />
 <h4 class="text-center">¿Qué acción desea realizar?</h4><br />
-
-    
     <div class="text-center">
-     <a href="{{ path('reporte_segurovida', { 'idexp': expediente[0].idexp, 'id':entity.id }) }}" class="btn btn-primary">Imprimir actual</a>
-     <button type="button" class="btn" onclick="location.href='{{ path ('segurovida') }}'">Regresar al listado</button>
-     <a href="{{ path('segurovida_edit', { 'id': entity.id }) }}" class="btn">Editar Registro</a>
+     <a href="{{ path('reporte_segurovida', { 'idexp': seguroActual[0].idexp, 'id':entities[0].id }) }}" class="btn btn-primary">Generar PDF</a>
+     <button type="button" class="btn" onclick="location.href='{{ path ('segurovida_consultar') }}'">Regresar al listado</button>
+     <a href="{{ path('segurovida_edit', { 'id': entities[0].id }) }}" class="btn">Editar Registro</a>
      <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
             
-      <form action="{{ path('segurovida_delete', { 'id': entity.id }) }}"  id="form_borrar" method="post">
+      <form action="{{ path('segurovida_delete', { 'id': entities[0].id }) }}"  id="form_borrar" method="post">
             <input type="hidden" name="_method" value="DELETE" />
              <div class="invisible"> {{ form_widget(delete_form) }} </div>
       </form>
     </div>
+  
 {% endblock %}
