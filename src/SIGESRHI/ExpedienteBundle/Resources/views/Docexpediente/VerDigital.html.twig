@@ -3,31 +3,46 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal %}
+<script type='text/javascript'>
+function eliminar() {
+
+    	if(confirm('\xbfEsta seguro que desea eliminar este documento?')) {
+        	document.getElementById('form_borrar').submit();
+			}
+		}
+</script>
 
 
 
 <div class="text-center">
 	
-	<h4>{{entity.nombredocexp}}</h4>
+	<h4>Nombre: {{entity.nombredocexp}}</h4>
 	<br>
 	{% if extension|lower == "jpg" or extension|lower == "png" %}
-	Es una imagen: {{entity.rutadocexp}}
+	<img src="{{ asset('uploads/docs_expediente/'~ entity.rutadocexp) }}" width="500px" height="500px"></img>
 	{% endif %}
 
 	{% if extension|lower == "pdf" %}
-	Es un documento pdf {{entity.rutadocexp}}
+	<embed src="{{ asset('uploads/docs_expediente/'~ entity.rutadocexp) }}" width="700px" height="500px"></embed>
 	{% endif %}
 
-	{% if extension|lower == "rar" or extension|lower == "zip" %}
-	Es un archivo comprimido: {{entity.rutadocexp}}
+	{% if extension|lower != "jpg" and extension|lower != "png" and extension|lower != "pdf" %}
+	No se puede previsualizar el archivo: <a href="{{ asset('uploads/docs_expediente/'~ entity.rutadocexp) }}" > Descargar </a>
 	{% endif %}
 
-	2. Es un archivo: {{entity.rutadocexp}}
-
-<img src="{{asset('uploads/docs_expediente/' ~ entity.rutadocexp)}}" />
+	
+<br>
+<br>
 <br>
 <br>
 
-<button type="button" class="btn" onclick="javascript: window.history.back(1)">Regresar al listado</button>
+			<button type="button" class="btn" onclick="javascript: window.history.back(1)">Regresar al listado</button>
+            <button type="button" class="btn btn-danger" onclick="eliminar()">Borrar</button>
+
+	<form class="invisible" action="{{ path('docdigital_delete', { 'id': entity.id }) }}" method="post" id="form_borrar">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+        </form>
+
 </div>
 {% endblock %}

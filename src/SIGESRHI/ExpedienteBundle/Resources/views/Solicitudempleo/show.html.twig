@@ -345,38 +345,14 @@
     {% endif %}
 
 
-    {#}        
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('solicitud') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('solicitud_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('solicitud_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
-
-#}
-
-
+ 
 <h4 class="text-center">¿Qué acción desea realizar?</h4><br />
 
     
      <div class="text-center">
      
      <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id }) }}" class="btn btn-primary">Generar PDF</a>
-     <button type="button" class="btn" onclick="location.href='{% if entity.idexpediente.tipoexpediente == 'I' or entity.idexpediente.tipoexpediente == 'A' %} {{ path ('solicitud_caspirante') }} {% endif %}'">Regresar al listado</button>
+     <button type="button" class="btn" onclick="location.href='{% if entity.idexpediente.tipoexpediente == 'I' or entity.idexpediente.tipoexpediente == 'A' %} {{ path ('solicitud_caspirante') }} {% elseif entity.idexpediente.tipoexpediente == 'E' or entity.idexpediente.tipoexpediente == 'T' %}{{ path ('solicitud_cempleado') }} {% elseif entity.idexpediente.tipoexpediente == 'X' %} {{ path('solicitud_cinactivo')}} {% endif %}'">Regresar al listado</button>
      <a href="{{ path('solicitud_edit', { 'id': entity.id }) }}" class="btn">Editar Registro</a>
      {% if entity.numsolicitud == 0 %}
      <a href="{{ path('solicitud_pruebanumsol', { 'id': entity.id }) }}" class="btn">Asignar Numero de Solicitud</a>

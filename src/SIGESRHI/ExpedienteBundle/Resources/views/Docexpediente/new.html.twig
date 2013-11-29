@@ -8,11 +8,25 @@
     </div>
 {% endfor %}
 
+{% for flashMessage in app.session.flashbag.get('new_error') %}
+    <div class="alert alert-alert-danger">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('del') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+
     <h4 class="text-center">AGREGAR DOCUMENTOS DIGITALES</h4>
 
     <br>
+    <p class="help-block"> En esta sección tiene la posibilidad de adjuntar los documentos solicitados. </p>
     <p class="help-block"> Registre los documentos digitales ingresando uno a la vez y seleccionando guardar, los registros aparecen en la parte de abajo, dando la posibilidad de registrar un nuevo archivo cada vez.</p>
-    <p class="help-block"> Los Archivos permitidos son: Imagenes (png/jpg) - Documentos (pdf) - Archivos comprimidos (rar, zip)</p>
+
+    <p class="help-block"> Los Archivos permitidos son: Imagenes (png/jpg) - Documentos (pdf, doc, docx) - Archivos comprimidos (zip)</p>
 
     <form action="{{ path('docdigital_create', {'id':id}) }}" method="post" {{ form_enctype(form) }}>
         
@@ -20,8 +34,8 @@
         
 <table border="0" width="100%" class="form-inline centered-table">
     <tr>
-        <td width="40%"><b>{{form_label(form.nombredocexp)}}</b></td>
-        <td><b>{{form_label(form.file)}}</b></td>
+        <td width="40%"><bold>{{form_label(form.nombredocexp)}}</bold></td>
+        <td><bold>{{form_label(form.file)}}</bold></td>
     </tr>
     <tr>
         <td>{{form_widget(form.nombredocexp)}} {{form_errors(form.nombredocexp)}} </td>
