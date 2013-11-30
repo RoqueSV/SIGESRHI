@@ -182,14 +182,7 @@ class Plaza
      * )
      */
     private $idmanejoequipo;
-
-    // ...
-    /**
-     * @ORM\OneToMany(targetEntity="Docautorizacionplaza", mappedBy="idplaza")
-     */
-    private $iddocautorizacion;
-    
-
+   
     /**
      * @var string
      *
@@ -503,39 +496,6 @@ class Plaza
     public function getIdmanejoequipo()
     {
         return $this->idmanejoequipo;
-    }
-
-    /**
-     * Add iddocautorizacion
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Docautorizacionplaza $iddocautorizacion
-     * @return Plaza
-     */
-    public function addIddocautorizacion(\SIGESRHI\AdminBundle\Entity\Docautorizacionplaza $iddocautorizacion)
-    {
-        $this->iddocautorizacion[] = $iddocautorizacion;
-    
-        return $this;
-    }
-
-    /**
-     * Remove iddocautorizacion
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Feature $iddocautorizacion
-     */
-    public function removeIddocautorizacion(\SIGESRHI\AdminBundle\Entity\Docautorizacionplaza $iddocautorizacion)
-    {
-        $this->iddocautorizacion->removeElement($iddocautorizacion);
-    }
-
-    /**
-     * Get iddocautorizacion
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIddocautorizacion()
-    {
-        return $this->iddocautorizacion;
     }
     
     /***  Manejo de archivos  ***/

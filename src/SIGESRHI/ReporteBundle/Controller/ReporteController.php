@@ -3,7 +3,7 @@ namespace SIGESRHI\ReporteBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use SIGESRHI\ReporteBundle\Resources\PHPJRU\JRU;
 use SIGESRHI\ReporteBundle\Resources\PHPJRU\JdbcConnection;
-use SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo;
+use SIGESRHI\ReporteBundle\Controller\DefaultController;
 use \Java;
 
 
@@ -22,6 +22,8 @@ class ReporteController extends Controller
         $Conn = new	JdbcConnection("org.postgresql.Driver","jdbc:postgresql://".$host.":".$port."/".$db,$user,$password);
         return $Conn;
     }
+
+      
 
     public function indexAction()
     {
@@ -80,16 +82,16 @@ class ReporteController extends Controller
    public function ReporteSeguroVidaAction()
     {
 
-  
      /* Obtengo parametros */
-     $request=$this->getRequest();
-     $idExp=$request->get('idexp');           
+     $request = $this->getRequest();
+     $idExp = $request->get('idexp');      
+     $ruta = $request->get('ruta'); 
 
      //Incluimos camino de migas 
      $breadcrumbs = $this->get("white_october_breadcrumbs");
      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-     $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida_consultar"));
-     $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("segurovida_show",array("id"=>$request->get('id'))));
+     $breadcrumbs->addItem("Seguro colectivo de vida", $this->get("router")->generate("segurovida_consultar"));
+     $breadcrumbs->addItem("Ver registro", $this->get("router")->generate($ruta, array("id"=>$request->get('id'))));
      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_segurovida"));
      
      // Nombre reporte

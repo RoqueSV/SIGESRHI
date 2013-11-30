@@ -9,10 +9,6 @@ ExpedienteBundle_solicitud:
 ExpedienteBundle_segurovida:
         resource: "@ExpedienteBundle/Resources/config/routing/segurovida.yml"
         prefix:   /segurovida
-
-ExpedienteBundle_beneficiario:
-        resource: "@ExpedienteBundle/Resources/config/routing/beneficiario.yml"
-        prefix:   /beneficiario
         
 ExpedienteBundle_pruebapsicologica:
         resource: "@ExpedienteBundle/Resources/config/routing/pruebapsicologica.yml"

@@ -8,6 +8,17 @@ function eliminar() {
         document.getElementById('form_borrar').submit();
 }
 }
+function mostrarocultar(){
+  if (document.getElementById('oculto').style.display == 'none')
+    {
+      document.getElementById('oculto').style.display = 'block';
+      document.getElementById('boton').innerHTML = 'Ocultar histórico';
+    }
+  else {
+      document.getElementById('oculto').style.display = 'none';
+      document.getElementById('boton').innerHTML = 'Mostrar histórico';
+  }
+}
 </script>
 
 {% if app.session.started %}
@@ -22,55 +33,121 @@ function eliminar() {
     </div>
   {% endfor %}
 {% endif %}
-          
+
+
 <h3 class="text-center"> Datos registrados </h3>
-{% for entity in entities %}
-{% if (entity.estadoseguro == 'V') %}
-  <h4 class="text-info"> Seguro colectivo de vida actual </h4>
-{% else %}
-  <h4 class="text-info"> Seguro colectivo de vida histórico </h4>
-{% endif %}
-{{ loop.index }}
- <table class="table table-bordered table-hover">
+{% set seguros = entities|length %}
+
+{% if seguros == 1 %}
+
+<h4 class="text-info text-center"> Seguro colectivo de vida</h4>
+<table class="table table-bordered table-hover">
         
-        	  <tr>
-        		    <th>Nombre empleado:</th><td>{{seguroActual[0].nombre}}</td>
-            </tr>
-            <tr>
-                <th>Fecha de registro:</th><td>{{ entity.fechaseguro|date('Y-m-d')|fecha }}</td>
-            </tr>
+          <tr>
+              <th>Nombre empleado:</th><td>{{expediente[0].nombre}}</td>
+          </tr>
+          <tr>
+              <th>Fecha de registro:</th><td>{{ entities[0].fechaseguro|date('Y-m-d')|fecha }}</td>
+          </tr>
+
  </table>
-        <h5>Beneficiarios: </h5>
-        {% set longitud =  (entity.idbeneficiario|length)-1 %} {#Obtengo numero de beneficiarios#}   
-        <table class="table table-bordered table-hover">
+
+<h5>Beneficiarios: </h5>
+{% set longitud =  (entities[0].idbeneficiario|length) - 1 %} {#Obtengo numero de beneficiarios#} 
+<table class="table table-bordered table-hover">
           <tr>        
-          	<th>Nombre beneficiario</th>
-          	<th class="text-center">Parentesco</th>
-          	<th class="text-center">Porcentaje</th>
+              <th>Nombre beneficiario</th>
+              <th class="text-center">Parentesco</th>
+              <th class="text-center">Porcentaje</th>
           </tr>           
-            {% for i in 0..longitud if longitud >= 0 %}
+          {% for i in 0..longitud %}
            <tr>
-            <td>{{ entity.idbeneficiario[i].nombrebeneficiario }}</td>
-            <td class="text-center">{{ entity.idbeneficiario[i].parentescobeneficiario }}</td>
-            <td class="text-center">{{ entity.idbeneficiario[i].porcentaje }}%</td>
-           </tr>
-             {% endfor %} 
+              <td>{{ entities[0].idbeneficiario[i].nombrebeneficiario }}</td>
+              <td class="text-center">{{ entities[0].idbeneficiario[i].parentescobeneficiario }}</td>
+              <td class="text-center">{{ entities[0].idbeneficiario[i].porcentaje }}%</td>
+          </tr>
+          {% endfor %} 
+</table>
+{% set ruta = app.request.attributes.get('_route') %}
+<h4 class="text-center">¿Qué acción desea realizar?</h4>
+<div class="text-center">
+  <a href="{{ path('reporte_segurovida', { 'idexp': expediente[0].idexp, 'id':entities[0].id, 'ruta':ruta }) }}" class="btn btn-primary">Generar PDF</a>
+  <button type="button" class="btn" onclick="location.href='{{ path ('segurovida_consultar') }}'">Regresar al listado</button>
+  <a href="{{ path('segurovida_edit', { 'id': entities[0].id }) }}" class="btn">Editar Registro</a>
+  <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
+            
+  <form action="{{ path('segurovida_delete', { 'id': entities[0].id }) }}"  id="form_borrar" method="post">
+          <input type="hidden" name="_method" value="DELETE" />
+          <div class="invisible"> {{ form_widget(delete_form) }} </div>
+  </form>
+</div>
+
+{% else %}
+
+<h4 class="text-info text-center"> Seguro colectivo de vida actual </h4>
+<b>Nombre empleado:</b> &nbsp; {{expediente[0].nombre}}
+
+<h5>Beneficiarios: </h5>
+{% set longitud =  (entities[0].idbeneficiario|length) - 1 %} {#Obtengo numero de beneficiarios#}   
+<table class="table table-bordered table-hover">
+          <tr>
+             <td colspan="3"><b>Fecha de registro:</b> {{ entities[0].fechaseguro|date('Y-m-d')|fecha }}</td>
+          </tr>
+          <tr>        
+              <th>Nombre beneficiario</th>
+              <th class="text-center">Parentesco</th>
+              <th class="text-center">Porcentaje</th>
+          </tr>           
+          {% for i in 0..longitud %}
+          <tr>
+              <td>{{ entities[0].idbeneficiario[i].nombrebeneficiario }}</td>
+              <td class="text-center">{{ entities[0].idbeneficiario[i].parentescobeneficiario }}</td>
+              <td class="text-center">{{ entities[0].idbeneficiario[i].porcentaje }}%</td>
+          </tr>
+          {% endfor %} 
+</table>
+{% set ruta = app.request.attributes.get('_route') %}
+<h4 class="text-center">¿Qué acción desea realizar?</h4>
+<div class="text-center">
+  <a href="{{ path('reporte_segurovida', { 'idexp': expediente[0].idexp, 'id':entities[0].id, 'ruta':ruta }) }}" class="btn btn-primary">Generar PDF</a>
+  <button type="button" class="btn" onclick="location.href='{{ path ('segurovida_consultar') }}'">Regresar al listado</button>
+  <a href="{{ path('segurovida_edit', { 'id': entities[0].id }) }}" class="btn">Editar Registro</a>
+  <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
+            
+  <form action="{{ path('segurovida_delete', { 'id': entities[0].id }) }}"  id="form_borrar" method="post">
+         <input type="hidden" name="_method" value="DELETE" />
+         <div class="invisible"> {{ form_widget(delete_form) }} </div>
+  </form>
+</div>
+<span class="help-block"><b>Nota:</b> El empleado posee mas de un registro, si desea ver su historial de click en el siguiente enlace</span>
+{#<a href="#" id="boton" onclick="mostrarocultar()"> Mostrar Histórico </a>#}
+<button id="boton" onclick="mostrarocultar()"> Mostrar Histórico </button>
+
+
+<div id="oculto" style='display:none;'>
+<h4 class="text-info text-center"> Histórico de registros de seguro colectivo de vida </h4>
+
+{% for i in 1..seguros - 1 %}
+{% set longitud =  (entities[i].idbeneficiario|length) - 1 %} {#Obtengo numero de beneficiarios#}
+<table class="table table-bordered table-hover">
+          <tr>
+             <td colspan="3"><b>Fecha de registro:</b> {{ entities[i].fechaseguro|date('Y-m-d')|fecha }}</td>
+          </tr>
+          <tr>        
+            	<th>Nombre beneficiario</th>
+            	<th class="text-center">Parentesco</th>
+            	<th class="text-center">Porcentaje</th>
+          </tr>           
+          {% for j in 0..longitud  %}
+          <tr>
+              <td>{{ entities[i].idbeneficiario[j].nombrebeneficiario }}</td>
+              <td class="text-center">{{ entities[i].idbeneficiario[j].parentescobeneficiario }}</td>
+              <td class="text-center">{{ entities[i].idbeneficiario[j].porcentaje }}%</td>
+          </tr>
+          {% endfor %} 
         </table>
       <br />
-  
 {% endfor %}
-<br />
-<h4 class="text-center">¿Qué acción desea realizar?</h4><br />
-    <div class="text-center">
-     <a href="{{ path('reporte_segurovida', { 'idexp': seguroActual[0].idexp, 'id':entities[0].id }) }}" class="btn btn-primary">Generar PDF</a>
-     <button type="button" class="btn" onclick="location.href='{{ path ('segurovida_consultar') }}'">Regresar al listado</button>
-     <a href="{{ path('segurovida_edit', { 'id': entities[0].id }) }}" class="btn">Editar Registro</a>
-     <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
-            
-      <form action="{{ path('segurovida_delete', { 'id': entities[0].id }) }}"  id="form_borrar" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-             <div class="invisible"> {{ form_widget(delete_form) }} </div>
-      </form>
-    </div>
-  
+</div>
+{% endif %}  
 {% endblock %}

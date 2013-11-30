@@ -56,9 +56,9 @@ function eliminar() {
 
 <h4 class="text-center">¿Qué acción desea realizar?</h4><br />
 
-    
+    {% set ruta = app.request.attributes.get('_route') %}
     <div class="text-center">
-     <a href="{{ path('reporte_segurovida', { 'idexp': expediente[0].idexp, 'id':entity.id }) }}" class="btn btn-primary">Generar PDF</a>
+     <a href="{{ path('reporte_segurovida', { 'idexp': expediente[0].idexp, 'id':entity.id, 'ruta':ruta }) }}" class="btn btn-primary">Generar PDF</a>
      <button type="button" class="btn" onclick="location.href='{{ path ('segurovida') }}'">Regresar al listado</button>
      <a href="{{ path('segurovida_edit', { 'id': entity.id }) }}" class="btn">Editar Registro</a>
      <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>

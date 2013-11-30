@@ -210,7 +210,7 @@ class SegurovidaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("sonata_user_impersonating"));
-        $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
+        $breadcrumbs->addItem("Seguro colectivo de vida", $this->get("router")->generate("segurovida"));
         $breadcrumbs->addItem("Registro", $this->get("router")->generate("segurovida_new"));
 
         return $this->render('ExpedienteBundle:Segurovida:new.html.twig', array(
@@ -244,7 +244,7 @@ class SegurovidaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
+        $breadcrumbs->addItem("Seguro colectivo de vida", $this->get("router")->generate("segurovida"));
         $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("segurovida_show",array("id"=>$id)));
 
         return $this->render('ExpedienteBundle:Segurovida:show.html.twig', array(
@@ -258,48 +258,30 @@ class SegurovidaController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         //Obtener seguro(s) de vida según idexpediente
-        $entity = $em->getRepository('ExpedienteBundle:Segurovida')->findByIdexpediente($id);
+        $entity = $em->getRepository('ExpedienteBundle:Segurovida')->findBy(
+                 array('idexpediente'=>$id), 
+                 array('fechaseguro' => 'DESC')
+               );
         
         if (!$entity) {
             throw $this->createNotFoundException('No existe el registro seleccionado.');
         }
         
-        //Verificar numero de registros
-        $query=$em->createQuery('SELECT COUNT(sv.id) 
-                                 FROM ExpedienteBundle:Expediente e 
-                                 JOIN e.idsegurovida sv 
-                                 WHERE e.id = :expediente'
-        )->setParameter('expediente', $id);
-        $numSeguros = $query->getResult();
-
+        /* Obtener datos expediente */
+        $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($id);
+        
         $deleteForm = $this->createDeleteForm($id);
 
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida_consultar"));
+        $breadcrumbs->addItem("Seguro colectivo de vida", $this->get("router")->generate("segurovida_consultar"));
         $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("segurovida_show_consultar",array("id"=>$id)));
 
-        if ($numSeguros>1){
-        //Beneficiarios 
-        $benValidos = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerBeneficiarios($id,'V');
-        $benHistorico = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerBeneficiarios($id,'N');
-
         return $this->render('ExpedienteBundle:Segurovida:show_consultar.html.twig', array(
-            'entities'       => $entity,
-            'seguroActual'   => $benValidos,
-            'seguroHistorico' => $benHistorico,
+            'entities'     => $entity,
+            'expediente'   => $expediente,
             'delete_form'  => $deleteForm->createView(),        ));
-        }
-        else{
-        $benValidos = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerBeneficiarios($id,'V');
-        
-        return $this->render('ExpedienteBundle:Segurovida:show_consultar.html.twig', array(
-            'entities'       => $entity,
-            'seguroActual'   => $benValidos,
-            'delete_form'  => $deleteForm->createView(),        ));
-
-        }
 
     }
 
@@ -329,7 +311,7 @@ class SegurovidaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Seguro de vida", $this->get("router")->generate("segurovida"));
+        $breadcrumbs->addItem("Seguro colectivo de vida", $this->get("router")->generate("segurovida"));
         $breadcrumbs->addItem("Editar registro", $this->get("router")->generate("segurovida_edit",array("id"=>$id)));
 
         return $this->render('ExpedienteBundle:Segurovida:edit.html.twig', array(
