@@ -26,18 +26,14 @@ class DefaultController extends Controller
         return $this->render('AdminBundle:Default:index.html.twig');
     }
 
-    public function cambiaopcionAction($acceso){
+    public function cambiaopcionAction($acceso, $ruta){
 
         //$foo = $session->get('seccion');
         $session = $this->getRequest()->getSession();
         $session->set('seccion',$acceso);
 
-        /*
-        $request=$this->container->get('request');
-        $routename=$request->get('_route');
-        */
-
-        return $this->render('AdminBundle:Default:index.html.twig');
+        //return $this->render('AdminBundle:Default:index.html.twig');
+        return $this->redirect($this->generateUrl($ruta));
     }
 
 

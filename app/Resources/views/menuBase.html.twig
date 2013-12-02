@@ -9,7 +9,7 @@
 {% for opcion in opciones %}
 
 {% if cont == 0 %}
-<li><a href="#">{{ opcion.modulo }} </a>
+<li><a href="{{path('cambia_opcion', {'acceso': '0', 'ruta': opcion.ruta}) }}">{{ opcion.modulo }} </a>
         <ul> 
 {% endif %}
 
@@ -21,13 +21,13 @@
             </li>
 
 
-            <li><a href="#">{{ opcion.modulo }} </a>
+            <li><a href="{{path('cambia_opcion', {'acceso': '0', 'ruta': opcion.ruta}) }}">{{ opcion.modulo }} </a>
                 <ul> 
 
                     {% if opcion.hijos == 0 %}
                     <li><a href="{{ path(opcion.ruta) }}  "> {{ opcion.pagina }}</a></li>
                     {% else %}
-                    <li><a href="{{path('cambia_opcion', {'acceso':opcion.acceso}) }}">{{opcion.pagina}}</a></li>
+                    <li><a href="{{path('cambia_opcion', {'acceso':opcion.acceso, 'ruta': opcion.ruta}) }}">{{opcion.pagina}}</a></li>
                     {% endif %}
    
                 
@@ -36,7 +36,7 @@
                     {% if opcion.hijos == 0 %}
                     <li><a href="{{ path(opcion.ruta) }}  "> {{ opcion.pagina }}</a></li>
                     {% else %}
-                    <li><a href="{{path('cambia_opcion', {'acceso':opcion.acceso}) }}">{{opcion.pagina}}</a></li>
+                    <li><a href="{{path('cambia_opcion', {'acceso':opcion.acceso, 'ruta': opcion.ruta}) }}">{{opcion.pagina}}</a></li>
                     {% endif %} 
 {% endif %}                     
         
