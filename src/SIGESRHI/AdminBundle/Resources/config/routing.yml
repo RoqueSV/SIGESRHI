@@ -32,7 +32,7 @@ AdminBundle_plaza:
    prefix:   /plaza
 
 cambia_opcion:
-   path: /inicio/{acceso}
+   path: /inicio/{acceso}/{ruta}
    defaults: {_controller: AdminBundle:Default:cambiaopcion}
 
     

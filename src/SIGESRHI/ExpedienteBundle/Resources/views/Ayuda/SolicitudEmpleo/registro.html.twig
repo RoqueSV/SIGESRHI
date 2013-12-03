@@ -10,7 +10,7 @@
 
 {% block contenido %}
 <p><h4>¿Cómo llenar este formulario?</h4></p>
-Se describen acontinuaci&oacute;n los pasos necesarios:
+Se describen acontinuaci&oacute;n los pasos m&aacute;s importantes para su correcto registro:
 	<ul style="list-style-type:decimal; margin-left:25px">
 		<li> Seleccione una fotograf&iacute;a para anexar a la solicitud:</li> 
 		<img src="{{asset('images/images_ayuda/subirfoto.jpg') }}" alt="ISRI"/><br>
@@ -33,11 +33,13 @@ Se describen acontinuaci&oacute;n los pasos necesarios:
 		<li> Ingrese datos de empleo</li>
 		<img src="{{asset('images/images_ayuda/empleo.jpg') }}" alt="ISRI"/>
 		<div class="justifyText">Para completar su informaci&oacute;n laboral, primero indique en el campo "Tipo de Empleo" si la informaci&oacute;n a introducir corresponde a su empleo actual o empleo anterior.<br> 
-		<b>Nota</b>: La solicitud permite &uacute;nicamente un registro de cada tipo de empleo. </div>
-	
-		<img src="{{asset('images/images_ayuda/declaracion.jpg') }}" alt="ISRI"/>
+		<b>Nota</b>: La solicitud permite &uacute;nicamente un registro por cada tipo de empleo.<br><br>
+		Al completar todos los puntos anteriores, no olvide chequear la cla&uacute;sula ubicada al final del formulario, donde hace constar que los datos proporcionados son verdaderos. Al finalizar presione el bot&oacute;n "Registrar Solictud"</div>
+		<img src="{{asset('images/images_ayuda/registro1.jpg') }}" alt="ISRI"/><br><br>
+		<div class="justifyText">Si existen campos a&uacute;n por completar, el sistema mostrar&aacute; dichos campos marcados con color rojo. No puede dejar campos obligatorios vac&iacute;os. </div>
+		<img src="{{asset('images/images_ayuda/datosmalos.jpg') }}" alt="ISRI"/><br>
 	</ul>
-
-
-
+<div class="justifyText"> Una vez la solicitud ha sido registrada correctamente, no olvide consultar la pesta&ntilde;a
+<a href="{{ path('documentacion_solicitada') }}">Documentaci&oacute;n a presentar.</a></div>
+<br><br> 
 {% endblock %}

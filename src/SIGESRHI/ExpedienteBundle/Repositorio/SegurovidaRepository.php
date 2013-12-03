@@ -31,11 +31,12 @@ class SegurovidaRepository extends EntityRepository
 	public function obtenerBeneficiarios($idexp,$estado)
     {
 		return $this->getEntityManager()
-			->createQuery("SELECT se.nombrecompleto,
+			->createQuery("SELECT e.id idexp,
+				                  se.nombrecompleto nombre,
 				                  s.id idseguro,
-				                  s.fechaseguro
+				                  s.fechaseguro,
 				                  b.nombrebeneficiario beneficiario,
-				                  b.parentesco,
+				                  b.parentescobeneficiario parentesco,
 				                  b.porcentaje  
 				           FROM ExpedienteBundle:Beneficiario b 
 				           JOIN b.idsegurovida s

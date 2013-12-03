@@ -3,11 +3,29 @@
 
 {% block titulo %}
 <h3 id="helpLabel">Seguro Colectivo de Vida</h3>
+<p>Este formulario permite el registro de beneficiarios al seguro de vida de un empleado.</p>
 {% endblock %}
 
 
 {% block contenido %}
- <p>¿Cómo llenar este formulario?</p>
-<p>Se describen a continuación los pasos necesarios:</p>
+ <p><h4>¿C&oacute;mo llenar este formulario?</h4></p>
+<div class="justifyText">Se describen acontinuaci&oacute;n los pasos m&aacute;s importantes para su correcto registro:<br>
+Para registrar un beneficiario, primero ingrese su nombre completo, parentesco, y porcentaje del seguro asignado.<br> Ejemplo:</div><br>
+<img src="{{asset('images/images_ayuda/beneficiario.jpg') }}" alt="ISRI"/><br>
+<div class="justifyText"><b>NOTA:</b> En el porcentaje de seguro asignado a cada beneficiario, tenga en cuenta que si se trata de un &uacute;nico beneficiario el porcentaje asignado es de 100%. Si es m&aacute;s de uno, la suma de los porcentajes de todos los beneficiarios deber&aacute; ser igual a 100%.</div>
 
+<div class="justifyText">A continuaci&oacute;n algunos de los casos posibles, si se trata de mas de un beneficiario:<br>
+	2 Beneficiario 50% c/u<br>
+	4 Beneficiario 25% c/u<br>
+</div>
+<div class="justifyText">Una vez ingresados todos los beneficiarios, presione el bot&oacute;n "Guardar". Aparecer&aacute; una nueva ventana con las siguientes opciones: </div>
+<center><img src="{{asset('images/images_ayuda/acciones.jpg') }}" alt="ISRI"/></center><br>
+<div class="justifyText">Descripci&oacute;n de opciones:
+<ul>
+	<b><li>Generar Pdf:</li></b>Esta opci&oacute;n permite generar el documento en formato Pdf.
+	<b><li>Regresar al listado:</li></b>Esta opci&oacute;n redirige a la lista de empleados aun por asignar beneficiarios.
+	<b><li>Editar Registro:</li></b>Permite modificar el seguro colectivo de vida de un empleado.
+	<b><li>Borrar</li></b>
+</ul>
+</div>
 {% endblock %}

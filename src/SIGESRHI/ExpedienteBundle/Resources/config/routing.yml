@@ -6,37 +6,13 @@ ExpedienteBundle_solicitud:
         resource: "@ExpedienteBundle/Resources/config/routing/solicitudempleo.yml"
         prefix:   /solicitud
 
-ExpedienteBundle_datosempleo:
-        resource: "@ExpedienteBundle/Resources/config/routing/datosempleo.yml"
-        prefix:   /datosempleo
-
-ExpedienteBundle_datosfamiliares:
-        resource: "@ExpedienteBundle/Resources/config/routing/datosfamiliares.yml"
-        prefix:   /datosfamiliares
-
-ExpedienteBundle_infacademica:
-        resource: "@ExpedienteBundle/Resources/config/routing/informacionacademica.yml"
-        prefix:   /infacademica
-
-ExpedienteBundle_titulo:
-        resource: "@ExpedienteBundle/Resources/config/routing/titulo.yml"
-        prefix:   /titulo
-
 ExpedienteBundle_segurovida:
         resource: "@ExpedienteBundle/Resources/config/routing/segurovida.yml"
         prefix:   /segurovida
-
-ExpedienteBundle_beneficiario:
-        resource: "@ExpedienteBundle/Resources/config/routing/beneficiario.yml"
-        prefix:   /beneficiario
         
 ExpedienteBundle_pruebapsicologica:
         resource: "@ExpedienteBundle/Resources/config/routing/pruebapsicologica.yml"
         prefix:   /pruebapsicologica
-
-ExpedienteBundle_idioma:
-        resource: "@ExpedienteBundle/Resources/config/routing/idioma.yml"
-        prefix:   /idioma
 
 ExpedienteBundle_consultarMunicipiosJSON:
     pattern:  /solicitud/consultarMunicipiosJSON    

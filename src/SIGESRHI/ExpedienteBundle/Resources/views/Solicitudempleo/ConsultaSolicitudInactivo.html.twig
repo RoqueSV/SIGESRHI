@@ -4,7 +4,7 @@
 <script>
         jQuery(function() {
 
-            jQuery("#grid_grid_segurovida__empleados__query__from").autocomplete({
+            jQuery("#grid_grid_solicitud_inactivo__empleados__query__from").autocomplete({
                 source: function( request, response ) {
                     jQuery.ajax({
                         url: "{{ path('shtumi_ajaxautocomplete') }}",
@@ -33,7 +33,7 @@
                 }
             });
 
-            jQuery("#grid_grid_segurovida__codigos__query__from").autocomplete({
+            jQuery("#grid_grid_solicitud_inactivo__codigos__query__from").autocomplete({
                 source: function( request, response ) {
                     jQuery.ajax({
                         url: "{{ path('shtumi_ajaxautocomplete') }}",
@@ -65,31 +65,24 @@
         });
 </script>
 
-{% if app.session.started %}
-   {% for flashMessage in app.session.flashbag.get('delete') %}
+
+{% for flashMessage in app.session.flashbag.get('delete') %}
      <div class="alert alert-danger">
        <p>{{ flashMessage }}</p>
      </div>
-   {% endfor %}
-{% endif %}
-{% set ruta = app.request.attributes.get('_route') %}
-{% if ruta == 'segurovida' %}
-<h3 class="text-center">Registro de seguro colectivo de vida</h3>
-{% elseif ruta == 'segurovida_consultar' %}
-<h3 class="text-center">Consultar seguro colectivo de vida</h3>
-{% elseif ruta == 'segurovida_modificar' %}
-<h3 class="text-center">Modificar seguro colectivo de vida</h3>
-{% endif %}
+{% endfor %}
 
-<p class="text-center">Seleccione un empleado de la lista</p>
-     {{ grid_search(grid) }}
-     {{ grid(grid,_self) }} 
-     {% block grid_filters %}{% endblock %}
+    <div class="text-center">
+    <h3> Consultar datos de Empleados Inactivos</h3>
+    </div>
+
+{{ grid_search(grid) }} 
+<br>
+{{ grid(grid,_self) }}  
+<br>
+{% block grid_filters %}{% endblock %} 
 
 <div class="text-center">
 <a href="{{path('hello_page')}}" class="btn"> Cancelar </a>
 </div>
-
-
-
-{% endblock %}
+ {% endblock %}

@@ -65,7 +65,7 @@ class Docexpediente
     /**
      * @Assert\File(
      * maxSize="5M",
-     * mimeTypes = {"image/png", "image/jpeg", "application/pdf", "application/zip"},
+     * mimeTypes = {"image/png", "image/jpeg", "application/pdf", "application/msword", "application/zip"},
      * maxSizeMessage = "El tamaño maximo permitido para el archivo es de 5MB.",
      * mimeTypesMessage = "El tipo de archivo cargado no es válido."
      * )

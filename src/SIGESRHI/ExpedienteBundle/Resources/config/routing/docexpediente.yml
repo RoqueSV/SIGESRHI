@@ -29,10 +29,14 @@ docdigital_delete:
     defaults: { _controller: "ExpedienteBundle:Docexpediente:delete" }
     requirements: { _method: post|delete }
 
-docdigital_grid_nuevo:
-    pattern:  /gridnuevodoc
-    defaults: { _controller: "ExpedienteBundle:Expediente:agregarDigitales" }
+docdigital_craspirante:
+    pattern:  /aspirante
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:ConsultaRegDocAspirantes" }
 
 docdigital_ver_docdigital:
     pattern:  /documento/{iddoc}
     defaults: { _controller: "ExpedienteBundle:Docexpediente:VerDigital" }
+
+docdigital_crempleado:
+    pattern:  /empleado
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:ConsultaRegDocEmpleados" }

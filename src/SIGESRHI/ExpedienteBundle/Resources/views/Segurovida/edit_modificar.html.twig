@@ -1,0 +1,128 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+{% if app.session.started %}
+{% for flashMessage in app.session.flashbag.get('erroredit') %}
+<div class="alert alert-danger">
+<p>{{ flashMessage }}</p>
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('error') %}
+<div class="alert alert-danger">
+<p>{{ flashMessage }}</p>
+</div>
+{% endfor %}
+{% endif %}
+
+    <h3 class="text-center">Modificar seguro colectivo de vida</h4><br />
+   {% for exp in expediente %}
+  <form action="{{ path('segurovida_create_modificar', {'id':exp.idexp, 'idsv':entity.id} ) }}" method="post" {{ form_enctype(edit_form) }}>
+           
+    {#Datos#}
+ 
+
+         <table class="table table-bordered table-hover">
+           <tr>
+            <th>Nombre del asegurado:</th><td> {{ exp.nombre }} </td>
+           </tr>
+           <tr>
+            <th>Número de DUI:</th><td> {{ exp.dui  }} </td>
+           </tr>
+           <tr>
+            <th>Lugar de Nacimiento:</th><td> {{ exp.lugarnac }} </td>
+           </tr>
+           <tr>
+            <th>Fecha de Nacimiento: </th><td>{{ exp.fechanac | date('d-m-Y') |fecha }} </td>
+           </tr>
+           <tr>
+            <th>Direccion: </th><td> {{ exp.direccion }} </td>
+           </tr>
+           <tr>
+            <th>Unidad primaria en que labora: </th><td> MINISTERIO DE SALUD </td>
+           </tr>
+           <tr>
+            <th>Unidad secundaria: </th><td> INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL </td>
+           </tr>
+         </table>   
+
+
+
+    {#Beneficiarios#}   
+    <fieldset>
+     <legend>Beneficiarios</legend>
+      <ul class="Beneficiario unstyled" data-prototype="
+
+        <table width=100% class='centered-table'>
+            <tr>
+              <td class='text-center'>{{ form_widget(edit_form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}
+                   {{form_errors(edit_form.idbeneficiario.vars.prototype.nombrebeneficiario)|e }}</td>
+              <td class='text-center'>{{ form_widget(edit_form.idbeneficiario.vars.prototype.parentescobeneficiario)|e }}   {{form_errors(edit_form.idbeneficiario.vars.prototype.parentescobeneficiario)|e }}</td>
+              <td class='text-center'>{{ form_widget(edit_form.idbeneficiario.vars.prototype.porcentaje)|e }}
+                   {{form_errors(edit_form.idbeneficiario.vars.prototype.porcentaje)|e }}</td>
+            </tr>
+           </table>
+            ">
+
+                {% set longitud =  (entity.idbeneficiario|length)-1 %} {#Obtengo numero de beneficiarios#}
+                {% for i in 0..longitud if longitud >= 0 %}
+                <li>     
+                <table width=100% class='centered-table'>
+                      
+                <tr class='text-center'>
+                <td class='text-center'>{{ form_row(edit_form.idbeneficiario[i].nombrebeneficiario) }}
+                </td>
+                <td class='text-center'>{{ form_row(edit_form.idbeneficiario[i].parentescobeneficiario) }}
+                </td>
+                <td class='text-center'>{{ form_row(edit_form.idbeneficiario[i].porcentaje) }}
+                </td>
+                </tr>
+                      
+                </table>
+               </li>
+               {% endfor %}
+      </ul>
+     </fieldset> 
+  {%endfor%}
+  {{form_rest(edit_form)}}  
+
+        <br /> <br />
+      <div class="text-center">
+            <button type="submit" class="btn btn-primary">Modificar</button>
+            <button type="button" onclick="cancelar();" class="btn">Cancelar</button>
+      </div>
+  </form>
+<script>   
+/************************************* + Beneficiarios **********************************/
+
+// Obtiene la ul que contiene la colección de etiquetas
+var collectionHolderBen = $('ul.Beneficiario');
+
+// configura una enlace "Agregar una etiqueta"
+var $addTagLinkBen = $('<input style="margin-left: 40px;" type="button" class="btn" value="Agregar Beneficiario"><br /><br />');
+var $newLinkLiBen = $('<ul></ul>').append($addTagLinkBen);
+
+jQuery(document).ready(function() {
+    // Añade el ancla "Agregar una etiqueta" y las etiquetas li y ul
+    collectionHolderBen.append($newLinkLiBen);
+
+    // Añade un enlace para eliminar todas las etiquetas existentes
+    // en elementos li del formulario
+    collectionHolderBen.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // cuenta las entradas actuales en el formulario (p. ej. 2),
+    // la usa como índice al insertar un nuevo elemento (p. ej. 2)
+    collectionHolderBen.data('index', collectionHolderBen.find(':input').length);
+
+    $addTagLinkBen.on('click', function(e) {
+        // evita crear el enlace con una "#" en la URL
+        e.preventDefault();
+
+        // añade una nueva etiqueta form (ve el siguiente bloque de código)
+        addTagForm(collectionHolderBen, $newLinkLiBen);
+    });
+});
+</script>
+{% endblock %}

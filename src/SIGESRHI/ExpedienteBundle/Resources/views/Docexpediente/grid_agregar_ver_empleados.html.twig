@@ -5,7 +5,7 @@
 <script>
         jQuery(function() {
 
-            jQuery("#grid_grid_docdigital__empleados__query__from").autocomplete({
+            jQuery("#grid_grid_docdigital_empleados__empleados__query__from").autocomplete({
                 source: function( request, response ) {
                     jQuery.ajax({
                         url: "{{ path('shtumi_ajaxautocomplete') }}",
@@ -39,7 +39,7 @@
 
 
     <div class="text-center">
-    <h3> Agregar Documentos Digitales a Expediente</h3>
+    <h3> Agregar Documentos Digitales a Expediente de Empleado</h3>
     </div>
 
 {{ grid_search(grid) }} 

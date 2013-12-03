@@ -25,6 +25,7 @@ use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Grid;
+use APY\DataGridBundle\Grid\Column\TextColumn;
 
 /**
  * Solicitudempleo controller.
@@ -32,25 +33,9 @@ use APY\DataGridBundle\Grid\Grid;
  */
 class SolicitudempleoController extends Controller
 {
-    /**
-     * Lists all Solicitudempleo entities.
-     *
-     */
-   
-   /* public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ExpedienteBundle:Solicitudempleo')->findAll();
-
-        return $this->render('ExpedienteBundle:Solicitudempleo:index.html.twig', array(
-            'entities' => $entities,
-        ));
-    }
-*/
-
-    //Metodo para establecer grid de consulta de solicitudes de empleo
-    public function indexAction()
+    //Metodo para establecer grid de consulta de solicitudes de empleo para aspirantes.
+    public function ConsultarSolicitudAspiranteAction()
     {
         $source = new Entity('ExpedienteBundle:Solicitudempleo', 'solicitud_empleo');
         // Get a grid instance
@@ -103,8 +88,8 @@ class SolicitudempleoController extends Controller
     }
    
 
-
-    public function indexEditAction()
+        // Grid para editar las solicitudes de los aspirantes.
+    public function EditarSolicitudAspiranteAction()
     {
         $source = new Entity('ExpedienteBundle:Solicitudempleo', 'solicitud_empleo');
         // Get a grid instance
@@ -114,7 +99,7 @@ class SolicitudempleoController extends Controller
         $source->manipulateQuery(
         function($query) use ($tableAlias){
             $query->join($tableAlias.".idexpediente ", "s")
-            ->andWhere("s.tipoexpediente = 'I' ");
+            ->andWhere("s.tipoexpediente = 'I' or s.tipoexpediente = 'A'" );
         }
             );
 
@@ -628,7 +613,6 @@ public function asignarNumsolAction($id){
         where  substring(s.numsolicitud,locate('-',s.numsolicitud)+1, 4) = :actual")
        ->setParameter('actual', date('Y'));
 
-       //$query = $em->createQuery('SELECT substring(s.numsolicitud,0,locate("-",s.numsolicitud)) correlativo, (max(COALESCE(s.numsolicitud,0))+1) numsolicitud FROM ExpedienteBundle:Solicitudempleo s');
         $Resultado = $query->getsingleResult();
 
         $num=$Resultado['numsolicitud'];
@@ -654,6 +638,108 @@ public function asignarNumsolAction($id){
         return $this->redirect($this->generateUrl('solicitud_show', array('id' => $entity->getId())));
 
 }//fin funcion
+
+
+//Metodo para establecer grid de consulta de solicitudes de empleo para Empleados.
+    public function ConsultarSolicitudEmpleadoAction()
+    {
+        $source = new Entity('ExpedienteBundle:Expediente', 'grupo_solicitud_empleado');
+        // Get a grid instance
+        $grid = $this->get('grid');
+
+       
+          $tableAlias=$source->getTableAlias();
+        $source->manipulateQuery(
+        function($query) use ($tableAlias){
+            $query->andWhere($tableAlias.".tipoexpediente = 'T' or ".$tableAlias.".tipoexpediente = 'E'");
+             }
+            );
+    
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $grid->addColumn($NombreEmpleados,3);
+
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','title' => 'Codigo',"operatorsVisible"=>false, 'align'=>'center'));
+        $grid->addColumn($CodigoEmpleados,3);
+
+        // Attach the source to the grid
+        $grid->setId('grid_solicitud_empleado');
+        $grid->setSource($source);
+
+        $em = $this->getDoctrine()->getManager();
+          
+        $grid->setNoDataMessage("No se encontraron resultados");
+        $grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
+        
+        $rowAction1 = new RowAction('Mostrar', 'solicitud_show');
+        $rowAction1->setColumn('info_column');
+
+        //reasignamos el id que se utilizara para la ruta (id de solicitud en vez de id de expediente)
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+             $action->setRouteParameters(array('id'=> $row->getField('idsolicitudempleo.id')));
+              return $action;
+            }
+        );
+
+        $grid->addRowAction($rowAction1);     
+        //$grid->addExport(new ExcelExport('Exportar a Excel'));
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+    // Manage the grid redirection, exports and the response of the controller
+    return $grid->getGridResponse('ExpedienteBundle:Solicitudempleo:ConsultaSolicitudEmpleado.html.twig');
+    }
+
+
+    // Metodod para generar el grid de consulta de datos para Ex-Empleados
+     public function ConsultarSolicitudInactivoAction()
+    {
+        $source = new Entity('ExpedienteBundle:Expediente', 'grupo_solicitud_empleado');
+        // Get a grid instance
+        $grid = $this->get('grid');
+
+        $tableAlias=$source->getTableAlias();
+        $source->manipulateQuery(
+        function($query) use ($tableAlias){
+            $query->andWhere($tableAlias.".tipoexpediente = 'X' "); //empledos inactivos
+             }
+            );
+    
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $grid->addColumn($NombreEmpleados,3);
+
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','title' => 'Codigo',"operatorsVisible"=>false, 'align'=>'center'));
+        $grid->addColumn($CodigoEmpleados,3);
+
+        // Attach the source to the grid
+        $grid->setId('grid_solicitud_inactivo');
+        $grid->setSource($source);
+
+        $em = $this->getDoctrine()->getManager();
+          
+        $grid->setNoDataMessage("No se encontraron resultados");
+        $grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
+        
+        $rowAction1 = new RowAction('Mostrar', 'solicitud_show');
+        $rowAction1->setColumn('info_column');
+
+        //reasignamos el id que se utilizara para la ruta (id de solicitud en vez de id de expediente)
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+             $action->setRouteParameters(array('id'=> $row->getField('idsolicitudempleo.id')));
+              return $action;
+            }
+        );
+
+        $grid->addRowAction($rowAction1);     
+        //$grid->addExport(new ExcelExport('Exportar a Excel'));
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+    // Manage the grid redirection, exports and the response of the controller
+    return $grid->getGridResponse('ExpedienteBundle:Solicitudempleo:ConsultaSolicitudInactivo.html.twig');
+    }
+
 
 }//fin clase
 

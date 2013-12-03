@@ -1,6 +1,6 @@
 solicitud_caspirante:
     pattern:  /consultaraspirante
-    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:index" }
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:ConsultarSolicitudAspirante" }
 
 solicitud_show:
     pattern:  /{id}/show
@@ -30,9 +30,17 @@ solicitud_delete:
     requirements: { _method: post|delete }
 
 solicitud_grid_edit:
-    pattern:  /solicitud_grid_edit
-    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:indexEdit" }
+    pattern:  /editaraspirante
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:EditarSolicitudAspirante" }
 
 solicitud_pruebanumsol:
     pattern:  /pruebanumsol/{id}
     defaults: { _controller: "ExpedienteBundle:Solicitudempleo:asignarNumsol" }
+
+solicitud_cempleado:
+    pattern:  /consultarempleado
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:ConsultarSolicitudEmpleado" }
+
+solicitud_cinactivo:
+    pattern:  /consultarinactivo
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:ConsultarSolicitudInactivo" }

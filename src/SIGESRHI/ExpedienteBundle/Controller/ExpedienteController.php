@@ -297,39 +297,7 @@ public function confirmarValidoAction($id)
         
     }
 
-//funcion de grid para agregar documentos digitales a un expediente (Docexpediente)
-    public function agregarDigitalesAction()
-    {
-        $source = new Entity('ExpedienteBundle:Expediente', 'grupo_docdigital');
-        // Get a grid instance
-        $grid = $this->get('grid');
 
-
-        $tableAlias=$source->getTableAlias();
-        $source->manipulateQuery(
-        function($query) use ($tableAlias){
-            $query->andWhere($tableAlias.".tipoexpediente = 'I' or ".$tableAlias.".tipoexpediente = 'A'");
-        }
-            );
-
-        // Attach the source to the grid
-        $grid->setId('grid_docdigital');
-        $grid->setSource($source);
-        
-        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
-        $grid->addColumn($NombreEmpleados,3);
-          
-        $grid->setNoDataMessage("No se encontraron resultados");
-        $grid->setDefaultOrder('idsolicitudempleo.numsolicitud', 'asc');
-        
-        $rowAction1 = new RowAction('Registrar', 'docdigital_new');        
-        $grid->addRowAction($rowAction1);     
- 
-        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
-
-    return $grid->getGridResponse('ExpedienteBundle:Docexpediente:grid_agregar.html.twig');
-
-    }
 //seleccionar el periodo a eliminar expediente aspirantes antiguos
     public function antAspirantesAction()
     {
