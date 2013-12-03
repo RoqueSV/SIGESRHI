@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="expediente")
  * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Repositorio\ExpedienteRepository")
- * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto,idempleado.idcontratacion.idplaza.nombreplaza, tipoexpediente", groups={"grupo_segurovida"})
+ * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto,idempleado.idcontratacion.idplaza.nombreplaza, tipoexpediente,idsegurovida.id", groups={"grupo_segurovida"})
  * @GRID\Source(columns="id,idsolicitudempleo.nombrecompleto,tipoexpediente", groups={"grupo_contratacion"})
  * @GRID\Source(columns="id, idsolicitudempleo.numsolicitud, idsolicitudempleo.nombrecompleto, idsolicitudempleo.fecharegistro, tipoexpediente", groups={"grupo_docdigital"})
  * @GRID\Source(columns="id, idsolicitudempleo.nombrecompleto, idsolicitudempleo.id, tipoexpediente, idempleado.codigoempleado", groups={"grupo_solicitud_empleado"})
@@ -70,6 +70,7 @@ class Expediente
 
     /**
      * @ORM\OneToMany(targetEntity="Segurovida", mappedBy="idexpediente")
+     * @GRID\Column(field="idsegurovida.id", groups="grupo_segurovida", visible=false, filterable=false)
      */
     private $idsegurovida;
 

@@ -73,7 +73,7 @@ function mostrarocultar(){
 <div class="text-center">
   <a href="{{ path('reporte_segurovida', { 'idexp': expediente[0].idexp, 'id':entities[0].id, 'ruta':ruta }) }}" class="btn btn-primary">Generar PDF</a>
   <button type="button" class="btn" onclick="location.href='{{ path ('segurovida_consultar') }}'">Regresar al listado</button>
-  <a href="{{ path('segurovida_edit', { 'id': entities[0].id }) }}" class="btn">Editar Registro</a>
+  <a href="{{ path('segurovida_edit_modificar', { 'id': entities[0].id }) }}" class="btn">Editar Registro</a>
   <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
             
   <form action="{{ path('segurovida_delete', { 'id': entities[0].id }) }}"  id="form_borrar" method="post">

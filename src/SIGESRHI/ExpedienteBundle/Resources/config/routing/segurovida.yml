@@ -1,6 +1,6 @@
 segurovida:
     pattern:  /
-    defaults: { _controller: "ExpedienteBundle:Segurovida:index" }
+    defaults: { _controller: "ExpedienteBundle:Segurovida:registrar" }
 
 segurovida_show:
     pattern:  /{id}/show
@@ -19,9 +19,18 @@ segurovida_create:
     defaults: { _controller: "ExpedienteBundle:Segurovida:create" }
     requirements: { _method: post }
 
+segurovida_create_modificar:
+    pattern:  /{id}/{idsv}/crearmodificado
+    defaults: { _controller: "ExpedienteBundle:Segurovida:updateModificar" }
+    requirements: { _method: post }
+
 segurovida_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "ExpedienteBundle:Segurovida:edit" }
+
+segurovida_edit_modificar:
+    pattern:  /{id}/modificar
+    defaults: { _controller: "ExpedienteBundle:Segurovida:editModificar" }
 
 segurovida_update:
     pattern:  /{id}/update
@@ -36,3 +45,7 @@ segurovida_delete:
 segurovida_consultar:
     pattern:  /consultar
     defaults: { _controller: "ExpedienteBundle:Segurovida:consultar" }
+
+segurovida_modificar:
+    pattern:  /modificar
+    defaults: { _controller: "ExpedienteBundle:Segurovida:modificar" }
