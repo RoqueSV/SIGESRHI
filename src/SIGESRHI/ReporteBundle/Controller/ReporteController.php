@@ -87,11 +87,14 @@ class ReporteController extends Controller
      $idExp = $request->get('idexp');      
      $ruta = $request->get('ruta'); 
 
+     $em = $this->getDoctrine()->getManager();
+     $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idExp);
+
      //Incluimos camino de migas 
      $breadcrumbs = $this->get("white_october_breadcrumbs");
      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-     $breadcrumbs->addItem("Seguro colectivo de vida", $this->get("router")->generate("segurovida_consultar"));
-     $breadcrumbs->addItem("Ver registro", $this->get("router")->generate($ruta, array("id"=>$request->get('id'))));
+     $breadcrumbs->addItem("Consultar seguro colectivo de vida", $this->get("router")->generate("segurovida_consultar"));
+     $breadcrumbs->addItem($expediente->getIdEmpleado()->getCodigoempleado(), $this->get("router")->generate($ruta, array("id"=>$request->get('id'))));
      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_segurovida"));
      
      // Nombre reporte

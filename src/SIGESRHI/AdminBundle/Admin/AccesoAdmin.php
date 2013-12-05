@@ -19,6 +19,14 @@ class AccesoAdmin extends Admin
     //Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
+
+        $em = $this->modelManager->getEntityManager('AdminBundle:Acceso');
+
+        $accesosup = $em->createQueryBuilder('a')
+                     ->select('a')
+                     ->from('AdminBundle:Acceso', 'a')
+                     ->where('a.idaccesosup is null');
+
         $formMapper
             ->add('nombrepagina', null, array('label' => 'Opción'))
             ->add('idmodulo','sonata_type_model',array('required'=>'required', 'label'=>'Modulo'))
@@ -28,8 +36,10 @@ class AccesoAdmin extends Admin
                                                   'class' => 'AdminBundle:Acceso',
                                                   'query_builder' => function(EntityRepository $er) {
                                                                  return $er->createQueryBuilder('a')
-                                                                           //->where('a.idaccesosup is null')
+                                                                           ->where('a.idaccesosup is null')
+                                                                           //->orWhere('a.idaccesosup IN select a.id from AdminBundle:Acceso a where idaccesosup is null')
                                                                            ->orderBy('a.nombrepagina', 'ASC');
+                                                                           //->setParameter('ids', $accesosup);
                                                                             },                
                                                                            ))
             

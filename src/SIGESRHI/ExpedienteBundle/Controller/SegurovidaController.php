@@ -257,8 +257,9 @@ class SegurovidaController extends Controller
         
         /* Obtener datos expediente */
         $em = $this->getDoctrine()->getManager();
-        $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($request->query->get('id'));
+        $datosExpediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($request->query->get('id'));
       
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('id'));
         //Crear form
         $form   = $this->createForm(new SegurovidaType(), $entity);
         
@@ -268,11 +269,11 @@ class SegurovidaController extends Controller
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Registrar seguro colectivo de vida", $this->get("router")->generate("segurovida"));
-        $breadcrumbs->addItem("Registro", $this->get("router")->generate("segurovida_new"));
+        $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("segurovida_new"));
 
         return $this->render('ExpedienteBundle:Segurovida:new.html.twig', array(
             'entity' => $entity,
-            'expediente' => $expediente,
+            'expediente' => $datosExpediente,
             'form'   => $form->createView(),
         ));
     }
@@ -303,8 +304,8 @@ class SegurovidaController extends Controller
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Registra seguro colectivo de vida", $this->get("router")->generate("segurovida"));
-        $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("segurovida_show",array("id"=>$id)));
+        $breadcrumbs->addItem("Registrar seguro colectivo de vida", $this->get("router")->generate("segurovida"));
+        $breadcrumbs->addItem($idexpediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("segurovida_show",array("id"=>$id)));
 
         return $this->render('ExpedienteBundle:Segurovida:show.html.twig', array(
             'entity'       => $entity,
@@ -331,8 +332,9 @@ class SegurovidaController extends Controller
         }
         
         /* Obtener datos expediente */
-        $expediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($id);
+        $datosExpediente = $em->getRepository('ExpedienteBundle:Segurovida')->obtenerDatosGenerales($id);
         
+        $expediente= $em->getRepository('ExpedienteBundle:Expediente')->find($id);
         $deleteForm = $this->createDeleteForm($id);
 
         //Camino de migas
@@ -341,11 +343,11 @@ class SegurovidaController extends Controller
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Consultar seguro colectivo de vida", $this->get("router")->generate("segurovida_consultar"));
-        $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("segurovida_show_consultar",array("id"=>$id)));
+        $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("segurovida_show_consultar",array("id"=>$id)));
 
         return $this->render('ExpedienteBundle:Segurovida:show_consultar.html.twig', array(
             'entities'     => $entity,
-            'expediente'   => $expediente,
+            'expediente'   => $datosExpediente,
             'delete_form'  => $deleteForm->createView(),        ));
 
     }
@@ -379,7 +381,7 @@ class SegurovidaController extends Controller
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Registrar seguro colectivo de vida", $this->get("router")->generate("segurovida"));
-        $breadcrumbs->addItem("Editar registro", $this->get("router")->generate("segurovida_edit",array("id"=>$id)));
+        $breadcrumbs->addItem("Editar ".$idexpediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("segurovida_edit",array("id"=>$id)));
 
         return $this->render('ExpedienteBundle:Segurovida:edit.html.twig', array(
             'entity'      => $entity,
@@ -419,7 +421,7 @@ class SegurovidaController extends Controller
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Modificar seguro colectivo de vida", $this->get("router")->generate("segurovida_modificar"));
-        $breadcrumbs->addItem("Modificar registro", $this->get("router")->generate("segurovida_edit_modificar",array("id"=>$id)));
+        $breadcrumbs->addItem($idexpediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("segurovida_edit_modificar",array("id"=>$id)));
 
         return $this->render('ExpedienteBundle:Segurovida:edit_modificar.html.twig', array(
             'entity'      => $entity,
@@ -569,7 +571,7 @@ class SegurovidaController extends Controller
             $em->flush();
             
             $this->get('session')->getFlashBag()->add('aviso', 'Seguro colectivo modificado correctamente');
-            return $this->redirect($this->generateUrl('segurovida_consultar', array('id' => $id)));
+            return $this->redirect($this->generateUrl('segurovida_show_consultar', array('id' => $id)));
         }
         
         $this->get('session')->getFlashBag()->add('error', 'Hubo un error en el procesamiento de los datos. Revise e intente nuevamente.');
