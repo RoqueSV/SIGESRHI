@@ -26,7 +26,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @GRID\Source(columns="id,nombrecompleto,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
  * @GRID\Source(columns="id,numsolicitud, nombrecompleto,idplaza.nombreplaza, idexpediente.tipoexpediente",groups={"solicitud_empleo"})
- * @GRID\Source(columns="id,nombrecompleto,idplaza.nombreplaza,idexpediente.tipoexpediente,fecharegistro",groups={"lista_expediente"})
+ * @GRID\Source(columns="id,nombrecompleto,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.fechaexpediente",groups={"lista_expediente"})
  */
 
 
@@ -360,7 +360,6 @@ class Solicitudempleo
      * @ORM\Column(name="fecharegistro", type="date", nullable=false)
      * 
      *
-     * @GRID\Column(filterable=false, groups={"lista_expediente"}, visible=true, title="Fecha registro")
      */
     private $fecharegistro;
 
@@ -553,6 +552,7 @@ class Solicitudempleo
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica","lista_expediente"})
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, visible=false, groups={"vista_basica_expediente"})
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, groups={"solicitud_empleo"}, visible=true, filter="Select", operatorsVisible=false )
+     * @GRID\Column(field="idexpediente.fechaexpediente",type="date", joinType="inner", filterable=false, groups={"lista_expediente"}, visible=true, title="Fecha registro")
      */
     private $idexpediente;
 

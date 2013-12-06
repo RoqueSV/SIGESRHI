@@ -78,7 +78,7 @@ class ExpedienteController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Gestion de Aspirantes",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Registrar como expediente valido de banco de datos institucional",  $this->get("router")->generate("expediente_aspirantes"));
+        $breadcrumbs->addItem("Validar Expediente",  $this->get("router")->generate("expediente_aspirantes"));
         
         return $grid->getGridResponse('ExpedienteBundle:Expediente:index.html.twig');
     }    
@@ -278,7 +278,7 @@ public function validarAction()
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Gestion de Aspirantes",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Registrar como expediente valido de banco de datos institucional",  $this->get("router")->generate("expediente_aspirantes"));
+        $breadcrumbs->addItem("Validar Expediente",  $this->get("router")->generate("expediente_aspirantes"));
         return $this->render('ExpedienteBundle:Expediente:validar.html.twig', array(          
             'expediente' => $expedienteinfo,
         ));
@@ -309,7 +309,7 @@ public function confirmarValidoAction($id)
         return $this->render('ExpedienteBundle:Expediente:ant.html.twig');
     }
 
-//ver listados a eliminar
+//ver listados a eliminar por antigüedad
     public function showElimAction()
     {        
         //recuperar desde un formulario
@@ -334,7 +334,7 @@ public function confirmarValidoAction($id)
                     $query->Join($tableAlias.'.idexpediente','e')
                           ->andWhere('e.tipoexpediente = :inv')
                           ->orWhere('e.tipoexpediente = :val')
-                          ->andWhere($tableAlias.'.fecharegistro <:fecha')                          
+                          ->andWhere('e.fechaexpediente <:fecha')                          
                           ->setParameter('fecha', $fecha_find )
                           ->setParameter('inv','I')
                           ->setParameter('val','A');                
@@ -415,7 +415,7 @@ public function confirmarValidoAction($id)
                 $query->Join($tableAlias.'.idexpediente','e')
                       ->andWhere('e.tipoexpediente = :inv')
                       ->orWhere('e.tipoexpediente = :val')
-                      ->andWhere($tableAlias.'.fecharegistro <:fecha')                          
+                      ->andWhere('e.fechaexpediente <:fecha')                          
                       ->setParameter('fecha', $fecha_find )
                       ->setParameter('inv','I')
                       ->setParameter('val','A');                
@@ -465,18 +465,17 @@ public function confirmarValidoAction($id)
         $fecha = $request->query->get('fecha');
         if($fecha){
             $em = $this->getDoctrine()->getManager();
-            $aspirantesElim = $em->getRepository('ExpedienteBundle:Expediente')->findAll();
-            //$tableAlias = $aspirantesElim->getTableAlias();
-            $aspirantesElim->manipulateQuery(
-                function($query) use ($fecha){
-                $query->andWhere('Expediente.fecharegistro < :fecha')
-                      ->setParameter('fecha', $fecha);
-            });
-
-            foreach ($aspirantesElim as $aspirante) {
-                $em->remove($aspirante);
+            $aspirantesElim = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedientesPeriodo($fecha);
+            foreach ($aspirantesElim as $asp) {
+                 $idExpAsp = $asp['id'];                 
+                 $aspirantetarget = $em->getRepository('ExpedienteBundle:Expediente')->find($idExpAsp);            
+                 $em->remove($aspirantetarget);
             }
-        $em->flush();            
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('confirm','Información eliminada exitosamente');
+            //return $this->render('ExpedienteBundle:Expediente:seleliminar.html.twig');
+            return $this->redirect($this->generateUrl('eliminar_aspirantes'));        
         }
 
     }

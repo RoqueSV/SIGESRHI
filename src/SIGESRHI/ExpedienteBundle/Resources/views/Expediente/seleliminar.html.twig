@@ -1,6 +1,11 @@
 {% extends '::PrincipalBase.html.twig' %}
 
-{% block principal -%}
+{% block principal %} 
+	{% for flashMessage in app.session.flashbag.get('confirm') %}
+        <div class="alert alert-success">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
     <h4 class='text-center'>Eliminar Información de Aspirantes</h4>
     <div align="center">
     <fieldset><legend>Seleccione el tipo de eliminación de aspirantes</legend>

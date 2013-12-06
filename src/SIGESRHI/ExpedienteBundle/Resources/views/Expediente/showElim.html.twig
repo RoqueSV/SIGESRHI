@@ -43,6 +43,8 @@
                         )
                     }}" class="btn btn-danger" onclick="return confirm('Se borraran los datos de los aspirantes mostrados ¿Está seguro de Eliminar? ')">Eliminar</a>
         {% endif %}
-        <a href="#" onclick="history.back()" class="btn" >Cancelar</a>
+            <a href="{{ 
+                path('eliminar_aspirantes')
+                }}" class="btn">Cancelar</a>
     </div>
 {% endblock %}

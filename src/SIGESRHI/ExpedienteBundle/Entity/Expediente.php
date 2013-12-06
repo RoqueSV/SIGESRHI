@@ -59,7 +59,7 @@ class Expediente
 
     /**
      * @var \Solicitudempleo
-     * @ORM\OneToOne(targetEntity="Solicitudempleo", mappedBy="idexpediente", cascade="remove")
+     * @ORM\OneToOne(targetEntity="Solicitudempleo", mappedBy="idexpediente", cascade={"remove"})
      * @GRID\Column(field="idsolicitudempleo.idplaza.nombreplaza", groups="grupo_contratacion",type="text", title="Plaza solicitada", operators={"like"}, operatorsVisible=false, joinType="inner")
      * @GRID\Column(field="idsolicitudempleo.nombrecompleto", groups={"grupo_segurovida","grupo_contratacion", "grupo_docdigital", "grupo_solicitud_empleado"} ,visible=false, joinType="inner", filterable=false)
      * @GRID\Column(field="idsolicitudempleo.fecharegistro", align="center", type="date", groups={"grupo_docdigital"}, title="Registrado",  joinType="inner", filterable=false)
@@ -69,13 +69,13 @@ class Expediente
     private $idsolicitudempleo;
 
     /**
-     * @ORM\OneToMany(targetEntity="Segurovida", mappedBy="idexpediente")
-     * @GRID\Column(field="idsegurovida.id", groups="grupo_segurovida", visible=false, filterable=false)
+     * @ORM\OneToMany(targetEntity="Segurovida", mappedBy="idexpediente", cascade={"remove"})
+     * @GRID\Column(field="idsegurovida.id", filterable=false, groups="grupo_segurovida", visible=false)
      */
     private $idsegurovida;
 
     /**
-     * @ORM\OneToOne(targetEntity="Pruebapsicologica", mappedBy="idexpediente")
+     * @ORM\OneToOne(targetEntity="Pruebapsicologica", mappedBy="idexpediente", cascade={"remove"})
      */
     private $idpruebapsicologica;
     
