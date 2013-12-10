@@ -10,6 +10,9 @@
     {#{{grid (grid)}}#}
 
     {% block grid_filters %}{% endblock %}
-        <a href="#" onclick="history.back()" class="btn" >Cancelar</a>
+        <!--<a href="#" onclick="history.back()" class="btn" >Cancelar</a>-->
+        <a href="{{ 
+                path('eliminar_aspirantes')
+                }}" class="btn">Cancelar</a>
     </div>
 {% endblock %}

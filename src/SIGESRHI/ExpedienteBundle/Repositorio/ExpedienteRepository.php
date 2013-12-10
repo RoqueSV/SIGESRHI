@@ -84,8 +84,8 @@ class ExpedienteRepository extends EntityRepository
   public function obtenerExpedientesPeriodo($fecha_find)
   {
     return $this->getEntityManager()
-                ->createQuery("SELECT e.id id, s.nombrecompleto nombres, p.nombreplaza nombreplaza, s.fecharegistro fecharegistro, e.tipoexpediente estado
-                 FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN s.idplaza p WHERE s.fecharegistro<:F AND (e.tipoexpediente='I' OR e.tipoexpediente='A')")
+                ->createQuery("SELECT e.id id, s.nombrecompleto nombres, p.nombreplaza nombreplaza, e.fechaexpediente fecharegistro, e.tipoexpediente estado
+                 FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN s.idplaza p WHERE e.fechaexpediente<:F AND (e.tipoexpediente='I' OR e.tipoexpediente='A')")
                 ->setParameter('F',$fecha_find)
                 ->getResult();
   }
