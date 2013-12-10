@@ -36,7 +36,7 @@ class SegurovidaController extends Controller
         $source->manipulateQuery(
             function($query) use ($tableAlias){
                 $query->andWhere($tableAlias.'.tipoexpediente = :tipo')
-                      ->andWhere($query->expr()->isNull('_idsegurovida.id'))
+                      ->andWhere('_idsegurovida.id  is null')
                       ->setParameter('tipo','E');
             }
         );

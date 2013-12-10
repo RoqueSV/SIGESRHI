@@ -83,12 +83,30 @@ class Acceso
     {
         return $this->getNombrepagina();
     }    
+
+    public function getAcceso() 
+    {
+        $prefix = "";
+        if ($this->getIdaccesosup() == null){
+             return strtoupper($this->getNombrepagina()); 
+        }
+        else if ($this->getIdaccesosup()->getIdaccesosup() == null) {
+           $prefix .= "&nbsp;&nbsp;";
+            return html_entity_decode($prefix).">> ".$this->getNombrepagina();
+        }
+        else {
+            $prefix .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            return html_entity_decode($prefix).$this->getNombrepagina();
+        }
+    }
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->idrol = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idaccesohija = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -225,5 +243,15 @@ class Acceso
     public function getIdaccesosup()
     {
         return $this->idaccesosup;
+    }
+
+    /**
+     * Get idaccesohija
+     *
+     * @return \SIGESRHI\AdminBundle\Entity\Acceso 
+     */
+    public function getIdaccesohija()
+    {
+        return $this->idaccesohija;
     }
 }

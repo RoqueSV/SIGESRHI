@@ -67,7 +67,8 @@ class GroupAdmin extends Admin
         $query = $em->createQueryBuilder('a')
                      ->select('a')
                      ->from('AdminBundle:Acceso', 'a')
-                     ->orderBy('a.nombrepagina', 'ASC');
+                     ->orderBy('a.idmodulo', 'ASC')
+                     ->addOrderBy('a.id', 'ASC');
 
         $formMapper
             ->add('name')
@@ -81,6 +82,7 @@ class GroupAdmin extends Admin
                         'multiple'=>true,
                         'expanded'=>true ,
                         'label'=>'Opciones',
+                        'property' => 'acceso',
                         'help' => 'Seleccione las opciones correspondientes al rol. Asegurese de seleccionar los niveles superiores para cada opción, si esta lo requiere',
                         'query'=>$query))   
         ;

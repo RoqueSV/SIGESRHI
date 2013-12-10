@@ -22,10 +22,14 @@ class AccesoAdmin extends Admin
 
         $em = $this->modelManager->getEntityManager('AdminBundle:Acceso');
 
-        $accesosup = $em->createQueryBuilder('a')
-                     ->select('a')
+        $accesosup = $em->createQueryBuilder()
+                     ->select('a.id')
                      ->from('AdminBundle:Acceso', 'a')
-                     ->where('a.idaccesosup is null');
+                     ->where('a.idaccesosup is null')
+                     ->getQuery();
+
+        $opciones = $accesosup->getResult();
+
 
         $formMapper
             ->add('nombrepagina', null, array('label' => 'Opción'))
@@ -34,12 +38,14 @@ class AccesoAdmin extends Admin
             ->add('idaccesosup', 'entity' , array('required' => false,
                                                   'label'=>'Acceso superior',
                                                   'class' => 'AdminBundle:Acceso',
-                                                  'query_builder' => function(EntityRepository $er) {
+                                                  'property' => 'acceso',
+                                                  'query_builder' => function(EntityRepository $er) use ($opciones){
                                                                  return $er->createQueryBuilder('a')
                                                                            ->where('a.idaccesosup is null')
-                                                                           //->orWhere('a.idaccesosup IN select a.id from AdminBundle:Acceso a where idaccesosup is null')
-                                                                           ->orderBy('a.nombrepagina', 'ASC');
-                                                                           //->setParameter('ids', $accesosup);
+                                                                           ->orWhere('a.idaccesosup IN (:ids)')
+                                                                           ->orderBy('a.idmodulo','ASC')
+                                                                           ->addOrderBy('a.id', 'ASC')
+                                                                           ->setParameter('ids',($opciones));
                                                                             },                
                                                                            ))
             
@@ -64,7 +70,7 @@ class AccesoAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('nombrepagina', null,array('label' => 'Opción','route' => array('name' => 'show')))
+            ->addIdentifier('nombrepagina',null, array('label'=>'Opción','route' => array('name' => 'show')))
             ->add('idmodulo',null,array('label'=>'Modulo'))
             ->add('ruta')
             ->add('idaccesosup',null, array('label'=>'Acceso superior'))
