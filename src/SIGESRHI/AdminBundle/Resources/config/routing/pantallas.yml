@@ -1,0 +1,15 @@
+pantalla_expediente:
+    pattern:  /expediente
+    defaults: { _controller: "AdminBundle:Pantallas:pantallaExpediente" }
+
+pantalla_aspirante:
+    pattern:  /aspirante
+    defaults: { _controller: "AdminBundle:Pantallas:pantallaAspirante" }
+
+pantalla_empleadoactivo:
+    pattern:  /empleadoactivo
+    defaults: { _controller: "AdminBundle:Pantallas:pantallaEmpleadoActivo" }
+
+pantalla_empleadoinactivo:
+    pattern:  /empleadoinactivo
+    defaults: { _controller: "AdminBundle:Pantallas:pantallaEmpleadoInactivo" }

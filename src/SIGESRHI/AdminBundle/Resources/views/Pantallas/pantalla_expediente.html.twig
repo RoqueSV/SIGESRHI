@@ -1,0 +1,43 @@
+{% extends '::PrincipalBase.html.twig' %}
+	{% block principal %}
+  <table background="{{ asset('images/pruebafinal.jpg') }}" width="100%" height="300px">
+  <tr>
+    <td width="40%">
+      <table>
+        <tr>
+          <td>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td width="60%">
+      <table width="100%">
+        {% set i=0 %}
+        {% for opcion in opciones %}
+        <br>
+        <tr>
+          <td>
+            <h5 style="margin-left:{{i}}px;"><a style="background-color: CornflowerBlue; padding: 5px 10px; border-radius: 10px; color:#ffffff;" href="{{path(opcion.ruta)}}">{{opcion.pagina}}</a></h5>
+          </td>
+        </tr>
+        {% set i=i+30 %}
+        {% endfor %}
+        {#<tr>
+        {{path('cambia_opcion', {'acceso':opcion.acceso, 'ruta': opcion.ruta}) }}
+          <td>
+            <h5 style="margin-left:30px;"><a style="background-color: CornflowerBlue; padding: 5px 10px; border-radius: 10px; color:#ffffff;" href="{{path('pantalla_empleadoactivo')}}">Expediente empleado activo </a></h5>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <h5 style="margin-left:60px;"><a style="background-color: CornflowerBlue; padding: 5px 40px 5px 10px; border-radius: 10px; color:#ffffff;" href="{{path('pantalla_empleadoinactivo')}}">Expediente empleado inactivo</a></h5>
+          </td>
+        </tr>#}
+      </table>
+    </td>
+  </tr>
+  </table>
+	{% endblock %}
+
+
+

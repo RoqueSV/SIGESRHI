@@ -35,4 +35,6 @@ cambia_opcion:
    path: /inicio/{acceso}/{ruta}
    defaults: {_controller: AdminBundle:Default:cambiaopcion}
 
-    
+AdminBundle_pantallas:
+   resource: "@AdminBundle/Resources/config/routing/pantallas.yml"
+   prefix:   /home   
