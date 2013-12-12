@@ -131,6 +131,19 @@ class Hojaservicio
     private $fechaingreso;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="cargo", type="string", length=100, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre de la plaza")
+     * @Assert\Length(
+     * max = "100",
+     * maxMessage = "El nombre de la plaza no debe exceder los {{limit}} caracteres"
+     * )
+     */
+    private $cargo;
+
+
+    /**
      * @var float
      *
      * @ORM\Column(name="sueldoinicial", type="float", nullable=false)
@@ -182,15 +195,6 @@ class Hojaservicio
      */
     private $informacionadicional;
 
-    /**
-     * @var \Plaza
-     *
-     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
-     * })
-     */
-    private $idplaza;
     
     /**
      * @var \Expediente
@@ -425,6 +429,29 @@ class Hojaservicio
     }
 
     /**
+     * Set cargo
+     *
+     * @param string $direccion
+     * @return Hojaservicio
+     */
+    public function setCargo($cargo)
+    {
+        $this->cargo = $cargo;
+    
+        return $this;
+    }
+
+    /**
+     * Get cargo
+     *
+     * @return string 
+     */
+    public function getCargo()
+    {
+        return $this->cargo;
+    }
+
+    /**
      * Set sueldoinicial
      *
      * @param float $sueldoinicial
@@ -537,29 +564,6 @@ class Hojaservicio
     public function getInformacionadicional()
     {
         return $this->informacionadicional;
-    }
-
-    /**
-     * Set idplaza
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
-     * @return Hojaservicio
-     */
-    public function setIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza = null)
-    {
-        $this->idplaza = $idplaza;
-    
-        return $this;
-    }
-
-    /**
-     * Get idplaza
-     *
-     * @return \SIGESRHI\AdminBundle\Entity\Plaza 
-     */
-    public function getIdplaza()
-    {
-        return $this->idplaza;
     }
 
     /**

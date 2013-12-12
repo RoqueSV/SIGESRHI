@@ -61,8 +61,8 @@ class SegurovidaController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Registrar seguro colectivo de vida", $this->get("router")->generate("segurovida"));
         
         return $grid->getGridResponse('ExpedienteBundle:Segurovida:index.html.twig');
@@ -112,8 +112,8 @@ class SegurovidaController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Consultar seguro colectivo de vida", $this->get("router")->generate("segurovida_consultar"));
         
         return $grid->getGridResponse('ExpedienteBundle:Segurovida:index.html.twig');
@@ -172,8 +172,8 @@ class SegurovidaController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Modificar seguro colectivo de vida", $this->get("router")->generate("segurovida_consultar"));
         
         return $grid->getGridResponse('ExpedienteBundle:Segurovida:index.html.twig');
@@ -265,9 +265,9 @@ class SegurovidaController extends Controller
         
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("sonata_user_impersonating"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Registrar seguro colectivo de vida", $this->get("router")->generate("segurovida"));
         $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("segurovida_new"));
 
@@ -302,8 +302,8 @@ class SegurovidaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Registrar seguro colectivo de vida", $this->get("router")->generate("segurovida"));
         $breadcrumbs->addItem($idexpediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("segurovida_show",array("id"=>$id)));
 
@@ -340,8 +340,8 @@ class SegurovidaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Consultar seguro colectivo de vida", $this->get("router")->generate("segurovida_consultar"));
         $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("segurovida_show_consultar",array("id"=>$id)));
 
@@ -378,8 +378,8 @@ class SegurovidaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Registrar seguro colectivo de vida", $this->get("router")->generate("segurovida"));
         $breadcrumbs->addItem("Editar ".$idexpediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("segurovida_edit",array("id"=>$id)));
 
@@ -418,8 +418,8 @@ class SegurovidaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Modificar seguro colectivo de vida", $this->get("router")->generate("segurovida_modificar"));
         $breadcrumbs->addItem($idexpediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("segurovida_edit_modificar",array("id"=>$id)));
 

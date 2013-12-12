@@ -31,7 +31,7 @@ class Plaza
      * @var string
      *
      * @ORM\Column(name="nombreplaza", type="string", length=100, nullable=false)
-     * @Assert\NotNull(message="Debe ingresar el nombre de la PLaza")
+     * @Assert\NotNull(message="Debe ingresar el nombre de la plaza")
      * @Assert\Length(
      * max = "100",
      * maxMessage = "El nombre de la plaza no debe exceder los {{limit}} caracteres"

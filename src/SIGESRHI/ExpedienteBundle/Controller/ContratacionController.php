@@ -63,17 +63,6 @@ class ContratacionController extends Controller
         return $grid->getGridResponse('ExpedienteBundle:Contratacion:index.html.twig');
     }
 
-    /*public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('ExpedienteBundle:Contratacion')->findAll();
-
-        return $this->render('ExpedienteBundle:Contratacion:index.html.twig', array(
-            'entities' => $entities,
-        ));
-    }*/
-
     /**
      * Creates a new Contratacion entity.
      *
@@ -104,12 +93,26 @@ class ContratacionController extends Controller
      */
     public function newAction()
     {
-        $entity = new Contratacion();
+        /*$entity = new Contratacion();
         $form   = $this->createForm(new ContratacionType(), $entity);
 
         return $this->render('ExpedienteBundle:Contratacion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+        ));*/
+        $request = $this->getRequest();
+        
+        $em = $this->getDoctrine()->getManager();
+        $expediente = $em->getRepository('ExpedienteBundle:Contratacion')->obtenerAspiranteValido($request->query->get('id'));
+    
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Gestion de Aspirantes",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Validar Expediente",  $this->get("router")->generate("expediente_aspirantes"));
+        
+        return $this->render('ExpedienteBundle:Contratacion:new.html.twig', array(          
+            'expediente' => $expediente,
         ));
     }
 

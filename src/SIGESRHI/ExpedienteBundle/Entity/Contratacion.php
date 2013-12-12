@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="contratacion")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Repositorio\ContratacionRepository")
  */
 class Contratacion
 {

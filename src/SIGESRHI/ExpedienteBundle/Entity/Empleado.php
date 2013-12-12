@@ -46,14 +46,24 @@ class Empleado
     private $idexpediente;
 
     /**
-     * @var \Empleado
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToOne(targetEntity="Empleado")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idjefe", referencedColumnName="id")
-     * })
+     * @ORM\ManyToMany(targetEntity="Empleado", inversedBy="idempleado")
+     * @ORM\JoinTable(name="empleado_jefe",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="idempleado", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="idjefe", referencedColumnName="id")
+     *   }
+     * )
      */
     private $idjefe;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Empleado", mappedBy="idjefe")
+     */
+    private $idempleado;
 
     /**
      * @var \Usuario
@@ -71,8 +81,8 @@ class Empleado
     private $idcontratacion;
 
          public function __toString() {
-  return $this->codigoempleado;
-}   
+        return $this->codigoempleado;
+       }   
 
     /**
      * Get id
@@ -131,29 +141,6 @@ class Empleado
     }
 
     /**
-     * Set idjefe
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idjefe
-     * @return Empleado
-     */
-    public function setIdjefe(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idjefe = null)
-    {
-        $this->idjefe = $idjefe;
-    
-        return $this;
-    }
-
-    /**
-     * Get idjefe
-     *
-     * @return \SIGESRHI\ExpedienteBundle\Entity\Empleado 
-     */
-    public function getIdjefe()
-    {
-        return $this->idjefe;
-    }
-
-    /**
      * Set idusuario
      *
      * @param \Application\Sonata\UserBundle\Entity\User $idusuario
@@ -181,6 +168,9 @@ class Empleado
     public function __construct()
     {
         $this->idcontratacion = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idjefe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idempleado = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
     
     /**
@@ -214,5 +204,71 @@ class Empleado
     public function getIdcontratacion()
     {
         return $this->idcontratacion;
+    }
+
+    /**
+     * Add idjefe
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idjefe
+     * @return Empleado
+     */
+    public function addIdjefe(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idjefe)
+    {
+        $this->idjefe[] = $idjefe;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idjefe
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idjefe
+     */
+    public function removeIdjefe(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idjefe)
+    {
+        $this->idjefe->removeElement($idjefe);
+    }
+
+    /**
+     * Get idjefe
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdjefe()
+    {
+        return $this->idjefe;
+    }
+
+    /**
+     * Add idempleado
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado
+     * @return Empleado
+     */
+    public function addIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado)
+    {
+        $this->idempleado[] = $idempleado;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idempleado
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado
+     */
+    public function removeIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado)
+    {
+        $this->idempleado->removeElement($idempleado);
+    }
+
+    /**
+     * Get idempleado
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdempleado()
+    {
+        return $this->idempleado;
     }
 }

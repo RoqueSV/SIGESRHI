@@ -1,20 +1,122 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Contratacion creation</h1>
+{% block principal -%}
+    <!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+    {{ include('ExpedienteBundle:Ayuda/SeguroColectivo:registro.html.twig')}}
 
-    <form action="{{ path('contratacion_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
-    </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('contratacion') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    <h4 class='text-center'>Registrar aspirante como empleado de la institución.</h4><br>
+    <h5>Datos Generales del Aspirante</h5>
+    <table width="100%">
+    {% for exp in expediente %}
+    <tr>
+       <td width="25%"> 
+        <table border="3" align="center" width="150px" height="193px">
+                <tr>
+                    <td>
+                        <img src="{{asset('uploads/fotografias/' ~ exp.fotografia)}}"  class="fotoSol"/>
+                    </td>
+                </tr>
+        </table>
+       </td>
+      <td>
+        <table class="table table-bordered table-hover mitable">
+           <tr>
+              <th>Nombre:</th>
+              <td>{{ exp.nombrecompleto  }}</td>
+           </tr>
+           <tr>
+              <th>Plaza solicitada:</th>
+              <td>{{ exp.nombreplaza  }}</td>
+           </tr>
+           
+          
+           <tr>
+             <th>Correo electrónico:</th>
+             <td>{{ exp.email }}</td>
+           </tr>
+            <tr>
+          <th>Direccion:</th>
+          <td>{{ exp.direccion }}</td>
+    </tr>
+    <tr>
+        <th>Fecha de nacimiento:</th>
+        <td>{{ exp.fechanac | date('d-m-Y') | fecha }}</td>
+    </tr>
+    <tr>
+        <th>Estado civil:</th>
+        <td>
+          {% set gen='o' %}
+          {% if exp.sexo=='F' %}
+          {% set gen='a' %}
+          {% endif %} 
+          {% if exp.estadocivil=='C' %}
+           Casad{{gen}}
+          {% elseif exp.estadocivil=='S' %}
+           Solter{{gen}}
+          {% elseif exp.estadocivil=='D' %}
+           Divorciad{{gen}}
+          {% elseif exp.estadocivil=='A' %}
+           Acompañad{{gen}}
+          {% elseif exp.estadocivil=='V' %}
+           Viud{{gen}}
+          {% endif %}
+        </td>
+    </tr>
+    <tr>    
+        <th>Telefono (movil):</th>
+        <td>{{ exp.telefonomovil }}</td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+</table>
+    <h5>Documentos de identidad personal</h5>
+    <table class="table table-bordered table-hover">
+    <tr>
+        <th>No. DUI</th>
+        <th>No. NIT</th>
+        <th>No. ISSS</th>
+        <th>No. NUP</th>
+        <th>No. NIP (docentes)</th>
+    </tr>
+    <tr>
+        <td>{{ exp.dui }}</td>
+        <td>{{ exp.nit }}</td>
+        <td>{{ exp.isss }}</td>
+        <td>{{ exp.nup }}</td>
+        <td>{{ exp.nip }}</td>
+    </tr>
+    <tr>
+        <td colspan="5"><b>Lugar y fecha de expedición de DUI:</b> {{ exp.lugardui }}, {{ exp.fechadui | date('d-m-Y') | fecha }}</td>
+    <tr>
+    </table>
+    <br>
+    </fieldset>    
+    <table width="100%">
+        <tr align="center">
+            <td><a href="{{ 
+                    path('solicitud_show',
+                        { 'id': exp.id }
+                        )
+                    }}">Consultar solicitud de empleo registrada</a></td>
+            <td><a href="{{ 
+                    path('docpersonal_new',
+                        { 'id': exp.id , 'exp': exp.idexpediente}                    
+                        )
+                    }}">Consultar Documentación registrada</a></td>
+        </tr><tr><td>&nbsp;</td></tr>
+        <tr>
+            <td colspan="2" align="center">Para registrar al aspirante como empleado haga click en Aceptar.</td>
+        </tr><tr><td>&nbsp;</td></tr>
+        <tr align="center">
+            <td><a href="{{ 
+                    path('expediente_confirm_valid',
+                        { 'id': exp.idexpediente }
+                        )
+                    }}" onclick="return confirm('¿Está seguro de registrarlo como empleado? ')" class="btn btn-primary">Aceptar</a></td>
+            <td><a href="#" onclick="history.back()" class="btn">Cancelar</a></td>
+        </tr>
+    </table>
+    {% endfor %}
 {% endblock %}
