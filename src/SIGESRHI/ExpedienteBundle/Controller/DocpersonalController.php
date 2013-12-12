@@ -64,18 +64,11 @@ class DocpersonalController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal"));
 
         return $grid->getGridResponse('ExpedienteBundle:Docpersonal:index.html.twig');
-
-    /*    $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('ExpedienteBundle:Docpersonal')->findAll();
-
-        return array(
-            'entities' => $entities,
-        ); */
     }
 
     /**
@@ -102,8 +95,10 @@ class DocpersonalController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", "hello_page");
-        $breadcrumbs->addItem("Gestion de Aspirantes", "hello_page");
-        $breadcrumbs->addItem("Registrar documentos de expediente Personal","");
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal"));
+        $breadcrumbs->addItem("Registrar","");
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -152,7 +147,8 @@ class DocpersonalController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirantes", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal"));
         $breadcrumbs->addItem("Ingresar", "");
 
@@ -279,5 +275,83 @@ class DocpersonalController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    //(GRID DOC PERSONAL EMPLEADO)
+    public function indexEmpleadoAction()
+    {
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_empleado');
+        $grid = $this->get('grid');
+
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->Join($tableAlias.'.idempleado','e')
+                        ->Join('e.idcontratacion','c')                        
+                        ->andWhere($tableAlias.'.tipoexpediente = :emp')
+                        ->andWhere('c.fechafincontrato IS NULL')
+                        ->setParameter('emp','E');
+            }
+        );
+
+        $grid->setSource($source);  
+        $grid->setNoDataMessage("No se encontraron resultados");
+
+        $rowAction1 = new RowAction('Ingresar', 'docpersonal_new_empleado');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                $action->setRouteParameters(array('id'));
+                return $action;
+            }
+        );
+
+        $grid->addRowAction($rowAction1);     
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleados", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal_empleado"));
+
+        return $grid->getGridResponse('ExpedienteBundle:Docpersonal:indexEmpleado.html.twig');
+    }
+
+        /**
+     * Displays a form to create a new Docpersonal entity.(EMPLEADO)
+     *
+     */
+    public function newEmpleadoAction()
+    {
+        $request = $this->getRequest();        
+        $em = $this->getDoctrine()->getManager();
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpediente($request->query->get('id'));
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('id'));
+
+        $Documentos = $em->getRepository('ExpedienteBundle:Docpersonal')->findBy(array(
+                                                                                    'idexpediente' => $request->query->get('id'),
+                                                                                    ));
+
+        $entity = new Docpersonal();
+        $entity->setIdexpediente($expediente);
+        $entity->setentregado(1);
+        $form   = $this->createForm(new DocpersonalType(), $entity);
+
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleados", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal_empleado"));
+        $breadcrumbs->addItem("Ingresar", "");
+
+        return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
+            'entity' => $entity,
+            'expediente' => $expedienteinfo,
+            'documentos' => $Documentos,
+            'form'   => $form->createView(),
+        ));
     }
 }

@@ -1,0 +1,56 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    <!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+    {{ include('ExpedienteBundle:Ayuda/Licencia:registro.html.twig')}}
+
+    {% for flashMessage in app.session.flashbag.get('new') %}
+        <div class="alert alert-success">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('errornew') %}
+        <div class="alert alert-danger">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+
+    <h4 class="text-center">Control Interno de Permisos</h4>
+
+    <table width="100%">
+    {% for exp in expediente %}
+      <tr>
+        <th>Fecha Registro: </th>
+        <td><input type='text' disabled='disabled'></td>
+      </tr>
+      <tr>
+        <th>Nombre empleado: </th>
+        <td><input type='text' disabled='disabled'></td>
+      </tr>
+      <tr>
+        <th>Codigo: </th>
+        <td><input type='text' disabled='disabled'></td>
+        <th>Partida: </th>
+        <td><input type='text' disabled='disabled'></td>
+        <th>Subpartida: </th>
+        <td><input type='text' disabled='disabled'></td>
+      </tr>
+    {% endfor %}
+    </table>  
+
+    <form action="{{ path('licencia_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <p>
+            <button type="submit">Create</button>
+        </p>
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('licencia') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

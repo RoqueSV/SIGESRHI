@@ -1,0 +1,123 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    <!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+    {{ include('ExpedienteBundle:Ayuda/Expediente:activar.html.twig')}}
+
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+    <h4 class='text-center'>Registrar como Empleado Activo.</h4><br>
+    <h5>Datos del Empleado</h5>
+    <table width="100%">
+    {% for exp in expediente %}
+    <tr>
+       <td width="25%"> 
+        <table border="3" align="center" width="150px" height="193px">
+                <tr>
+                    <td>
+                        <img src="{{asset('uploads/fotografias/' ~ exp.fotografia)}}"  class="fotoSol"/>
+                    </td>
+                </tr>
+        </table>
+       </td>
+      <td>
+        <table class="table table-bordered table-hover mitable">
+          <tr>
+            <th>Nombre:</th>
+            <td colspan=2>{{ exp.nombrecompleto  }}</td>
+            <th><b>Codigo: </b>{{ exp.codigoempleado }}</th>
+          </tr>          
+          <tr>
+            <th>Direccion:</th>
+            <td colspan=3>{{ exp.direccion }}</td>
+          </tr>        
+          <tr>
+            <th>Estado civil:</th>
+            <td colspan=3>
+              {% set gen='o' %}
+              {% if exp.sexo=='F' %}
+              {% set gen='a' %}
+              {% endif %} 
+              {% if exp.estadocivil=='C' %}
+               Casad{{gen}}
+              {% elseif exp.estadocivil=='S' %}
+               Solter{{gen}}
+              {% elseif exp.estadocivil=='D' %}
+               Divorciad{{gen}}
+              {% elseif exp.estadocivil=='A' %}
+               Acompañad{{gen}}
+              {% elseif exp.estadocivil=='V' %}
+               Viud{{gen}}
+              {% endif %}
+            </td>
+          </tr>
+          <tr>    
+            <th>Telefono (movil):</th>
+            <td>{{ exp.telefonomovil }}</td>
+            <th>Telefono (fijo):</th>
+            <td>{{ exp.telefonofijo }}</td>
+          </tr>
+          <tr>
+             <th>Correo electrónico:</th>
+             <td colspan=3>{{ exp.email }}</td>
+          </tr>
+          <tr>
+            <th>Lugar de nacimiento:</th>
+            <td>{{ exp.lugarnac }}</td>
+            <th>Fecha de nacimiento:</th>
+            <td>{{ exp.fechanac | date('d-m-Y') | fecha }}</td>
+          </tr>
+   </table>
+  </td>
+ </tr>
+</table>
+    <h5>Documentos de identidad personal</h5>
+    <table class="table table-bordered table-hover">
+    <tr>
+        <th>No. DUI</th>
+        <th>No. NIT</th>
+        <th>No. ISSS</th>
+        <th>No. NUP</th>
+        <th>No. NIP (docentes)</th>
+    </tr>
+    <tr>
+        <td>{{ exp.dui }}</td>
+        <td>{{ exp.nit }}</td>
+        <td>{{ exp.isss }}</td>
+        <td>{{ exp.nup }}</td>
+        <td>{{ exp.nip }}</td>
+    </tr>
+    <tr>
+        <td colspan="5"><b>Lugar y fecha de expedición de DUI:</b> {{ exp.lugardui }}, {{ exp.fechadui | date('d-m-Y') | fecha }}</td>
+    <tr>
+    </table>
+    <br>
+    </fieldset>
+    <form action="{{ path('expediente_activar') }}" method="post">
+    <table width="100%">
+        <tr>
+            <td align="center">Ingrese el código del acuerdo que permite registar al empleado como activo: </td>
+            <td>
+              <input type='text' id='numacuerdo' maxlength='15' name='numacuerdo' data-bvalidator='alphanum,minlength[15],maxlength[15],required' class='input-medium' value={{ numerodef }}>
+              <input type='hidden' id='idexp' name='idexp' value='{{ exp.idexpediente }}'>
+            </td>
+        </tr>
+        <tr><td>&nbsp;</td>
+        </tr>
+        <tr align="center">
+            <td width="50%">
+              <button type="submit" onclick="return confirm('¿Está seguro de registrar al empleado como activo? ')" class="btn btn-primary" >Aceptar</button>
+            </td>
+            <td width="50%"><a href="{{ 
+                    path('expediente_adm_empleado_inactivo'                        
+                        )
+                    }}" class="btn">Cancelar</a></td>
+        </tr>
+    </table>
+    </form>  
+    {% endfor %}
+{% endblock %}

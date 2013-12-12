@@ -110,8 +110,9 @@ class PruebapsicologicaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
 
         return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientes.html.twig');
 
@@ -187,8 +188,10 @@ class PruebapsicologicaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
+
 
         return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientes.html.twig');
 
@@ -280,7 +283,8 @@ class PruebapsicologicaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Prueba Psicologica",$this->get("router")->generate("pruebapsicologica"));
         $breadcrumbs->addItem("Registrar","");
 
@@ -311,7 +315,8 @@ class PruebapsicologicaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Prueba Psicologica",$this->get("router")->generate("pruebapsicologica_index_edit"));
         $breadcrumbs->addItem("Mostrar","");
 
@@ -344,7 +349,8 @@ class PruebapsicologicaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Gestion de Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Prueba Psicologica",$this->get("router")->generate("pruebapsicologica_index_edit"));
         $breadcrumbs->addItem("Modificar","");
 

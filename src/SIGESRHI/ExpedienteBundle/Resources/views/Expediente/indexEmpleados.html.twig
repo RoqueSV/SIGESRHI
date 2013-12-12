@@ -1,0 +1,18 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+{% for flashMessage in app.session.flashbag.get('confirm') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+<h4 class='text-center'>SELECCIONE UN EMPLEADO</h4>
+{{ grid_search(grid) }}
+
+    {{ grid(grid,_self) }}
+
+    {% block grid_filters %}{% endblock %}
+    <div align='center'>
+        <a  href="{{ path('hello_page') }}" class="btn">Cancelar</a>            
+    </div>
+{% endblock %}

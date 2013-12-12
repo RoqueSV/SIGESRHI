@@ -1,0 +1,16 @@
+licencia:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Licencia:index" }
+
+licencia_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Licencia:show" }
+
+licencia_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Licencia:new" }
+
+licencia_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Licencia:create" }
+    requirements: { _method: post }

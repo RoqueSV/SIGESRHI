@@ -1,0 +1,73 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+<h4 class='text-center'>SELECCIONE UN EMPLEADO</h4>
+{{ grid_search(grid) }}
+
+    {{ grid(grid,_self) }}
+
+    {% block grid_filters %}{% endblock %}
+
+{# extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Licencia list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Concepto</th>
+                <th>Duraciondias</th>
+                <th>Duracionhoras</th>
+                <th>Duracionminutos</th>
+                <th>Congoce</th>
+                <th>Fechainiciolic</th>
+                <th>Fechafinlic</th>
+                <th>Horainiciolic</th>
+                <th>Horafinlic</th>
+                <th>Fechapermiso</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('licencia_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.concepto }}</td>
+                <td>{{ entity.duraciondias }}</td>
+                <td>{{ entity.duracionhoras }}</td>
+                <td>{{ entity.duracionminutos }}</td>
+                <td>{{ entity.congoce }}</td>
+                <td>{% if entity.fechainiciolic %}{{ entity.fechainiciolic|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.fechafinlic %}{{ entity.fechafinlic|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.horainiciolic }}</td>
+                <td>{{ entity.horafinlic }}</td>
+                <td>{% if entity.fechapermiso %}{{ entity.fechapermiso|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('licencia_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('licencia_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('licencia_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock #}
+    <div align='center'>
+        <a  href="{{ path('hello_page') }}" class="btn">Cancelar</a>            
+    </div>
+{% endblock %}

@@ -57,7 +57,7 @@ class Accionpersonal
     /**
      * @var \Expediente
      *
-     * @ORM\ManyToOne(targetEntity="Expediente")
+     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="idaccion")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
      * })

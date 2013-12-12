@@ -64,3 +64,19 @@ expediente_aelim:
 eliminar_aspirantes_confirm:
     pattern: /aspirantes/eliminar/confirmar
     defaults: { _controller: "ExpedienteBundle:Expediente:confirmarEliminacion" }
+
+expediente_adm_empleado:
+    pattern:  /empleado/activo
+    defaults: { _controller: "ExpedienteBundle:Expediente:admEmpleado" }
+
+expediente_inactivar:
+    pattern:  /empleado/inactivar
+    defaults: { _controller: "ExpedienteBundle:Expediente:inactivarEmpleado" }
+
+expediente_adm_empleado_inactivo:
+    pattern:  /empleado/inactivo
+    defaults: { _controller: "ExpedienteBundle:Expediente:admEmpleadoInactivo" }
+
+expediente_activar:
+    pattern:  /empleado/activar
+    defaults: { _controller: "ExpedienteBundle:Expediente:activarEmpleado" }

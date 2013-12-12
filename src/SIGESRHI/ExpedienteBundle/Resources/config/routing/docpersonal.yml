@@ -1,5 +1,5 @@
 docpersonal:
-    pattern:  /
+    pattern:  /aspirante
     defaults: { _controller: "ExpedienteBundle:Docpersonal:index" }
 
 docpersonal_show:
@@ -7,7 +7,7 @@ docpersonal_show:
     defaults: { _controller: "ExpedienteBundle:Docpersonal:show" }
 
 docpersonal_new:
-    pattern:  /new
+    pattern:  /new/aspirante
     defaults: { _controller: "ExpedienteBundle:Docpersonal:new" }
 
 docpersonal_create:
@@ -28,3 +28,11 @@ docpersonal_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "ExpedienteBundle:Docpersonal:delete" }
     requirements: { _method: post|delete }
+
+docpersonal_empleado:
+    pattern:  /empleado
+    defaults: { _controller: "ExpedienteBundle:Docpersonal:indexEmpleado" }
+
+docpersonal_new_empleado:
+    pattern:  /new/empleado
+    defaults: { _controller: "ExpedienteBundle:Docpersonal:newEmpleado" }

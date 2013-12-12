@@ -38,4 +38,7 @@ ExpedienteBundle_docpersonal:
         resource: "@ExpedienteBundle/Resources/config/routing/docpersonal.yml"
         prefix:   /docpersonal
 
+ExpedienteBundle_licencia:
+        resource: "@ExpedienteBundle/Resources/config/routing/licencia.yml"
+        prefix:   /licencia
 
