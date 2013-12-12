@@ -1,6 +1,6 @@
-pantalla_expediente:
-    pattern:  /expediente
-    defaults: { _controller: "AdminBundle:Pantallas:pantallaExpediente" }
+pantalla_modulo:
+    pattern:  /{id}/modulo
+    defaults: { _controller: "AdminBundle:Pantallas:pantallaModulo" }
 
 pantalla_aspirante:
     pattern:  /aspirante

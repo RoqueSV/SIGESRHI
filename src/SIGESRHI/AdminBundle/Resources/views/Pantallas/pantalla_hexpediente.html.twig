@@ -1,0 +1,16 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+	
+	{% block principal %}
+	{% set ruta=app.request.attributes.get('_route') %}
+	 <div>
+	 {% if ruta == 'pantalla_aspirante' %}
+    <img src="{{ asset('images/aspirante.jpg') }}" width="600" heigth="300" alt="ISRI"/>
+    {% elseif ruta == 'pantalla_empleadoactivo' %}
+    <img src="{{ asset('images/empleadoactivo.jpg') }}" width="600" heigth="300" alt="ISRI"/>
+    {% elseif ruta == 'pantalla_empleadoinactivo' %}
+    <img src="{{ asset('images/empleadoinactivo.jpg') }}" width="600" heigth="300" alt="ISRI"/>
+    {% endif %}
+	</div>
+
+	{% endblock %}

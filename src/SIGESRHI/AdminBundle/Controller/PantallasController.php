@@ -7,23 +7,24 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PantallasController extends Controller
 {
-    public function pantallaExpedienteAction()
+       public function pantallaModuloAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery('
           SELECT a.id acceso, a.nombrepagina pagina, a.ruta ruta  FROM AdminBundle:Acceso a  
           join a.idmodulo m 
           WHERE m.id = :id and a.idaccesosup is null order by a.nombrepagina'
-        )->setParameter('id', 1);
+        )->setParameter('id', $id);
 
         $opciones = $query->getResult(); 
-
 
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_expediente"));
+        if($id==1){
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>$id)));
         return $this->render('AdminBundle:Pantallas:pantalla_expediente.html.twig',array('opciones'=>$opciones));
+       }
     }
 
     public function pantallaAspiranteAction()
@@ -32,9 +33,9 @@ class PantallasController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_expediente"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
         $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
-        return $this->render('AdminBundle:Pantallas:pantalla_aspirante.html.twig');
+        return $this->render('AdminBundle:Pantallas:pantalla_hexpediente.html.twig');
     }
 
     public function pantallaEmpleadoActivoAction()
@@ -43,9 +44,9 @@ class PantallasController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_expediente"));
-        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
-        return $this->render('AdminBundle:Pantallas:pantalla_empleadoactivo.html.twig');
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        return $this->render('AdminBundle:Pantallas:pantalla_hexpediente.html.twig');
     }
 
     public function pantallaEmpleadoInactivoAction()
@@ -54,8 +55,8 @@ class PantallasController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_expediente"));
-        $breadcrumbs->addItem("Empleado Inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
-        return $this->render('AdminBundle:Pantallas:pantalla_empleadoinactivo.html.twig');
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
+        return $this->render('AdminBundle:Pantallas:pantalla_hexpediente.html.twig');
     }
 }
