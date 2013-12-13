@@ -23,10 +23,10 @@
     <h4 class="text-center">AGREGAR DOCUMENTOS DIGITALES</h4>
 
     <br>
-    <p class="help-block"> En esta sección tiene la posibilidad de adjuntar los documentos solicitados. </p>
-    <p class="help-block"> Registre los documentos digitales ingresando uno a la vez y seleccionando guardar, los registros aparecen en la parte de abajo, dando la posibilidad de registrar un nuevo archivo cada vez.</p>
+    <p class="help-block justifyText"> En esta sección tiene la posibilidad de adjuntar los documentos solicitados. </p>
+    <p class="help-block justifyText"> Registre los documentos digitales ingresando uno a la vez y seleccionando guardar, los registros aparecen en la parte de abajo, dando la posibilidad de registrar un nuevo archivo cada vez.</p>
 
-    <p class="help-block"> Los Archivos permitidos son: Imagenes (png/jpg) - Documentos (pdf, doc, docx) - Archivos comprimidos (zip)</p>
+    <p class="help-block justifyText"> Los Archivos permitidos son: Imagenes (png/jpg), documentos (pdf, doc, docx)  y archivos comprimidos (zip)</p>
 
     <form action="{{ path('docdigital_create', {'id':id}) }}" method="post" {{ form_enctype(form) }}>
         

@@ -18,46 +18,43 @@
 
     <h4 class='text-center'>RECORD DEL EXPEDIENTE PERSONAL</h4>
     {% for exp in expediente %}
-    <p>Nombre: <b>{{exp.nombres}}</b><p>
-    <form action="{{ path('docpersonal_create',{'exp':exp.id}) }}" id= "docpersonal_form" method="post" class="form-horizontal" {{ form_enctype(form) }}>
+    <p>Nombre: <b>{{exp.nombres}}</b><p><br/>
+    <form action="{{ path('docpersonal_create',{'exp':exp.id}) }}" id= "docpersonal_form" method="post" {{ form_enctype(form) }}>
     {% endfor %}
         {#{ form_widget(form) }#}
         <fieldset><legend>Agregar Documento Personal</legend>
-            <div class='text-center'>
-            <table class='text-center' width='80%'>
+              <table width='80%'>
                 <tr>
-                    <td>{{ form_label(form.nombredocpersonal) }}</td>
-                    <td width='100px'>{{ form_label(form.indice) }}</td>
-                    <td width='150px'></td>
-                </tr>
-                <tr>
-                    <td>{{ form_widget(form.nombredocpersonal) }}</td>
-                    <td>{{ form_widget(form.indice) }}</td>
-                    <td>{{ form_errors(form.indice) }}</td>
+                    <td class="text-center">{{ form_row(form.nombredocpersonal) }}</td>
+                    <td class="text-center">{{ form_row(form.indice) }}</td>
                 </tr>
             </table>            
-            </div>
-        </fieldset>
+          </fieldset>
         {{ form_rest(form) }}
         <div class='text-center'>
             <button type="submit" class="btn btn-primary">Agregar</button>
             <a  href="#" onClick="history.back()" class="btn">Cancelar</a>
         <div>
     </form>
-    
+    <br/>
     <fieldset><legend>Documentos Registrados</legend>
     <div class='centered'>
+    {% if documentos|length > 0 %}
         <table class='table table-bordered table-hover' border='1' width='100%' align='center'>
             <tr>
                 <th>Nombre del documento</th>
                 <th width='150px'>N° Correlativo</th>
             </tr>
-    {% for doc in documentos%}
+    
+        {% for doc in documentos%}
             <tr>
                 <td>{{ doc.nombredocpersonal }}</td>
                 <td>{{ doc.indice }}</td>
             </tr>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+    No existen registros
+    {% endif %}
         </table>
     </div>
     </fieldset>

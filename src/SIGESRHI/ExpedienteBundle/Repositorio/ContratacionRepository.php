@@ -18,7 +18,7 @@ class ContratacionRepository extends EntityRepository
             ->createQuery("SELECT s.id,
       	                          e.id idexpediente,
       	                          s.nombrecompleto, 
-      	                          CONCAT(COALESCE(s.calle,''),CONCAT(', ',s.colonia))  direccion, 
+      	                          CONCAT(m.nombremunicipio,CONCAT(', ',d.nombredepartamento))  direccion, 
       	                          s.estadocivil, 
       	                          s.telefonofijo,
                                   s.telefonomovil, 
@@ -36,6 +36,7 @@ class ContratacionRepository extends EntityRepository
                                   s.lugardui,
                                   p.nombreplaza
                            FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e join s.idplaza p
+                           JOIN s.idmunicipio m JOIN m.iddepartamento d
                            WHERE e.id=:idexp
                            ")
             ->setParameter('idexp',$idexp)
