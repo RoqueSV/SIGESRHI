@@ -92,11 +92,6 @@ class DocexpedienteController extends Controller
      */
     public function newAction()
     {
-
-        //incluimos camino de migas
-        $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-
         //recibimos el id del expediente creado al cual se le asociara los documentos
         $request = $this->getRequest();
         $id= $request->query->get('id');
@@ -105,15 +100,40 @@ class DocexpedienteController extends Controller
         $form   = $this->createForm(new DocexpedienteType(), $entity);
 
         //agregado para obtener todos los documentos digitales registrados para un expediente
-         $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $Documentos = $em->getRepository('ExpedienteBundle:Docexpediente')->findBy(array('idexpediente' => $id));
-        //$Documentos= $em->getRepository('ExpedienteBundle:Docexpediente')->find($id);
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);
+        
+        if (!$expediente) {
+            throw $this->createNotFoundException('No es posible encontrar la entidad Expediente.');
+        }
 
+         //incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+            
+            if($expediente->getTipoexpediente() == 'I' or $expediente->getTipoexpediente() == 'A')
+            {
+                $breadcrumbs->addItem("Aspirantes", $this->get("router")->generate("hello_page"));
+                $breadcrumbs->addItem("Agregar Documentos Digitales", $this->get("router")->generate("docdigital_craspirante"));
+            }
+
+            if($expediente->getTipoexpediente() == 'T' or $expediente->getTipoexpediente() == 'E')
+            {
+                $breadcrumbs->addItem("Empleados", $this->get("router")->generate("hello_page"));
+                $breadcrumbs->addItem("Agregar Documentos Digitales", $this->get("router")->generate("docdigital_crempleado"));
+            }
+
+        $breadcrumbs->addItem($expediente->getIdsolicitudempleo()->getnombrecompleto(), $this->get("router")->generate("hello_page"));
+
+        
         return $this->render('ExpedienteBundle:Docexpediente:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
             'id' => $id,
-            'documentos' => $Documentos
+            'documentos' => $Documentos,
+            'expediente' => $expediente
         ));
     }
 
@@ -243,6 +263,15 @@ class DocexpedienteController extends Controller
 //funcion de grid para agregar documentos digitales a un expediente (Docexpediente)
     public function ConsultaRegDocAspirantesAction()
     {
+
+        //incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Agregar Documentos Digitales", $this->get("router")->generate("hello_page"));
+
+
         $source = new Entity('ExpedienteBundle:Expediente', 'grupo_docdigital');
         // Get a grid instance
         $grid = $this->get('grid');
@@ -278,6 +307,15 @@ class DocexpedienteController extends Controller
 //funcion de grid para agregar documentos digitales a un expediente (Docexpediente)
     public function ConsultaRegDocEmpleadosAction()
     {
+
+            //incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Agregar Documentos Digitales", $this->get("router")->generate("hello_page"));
+
+        
         $source = new Entity('ExpedienteBundle:Expediente', 'grupo_docdigital');
         // Get a grid instance
         $grid = $this->get('grid');

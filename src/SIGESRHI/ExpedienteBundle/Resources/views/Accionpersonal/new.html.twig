@@ -1,0 +1,67 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    
+    <h4 class="text-center">REGISTRO DE ACCIONES DE PERSONAL</h4>
+    <br>
+
+    <form action="{{ path('accionpersonal_create') }}" method="post" {{ form_enctype(form) }}>
+        
+
+        <table>
+            <tr>
+                <td width="175px">{{form_label(form.idtipoaccion)}}</td>
+                <td>{{form_widget(form.idtipoaccion)}}{{form_errors(form.idtipoaccion)}}</td>
+            </tr>
+            <tr>
+                <td>{{form_label(form.fecharegistroaccion)}}</td>
+                <td>{{form_widget(form.fecharegistroaccion)}}{{form_errors(form.fecharegistroaccion)}}</td>
+            </tr>
+            <tr>
+                <td>{{form_label(form.numacuerdo)}}</td>
+                <td>{{form_widget(form.numacuerdo)}}{{form_errors(form.numacuerdo)}}</td>
+            </tr>
+            <tr>
+                <td>{{form_label(form.motivoaccion)}}</td>
+                <td>{{form_widget(form.motivoaccion)}}{{form_errors(form.motivoaccion)}}</td>
+            </tr>
+        </table>
+
+
+        {{ form_rest(form) }}
+        <br>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="button" onclick="location.href='{{path('accionpersonal')}}'" class="btn">Cancelar </button>
+        </div>
+    </form>
+
+
+    <script>
+// Rellenar la descripcion del motivo del acuerdo al seleccionar el tipo de acuerdo
+
+    $(document).ready(function(){
+        $('#sigesrhi_expedientebundle_accionpersonaltype_idtipoaccion').change(function(){
+           $.getJSON('consultarTipoAccionJSON?idtipoaccion='+$('#sigesrhi_expedientebundle_accionpersonaltype_idtipoaccion').val(),
+             function(data){
+                var i=0;
+                $.each(data, function(key, val){
+                    if(key=='rows'){
+                        $.each(val, function(id, registro){
+                            $('#sigesrhi_expedientebundle_accionpersonaltype_motivoaccion').val(registro['cell'][0]);
+                        });
+
+                    }
+
+                });
+
+             });
+
+
+        });//#idtipoaccion
+
+    });//document
+
+    </script>
+
+{% endblock %}

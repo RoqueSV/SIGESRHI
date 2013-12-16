@@ -739,6 +739,7 @@ class Solicitudempleo
             public function esNitValido(ExecutionContextInterface $context){
 
                 $nit= $this->getNit();
+                $dia_mes_correcto= false;
 
     if(preg_match('/(^\d{14})/',$nit)){
         $verificador = (int) substr($nit,13,1);
@@ -765,7 +766,11 @@ class Solicitudempleo
                 $valida = 0;
             }
         }
-        if($valida != $verificador) 
+        
+        if(((int)substr($nit,4,2) <= 31) && ((int)substr($nit,6,2) <= 12))
+            $dia_mes_correcto= true;
+
+        if($valida != $verificador || !$dia_mes_correcto) 
              $context->addViolationAt('nit', 'El NIT introducido no es válido.', array(), null);
             
    }

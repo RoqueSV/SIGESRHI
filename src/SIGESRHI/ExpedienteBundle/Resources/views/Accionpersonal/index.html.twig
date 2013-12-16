@@ -1,0 +1,118 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    
+<div class="text-center">
+<h4>HOJA DE SERVICIO</h4>
+
+
+<table border="0" width="90%" class="centered-table">
+    <tr>
+        <td width="25%" align="center"> 
+                    <table border="3" align="center" width="150px" height="192px">
+                        <tr>
+                            <td>
+                                <img src="{{asset('uploads/fotografias/')}}" class="fotoSol" />
+                            </td>
+                        </tr>
+                    </table>
+            </td>
+        </td>
+        <td>
+            <table class="table table-bordered table-hover mitable">
+                <tr>
+                    <th width="35%">Nombre: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Código empleado: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Numero de DUI: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Extendido en: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Lugar y fecha de nac.: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Estado civil: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Estado del empleado: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Dirección: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Teléfono fijo y móvil: </th>
+                    <td></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table class="table table-bordered table-hover mitable">
+                <tr>
+                    <th width="25%">Educación: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Fecha de Ingreso: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Cargo Inicial: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Sueldo Inicial: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Numero del ISSS : </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Numero de NIT : </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Destacado en: </th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Información Adicional: </th>
+                    <td></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+<h4>REGISTRO LABORAL </h4>
+</div>
+
+{{ grid_search(grid) }} 
+<br>
+{{ grid(grid,_self) }}  
+<br>
+{% block grid_filters %}{% endblock %} 
+
+<div class="text-center">
+<br>
+<button class="btn" onclick="location.href='{{path('accionpersonal_new' )}}'"> Registrar Acuerdo </button>
+<button class="btn" onclick="#"> Cancelar </button>
+</div>
+
+{% endblock %}
