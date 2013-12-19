@@ -20,20 +20,22 @@ use APY\DataGridBundle\Grid\Action\DeleteMassAction;
 /**
  * Licencia controller.
  *
- * @Route("/licencia")
  */
 class LicenciaController extends Controller
 {
     /**
      * Lists all Licencia entities.
      *
-     * @Route("/", name="licencia")
-     * @Method("GET")
-     * @Template()
      */
-    public function indexAction()
-    {
-        $source = new Entity('ExpedienteBundle:Solicitudempleo','vista_basica_expediente');
+    public function indexRegistrarAction(){    
+        return $this->redirect($this->generateUrl('licencia' ));
+    }
+    public function indexVerAction(){
+        return $this->redirect($this->generateUrl('licencia'));
+    }
+    public function indexAction($opc)
+    {        
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_empleado');
         $grid = $this->get('grid');
         $grid->setSource($source);  
         $grid->setNoDataMessage("No se encontraron resultados");
@@ -41,45 +43,54 @@ class LicenciaController extends Controller
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias){
-                $query->Join($tableAlias.'.idexpediente','e')
-                        ->Join('e.idempleado','em')
-                        ->Join('em.idcontratacion','c')
-                        ->andWhere('e.tipoexpediente = :emp')
-                        ->andWhere('c.fechafincontrato IS NULL')
+                $query->andWhere($tableAlias.'.tipoexpediente = :emp')
+                        ->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
                         ->setParameter('emp','E');
             }
-        );
-        $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false));
-        $grid->addColumn($plaza,3);
+        );        
 
-        $rowAction1 = new RowAction('Ver', 'licencia_show');
-        $rowAction1->setColumn('info_column');
-        $rowAction1->manipulateRender(
-            function ($action, $row)
-            {
-                $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id') ));
-                return $action; 
-            }
-        );
-        $grid->addRowAction($rowAction1);
+        //Columnas para filtrar
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idempleado.idcontratacion.idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false));        
+        $grid->addColumn($NombreEmpleados,1);
+        $grid->addColumn($plaza,2);
 
-        $rowAction2 = new RowAction('Registrar', 'licencia_new');
-        $rowAction2->setColumn('info_column');
-        $rowAction2->manipulateRender(
-            function ($action, $row)
-            {
-                $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id') ));
-                return $action; 
-            }
-        );
-        $grid->addRowAction($rowAction2); 
-
-        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleados",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Licencias",$this->get("router")->generate("hello_page"));
+
+        if($opc=="indexver"){
+            $rowAction1 = new RowAction('Ver', 'licencia_show');
+            $rowAction1->setColumn('info_column');
+            $rowAction1->manipulateRender(
+                function ($action, $row)
+                {
+                    $action->setRouteParameters(array('id','idc' => $row->getField('idempleado.idcontratacion.id') ));
+                    return $action; 
+                }
+            );
+            $grid->addRowAction($rowAction1);
+            $breadcrumbs->addItem("Ver","");
+        }
+        elseif($opc=="indexregistrar"){
+            $rowAction2 = new RowAction('Registrar', 'licencia_new');
+            $rowAction2->setColumn('info_column');
+            $rowAction2->manipulateRender(
+                function ($action, $row)
+                {
+                    $action->setRouteParameters(array('id','idc' => $row->getField('idempleado.idcontratacion.id') ));
+                    return $action; 
+                }
+            );
+            $grid->addRowAction($rowAction2); 
+            $breadcrumbs->addItem("Registrar","");
+        }
+
+        $grid->setId('grid_licencias');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
         return $grid->getGridResponse('ExpedienteBundle:Licencia:index.html.twig');
     }
@@ -87,54 +98,67 @@ class LicenciaController extends Controller
     /**
      * Creates a new Licencia entity.
      *
-     * @Route("/", name="licencia_create")
-     * @Method("POST")
-     * @Template("ExpedienteBundle:Licencia:new.html.twig")
      */
     public function createAction(Request $request)
     {
+        $id = $request->get('id');
+        $idc = $request->get('idc');
+        $em = $this->getDoctrine()->getManager();
+        echo $idc;
+        
         $entity  = new Licencia();
-        $form = $this->createForm(new LicenciaType(), $entity);
-        $form->bind($request);
+        $entity -> setFechapermiso(new \Datetime(date('d-m-Y')));
+        $entity -> setIdcontratacion($em->getRepository('ExpedienteBundle:Contratacion')->find($idc));
 
+        $form = $this->createForm(new LicenciaType(), $entity);
+        $form -> bind($request);
+        
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('new','Permiso registrado correctamente');
             return $this->redirect($this->generateUrl('licencia_show', array('id' => $entity->getId())));
         }
 
-        return array(
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($id);
+        $plazasinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazaEmpleado($request->query->get('idc'));        
+        
+        $this->get('session')->getFlashBag()->add('errornew','Errores en el Registro de Permiso');
+        return $this->render('ExpedienteBundle:Licencia:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+            'expediente' => $expedienteinfo,
+            'plazas' => $plazasinfo,
+        ));
     }
 
     /**
      * Displays a form to create a new Licencia entity.
      *
-     * @Route("/new", name="licencia_new")
-     * @Method("GET")
-     * @Template()
      */
-    public function newAction()
+    public function newAction(Request $request, $id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $idc = $request->query->get('idc');
         $entity = new Licencia();
+        $entity -> setFechapermiso(new \Datetime(date('d-m-Y')));
+        $entity -> setIdcontratacion($em->getRepository('ExpedienteBundle:Contratacion')->find($idc));
         $form   = $this->createForm(new LicenciaType(), $entity);
-
-        return array(
+        $em = $this->getDoctrine()->getManager();
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($id);
+        $plazasinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazaEmpleado($idc);
+        return $this->render('ExpedienteBundle:Licencia:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
-        );
+            'expediente' => $expedienteinfo,
+            'plazas' => $plazasinfo,
+        ));
     }
 
     /**
      * Finds and displays a Licencia entity.
      *
-     * @Route("/{id}", name="licencia_show")
-     * @Method("GET")
-     * @Template()
      */
     public function showAction($id)
     {
@@ -148,10 +172,10 @@ class LicenciaController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('ExpedienteBundle:Licencia:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**

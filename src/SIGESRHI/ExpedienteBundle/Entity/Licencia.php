@@ -105,14 +105,14 @@ class Licencia
     private $fechapermiso;
 
     /**
-     * @var \Expediente
+     * @var \Contratacion
      *
-     * @ORM\ManyToOne(targetEntity="Expediente")
+     * @ORM\ManyToOne(targetEntity="Contratacion")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idcontratacion", referencedColumnName="id")
      * })
      */
-    private $idexpediente;
+    private $idcontratacion;
 
 
 
@@ -356,26 +356,28 @@ class Licencia
         return $this->fechapermiso;
     }
 
+
+
     /**
-     * Set idexpediente
+     * Set idcontratacion
      *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Expediente $idexpediente
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion
      * @return Licencia
      */
-    public function setIdexpediente(\SIGESRHI\ExpedienteBundle\Entity\Expediente $idexpediente = null)
+    public function setIdcontratacion(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion = null)
     {
-        $this->idexpediente = $idexpediente;
+        $this->idcontratacion = $idcontratacion;
     
         return $this;
     }
 
     /**
-     * Get idexpediente
+     * Get idcontratacion
      *
-     * @return \SIGESRHI\ExpedienteBundle\Entity\Expediente 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Contratacion 
      */
-    public function getIdexpediente()
+    public function getIdcontratacion()
     {
-        return $this->idexpediente;
+        return $this->idcontratacion;
     }
 }

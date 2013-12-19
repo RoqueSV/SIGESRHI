@@ -493,10 +493,8 @@ public function admEmpleadoAction()
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias){
-                $query->Join($tableAlias.'.idempleado','e')
-                        ->Join('e.idcontratacion','c')                        
-                        ->andWhere($tableAlias.'.tipoexpediente = :emp')
-                        ->andWhere('c.fechafincontrato IS NULL')
+                $query->andWhere($tableAlias.'.tipoexpediente = :emp')
+                       // ->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
                         ->setParameter('emp','E');
                         
             }            
@@ -516,6 +514,13 @@ public function admEmpleadoAction()
             }
         );
         $grid->addRowAction($rowAction1); 
+        $grid->setId('grid_adm_activos');
+
+        //Columnas para filtrar
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','align'=>'center','title' => 'Código',"operatorsVisible"=>false));
+        $grid->addColumn($CodigoEmpleados,1);
+        $grid->addColumn($NombreEmpleados,2);
 
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         //Camino de migas
@@ -538,7 +543,7 @@ public function inactivarEmpleadoAction()
         //ver expediente a inhabilitar(Principal)
         if($request->query->get('id')!=null AND $numacuerdo==null) {            
             $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($request->query->get('id'));
-            $plazasinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazasEmpleado($request->query->get('id'));
+            //$plazasinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazasEmpleado($request->query->get('id'));
 
             $breadcrumbs = $this->get("white_october_breadcrumbs");
             $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
@@ -548,7 +553,6 @@ public function inactivarEmpleadoAction()
 
             return $this->render('ExpedienteBundle:Expediente:inactivar.html.twig', array(          
                 'expediente' => $expedienteinfo,
-                'plazas' => $plazasinfo,
                 'numerodef' => '',
             ));
         }
@@ -572,7 +576,7 @@ public function inactivarEmpleadoAction()
                 $breadcrumbs = $this->get("white_october_breadcrumbs");
                 $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
                 $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
-                $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
+                $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("expediente_adm_empleado"));
                 $breadcrumbs->addItem("Registrar Inactivo",  "");
 
                 $this->get('session')->getFlashBag()->add('error','Ingrese un código de acuerdo válido para el Empleado');
@@ -597,10 +601,8 @@ public function admEmpleadoInactivoAction()
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias){
-                $query->Join($tableAlias.'.idempleado','e')
-                        ->Join('e.idcontratacion','c')                        
-                        ->andWhere($tableAlias.'.tipoexpediente = :emp')
-                        ->andWhere('c.fechafincontrato IS NOT NULL')
+                $query->andWhere($tableAlias.'.tipoexpediente = :emp')
+                        //->andWhere('_idempleado_idcontratacion.fechafincontrato IS NOT NULL')
                         ->setParameter('emp','X');
             }
         );
@@ -620,6 +622,14 @@ public function admEmpleadoInactivoAction()
         );
         $grid->addRowAction($rowAction1); 
 
+        $grid->setId('grid_adm_activos');
+
+        //Columnas para filtrar
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','align'=>'center','title' => 'Código',"operatorsVisible"=>false));
+        $grid->addColumn($CodigoEmpleados,1);
+        $grid->addColumn($NombreEmpleados,2);
+        
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
@@ -674,7 +684,7 @@ public function activarEmpleadoAction()
                 $breadcrumbs = $this->get("white_october_breadcrumbs");
                 $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
                 $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
-                $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
+                $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("expediente_adm_empleado_inactivo"));
                 $breadcrumbs->addItem("Registrar Inactivo",  "");
 
                 $this->get('session')->getFlashBag()->add('error','Ingrese un código de acuerdo válido para el Empleado');

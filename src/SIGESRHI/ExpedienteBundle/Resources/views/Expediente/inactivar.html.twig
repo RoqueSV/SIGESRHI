@@ -95,17 +95,6 @@
         <td colspan="5"><b>Lugar y fecha de expedición de DUI:</b> {{ exp.lugardui }}, {{ exp.fechadui | date('d-m-Y') | fecha }}</td>
     <tr>
     </table>
-    <h5>Plaza(s)</h5>
-    <table class="table table-bordered table-hover">
-    {% for plaza in plazas %}
-    <tr>
-      <th colspan="2">Cargo Desempeñado:</th><td colspan="3">{{ plaza.nombreplaza }}</td>
-    <tr>
-    <tr>
-        <th colspan="2">Lugar Destacado:</th><td colspan="3"> {{ plaza.nombrecentro }}</td>
-    <tr>
-    {% endfor %}
-    </table>
     <br>
     </fieldset>
     <form action="{{ path('expediente_inactivar') }}" method="post">
