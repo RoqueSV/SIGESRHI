@@ -1,0 +1,30 @@
+hojaservicio:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Hojaservicio:index" }
+
+hojaservicio_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Hojaservicio:show" }
+
+hojaservicio_new:
+    pattern:  /{id}/new
+    defaults: { _controller: "ExpedienteBundle:Hojaservicio:new" }
+
+hojaservicio_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Hojaservicio:create" }
+    requirements: { _method: post }
+
+hojaservicio_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Hojaservicio:edit" }
+
+hojaservicio_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Hojaservicio:update" }
+    requirements: { _method: post|put }
+
+hojaservicio_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Hojaservicio:delete" }
+    requirements: { _method: post|delete }

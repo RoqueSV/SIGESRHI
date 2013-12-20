@@ -1,0 +1,94 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Hojaservicio</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombreempleado</th>
+                <td>{{ entity.nombreempleado }}</td>
+            </tr>
+            <tr>
+                <th>Dui</th>
+                <td>{{ entity.dui }}</td>
+            </tr>
+            <tr>
+                <th>Lugardui</th>
+                <td>{{ entity.lugardui }}</td>
+            </tr>
+            <tr>
+                <th>Lugarnac</th>
+                <td>{{ entity.lugarnac }}</td>
+            </tr>
+            <tr>
+                <th>Fechanac</th>
+                <td>{{ entity.fechanac|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Estadocivil</th>
+                <td>{{ entity.estadocivil }}</td>
+            </tr>
+            <tr>
+                <th>Direccion</th>
+                <td>{{ entity.direccion }}</td>
+            </tr>
+            <tr>
+                <th>Educacion</th>
+                <td>{{ entity.educacion }}</td>
+            </tr>
+            <tr>
+                <th>Fechaingreso</th>
+                <td>{{ entity.fechaingreso|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Cargo</th>
+                <td>{{ entity.cargo }}</td>
+            </tr>
+            <tr>
+                <th>Sueldoinicial</th>
+                <td>{{ entity.sueldoinicial }}</td>
+            </tr>
+            <tr>
+                <th>Isss</th>
+                <td>{{ entity.isss }}</td>
+            </tr>
+            <tr>
+                <th>Nit</th>
+                <td>{{ entity.nit }}</td>
+            </tr>
+            <tr>
+                <th>Destacadoen</th>
+                <td>{{ entity.destacadoen }}</td>
+            </tr>
+            <tr>
+                <th>Informacionadicional</th>
+                <td>{{ entity.informacionadicional }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('hojaservicio') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('hojaservicio_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('hojaservicio_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

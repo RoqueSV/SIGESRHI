@@ -28,3 +28,7 @@ contratacion_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "ExpedienteBundle:Contratacion:delete" }
     requirements: { _method: post|delete }
+
+contratacion_tipo:
+    pattern:  /tipo
+    defaults: { _controller: "ExpedienteBundle:Contratacion:tipoContrato" }

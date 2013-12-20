@@ -8,28 +8,28 @@
     {% endfor %}
 
     <h3 class="text-center"> Datos registrados </h3>
-    <fieldset><legend>Datos Generales del evaluado</legend>
+    <h5>Datos Generales del evaluado</h5>
     <table class="table table-bordered table-hover">
     {% for exp in expediente %}
     <tr>
         <th>Fecha:</th>
-        <td><b> {{ exp.fechaexpediente | date('d-m-Y') | fecha }} </b></td>
+        <td> {{ exp.fechaexpediente | date('d-m-Y') | fecha }} </td>
     </tr>
     <tr>
         <th>Nombre:</th>
-        <td><b> {{ exp.nombres  }}</b></td>
+        <td> {{ exp.nombres  }} </td>
     </tr>
     <tr>
         <th>Escolaridad:</th>
-        <td><b> {{ exp.nombretitulo }}</b></td>
+        <td> {{ exp.nombretitulo }} </td>
     </tr>
     <tr>
         <th>Plaza a la que aplica:</th>
-        <td><b>{{ exp.nombreplaza }}</b></td>
+        <td> {{ exp.nombreplaza }} </td>
     </tr>    
     </table>
-    </fieldset>
-
+    
+    <br/>
     <h5>Prueba Psicologica</h5>
     <table class="table table-bordered table-hover">
         <tbody>

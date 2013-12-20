@@ -15,8 +15,9 @@ class ContratacionRepository extends EntityRepository
 	public function obtenerAspiranteValido($idexp)
     {
     return $this->getEntityManager()
-            ->createQuery("SELECT s.id,
-      	                          e.id idexpediente,
+            ->createQuery("SELECT e.id,
+                                  s.id idsolicitud,
+                                  ps.id idprueba,
       	                          s.nombrecompleto, 
       	                          CONCAT(m.nombremunicipio,CONCAT(', ',d.nombredepartamento))  direccion, 
       	                          s.estadocivil, 
@@ -35,11 +36,21 @@ class ContratacionRepository extends EntityRepository
                                   s.fechadui,
                                   s.lugardui,
                                   p.nombreplaza
-                           FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e join s.idplaza p
-                           JOIN s.idmunicipio m JOIN m.iddepartamento d
+                           FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN s.idplaza p
+                                JOIN s.idmunicipio m JOIN m.iddepartamento d LEFT JOIN e.idpruebapsicologica ps
                            WHERE e.id=:idexp
                            ")
             ->setParameter('idexp',$idexp)
             ->getResult();
-  }
+    }
+
+   public function actualizarEstadoExpediente($idexp)
+    {
+    return $this->getEntityManager()
+                ->createQuery("UPDATE ExpedienteBundle:Expediente e SET e.tipoexpediente='E'
+                               WHERE e.id=:idexp
+                              ")
+                ->setParameter('idexp',$idexp)
+                ->getResult();
+    }
 }

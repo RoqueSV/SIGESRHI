@@ -1174,8 +1174,8 @@ input[type="color"]:focus,
 
 input[type="radio"],
 input[type="checkbox"] {
-  margin: 4px 0 0;
-  margin-top: 1px \9;
+  margin: 1px 0 0;
+  margin-top: 0px \9;
   *margin-top: 0;
   line-height: normal;
 }
@@ -2028,6 +2028,11 @@ table {
 
 .table thead th {
   vertical-align: bottom;
+}
+
+.table th label {
+  font-weight: bold;
+  background-color: #E1E1E1;
 }
 
 .table caption + thead tr:first-child th,
@@ -3917,6 +3922,13 @@ input[type="submit"].btn.btn-mini {
 
 .alert-success h4 {
   color: #468847;
+}
+
+.alert-form {
+  color: black;
+  background-color: white;
+  border-color: white;
+  padding: 3px 15px 3px 2px;
 }
 
 .alert-danger,

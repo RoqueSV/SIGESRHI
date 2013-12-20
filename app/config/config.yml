@@ -132,12 +132,17 @@ knp_gaufrette:
         fotografia_adapter:
             local:
                 directory: %kernel.root_dir%/../web/uploads/fotografias
+        contratacion_adapter:
+            local:
+                directory: %kernel.root_dir%/../web/uploads/docs_contratacion
 
     filesystems:
         docs_exp_fs:
             adapter:    docsexp_adapter
         fotografia_fs:
             adapter:    fotografia_adapter
+        contratacion_fs:
+            adapter:    contratacion_adapter
 
 vich_uploader:
     db_driver: orm
@@ -154,6 +159,13 @@ vich_uploader:
         fotografias:
             uri_prefix: fotografia_adapter
             upload_destination: fotografia_fs 
+            namer: vich_uploader.namer_origname
+            delete_on_remove: true
+            delete_on_update: true
+
+        docs_contratacion:
+            uri_prefix: contratacion_adapter
+            upload_destination: contratacion_fs 
             namer: vich_uploader.namer_origname
             delete_on_remove: true
             delete_on_update: true

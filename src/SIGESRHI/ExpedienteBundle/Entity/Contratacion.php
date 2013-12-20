@@ -4,6 +4,8 @@ namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Contratacion
@@ -11,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="contratacion")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Repositorio\ContratacionRepository")
+ * @Vich\Uploadable
  */
 class Contratacion
 {
@@ -63,32 +66,34 @@ class Contratacion
      * @var \DateTime
      *
      * @ORM\Column(name="fechainiciocontratacion", type="date", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar la fecha de inicio laboral")
-     * @Assert\DateTime()
      */
     private $fechainiciocontratacion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="doccontratacion", type="string", length=50, nullable=true)
+     * @ORM\Column(name="doccontratacion", type="string", length=100, nullable=true)
      * @Assert\Length(
-     * max = "50",
-     * maxMessage = "El nombre del documento no debe exceder los {{limit}} caracteres"
+     * max = "150",
+     * maxMessage = "El nombre o ruta del documento no debe exceder los {{limit}} caracteres"
      * )
+     *
      */
     private $doccontratacion;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="informacionadicional", type="text", length=500, nullable=true)
-     * @Assert\Length(
-     * max = "500",
-     * maxMessage = "La informacion adicional no debe exceder los {{limit}} caracteres"
+     * @Assert\File(
+     * maxSize="2048k",
+     * mimeTypes = {"image/png", "image/jpeg", "image/pjpeg", "application/pdf", "application/x-pdf", "application/msword"},
+     * maxSizeMessage = "El tamaño maximo permitido para el documento es 2MB.",
+     * mimeTypesMessage = "El documento debe ser una imagen o un pdf."
      * )
+     *
+     * @Vich\UploadableField(mapping="docs_contratacion", fileNameProperty="doccontratacion")
+     *
      */
-    private $informacionadicional;
+    private $file;
+
 
      /**
      * @var string
@@ -307,29 +312,7 @@ class Contratacion
         return $this->doccontratacion;
     }
 
-    /**
-     * Set informacionadicional
-     *
-     * @param string $informacionadicional
-     * @return Contratacion
-     */
-    public function setInformacionadicional($informacionadicional)
-    {
-        $this->informacionadicional = $informacionadicional;
     
-        return $this;
-    }
-
-    /**
-     * Get informacionadicional
-     *
-     * @return string 
-     */
-    public function getInformacionadicional()
-    {
-        return $this->informacionadicional;
-    }
-
     /**
      * Set tipocontratacion
      *
@@ -513,4 +496,26 @@ class Contratacion
     {
         return $this->idempleado;
     }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
 }

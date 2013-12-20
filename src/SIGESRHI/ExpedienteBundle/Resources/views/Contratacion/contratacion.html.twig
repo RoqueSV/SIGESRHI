@@ -1,0 +1,95 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal %}
+
+    {{ form_javascript(form) }}
+
+    {% if tipo == 1 %}
+    <h3 class="text-center">Autorizaci&oacute;n de nombramiento</h3>
+    {% else %}
+    <h3 class="text-center">Registro de empleado por contrato</h3>
+    {% endif %}
+
+    <form action="{{ path('contratacion_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+    
+    <fieldset><legend>Ingreso de datos de contratación</legend>
+    <br />
+    
+      <div style="margin-left:40px;" class="text-center">
+        <b>NOMBRE EMPLEADO</b> &nbsp;&nbsp;&nbsp; 
+        <span class="alert alert-form">{{expediente[0].nombrecompleto}}</span>
+      </div>
+    <br /><br />
+
+    <div class="control-group">
+         <label for="codigoempl" class="control-label required">C&oacute;digo empleado</label>
+         <div class="controls">
+         <input type="text" name="codempleado" id="codempleado" required="required" class="input-small"/>
+         </div>
+    </div>
+
+    {{form_row(form.idplaza)}}
+
+    {{form_row(form.idunidad)}}
+
+    {{form_row(form.sueldoinicial)}}
+
+    {{form_label(form.numoficio)}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    {{form_widget(form.numoficio)}}<span class="help-inline">* número del documento generado</span>
+    {{form_errors(form.numoficio)}}
+    <br/><br/>
+
+    {{form_row(form.fechaautorizacion)}}
+    
+    {% if tipo == 1 %}
+       {{form_row(form.fechainiciocontratacion)}}
+       <div class="hide">
+       {{form_widget(form.fechafincontrato, {'attr': {'class': 'invisible'}}) }}
+       </div>
+    {% else %}  
+       {{form_row(form.fechainiciocontratacion,{ 'label': 'Fecha inicio contrato' })}}
+       {{form_row(form.fechafincontrato)}}
+    {% endif %}
+
+    {{form_row(form.horaslaborales)}}
+
+    {{form_row(form.jornadalaboral)}}
+
+    {{form_row(form.observaciones)}}
+    
+    <br /> 
+    {% if tipo == 1 %}
+    <table width="80%" class="centered-table">
+        <tr>
+            <td>Subir documento o imagen del nombramiento emitido por DGP (opcional)</td>
+        </tr>
+        <tr>
+            <td> {{form_widget(form.file)}}  {{form_errors(form.file)}}</td>
+        </tr>
+    </table>
+       
+    {% else %}  
+
+    <table width="80%" class="centered-table">
+        <tr>
+            <td >Subir documento o imagen del contrato del empleado (opcional)</td>
+        </tr>
+        <tr>
+            <td> {{form_widget(form.file)}}  {{form_errors(form.file)}}</td>
+        </tr>
+    </table>
+    {% endif %}
+    <input type="hidden" name="tipo" id="tipo" value="{{tipo}}"/>
+    <input type="hidden" name="idexpediente" id="idexpediente" value="{{expediente[0].id}}"/>
+       
+    {{ form_rest(form) }}
+    <br/>
+    </fieldset>
+    
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">Registrar</button>
+      <a href="{{ path('contratacion_new',{'id': expediente[0].id}) }}"  class="btn" onclick="return confirm('Si cancela, perderá los datos del formulario actual ¿Está seguro de cancelar?')">Cancelar</a>
+    </div>
+    
+    </form>
+{% endblock %}

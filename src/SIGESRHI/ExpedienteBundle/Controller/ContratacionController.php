@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use SIGESRHI\ExpedienteBundle\Entity\Contratacion;
 use SIGESRHI\ExpedienteBundle\Form\ContratacionType;
 use SIGESRHI\ExpedienteBundle\Entity\Expediente;
+use SIGESRHI\ExpedienteBundle\Entity\Empleado;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Grid;
@@ -58,7 +59,9 @@ class ContratacionController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Seleccionar aspirante", $this->get("router")->generate("contratacion"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
         
         return $grid->getGridResponse('ExpedienteBundle:Contratacion:index.html.twig');
     }
@@ -70,15 +73,39 @@ class ContratacionController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Contratacion();
+
+        //Establecer tipo
+        $entity->setTipocontratacion($request->get('tipo'));
+
         $form = $this->createForm(new ContratacionType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            
+             $em = $this->getDoctrine()->getManager();
+             
+             //crear empleado para establecer la relación.
+             $empleado = new Empleado();
+             $idexpediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->get('idexpediente'));
+             $empleado->setIdexpediente($idexpediente);
+             $empleado->setCodigoempleado($request->get('codempleado'));
+             
+             $em->persist($empleado);
+             $em->flush();
+             
+             //asignamos el id del nuevo empleado
+             $entity->setIdempleado($empleado);
+             
+             $em->persist($entity);
+             $em->flush();
 
-            return $this->redirect($this->generateUrl('contratacion_show', array('id' => $entity->getId())));
+             //Actualizar expediente
+             $expedienteinfo = $em->getRepository('ExpedienteBundle:Contratacion')->actualizarEstadoExpediente($request->get('idexpediente'));
+             
+             if(count($entity->getIdempleado()->getIdcontratacion())==0){
+             return $this->redirect($this->generateUrl('hojaservicio_new', array('id' => $request->get('idexpediente'))));
+            }
+         return $this->redirect($this->generateUrl('contratacion_show', array('id' => $entity->getId())));
         }
 
         return $this->render('ExpedienteBundle:Contratacion:new.html.twig', array(
@@ -93,27 +120,73 @@ class ContratacionController extends Controller
      */
     public function newAction()
     {
-        /*$entity = new Contratacion();
-        $form   = $this->createForm(new ContratacionType(), $entity);
 
-        return $this->render('ExpedienteBundle:Contratacion:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));*/
         $request = $this->getRequest();
         
         $em = $this->getDoctrine()->getManager();
         $expediente = $em->getRepository('ExpedienteBundle:Contratacion')->obtenerAspiranteValido($request->query->get('id'));
     
+        $idexpediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('id'));
+        
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Gestion de Aspirantes",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Validar Expediente",  $this->get("router")->generate("expediente_aspirantes"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
+        $breadcrumbs->addItem($idexpediente->getIdsolicitudempleo()->getNumsolicitud(),  $this->get("router")->generate("contratacion_new"));
         
         return $this->render('ExpedienteBundle:Contratacion:new.html.twig', array(          
             'expediente' => $expediente,
         ));
+    }
+
+    public function tipoContratoAction()
+    {
+        $request=$this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+
+        $tipo=$request->get('tipo');
+
+        $expediente = $em->getRepository('ExpedienteBundle:Contratacion')->obtenerAspiranteValido($request->get('idexp'));
+        foreach ($expediente as $exp) {
+          $plaza = $exp['nombreplaza'];
+        }
+        $idplaza = $em->getRepository('AdminBundle:Plaza')->findOneByNombreplaza($plaza);
+        
+        $entity = new Contratacion();
+        $entity->setIdplaza($idplaza);
+
+        $form = $this->createForm(new ContratacionType(), $entity);
+        
+        //Camino de migas
+        $idexpediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('idexp'));
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
+
+        if ($tipo == 1){ //Ley de salarios
+        $breadcrumbs->addItem("Registrar nombramiento",  $this->get("router")->generate("contratacion_new"));
+          return $this->render('ExpedienteBundle:Contratacion:contratacion.html.twig', array(
+         'entity' => $entity,
+         'expediente' => $expediente,
+         'tipo' => $tipo,
+         'form' => $form->createView(),
+         ));
+        }
+       else if ($tipo == 2){ //Contrato
+        $breadcrumbs->addItem("Registrar contrato",  $this->get("router")->generate("contratacion_new"));
+          return $this->render('ExpedienteBundle:Contratacion:contratacion.html.twig', array(
+         'entity' => $entity,
+         'expediente' => $expediente,
+         'tipo' => $tipo,
+         'form' => $form->createView(),
+         ));
+       }
+
+
     }
 
     /**

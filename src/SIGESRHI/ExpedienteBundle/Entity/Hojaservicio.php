@@ -11,8 +11,6 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  *
  * @ORM\Table(name="hojaservicio")
  * @ORM\Entity
- * @Assert\Callback(methods={"esDuiValido"})
- * @Assert\Callback(methods={"esNitValido"})
  */
 class Hojaservicio
 {
@@ -88,10 +86,10 @@ class Hojaservicio
     /**
      * @var string
      *
-     * @ORM\Column(name="estadocivil", type="string", length=12, nullable=false)
+     * @ORM\Column(name="estadocivil", type="string", length=1, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el estado civil")
      * @Assert\Length(
-     * max = "12",
+     * max = "1",
      * maxMessage = "El estado civil no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -108,6 +106,19 @@ class Hojaservicio
      * )
      */
     private $direccion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefonofijo", type="string", length=8, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el telefono")
+     * @Assert\Length(
+     * max = "8",
+     * maxMessage = "El telefono no debe exceder los {{limit}} caracteres"
+     * )
+     *
+     */
+    private $telefonofijo;
 
     /**
      * @var string
@@ -206,10 +217,6 @@ class Hojaservicio
      */
     private $idexpediente;
 
-
-    public function __toString() {
-          return $this->codigoempleado;
-       }   
 
     /**
      * Get id
@@ -380,6 +387,29 @@ class Hojaservicio
     public function getDireccion()
     {
         return $this->direccion;
+    }
+
+    /**
+     * Set telefonofijo
+     *
+     * @param string $telefonofijo
+     * @return Solicitudempleo
+     */
+    public function setTelefonofijo($telefonofijo)
+    {
+        $this->telefonofijo = $telefonofijo;
+    
+        return $this;
+    }
+
+    /**
+     * Get telefonofijo
+     *
+     * @return string 
+     */
+    public function getTelefonofijo()
+    {
+        return $this->telefonofijo;
     }
 
     /**
@@ -588,97 +618,5 @@ class Hojaservicio
     {
         return $this->idexpediente;
     }
-
-
-    /******************** Validacion del dui y nit ******************/
-
-
-    
-        public function esDuiValido(ExecutionContextInterface $context)
-            {
-           
-            $pDui = $this->getDui();
-
-
-        $i= 0;
-        $suma = 0;
-        $digito = 0;
-
-        if($pDui == '000000000'||$pDui=='' || strlen($pDui) != 9){
-
-            $context->addViolationAt('dui', 'El DUI introducido no tiene
-                el formato correcto (9 digitos), sin guiones y
-                sin dejar ningún espacio en blanco)', array(), null);
-                return;
-
-        }
-                
-
-        $digito = substr($pDui,8);
-
-        for($i=1;$i<strlen($pDui);$i++){
-                $suma = $suma + ((substr($pDui,$i-1,1))*(10-$i));
-                //echo "$suma<br>";
-        }//fin for
-
-        $validar = 0;
-        $validar = (10-($suma%10)) % 10;
-        //echo "<br><br>".$validar."==".$digito."<br><br>";
-       
-        if($digito != $validar){
-
-            $context->addViolationAt('dui', 'DUI ingresado Inválido.',array(), null);
-
-        }//fin if
-
-    
-            }//fin funcion esDuiValido()
-
-
-
-    //Funcion validar NIT
-
-            
-    public function esNitValido(ExecutionContextInterface $context){
-
-    $nit= $this->getNit();
-
-    if(preg_match('/(^\d{14})/',$nit)){
-        $verificador = (int) substr($nit,13,1);
-        $valida = false;
-        $suma = 0;
-        if(( (int)substr($nit,10,3) ) <= 100){
-            for($i = 1; $i <= 13; $i++){
-                $suma += ( (int) substr($nit,( $i - 1 ),1) ) * ( 15 - $i );
-            }
-            $valida = ($suma%11);
-
-            if($valida == 10){
-                $valida = 0;
-            }
-        }else{
-            for($i = 1; $i <= 13; $i++){
-                $factor = (3 + (6 * floor(abs(( $i + 4 ) / 6)))) - $i;
-                $suma += ( (int) substr($nit,( $i - 1 ),1) ) * $factor;
-            }
-            $mod = ($suma%11);
-            if($mod > 1){
-                $valida = 11 - $mod;
-            }else{
-                $valida = 0;
-            }
-        }
-        if($valida != $verificador) 
-             $context->addViolationAt('nit', 'El NIT introducido no es válido.', array(), null);
-            
-   }
-   else{
-    $context->addViolationAt('nit', 'NIT no tiene el formato correcto (14 digitos), sin guiones y
-                sin dejar ningún espacio en blanco)', array(), null);
-    }
-
-}//fin validar NIT
-
-/****************************************************************/
 
 }

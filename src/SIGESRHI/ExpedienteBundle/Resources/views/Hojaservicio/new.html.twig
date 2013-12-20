@@ -1,0 +1,102 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+  <h3 class="text-center">Registro de Hoja de Servicio</h3>
+
+  <br />
+  <form action="{{ path('hojaservicio_create', {'idexp': idexp}) }}" method="post" class="form-inline">
+
+  <table width="100%">
+    <tr>
+       <td width="25%"> 
+        <table border="3" align="center" width="150px" height="193px">
+                <tr>
+                    <td>
+                        <img src="{{asset('uploads/fotografias/' ~ fotografia)}}"  class="fotoSol"/>
+                    </td>
+                </tr>
+        </table>
+       </td>
+      <td>
+        <table class="mitable">
+                <tr>
+                    <td>
+                        {{form_label(form.nombreempleado)}}
+                       <span style="margin-left:21px;">{{form_widget(form.nombreempleado)}}</span>  
+                        {{form_errors(form.nombreempleado)}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{form_label(form.dui)}} 
+                        <span style="margin-left:87px;">{{form_widget(form.dui)}}</span>
+                        <span style="margin-left:39px;">{{form_label(form.lugardui)}}</span>&nbsp;&nbsp;
+                        {{form_widget(form.lugardui)}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{form_label(form.lugarnac)}} &nbsp;&nbsp;
+                        {{form_widget(form.lugarnac)}} {{form_errors(form.lugarnac)}}
+                        <span style="margin-left:20px;">{{form_label(form.fechanac)}}</span>&nbsp;&nbsp; 
+                        {{form_widget(form.fechanac)}} {{form_errors(form.fechanac)}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{form_label(form.direccion)}}
+                        <span style="margin-left:77px;">{{form_widget(form.direccion)}}</span>
+                        {{form_errors(form.direccion)}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{form_label(form.estadocivil)}} 
+                        <span style="margin-left:67px;">{{form_widget(form.estadocivil)}}</span>
+                        {{form_errors(form.estadocivil)}}
+                        <span style="margin-left:18px;">{{form_label(form.telefonofijo)}}</span>&nbsp;&nbsp;
+                        {{form_widget(form.telefonofijo)}} {{form_errors(form.telefonofijo)}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{form_label(form.educacion)}} 
+                        <span style="margin-left:72px;">{{form_widget(form.educacion)}}</span> 
+                        {{form_errors(form.educacion)}}
+                    </td>
+                </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <br />
+  {{form_label(form.fechaingreso)}}
+  <span style="margin-left:45px;">{{form_widget(form.fechaingreso)}}</span>
+  &nbsp;&nbsp;&nbsp;{{form_label(form.cargo)}}&nbsp;&nbsp;{{form_widget(form.cargo)}}
+  <br /><br />
+  
+  {{form_label(form.sueldoinicial)}}
+  <span style="margin-left:70px;">{{form_widget(form.sueldoinicial)}}</span>
+  <br /><br />
+  
+  {{form_label(form.isss)}}<span style="margin-left:72px;">{{form_widget(form.isss)}}</span>
+  <span style="margin-left:54px;">{{form_label(form.nit)}}</span>&nbsp;&nbsp;{{form_widget(form.nit)}}
+  <br /><br />
+  
+  {{form_label(form.destacadoen)}}<span style="margin-left:71px;">{{form_widget(form.destacadoen)}}</span>
+  <br /><br />
+  
+  {{form_label(form.informacionadicional)}}
+  <span style="margin-left:23px;">{{form_widget(form.informacionadicional)}}</span>
+  {{form_errors(form.informacionadicional)}}
+
+{{ form_rest(form) }}
+<br /><br />
+  <div class="text-center">
+      <button type="submit" class="btn btn-primary">Registrar</button>
+      <a href="{{ path('contratacion') }}"  class="btn">Cancelar</a>
+  </div>
+
+</form>
+{% endblock %}
