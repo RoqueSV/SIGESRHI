@@ -4,7 +4,6 @@ namespace SIGESRHI\ExpedienteBundle\Repositorio;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * ExpedienteRepository
@@ -37,11 +36,41 @@ class ExpedienteRepository extends EntityRepository
             ->setParameter('idexp',$idexp)
             ->getResult();
   }
-/**
-*
-* @GRID\Column(field="fechaexpediente", type="date")
-*
-*/
+
+public function obtenerExpedienteEmpleadoInfo($idexp)
+  {
+  return $this->getEntityManager()
+    ->createQuery("SELECT s.id,e.id as idexpediente,s.nombrecompleto, CONCAT(COALESCE(s.calle,''),CONCAT(', ',s.colonia)) as direccion, s.estadocivil, s.telefonofijo,
+                          s.telefonomovil, s.email,s.lugarnac, s.fechanac, s.fotografia,s.dui,s.nit,s.isss,s.nup,s.nip,s.sexo,s.fechadui,s.lugardui, em.codigoempleado,
+                          e.fechaexpediente
+                         FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN e.idempleado em
+                         WHERE e.id=:idexp 
+                         ")
+          ->setParameter('idexp',$idexp)
+          ->getResult();
+}
+
+public function obtenerPlazasEmpleado($idexp)
+  {
+  return $this->getEntityManager()
+    ->createQuery("SELECT p.nombreplaza, ce.nombrecentro
+                         FROM ExpedienteBundle:Expediente e JOIN e.idempleado em JOIN em.idcontratacion c JOIN c.idplaza p JOIN c.idunidad u JOIN u.idcentro ce
+                         WHERE e.id=:idexp AND  c.fechafincontrato IS NULL
+                         ")
+          ->setParameter('idexp',$idexp)  
+          ->getResult();
+}
+
+public function obtenerPlazaEmpleado($idcontratacion)
+  {
+  return $this->getEntityManager()
+    ->createQuery("SELECT p.nombreplaza, ce.nombrecentro, c.id
+                         FROM ExpedienteBundle:Contratacion c JOIN c.idplaza p JOIN c.idunidad u JOIN u.idcentro ce 
+                         WHERE c.id=:idc AND  c.fechafincontrato IS NULL
+                         ")
+          ->setParameter('idc',$idcontratacion)  
+          ->getResult();
+}
 
   public function obtenerExpedientes()
     {
@@ -87,6 +116,14 @@ class ExpedienteRepository extends EntityRepository
                 ->createQuery("SELECT e.id id, s.nombrecompleto nombres, p.nombreplaza nombreplaza, e.fechaexpediente fecharegistro, e.tipoexpediente estado
                  FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN s.idplaza p WHERE e.fechaexpediente<:F AND (e.tipoexpediente='I' OR e.tipoexpediente='A')")
                 ->setParameter('F',$fecha_find)
+                ->getResult();
+  }
+
+  public function encontrarAcuerdo($idexp){
+    return $this->getEntityManager()
+                ->createQuery("SELECT a.id
+                 FROM ExpedienteBundle:Expediente e JOIN e.idaccion a WHERE a.numacuerdo=:N")
+                ->setParameter('N',$idexp)
                 ->getResult();
   }
 

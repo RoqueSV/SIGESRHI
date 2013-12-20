@@ -84,7 +84,7 @@ class SolicitudempleoController extends Controller
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
 
     // Manage the grid redirection, exports and the response of the controller
-    return $grid->getGridResponse('ExpedienteBundle:Solicitudempleo:index.html.twig');
+    return $grid->getGridResponse('ExpedienteBundle:Solicitudempleo:ConsultaSolicitudAspirante.html.twig');
     }
    
 
@@ -138,7 +138,7 @@ class SolicitudempleoController extends Controller
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
 
     // Manage the grid redirection, exports and the response of the controller
-    return $grid->getGridResponse('ExpedienteBundle:Solicitudempleo:grid_editar.html.twig');
+    return $grid->getGridResponse('ExpedienteBundle:Solicitudempleo:EditarSolicitudAspirante.html.twig');
     }
 
 
@@ -272,6 +272,18 @@ class SolicitudempleoController extends Controller
      */
     public function showAction($id)
     {
+        //comprobar si viene de un grid u otra pagina (por parametro enviado)
+        /*
+        $request = $this->getRequest();
+        if(isset($request->get('nogrid')))
+        {
+        $nogrid=0;
+        }
+        else
+            {
+                $nogrid=1;
+            }
+        */
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($id);
@@ -284,7 +296,8 @@ class SolicitudempleoController extends Controller
 
         return $this->render('ExpedienteBundle:Solicitudempleo:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'delete_form' => $deleteForm->createView(),
+            'nogrid' =>$nogrid,       ));
     }
 
     /**
@@ -739,6 +752,58 @@ public function asignarNumsolAction($id){
     // Manage the grid redirection, exports and the response of the controller
     return $grid->getGridResponse('ExpedienteBundle:Solicitudempleo:ConsultaSolicitudInactivo.html.twig');
     }
+
+
+    // Grid para editar las solicitudes de los empleados.
+    public function EditarSolicitudEmpleadoAction()
+    {
+       $source = new Entity('ExpedienteBundle:Expediente', 'grupo_solicitud_empleado');
+        // Get a grid instance
+        $grid = $this->get('grid');
+
+       
+          $tableAlias=$source->getTableAlias();
+        $source->manipulateQuery(
+        function($query) use ($tableAlias){
+            $query->andWhere($tableAlias.".tipoexpediente = 'T' or ".$tableAlias.".tipoexpediente = 'E'");
+             }
+            );
+    
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $grid->addColumn($NombreEmpleados,3);
+
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','title' => 'Codigo',"operatorsVisible"=>false, 'align'=>'center'));
+        $grid->addColumn($CodigoEmpleados,3);
+
+        // Attach the source to the grid
+        $grid->setId('grid_solicitud_empleado_edit');
+        $grid->setSource($source);
+
+        $em = $this->getDoctrine()->getManager();
+          
+        $grid->setNoDataMessage("No se encontraron resultados");
+        $grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
+        
+        $rowAction1 = new RowAction('Editar', 'solicitud_edit');
+        $rowAction1->setColumn('info_column');
+
+        //reasignamos el id que se utilizara para la ruta (id de solicitud en vez de id de expediente)
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+             $action->setRouteParameters(array('id'=> $row->getField('idsolicitudempleo.id')));
+              return $action;
+            }
+        );
+
+        $grid->addRowAction($rowAction1);     
+        //$grid->addExport(new ExcelExport('Exportar a Excel'));
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+    // Manage the grid redirection, exports and the response of the controller
+    return $grid->getGridResponse('ExpedienteBundle:Solicitudempleo:EditarSolicitudEmpleado.html.twig');
+    }
+
 
 
 }//fin clase

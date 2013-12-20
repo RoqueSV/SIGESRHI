@@ -5,11 +5,14 @@ namespace SIGESRHI\ExpedienteBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use APY\DataGridBundle\Grid\Mapping as GRID;
+
 /**
  * Accionpersonal
  *
  * @ORM\Table(name="accionpersonal")
  * @ORM\Entity
+ * @GRID\Source(columns="id, idtipoaccion.nombretipoaccion, numacuerdo, fecharegistroaccion, idexpediente.id, motivoaccion", groups={"grupo_consultar_acuerdo"})
  */
 class Accionpersonal
 {
@@ -20,17 +23,18 @@ class Accionpersonal
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="accionpersonal_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(filterable=false, groups={"grupo_consultar_acuerdo"}, visible=false)
      */
     private $id;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecharegistroacccion", type="date", nullable=false)
-     * @Assert\DateTime()
+     * @ORM\Column(name="fecharegistroaccion", type="date", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la fecha de registro")
+     * @GRID\Column(filterable=true, groups={"grupo_consultar_acuerdo"}, visible=true, title="Fecha Registro", align="center", operators={"gte", "like", "eq", "lt"}, operatorsVisible=true)
      */
-    private $fecharegistroacccion;
+    private $fecharegistroaccion;
 
     /**
      * @var string
@@ -41,6 +45,7 @@ class Accionpersonal
      * max = "500",
      * maxMessage = "El motivo de la accion no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(filterable=false, groups={"grupo_consultar_acuerdo"}, visible=true, title="Descripción")
      */
     private $motivoaccion;
 
@@ -51,34 +56,31 @@ class Accionpersonal
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idtipoaccion", referencedColumnName="id")
      * })
+     * @GRID\Column(field="idtipoaccion.nombretipoaccion", groups={"grupo_consultar_acuerdo"} ,visible=false, joinType="inner", filterable=true, title="Tipo de acuerdo", filter="select", operators={"like"}, operatorsVisible=false)
      */
     private $idtipoaccion;
 
     /**
      * @var \Expediente
      *
-     * @ORM\ManyToOne(targetEntity="Expediente")
+     * @ORM\ManyToOne(targetEntity="Expediente", inversedBy="idaccion")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
      * })
+     * @GRID\Column(field="idexpediente.id",groups={"grupo_consultar_acuerdo"} ,visible=false, joinType="inner", filterable=false)
      */
     private $idexpediente;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tipoacuerdo", type="string", length=1, nullable=false)
-     */
-    private $tipoacuerdo;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="numacuerdo", type="string", length=15, nullable=true)
+     * @ORM\Column(name="numacuerdo", type="string", length=15, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el numero de acuerdo.")
      * @Assert\Length(
      * max = "15",
      * maxMessage = "El numero de acuerdo no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(filterable=false, groups={"grupo_consultar_acuerdo"}, visible=true, title="# Acuerdo", align="center")
      */
     private $numacuerdo;
 
@@ -93,26 +95,26 @@ class Accionpersonal
     }
 
     /**
-     * Set fecharegistroacccion
+     * Set fecharegistroaccion
      *
-     * @param \DateTime $fecharegistroacccion
+     * @param \DateTime $fecharegistroaccion
      * @return Accionpersonal
      */
-    public function setFecharegistroacccion($fecharegistroacccion)
+    public function setFecharegistroaccion($fecharegistroaccion)
     {
-        $this->fecharegistroacccion = $fecharegistroacccion;
+        $this->fecharegistroaccion = $fecharegistroaccion;
     
         return $this;
     }
 
     /**
-     * Get fecharegistroacccion
+     * Get fecharegistroaccion
      *
      * @return \DateTime 
      */
-    public function getFecharegistroacccion()
+    public function getFecharegistroaccion()
     {
-        return $this->fecharegistroacccion;
+        return $this->fecharegistroaccion;
     }
 
     /**

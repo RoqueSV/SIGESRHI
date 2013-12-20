@@ -1,0 +1,42 @@
+accionpersonal:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:index" }
+
+accionpersonal_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:show" }
+
+accionpersonal_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:new" }
+
+accionpersonal_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:create" }
+    requirements: { _method: post }
+
+accionpersonal_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:edit" }
+
+accionpersonal_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:update" }
+    requirements: { _method: post|put }
+
+accionpersonal_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:delete" }
+    requirements: { _method: post|delete }
+
+accionpersonal_consultarTipoAccionJSON:
+    pattern:  /consultarTipoAccionJSON    
+    defaults: { _controller: ExpedienteBundle:Accionpersonal:consultarTipoAccionJSON }
+
+accionpersonal_cempleados:
+    pattern:  /cempleados
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:ConsultarEmpleadosAcuerdos" }
+
+accionpersonal_cacuerdos:
+    pattern:  /cacuerdos/{id}
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:ConsultarAcuerdosEmpleado" }

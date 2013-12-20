@@ -42,5 +42,14 @@ ExpedienteBundle_hojaservicio:
         resource: "@ExpedienteBundle/Resources/config/routing/hojaservicio.yml"
         prefix:   /hojaservicio
 
+ExpedienteBundle_licencia:
+        resource: "@ExpedienteBundle/Resources/config/routing/licencia.yml"
+        prefix:   /licencia
 
+ExpedienteBundle_accionpersonal:
+        resource: "@ExpedienteBundle/Resources/config/routing/accionpersonal.yml"
+        prefix:   /accionpersonal
 
+ExpedienteBundle_tipoaccion:
+        resource: "@ExpedienteBundle/Resources/config/routing/tipoaccion.yml"
+        prefix:   /tipoaccion

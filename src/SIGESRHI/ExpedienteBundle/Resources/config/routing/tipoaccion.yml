@@ -1,0 +1,30 @@
+tipoaccion:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Tipoaccion:index" }
+
+tipoaccion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Tipoaccion:show" }
+
+tipoaccion_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Tipoaccion:new" }
+
+tipoaccion_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Tipoaccion:create" }
+    requirements: { _method: post }
+
+tipoaccion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Tipoaccion:edit" }
+
+tipoaccion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Tipoaccion:update" }
+    requirements: { _method: post|put }
+
+tipoaccion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Tipoaccion:delete" }
+    requirements: { _method: post|delete }

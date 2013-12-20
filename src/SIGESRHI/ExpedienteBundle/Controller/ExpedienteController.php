@@ -13,8 +13,7 @@ use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Column\TextColumn;
-use APY\DataGridBundle\Grid\Action\DeleteMassAction;;
-
+use APY\DataGridBundle\Grid\Action\DeleteMassAction;
 /**
  * Expediente controller.
  *
@@ -77,8 +76,9 @@ class ExpedienteController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Gestion de Aspirantes",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Validar Expediente",  $this->get("router")->generate("expediente_aspirantes"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Validar",  $this->get("router")->generate("expediente_aspirantes"));
         
         return $grid->getGridResponse('ExpedienteBundle:Expediente:index.html.twig');
     }    
@@ -277,8 +277,9 @@ public function validarAction()
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Gestion de Aspirantes",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Validar Expediente",  $this->get("router")->generate("expediente_aspirantes"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Validar",  $this->get("router")->generate("expediente_aspirantes"));
         return $this->render('ExpedienteBundle:Expediente:validar.html.twig', array(          
             'expediente' => $expedienteinfo,
         ));
@@ -303,8 +304,9 @@ public function confirmarValidoAction($id)
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Gestion de Aspirantes",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Eliminar Aspirantes",  $this->get("router")->generate("eliminar_aspirantes"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Eliminar",  $this->get("router")->generate("eliminar_aspirantes"));
         $breadcrumbs->addItem("Antigüedad", "");
         return $this->render('ExpedienteBundle:Expediente:ant.html.twig');
     }
@@ -360,8 +362,9 @@ public function confirmarValidoAction($id)
             //Camino de migas
             $breadcrumbs = $this->get("white_october_breadcrumbs");
             $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-            $breadcrumbs->addItem("Gestion de Aspirantes",$this->get("router")->generate("hello_page"));
-            $breadcrumbs->addItem("Eliminar Aspirantes",  $this->get("router")->generate("eliminar_aspirantes"));
+            $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Eliminar",  $this->get("router")->generate("eliminar_aspirantes"));
             $breadcrumbs->addItem("Antigüedad", "");
             
             return $grid->getGridResponse('ExpedienteBundle:Expediente:showElim.html.twig',array(
@@ -388,8 +391,9 @@ public function confirmarValidoAction($id)
              //Camino de migas
             $breadcrumbs = $this->get("white_october_breadcrumbs");
             $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-            $breadcrumbs->addItem("Gestion de Aspirantes",$this->get("router")->generate("hello_page"));
-            $breadcrumbs->addItem("Eliminar Aspirantes", "");
+            $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Eliminar", "");
             return $this->render('ExpedienteBundle:Expediente:seleliminar.html.twig');
         }
 
@@ -452,8 +456,9 @@ public function confirmarValidoAction($id)
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Gestion de Aspirantes",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Eliminar Aspirantes",  $this->get("router")->generate("eliminar_aspirantes"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Eliminar",  $this->get("router")->generate("eliminar_aspirantes"));
         $breadcrumbs->addItem("Individual", "");
         
         return $grid->getGridResponse('ExpedienteBundle:Expediente:showElimAll.html.twig');        
@@ -478,6 +483,221 @@ public function confirmarValidoAction($id)
             return $this->redirect($this->generateUrl('eliminar_aspirantes'));        
         }
 
+    }
+//func que muestra empleados activos para pasarlos a inactivos
+public function admEmpleadoAction()
+    {
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_empleado');
+        $grid = $this->get('grid');
+
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->andWhere($tableAlias.'.tipoexpediente = :emp')
+                       // ->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
+                        ->setParameter('emp','E');
+                        
+            }            
+        );
+        $grid->setSource($source);  
+        $grid->setNoDataMessage("No se encontraron resultados");
+        //$plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idempleado.idcontratacion.idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false));
+        //$grid->addColumn($plaza,3);
+
+        $rowAction1 = new RowAction('Inactivar', 'expediente_inactivar');
+        $rowAction1->setColumn('info_column');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                $action->setRouteParameters(array('id'));
+                return $action; 
+            }
+        );
+        $grid->addRowAction($rowAction1); 
+        $grid->setId('grid_adm_activos');
+
+        //Columnas para filtrar
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','align'=>'center','title' => 'Código',"operatorsVisible"=>false));
+        $grid->addColumn($CodigoEmpleados,1);
+        $grid->addColumn($NombreEmpleados,2);
+
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Registrar Inactivo",  "");
+        
+        return $grid->getGridResponse('ExpedienteBundle:Expediente:indexEmpleados.html.twig');
+    } 
+
+/* Formulario para registrar un empleado como inactivo */
+public function inactivarEmpleadoAction()
+    {
+        $request = $this->getRequest();
+        $numacuerdo=$this->get('request')->request->get('numacuerdo');   
+        $idexp=$this->get('request')->request->get('idexp');   
+        $em = $this->getDoctrine()->getManager();
+        //ver expediente a inhabilitar(Principal)
+        if($request->query->get('id')!=null AND $numacuerdo==null) {            
+            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($request->query->get('id'));
+            //$plazasinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazasEmpleado($request->query->get('id'));
+
+            $breadcrumbs = $this->get("white_october_breadcrumbs");
+            $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Registrar Inactivo",  "");
+
+            return $this->render('ExpedienteBundle:Expediente:inactivar.html.twig', array(          
+                'expediente' => $expedienteinfo,
+                'numerodef' => '',
+            ));
+        }
+
+       //Si viene del formulario donde inserta el num acuerdo
+        elseif($numacuerdo!=null AND $idexp!=null){
+            $acuerdovalido = $em->getRepository('ExpedienteBundle:Expediente')->encontrarAcuerdo($numacuerdo);
+            if($acuerdovalido!=null){
+                $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+                $entity -> setTipoexpediente('X');
+                $em -> persist($entity);
+                $em -> flush();
+
+                $this->get('session')->getFlashBag()->add('confirm','Empleado registrado como inactivo Exitosamente');                
+                return $this->redirect($this->generateUrl('expediente_adm_empleado'));            
+            }
+            else{
+                $em = $this->getDoctrine()->getManager();
+                $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($idexp);
+                $plazasinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazasEmpleado($idexp);
+                $breadcrumbs = $this->get("white_october_breadcrumbs");
+                $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+                $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+                $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("expediente_adm_empleado"));
+                $breadcrumbs->addItem("Registrar Inactivo",  "");
+
+                $this->get('session')->getFlashBag()->add('error','Ingrese un código de acuerdo válido para el Empleado');
+                return $this->render('ExpedienteBundle:Expediente:inactivar.html.twig', array(          
+                    'expediente' => $expedienteinfo,
+                    'plazas' => $plazasinfo,
+                    'numerodef' => $numacuerdo,
+                ));
+            }
+        }
+        //si no viene con nada redirigirlo a grid de la opción
+        else{
+            return $this->redirect($this->generateUrl('expediente_adm_empleado'));        
+        }
+    }
+//func que muestra empleados inactivos para pasarlos a activos
+public function admEmpleadoInactivoAction()
+    {
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_empleado_inactivo');
+        $grid = $this->get('grid');
+
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->andWhere($tableAlias.'.tipoexpediente = :emp')
+                        //->andWhere('_idempleado_idcontratacion.fechafincontrato IS NOT NULL')
+                        ->setParameter('emp','X');
+            }
+        );
+        //$plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false));
+        //$grid->addColumn($plaza,3);
+        $grid->setSource($source);  
+        $grid->setNoDataMessage("No se encontraron resultados");
+
+        $rowAction1 = new RowAction('Activar', 'expediente_activar');
+        $rowAction1->setColumn('info_column');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                $action->setRouteParameters(array('id'));
+                return $action; 
+            }
+        );
+        $grid->addRowAction($rowAction1); 
+
+        $grid->setId('grid_adm_activos');
+
+        //Columnas para filtrar
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','align'=>'center','title' => 'Código',"operatorsVisible"=>false));
+        $grid->addColumn($CodigoEmpleados,1);
+        $grid->addColumn($NombreEmpleados,2);
+        
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado Inactivo",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Registrar Activo",  "");
+        
+        return $grid->getGridResponse('ExpedienteBundle:Expediente:indexEmpleados.html.twig');
+    } 
+
+    
+/* Formulario para registrar un empleado como activo */
+public function activarEmpleadoAction()
+    {
+        $request = $this->getRequest();
+        $numacuerdo=$this->get('request')->request->get('numacuerdo');   
+        $idexp=$this->get('request')->request->get('idexp');   
+        $em = $this->getDoctrine()->getManager();
+        //ver expediente a inhabilitar(Principal)
+        if($request->query->get('id')!=null AND $numacuerdo==null) {            
+            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($request->query->get('id'));
+
+            $breadcrumbs = $this->get("white_october_breadcrumbs");
+            $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Empleado Inactivo",$this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Registrar Activo",  "");
+
+            return $this->render('ExpedienteBundle:Expediente:activar.html.twig', array(          
+                'expediente' => $expedienteinfo,
+                'numerodef' => '',
+            ));
+        }
+
+       //Si viene del formulario donde inserta el num acuerdo
+        elseif($numacuerdo!=null AND $idexp!=null){
+            $acuerdovalido = $em->getRepository('ExpedienteBundle:Expediente')->encontrarAcuerdo($numacuerdo);
+            if($acuerdovalido!=null){
+                $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+                $entity -> setTipoexpediente('E');
+                $em -> persist($entity);
+                $em -> flush();
+
+                $this->get('session')->getFlashBag()->add('confirm','Empleado registrado como activo Exitosamente');                
+                return $this->redirect($this->generateUrl('expediente_adm_empleado_inactivo'));            
+            }
+            else{
+                $em = $this->getDoctrine()->getManager();
+                $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($idexp);
+
+                $breadcrumbs = $this->get("white_october_breadcrumbs");
+                $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+                $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+                $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("expediente_adm_empleado_inactivo"));
+                $breadcrumbs->addItem("Registrar Inactivo",  "");
+
+                $this->get('session')->getFlashBag()->add('error','Ingrese un código de acuerdo válido para el Empleado');
+                return $this->render('ExpedienteBundle:Expediente:activar.html.twig', array(          
+                    'expediente' => $expedienteinfo,
+                    'numerodef' => $numacuerdo,
+                ));
+            }
+        }
+        //si no viene con nada redirigirlo a grid de la opción
+        else{
+            return $this->redirect($this->generateUrl('expediente_adm_empleado_inactivo'));        
+        }
     }
 
 }

@@ -9,7 +9,7 @@
 {% endfor %}
 
 {% for flashMessage in app.session.flashbag.get('new_error') %}
-    <div class="alert alert-alert-danger">
+    <div class="alert alert-danger">
         <p> {{ flashMessage }} </p>
     </div>
 {% endfor %}
@@ -23,10 +23,104 @@
     <h4 class="text-center">AGREGAR DOCUMENTOS DIGITALES</h4>
 
     <br>
-    <p class="help-block justifyText"> En esta sección tiene la posibilidad de adjuntar los documentos solicitados. </p>
-    <p class="help-block justifyText"> Registre los documentos digitales ingresando uno a la vez y seleccionando guardar, los registros aparecen en la parte de abajo, dando la posibilidad de registrar un nuevo archivo cada vez.</p>
 
-    <p class="help-block justifyText"> Los Archivos permitidos son: Imagenes (png/jpg), documentos (pdf, doc, docx)  y archivos comprimidos (zip)</p>
+    <p class="help-block justifyText"> Registre los documentos digitales ingresando uno a la vez y seleccionando guardar, los registros aparecen en la parte de abajo, dando la posibilidad de registrar un nuevo archivo cada vez.</p>
+    <br>
+    <table border="0" width="100%">
+        <tr>
+            <td width="25%" align="center"> 
+                    <table border="3" align="center" width="150px" height="192px">
+                        <tr>
+                            <td>
+                                <img src="{{asset('uploads/fotografias/' ~ expediente.idsolicitudempleo.fotografia)}}" class="fotoSol" />
+                            </td>
+                        </tr>
+                    </table>
+            </td>
+            <td> 
+                <table class="table table-bordered table-hover mitable">
+                    <tr>
+                        <th width="30%">Nombre:</th>
+                        <td>{{expediente.idsolicitudempleo.nombrecompleto}}</td>
+                    </tr>
+                    <tr>
+                        <th>Direcci&oacute;n:</th>
+                        <td>{{expediente.idsolicitudempleo.colonia}} {{expediente.idsolicitudempleo.calle}}, {{expediente.idsolicitudempleo.idmunicipio}}, {{expediente.idsolicitudempleo.idmunicipio.iddepartamento}}</td>
+                    </tr>
+                    <tr>
+                        <th>Estado civil:</th>
+                        <td>
+                            {% set gen='o' %}
+                            {% if expediente.idsolicitudempleo.sexo =='F' %}
+                            {% set gen='a' %}
+                            {% endif %} 
+                            {% if expediente.idsolicitudempleo.estadocivil =='C' %}
+                            Casad{{gen}}
+                            {% elseif expediente.idsolicitudempleo.estadocivil =='S' %}
+                            Solter{{gen}}
+                            {% elseif expediente.idsolicitudempleo.estadocivil =='D' %}
+                            Divorciad{{gen}}
+                            {% elseif expediente.idsolicitudempleo.estadocivil =='A' %}
+                            Acompañad{{gen}}
+                            {% elseif expediente.idsolicitudempleo.estadocivil =='V' %}
+                            Viud{{gen}}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Tel&eacute;fonos:</th>
+                        <td>{{expediente.idsolicitudempleo.telefonofijo}} - {{expediente.idsolicitudempleo.telefonomovil}}</td>
+                    </tr>
+                    <tr>
+                        <th>Correo electr&oacute;nico: </th>
+                        <td>{{expediente.idsolicitudempleo.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Sexo: </th>
+                        <td>
+                            {% if expediente.idsolicitudempleo.sexo == 'M' %}
+                            Masculino
+                            {% elseif expediente.idsolicitudempleo.sexo == 'F' %}
+                            Femenino
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Lugar nacimiento: </th>
+                        <td>{{expediente.idsolicitudempleo.lugarnac}}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha nacimiento: </th>
+                        <td>{{(expediente.idsolicitudempleo.fechanac|date('d-m-Y'))|fecha}}</td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"> 
+                    <table border="0" width="100%" class="table table-bordered table-hover mitable">
+                        <tr>
+                            <th width="20%" align="center"><b>No. DUI</b></th>
+                            <th width="20%" align="center"><b>No. NIT</b></th>
+                            <th width="20%" align="center"><b>No. ISSS</b></th>
+                            <th width="20%" align="center"><b>No. NUP</b></th>
+                            <th width="20%" align="center"><b>No. NIP</b></th>
+                        </tr>
+                        <tr>
+                            <td align="center">{{expediente.idsolicitudempleo.dui}}</td>
+                            <td align="center">{{expediente.idsolicitudempleo.nit}}</td>
+                            <td align="center">{{expediente.idsolicitudempleo.isss}}</td>
+                            <td align="center">{{expediente.idsolicitudempleo.nup}}</td>
+                            <td align="center">{{expediente.idsolicitudempleo.nip}}</td>
+                        </tr>
+                    </table>
+            </td>
+        </tr>
+    </table>
+    <br>
+    
+    <p class="help-block justifyText"> Los Archivos permitidos son: Imagenes (png, jpg) - Documentos (pdf, doc, docx) - Archivos comprimidos (zip)</p>
 
     <form action="{{ path('docdigital_create', {'id':id}) }}" method="post" {{ form_enctype(form) }}>
         
@@ -82,9 +176,7 @@
 
         </div>
         {% endif %}
-
-
+        
     </form>
 
-       
 {% endblock %}

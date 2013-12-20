@@ -1,0 +1,73 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+<script>
+    jQuery(function() {
+        jQuery("#grid_grid_licencias__empleados__query__from").autocomplete({
+            source: function( request, response ) {
+                jQuery.ajax({
+                    url: "{{ path('shtumi_ajaxautocomplete') }}",
+                    dataType: "json",
+                    data: {
+                        maxRows: 12,
+                        letters: request.term,
+                        entity_alias: "empleados"
+                    },
+                    success: function( data ) {
+                        response( jQuery.map( data, function( item ) {
+                            return {
+                                label: item,
+                                value: item
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 2,
+            open: function() {
+                jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+            },
+            close: function() {
+                jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+            }
+        });
+    jQuery("#grid_grid_licencias__plaza__query__from").autocomplete({
+            source: function( request, response ) {
+                jQuery.ajax({
+                    url: "{{ path('shtumi_ajaxautocomplete') }}",
+                    dataType: "json",
+                    data: {
+                        maxRows: 12,
+                        letters: request.term,
+                        entity_alias: "plazas"
+                    },
+                    success: function( data ) {
+                        response( jQuery.map( data, function( item ) {
+                            return {
+                                label: item,
+                                value: item
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 2,
+            open: function() {
+                jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+            },
+            close: function() {
+                jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+            }
+        });
+    });
+</script>
+<h4 class='text-center'>SELECCIONE UN EMPLEADO</h4>
+{{ grid_search(grid) }}
+
+    {{ grid(grid,_self) }}
+
+    {% block grid_filters %}{% endblock %}
+    <div align='center'>
+        <a  href="{{ path('hello_page') }}" class="btn">Cancelar</a>            
+    </div>
+{% endblock %}

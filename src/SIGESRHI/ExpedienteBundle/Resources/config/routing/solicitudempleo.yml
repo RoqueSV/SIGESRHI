@@ -29,7 +29,7 @@ solicitud_delete:
     defaults: { _controller: "ExpedienteBundle:Solicitudempleo:delete" }
     requirements: { _method: post|delete }
 
-solicitud_grid_edit:
+solicitud_maspirante:
     pattern:  /editaraspirante
     defaults: { _controller: "ExpedienteBundle:Solicitudempleo:EditarSolicitudAspirante" }
 
@@ -44,3 +44,7 @@ solicitud_cempleado:
 solicitud_cinactivo:
     pattern:  /consultarinactivo
     defaults: { _controller: "ExpedienteBundle:Solicitudempleo:ConsultarSolicitudInactivo" }
+
+solicitud_mempleado:
+    pattern:  /editarempleado
+    defaults: { _controller: "ExpedienteBundle:Solicitudempleo:EditarSolicitudEmpleado" }

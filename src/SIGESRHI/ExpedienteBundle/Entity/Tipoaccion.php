@@ -38,9 +38,9 @@ class Tipoaccion
     /**
      * @var string
      *
-     * @ORM\Column(name="descripciontipoaccion", type="string", length=150, nullable=true)
+     * @ORM\Column(name="descripciontipoaccion", type="string", length=750, nullable=true)
      * @Assert\Length(
-     * max = "150",
+     * max = "750",
      * maxMessage = "La descripcion de la accion no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -133,4 +133,9 @@ class Tipoaccion
     {
         return $this->tipoaccion;
     }
+
+
+      public function __toString() {
+        return $this->getNombretipoaccion();
+    } 
 }
