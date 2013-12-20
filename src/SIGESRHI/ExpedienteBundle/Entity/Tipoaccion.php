@@ -49,7 +49,11 @@ class Tipoaccion
     /**
      * @var string
      *
-     * @ORM\Column(name="tipoaccion", type="string", nullable=false)
+     * @ORM\Column(name="tipoaccion", type="string", nullable=false, length=1)
+     * @Assert\Length(
+     * max = "1",
+     * maxMessage = "El valor de tipo accion no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $tipoaccion;
 

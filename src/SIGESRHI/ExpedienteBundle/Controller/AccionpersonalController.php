@@ -66,8 +66,9 @@ class AccionpersonalController extends Controller
      * Displays a form to create a new Accionpersonal entity.
      *
      */
-    public function newAction()
+    public function newAction($idexp)
     {
+
         $entity = new Accionpersonal();
         $entity->setFecharegistroaccion(new \Datetime(date('d-m-Y')));
 
@@ -76,6 +77,7 @@ class AccionpersonalController extends Controller
         return $this->render('ExpedienteBundle:Accionpersonal:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'idexp' => $idexp,
         ));
     }
 
@@ -320,10 +322,12 @@ class AccionpersonalController extends Controller
         $rowAction1->setColumn('info_column');
 
         //define un operador
-/*   $grid->setDefaultFilters(array(
-    'fecharegistroaccion' => array('operator' => 'gte', 'from' => date('d-m-Y')),
+        $fecha_de_hoy = date('Y-m-d');
+
+   $grid->setDefaultFilters(array(
+    'fecharegistroaccion' => array('operator' => 'lte', 'from' => $fecha_de_hoy),
     ));
-    */
+
 
         $grid->addRowAction($rowAction1);     
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));

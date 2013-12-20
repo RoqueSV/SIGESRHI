@@ -149,10 +149,10 @@ class Solicitudempleo
     /**
      * @var string
      *
-     * @ORM\Column(name="estadocivil", type="string", length=12, nullable=false)
+     * @ORM\Column(name="estadocivil", type="string", length=1, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el estado civil")
      * @Assert\Length(
-     * max = "12",
+     * max = "1",
      * maxMessage = "El estado civil no debe exceder los {{limit}} caracteres"
      * )
      *

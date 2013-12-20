@@ -92,7 +92,7 @@ class Expediente
     private $hojaservicio;
 
     /**
-     * @ORM\OneToOne(targetEntity="Accionpersonal", mappedBy="idexpediente", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Accionpersonal", mappedBy="idexpediente", cascade={"remove"})
      */
     private $idaccion;
     
@@ -356,5 +356,61 @@ class Expediente
     public function getDocsPersonal()
     {
         return $this->Docs_personal;
+    }
+
+    /**
+     * Set hojaservicio
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Hojaservicio $hojaservicio
+     * @return Expediente
+     */
+    public function setHojaservicio(\SIGESRHI\ExpedienteBundle\Entity\Hojaservicio $hojaservicio = null)
+    {
+        $this->hojaservicio = $hojaservicio;
+    
+        return $this;
+    }
+
+    /**
+     * Get hojaservicio
+     *
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Hojaservicio 
+     */
+    public function getHojaservicio()
+    {
+        return $this->hojaservicio;
+    }
+
+    /**
+     * Add idaccion
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Accionpersonal $idaccion
+     * @return Expediente
+     */
+    public function addIdaccion(\SIGESRHI\ExpedienteBundle\Entity\Accionpersonal $idaccion)
+    {
+        $this->idaccion[] = $idaccion;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idaccion
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Accionpersonal $idaccion
+     */
+    public function removeIdaccion(\SIGESRHI\ExpedienteBundle\Entity\Accionpersonal $idaccion)
+    {
+        $this->idaccion->removeElement($idaccion);
+    }
+
+    /**
+     * Get idaccion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdaccion()
+    {
+        return $this->idaccion;
     }
 }

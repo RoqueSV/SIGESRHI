@@ -297,7 +297,8 @@ class SolicitudempleoController extends Controller
         return $this->render('ExpedienteBundle:Solicitudempleo:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-            'nogrid' =>$nogrid,       ));
+            //'nogrid' =>$nogrid,      
+             ));
     }
 
     /**

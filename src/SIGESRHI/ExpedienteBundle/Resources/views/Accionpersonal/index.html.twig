@@ -12,50 +12,62 @@
                     <table border="3" align="center" width="150px" height="192px">
                         <tr>
                             <td>
-                                <img src="{{asset('uploads/fotografias/')}}" class="fotoSol" />
+                                <img src="{{asset('uploads/fotografias/' ~ entity.idsolicitudempleo.fotografia)}}" class="fotoSol" />
                             </td>
                         </tr>
                     </table>
+                    <br>
             </td>
         </td>
         <td>
             <table class="table table-bordered table-hover mitable">
                 <tr>
                     <th width="35%">Nombre: </th>
-                    <td></td>
+                    <td>{{entity.hojaservicio.nombreempleado}}</td>
                 </tr>
                 <tr>
                     <th>Código empleado: </th>
-                    <td></td>
+                    <td>{{entity.idempleado.codigoempleado}}</td>
                 </tr>
                 <tr>
                     <th>Numero de DUI: </th>
-                    <td></td>
+                    <td>{{entity.hojaservicio.dui}}</td>
                 </tr>
                 <tr>
                     <th>Extendido en: </th>
-                    <td></td>
+                    <td>{{entity.hojaservicio.lugardui}}</td>
                 </tr>
                 <tr>
                     <th>Lugar y fecha de nac.: </th>
-                    <td></td>
+                    <td>{{entity.hojaservicio.lugarnac}} {{entity.hojaservicio.fechanac|date('d-m-Y')|fecha}}</td>
                 </tr>
                 <tr>
                     <th>Estado civil: </th>
-                    <td></td>
+                    <td>
+                        {% if entity.hojaservicio.estadocivil == 'S' %} Soltero {% endif %}
+                        {% if entity.hojaservicio.estadocivil == 'A' %} Acompañado {% endif %}
+                        {% if entity.hojaservicio.estadocivil == 'C' %} Casado {% endif %}
+                        {% if entity.hojaservicio.estadocivil == 'D' %} Divorciado {% endif %}
+                        {% if entity.hojaservicio.estadocivil == 'V' %} Viudo {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <th>Estado del empleado: </th>
-                    <td></td>
+                    <td>
+                        {% if entity.tipoexpediente == "T" %}
+                        Interino
+                        {% elseif entity.tipoexpediente == "E" %}
+                        Permanente
+                        {% elseif entity.tipoexpediente == "X" %}
+                        Inactivo
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <th>Dirección: </th>
-                    <td></td>
+                    <td>{{entity.hojaservicio.direccion}}</td>
                 </tr>
-                <tr>
-                    <th>Teléfono fijo y móvil: </th>
-                    <td></td>
-                </tr>
+                
             </table>
         </td>
     </tr>
@@ -63,36 +75,40 @@
         <td colspan="2">
             <table class="table table-bordered table-hover mitable">
                 <tr>
+                    <th>Teléfono fijo y móvil: </th>
+                    <td> {{entity.idsolicitudempleo.telefonofijo}} - - - {{entity.idsolicitudempleo.telefonomovil}}</td>
+                </tr>
+                <tr>
                     <th width="25%">Educación: </th>
-                    <td></td>
+                    <td>{{entity.hojaservicio.educacion}}</td>
                 </tr>
                 <tr>
                     <th>Fecha de Ingreso: </th>
-                    <td></td>
+                    <td>{{entity.hojaservicio.fechaingreso|date('d-m-Y')|fecha}}</td>
                 </tr>
                 <tr>
                     <th>Cargo Inicial: </th>
-                    <td></td>
+                    <td>{{entity.hojaservicio.cargo}}</td>
                 </tr>
                 <tr>
                     <th>Sueldo Inicial: </th>
-                    <td></td>
+                    <td>{{entity.hojaservicio.sueldoinicial}}</td>
                 </tr>
                 <tr>
                     <th>Numero del ISSS : </th>
-                    <td></td>
+                    <td>{{entity.hojaservicio.isss}}</td>
                 </tr>
                 <tr>
                     <th>Numero de NIT : </th>
-                    <td></td>
+                    <td>{{entity.hojaservicio.nit}}</td>
                 </tr>
                 <tr>
                     <th>Destacado en: </th>
-                    <td></td>
+                    <td>{{entity.hojaservicio.destacadoen}}</td>
                 </tr>
                 <tr>
                     <th>Información Adicional: </th>
-                    <td></td>
+                    <td><div class="justifyText">{{entity.hojaservicio.informacionadicional}}</div></td>
                 </tr>
             </table>
         </td>
@@ -109,9 +125,14 @@
 <br>
 {% block grid_filters %}{% endblock %} 
 
+<div align="right">
+<a class="btn" onclick="location.href='{{path('accionpersonal_new', {'idexp': entity.id} )}}'" title="Registrar Nuevo Acuerdo"><div class="con-plus-sign">+</div></a>
+</div>
+
 <div class="text-center">
 <br>
-<button class="btn" onclick="location.href='{{path('accionpersonal_new' )}}'"> Registrar Acuerdo </button>
+
+<button class="btn" onclick="location.href=''"> Generar Reporte </button>
 <button class="btn" onclick="#"> Cancelar </button>
 </div>
 

@@ -1,29 +1,37 @@
-{% extends '::base.html.twig' %}
+{% extends '::Principalbase.html.twig' %}
 
-{% block body -%}
-    <h1>Accionpersonal</h1>
+{% block principal -%}
+    
+    {% for flashMessage in app.session.flashbag.get('new') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+    {% endfor %}
 
-    <table class="record_properties">
+    <h3 class="text-center">Acci&oacute;n de Personal</h3>
+
+    <table class="table table-bordered table-hover mitable">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
+                <th width="25%">Tipo de Acci&oacute;n: </th>
+                <td>{{ entity.idtipoaccion.nombretipoaccion }}</td>
             </tr>
             <tr>
-                <th>Fecharegistroacccion</th>
-                <td>{{ entity.fecharegistroaccion|date('Y-m-d H:i:s') }}</td>
+                <th>Fecha de registro: </th>
+                <td>{{ entity.fecharegistroaccion|date('d-m-Y')|fecha }}</td>
             </tr>
             <tr>
-                <th>Motivoaccion</th>
+                <th>Descripci&oacute;n: </th>
                 <td>{{ entity.motivoaccion }}</td>
             </tr>
             <tr>
-                <th>Numacuerdo</th>
+                <th># de acuerdo: </th>
                 <td>{{ entity.numacuerdo }}</td>
             </tr>
         </tbody>
     </table>
 
+{#
         <ul class="record_actions">
     <li>
         <a href="{{ path('accionpersonal') }}">
@@ -43,4 +51,6 @@
         </form>
     </li>
 </ul>
+
+#}
 {% endblock %}

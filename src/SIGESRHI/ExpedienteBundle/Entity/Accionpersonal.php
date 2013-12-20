@@ -5,6 +5,8 @@ namespace SIGESRHI\ExpedienteBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
@@ -12,6 +14,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  *
  * @ORM\Table(name="accionpersonal")
  * @ORM\Entity
+ * @UniqueEntity("numacuerdo")
  * @GRID\Source(columns="id, idtipoaccion.nombretipoaccion, numacuerdo, fecharegistroaccion, idexpediente.id, motivoaccion", groups={"grupo_consultar_acuerdo"})
  */
 class Accionpersonal
@@ -32,7 +35,7 @@ class Accionpersonal
      *
      * @ORM\Column(name="fecharegistroaccion", type="date", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la fecha de registro")
-     * @GRID\Column(filterable=true, groups={"grupo_consultar_acuerdo"}, visible=true, title="Fecha Registro", align="center", operators={"gte", "like", "eq", "lt"}, operatorsVisible=true)
+     * @GRID\Column(filterable=true, groups={"grupo_consultar_acuerdo"}, visible=true, type="date", format="Y-m-d", title="Fecha Registro", align="center", operators={"gte", "like", "eq", "lte"}, operatorsVisible=true)
      */
     private $fecharegistroaccion;
 
