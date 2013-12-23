@@ -19,11 +19,11 @@
     {% for plaza in plazas %}
     <h4 class="text-center">Control Interno de Permisos</h4>
     {% for exp in expediente %}
-        <form action="{{ path('licencia_create',{'id' : exp.id, 'idc' : plaza.id}) }}" id="licencia_form" class="form-horizontal" method="post" {{ form_enctype(form) }}>
+        <form action="{{ path('licencia_create',{'id' : exp.id, 'idc' : plaza.id}) }}" id="licencia_form" method="post" {{ form_enctype(form) }}>
 
         <table class='table table-bordered table-hover mitable' border='1' width='100%' align='center'>    
           <tr>        
-            <th>{{ form_label(form.fechapermiso) }}</th>
+            <th width="20%">{{ form_label(form.fechapermiso) }}</th>
             <td colspan="5">{{ form_widget(form.fechapermiso) }}</td>
 
           </tr>
@@ -114,7 +114,7 @@
     <div class='text-center'>
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a  href="{{ 
-                path('licencia',{'opc':'indexregistrar'}                        
+                path('licencia_registrar'                        
                     )
                 }}" class="btn">Cancelar</a>
     <div>
@@ -137,7 +137,19 @@ $( document ).ready(function() {
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").attr("disabled","disabled");        
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").attr("disabled","disabled");        
         $("#sigesrhi_expedientebundle_licenciatype_duracionhoras").attr("disabled","disabled");        
-        $("#sigesrhi_expedientebundle_licenciatype_duracionminutos").attr("disabled","disabled");        
+        $("#sigesrhi_expedientebundle_licenciatype_duracionminutos").attr("disabled","disabled");  
+        //quiatamos y agregamos nuevos requiered
+        $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").attr("data-bvalidator","required");
+        $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").attr("data-bvalidator","required");
+        $("#sigesrhi_expedientebundle_licenciatype_duraciondias").attr("data-bvalidator","required,number");        
+
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").removeAttr("data-bvalidator");
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_minute").removeAttr("data-bvalidator");
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").removeAttr("data-bvalidator");        
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").removeAttr("data-bvalidator");
+        $("#sigesrhi_expedientebundle_licenciatype_duracionhoras").removeAttr("data-bvalidator");        
+        $("#sigesrhi_expedientebundle_licenciatype_duracionminutos").removeAttr("data-bvalidator");
+
 
     });
     $("#horas").click(function(){
@@ -151,9 +163,26 @@ $( document ).ready(function() {
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").removeAttr("disabled");
         $("#sigesrhi_expedientebundle_licenciatype_duracionhoras").removeAttr("disabled");        
         $("#sigesrhi_expedientebundle_licenciatype_duracionminutos").removeAttr("disabled");
+        //quitamos y asigmanos nuevos required
+        $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").removeAttr("data-bvalidator");
+        $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").removeAttr("data-bvalidator");
+        $("#sigesrhi_expedientebundle_licenciatype_duraciondias").removeAttr("data-bvalidator");        
 
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").attr("data-bvalidator","required");
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_minute").attr("data-bvalidator","required");
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").attr("data-bvalidator","required");        
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").attr("data-bvalidator","required");
+        $("#sigesrhi_expedientebundle_licenciatype_duracionhoras").attr("data-bvalidator","required,number");        
+        //$("#sigesrhi_expedientebundle_licenciatype_duracionminutos").attr("data-bvalidator","required,number");
     });
+
+    $('.date2').datepicker({ 
+        dateFormat: 'dd-mm-yy',  
+        changeMonth: true,
+        changeYear: true,
+        minDate: "-3M", maxDate: "+3M"});
 });
+
 </script>
     
 {% endblock %}

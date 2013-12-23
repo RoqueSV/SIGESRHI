@@ -18,15 +18,15 @@ class LicenciaType extends AbstractType
                 ))
             ->add('duraciondias',null,array(
                 'label' => 'Número de días',
-                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number,required','max_length'=>'2','max_length'=>'1')
+                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number,required','maxlength'=>'2','minlength'=>'1')
                 ))
             ->add('duracionhoras',null,array(
                 'label' => 'Número de horas',
-                'attr' => array('class'=> 'input-small nip', 'data-bvalidator'=>'number','max_length'=>'2',)
+                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number','maxlength'=>'2','minlength'=>'1')
                 ))
             ->add('duracionminutos',null,array(
                 'label' => 'Número de minutos',
-                'attr' => array('class'=> 'input-small nip', 'data-bvalidator'=>'number','max_length'=>'2',)
+                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number','maxlength'=>'2','minlength'=>'0')
                 ))
             ->add('congoce','choice',array(
                 'choices' => array('1'=>'Con goce de Sueldo','0'=>'Si goce de Sueldo'),                
@@ -38,7 +38,7 @@ class LicenciaType extends AbstractType
                 'label' => 'Fecha de Incio',
                 'widget' => 'single_text', 
                 'format'=>'dd-MM-yyyy',
-                'attr' => array('class' => 'date input-small', 'data-bvalidator'=>'required', 'readonly'=>true),
+                'attr' => array('class' => 'date2 input-small', 'data-bvalidator'=>'required', 'readonly'=>true),
                 ))
             ->add('fechafinlic','date',array(
                 'label' => 'Fecha Fin',

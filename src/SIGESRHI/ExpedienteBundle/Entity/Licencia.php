@@ -5,11 +5,14 @@ namespace SIGESRHI\ExpedienteBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\ExecutionContextInterface;
 /**
  * Licencia
  *
  * @ORM\Table(name="licencia")
  * @ORM\Entity
+ * @Assert\Callback(methods={"fechasValidas"})
  */
 class Licencia
 {
@@ -114,7 +117,17 @@ class Licencia
      */
     private $idcontratacion;
 
+    /************************Validacion de las Fechas*****************/
+    public function fechasValidas(ExecutionContextInterface $context)
+    {
+        $fechainiciolic = $this->getFechainiciolic();
+        $fechafinlic =  $this->getFechafinlic();
 
+        if($fechainiciolic > $fechafinlic){
+            $context->addViolationAt('fechainiciolic','Debe introducir Fechas Validas',array(),null);
+        }
+    }
+    /****************************************************************/
 
     /**
      * Get id
@@ -380,4 +393,5 @@ class Licencia
     {
         return $this->idcontratacion;
     }
+
 }

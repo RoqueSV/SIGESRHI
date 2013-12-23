@@ -1,7 +1,3 @@
-licencia:
-    pattern:  /{opc}
-    defaults: { _controller: "ExpedienteBundle:Licencia:index" }
-
 licencia_ver:
     pattern:  /indexver
     defaults: { _controller: "ExpedienteBundle:Licencia:indexVer" }
@@ -22,3 +18,12 @@ licencia_create:
     pattern:  /create
     defaults: { _controller: "ExpedienteBundle:Licencia:create" }
     requirements: { _method: post }
+
+licencia_edit:
+    pattern: /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Licencia:edit" }
+
+licencia_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Licencia:delete" }
+    requirements: { _method: post|delete }
