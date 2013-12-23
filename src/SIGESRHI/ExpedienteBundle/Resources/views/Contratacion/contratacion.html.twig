@@ -12,7 +12,7 @@
 
     <form action="{{ path('contratacion_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
     
-    <fieldset><legend>Ingreso de datos de contratación</legend>
+
     <br />
     
       <div style="margin-left:40px;" class="text-center">
@@ -28,9 +28,19 @@
          </div>
     </div>
 
-    {{form_row(form.idplaza)}}
+    
 
-    {{form_row(form.idunidad)}}
+    {{form_row(form.centro)}}
+    {{form_row(form.unidad)}}
+    {{form_row(form.puesto)}}
+
+    <fieldset>
+     <legend>Ingrese datos de jefe inmediato</legend>
+      {{form_row(form.centrojefe)}}
+      {{form_row(form.unidadjefe)}}
+      {{form_row(form.puestojefe)}}
+    </fieldset>
+    
 
     {{form_row(form.sueldoinicial)}}
 
@@ -84,7 +94,7 @@
        
     {{ form_rest(form) }}
     <br/>
-    </fieldset>
+  
     
     <div class="text-center">
       <button type="submit" class="btn btn-primary">Registrar</button>

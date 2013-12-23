@@ -8,10 +8,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Refrenda
  *
- * @ORM\Table(name="refrenda")
+ * @ORM\Table(name="refrendaact")
  * @ORM\Entity
  */
-class Refrenda
+class RefrendaAct
 {
     /**
      * @var integer
@@ -35,6 +35,7 @@ class Refrenda
      */
     private $codigoempleado;
 
+
     /**
      * @var integer
      *
@@ -50,34 +51,6 @@ class Refrenda
      * @Assert\NotNull(message="Debe ingresar la subpartida")
      */
     private $subpartida;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nombreempleado", type="string", length=100, nullable=false)
-     * @Assert\NotNull(message="Debe ingresar el nombre del empleado")
-     * @Assert\Length(
-     * max = "100",
-     * maxMessage = "El nombre del empleado no debe exceder los {{limit}} caracteres"
-     * )
-     */
-    private $nombreempleado;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="salariominimo", type="float", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar el salario minimo")
-     */
-    private $salariominimo;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="salariomaximo", type="float", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar el salario maximo")
-     */
-    private $salariomaximo;
 
     /**
      * @var float
@@ -122,17 +95,60 @@ class Refrenda
     private $codigolp;
 
     /**
+     * @var \SIGESRHI\ExpedienteBundle\Entity\Empleado
+     *
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Empleado", inversedBy="idrefrenda")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idempleado", referencedColumnName="id")
+     * })
+     */
+    private $idempleado;
+
+    /**
+     * @var \SIGESRHI\AdminBundle\Entity\Plaza
+     *
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza", inversedBy="idrefrenda")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
+     * })
+     */
+    private $idplaza;
+
+     /**
      * @var string
      *
-     * @ORM\Column(name="nombrecentro", type="string", length=100, nullable=false)
-     * @Assert\NotNull(message="Debe ingresar un nombre de Centro")
+     * @ORM\Column(name="nombreplaza", type="string", length=100, nullable=true)
+     * @Assert\NotNull(message="Debe ingresar el nombre de la plaza")
      * @Assert\Length(
-     *  max = "100"
+     * max = "100",
+     * maxMessage = "El nombre de la plaza no debe exceder los {{limit}} caracteres"
      * )
      */
-    private $nombrecentro;
+    private $nombreplaza;
 
+    /**
+     * @ORM\OneToOne(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Contratacion", mappedBy="puesto")
+     */
+    private $puestoempleado;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Contratacion", mappedBy="puestojefe")
+     */
+    private $idpuestojefe;
+
+    /**
+     * @var \SIGESRHI\AdminBundle\Entity\Unidadorganizativa
+     *
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Unidadorganizativa", inversedBy="idrefrenda")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idunidad", referencedColumnName="id")
+     * })
+     */
+    private $idunidad;
+
+    public function __toString() {
+        return $this->getNombreplaza();
+       }
 
     /**
      * Get id
@@ -188,52 +204,6 @@ class Refrenda
     public function getSubpartida()
     {
         return $this->subpartida;
-    }
-
-    /**
-     * Set salariominimo
-     *
-     * @param float $salariominimo
-     * @return Refrenda
-     */
-    public function setSalariominimo($salariominimo)
-    {
-        $this->salariominimo = $salariominimo;
-    
-        return $this;
-    }
-
-    /**
-     * Get salariominimo
-     *
-     * @return float 
-     */
-    public function getSalariominimo()
-    {
-        return $this->salariominimo;
-    }
-
-    /**
-     * Set salariomaximo
-     *
-     * @param float $salariomaximo
-     * @return Refrenda
-     */
-    public function setSalariomaximo($salariomaximo)
-    {
-        $this->salariomaximo = $salariomaximo;
-    
-        return $this;
-    }
-
-    /**
-     * Get salariomaximo
-     *
-     * @return float 
-     */
-    public function getSalariomaximo()
-    {
-        return $this->salariomaximo;
     }
 
     /**
@@ -328,12 +298,34 @@ class Refrenda
         return $this->codigolp;
     }
 
+    /**
+     * Set idempleado
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado
+     * @return Refrenda
+     */
+    public function setIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado = null)
+    {
+        $this->idempleado = $idempleado;
+    
+        return $this;
+    }
+
+    /**
+     * Get idempleado
+     *
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Empleado 
+     */
+    public function getIdempleado()
+    {
+        return $this->idempleado;
+    }
 
     /**
      * Set codigoempleado
      *
      * @param string $codigoempleado
-     * @return Refrenda
+     * @return RefrendaAct
      */
     public function setCodigoempleado($codigoempleado)
     {
@@ -353,48 +345,147 @@ class Refrenda
     }
 
     /**
-     * Set nombreempleado
+     * Set idplaza
      *
-     * @param string $nombreempleado
-     * @return Refrenda
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     * @return RefrendaAct
      */
-    public function setNombreempleado($nombreempleado)
+    public function setIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza = null)
     {
-        $this->nombreempleado = $nombreempleado;
+        $this->idplaza = $idplaza;
     
         return $this;
     }
 
     /**
-     * Get nombreempleado
+     * Get idplaza
      *
-     * @return string 
+     * @return \SIGESRHI\AdminBundle\Entity\Plaza 
      */
-    public function getNombreempleado()
+    public function getIdplaza()
     {
-        return $this->nombreempleado;
+        return $this->idplaza;
     }
 
     /**
-     * Set nombrecentro
+     * Set puestoempleado
      *
-     * @param string $nombrecentro
-     * @return Refrenda
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $puestoempleado
+     * @return RefrendaAct
      */
-    public function setNombrecentro($nombrecentro)
+    public function setPuestoempleado(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $puestoempleado = null)
     {
-        $this->nombrecentro = $nombrecentro;
+        $this->puestoempleado = $puestoempleado;
     
         return $this;
     }
 
     /**
-     * Get nombrecentro
+     * Get puestoempleado
+     *
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Contratacion 
+     */
+    public function getPuestoempleado()
+    {
+        return $this->puestoempleado;
+    }
+
+    /**
+     * Set idpuestojefe
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $idpuestojefe
+     * @return RefrendaAct
+     */
+    public function setIdpuestojefe(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idpuestojefe = null)
+    {
+        $this->idpuestojefe = $idpuestojefe;
+    
+        return $this;
+    }
+
+    /**
+     * Get idpuestojefe
+     *
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Contratacion 
+     */
+    public function getIdpuestojefe()
+    {
+        return $this->idpuestojefe;
+    }
+
+    /**
+     * Set idunidad
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Unidadorganizativa $idunidad
+     * @return RefrendaAct
+     */
+    public function setIdunidad(\SIGESRHI\AdminBundle\Entity\Unidadorganizativa $idunidad = null)
+    {
+        $this->idunidad = $idunidad;
+    
+        return $this;
+    }
+
+    /**
+     * Get idunidad
+     *
+     * @return \SIGESRHI\AdminBundle\Entity\Unidadorganizativa 
+     */
+    public function getIdunidad()
+    {
+        return $this->idunidad;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idpuestojefe = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Set nombreplaza
+     *
+     * @param string $nombreplaza
+     * @return RefrendaAct
+     */
+    public function setNombreplaza($nombreplaza)
+    {
+        $this->nombreplaza = $nombreplaza;
+    
+        return $this;
+    }
+
+    /**
+     * Get nombreplaza
      *
      * @return string 
      */
-    public function getNombrecentro()
+    public function getNombreplaza()
     {
-        return $this->nombrecentro;
+        return $this->nombreplaza;
+    }
+
+    /**
+     * Add idpuestojefe
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $idpuestojefe
+     * @return RefrendaAct
+     */
+    public function addIdpuestojefe(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idpuestojefe)
+    {
+        $this->idpuestojefe[] = $idpuestojefe;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idpuestojefe
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $idpuestojefe
+     */
+    public function removeIdpuestojefe(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idpuestojefe)
+    {
+        $this->idpuestojefe->removeElement($idpuestojefe);
     }
 }

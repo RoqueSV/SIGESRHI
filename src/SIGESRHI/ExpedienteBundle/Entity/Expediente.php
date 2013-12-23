@@ -12,13 +12,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="expediente")
  * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Repositorio\ExpedienteRepository")
- * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto,idempleado.idcontratacion.idplaza.nombreplaza, tipoexpediente,idsegurovida.id", groups={"grupo_segurovida"})
+ * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto,idempleado.idrefrenda.idplaza.nombreplaza, tipoexpediente,idsegurovida.id", groups={"grupo_segurovida"})
  * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto,idempleado.idcontratacion.id", groups={"grupo_empleado"})
  * @GRID\Source(columns="id,idempleo.codigoempleado,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto", groups={"grupo_empleado_inactivo"})
  * @GRID\Source(columns="id,idsolicitudempleo.nombrecompleto,tipoexpediente", groups={"grupo_contratacion"})
  * @GRID\Source(columns="id, idsolicitudempleo.numsolicitud, idsolicitudempleo.nombrecompleto, idsolicitudempleo.fecharegistro, tipoexpediente", groups={"grupo_docdigital"})
  * @GRID\Source(columns="id, idsolicitudempleo.nombrecompleto, idsolicitudempleo.id, tipoexpediente, idempleado.codigoempleado", groups={"grupo_solicitud_empleado"})
- * @GRID\Source(columns="id, idsolicitudempleo.nombrecompleto, tipoexpediente, idempleado.codigoempleado, idempleado.idcontratacion.idplaza.nombreplaza", groups={"grupo_acciones_empleado"})
+ * @GRID\Source(columns="id, idsolicitudempleo.nombrecompleto, tipoexpediente, idempleado.codigoempleado, idempleado.idrefrenda.idplaza.nombreplaza", groups={"grupo_acciones_empleado"})
  */
 class Expediente
 {
@@ -57,8 +57,7 @@ class Expediente
      * @ORM\OneToOne(targetEntity="Empleado", mappedBy="idexpediente")
      * @GRID\Column(field="idempleado.codigoempleado",groups={"grupo_empleado_inactivo","grupo_empleado","grupo_segurovida", "grupo_solicitud_empleado", "grupo_acciones_empleado"} ,title="Codigo", visible=false, joinType="inner", filterable=false)
      * @GRID\Column(field="idempleado.codigoempleado",groups={"grupo_empleado_inactivo"} ,title="Codigo", visible=true, joinType="inner", filterable=true, operators={"like"},operatorsVisible=false)
-     * @GRID\Column(field="idempleado.idcontratacion.idplaza.nombreplaza", groups={"grupo_segurovida","grupo_empleado","grupo_empleado_inactivo", "grupo_acciones_empleado"},type="text", title="Plaza", filterable=false, joinType="inner")
-     * @GRID\Column(field="idempleado.idcontratacion.idplaza.nombreplaza", groups="grupo_empleado",visible=true, title="Plaza", filterable=true, joinType="inner", operators={"like"},operatorsVisible=false)
+     * @GRID\Column(field="idempleado.idrefrenda.idplaza.nombreplaza", groups={"grupo_segurovida","grupo_empleado","grupo_empleado_inactivo", "grupo_acciones_empleado"},type="text", title="Plaza", filterable=false, joinType="inner")
      * @GRID\Column(field="idempleado.idcontratacion.id", groups="grupo_empleado", filterable=false, joinType="inner", visible=false)
      */
     private $idempleado;

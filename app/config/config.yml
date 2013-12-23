@@ -110,7 +110,7 @@ sonata_admin:
         blocks:
            - { position: left, type: sonata.admin.block.admin_list }
            - { position: right, type: sonata.block.service.text, settings: { content: "<h2>Area de administración</h2> <p style='font-size:16px' >En esta sección podra llevar a cabo las configuraciones para usuarios, roles y sus respectivos accesos a modulos del sistema. <br /><br /> De igual forma podrá realizar la gestión de los centros de atención, unidades organizativas y la administración para el manual de puestos de la institución.</p>"} }
-        
+
 sonata_user:
     profile:
       form:
@@ -196,3 +196,15 @@ shtumi_useful:
             class: AdminBundle:Plaza
             property: nombreplaza
             search: contains
+
+    dependent_filtered_entities:
+        centro_unidad:
+            class: AdminBundle:Unidadorganizativa
+            parent_property: idcentro
+            property: nombreunidad
+            no_result_msg: 'Seleccione Unidad'
+        unidad_puesto:
+            class: AdminBundle:RefrendaAct
+            parent_property: idunidad
+            property: nombreplaza
+            no_result_msg: 'Seleccione Plaza'

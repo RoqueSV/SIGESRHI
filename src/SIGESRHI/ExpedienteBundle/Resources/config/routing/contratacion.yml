@@ -1,6 +1,10 @@
 contratacion:
     pattern:  /
-    defaults: { _controller: "ExpedienteBundle:Contratacion:index" }
+    defaults: { _controller: "ExpedienteBundle:Contratacion:registrar" }
+
+contratacion_consultar:
+    pattern:  /consultar
+    defaults: { _controller: "ExpedienteBundle:Contratacion:consultar" }
 
 contratacion_show:
     pattern:  /{id}/show

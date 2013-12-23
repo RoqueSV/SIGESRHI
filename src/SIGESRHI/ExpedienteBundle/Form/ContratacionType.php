@@ -50,18 +50,50 @@ class ContratacionType extends AbstractType
                   'widget' => 'single_text', 
                   'format'=>'dd-MM-yyyy', 
                   'attr' => array('class' => 'datenr input-small', 'data-bvalidator'=>'required', 'readonly'=>true))) 
-            ->add('idplaza','genemu_jqueryselect2_entity', array(
-                  'class' => 'AdminBundle:Plaza', 'label'=> 'Cargo nombrado',
-                  'empty_value' => 'Seleccione una opción',
-                  'required'=> true,
-                  'attr' =>array('class'=> 'input-xmlarge')
-            ))
-            ->add('idunidad','genemu_jqueryselect2_entity', array(
-                  'class' => 'AdminBundle:Unidadorganizativa', 'label'=> 'Destacado en',
-                  'empty_value' => 'Seleccione una opción',
-                  'required'=> true,
-                  'attr' =>array('class'=> 'input-xmlarge')
-            ))
+            ->add('centro', 'entity', array(
+                  'class' => 'AdminBundle:Centrounidad',
+                  'empty_value'=> 'Seleccione un centro',
+                  'required' => true,
+                  'mapped'=>false,
+                  'attr' => array('class' => 'input-xmlarge')))
+            ->add('unidad', 'shtumi_dependent_filtered_entity', array(
+                  'label' => 'Unidad organizativa',
+                  'entity_alias' => 'centro_unidad',
+                  'empty_value'=> 'Seleccione Unidad',
+                  'parent_field'=>'centro',
+                  'required' => false,
+                  'mapped'=>false,
+                  'attr' => array('class' => 'input-xmlarge')))
+            ->add('puesto', 'shtumi_dependent_filtered_entity', array(
+                  'label' => 'Cargo nombrado',
+                  'entity_alias' => 'unidad_puesto',
+                  'empty_value'=> 'Seleccione Plaza',
+                  'parent_field'=>'unidad',
+                  'required' => false,
+                  'attr' => array('class' => 'input-xmlarge')))
+            ->add('centrojefe', 'entity', array(
+                  'class' => 'AdminBundle:Centrounidad',
+                  'label' => 'Centro',
+                  'empty_value'=> 'Seleccione un centro',
+                  'required' => false,
+                  'mapped'=>false,
+                  'attr' => array('class' => 'input-xmlarge')))
+            ->add('unidadjefe', 'shtumi_dependent_filtered_entity', array(
+                  'label' => 'Unidad organizativa',
+                  'entity_alias' => 'centro_unidad',
+                  'empty_value'=> 'Seleccione Unidad',
+                  'parent_field'=>'centro',
+                  'required' => false,
+                  'mapped'=>false,
+                  'attr' => array('class' => 'input-xmlarge')))
+            ->add('puestojefe', 'shtumi_dependent_filtered_entity', array(
+                  'label' => 'Cargo nombrado',
+                  'entity_alias' => 'unidad_puesto',
+                  'empty_value'=> 'Seleccione Plaza',
+                  'parent_field'=>'unidadjefe',
+                  'required' => false,
+                  'attr' => array('class' => 'input-xmlarge')))
+           
             //->add('idempleado')
         ;
     }

@@ -134,26 +134,6 @@ class Contratacion
     private $fechafincontrato;
 
     /**
-     * @var \SIGESRHI\AdminBundle\Entity\Plaza
-     *
-     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza", inversedBy="idcontratacion")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
-     * })
-     */
-    private $idplaza;
-
-    /**
-     * @var \SIGESRHI\AdminBundle\Entity\Unidadorganizativa
-     *
-     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Unidadorganizativa", inversedBy="idcontratacion")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idunidad", referencedColumnName="id")
-     * })
-     */
-    private $idunidad;
-
-    /**
      * @var \Empleado
      *
      * @ORM\ManyToOne(targetEntity="Empleado", inversedBy="idcontratacion")
@@ -162,6 +142,27 @@ class Contratacion
      * })
      */
     private $idempleado;   
+
+    /**
+     * @ORM\OneToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\RefrendaAct", inversedBy="puestoempleado")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="puesto", referencedColumnName="id")
+     * })
+     */
+    private $puesto;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\RefrendaAct", inversedBy="idpuestojefe")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="puestojefe", referencedColumnName="id")
+     * })
+     */
+    private $puestojefe;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Licencia", mappedBy="idcontratacion")
+     */
+    private $idlicencia;
 
 
     /**
@@ -428,52 +429,7 @@ class Contratacion
         return $this->fechafincontrato;
     }
 
-    /**
-     * Set idplaza
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
-     * @return Contratacion
-     */
-    public function setIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza = null)
-    {
-        $this->idplaza = $idplaza;
     
-        return $this;
-    }
-
-    /**
-     * Get idplaza
-     *
-     * @return \SIGESRHI\AdminBundle\Entity\Plaza 
-     */
-    public function getIdplaza()
-    {
-        return $this->idplaza;
-    }
-
-    /**
-     * Set idunidad
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Unidadorganizativa $idunidad
-     * @return Contratacion
-     */
-    public function setIdunidad(\SIGESRHI\AdminBundle\Entity\Unidadorganizativa $idunidad = null)
-    {
-        $this->idunidad = $idunidad;
-    
-        return $this;
-    }
-
-    /**
-     * Get idunidad
-     *
-     * @return \SIGESRHI\AdminBundle\Entity\Unidadorganizativa 
-     */
-    public function getIdunidad()
-    {
-        return $this->idunidad;
-    }
-
     /**
      * Set idempleado
      *
@@ -518,4 +474,50 @@ class Contratacion
         $this->file = $file;
     }
 
+
+    /**
+     * Set puesto
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\RefrendaAct $puesto
+     * @return Contratacion
+     */
+    public function setPuesto(\SIGESRHI\AdminBundle\Entity\RefrendaAct $puesto = null)
+    {
+        $this->puesto = $puesto;
+    
+        return $this;
+    }
+
+    /**
+     * Get puesto
+     *
+     * @return \SIGESRHI\AdminBundle\Entity\RefrendaAct 
+     */
+    public function getPuesto()
+    {
+        return $this->puesto;
+    }
+
+    /**
+     * Set puestojefe
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\RefrendaAct $puestojefe
+     * @return Contratacion
+     */
+    public function setPuestojefe(\SIGESRHI\AdminBundle\Entity\RefrendaAct $puestojefe = null)
+    {
+        $this->puestojefe = $puestojefe;
+    
+        return $this;
+    }
+
+    /**
+     * Get puestojefe
+     *
+     * @return \SIGESRHI\AdminBundle\Entity\RefrendaAct 
+     */
+    public function getPuestojefe()
+    {
+        return $this->puestojefe;
+    }
 }

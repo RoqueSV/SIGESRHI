@@ -25,7 +25,7 @@ class ContratacionController extends Controller
      *
      */
 
-    public function indexAction(){
+    public function registrarAction(){
 
         $source = new Entity('ExpedienteBundle:Expediente','grupo_contratacion');
         
@@ -52,6 +52,47 @@ class ContratacionController extends Controller
         
         // Crear
         $rowAction1 = new RowAction('Seleccionar', 'contratacion_new');
+        $grid->addRowAction($rowAction1);
+        
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
+        
+        return $grid->getGridResponse('ExpedienteBundle:Contratacion:index.html.twig');
+    }
+
+    public function consultarAction(){
+
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_contratacion');
+        
+        $grid = $this->get('grid');
+
+
+        /* Aspirantes validos */
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->andWhere($tableAlias.'.tipoexpediente = :tipo')
+                      ->setParameter('tipo','E');
+            }
+        );   
+        
+        $grid->setId('grid_contratacion');
+        $grid->setSource($source);       
+
+         //Columnas para filtrar
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre','operatorsVisible'=>false));
+        $grid->addColumn($NombreEmpleados,2);  
+        $NombrePlazas = new TextColumn(array('id' => 'plazas','source' => true,'field'=>'idsolicitudempleo.idplaza.nombreplaza','title' => 'Plaza','operatorsVisible'=>false,'joinType'=>'inner'));
+        $grid->addColumn($NombrePlazas,3);      
+        
+        // Crear
+        $rowAction1 = new RowAction('Mostrar', 'contratacion_show');
         $grid->addRowAction($rowAction1);
         
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
@@ -153,9 +194,10 @@ class ContratacionController extends Controller
           $plaza = $exp['nombreplaza'];
         }
         $idplaza = $em->getRepository('AdminBundle:Plaza')->findOneByNombreplaza($plaza);
+        $idrefrenda = $em->getRepository('AdminBundle:RefrendaAct')->findOneByIdplaza($idplaza);
         
         $entity = new Contratacion();
-        $entity->setIdplaza($idplaza);
+        $entity->setPuesto($idrefrenda);
 
         $form = $this->createForm(new ContratacionType(), $entity);
         

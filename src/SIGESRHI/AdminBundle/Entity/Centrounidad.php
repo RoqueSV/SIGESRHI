@@ -103,8 +103,8 @@ class Centrounidad
     private $idunidad;
     
     public function __toString() {
-  return $this->nombrecentro;
-}
+     return $this->nombrecentro;
+    }
     /**
      * Get id
      *

@@ -410,7 +410,7 @@ class Solicitudempleo
     /**
      * @var \SIGESRHI\AdminBundle\Entity\Centrounidad
      *
-     * @ORM\OneToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Centrounidad")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Centrounidad")
      *      @ORM\JoinColumns({
      * @ORM\JoinColumn(name="dependenciaparinst", referencedColumnName="id")
      * })

@@ -22,6 +22,9 @@ class DependentFilteredEntityController extends Controller
 
         $entity_alias = $request->get('entity_alias');
         $parent_id    = $request->get('parent_id');
+        if ($parent_id == null){
+            $parent_id = 0;
+        }
         $empty_value  = $request->get('empty_value');
 
         $entities = $this->get('service_container')->getParameter('shtumi.dependent_filtered_entities');

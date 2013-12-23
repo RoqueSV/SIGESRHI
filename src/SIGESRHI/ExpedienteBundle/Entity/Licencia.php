@@ -107,7 +107,7 @@ class Licencia
     /**
      * @var \Contratacion
      *
-     * @ORM\ManyToOne(targetEntity="Contratacion")
+     * @ORM\ManyToOne(targetEntity="Contratacion", inversedBy="idlicencia")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idcontratacion", referencedColumnName="id")
      * })

@@ -118,9 +118,9 @@ class Plaza
     private $idtitulo;
 
     /**
-     * @ORM\OneToMany(targetEntity="SIGESRHI\ExpedienteBundle\Entity\Contratacion", mappedBy="idplaza")
+     * @ORM\OneToMany(targetEntity="RefrendaAct", mappedBy="idplaza")
      */
-    private $idcontratacion;
+    private $idrefrenda;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -224,7 +224,7 @@ class Plaza
         $this->idhabilidad = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idmanejoequipo = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idtitulo = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idcontratacion = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idrefrenda = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -752,35 +752,35 @@ class Plaza
     }
 
     /**
-     * Add idcontratacion
+     * Add idrefrenda
      *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion
+     * @param \SIGESRHI\AdminBundle\Entity\RefrendaAct $idrefrenda
      * @return Plaza
      */
-    public function addIdcontratacion(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion)
+    public function addIdrefrenda(\SIGESRHI\AdminBundle\Entity\RefrendaAct $idrefrenda)
     {
-        $this->idcontratacion[] = $idcontratacion;
+        $this->idrefrenda[] = $idrefrenda;
     
         return $this;
     }
 
     /**
-     * Remove idcontratacion
+     * Remove idrefrenda
      *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion
+     * @param \SIGESRHI\AdminBundle\Entity\RefrendaAct $idrefrenda
      */
-    public function removeIdcontratacion(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idcontratacion)
+    public function removeIdrefrenda(\SIGESRHI\AdminBundle\Entity\RefrendaAct $idrefrenda)
     {
-        $this->idcontratacion->removeElement($idcontratacion);
+        $this->idrefrenda->removeElement($idrefrenda);
     }
 
     /**
-     * Get idcontratacion
+     * Get idrefrenda
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getIdcontratacion()
+    public function getIdrefrenda()
     {
-        return $this->idcontratacion;
+        return $this->idrefrenda;
     }
 }
