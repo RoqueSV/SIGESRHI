@@ -58,38 +58,38 @@ from informacionAcademica ia join titulo t on(ia.idtitulo=t.id) where idsolicitu
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="24" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false">
-				<reportElement uuid="61e84e38-021a-4e0e-a633-16dd0f45d0a7" x="15" y="0" width="102" height="24" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="61e84e38-021a-4e0e-a633-16dd0f45d0a7" positionType="Float" x="15" y="0" width="102" height="25" isRemoveLineWhenBlank="true"/>
 				<box topPadding="1" leftPadding="3">
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{niveltitulo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="1f715342-4ce5-4f9d-ad95-bd506d388f3d" stretchType="RelativeToTallestObject" x="377" y="0" width="182" height="24"/>
+				<reportElement uuid="1f715342-4ce5-4f9d-ad95-bd506d388f3d" positionType="Float" stretchType="RelativeToTallestObject" x="377" y="0" width="182" height="25"/>
 				<box topPadding="1" leftPadding="2" bottomPadding="1" rightPadding="1">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Top">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{centroestudio}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="fe31d4be-b485-4d25-b861-b753ef589ab0" stretchType="RelativeToTallestObject" x="117" y="0" width="261" height="24"/>
+				<reportElement uuid="fe31d4be-b485-4d25-b861-b753ef589ab0" positionType="Float" stretchType="RelativeToTallestObject" x="117" y="1" width="261" height="24"/>
 				<box topPadding="2" leftPadding="3">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombretitulo}]]></textFieldExpression>

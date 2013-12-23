@@ -2,25 +2,25 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Solicitud de Empleo" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="14" bottomMargin="20" uuid="b71055dc-4258-4c24-9069-a03267bff9f9">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="432"/>
+	<property name="ireport.y" value="639"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Formularios\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="sol_empleo" class="java.lang.Integer"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select to_char(current_date,'DD "de" TMMonth "de" YYYY') as fechaactual,fotografia,numsolicitud,p.nombreplaza,concat(nombres,' ',primerApellido,' ',coalesce(nullif(concat('de ',apellidocasada),'de '),segundoapellido)) as  NomCompleto,nombreparinst, case when se.nombreparinst isnull then 'No' else 'Si' end as bandera ,se.parentescoparinst,cu.nombrecentro,se.id, case when estadoCivil= 'S' then 'Soltero(a)'
+		<![CDATA[select to_char(current_date,'DD "de" TMMonth "de" YYYY') as fechaactual,fotografia,numsolicitud,p.nombreplaza,nombrecompleto,nombreparinst, case when se.nombreparinst isnull then 'No' else 'Si' end as bandera ,se.parentescoparinst,cu.nombrecentro,se.id, case when estadoCivil= 'S' then 'Soltero(a)'
 	   when estadoCivil= 'A' then 'Acompañado(a)'
 	   when estadoCivil= 'V' then 'Viudo(a)'
 	   when estadoCivil= 'D' then 'Divorciado(a)'
 	   else 'Casado(a)' end as estado,
-coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,coalesce(segundoApellido, '----') as segundoApellido,nombres,colonia,coalesce(calle,'----') as calle, concat (substring(telefonoFijo from 1 for 4),'-',substring(telefonoFijo from 5 for 8))as "telefono Fijo",concat (substring(telefonoMovil from 1 for 4),'-',substring(telefonoMovil from 5 for 8))as "Celular",email,lugarNac||', '||to_char(fechaNac,'DD "de" TMMonth "de" YYYY') as lugarfecha,concat(substr(dui,1, 8),'-',substr(dui,9))as DUI,lugarDui,to_char(fechaNac,'DD "de" TMMonth "de" YYYY') as fechaDui,concat(substr(nit,1,4),'-',substr(nit,5,6),'-',substr(nit,11,3),'-',substr(nit,14)) as nit,coalesce(isss,'----')as isss,coalesce(nup,'----') as nup,coalesce(nip,'----')as nip, se.sexo,fechaRegistro,fechaModificacion,m.nombremunicipio,d.nombredepartamento from solicitudempleo se join municipio m on (se.idmunicipio=m.id) join departamento d on (m.iddepartamento=d.id) join plaza p on(se.idplaza=p.id)  left outer join centrounidad cu on (se.dependenciaparinst=cu.id) where se.id=$P{sol_empleo}]]>
+coalesce(apellidoCasada,'------') as apellidoCasada,primerApellido,coalesce(segundoApellido, '------') as segundoApellido,nombres,colonia,coalesce(calle,'------') as calle, concat (substring(telefonoFijo from 1 for 4),'-',substring(telefonoFijo from 5 for 8))as "telefono Fijo",concat (substring(telefonoMovil from 1 for 4),'-',substring(telefonoMovil from 5 for 8))as "Celular",email,lugarNac||', '||to_char(fechaNac,'DD "de" TMMonth "de" YYYY') as lugarfecha,concat(substr(dui,1, 8),'-',substr(dui,9))as DUI,lugarDui,to_char(fechadui,'DD "de" TMMonth "de" YYYY') as fechaDui,concat(substr(nit,1,4),'-',substr(nit,5,6),'-',substr(nit,11,3),'-',substr(nit,14)) as nit,coalesce(isss,'------')as isss,coalesce(nup,'------') as nup,coalesce(nip,'------')as nip, se.sexo,fechaRegistro,fechaModificacion,m.nombremunicipio,d.nombredepartamento from solicitudempleo se join municipio m on (se.idmunicipio=m.id) join departamento d on (m.iddepartamento=d.id) join plaza p on(se.idplaza=p.id)  left outer join centrounidad cu on (se.dependenciaparinst=cu.id) where se.id=$P{sol_empleo}]]>
 	</queryString>
 	<field name="fechaactual" class="java.lang.String"/>
 	<field name="fotografia" class="java.lang.String"/>
 	<field name="numsolicitud" class="java.lang.String"/>
 	<field name="nombreplaza" class="java.lang.String"/>
-	<field name="nomcompleto" class="java.lang.String"/>
+	<field name="nombrecompleto" class="java.lang.String"/>
 	<field name="nombreparinst" class="java.lang.String"/>
 	<field name="bandera" class="java.lang.String"/>
 	<field name="parentescoparinst" class="java.lang.String"/>
@@ -316,12 +316,12 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,coalesce(segund
 				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="b2e68529-e36e-44b7-9bd2-540ad64a2ad0" x="228" y="227" width="107" height="42"/>
+				<reportElement uuid="b2e68529-e36e-44b7-9bd2-540ad64a2ad0" positionType="Float" x="228" y="227" width="107" height="42"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="1" rightPadding="2">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{colonia}]]></textFieldExpression>
@@ -351,13 +351,13 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,coalesce(segund
 				<textFieldExpression><![CDATA[$F{nup}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="835278c1-e03a-4304-9a88-6fb0587b59d4" x="335" y="227" width="219" height="42"/>
+				<reportElement uuid="835278c1-e03a-4304-9a88-6fb0587b59d4" positionType="Float" x="335" y="227" width="219" height="42"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="1" rightPadding="2">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{calle}]]></textFieldExpression>
@@ -383,23 +383,23 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,coalesce(segund
 				<textFieldExpression><![CDATA[$F{nip}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="4162ec22-f708-4422-94e1-69c38408b150" x="118" y="227" width="110" height="42"/>
+				<reportElement uuid="4162ec22-f708-4422-94e1-69c38408b150" positionType="Float" x="118" y="227" width="110" height="42"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="1" rightPadding="2">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombremunicipio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="50c2b83e-268b-45a8-a807-80972cfb19bc" x="13" y="227" width="105" height="42"/>
+				<reportElement uuid="50c2b83e-268b-45a8-a807-80972cfb19bc" positionType="Float" x="13" y="227" width="105" height="42"/>
 				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombredepartamento}]]></textFieldExpression>
@@ -757,13 +757,6 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,coalesce(segund
 				</textElement>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
-			<textField>
-				<reportElement uuid="9a21ed9c-5148-4915-a4cb-45c6de01cb0c" positionType="Float" x="61" y="242" width="288" height="20"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{nomcompleto}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement uuid="44e84360-f884-4c08-8211-56d80e33308d" positionType="Float" x="198" y="133" width="187" height="20"/>
 				<textElement verticalAlignment="Middle">
@@ -782,6 +775,11 @@ coalesce(apellidoCasada,'----') as apellidoCasada,primerApellido,coalesce(segund
 				<reportElement uuid="1edcb254-bad7-4f59-947e-93112a897a3a" positionType="Float" x="413" y="227" width="147" height="17"/>
 				<textElement verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{fechaactual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fbc21157-6a2c-4b1f-836d-ecd6040cb6b6" positionType="Float" x="54" y="242" width="304" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -70,12 +70,12 @@
 				<textFieldExpression><![CDATA[$F{nombrefamiliar}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="0742f683-59de-41fd-8673-cc5a82ef56ad" x="221" y="-1" width="273" height="20"/>
+				<reportElement uuid="0742f683-59de-41fd-8673-cc5a82ef56ad" positionType="Float" x="221" y="-1" width="273" height="20"/>
 				<box leftPadding="3">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{direccionfamiliar}]]></textFieldExpression>
