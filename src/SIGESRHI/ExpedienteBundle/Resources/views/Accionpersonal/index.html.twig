@@ -75,8 +75,8 @@
         <td colspan="2">
             <table class="table table-bordered table-hover mitable">
                 <tr>
-                    <th>Teléfono fijo y móvil: </th>
-                    <td> {{entity.idsolicitudempleo.telefonofijo}} - - - {{entity.idsolicitudempleo.telefonomovil}}</td>
+                    <th>Teléfono: </th>
+                    <td>  {{entity.hojaservicio.telefonofijo}} </td>
                 </tr>
                 <tr>
                     <th width="25%">Educación: </th>
@@ -132,8 +132,30 @@
 <div class="text-center">
 <br>
 
-<button class="btn" onclick="location.href=''"> Generar Reporte </button>
-<button class="btn" onclick="#"> Cancelar </button>
+<button class="btn" onclick="location.href='{{path('accionpersonal_reportes', {'id':entity.id})}}'">Generar Reporte </button>
+<button class="btn" onclick="location.href='{{path('accionpersonal_cempleados')}}'"> Cancelar </button>
 </div>
+
+<style type="text/css">
+#grid_grid_acuerdos__fecharegistroaccion__query__from{
+    width: 100px; 
+}
+</style>
+
+
+<script>
+
+$(document).ready(function(){
+
+         $("#grid_grid_acuerdos__fecharegistroaccion__query__from").datepicker({ 
+              dateFormat: 'yy-mm-dd',  
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "-100:+0",});
+
+         $('#grid_grid_acuerdos__fecharegistroaccion__query__from').attr('readonly');
+        
+    });
+</script>
 
 {% endblock %}

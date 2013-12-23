@@ -1,0 +1,33 @@
+{% extends '::principalbase.html.twig' %}
+
+
+{% block principal %}
+
+<h4 class="text-center"> Seleccione el tipo de reporte a generar</h4>
+
+<br>
+<fieldset>
+	<legend>Tipo de reporte</legend>
+	<br>
+	<input type="radio" id="reporte" name="reporte" value="1"> Historial Laboral completo.  <br><br>
+	<input type="radio" id="reporte" name="reporte" value="2"> Por tipo de acuerdos.  <br><br>
+	<input type="radio" id="reporte" name="reporte" value="3"> Por rango de fechas. <br><br>
+</fieldset>
+
+
+<div class="text-center">
+<button type="button" onclick="" class="btn">Generar </button>
+<button type="button" onclick="location.href='{{path('accionpersonal_cacuerdos', {'id': idexp})}}'" class="btn">Cancelar </button>
+</div>
+
+<script>
+$(document).ready(function(){
+	$('#reporte').change(function(){
+		var valor= $('#reporte').val();
+
+	});//change
+
+});//ready
+
+</script>
+{% endblock %}

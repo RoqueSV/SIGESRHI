@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use Doctrine\ORM\EntityRepository;
+
 class AccionpersonalType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -14,10 +16,16 @@ class AccionpersonalType extends AbstractType
             ->add('fecharegistroaccion', null, array('label'=>'Fecha de Registro: ','widget' => 'single_text', 'format'=>'dd-MM-yyyy', 'attr' => array('class' => 'input-medium', 'readonly'=>true)))
             ->add('motivoaccion', 'textarea', array('label'=>'Descripción del motivo: ', 'attr' => array('class' => 'input-xmlarge', 'rows'=> 4)))
             ->add('numacuerdo', null, array('label'=>'Numero de Acuerdo: ', 'attr' => array('class' => 'input-medium')))
-            ->add('idtipoaccion', null, array('label'=>'Tipo de Acuerdo: ', 'empty_value' => 'Seleccione', 'required' => true, 'attr' => array('class' => 'input-xlarge')))
+            ->add('idtipoaccion', 'entity', array('label'=>'Tipo de Acuerdo: ', 'empty_value' => 'Seleccione', 'required' => true, 'attr' => array('class' => 'input-xlarge'), 
+                'class' => 'ExpedienteBundle:Tipoaccion', 
+                        'query_builder' => function(EntityRepository $er) {
+                                           return $er->createQueryBuilder('u')->AndWhere('u.tipoaccion = :var')->setParameter('var','1');
+                                           },
+                                    ))//fin add
+
             //->add('idexpediente')
         ;
-    }
+    } 
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {

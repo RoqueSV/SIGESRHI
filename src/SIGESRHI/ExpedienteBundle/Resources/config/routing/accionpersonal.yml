@@ -7,7 +7,7 @@ accionpersonal_show:
     defaults: { _controller: "ExpedienteBundle:Accionpersonal:show" }
 
 accionpersonal_new:
-    pattern:  /new/{idexp}
+    pattern:  /new
     defaults: { _controller: "ExpedienteBundle:Accionpersonal:new"}
 
 accionpersonal_create:
@@ -40,3 +40,7 @@ accionpersonal_cempleados:
 accionpersonal_cacuerdos:
     pattern:  /cacuerdos/{id}
     defaults: { _controller: "ExpedienteBundle:Accionpersonal:ConsultarAcuerdosEmpleado" }
+
+accionpersonal_reportes:
+    pattern:  /reportes/{id}
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:ElegirReporte" }

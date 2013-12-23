@@ -210,8 +210,7 @@ class SolicitudempleoController extends Controller
             $em->flush();
 
            // return $this->redirect($this->generateUrl('solicitud_show', array('id' => $entity->getId())));
-            $this->get('session')->getFlashBag()->add('new', 'La solicitud de empleo se ha registrado correctamente.'); 
-            $this->get('session')->getFlashBag()->add('new', 'Si desea puede registrar sus documentos en formato digital en esta página.'); 
+            $this->get('session')->getFlashBag()->add('new', 'La solicitud de empleo se ha registrado correctamente. Si desea puede registrar sus documentos en formato digital en esta página.'); 
              return $this->redirect($this->generateUrl('docdigital_new', array('id' => $expediente->getId())));
         }
 
@@ -273,9 +272,10 @@ class SolicitudempleoController extends Controller
     public function showAction($id)
     {
         //comprobar si viene de un grid u otra pagina (por parametro enviado)
-        /*
+        
         $request = $this->getRequest();
-        if(isset($request->get('nogrid')))
+        $var = $request->get('nogrid');
+        if(isset($var))
         {
         $nogrid=0;
         }
@@ -283,7 +283,7 @@ class SolicitudempleoController extends Controller
             {
                 $nogrid=1;
             }
-        */
+        
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($id);
@@ -297,7 +297,7 @@ class SolicitudempleoController extends Controller
         return $this->render('ExpedienteBundle:Solicitudempleo:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-            //'nogrid' =>$nogrid,      
+            'nogrid' =>$nogrid,      
              ));
     }
 

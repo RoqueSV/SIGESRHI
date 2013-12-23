@@ -35,7 +35,7 @@ class Accionpersonal
      *
      * @ORM\Column(name="fecharegistroaccion", type="date", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la fecha de registro")
-     * @GRID\Column(filterable=true, groups={"grupo_consultar_acuerdo"}, visible=true, type="date", format="Y-m-d", title="Fecha Registro", align="center", operators={"gte", "like", "eq", "lte"}, operatorsVisible=true)
+     * @GRID\Column(filterable=true, groups={"grupo_consultar_acuerdo"}, visible=true, filter="input", type="date", inputType="datetime", format="Y-m-d", title="Fecha Registro", align="center", operators={"gte", "eq", "lte"}, defaultOperator="gte", operatorsVisible=true)
      */
     private $fecharegistroaccion;
 

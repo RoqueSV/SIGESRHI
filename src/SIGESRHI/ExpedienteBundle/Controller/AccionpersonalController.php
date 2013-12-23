@@ -44,21 +44,33 @@ class AccionpersonalController extends Controller
      */
     public function createAction(Request $request)
     {
+        $request = $this->getRequest();
+        $idexp = $request->get('idexp');
+
         $entity  = new Accionpersonal();
         $form = $this->createForm(new AccionpersonalType(), $entity);
         $form->bind($request);
+
+        $em = $this->getDoctrine()->getManager();
+
+        //obtenemos el objeto expediente
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+        //asignamos el id de expediente al acuerdo, mandandole el objeto de expediente
+        $entity->setIdexpediente($expediente);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('new', 'Accion de personal registrada correctamente.'); 
             return $this->redirect($this->generateUrl('accionpersonal_show', array('id' => $entity->getId())));
         }
 
         return $this->render('ExpedienteBundle:Accionpersonal:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'idexp' =>  $idexp,
         ));
     }
 
@@ -66,8 +78,10 @@ class AccionpersonalController extends Controller
      * Displays a form to create a new Accionpersonal entity.
      *
      */
-    public function newAction($idexp)
+    public function newAction()
     {
+        $request = $this->getRequest();
+        $idexp = $request->get('idexp');
 
         $entity = new Accionpersonal();
         $entity->setFecharegistroaccion(new \Datetime(date('d-m-Y')));
@@ -281,34 +295,22 @@ class AccionpersonalController extends Controller
           $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
         function($query) use ($tableAlias, $idexp){
-            $query->andWhere("_idexpediente.id = ".$idexp);
+            $query->andWhere("_idexpediente.id = ".$idexp)
+            ->andWhere("_idtipoaccion.tipoaccion = '1'");
              }
             );
     
-        //$NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
-        //$grid->addColumn($NombreEmpleados,3);
-
-        //$CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','title' => 'Código',"operatorsVisible"=>false, 'align'=>'center'));
-        //$grid->addColumn($CodigoEmpleados,3);
-
-        // Attach the source to the grid
-       // $grid->setId('grid_consulta_acuerdos_empleado');
-
-        
-         //Manipular Fila
-      /*  $source->manipulateRow(
+        //Manipular Fila
+        $source->manipulateRow(
             function ($row)
             {
-                // Change the ouput of the column
-
-                $fecha =  $row->getField('fecharegistroaccion');
-                        $row->setField('fecharegistroaccion', date('d-m-Y', strtotime($fecha)));                  
-
+                $row->setField('motivoaccion', substr($row->getField('motivoaccion'),0,200)." ...");                  
                 return $row;
             }
         );
-        */
-        
+       
+        $grid->setId('grid_acuerdos');
+
         $grid->setSource($source);
 
         $em = $this->getDoctrine()->getManager();
@@ -321,14 +323,6 @@ class AccionpersonalController extends Controller
         $rowAction1 = new RowAction('Mostrar', 'accionpersonal_show');
         $rowAction1->setColumn('info_column');
 
-        //define un operador
-        $fecha_de_hoy = date('Y-m-d');
-
-   $grid->setDefaultFilters(array(
-    'fecharegistroaccion' => array('operator' => 'lte', 'from' => $fecha_de_hoy),
-    ));
-
-
         $grid->addRowAction($rowAction1);     
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
 
@@ -336,6 +330,20 @@ class AccionpersonalController extends Controller
     return $grid->getGridResponse('ExpedienteBundle:Accionpersonal:index.html.twig', array(
         'entity'=>$entity,
 
+        ));
+    }
+
+
+    //Controlador que maneja la vista de eleccion del reporte sobre acuerdos para un empleado.
+
+    public function ElegirReporteAction($id)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+
+        return $this->render('ExpedienteBundle:Accionpersonal:Reporte.html.twig', array(
+            'idexp'      => $id,
         ));
     }
 

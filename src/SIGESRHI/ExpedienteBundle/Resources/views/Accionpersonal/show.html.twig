@@ -31,6 +31,13 @@
         </tbody>
     </table>
 
+    <div class="text-center">
+        <a  class="btn" href="{{ path('accionpersonal_cacuerdos', {'id':entity.idexpediente.id}) }}">
+            Ir a Hoja de servicio
+        </a>
+
+    </div>
+
 {#
         <ul class="record_actions">
     <li>
@@ -51,6 +58,5 @@
         </form>
     </li>
 </ul>
-
 #}
 {% endblock %}
