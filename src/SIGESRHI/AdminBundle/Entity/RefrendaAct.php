@@ -26,7 +26,7 @@ class RefrendaAct
     /**
      * @var string
      *
-     * @ORM\Column(name="codigoempleado", type="string", length=5, nullable=false)
+     * @ORM\Column(name="codigoempleado", type="string", length=5, nullable=true)
      * @Assert\NotNull(message="Debe ingresar el codigo del empleado")
      * @Assert\Length(
      * max = "5",
@@ -117,7 +117,7 @@ class RefrendaAct
      /**
      * @var string
      *
-     * @ORM\Column(name="nombreplaza", type="string", length=100, nullable=true)
+     * @ORM\Column(name="nombreplaza", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre de la plaza")
      * @Assert\Length(
      * max = "100",
@@ -127,7 +127,7 @@ class RefrendaAct
     private $nombreplaza;
 
     /**
-     * @ORM\OneToOne(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Contratacion", mappedBy="puesto")
+     * @ORM\OneToMany(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Contratacion", mappedBy="puesto")
      */
     private $puestoempleado;
 
@@ -149,7 +149,10 @@ class RefrendaAct
     public function __toString() {
         return $this->getNombreplaza();
        }
-
+    
+    public function getPuesto(){
+        return "Partida ".$this->getPartida().", Subpartida ".$this->getSubpartida()."- ".$this->getNombreplaza();
+    }
     /**
      * Get id
      *

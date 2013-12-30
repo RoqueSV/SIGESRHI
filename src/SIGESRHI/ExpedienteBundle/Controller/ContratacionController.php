@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use SIGESRHI\ExpedienteBundle\Entity\Contratacion;
@@ -27,7 +28,7 @@ class ContratacionController extends Controller
 
     public function registrarAction(){
 
-        $source = new Entity('ExpedienteBundle:Expediente','grupo_contratacion');
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_contratacion_aspirante');
         
         $grid = $this->get('grid');
 
@@ -47,11 +48,18 @@ class ContratacionController extends Controller
          //Columnas para filtrar
         $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre','operatorsVisible'=>false));
         $grid->addColumn($NombreEmpleados,2);  
-        $NombrePlazas = new TextColumn(array('id' => 'plazas','source' => true,'field'=>'idsolicitudempleo.idplaza.nombreplaza','title' => 'Plaza','operatorsVisible'=>false,'joinType'=>'inner'));
+        $NombrePlazas = new TextColumn(array('id' => 'plazas','source' => true,'field'=>'idsolicitudempleo.idplaza.nombreplaza','title' => 'Plaza solicitada','operatorsVisible'=>false,'joinType'=>'inner'));
         $grid->addColumn($NombrePlazas,3);      
         
         // Crear
         $rowAction1 = new RowAction('Seleccionar', 'contratacion_new');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                 $action->setRouteParameters(array('id','tipogrid'=> 1));
+                return $action;
+            }
+        );
         $grid->addRowAction($rowAction1);
         
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
@@ -68,12 +76,12 @@ class ContratacionController extends Controller
 
     public function consultarAction(){
 
-        $source = new Entity('ExpedienteBundle:Expediente','grupo_contratacion');
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_contratacion_empleado');
         
         $grid = $this->get('grid');
 
 
-        /* Aspirantes validos */
+        /* Empleados validos */
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias){
@@ -86,23 +94,80 @@ class ContratacionController extends Controller
         $grid->setSource($source);       
 
          //Columnas para filtrar
-        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre','operatorsVisible'=>false));
-        $grid->addColumn($NombreEmpleados,2);  
-        $NombrePlazas = new TextColumn(array('id' => 'plazas','source' => true,'field'=>'idsolicitudempleo.idplaza.nombreplaza','title' => 'Plaza','operatorsVisible'=>false,'joinType'=>'inner'));
-        $grid->addColumn($NombrePlazas,3);      
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre','operatorsVisible'=>false,'joinType'=>'inner'));
+        $grid->addColumn($NombreEmpleados,3);  
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','align'=>'center','title' => 'Código',"operatorsVisible"=>false,'joinType'=>'inner'));
+        $grid->addColumn($CodigoEmpleados,2);      
         
         // Crear
         $rowAction1 = new RowAction('Mostrar', 'contratacion_show');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                 $action->setRouteParameters(array('id'=> $row->getField('idempleado.idcontratacion.id')));
+                return $action;
+            }
+        );
         $grid->addRowAction($rowAction1);
         
+        $grid->setDefaultOrder('codigos', 'asc');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
-        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
-        $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Consultar datos de contratación", $this->get("router")->generate("contratacion"));
+        
+        return $grid->getGridResponse('ExpedienteBundle:Contratacion:index.html.twig');
+    }
+
+    public function registrarEmpleadoAction(){
+
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_contratacion_empleado');
+        
+        $grid = $this->get('grid');
+
+
+        /* Empleados validos */
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->andWhere($tableAlias.'.tipoexpediente = :tipo')
+                      ->setParameter('tipo','E');
+            }
+        );   
+        
+        $grid->setId('grid_contratacion');
+        $grid->setSource($source);       
+
+         //Columnas para filtrar
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre','operatorsVisible'=>false,'joinType'=>'inner'));
+        $grid->addColumn($NombreEmpleados,3);  
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','align'=>'center','title' => 'Código',"operatorsVisible"=>false,'joinType'=>'inner'));
+        $grid->addColumn($CodigoEmpleados,2);      
+        
+        // Crear
+        $rowAction1 = new RowAction('Registrar', 'contratacion_new');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                 $action->setRouteParameters(array('id','tipogrid'=> 2));
+                return $action;
+            }
+        );
+        $grid->addRowAction($rowAction1);
+        
+        $grid->setDefaultOrder('codigos', 'asc');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Registrar contratación", $this->get("router")->generate("contratacion_empleado"));
         
         return $grid->getGridResponse('ExpedienteBundle:Contratacion:index.html.twig');
     }
@@ -125,6 +190,7 @@ class ContratacionController extends Controller
             
              $em = $this->getDoctrine()->getManager();
              
+             /***** Si es empleado nuevo *******/
              //crear empleado para establecer la relación.
              $empleado = new Empleado();
              $idexpediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->get('idexpediente'));
@@ -142,16 +208,22 @@ class ContratacionController extends Controller
 
              //Actualizar expediente
              $expedienteinfo = $em->getRepository('ExpedienteBundle:Contratacion')->actualizarEstadoExpediente($request->get('idexpediente'));
-             
+             /**********************************/
+
+
              if(count($entity->getIdempleado()->getIdcontratacion())==0){
              return $this->redirect($this->generateUrl('hojaservicio_new', array('id' => $request->get('idexpediente'))));
             }
          return $this->redirect($this->generateUrl('contratacion_show', array('id' => $entity->getId())));
         }
-
-        return $this->render('ExpedienteBundle:Contratacion:new.html.twig', array(
+        
+        $expediente = $em->getRepository('ExpedienteBundle:Contratacion')->obtenerAspiranteValido($request->get('idexpediente'));
+        $tipo=$request->get('tipo');
+        return $this->render('ExpedienteBundle:Contratacion:contratacion.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'expediente'=>$expediente,
+            'tipo'=>$tipo,
         ));
     }
 
@@ -173,12 +245,20 @@ class ContratacionController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        
+        if ($request->get('tipogrid')==1){
         $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
         $breadcrumbs->addItem($idexpediente->getIdsolicitudempleo()->getNumsolicitud(),  $this->get("router")->generate("contratacion_new"));
-        
+        }
+        else{
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Registrar contratación", $this->get("router")->generate("contratacion_empleado"));
+        $breadcrumbs->addItem($idexpediente->getIdempleado()->getCodigoempleado(),  $this->get("router")->generate("contratacion_new"));
+        }
         return $this->render('ExpedienteBundle:Contratacion:new.html.twig', array(          
             'expediente' => $expediente,
+            'tipogrid' => $request->query->get('tipogrid'),
         ));
     }
 
@@ -246,6 +326,16 @@ class ContratacionController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
+        
+        $contratacion = $em->getRepository('ExpedienteBundle:Contratacion')->find($id);
+
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Consultar datos de contratación", $this->get("router")->generate("contratacion_consultar"));
+        $breadcrumbs->addItem($contratacion->getIdempleado()->getCodigoempleado(),  $this->get("router")->generate("contratacion_consultar"));
 
         return $this->render('ExpedienteBundle:Contratacion:show.html.twig', array(
             'entity'      => $entity,
@@ -346,4 +436,5 @@ class ContratacionController extends Controller
             ->getForm()
         ;
     }
+
 }

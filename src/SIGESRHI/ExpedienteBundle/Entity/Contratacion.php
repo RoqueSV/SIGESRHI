@@ -144,7 +144,7 @@ class Contratacion
     private $idempleado;   
 
     /**
-     * @ORM\OneToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\RefrendaAct", inversedBy="puestoempleado")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\RefrendaAct", inversedBy="puestoempleado")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="puesto", referencedColumnName="id")
      * })

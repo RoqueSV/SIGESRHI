@@ -81,7 +81,8 @@
                     data: {
                         parent_id: jQuery(this).val(),
                         entity_alias: "{{ entity_alias }}",
-                        empty_value: "{{ empty_value }}"
+                        empty_value: "{{ empty_value }}",
+                        elemento: "{{ form.vars.id }}"
                     },
                     url:"{{ path('shtumi_dependent_filtered_entity') }}",
                     success: function(msg){

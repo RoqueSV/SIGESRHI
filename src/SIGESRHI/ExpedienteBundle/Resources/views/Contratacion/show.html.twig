@@ -1,78 +1,107 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Contratacion</h1>
+{% block principal %}
+<script type='text/javascript'>
+function eliminar() {
 
-    <table class="record_properties">
-        <tbody>
+    if(confirm('\xbfEst\xE1 seguro que desea eliminar este registro?')) {
+        document.getElementById('form_borrar').submit();
+}
+}
+</script>
+
+   {% if entity.tipocontratacion == 1 %}
+    <h3 class="text-center">Datos de nombramiento</h3>
+   {% else %}
+    <h3 class="text-center">Datos de contratación</h3>
+   {% endif %}
+
+    <table class="table table-bordered table-hover">
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
+                <th>Nombre empleado</th>
+                <td>{{ entity.idempleado.idexpediente.idsolicitudempleo.nombrecompleto }}</td>
             </tr>
             <tr>
-                <th>Observaciones</th>
-                <td>{{ entity.observaciones }}</td>
+                <th>C&oacute;digo empleado</th>
+                <td>{{ entity.idempleado.codigoempleado }}</td>
             </tr>
             <tr>
-                <th>Sueldoinicial</th>
+                <th>Cargo nombrado</th>
+                <td>{{ entity.puesto.nombreplaza }}</td>
+            </tr>
+            <tr>
+                <th>Destacado en</th>
+                <td>{{ entity.puesto.idunidad.idcentro.nombrecentro }}</td>
+            </tr>
+            <tr>
+                <th>Sueldo inicial</th>
                 <td>{{ entity.sueldoinicial }}</td>
             </tr>
             <tr>
-                <th>Horaslaborales</th>
-                <td>{{ entity.horaslaborales }}</td>
-            </tr>
-            <tr>
-                <th>Jornadalaboral</th>
-                <td>{{ entity.jornadalaboral }}</td>
-            </tr>
-            <tr>
-                <th>Fechainiciocontratacion</th>
-                <td>{{ entity.fechainiciocontratacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Doccontratacion</th>
-                <td>{{ entity.doccontratacion }}</td>
-            </tr>
-            <tr>
-                <th>Tipocontratacion</th>
-                <td>{{ entity.tipocontratacion }}</td>
-            </tr>
-            <tr>
-                <th>Fechafinnom</th>
-                <td>{{ entity.fechafinnom|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Fechaautorizacion</th>
-                <td>{{ entity.fechaautorizacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Numoficio</th>
+                <th>N&uacute;mero de oficio</th>
                 <td>{{ entity.numoficio }}</td>
             </tr>
             <tr>
-                <th>Fechafincontrato</th>
-                <td>{{ entity.fechafincontrato|date('Y-m-d H:i:s') }}</td>
+                <th>Fecha de autorizacion</th>
+                <td>{{ entity.fechaautorizacion|date('Y-m-d')|fecha }}</td>
             </tr>
-        </tbody>
+            <tr>
+                <th>Fecha de inicio laboral</th>
+                <td>{{ entity.fechainiciocontratacion|date('Y-m-d')|fecha }}</td>
+            </tr>
+            {% if entity.tipocontratacion == 1 %}
+            <tr>
+                <th>Fecha fin nombramiento</th>
+                <td>{% if entity.fechafinnom is null %}
+                    ---
+                    {% else %}
+                    {{ entity.fechafinnom|date('Y-m-d')|fecha }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <th>Fecha fin contrato</th>
+                <td>{{ entity.fechafincontrato|date('Y-m-d')|fecha }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Horas laborales</th>
+                <td>{{ entity.horaslaborales }}</td>
+            </tr>
+            <tr>
+                <th>Jornada laboral</th>
+                <td>
+                    {% if entity.jornadalaboral == 'D' %} 
+                    Diurna
+                    {% elseif entity.jornadalaboral == 'M' %}
+                    Matutina
+                    {% elseif entity.jornadalaboral == 'V' %}
+                    Vespertina
+                    {% else %}
+                    Nocturna
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{% if entity.observaciones is null %} --- {% endif %}{{ entity.observaciones }}</td>
+            </tr>
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('contratacion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('contratacion_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
+    <br />
+    {% if entity.doccontratacion is not null %}
+    <p class="text-center"> Documento de nombramiento o contrato </p>
+    <embed src="{{ asset('uploads/docs_contratacion/'~ entity.doccontratacion) }}" class="pdf"></embed>
+    {% endif %}
+    
+    <br />
+    <div class="text-center">
+        <a href="{{ path('contratacion_consultar') }}" class="btn"> Regresar al listado </a>
+        <a href="{{ path('contratacion_edit', { 'id': entity.id }) }}" class="btn"> Editar </a>
+        <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
         <form action="{{ path('contratacion_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <div class="invisible"> {{ form_widget(delete_form) }} </div>
         </form>
-    </li>
-</ul>
+   </div>
 {% endblock %}

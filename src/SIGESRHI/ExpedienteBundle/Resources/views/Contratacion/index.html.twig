@@ -62,6 +62,35 @@
                 }
             });
 
+            jQuery("#grid_grid_contratacion__codigos__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "codigos"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
+
         });
 </script>
      {% set ruta = app.request.attributes.get('_route') %}
@@ -69,8 +98,11 @@
      <h3 class="text-center"> Consulta de aspirantes </h3>
      <p class="text-center">De click en seleccionar para registrar un aspirante como empleado</p>
      {% elseif ruta == 'contratacion_consultar' %}
-     <h3 class="text-center"> Consulta de empleado </h3>
+     <h3 class="text-center"> Consulta de empleados </h3>
      <p class="text-center">De click en mostrar para consultar la información de la contratación un empleado</p>
+      {% elseif ruta == 'contratacion_empleado' %}
+     <h3 class="text-center"> Consulta de empleados </h3>
+     <p class="text-center">De click en seleccionar para registrar la contratación de un empleado</p>
      {% endif %}
      
      {{ grid_search(grid) }}

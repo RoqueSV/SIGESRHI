@@ -45,12 +45,6 @@ $(document).ready(function(){
               $.datepicker.setDefaults($.datepicker.regional['es']);
               });
 
-    $('.datenr').datepicker({ 
-              dateFormat: 'dd-mm-yy',  
-              changeMonth: true,
-              changeYear: true,
-              yearRange: "-100:+2",});
-
   /***** Validaciones de máscara ****/
     $(".telefono").mask("99999999",{placeholder:""});
     $(".isss").mask("999999999",{placeholder:""});

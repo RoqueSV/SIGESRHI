@@ -9,7 +9,7 @@ ExpedienteBundle_solicitud:
 ExpedienteBundle_segurovida:
         resource: "@ExpedienteBundle/Resources/config/routing/segurovida.yml"
         prefix:   /segurovida
-        
+
 ExpedienteBundle_pruebapsicologica:
         resource: "@ExpedienteBundle/Resources/config/routing/pruebapsicologica.yml"
         prefix:   /pruebapsicologica
@@ -19,7 +19,7 @@ ExpedienteBundle_consultarMunicipiosJSON:
     defaults: { _controller: ExpedienteBundle:Solicitudempleo:consultarMunicipiosJSON }
 
 ExpedienteBundle_Editar_consultarMunicipiosJSON:
-    pattern:  /solicitud/{slug}/consultarMunicipiosJSON    
+    pattern:  /solicitud/{slug}/consultarMunicipiosJSON
     defaults: { _controller: ExpedienteBundle:Solicitudempleo:consultarMunicipiosJSON }
 
 ExpedienteBundle_docdigital:

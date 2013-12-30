@@ -27,8 +27,13 @@
                     <td>{{ exp.nombrecompleto  }}</td>
                 </tr>
                 <tr>
+                  {% if tipogrid == 1 %}
                     <th>Plaza solicitada:</th>
                     <td>{{ exp.nombreplaza  }}</td>
+                  {% else %}
+                    <th>Plaza solicitada:</th>
+                    <td>Nada</td>
+                  {% endif %}
                 </tr>
                 <tr>
                     <th>Correo electrónico:</th>

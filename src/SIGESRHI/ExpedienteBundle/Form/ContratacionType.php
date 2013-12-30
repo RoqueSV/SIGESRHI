@@ -5,6 +5,7 @@ namespace SIGESRHI\ExpedienteBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class ContratacionType extends AbstractType
 {
@@ -22,7 +23,7 @@ class ContratacionType extends AbstractType
             ->add('horaslaborales',null, array(
                   'label'=>'Horas laborales',
                   'max_length'=>'2',
-                  'attr' => array('class'=>'input-small', 'data-bvalidator'=>'number')))
+                  'attr' => array('class'=>'input-mini', 'data-bvalidator'=>'number')))
             ->add('jornadalaboral','choice', array(
                   'label'=>'Jornada laboral',
                   'choices' => array(
@@ -30,36 +31,43 @@ class ContratacionType extends AbstractType
                   'required'  => true, 'empty_value' => 'Seleccione una opción'))
             ->add('fechainiciocontratacion',null, array(
                   'label'=>'Fecha de inicio laboral', 
+                  'required'  => true,
                   'widget' => 'single_text', 
-                  'format'=>'dd-MM-yyyy', 
-                  'attr' => array('class' => 'date input-small', 'data-bvalidator'=>'required', 'readonly'=>true))) 
+                  'format'=>'dd-MM-yyyy',
+                  'attr' => array('class' => 'input-small', 'data-bvalidator'=>'required', 'readonly'=>true))) 
             ->add('doccontratacion','hidden')
             ->add('file', 'file', array('label'=>'Subir documento o imagen del nombramiento emitido por DGP', 'required'=>false))
             //->add('tipocontratacion')
             //->add('fechafinnom')
             ->add('fechaautorizacion',null, array(
                   'label'=>'Fecha de autorización', 
-                  'widget' => 'single_text', 
-                  'format'=>'dd-MM-yyyy', 
+                  'widget' => 'single_text',
+                  'format'=>'dd-MM-yyyy',
                   'attr' => array('class' => 'date input-small', 'data-bvalidator'=>'required', 'readonly'=>true))) 
             ->add('numoficio',null,array(
                   'label'=>'Número de oficio',
+                  'required'  => false,
                   'attr' => array('class'=>'input-small')))
             ->add('fechafincontrato',null, array(
-                  'label'=>'Fecha fin contrato', 
-                  'widget' => 'single_text', 
-                  'format'=>'dd-MM-yyyy', 
-                  'attr' => array('class' => 'datenr input-small', 'data-bvalidator'=>'required', 'readonly'=>true))) 
+                  'label'=>'Fecha fin contrato',
+                  'widget' => 'single_text',
+                  'format'=>'dd-MM-yyyy',
+                  'required' => false,
+                  'attr' => array('class' => 'input-small', 'readonly'=>true))) 
             ->add('centro', 'entity', array(
                   'class' => 'AdminBundle:Centrounidad',
-                  'empty_value'=> 'Seleccione un centro',
-                  'required' => true,
+                  'query_builder' => function(EntityRepository $er) {
+                   return $er->createQueryBuilder('c')
+                             ->orderBy('c.nombrecentro', 'ASC');
+                   },
+                  'empty_value'=> 'Seleccione centro',
+                  'required' => false,
                   'mapped'=>false,
                   'attr' => array('class' => 'input-xmlarge')))
             ->add('unidad', 'shtumi_dependent_filtered_entity', array(
                   'label' => 'Unidad organizativa',
                   'entity_alias' => 'centro_unidad',
-                  'empty_value'=> 'Seleccione Unidad',
+                  'empty_value'=> 'Seleccione unidad',
                   'parent_field'=>'centro',
                   'required' => false,
                   'mapped'=>false,
@@ -67,33 +75,41 @@ class ContratacionType extends AbstractType
             ->add('puesto', 'shtumi_dependent_filtered_entity', array(
                   'label' => 'Cargo nombrado',
                   'entity_alias' => 'unidad_puesto',
-                  'empty_value'=> 'Seleccione Plaza',
+                  'empty_value'=> 'Seleccione plaza',
                   'parent_field'=>'unidad',
-                  'required' => false,
+                  'required' => true,
                   'attr' => array('class' => 'input-xmlarge')))
             ->add('centrojefe', 'entity', array(
                   'class' => 'AdminBundle:Centrounidad',
+                  'query_builder' => function(EntityRepository $er) {
+                   return $er->createQueryBuilder('c')
+                             ->orderBy('c.nombrecentro', 'ASC');
+                   },
                   'label' => 'Centro',
-                  'empty_value'=> 'Seleccione un centro',
+                  'empty_value'=> 'Seleccione centro',
                   'required' => false,
                   'mapped'=>false,
                   'attr' => array('class' => 'input-xmlarge')))
             ->add('unidadjefe', 'shtumi_dependent_filtered_entity', array(
                   'label' => 'Unidad organizativa',
                   'entity_alias' => 'centro_unidad',
-                  'empty_value'=> 'Seleccione Unidad',
-                  'parent_field'=>'centro',
+                  'empty_value'=> 'Seleccione unidad',
+                  'parent_field'=>'centrojefe',
                   'required' => false,
                   'mapped'=>false,
                   'attr' => array('class' => 'input-xmlarge')))
             ->add('puestojefe', 'shtumi_dependent_filtered_entity', array(
                   'label' => 'Cargo nombrado',
                   'entity_alias' => 'unidad_puesto',
-                  'empty_value'=> 'Seleccione Plaza',
+                  'empty_value'=> 'Seleccione plaza',
                   'parent_field'=>'unidadjefe',
-                  'required' => false,
+                  'required' => true,
                   'attr' => array('class' => 'input-xmlarge')))
-           
+
+           /* ->add('unidadjefe','entity',array('class' => 'AdminBundle:Unidadorganizativa','label'=>'Unidad: ', 'empty_value' => 'Seleccione', 'mapped'=>false,'attr'=>array('class'=>'input-xmlarge') ))
+            ->add('centrojefe', 'entity', array( 'label'=>'Centro: ', 'class' => 'AdminBundle:Centrounidad', 'empty_value' => 'Seleccione', 'mapped'=>false, 'attr'=>array('class'=>'input-xmlarge')))
+           ->add('puestojefe', null,array('required' => true,'label'=>'Puesto: ', 'empty_value' => 'Seleccione', 'attr'=>array('class'=>'input-medium') ))
+            */
             //->add('idempleado')
         ;
     }

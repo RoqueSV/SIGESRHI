@@ -95,10 +95,10 @@ class HojaservicioController extends Controller
 
         //Obtener plaza y unidad
         $query = $em->createQuery('
-                 SELECT p.nombreplaza, u.nombreunidad
-                 FROM AdminBundle:Plaza p
-                 JOIN p.idcontratacion c
-                 JOIN c.idunidad u
+                 SELECT r.nombreplaza, u.nombreunidad
+                 FROM ExpedienteBundle:Contratacion c
+                 JOIN c.puesto r
+                 JOIN r.idunidad u
                  WHERE c.id = :id'
                  )
         ->setMaxResults(1)

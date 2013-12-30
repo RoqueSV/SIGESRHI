@@ -202,9 +202,11 @@ shtumi_useful:
             class: AdminBundle:Unidadorganizativa
             parent_property: idcentro
             property: nombreunidad
-            no_result_msg: 'Seleccione Unidad'
+            order_property: nombreunidad
+            no_result_msg: 'Seleccione unidad'
         unidad_puesto:
             class: AdminBundle:RefrendaAct
             parent_property: idunidad
-            property: nombreplaza
-            no_result_msg: 'Seleccione Plaza'
+            property: puesto
+            order_property: partida
+            no_result_msg: 'Seleccione plaza'

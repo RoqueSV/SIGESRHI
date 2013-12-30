@@ -6,6 +6,10 @@ contratacion_consultar:
     pattern:  /consultar
     defaults: { _controller: "ExpedienteBundle:Contratacion:consultar" }
 
+contratacion_empleado:
+    pattern:  /registrar
+    defaults: { _controller: "ExpedienteBundle:Contratacion:registrarEmpleado" }
+
 contratacion_show:
     pattern:  /{id}/show
     defaults: { _controller: "ExpedienteBundle:Contratacion:show" }

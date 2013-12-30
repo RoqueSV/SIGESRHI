@@ -2,8 +2,6 @@
 
 {% block principal %}
 
-    {{ form_javascript(form) }}
-
     {% if tipo == 1 %}
     <h3 class="text-center">Autorizaci&oacute;n de nombramiento</h3>
     {% else %}
@@ -12,7 +10,8 @@
 
     <form action="{{ path('contratacion_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
     
-
+    <fieldset>
+     <legend>Datos de contratación</legend>
     <br />
     
       <div style="margin-left:40px;" class="text-center">
@@ -22,7 +21,7 @@
     <br /><br />
 
     <div class="control-group">
-         <label for="codigoempl" class="control-label required">C&oacute;digo empleado</label>
+         <label for="codempleado" class="control-label required">C&oacute;digo empleado</label>
          <div class="controls">
          <input type="text" name="codempleado" id="codempleado" required="required" class="input-small"/>
          </div>
@@ -33,14 +32,7 @@
     {{form_row(form.centro)}}
     {{form_row(form.unidad)}}
     {{form_row(form.puesto)}}
-
-    <fieldset>
-     <legend>Ingrese datos de jefe inmediato</legend>
-      {{form_row(form.centrojefe)}}
-      {{form_row(form.unidadjefe)}}
-      {{form_row(form.puestojefe)}}
-    </fieldset>
-    
+   
 
     {{form_row(form.sueldoinicial)}}
 
@@ -66,6 +58,15 @@
     {{form_row(form.jornadalaboral)}}
 
     {{form_row(form.observaciones)}}
+    </fieldset>
+
+    <fieldset>
+     <legend>Datos de jefe inmediato</legend>
+     <span class="help-block justifyText">En esta sección debera seleccionar las distintas opciones según el puesto en el que se encuentra nombrado el jefe inmediato del empleado que se registra.</span><br />
+      {{form_row(form.centrojefe)}}
+      {{form_row(form.unidadjefe)}}
+      {{form_row(form.puestojefe)}} 
+    </fieldset>
     
     <br /> 
     {% if tipo == 1 %}
@@ -102,4 +103,44 @@
     </div>
     
     </form>
-{% endblock %}
+  
+  
+    <script type="text/javascript">
+    if( document.getElementById('tipo').value == 1){
+     
+        $('#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion').datepicker({ 
+        dateFormat: 'dd-mm-yy',  
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-0:+1",});
+
+    }
+    else {
+        $(function() {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker({
+        yearRange: "-0:+1",
+        dateFormat: 'dd-mm-yy',
+        changeYear: true,
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechafincontrato" ).datepicker( "option", "minDate", selectedDate );
+        }
+        });
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechafincontrato" ).datepicker({
+        yearRange: "-0:+3",
+        dateFormat: 'dd-mm-yy',
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker( "option", "maxDate", selectedDate );
+        }
+        });
+        });
+      
+    }
+  </script> 
+
+
+  {% endblock %}
