@@ -41,6 +41,11 @@ accionpersonal_cacuerdos:
     pattern:  /cacuerdos/{id}
     defaults: { _controller: "ExpedienteBundle:Accionpersonal:ConsultarAcuerdosEmpleado" }
 
-accionpersonal_reportes:
-    pattern:  /reportes/{id}
+accionpersonal_eligereporte:
+    pattern:  /eligereporte/{id}
     defaults: { _controller: "ExpedienteBundle:Accionpersonal:ElegirReporte" }
+
+accionpersonal_llamareporte:
+    pattern:  /llamareporte/{id}
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:LlamarReporte" }
+

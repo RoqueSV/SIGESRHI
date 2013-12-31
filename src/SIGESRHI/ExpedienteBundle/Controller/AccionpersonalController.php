@@ -46,10 +46,13 @@ class AccionpersonalController extends Controller
     {
         $request = $this->getRequest();
         $idexp = $request->get('idexp');
+        $puesto = $request->get('puesto');
 
         $entity  = new Accionpersonal();
         $form = $this->createForm(new AccionpersonalType(), $entity);
         $form->bind($request);
+
+        $entity->setMotivoaccion($puesto." - ".$entity->getMotivoaccion());
 
         $em = $this->getDoctrine()->getManager();
 
@@ -57,6 +60,7 @@ class AccionpersonalController extends Controller
         $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
         //asignamos el id de expediente al acuerdo, mandandole el objeto de expediente
         $entity->setIdexpediente($expediente);
+
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -67,10 +71,22 @@ class AccionpersonalController extends Controller
             return $this->redirect($this->generateUrl('accionpersonal_show', array('id' => $entity->getId())));
         }
 
+         // obtenemos los puestos a los que esta asociado el empleado.
+        $query = $em->createQuery('
+          SELECT pl.nombreplaza
+          FROM ExpedienteBundle:Expediente ex
+          join ex.idempleado em
+          join em.idrefrenda re
+          join re.idplaza pl
+          WHERE ex.id =:idexp'
+        )->setParameter('idexp', $idexp);
+        $puestos = $query->getResult();
+
         return $this->render('ExpedienteBundle:Accionpersonal:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
             'idexp' =>  $idexp,
+            'puestos' => $puestos,
         ));
     }
 
@@ -83,6 +99,21 @@ class AccionpersonalController extends Controller
         $request = $this->getRequest();
         $idexp = $request->get('idexp');
 
+        //obtenemos el manejador de doctrine
+        $em = $this->getDoctrine()->getManager();
+
+        // obtenemos los puestos a los que esta asociado el empleado.
+        $query = $em->createQuery('
+          SELECT pl.nombreplaza
+          FROM ExpedienteBundle:Expediente ex
+          join ex.idempleado em
+          join em.idrefrenda re
+          join re.idplaza pl
+          WHERE ex.id =:idexp'
+        )->setParameter('idexp', $idexp);
+
+         $puestos = $query->getResult();
+
         $entity = new Accionpersonal();
         $entity->setFecharegistroaccion(new \Datetime(date('d-m-Y')));
 
@@ -92,6 +123,7 @@ class AccionpersonalController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
             'idexp' => $idexp,
+            'puestos' => $puestos,
         ));
     }
 
@@ -340,12 +372,52 @@ class AccionpersonalController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+
+         $query = $em->createQuery('
+            SELECT DISTINCT ta.id idtipo, ta.nombretipoaccion tipoaccion 
+            from ExpedienteBundle:Accionpersonal ap
+            join ap.idtipoaccion ta
+            where ap.idexpediente =:idexp
+            ')->setParameter('idexp',$id);
+        $tipos_acuerdo = $query->getResult();
+
+        // $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);
 
         return $this->render('ExpedienteBundle:Accionpersonal:Reporte.html.twig', array(
             'idexp'      => $id,
+            'tipos_acuerdo' => $tipos_acuerdo,
         ));
     }
+
+
+    public function LlamarReporteAction($id){
+
+        $request = $this->getRequest();
+        $idexp = $request->get('id');
+        $tipo_reporte = $request->get('tipo_reporte');
+        $fechainicio = $request->get('fechainicio');
+        $fechafin = $request->get('fechafin');
+        $tipoaccion = $request->get('tipo_accion');
+
+        echo $tipo_reporte;
+        
+        if($tipo_reporte =="1"){
+        return $this->redirect($this->generateUrl('solicitud_show', array('id' => $idexp)));
+            }// if 1
+
+        if($tipo_reporte =="2"){
+        return $this->redirect($this->generateUrl('solicitud_show', array('id' => $idexp, 'tipo'=> $tipoaccion)));
+            }// if 2
+    
+        if($tipo_reporte =="3"){
+        return $this->redirect($this->generateUrl('solicitud_show', array('id' => $idexp, 'fechainicio'=> $fechainicio, 'fechafin'=>$fechafin)));
+            }// if 3
+
+        if($tipo_reporte =="4"){
+        return $this->redirect($this->generateUrl('solicitud_show', array('id' => $idexp, 'tipo'=> $tipoaccion, 'fechainicio'=> $fechainicio, 'fechafin'=>$fechafin)));
+            }// if 4
+
+    }//function
 
 
 }// fin clase

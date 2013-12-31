@@ -5,29 +5,166 @@
 
 <h4 class="text-center"> Seleccione el tipo de reporte a generar</h4>
 
+<form action="{{path('accionpersonal_llamareporte', {'id': idexp})}}" id="miform" method="post">
 <br>
 <fieldset>
 	<legend>Tipo de reporte</legend>
 	<br>
-	<input type="radio" id="reporte" name="reporte" value="1"> Historial Laboral completo.  <br><br>
-	<input type="radio" id="reporte" name="reporte" value="2"> Por tipo de acuerdos.  <br><br>
-	<input type="radio" id="reporte" name="reporte" value="3"> Por rango de fechas. <br><br>
-</fieldset>
+	Seleccione el tipo de reporte a generar:
+	<select id="tipo_reporte" name="tipo_reporte">
+		<option value="1">Historial Completo</option>
+		<option value="2">Por Tipo de Acuerdo</option>
+		<option value="3">Por Rango de fechas</option>
+		<option value="4">Por Tipo de acuerdo y Rango de fechas</option>
+	</select>
 
+<br>
+
+{% if tipos_acuerdo|length > 0 %}
 
 <div class="text-center">
-<button type="button" onclick="" class="btn">Generar </button>
+<label for="tipo_accion" id="tipo_accion_label"> Accion de Personal: </label>
+<select id="tipo_accion" name="tipo_accion">
+{% for tipo in tipos_acuerdo %}
+<option value="{{tipo.idtipo}}">{{tipo.tipoaccion}}</option>
+{% endfor %}
+</select>
+</div>
+{% else %}
+El empleado no tiene acuerdos registrados.
+{% endif %}
+
+
+<table border="0" class="centered-table">
+	<tr>
+		<td ><label for="fechainicio" id="fechainicio_label">Fecha Inicio:</label></td>
+		<td width="25px"></td>
+		<td><label for="fechafin" id="fechafin_label">Fecha Fin:</label></td>
+	</tr>
+	<tr>
+		<td><input type="text" class="date input-small" id="fechainicio" name="fechainicio" readonly required></td>
+		<td ></td>
+		<td><input type="text" class="date input-small" id="fechafin" name="fechafin" readonly required></td>
+	</tr>
+	<tr>
+		<Td colspan="3"><label for="fechainicio" id="fecha_requerida" class="help-inline">* Seleccione las fechas.</label>	</td>
+	</tr>
+</table>
+
+<br>
+</fieldset>
+
+{#  <input type="text" id="caja"> #}
+<div class="text-center">
+	
+<button id="enviar" type="button" onclick="llamar_controlador()" class="btn">Generar Reporte</button>
 <button type="button" onclick="location.href='{{path('accionpersonal_cacuerdos', {'id': idexp})}}'" class="btn">Cancelar </button>
 </div>
+</form>
 
 <script>
 $(document).ready(function(){
-	$('#reporte').change(function(){
-		var valor= $('#reporte').val();
+	$('#tipo_reporte').prop("selectedIndex",-1);
+	$('#enviar').hide();
+	
+	$('#fecha_requerida').hide();
 
+	$('#tipo_accion').hide();
+	$('#fechainicio').hide();
+	$('#fechafin').hide();
+
+	$('#tipo_accion_label').hide();
+	$('#fechainicio_label').hide();
+	$('#fechafin_label').hide();
+
+	$('#tipo_reporte').change(function(){
+		var valor= $('#tipo_reporte').val();
+
+		if(valor=='1')
+		{
+			$('#enviar').show();
+
+			$('#tipo_accion').hide();
+			$('#fechainicio').hide();
+			$('#fechafin').hide();
+
+			$('#tipo_accion_label').hide();
+			$('#fechainicio_label').hide();
+			$('#fechafin_label').hide();
+
+			$('#fecha_requerida').hide();
+		}
+		if(valor=='2')
+		{
+			$('#enviar').show();
+
+			$('#tipo_accion').show();
+			$('#fechainicio').hide();
+			$('#fechafin').hide();
+
+			$('#tipo_accion_label').show();
+			$('#fechainicio_label').hide();
+			$('#fechafin_label').hide();
+
+			$('#fecha_requerida').hide();
+		}
+		if(valor=='3')
+		{
+			$('#enviar').show();
+
+			$('#tipo_accion').hide();
+			$('#fechainicio').show();
+			$('#fechafin').show();
+
+			$('#tipo_accion_label').hide();
+			$('#fechainicio_label').show();
+			$('#fechafin_label').show();
+
+			$('#fecha_requerida').hide();
+		}
+		if(valor=='4')
+		{
+			$('#enviar').show();
+
+			$('#tipo_accion').show();
+			$('#fechainicio').show();
+			$('#fechafin').show();
+
+			$('#tipo_accion_label').show();
+			$('#fechainicio_label').show();
+			$('#fechafin_label').show();
+
+			$('#fecha_requerida').hide();
+		}
+	//	$('#caja').val(valor);
 	});//change
 
 });//ready
 
+
+
+function llamar_controlador(){
+
+var tipo = $('#tipo_reporte').val();
+
+if(tipo=="3" || tipo=="4"){
+	if($('#fechainicio').val()=="" || $('#fechafin').val()==""){
+
+			$('#fecha_requerida').show();
+		
+	return false;
+}//if interno
+}//if externo
+
+document.getElementById("miform").submit();
+}
+
+
 </script>
+
+<style type="text/css">
+.help-inline{
+        color: rgb(185, 74, 72); 
+        }
+</style>
 {% endblock %}

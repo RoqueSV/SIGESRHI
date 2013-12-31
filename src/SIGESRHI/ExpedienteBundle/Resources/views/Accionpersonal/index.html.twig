@@ -132,7 +132,9 @@
 <div class="text-center">
 <br>
 
-<button class="btn" onclick="location.href='{{path('accionpersonal_reportes', {'id':entity.id})}}'">Generar Reporte </button>
+{% if entity.idaccion|length > 0 %}
+<button class="btn" onclick="location.href='{{path('accionpersonal_eligereporte', {'id':entity.id})}}'">Generar Reporte </button>
+{% endif %}
 <button class="btn" onclick="location.href='{{path('accionpersonal_cempleados')}}'"> Cancelar </button>
 </div>
 
