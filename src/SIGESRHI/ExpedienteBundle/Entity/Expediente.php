@@ -16,7 +16,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto,idempleado.idcontratacion.id", groups={"grupo_empleado"})
  * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto", groups={"grupo_empleado_inactivo"})
  * @GRID\Source(columns="id,idsolicitudempleo.nombrecompleto,tipoexpediente", groups={"grupo_contratacion_aspirante"})
- * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto,tipoexpediente,idempleado.idcontratacion.puesto.idplaza.nombreplaza,idempleado.idcontratacion.id", groups={"grupo_contratacion_empleado"})
+ * @GRID\Source(columns="id,tipoexpediente,idempleado.idcontratacion.puesto.idplaza.nombreplaza,idempleado.idcontratacion.id", groups={"grupo_contratacion_consultar"})
+ * @GRID\Source(columns="id,tipoexpediente,idempleado.idrefrenda.idplaza.nombreplaza", groups={"grupo_contratacion_empleado"})
  * @GRID\Source(columns="id,idsolicitudempleo.numsolicitud, idsolicitudempleo.nombrecompleto, idsolicitudempleo.fecharegistro, tipoexpediente", groups={"grupo_docdigital"})
  * @GRID\Source(columns="id,idsolicitudempleo.nombrecompleto, idsolicitudempleo.id, tipoexpediente, idempleado.codigoempleado", groups={"grupo_solicitud_empleado"})
  * @GRID\Source(columns="id,idsolicitudempleo.nombrecompleto, tipoexpediente, idempleado.codigoempleado, idempleado.idrefrenda.idplaza.nombreplaza", groups={"grupo_acciones_empleado"})
@@ -30,7 +31,7 @@ class Expediente
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="expediente_id_seq", allocationSize=1, initialValue=1)
-     * @GRID\Column(filterable=false, groups={"grupo_segurovida","grupo_contratacion_aspirante","grupo_contratacion_empleado","grupo_docdigital", "grupo_solicitud_empleado","grupo_empleado","grupo_empleado_inactivo", "grupo_acciones_empleado"}, visible=false)
+     * @GRID\Column(filterable=false, groups={"grupo_segurovida","grupo_contratacion_aspirante","grupo_contratacion_consultar","grupo_contratacion_empleado","grupo_docdigital", "grupo_solicitud_empleado","grupo_empleado","grupo_empleado_inactivo", "grupo_acciones_empleado"}, visible=false)
      */
     private $id;
 
@@ -50,25 +51,25 @@ class Expediente
      * max = "1",
      * maxMessage = "El tipo de expediente no debe exceder los {{limit}} caracteres"
      * )
-     * @GRID\Column(filterable=false, groups={"grupo_segurovida","grupo_contratacion_aspirante","grupo_contratacion_empleado", "grupo_docdigital", "grupo_solicitud_empleado","grupo_empleado","grupo_empleado_inactivo","grupo_acciones_empleado"}, visible=false)
+     * @GRID\Column(filterable=false, groups={"grupo_segurovida","grupo_contratacion_aspirante","grupo_contratacion_consultar","grupo_contratacion_empleado", "grupo_docdigital", "grupo_solicitud_empleado","grupo_empleado","grupo_empleado_inactivo","grupo_acciones_empleado"}, visible=false)
      */
     private $tipoexpediente;
 
     /**
      * @ORM\OneToOne(targetEntity="Empleado", mappedBy="idexpediente")
-     * @GRID\Column(field="idempleado.codigoempleado",groups={"grupo_empleado_inactivo","grupo_empleado","grupo_segurovida", "grupo_contratacion_empleado","grupo_solicitud_empleado", "grupo_acciones_empleado"} ,title="Codigo", visible=false, joinType="inner", filterable=false)
+     * @GRID\Column(field="idempleado.codigoempleado",groups={"grupo_empleado_inactivo","grupo_empleado","grupo_segurovida","grupo_contratacion_consultar","grupo_contratacion_empleado","grupo_solicitud_empleado", "grupo_acciones_empleado"} ,title="Codigo", visible=false, joinType="inner", filterable=false)
      * @GRID\Column(field="idempleado.codigoempleado",groups={"grupo_empleado_inactivo"} ,title="Codigo", visible=true, joinType="inner", filterable=true, operators={"like"},operatorsVisible=false)
-     * @GRID\Column(field="idempleado.idrefrenda.idplaza.nombreplaza", groups={"grupo_segurovida","grupo_empleado","grupo_empleado_inactivo","grupo_acciones_empleado"},type="text", title="Plaza", filterable=false, joinType="inner")
-     * @GRID\Column(field="idempleado.idcontratacion.puesto.idplaza.nombreplaza", groups={"grupo_contratacion_empleado"},type="text", title="Plaza", filterable=false, joinType="inner")
-     * @GRID\Column(field="idempleado.idcontratacion.id", groups={"grupo_empleado","grupo_contratacion_empleado"}, filterable=false, joinType="inner", visible=false)
+     * @GRID\Column(field="idempleado.idrefrenda.idplaza.nombreplaza", groups={"grupo_segurovida","grupo_empleado","grupo_contratacion_empleado","grupo_empleado_inactivo","grupo_acciones_empleado"},type="text", title="Plaza", filterable=false, joinType="inner")
+     * @GRID\Column(field="idempleado.idcontratacion.puesto.idplaza.nombreplaza", groups={"grupo_contratacion_consultar"},type="text", title="Plaza", filterable=false, joinType="inner")
+     * @GRID\Column(field="idempleado.idcontratacion.id", groups={"grupo_empleado","grupo_contratacion_consultar"}, filterable=false, joinType="inner", visible=false)
      */
     private $idempleado;
 
     /**
      * @var \Solicitudempleo
      * @ORM\OneToOne(targetEntity="Solicitudempleo", mappedBy="idexpediente", cascade={"remove"})
-     * @GRID\Column(field="idsolicitudempleo.idplaza.nombreplaza", groups="grupo_contratacion_aspirante",type="text", title="Plaza solicitada", operators={"like"}, operatorsVisible=false, joinType="inner")
-     * @GRID\Column(field="idsolicitudempleo.nombrecompleto", groups={"grupo_empleado","grupo_empleado_inactivo","grupo_segurovida","grupo_contratacion_aspirante","grupo_contratacion_empleado", "grupo_docdigital", "grupo_solicitud_empleado", "grupo_acciones_empleado"} ,visible=false, joinType="inner", filterable=false)
+     * @GRID\Column(field="idsolicitudempleo.idplaza.nombreplaza", groups="grupo_contratacion_aspirante",type="text", title="Plaza solicitada", visible=false)
+     * @GRID\Column(field="idsolicitudempleo.nombrecompleto", groups={"grupo_empleado","grupo_empleado_inactivo","grupo_segurovida","grupo_contratacion_aspirante","grupo_contratacion_consultar","grupo_contratacion_empleado", "grupo_docdigital", "grupo_solicitud_empleado", "grupo_acciones_empleado"} ,visible=false, joinType="inner", filterable=false)
      * @GRID\Column(field="idsolicitudempleo.nombrecompleto", title="Nombre", filter="input",  type="text", operators={"like"}, operatorsVisible=false, joinType="inner", groups={"grupo_empleado","grupo_empleado_inactivo"})
      * @GRID\Column(field="idsolicitudempleo.fecharegistro", align="center", type="date", groups={"grupo_docdigital"}, title="Registrado",  joinType="inner", filterable=false)
      * @GRID\Column(field="idsolicitudempleo.numsolicitud", align="center", groups={"grupo_docdigital"}, title="Solicitud", joinType="inner", filterable=false )

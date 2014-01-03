@@ -44,13 +44,17 @@ class ContratacionRepository extends EntityRepository
             ->getResult();
     }
 
-   public function actualizarEstadoExpediente($idexp)
+   public function actualizarRefrenda($idrefrenda,$empleado,$codigo)
     {
     return $this->getEntityManager()
-                ->createQuery("UPDATE ExpedienteBundle:Expediente e SET e.tipoexpediente='E'
-                               WHERE e.id=:idexp
+                ->createQuery("UPDATE AdminBundle:RefrendaAct r 
+                               SET r.idempleado = :empleado,
+                                   r.codigoempleado = :codigo
+                               WHERE r.id = :idrefrenda
                               ")
-                ->setParameter('idexp',$idexp)
+                ->setParameter('empleado',$empleado)
+                ->setParameter('codigo',$codigo)
+                ->setParameter('idrefrenda',$idrefrenda)
                 ->getResult();
     }
 }

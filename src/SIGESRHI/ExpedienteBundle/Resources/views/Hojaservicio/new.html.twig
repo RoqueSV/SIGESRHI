@@ -2,10 +2,16 @@
 
 {% block principal -%}
 
-  <h3 class="text-center">Registro de Hoja de Servicio</h3>
+{% for flashMessage in app.session.flashbag.get('aviso') %}
+  <div class="alert alert-success">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
+<h3 class="text-center">Registro de Hoja de Servicio</h3>
 
   <br />
-  <form action="{{ path('hojaservicio_create', {'idexp': idexp}) }}" method="post" class="form-inline">
+  <form action="{{ path('hojaservicio_create', {'idexp': idexp,'idcontratacion':idcontratacion}) }}" method="post" class="form-inline">
 
   <table width="100%">
     <tr>
@@ -90,6 +96,9 @@
   {{form_label(form.informacionadicional)}}
   <span style="margin-left:23px;">{{form_widget(form.informacionadicional)}}</span>
   {{form_errors(form.informacionadicional)}}
+
+  <input type="hidden" name="fotografia" id="fotografia" value="{{fotografia}}"/>
+  <input type="hidden" name="tipo" id="tipo" value="{{tipo}}"/>
 
 {{ form_rest(form) }}
 <br /><br />

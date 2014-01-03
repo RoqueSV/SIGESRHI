@@ -93,6 +93,13 @@
 
         });
 </script>
+
+{% for flashMessage in app.session.flashbag.get('delete') %}
+     <div class="alert alert-danger">
+       <p>{{ flashMessage }}</p>
+     </div>
+{% endfor %}
+
      {% set ruta = app.request.attributes.get('_route') %}
      {% if ruta == 'contratacion' %}
      <h3 class="text-center"> Consulta de aspirantes </h3>

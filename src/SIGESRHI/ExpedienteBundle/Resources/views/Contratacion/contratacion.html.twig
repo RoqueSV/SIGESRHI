@@ -23,7 +23,11 @@
     <div class="control-group">
          <label for="codempleado" class="control-label required">C&oacute;digo empleado</label>
          <div class="controls">
+        {% if tipocontratacion == 1 %}
          <input type="text" name="codempleado" id="codempleado" required="required" class="input-small"/>
+        {% else %}
+         <input type="text" name="codempleado" id="codempleado" required="required" value={{codigo}} class="input-small"/>
+        {% endif %}
          </div>
     </div>
 
@@ -72,7 +76,9 @@
     {% if tipo == 1 %}
     <table width="80%" class="centered-table">
         <tr>
-            <td>Subir documento o imagen del nombramiento emitido por DGP (opcional)</td>
+            <td>Subir documento o imagen del nombramiento emitido por DGP (opcional)<br /> 
+              <span class="help-block">(Formatos permitidos: jpg, png, pdf, word)</span>
+            </td>
         </tr>
         <tr>
             <td> {{form_widget(form.file)}}  {{form_errors(form.file)}}</td>
@@ -83,7 +89,9 @@
 
     <table width="80%" class="centered-table">
         <tr>
-            <td >Subir documento o imagen del contrato del empleado (opcional)</td>
+            <td>Subir documento o imagen del contrato del empleado (opcional)<br /> 
+              <span class="help-block">(Formatos permitidos: jpg, png, pdf, word)</span>
+            </td>
         </tr>
         <tr>
             <td> {{form_widget(form.file)}}  {{form_errors(form.file)}}</td>
@@ -91,15 +99,23 @@
     </table>
     {% endif %}
     <input type="hidden" name="tipo" id="tipo" value="{{tipo}}"/>
+    <input type="hidden" name="tipocontratacion" id="tipocontratacion" value="{{tipocontratacion}}"/>
     <input type="hidden" name="idexpediente" id="idexpediente" value="{{expediente[0].id}}"/>
-       
+    {# Determina si es ingreso o edición#}
+    <input type="hidden" name="control" id="control" value="1"/>
+
+
     {{ form_rest(form) }}
     <br/>
   
     
     <div class="text-center">
       <button type="submit" class="btn btn-primary">Registrar</button>
-      <a href="{{ path('contratacion_new',{'id': expediente[0].id}) }}"  class="btn" onclick="return confirm('Si cancela, perderá los datos del formulario actual ¿Está seguro de cancelar?')">Cancelar</a>
+      {% if tipocontratacion == 1 %}
+      <a href="{{ path('contratacion') }}"  class="btn" onclick="return confirm('Si cancela, perderá los datos del formulario actual ¿Está seguro de cancelar?')">Cancelar</a>
+      {% else %}
+      <a href="{{ path('contratacion_empleado') }}"  class="btn" onclick="return confirm('Si cancela, perderá los datos del formulario actual ¿Está seguro de cancelar?')">Cancelar</a>
+      {% endif %}
     </div>
     
     </form>

@@ -2,12 +2,21 @@
 
 {% block principal -%}
   
+  {% if tipogrid == 1 %}
   <h4 class='text-center'>Registrar aspirante como empleado de la institución.</h4><br>
+  {% else %}
+  <h4 class='text-center'>Registrar contratación para empleados.</h4><br>
+  {% endif %}
+
   <p class="help-block text-center">
     Seleccione la modalidad de trabajo bajo la cual se realizará la contratación del empleado
   </p>
 
+  {% if tipogrid == 1 %}
   <h5>Datos Generales del Aspirante</h5>
+  {% else %}
+  <h5>Datos Generales del Empleado</h5>
+  {% endif %}
   <table width="100%">
     {% for exp in expediente %}
     <tr>
@@ -26,15 +35,22 @@
                     <th>Nombre:</th>
                     <td>{{ exp.nombrecompleto  }}</td>
                 </tr>
+                
+                {% if tipogrid == 1 %}
                 <tr>
-                  {% if tipogrid == 1 %}
                     <th>Plaza solicitada:</th>
-                    <td>{{ exp.nombreplaza  }}</td>
-                  {% else %}
-                    <th>Plaza solicitada:</th>
-                    <td>Nada</td>
-                  {% endif %}
+                    <td>{{ exp.nombreplaza  }}</td>  
+                </tr>  
+                {% else %}
+                <tr>  
+                    <th>Plaza (s):</th>
+                    <td>{{ plazas[0].nombreplaza }}
+                    {% for i in 1..(plazas|length - 1) if (plazas|length) > 1 %}
+                    <tr><td></td><td>{{ plazas[i].nombreplaza }}</td></tr>
+                    {% endfor %}
                 </tr>
+                {% endif %}
+                
                 <tr>
                     <th>Correo electrónico:</th>
                     <td>{{ exp.email }}</td>
@@ -128,10 +144,15 @@
     </tr>
   </table>  
   <br/>
- 
+  <input type="hidden" name="tipogrid" id="tipogrid" value="{{tipogrid}}"/>
+  
   <div class="text-center">
       <button type="submit" class="btn btn-primary">Aceptar</button>
+      {% if tipogrid == 1 %}
       <a href="{{ path('contratacion') }}"  class="btn">Cancelar</a>
+      {% else %}
+      <a href="{{ path('contratacion_empleado') }}"  class="btn">Cancelar</a>
+      {% endif %}
   </div>
   </form>
 

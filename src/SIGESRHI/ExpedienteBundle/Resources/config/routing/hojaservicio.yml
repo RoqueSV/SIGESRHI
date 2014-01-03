@@ -7,7 +7,7 @@ hojaservicio_show:
     defaults: { _controller: "ExpedienteBundle:Hojaservicio:show" }
 
 hojaservicio_new:
-    pattern:  /{id}/new
+    pattern:  /{id}/{idc}/new
     defaults: { _controller: "ExpedienteBundle:Hojaservicio:new" }
 
 hojaservicio_create:

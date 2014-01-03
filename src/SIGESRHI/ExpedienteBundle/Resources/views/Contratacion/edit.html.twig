@@ -1,28 +1,163 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Contratacion edit</h1>
+{% block principal -%}
+    <h3 class="text-center">Edici&oacute;n de registro</h3>
+    <br />
+    <form action="{{ path('contratacion_update', { 'id': entity.id, 'tipo':tipo }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
+        
+    <input type="hidden" name="_method" value="PUT" />
+    
+    <fieldset>
+     <legend>Datos de contratación</legend>
+    <br />
+    <div style="margin-left:40px;" class="text-center">
+        <b>NOMBRE EMPLEADO</b> &nbsp;&nbsp;&nbsp; 
+        <span class="alert alert-form">{{entity.idempleado.idexpediente.idsolicitudempleo.nombrecompleto}}</span>
+      </div>
+    <br /><br />
 
-    <form action="{{ path('contratacion_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
-    </form>
+    <div class="control-group">
+         <label for="codempleado" class="control-label required">C&oacute;digo empleado</label>
+         <div class="controls">
+         {% if tipo == 1 %}
+         <input type="text" name="codempleado" id="codempleado" required="required" value={{entity.idempleado.codigoempleado}} class="input-small"/>
+         {% else %}
+         <input type="text" name="codempleado" id="codempleado" readonly="readonly" value={{entity.idempleado.codigoempleado}} class="input-small"/>
+         {% endif %}
+          <input type="hidden" name="codigoactual" id="codigoactual" value="{{entity.idempleado.codigoempleado}}"/>
+         </div>
+    </div>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('contratacion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('contratacion_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+
+   
+   {{form_row(edit_form.centro, {value : datospuesto[0].centro}) }} 
+   {{form_row(edit_form.unidad, {value : datospuesto[0].unidad}) }} 
+   {{form_row(edit_form.puesto, {value : datospuesto[0].puesto},
+   {'attr' : {'id':'sigesrhi_expedientebundle_contrataciontype_puestoedit'}} 
+   ) }} 
+
+   {{form_row(edit_form.sueldoinicial)}}
+
+   {{form_label(edit_form.numoficio)}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   {{form_widget(edit_form.numoficio)}}<span class="help-inline">* número del documento generado</span>
+   {{form_errors(edit_form.numoficio)}}
+    <br/><br/>
+
+   {{form_row(edit_form.fechaautorizacion)}}
+
+   {% if entity.tipocontratacion == 1 %}
+       {{form_row(edit_form.fechainiciocontratacion)}}
+       <div class="hide">
+       {{form_widget(edit_form.fechafincontrato, {'attr': {'class': 'invisible'}}) }}
+       </div>
+    {% else %}  
+       {{form_row(edit_form.fechainiciocontratacion,{ 'label': 'Fecha inicio contrato' })}}
+       {{form_row(edit_form.fechafincontrato)}}
+    {% endif %}
+
+    {{form_row(edit_form.horaslaborales)}}
+
+    {{form_row(edit_form.jornadalaboral)}}
+
+    {{form_row(edit_form.observaciones)}}
+    </fieldset>
+
+    <fieldset>
+     <legend>Datos de jefe inmediato</legend>
+     <span class="help-block justifyText">En esta sección debera seleccionar las distintas opciones según el puesto en el que se encuentra nombrado el jefe inmediato del empleado que se registra.</span><br />
+      {{form_row(edit_form.centrojefe, {value : puestojefe[0].centrojefe}) }} 
+      {{form_row(edit_form.unidadjefe, {value : puestojefe[0].unidadjefe}) }} 
+      {{form_row(edit_form.puestojefe, {value : puestojefe[0].puestojefe}) }} 
+    </fieldset>
+    
+    <br /> 
+    {% if entity.tipocontratacion == 1 %}
+    <table width="80%" class="centered-table">
+        <tr>
+            <td>Reemplazar documento o imagen del nombramiento emitido por DGP (opcional)<br /> 
+              <span class="help-block">(Formatos permitidos: jpg, png, pdf, word)</span>
+            </td>
+        </tr>
+        <tr>
+            <td> {{form_widget(edit_form.file)}}  {{form_errors(edit_form.file)}}</td>
+        </tr>
+    </table>
+       
+    {% else %}  
+
+    <table width="80%" class="centered-table">
+        <tr>
+            <td >Reemplazar documento o imagen del contrato del empleado (opcional)<br /> 
+              <span class="help-block">(Formatos permitidos: jpg, png, pdf, word)</span>
+            </td>
+        </tr>
+        <tr>
+            <td> {{form_widget(edit_form.file)}}  {{form_errors(edit_form.file)}}</td>
+        </tr>
+    </table>
+    {% endif %}
+
+   <input type="hidden" name="tipo" id="tipo" value="{{entity.tipocontratacion}}"/>
+   <input type="hidden" name="puestoactual" id="puestoactual" value="{{datospuesto[0].puesto}}"/>
+   {# Determina si es ingreso o edición#}
+   <input type="hidden" name="control" id="control" value="2"/>
+   {{ form_rest(edit_form) }}
+
+   <br/>
+   <div class="text-center">
+        <button type="submit" class="btn btn-primary">Modificar</button>
+        <a href="#" class="btn">Cancelar</a>
+   </div>
+
+   </form>
+
+<script>
+/**************** Establecer Centro, unidad y puesto *********/
+
+$(document).ready(function(){
+   document.getElementById('sigesrhi_expedientebundle_contrataciontype_centro').value={{datospuesto[0].centro}};
+   document.getElementById('sigesrhi_expedientebundle_contrataciontype_centrojefe').value={{puestojefe[0].centrojefe}};
+});
+
+jQuery(function(){    
+     jQuery("select#sigesrhi_expedientebundle_contrataciontype_centro").trigger('change');
+     jQuery("select#sigesrhi_expedientebundle_contrataciontype_centrojefe").trigger('change');
+});
+/*************************************************************/
+  if( document.getElementById('tipo').value == 1){
+     
+        $('#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion').datepicker({ 
+        dateFormat: 'dd-mm-yy',  
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-0:+1",});
+
+  }
+  else {
+        $(function() {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker({
+        yearRange: "-0:+1",
+        dateFormat: 'dd-mm-yy',
+        changeYear: true,
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechafincontrato" ).datepicker( "option", "minDate", selectedDate );
+        }
+        });
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechafincontrato" ).datepicker({
+        yearRange: "-0:+3",
+        dateFormat: 'dd-mm-yy',
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker( "option", "maxDate", selectedDate );
+        }
+        });
+        });
+      
+    }
+
+</script>
 {% endblock %}

@@ -11,8 +11,8 @@ contratacion_empleado:
     defaults: { _controller: "ExpedienteBundle:Contratacion:registrarEmpleado" }
 
 contratacion_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "ExpedienteBundle:Contratacion:show" }
+    pattern:  /{id}/{tipo}/show
+    defaults: { _controller: "ExpedienteBundle:Contratacion:show",tipo: 0 }
 
 contratacion_new:
     pattern:  /new

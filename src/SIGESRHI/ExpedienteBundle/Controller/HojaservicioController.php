@@ -53,13 +53,19 @@ class HojaservicioController extends Controller
             
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('hojaservicio_show', array('id' => $entity->getId())));
+        
+        $this->get('session')->getFlashBag()->add('aviso', 'Datos registrados correctamente.');
+        return $this->redirect($this->generateUrl('contratacion_show', array('id' => $request->get('idcontratacion'),
+                                                                             'tipo'=>$request->get('tipo'))));
+        //return $this->redirect($this->generateUrl('hojaservicio_show', array('id' => $entity->getId())));
         }
 
         return $this->render('ExpedienteBundle:Hojaservicio:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'fotografia' => $request->get('fotografia'),
+            'idexp'=>$request->get('idexp'),
+            'idcontratacion'=>$request->get('idcontratacion'),
         ));
     }
 
@@ -67,10 +73,11 @@ class HojaservicioController extends Controller
      * Displays a form to create a new Hojaservicio entity.
      *
      */
-    public function newAction($id)
+    public function newAction($id,$idc)
     {
         $entity = new Hojaservicio();
         $em = $this->getDoctrine()->getManager();
+        $request = $this->getRequest();
 
         $empleado = $em->getRepository('ExpedienteBundle:Empleado')->findOneByIdexpediente($id);
         $contratacion = $em->getRepository('ExpedienteBundle:Contratacion')->findOneByIdempleado($empleado);
@@ -138,6 +145,8 @@ class HojaservicioController extends Controller
             'form'   => $form->createView(),
             'fotografia' => $fotografia,
             'idexp'=>$id,
+            'idcontratacion'=>$idc,
+            'tipo' =>$request->get('tipo'),
         ));
     }
 

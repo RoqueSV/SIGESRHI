@@ -1,6 +1,18 @@
 {% extends '::PrincipalBase.html.twig' %}
 
-{% block principal %}
+{% block principal -%}
+{% for flashMessage in app.session.flashbag.get('aviso') %}
+  <div class="alert alert-success">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('edit') %}
+  <div class="alert alert-success">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
+
 <script type='text/javascript'>
 function eliminar() {
 
@@ -97,11 +109,15 @@ function eliminar() {
     <br />
     <div class="text-center">
         <a href="{{ path('contratacion_consultar') }}" class="btn"> Regresar al listado </a>
-        <a href="{{ path('contratacion_edit', { 'id': entity.id }) }}" class="btn"> Editar </a>
+        {% set ruta = app.request.attributes.get('_route') %}
+        {% if tipo !=0  %}
+        <a href="{{ path('contratacion_edit', { 'id': entity.id,'tipo':tipo }) }}" class="btn"> Editar </a>
         <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
-        <form action="{{ path('contratacion_delete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ path('contratacion_delete', { 'id': entity.id }) }}" id="form_borrar" method="post">
             <input type="hidden" name="_method" value="DELETE" />
+            <input type="hidden" name="tipo" id="tipo" value="{{tipo}}" />
             <div class="invisible"> {{ form_widget(delete_form) }} </div>
         </form>
+        {% endif %}
    </div>
 {% endblock %}
