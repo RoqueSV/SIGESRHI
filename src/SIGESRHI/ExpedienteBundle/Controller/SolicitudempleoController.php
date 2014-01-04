@@ -68,13 +68,20 @@ class SolicitudempleoController extends Controller
             }
         );
 
+        $NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $grid->addColumn($NombreAspirante,1);
+
+        $PlazaAplica = new TextColumn(array('id' => 'plazas','source' => true,'field'=>'idplaza.nombreplaza','title' => 'Plaza que aplica',"operatorsVisible"=>false));
+        $grid->addColumn($PlazaAplica,2);
+
         // Attach the source to the grid
+        $grid->setId('grid_solicitud_aspirante');
         $grid->setSource($source);
 
         $em = $this->getDoctrine()->getManager();
           
         $grid->setNoDataMessage("No se encontraron resultados");
-        $grid->setDefaultOrder('numsolicitud', 'asc');
+        $grid->setDefaultOrder('nombrecompleto', 'asc');
         
         $rowAction1 = new RowAction('Mostrar', 'solicitud_show');
         $rowAction1->setColumn('info_column');
@@ -121,7 +128,15 @@ class SolicitudempleoController extends Controller
             }
         );
 
+       
+       $NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $grid->addColumn($NombreAspirante,1);
+
+        $PlazaAplica = new TextColumn(array('id' => 'plazas','source' => true,'field'=>'idplaza.nombreplaza','title' => 'Plaza que aplica',"operatorsVisible"=>false));
+        $grid->addColumn($PlazaAplica,2);
+
         // Attach the source to the grid
+        $grid->setId('grid_solicitud_aspirante_edit');
         $grid->setSource($source);
 
 
@@ -129,6 +144,8 @@ class SolicitudempleoController extends Controller
         
           
         $grid->setNoDataMessage("No se encontraron resultados");
+
+        $grid->setDefaultOrder('nombrecompleto', 'asc');
         
         $rowAction1 = new RowAction('Modificar', 'solicitud_edit');
         $rowAction1->setColumn('info_column');

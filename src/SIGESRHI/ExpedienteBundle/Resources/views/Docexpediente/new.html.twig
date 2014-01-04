@@ -69,7 +69,7 @@
                     </tr>
                     <tr>
                         <th>Tel&eacute;fonos:</th>
-                        <td>{{expediente.idsolicitudempleo.telefonofijo}} - {{expediente.idsolicitudempleo.telefonomovil}}</td>
+                        <td>{{expediente.idsolicitudempleo.telefonofijo|telefono}} ~ ~ ~ {{expediente.idsolicitudempleo.telefonomovil|telefono}}</td>
                     </tr>
                     <tr>
                         <th>Correo electr&oacute;nico: </th>
@@ -108,8 +108,8 @@
                             <th width="20%" align="center"><b>No. NIP</b></th>
                         </tr>
                         <tr>
-                            <td align="center">{{expediente.idsolicitudempleo.dui}}</td>
-                            <td align="center">{{expediente.idsolicitudempleo.nit}}</td>
+                            <td align="center">{{expediente.idsolicitudempleo.dui|dui}}</td>
+                            <td align="center">{{expediente.idsolicitudempleo.nit|nit}}</td>
                             <td align="center">{{expediente.idsolicitudempleo.isss}}</td>
                             <td align="center">{{expediente.idsolicitudempleo.nup}}</td>
                             <td align="center">{{expediente.idsolicitudempleo.nip}}</td>

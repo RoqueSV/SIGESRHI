@@ -25,7 +25,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  *
  * @GRID\Source(columns="id,nombrecompleto,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
- * @GRID\Source(columns="id,numsolicitud, nombrecompleto,idplaza.nombreplaza, idexpediente.tipoexpediente",groups={"solicitud_empleo"})
+ * @GRID\Source(columns="id,numsolicitud, nombrecompleto, idplaza.nombreplaza, idexpediente.tipoexpediente",groups={"solicitud_empleo"})
  * @GRID\Source(columns="id,nombrecompleto,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.fechaexpediente",groups={"lista_expediente"})
  */
 
@@ -112,9 +112,7 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="nombrecompleto", type="string", length=100, nullable=true)
-     * @GRID\Column(title="Nombre", filter="input", groups={"grupo_pruebapsicologica", "solicitud_empleo","vista_basica_expediente"}, type="text", operators={"like"}, operatorsVisible=false)
-     *
-     * @GRID\Column(title="Nombre", filter="input", groups={"solicitud_empleo"}, type="text", operators={"like"}, operatorsVisible=false)
+     * @GRID\Column(title="Nombre", filter="input", groups={"grupo_pruebapsicologica", "solicitud_empleo","vista_basica_expediente"}, type="text", operators={"like"}, operatorsVisible=false, visible=false, filterable=false)
       *@GRID\Column(title="Nombre", groups={"lista_expediente"}, filterable=false)
      */
     private $nombrecompleto;
@@ -535,7 +533,7 @@ class Solicitudempleo
      *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      * })
      *
-     * @GRID\Column(field="idplaza.nombreplaza", title="Puesto al que aplica", joinType="inner", filterable=true, groups={"grupo_pruebapsicologica","vista_basica_expediente", "solicitud_empleo"}, operators={"like"}, operatorsVisible=false)
+     * @GRID\Column(field="idplaza.nombreplaza", title="Puesto al que aplica", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica","vista_basica_expediente", "solicitud_empleo"}, operators={"like"}, operatorsVisible=false, visible=false)
      * @GRID\Column(field="idplaza.nombreplaza", title="Puesto al que aplica", joinType="inner", filterable=false, groups={"lista_expediente"})
      */
     private $idplaza;

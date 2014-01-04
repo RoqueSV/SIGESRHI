@@ -9,7 +9,22 @@ services:
 
 # src/Acme/DemoBundle/Resources/config/services.yml
 
-    acme.twig.acme_extension:
+    expediente.fecha_extension:
         class: SIGESRHI\ExpedienteBundle\Twig\FechaExtension
+        tags:
+                - { name: twig.extension }
+
+    expediente.dui_extension:
+        class: SIGESRHI\ExpedienteBundle\Twig\DuiExtension
+        tags:
+                - { name: twig.extension }
+
+    expediente.nit_extension:
+        class: SIGESRHI\ExpedienteBundle\Twig\NitExtension
+        tags:
+                - { name: twig.extension }
+
+    expediente.telefono_extension:
+        class: SIGESRHI\ExpedienteBundle\Twig\TelefonoExtension
         tags:
                 - { name: twig.extension }

@@ -108,7 +108,7 @@ class DocexpedienteController extends Controller
             throw $this->createNotFoundException('No es posible encontrar la entidad Expediente.');
         }
 
-         //incluimos camino de migas
+ /*        //incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
@@ -126,7 +126,7 @@ class DocexpedienteController extends Controller
             }
 
         $breadcrumbs->addItem($expediente->getIdsolicitudempleo()->getnombrecompleto(), $this->get("router")->generate("hello_page"));
-
+*/
         
         return $this->render('ExpedienteBundle:Docexpediente:new.html.twig', array(
             'entity' => $entity,
@@ -261,7 +261,7 @@ class DocexpedienteController extends Controller
 
 
 //funcion de grid para agregar documentos digitales a un expediente (Docexpediente)
-    public function ConsultaRegDocAspirantesAction()
+    public function RegistraDocAspirantesAction()
     {
 
         //incluimos camino de migas
@@ -299,10 +299,53 @@ class DocexpedienteController extends Controller
  
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
 
-    return $grid->getGridResponse('ExpedienteBundle:Docexpediente:grid_agregar_ver_aspirantes.html.twig');
+    return $grid->getGridResponse('ExpedienteBundle:Docexpediente:grid_registrar_aspirantes.html.twig');
 
     }
 
+
+    //funcion de grid para consultar documentos digitales de un expediente (Docexpediente)
+    public function ConsultaDocAspirantesAction()
+    {
+
+        //incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirantes", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Agregar Documentos Digitales", $this->get("router")->generate("hello_page"));
+
+
+        $source = new Entity('ExpedienteBundle:Expediente', 'grupo_docdigital');
+        // Get a grid instance
+        $grid = $this->get('grid');
+
+
+        $tableAlias=$source->getTableAlias();
+        $source->manipulateQuery(
+        function($query) use ($tableAlias){
+            $query->andWhere($tableAlias.".tipoexpediente = 'I' or ".$tableAlias.".tipoexpediente = 'A'");
+        }
+            );
+
+        // Attach the source to the grid
+        $grid->setId('grid_docdigital_aspirantes');
+        $grid->setSource($source);
+        
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $grid->addColumn($NombreEmpleados,3);
+          
+        $grid->setNoDataMessage("No se encontraron resultados");
+        $grid->setDefaultOrder('idsolicitudempleo.numsolicitud', 'asc');
+        
+        $rowAction1 = new RowAction('Consultar', 'docdigital_new');        
+        $grid->addRowAction($rowAction1);     
+ 
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+    return $grid->getGridResponse('ExpedienteBundle:Docexpediente:grid_consultar_aspirantes.html.twig');
+
+    }
 
 //funcion de grid para agregar documentos digitales a un expediente (Docexpediente)
     public function ConsultaRegDocEmpleadosAction()

@@ -29,9 +29,13 @@ docdigital_delete:
     defaults: { _controller: "ExpedienteBundle:Docexpediente:delete" }
     requirements: { _method: post|delete }
 
-docdigital_craspirante:
-    pattern:  /aspirante
-    defaults: { _controller: "ExpedienteBundle:Docexpediente:ConsultaRegDocAspirantes" }
+docdigital_caspirante:
+    pattern:  /consultar/aspirante
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:ConsultaDocAspirantes" }
+
+docdigital_raspirante:
+    pattern:  /registrar/aspirante
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:RegistraDocAspirantes" }
 
 docdigital_ver_docdigital:
     pattern:  /documento/{iddoc}
