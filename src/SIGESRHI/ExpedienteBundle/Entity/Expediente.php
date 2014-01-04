@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="expediente")
  * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Repositorio\ExpedienteRepository")
  * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto,idempleado.idrefrenda.idplaza.nombreplaza, tipoexpediente,idsegurovida.id", groups={"grupo_segurovida"})
- * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto,idempleado.idcontratacion.id", groups={"grupo_empleado"})
  * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto", groups={"grupo_empleado_inactivo"})
  * @GRID\Source(columns="id,idsolicitudempleo.nombrecompleto,tipoexpediente", groups={"grupo_contratacion_aspirante"})
  * @GRID\Source(columns="id,tipoexpediente,idempleado.idcontratacion.puesto.idplaza.nombreplaza,idempleado.idcontratacion.id", groups={"grupo_contratacion_consultar"})
@@ -21,6 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @GRID\Source(columns="id,idsolicitudempleo.numsolicitud, idsolicitudempleo.nombrecompleto, idsolicitudempleo.fecharegistro, tipoexpediente", groups={"grupo_docdigital"})
  * @GRID\Source(columns="id,idsolicitudempleo.nombrecompleto, idsolicitudempleo.id, tipoexpediente, idempleado.codigoempleado", groups={"grupo_solicitud_empleado"})
  * @GRID\Source(columns="id,idsolicitudempleo.nombrecompleto, tipoexpediente, idempleado.codigoempleado, idempleado.idrefrenda.idplaza.nombreplaza", groups={"grupo_acciones_empleado"})
+ * @GRID\Source(columns="id,idempleado.codigoempleado,tipoexpediente,idsolicitudempleo.nombrecompleto,idempleado.idcontratacion.id,idempleado.idcontratacion.puesto.idplaza.nombreplaza", groups={"grupo_empleado"})
  */
 class Expediente
 {
@@ -63,6 +63,7 @@ class Expediente
      * @GRID\Column(field="idempleado.idcontratacion.puesto.idplaza.nombreplaza", groups={"grupo_contratacion_consultar"},type="text", title="Plaza", filterable=false, joinType="inner")
      * @GRID\Column(field="idempleado.idcontratacion.id", groups={"grupo_empleado","grupo_contratacion_consultar"}, filterable=false, joinType="inner", visible=false)
      */
+         //@GRID\Column(field="idempleado.idcontratacion.idlicencia.id", groups="grupo_empleado", filterable=false, visible=false)
     private $idempleado;
 
     /**
@@ -70,7 +71,6 @@ class Expediente
      * @ORM\OneToOne(targetEntity="Solicitudempleo", mappedBy="idexpediente", cascade={"remove"})
      * @GRID\Column(field="idsolicitudempleo.idplaza.nombreplaza", groups="grupo_contratacion_aspirante",type="text", title="Plaza solicitada", visible=false)
      * @GRID\Column(field="idsolicitudempleo.nombrecompleto", groups={"grupo_empleado","grupo_empleado_inactivo","grupo_segurovida","grupo_contratacion_aspirante","grupo_contratacion_consultar","grupo_contratacion_empleado", "grupo_docdigital", "grupo_solicitud_empleado", "grupo_acciones_empleado"} ,visible=false, joinType="inner", filterable=false)
-     * @GRID\Column(field="idsolicitudempleo.nombrecompleto", title="Nombre", filter="input",  type="text", operators={"like"}, operatorsVisible=false, joinType="inner", groups={"grupo_empleado","grupo_empleado_inactivo"})
      * @GRID\Column(field="idsolicitudempleo.fecharegistro", align="center", type="date", groups={"grupo_docdigital"}, title="Registrado",  joinType="inner", filterable=false)
      * @GRID\Column(field="idsolicitudempleo.numsolicitud", align="center", groups={"grupo_docdigital"}, title="Solicitud", joinType="inner", filterable=false )
      * @GRID\Column(field="idsolicitudempleo.id", groups={"grupo_solicitud_empleado"} ,visible=false, joinType="inner", filterable=false)

@@ -2,6 +2,10 @@ licencia_ver:
     pattern:  /indexver
     defaults: { _controller: "ExpedienteBundle:Licencia:indexVer" }
 
+licencia_ver_permisos:
+    pattern:  /{id}/{idc}/indexverpermisos
+    defaults: { _controller: "ExpedienteBundle:Licencia:indexVerPermisos" }
+
 licencia_registrar:
     pattern:  /indexregistrar
     defaults: { _controller: "ExpedienteBundle:Licencia:indexRegistrar" }

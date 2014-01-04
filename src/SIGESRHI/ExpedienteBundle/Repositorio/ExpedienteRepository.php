@@ -37,16 +37,17 @@ class ExpedienteRepository extends EntityRepository
             ->getResult();
   }
 
-public function obtenerExpedienteEmpleadoInfo($idexp)
+public function obtenerExpedienteEmpleadoInfo($idexp,$idc)
   {
   return $this->getEntityManager()
     ->createQuery("SELECT s.id,e.id as idexpediente,s.nombrecompleto, CONCAT(COALESCE(s.calle,''),CONCAT(', ',s.colonia)) as direccion, s.estadocivil, s.telefonofijo,
                           s.telefonomovil, s.email,s.lugarnac, s.fechanac, s.fotografia,s.dui,s.nit,s.isss,s.nup,s.nip,s.sexo,s.fechadui,s.lugardui, em.codigoempleado,
-                          e.fechaexpediente
-                         FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN e.idempleado em
-                         WHERE e.id=:idexp 
+                          e.fechaexpediente, r.partida, r.subpartida
+                         FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN e.idempleado em JOIN em.idrefrenda r JOIN r.puestoempleado c
+                         WHERE e.id=:idexp AND c.id=:idc
                          ")
           ->setParameter('idexp',$idexp)
+          ->setParameter('idc',$idc)
           ->getResult();
 }
 
@@ -54,7 +55,7 @@ public function obtenerPlazasEmpleado($idexp)
   {
   return $this->getEntityManager()
     ->createQuery("SELECT p.nombreplaza, ce.nombrecentro
-                         FROM ExpedienteBundle:Expediente e JOIN e.idempleado em JOIN em.idcontratacion c JOIN c.idplaza p JOIN c.idunidad u JOIN u.idcentro ce
+                         FROM ExpedienteBundle:Expediente e JOIN e.idempleado em JOIN em.idcontratacion c JOIN c.puesto r JOIN c.idplaza p JOIN r.idunidad u JOIN u.idcentro ce
                          WHERE e.id=:idexp AND  c.fechafincontrato IS NULL
                          ")
           ->setParameter('idexp',$idexp)  
@@ -65,7 +66,7 @@ public function obtenerPlazaEmpleado($idcontratacion)
   {
   return $this->getEntityManager()
     ->createQuery("SELECT p.nombreplaza, ce.nombrecentro, c.id
-                         FROM ExpedienteBundle:Contratacion c JOIN c.idplaza p JOIN c.idunidad u JOIN u.idcentro ce 
+                         FROM ExpedienteBundle:Contratacion c JOIN c.puesto r JOIN r.idplaza p JOIN r.idunidad u JOIN u.idcentro ce 
                          WHERE c.id=:idc AND  c.fechafincontrato IS NULL
                          ")
           ->setParameter('idc',$idcontratacion)  

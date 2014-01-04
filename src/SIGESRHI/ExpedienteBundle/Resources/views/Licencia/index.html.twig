@@ -31,7 +31,7 @@
                 jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
             }
         });
-    jQuery("#grid_grid_licencias__plaza__query__from").autocomplete({
+    jQuery("#grid_grid_licencias__codigo__query__from").autocomplete({
             source: function( request, response ) {
                 jQuery.ajax({
                     url: "{{ path('shtumi_ajaxautocomplete') }}",
@@ -39,7 +39,7 @@
                     data: {
                         maxRows: 12,
                         letters: request.term,
-                        entity_alias: "plazas"
+                        entity_alias: "codigos"
                     },
                     success: function( data ) {
                         response( jQuery.map( data, function( item ) {
@@ -61,12 +61,14 @@
         });
     });
 </script>
-<h4 class='text-center'>SELECCIONE UN EMPLEADO</h4>
+<h4 class='text-center'>REGISTRO DE PERMISOS</h4>
+<p class="text-center">Seleccione un empleado de la lista</p>
 {{ grid_search(grid) }}
 
     {{ grid(grid,_self) }}
 
     {% block grid_filters %}{% endblock %}
+    <br>
     <div align='center'>
         <a  href="{{ path('hello_page') }}" class="btn">Cancelar</a>            
     </div>

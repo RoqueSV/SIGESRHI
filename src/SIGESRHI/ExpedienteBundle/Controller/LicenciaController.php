@@ -10,6 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use SIGESRHI\ExpedienteBundle\Entity\Licencia;
 use SIGESRHI\ExpedienteBundle\Form\LicenciaType;
 
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+
 use SIGESRHI\ExpedienteBundle\Entity\Expediente;
 use APY\DataGridBundle\Grid\Grid;
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
@@ -31,29 +34,29 @@ class LicenciaController extends Controller
         $source = new Entity('ExpedienteBundle:Expediente','grupo_empleado');
         $grid = $this->get('grid');
         $grid->setSource($source);  
-        $grid->setNoDataMessage("No se encontraron resultados");
 
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias){
                 $query->andWhere($tableAlias.'.tipoexpediente = :emp')
-                        ->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
-                        ->setParameter('emp','E');
+                      ->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
+                      //->andWhere('_idempleado_idcontratacion.fechafinnom IS NULL')
+                      ->setParameter('emp','E');
             }
         );        
 
         //Columnas para filtrar
         $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
-        $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idempleado.idcontratacion.idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false));        
-        $grid->addColumn($NombreEmpleados,1);
-        $grid->addColumn($plaza,2);
+        $codigo = new TextColumn(array('id' => 'codigo','source' => true,'field'=>'idempleado.codigoempleado','title' => 'Codigo',"operatorsVisible"=>false));        
+        $grid->addColumn($codigo,1);
+        $grid->addColumn($NombreEmpleados,2);
 
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleados",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Licencias",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Registrar Licencias",$this->get("router")->generate("hello_page"));
 
         $rowAction2 = new RowAction('Registrar', 'licencia_new');
         $rowAction2->setColumn('info_column');
@@ -64,10 +67,10 @@ class LicenciaController extends Controller
                 return $action; 
             }
         );
-        $grid->addRowAction($rowAction2); 
-        $breadcrumbs->addItem("Registrar","");
+        $grid->addRowAction($rowAction2);         
 
         $grid->setId('grid_licencias');
+        $grid->setDefaultOrder('idempleado.codigoempleado','asc');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
         return $grid->getGridResponse('ExpedienteBundle:Licencia:index.html.twig');
@@ -76,46 +79,100 @@ class LicenciaController extends Controller
         $source = new Entity('ExpedienteBundle:Expediente','grupo_empleado');
         $grid = $this->get('grid');
         $grid->setSource($source);  
-        $grid->setNoDataMessage("No se encontraron resultados");
+        
+        $em = $this->getDoctrine()->getManager();
+        $query2 = $em->createQuery("SELECT identity(c.idempleado)
+                         FROM ExpedienteBundle:Contratacion c JOIN c.idlicencia l
+                         ");
 
+        $resultado = $query2->getResult();
+        $idemps=array();
+        if(!is_null($resultado)){
+            foreach ($resultado as $val) {
+                foreach ($val as $v){
+                    $idemps[]=$v;
+                }
+            }
+        }
+        else{
+            $idemps[]=0;
+        }
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
-            function($query) use ($tableAlias){
+            function($query) use ($tableAlias,$idemps){
                 $query->andWhere($tableAlias.'.tipoexpediente = :emp')
+                      ->andWhere($query->expr()->in('_idempleado_idcontratacion.idempleado', $idemps))
                         ->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
+                        //->andWhere($query->expr()->isNotNull('_idempleado_idcontratacion_idlicencia.id'))
                         ->setParameter('emp','E');
             }
         );        
 
         //Columnas para filtrar
         $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
-        $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idempleado.idcontratacion.idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false));        
-        $grid->addColumn($NombreEmpleados,1);
-        $grid->addColumn($plaza,2);
+        $codigo = new TextColumn(array('id' => 'codigo','source' => true,'field'=>'idempleado.codigoempleado','title' => 'Codigo',"operatorsVisible"=>false));        
+        $grid->addColumn($codigo,1);
+        $grid->addColumn($NombreEmpleados,2);
 
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleados",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Licencias",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Ver Licencias",$this->get("router")->generate("licencia_ver"));
         
-        $rowAction1 = new RowAction('Ver', 'licencia_show');
+        $rowAction1 = new RowAction('Ver', 'licencia_ver_permisos');
         $rowAction1->setColumn('info_column');
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
-                $action->setRouteParameters(array('id','idc' => $row->getField('idempleado.idcontratacion.id') ));
+                $action->setRouteParameters(array('id','idc' => $row->getField('idempleado.idcontratacion.id')));
                 return $action; 
             }
         );
         $grid->addRowAction($rowAction1);
-        $breadcrumbs->addItem("Ver","");
 
         $grid->setId('grid_licencias');
+        $grid->setDefaultOrder('idempleado.codigoempleado','asc');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
         return $grid->getGridResponse('ExpedienteBundle:Licencia:index.html.twig');        
+    }
+    /**
+    * Ver grid de permisos por contrato
+    */
+    public function indexVerPermisosAction(Request $request,$id,$idc){
+        //$id = $request->get('id');
+        //$idc = $request->get('idc');
+
+        $source = new Entity('ExpedienteBundle:Licencia','licencias_por_contrato');
+        $grid = $this->get('grid');
+        $grid->setSource($source); 
+
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias,$idc){
+                $query->andWhere($tableAlias.'.idcontratacion = :idc')                      
+                      ->setParameter('idc',$idc);
+            }
+        );
+
+        $rowAction1 = new RowAction('Ver detalle', 'licencia_show');
+        $rowAction1->setColumn('info_column');
+        $rowAction1->manipulateRender(
+            function ($action, $row) use($idc)
+            {
+                $action->setRouteParameters(array('id','idc' => $idc, 'cf' => 'v'));
+                return $action; 
+            }
+        );
+        $grid->addRowAction($rowAction1);
+
+        $grid->setId('grid_licencias_por_contrato');
+        $grid->setDefaultOrder('fechapermiso','asc');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        
+        return $grid->getGridResponse('ExpedienteBundle:Licencia:indexlicencias.html.twig');
     }
    
 
@@ -135,38 +192,29 @@ class LicenciaController extends Controller
 
         $form = $this->createForm(new LicenciaType(), $entity);
         $form -> bind($request);
-    /*  $error = 0;
-        if ($form->isValid()) {            
-            $periodo=$this->get('request')->request->get('periodo'); 
-            if($periodo=='dias'){
-                if($entity->getFechainiciolic() > $entity->getFechafinlic()){
-                    $error=1;
-                }
-            }
-            elseif ($periodo=='horas') {
-                if($entity->getHorainiciolic() > $entity->getHorafinlic()){
-                    $error=2;
-                }
-            }
+        if ($form->isValid()) {           
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('new','Permiso registrado correctamente');            
+            return $this->redirect($this->generateUrl('licencia_show', array('id' => $entity->getId(), 'idc' => $entity->getidcontratacion()->getId(),'cf' => 'c' )));   
+        }
 
-            if($error==0){
-                $em->persist($entity);
-                $em->flush();
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($id,$idc);
+        $plazainfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazaEmpleado($idc);        
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Registrar Licencias",$this->get("router")->generate("licencia_registrar"));
+        $breadcrumbs->addItem($expedienteinfo[0]['codigoempleado'],"");        
 
-                $this->get('session')->getFlashBag()->add('new','Permiso registrado correctamente');            
-                return $this->redirect($this->generateUrl('licencia_show', array('id' => $entity->getId())));
-            }
-        } */
-
-        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($id);
-        $plazasinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazaEmpleado($request->query->get('idc'));        
-        
         $this->get('session')->getFlashBag()->add('errornew','Errores en el Registro de Permiso');
         return $this->render('ExpedienteBundle:Licencia:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
             'expediente' => $expedienteinfo,
-            'plazas' => $plazasinfo,
+            'plazax' => $plazainfo,
         ));
     }
 
@@ -181,15 +229,36 @@ class LicenciaController extends Controller
         $entity = new Licencia();
         $entity -> setFechapermiso(new \Datetime(date('d-m-Y')));
         $entity -> setIdcontratacion($em->getRepository('ExpedienteBundle:Contratacion')->find($idc));
+        
         $form   = $this->createForm(new LicenciaType(), $entity);
-        $em = $this->getDoctrine()->getManager();
-        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($id);
-        $plazasinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazaEmpleado($idc);
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($id,$idc);
+        $plazainfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazaEmpleado($idc);
+        //ver los dias y horas de permiso totales en el mes
+        $fechaactual=Date('Y-m');
+        $finicio=$fechaactual.'-01';
+        $ffin=$fechaactual.'-31';
+        $query1 = $em->createQuery('SELECT sum(l.duraciondias) tdias, sum(l.duracionhoras) thoras
+                           FROM ExpedienteBundle:Licencia l
+                           WHERE l.idcontratacion=:idc AND l.fechapermiso BETWEEN :fi AND :ff
+                           ')
+                ->setParameter('idc',$idc)
+                ->setParameter('fi',$finicio)
+                ->setParameter('ff',$ffin);
+        $res = $query1->getResult();
+
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Registrar Licencias",$this->get("router")->generate("licencia_registrar"));
+        $breadcrumbs->addItem($expedienteinfo[0]['codigoempleado'],"");
         return $this->render('ExpedienteBundle:Licencia:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
             'expediente' => $expedienteinfo,
-            'plazas' => $plazasinfo,
+            'plazax' => $plazainfo,
+            'totales' => $res[0],
         ));
     }
 
@@ -197,21 +266,44 @@ class LicenciaController extends Controller
      * Finds and displays a Licencia entity.
      *
      */
-    public function showAction($id)
+    public function showAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
+        $idc = $request->query->get('idc');
+        $comefrom = $request->query->get('cf');
 
         $entity = $em->getRepository('ExpedienteBundle:Licencia')->find($id);
-
+        //echo ($entity);
+        $entityContra = $em->getRepository('ExpedienteBundle:Contratacion')->find($idc);
+        $entityEmple  = $em -> getRepository('ExpedienteBundle:Empleado')->find($entityContra->getIdempleado());
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($entityEmple->getIdexpediente(),$idc);
+        $plazainfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazaEmpleado($idc);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Licencia entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
+        if($comefrom=='c'){            
+            $breadcrumbs->addItem("Registrar Licencias",$this->get("router")->generate("licencia_registrar"));
+            $breadcrumbs->addItem("Datos Registrados","");
+        }
+        elseif($comefrom=='v'){
+            $breadcrumbs->addItem("Ver Licencias",$this->get("router")->generate("licencia_ver"));
+        }
+        $breadcrumbs->addItem($expedienteinfo[0]['codigoempleado'],"");
+
         return $this->render('ExpedienteBundle:Licencia:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'expediente' => $expedienteinfo,
+            'plazax' => $plazainfo,
+            'comefrom' => $comefrom,
         ));
     }
 
@@ -300,7 +392,7 @@ class LicenciaController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('licencia'));
+        return $this->redirect($this->generateUrl('licencia_registrar'));
     }
 
     /**

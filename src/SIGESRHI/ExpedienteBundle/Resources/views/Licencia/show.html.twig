@@ -1,74 +1,122 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Licencia</h1>
-    {{ per }}
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Concepto</th>
-                <td>{{ entity.concepto }}</td>
-            </tr>
-            <tr>
-                <th>Duraciondias</th>
-                <td>{{ entity.duraciondias }}</td>
-            </tr>
-            <tr>
-                <th>Duracionhoras</th>
-                <td>{{ entity.duracionhoras }}</td>
-            </tr>
-            <tr>
-                <th>Duracionminutos</th>
-                <td>{{ entity.duracionminutos }}</td>
-            </tr>
-            <tr>
-                <th>Congoce</th>
-                <td>{{ entity.congoce }}</td>
-            </tr>
-            <tr>
-                <th>Fechainiciolic</th>
-                <td>{{ entity.fechainiciolic|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Fechafinlic</th>
-                <td>{{ entity.fechafinlic|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Horainiciolic</th>
-                <td>{{ entity.horainiciolic }}</td>
-            </tr>
-            <tr>
-                <th>Horafinlic</th>
-                <td>{{ entity.horafinlic }}</td>
-            </tr>
-            <tr>
-                <th>Fechapermiso</th>
-                <td>{{ entity.fechapermiso|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
+{% block principal -%}
+<script type='text/javascript'>
+function eliminar() {
+
+    if(confirm('\xbfEsta seguro que desea eliminar este registro?')) {
+        document.getElementById('form_borrar').submit();
+    }
+}
+</script>
+{% if app.session.started %}
+    {% for flashMessage in app.session.flashbag.get('new') %}
+        <div class="alert alert-success">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+{% endif %}
+
+    <h3 class="text-center"> Datos registrados </h3>
+    <table class="table table-bordered table-hover mitable" border='1' width='100%' align='center'>        
+          <tr>
+            <th width="20%">Fecha de Registro</th>
+            <td><b>{{ entity.fechapermiso|date('d-m-Y') | fecha }} </b></td>
+          </tr>
+          {% for exp in expediente %}
+          <tr>
+            <th>Nombre empleado: </th>
+            <td colspan="5">{{ exp.nombrecompleto }}</td>
+          </tr>
+          <tr>
+            <th>Codigo: </th>
+            <td>{{ exp.codigoempleado }}</td>
+            <th>Partida: </th>
+            <td>{{ exp.partida }}</td>
+            <th>Subpartida: </th>
+            <td>{{ exp.subpartida }}</td>
+          </tr>
+          {% for plaza in plazax %}
+          <tr>
+            <th>Puesto: </th>
+            <td colspan="5">{{ plaza.nombreplaza }}</td>
+          </tr>
+          <tr>
+            <th>Centro/Unidad: </th>
+            <td colspan="5">{{ plaza.nombrecentro }}</td>
+          </tr>        
+          <tr>
+            <th>N° de Tarjeta</th>
+            <td colspan="5"></td>
+          </tr>  
+          {% endfor %}
+          {% endfor %}
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('licencia_ver') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('licencia_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('licencia_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+    <br>
+    <table class="table table-bordered table-hover mitable" border='1' width='100%' align='center'>        
+            <tr>
+                <th width="25%">Motivo</th>
+                <td><b>{{ entity.concepto }}</b></td>
+            </tr>
+            <tr>
+                <th>Permiso</th>
+                <td><b>
+                  {% if entity.congoce == 1 %}
+                    Con goce de Sueldo
+                  {% else %}
+                    Sin goce de Sueldo
+                  {% endif %}
+                </b></td>
+            </tr>
+            {% if (entity.duraciondias != "") and (entity.duracionhoras == "") %} 
+                <tr>
+                    <th>Fecha de inicio Permiso</th>
+                    <td><b>{{ entity.fechainiciolic|date('d-m-Y')|fecha }}</b></td>
+                </tr>
+                <tr>
+                    <th>Fecha fin Permiso</th>
+                    <td><b>{{ entity.fechafinlic|date('d-m-Y')|fecha }}</b></td>
+                </tr>
+                <tr>            
+                    <th>Duracion en días</th>
+                    <td><b>{{ entity.duraciondias }}</b></td>
+                </tr>
+            {% else %}                              
+                <tr>
+                    <th>Hora inicio Permiso</th>
+                    <td><b>{{ entity.horainiciolic|date('H:i A') }}</b></td>
+                </tr>
+                <tr>
+                    <th>Hora fin Permiso</th>
+                    <td><b>{{ entity.horafinlic|date('H:i A') }}</b></td>
+                </tr> 
+                <tr>
+                    <th>Duración en horas</th>
+                    <td><b>{{ entity.duracionhoras }} hrs.
+                      {% if entity.duracionminutos != "" %}
+                        {{ entity.duracionminutos }}
+                      {% else %}   
+                      00
+                      {% endif %}
+                      minutos
+                    </b></td>
+                </tr>
+            {% endif %}           
+    </table>
+    <br><br>
+    <h4 class="text-center">¿Qué acción desea realizar?</h4><br />
+    <div class="text-center">
+        {#<a href="{{ path('reporte_segurovida', { 'idexp': expediente[0].idexp, 'id':entity.id, 'ruta':ruta }) }}" class="btn btn-primary">Generar PDF (TODAS)</a>#}
+        {% if comefrom == 'c' %}
+            <button type="button" class="btn" onclick="location.href='{{ path ('licencia_registrar') }}'">Regresar al listado</button>
+        {% else %}
+            <button type="button" class="btn" onclick="location.href='{{ path ('licencia_ver_permisos',{ 'id':expediente[0].idexpediente, 'idc':entity.getIdContratacion().getId() }) }}'">Regresar al listado</button>
+        {% endif %}
+         {#<a href="{{ path('licencia_edit', { 'id': entity.id }) }}" class="btn">Editar Registro</a>#}
+         <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
+    </div>
+    <form action="{{ path('licencia_delete', { 'id': entity.id }) }}" method="post" id="form_borrar">
+        <input type="hidden" name="_method" value="DELETE" />
+        <div class="invisible">{{ form_widget(delete_form) }}</div>
+    </form>
 {% endblock %}

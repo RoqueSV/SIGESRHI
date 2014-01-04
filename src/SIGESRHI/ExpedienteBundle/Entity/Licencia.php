@@ -3,6 +3,7 @@
 namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -12,7 +13,9 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  *
  * @ORM\Table(name="licencia")
  * @ORM\Entity
+ * @GRID\Source(columns="id,congoce,concepto,fechapermiso",groups={"licencias_por_contrato"})
  * @Assert\Callback(methods={"fechasValidas"})
+ * @Assert\Callback(methods={"horasValidas"})
  */
 class Licencia
 {
@@ -23,6 +26,7 @@ class Licencia
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="licencia_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(filterable=false, groups={"licencias_por_contrato"}, visible=false)
      */
     private $id;
 
@@ -34,6 +38,7 @@ class Licencia
      * max = "12",
      * maxMessage = "El concepto de la licencia no debe exceder los {{limit}} caracteres"
      * )
+     *@GRID\Column(align="center",title="Motivo",filterable=false, groups={"licencias_por_contrato"})
      */
     private $concepto;
 
@@ -63,6 +68,7 @@ class Licencia
      *
      * @ORM\Column(name="congoce", type="boolean", nullable=false)
      * @Assert\NotNull(message="Debe especificar si la licencia es con goce o no")
+     * @GRID\Column(title="Goce de Sueldo", filterable=false, align="center")
      */
     private $congoce;
 
@@ -104,6 +110,7 @@ class Licencia
      * @ORM\Column(name="fechapermiso", type="date", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la fecha de licencia")
      * @Assert\DateTime()
+     * @GRID\Column(align="center",type="date",title="Fecha de Registro",groups={"licencias_por_contrato"},filter="input", inputType="datetime", format="Y-m-d",operators={"gte", "eq", "lte"}, defaultOperator="gte"))
      */
     private $fechapermiso;
 
@@ -117,7 +124,7 @@ class Licencia
      */
     private $idcontratacion;
 
-    /************************Validacion de las Fechas*****************/
+    /************************Validacion de las Fechas y horas*****************/
     public function fechasValidas(ExecutionContextInterface $context)
     {
         $fechainiciolic = $this->getFechainiciolic();
@@ -125,6 +132,16 @@ class Licencia
 
         if($fechainiciolic > $fechafinlic){
             $context->addViolationAt('fechainiciolic','Debe introducir Fechas Validas',array(),null);
+        }
+    }
+
+    public function horasValidas(ExecutionContextInterface $context)
+    {
+        $horainiciolic = $this->gethorainiciolic();
+        $horafinlic =  $this->gethorafinlic();
+
+        if($horainiciolic > $horafinlic){
+            $context->addViolationAt('horainiciolic','Debe introducir Horas Validas',array(),null);
         }
     }
     /****************************************************************/
