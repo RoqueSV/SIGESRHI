@@ -108,9 +108,14 @@ function eliminar() {
     
     <br />
     <div class="text-center">
+        {% if tipo == 1 %}
+        <a href="{{ path('pantalla_aspirante') }}" class="btn"> Finalizar </a>
+        {% elseif tipo == 2 %}
+        <a href="{{ path('pantalla_empleadoactivo') }}" class="btn"> Finalizar </a>
+        {% else %}
         <a href="{{ path('contratacion_consultar') }}" class="btn"> Regresar al listado </a>
-        {% set ruta = app.request.attributes.get('_route') %}
-        {% if tipo !=0  %}
+        {% endif %}
+        {% if tipo != 0  %}
         <a href="{{ path('contratacion_edit', { 'id': entity.id,'tipo':tipo }) }}" class="btn"> Editar </a>
         <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
         <form action="{{ path('contratacion_delete', { 'id': entity.id }) }}" id="form_borrar" method="post">

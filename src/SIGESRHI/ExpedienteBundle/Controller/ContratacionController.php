@@ -196,7 +196,7 @@ class ContratacionController extends Controller
              
              if ($tipocontratacion == 1) { //Aspirante
 
-             //crear empleado para establecer la relación.
+             //Crear empleado para establecer la relación.
              $empleado = new Empleado();
              $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->get('idexpediente'));
 
@@ -208,8 +208,30 @@ class ContratacionController extends Controller
              $expediente->setTipoexpediente('E'); //Cambiar tipoexpediente
              $em->persist($empleado);
                         
-             //asignamos el id del nuevo empleado
+             //Asignamos el id del nuevo empleado
              $entity->setIdempleado($empleado);
+
+             /******* Crear usuario nuevo ******/ 
+             //- Inyección de dependencias
+             /*$userManager = $this->get('fos_user.user_manager');
+             $user = $userManager->createUser();
+             $enconder = $this->container->get('security.encoder_factory')->getEncoder($user);
+
+             //- Datos para crear usuario
+             $correo = $expediente->getIdsolicitudempleo()->getEmail(); 
+             $tempPassword = $correo;
+             $usuario = $empleado->getCodigoempleado();
+
+             //Asignando variables
+             $user->setUsername($usuario);
+             $user->setPassword($encoder->encodePassword($tempPassword,$user->getSalt()));
+             $user->setEmail($correo);
+
+             $user->setEnabled(true); //Activado x defecto
+             $user->addRole('ROLE_USER'); //Permisos
+             $userManager->updateUser($user);*/
+
+             /*********************/
              
              $em->persist($entity);
              $em->flush(); // Guardar cambios en BD
@@ -234,7 +256,7 @@ class ContratacionController extends Controller
              
              } //Fin empleado
 
-             $this->get('session')->getFlashBag()->add('aviso', 'Contratación realizada correctamente.');
+             $this->get('session')->getFlashBag()->add('aviso', 'Contratación registrada correctamente.');
              
              if(count($entity->getIdempleado()->getIdcontratacion()) == 0){
              return $this->redirect($this->generateUrl('hojaservicio_new', array('id' => $request->get('idexpediente'),
@@ -343,10 +365,10 @@ class ContratacionController extends Controller
         
            /* Definir tipo de contratación */
            if ($tipo == 1){ //Ley de salarios
-            $breadcrumbs->addItem("Registrar nombramiento",  $this->get("router")->generate("contratacion_new"));
+            $breadcrumbs->addItem("Registrar nombramiento / ".$idexpediente->getIdsolicitudempleo()->getNumsolicitud(),  $this->get("router")->generate("contratacion_new"));
            }
            else if ($tipo == 2){ //Contrato
-            $breadcrumbs->addItem("Registrar contrato",  $this->get("router")->generate("contratacion_new"));
+            $breadcrumbs->addItem("Registrar contrato / ".$idexpediente->getIdsolicitudempleo()->getNumsolicitud(),  $this->get("router")->generate("contratacion_new"));
            }
             return $this->render('ExpedienteBundle:Contratacion:contratacion.html.twig', array(
             'entity' => $entity,
@@ -369,10 +391,10 @@ class ContratacionController extends Controller
             
            /* Definir tipo de contratación */
            if ($tipo == 1){ //Ley de salarios
-           $breadcrumbs->addItem("Registrar nombramiento",  $this->get("router")->generate("contratacion_new"));
+           $breadcrumbs->addItem("Registrar nombramiento / ".$idexpediente->getIdempleado()->getCodigoempleado(),  $this->get("router")->generate("contratacion_new"));
            }
            else if ($tipo == 2){ //Contrato
-           $breadcrumbs->addItem("Registrar contrato",  $this->get("router")->generate("contratacion_new"));
+           $breadcrumbs->addItem("Registrar contrato / ".$idexpediente->getIdempleado()->getCodigoempleado(),  $this->get("router")->generate("contratacion_new"));
            }
            
            return $this->render('ExpedienteBundle:Contratacion:contratacion.html.twig', array(
@@ -408,10 +430,21 @@ class ContratacionController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        if ($tipo==1){
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
+        $breadcrumbs->addItem("Datos de registro / ".$entity->getIdempleado()->getCodigoempleado(),  $this->get("router")->generate("contratacion_consultar"));
+        }
+        else if($tipo==2){
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Registrar contratación", $this->get("router")->generate("contratacion_empleado"));
+        $breadcrumbs->addItem("Datos de registro / ".$entity->getIdempleado()->getCodigoempleado(),  $this->get("router")->generate("contratacion_consultar"));
+        }
+        else{
         $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Consultar datos de contratación", $this->get("router")->generate("contratacion_consultar"));
         $breadcrumbs->addItem($entity->getIdempleado()->getCodigoempleado(),  $this->get("router")->generate("contratacion_consultar"));
-
+        }
         return $this->render('ExpedienteBundle:Contratacion:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(), 
@@ -455,6 +488,22 @@ class ContratacionController extends Controller
 
         $editForm = $this->createForm(new ContratacionType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
+
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+
+        if($request->get('tipo')==1){ //Aspirante
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
+         }
+        else{ //Empleado
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Registrar contratacion", $this->get("router")->generate("contratacion_empleado"));   
+        }
+        $breadcrumbs->addItem("Datos de registro", $this->get("router")->generate("contratacion_show",array('id'=>$entity->getId(),'tipo'=>$request->get('tipo'))));
+        $breadcrumbs->addItem("Editar registro / ".$entity->getIdempleado()->getCodigoempleado(),  $this->get("router")->generate("contratacion_new"));
 
         return $this->render('ExpedienteBundle:Contratacion:edit.html.twig', array(
             'entity'      => $entity,

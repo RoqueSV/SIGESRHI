@@ -32,9 +32,7 @@
    
    {{form_row(edit_form.centro, {value : datospuesto[0].centro}) }} 
    {{form_row(edit_form.unidad, {value : datospuesto[0].unidad}) }} 
-   {{form_row(edit_form.puesto, {value : datospuesto[0].puesto},
-   {'attr' : {'id':'sigesrhi_expedientebundle_contrataciontype_puestoedit'}} 
-   ) }} 
+   {{form_row(edit_form.puesto, {value : datospuesto[0].puesto}) }} 
 
    {{form_row(edit_form.sueldoinicial)}}
 
@@ -97,7 +95,6 @@
     </table>
     {% endif %}
 
-   <input type="hidden" name="tipo" id="tipo" value="{{entity.tipocontratacion}}"/>
    <input type="hidden" name="puestoactual" id="puestoactual" value="{{datospuesto[0].puesto}}"/>
    {# Determina si es ingreso o edición#}
    <input type="hidden" name="control" id="control" value="2"/>
@@ -106,7 +103,7 @@
    <br/>
    <div class="text-center">
         <button type="submit" class="btn btn-primary">Modificar</button>
-        <a href="#" class="btn">Cancelar</a>
+        <a href="{{ path('contratacion_show', { 'id': entity.id,'tipo':tipo }) }}" class="btn">Cancelar</a>
    </div>
 
    </form>
