@@ -57,7 +57,6 @@ class HojaservicioController extends Controller
         $this->get('session')->getFlashBag()->add('aviso', 'Hoja de servicio registrada correctamente.');
         return $this->redirect($this->generateUrl('contratacion_show', array('id' => $request->get('idcontratacion'),
                                                                              'tipo'=>$request->get('tipo'))));
-        //return $this->redirect($this->generateUrl('hojaservicio_show', array('id' => $entity->getId())));
         }
 
         return $this->render('ExpedienteBundle:Hojaservicio:new.html.twig', array(
@@ -102,10 +101,11 @@ class HojaservicioController extends Controller
 
         //Obtener plaza y unidad
         $query = $em->createQuery('
-                 SELECT r.nombreplaza, u.nombreunidad
+                 SELECT r.nombreplaza, ca.nombrecentro
                  FROM ExpedienteBundle:Contratacion c
                  JOIN c.puesto r
                  JOIN r.idunidad u
+                 JOIN u.idcentro ca
                  WHERE c.id = :id'
                  )
         ->setMaxResults(1)
@@ -115,7 +115,7 @@ class HojaservicioController extends Controller
 
         foreach ($plazaunidad as $pu) {
           $cargo = $pu['nombreplaza']; 
-          $unidad = $pu['nombreunidad']; 
+          $centro = $pu['nombrecentro']; 
         } 
 
         //Obtener ruta de fotografia
@@ -136,7 +136,7 @@ class HojaservicioController extends Controller
         $entity->setSueldoinicial($contratacion->getSueldoinicial());
         $entity->setIsss($solicitud->getIsss());
         $entity->setNit($solicitud->getNit());
-        $entity->setDestacadoen($unidad);
+        $entity->setDestacadoen($centro);
 
         $form   = $this->createForm(new HojaservicioType(), $entity);
         

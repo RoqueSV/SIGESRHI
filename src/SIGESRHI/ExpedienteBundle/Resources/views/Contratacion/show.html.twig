@@ -95,6 +95,12 @@ function eliminar() {
                     {% endif %}
                 </td>
             </tr>
+            {% if entity.tipocontratacion == 2 %}
+            <tr>
+                <th># de contrato</th>
+                <td>{{ app.session.get('acuerdo') }}</td>
+            </tr>
+            {% endif %}
             <tr>
                 <th>Observaciones</th>
                 <td>{% if entity.observaciones is null %} --- {% endif %}{{ entity.observaciones }}</td>

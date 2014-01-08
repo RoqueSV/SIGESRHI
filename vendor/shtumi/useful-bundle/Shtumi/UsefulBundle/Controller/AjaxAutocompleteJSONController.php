@@ -57,7 +57,31 @@ class AjaxAutocompleteJSONController extends Controller
         }
 
 
+        if ($entity_alias == 'empleados'){
+            $results = $em->createQuery(
+            'SELECT e.' . $property . '
+             FROM ' . $entity_inf['class'] . ' e JOIN e.idexpediente ex JOIN ex.idempleado em ' .
+             $where_clause_lhs . ' ' . $where_clause_rhs . ' ' .
+            'ORDER BY e.' . $property)
+            ->setParameter('like', $like )
+            ->setMaxResults($maxRows)
+            ->getScalarResult();
 
+        }
+
+        else if($entity_alias == 'aspirantes'){
+           $results = $em->createQuery(
+            'SELECT e.' . $property . '
+             FROM ' . $entity_inf['class'] . ' e JOIN e.idexpediente ex ' .
+             $where_clause_lhs . ' ' . $where_clause_rhs . ' ' .
+            'AND ex.tipoexpediente != :tipo ORDER BY e.' . $property)
+            ->setParameter('like', $like )
+            ->setParameter('tipo', 'E' )
+            ->setMaxResults($maxRows)
+            ->getScalarResult();
+        }
+
+        else{
         $results = $em->createQuery(
             'SELECT e.' . $property . '
              FROM ' . $entity_inf['class'] . ' e ' .
@@ -66,12 +90,13 @@ class AjaxAutocompleteJSONController extends Controller
             ->setParameter('like', $like )
             ->setMaxResults($maxRows)
             ->getScalarResult();
-
+        
+         }
         $res = array();
         foreach ($results AS $r){
             $res[] = $r[$entity_inf['property']];
         }
-
+       
         return new Response(json_encode($res));
 
     }

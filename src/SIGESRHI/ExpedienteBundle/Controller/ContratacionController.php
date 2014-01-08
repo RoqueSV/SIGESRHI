@@ -11,6 +11,7 @@ use SIGESRHI\ExpedienteBundle\Form\ContratacionType;
 use SIGESRHI\ExpedienteBundle\Entity\Expediente;
 use SIGESRHI\ExpedienteBundle\Entity\Empleado;
 use SIGESRHI\AdminBundle\Entity\RefrendaAct;
+use SIGESRHI\ExpedienteBundle\Entity\Accionpersonal;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Grid;
@@ -101,7 +102,7 @@ class ContratacionController extends Controller
         $grid->addColumn($CodigoEmpleados,2);      
         
         // Crear
-        $rowAction1 = new RowAction('Mostrar', 'contratacion_show');
+        $rowAction1 = new RowAction('Consultar', 'contratacion_show');
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
@@ -183,7 +184,7 @@ class ContratacionController extends Controller
         $entity  = new Contratacion();
 
         //Establecer tipo
-        $entity->setTipocontratacion($request->get('tipo')); //1-contrato, 2-nombramiento
+        $entity->setTipocontratacion($request->get('tipo')); //1-nombramiento, 2-contrato
         
         $tipocontratacion = $request->get('tipocontratacion'); //1-aspirante, 2-empleado
 
@@ -203,58 +204,83 @@ class ContratacionController extends Controller
              $empleado->setIdexpediente($expediente);
              $empleado->setCodigoempleado($request->get('codempleado'));
 
-             $em->persist($expediente);
-             
              $expediente->setTipoexpediente('E'); //Cambiar tipoexpediente
-             $em->persist($empleado);
-                        
+             $em->persist($expediente);       
+             
              //Asignamos el id del nuevo empleado
              $entity->setIdempleado($empleado);
 
-             /******* Crear usuario nuevo ******/ 
+             /******* Crear usuario nuevo ******/
+            
              //- Inyección de dependencias
-             /*$userManager = $this->get('fos_user.user_manager');
+             $userManager = $this->get('fos_user.user_manager');
              $user = $userManager->createUser();
-             $enconder = $this->container->get('security.encoder_factory')->getEncoder($user);
 
              //- Datos para crear usuario
              $correo = $expediente->getIdsolicitudempleo()->getEmail(); 
-             $tempPassword = $correo;
+             $tempPassword = $expediente->getIdsolicitudempleo()->getEmail(); 
              $usuario = $empleado->getCodigoempleado();
 
              //Asignando variables
              $user->setUsername($usuario);
-             $user->setPassword($encoder->encodePassword($tempPassword,$user->getSalt()));
+             $user->setPlainPassword($tempPassword);
              $user->setEmail($correo);
 
              $user->setEnabled(true); //Activado x defecto
-             $user->addRole('ROLE_USER'); //Permisos
-             $userManager->updateUser($user);*/
+             $user->setRoles(array('ROLE_USER')); //Permisos
+             
+             /* Asigno rol "Empleado" */
+             
+             $rol = $em->getRepository('ApplicationSonataUserBundle:Group')->findOneByName('Empleado');
 
+             $user->addGroup($rol); //Rol aplicacion
+             $userManager->updateUser($user); //Guardar cambios
+
+             $empleado->setIdusuario($user); //Asignar usuario a empleado
+             $em->persist($empleado);
              /*********************/
-             
-             $em->persist($entity);
-             $em->flush(); // Guardar cambios en BD
-             
-             //Actualizar RefrendaAct
-             $refrendaAct = $em->getRepository('ExpedienteBundle:Contratacion')->actualizarRefrenda($entity->getPuesto(),$empleado->getId(),$empleado->getCodigoempleado());
-                          
+                        
              } //Fin Aspirante
 
              if($tipocontratacion == 2) { //Empleado
-              
+
+             $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->get('idexpediente'));
+
              $empleado = $em->getRepository('ExpedienteBundle:Empleado')->findOneByCodigoempleado($request->get('codempleado'));
              
              //Asignamos el id del nuevo empleado
              $entity->setIdempleado($empleado);
              
-             //Actualizar RefrendaAct
-             $refrendaAct = $em->getRepository('ExpedienteBundle:Contratacion')->actualizarRefrenda($entity->getPuesto(),$empleado->getId(),$empleado->getCodigoempleado());
+             } //Fin empleado
+
+             if($request->get('tipo') == 2) { //Contrato
+               
+             //Registrar acuerdo - PENDIENTE NOMBRAMIENTO
+             $accionpersonal  = new Accionpersonal();
+             $tipoaccion = $em->getRepository('ExpedienteBundle:Tipoaccion')->find(11);
+             $fechaini = $this->fechaConvert($entity->getFechainiciocontratacion());
+             $fechafin = $this->fechaConvert($entity->getFechafincontrato());
+
+             $accionpersonal->setIdtipoaccion($tipoaccion);
+             $accionpersonal->setIdexpediente($expediente);
+             $accionpersonal->setFecharegistroaccion(new \Datetime(date('d-m-Y')));
+             $accionpersonal->setMotivoaccion($entity->getPuesto()." - Se le contrata a partir del ".$fechaini." al ".$fechafin." según contrato No. ".$request->get('numcontrato')." como ".$entity->getPuesto()." con sueldo mensual de $".$entity->getSueldoinicial());
+             $accionpersonal->setNumacuerdo($request->get('numcontrato'));
+             $em->persist($accionpersonal);
+
+             //Guardar variable session
+             $session = $this->getRequest()->getSession();
+             $session->set('acuerdo',$accionpersonal->getNumacuerdo());
+             }
              
+             //Actualizar RefrendaAct
+             $refrendaAct = $em->getRepository('AdminBundle:RefrendaAct')->find($entity->getPuesto()->getId());
+             $refrendaAct->setIdempleado($empleado);
+             $refrendaAct->setCodigoempleado($empleado->getCodigoempleado());
+             $em->persist($refrendaAct);
+
              $em->persist($entity);
              $em->flush(); // Guardar cambios en BD
-             
-             } //Fin empleado
 
              $this->get('session')->getFlashBag()->add('aviso', 'Contratación registrada correctamente.');
              
@@ -267,13 +293,16 @@ class ContratacionController extends Controller
                                                                               'tipo'=>$tipocontratacion)));
         }
         
+        //Error
         $expediente = $em->getRepository('ExpedienteBundle:Contratacion')->obtenerAspiranteValido($request->get('idexpediente'));
         $tipo=$request->get('tipo');
         return $this->render('ExpedienteBundle:Contratacion:contratacion.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
             'expediente'=>$expediente,
-            'tipo'=>$tipo,
+            'tipo'=>$request->get('tipo'),
+            'tipocontratacion'=>$tipocontratacion,
+            'codigo'=>$entity->getIdempleado->getCodigoempleado(),
         ));
     }
 
@@ -356,11 +385,9 @@ class ContratacionController extends Controller
         $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
         
         //Obtengo plaza para asignarla si es aspirante
-        foreach ($expediente as $exp) {
-          $plaza = $exp['nombreplaza'];
-        }
-        $idplaza = $em->getRepository('AdminBundle:Plaza')->findOneByNombreplaza($plaza);
-        $idrefrenda = $em->getRepository('AdminBundle:RefrendaAct')->findOneByIdplaza($idplaza);
+        $idplaza = $em->getRepository('AdminBundle:Plaza')->find($idexpediente->getIdsolicitudempleo()->getIdplaza()->getId());
+        $idrefrenda = $em->getRepository('AdminBundle:RefrendaAct')->findOneByIdplaza($idplaza->getId());
+
         $entity->setPuesto($idrefrenda); //Asignar por defecto plaza por la que optó
         
            /* Definir tipo de contratación */
@@ -522,6 +549,7 @@ class ContratacionController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
+        $session = $this->getRequest()->getSession();
         
         $tipo=$request->get('tipo'); // 1-aspirante, 2-empleado
 
@@ -546,20 +574,30 @@ class ContratacionController extends Controller
 
            }
 
-           if($request->get('puestoactual') != $entity->getPuesto())
+           if($request->get('puestoactual') != $entity->getPuesto()) // Cambio el puesto
            {
+            //Quitamos registro anterior
             $refrenda = $em->getRepository('AdminBundle:RefrendaAct')->find($request->get('puestoactual'));
             $refrenda->setIdempleado(null);
             $refrenda->setCodigoempleado(null);
             $em->persist($refrenda);
+
+            //Actualizar RefrendaAct
+            $refrendaAct = $em->getRepository('AdminBundle:RefrendaAct')->find($entity->getPuesto()->getId());
+            $refrendaAct->setIdempleado($empleado);
+            $refrendaAct->setCodigoempleado($empleado->getCodigoempleado());
+            $em->persist($refrendaAct);
            }
            
+           if($session->get('acuerdo') != $request->get('numcontrato')){ // Cambio numero de contrato/acuerdo
+            $accionpersonal = $em->getRepository('ExpedienteBundle:Accionpersonal')->findOneByNumacuerdo($session->get('acuerdo'));
+            $accionpersonal->setNumacuerdo($request->get('numcontrato'));
+            $em->persist($accionpersonal);
+           }
+
             $em->persist($entity);
             $em->flush();
 
-            //Actualizar RefrendaAct
-            $refrendaAct = $em->getRepository('ExpedienteBundle:Contratacion')->actualizarRefrenda($entity->getPuesto(),$empleado->getId(),$empleado->getCodigoempleado());
-             
             $this->get('session')->getFlashBag()->add('edit', 'Registro modificado correctamente');
             return $this->redirect($this->generateUrl('contratacion_show', array('id' => $id,'tipo'=>$tipo)));
         }
@@ -622,7 +660,16 @@ class ContratacionController extends Controller
              $hojaservicio = $em->getRepository('ExpedienteBundle:Hojaservicio')->findOneByIdexpediente($expediente->getId());
              $em->remove($hojaservicio);
 
+             $userManager = $this->get('fos_user.user_manager');
+             $user = $userManager->findUserByEmail($expediente->getIdsolicitudempleo()->getEmail());
+             $em->remove($user);
+
             }//Fin aspirante
+
+            if($entity->getTipocontratacion() == 2){ //Contrato
+                $accionpersonal = $em->getRepository('ExpedienteBundle:Accionpersonal')->findOneByFecharegistroaccion(new \Datetime(date('d-m-Y')));
+                $em->remove($accionpersonal);
+            }
 
             $refrenda = $em->getRepository('AdminBundle:RefrendaAct')->find($entity->getPuesto());
             $refrenda->setIdempleado(null);
@@ -654,6 +701,16 @@ class ContratacionController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    public function fechaConvert($sfecha)
+    {
+
+    $fecha = date_format($sfecha, 'Y-m-d');
+    $meses= array("enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre");
+    
+    return strftime("%d de ".$meses[date('n',strtotime($fecha))-1]." del %Y",strtotime($fecha));
+        
     }
 
 }

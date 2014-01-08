@@ -28,8 +28,7 @@
          </div>
     </div>
 
-
-   
+       
    {{form_row(edit_form.centro, {value : datospuesto[0].centro}) }} 
    {{form_row(edit_form.unidad, {value : datospuesto[0].unidad}) }} 
    {{form_row(edit_form.puesto, {value : datospuesto[0].puesto}) }} 
@@ -56,6 +55,17 @@
     {{form_row(edit_form.horaslaborales)}}
 
     {{form_row(edit_form.jornadalaboral)}}
+
+    {# Número de nombramiento o contrato #}
+    <div class="control-group">
+      {% if entity.tipocontratacion == 2 %}
+        <label for="numcontrato" class="control-label required">N&uacute;mero de contrato</label>
+        <div class="controls">
+          <input type="text" name="numcontrato" id="numcontrato" required="required" value={{ app.session.get('acuerdo')}} class="input-small"
+          <span class="help-inline">* número del contrato generado</span>
+        </div>
+      {% endif %}
+    </div>
 
     {{form_row(edit_form.observaciones)}}
     </fieldset>
@@ -98,6 +108,7 @@
    <input type="hidden" name="puestoactual" id="puestoactual" value="{{datospuesto[0].puesto}}"/>
    {# Determina si es ingreso o edición#}
    <input type="hidden" name="control" id="control" value="2"/>
+   <input type="hidden" name="tipo" id="tipo" value="{{entity.tipocontratacion}}"/>
    {{ form_rest(edit_form) }}
 
    <br/>
@@ -123,27 +134,56 @@ jQuery(function(){
 /*************************************************************/
   if( document.getElementById('tipo').value == 1){
      
-        $('#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion').datepicker({ 
-        dateFormat: 'dd-mm-yy',  
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "-0:+1",});
-
-  }
-  else {
         $(function() {
-        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker({
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechaautorizacion" ).datepicker({
         yearRange: "-0:+1",
         dateFormat: 'dd-mm-yy',
         changeYear: true,
         changeMonth: true,
         numberOfMonths: 1,
         onClose: function( selectedDate ) {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker( "option", "minDate", selectedDate );
+        }
+        });
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker({
+        yearRange: "-0:+2",
+        dateFormat: 'dd-mm-yy',
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechaautorizacion" ).datepicker( "option", "maxDate", selectedDate );
+        }
+        });
+        });
+    }
+
+    else {
+        $(function() {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechaautorizacion" ).datepicker({
+        yearRange: "-0:+1",
+        dateFormat: 'dd-mm-yy',
+        changeYear: true,
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker( "option", "minDate", selectedDate );
+        }
+        });
+
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker({
+        yearRange: "-0:+2",
+        dateFormat: 'dd-mm-yy',
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
         $( "#sigesrhi_expedientebundle_contrataciontype_fechafincontrato" ).datepicker( "option", "minDate", selectedDate );
         }
         });
+
         $( "#sigesrhi_expedientebundle_contrataciontype_fechafincontrato" ).datepicker({
-        yearRange: "-0:+3",
+        yearRange: "-0:+2",
         dateFormat: 'dd-mm-yy',
         changeMonth: true,
         changeYear: true,

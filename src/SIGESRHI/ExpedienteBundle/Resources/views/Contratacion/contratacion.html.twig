@@ -2,6 +2,11 @@
 
 {% block principal %}
 
+<!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+
+    {{ include('ExpedienteBundle:Ayuda/Contratacion:registro.html.twig')}} 
+
     {% if tipo == 1 %}
     <h3 class="text-center">Autorizaci&oacute;n de nombramiento</h3>
     {% else %}
@@ -41,7 +46,7 @@
     {{form_row(form.sueldoinicial)}}
 
     {{form_label(form.numoficio)}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    {{form_widget(form.numoficio)}}<span class="help-inline">* número del documento generado</span>
+    {{form_widget(form.numoficio)}}<span class="help-inline">* número del documento que autoriza contratación</span>
     {{form_errors(form.numoficio)}}
     <br/><br/>
 
@@ -53,15 +58,27 @@
        {{form_widget(form.fechafincontrato, {'attr': {'class': 'invisible'}}) }}
        </div>
     {% else %}  
-       {{form_row(form.fechainiciocontratacion,{ 'label': 'Fecha inicio contrato' })}}
+       {{form_row(form.fechainiciocontratacion,{ 'label': 'Contratado a partir de' })}}
        {{form_row(form.fechafincontrato)}}
     {% endif %}
 
     {{form_row(form.horaslaborales)}}
 
     {{form_row(form.jornadalaboral)}}
+    
+    <div class="control-group">
+      {% if tipo == 2 %}
+         <label for="numcontrato" class="control-label required">N&uacute;mero de contrato</label>
+         <div class="controls">
+         <input type="text" name="numcontrato" id="numcontrato" required="required" class="input-small"/>
+         <span class="help-inline">* número del contrato generado</span>
+         </div>
+      {% endif %}
+    </div>
+    
 
     {{form_row(form.observaciones)}}
+
     </fieldset>
 
     <fieldset>
@@ -124,27 +141,56 @@
     <script type="text/javascript">
     if( document.getElementById('tipo').value == 1){
      
-        $('#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion').datepicker({ 
-        dateFormat: 'dd-mm-yy',  
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "-0:+1",});
-
-    }
-    else {
         $(function() {
-        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker({
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechaautorizacion" ).datepicker({
         yearRange: "-0:+1",
         dateFormat: 'dd-mm-yy',
         changeYear: true,
         changeMonth: true,
         numberOfMonths: 1,
         onClose: function( selectedDate ) {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker( "option", "minDate", selectedDate );
+        }
+        });
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker({
+        yearRange: "-0:+2",
+        dateFormat: 'dd-mm-yy',
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechaautorizacion" ).datepicker( "option", "maxDate", selectedDate );
+        }
+        });
+        });
+    }
+
+    else {
+        $(function() {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechaautorizacion" ).datepicker({
+        yearRange: "-0:+1",
+        dateFormat: 'dd-mm-yy',
+        changeYear: true,
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker( "option", "minDate", selectedDate );
+        }
+        });
+
+        $( "#sigesrhi_expedientebundle_contrataciontype_fechainiciocontratacion" ).datepicker({
+        yearRange: "-0:+2",
+        dateFormat: 'dd-mm-yy',
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
         $( "#sigesrhi_expedientebundle_contrataciontype_fechafincontrato" ).datepicker( "option", "minDate", selectedDate );
         }
         });
+
         $( "#sigesrhi_expedientebundle_contrataciontype_fechafincontrato" ).datepicker({
-        yearRange: "-0:+3",
+        yearRange: "-0:+2",
         dateFormat: 'dd-mm-yy',
         changeMonth: true,
         changeYear: true,

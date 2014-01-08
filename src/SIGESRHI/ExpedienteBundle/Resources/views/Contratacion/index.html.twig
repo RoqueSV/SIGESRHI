@@ -1,6 +1,7 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+{% set ruta = app.request.attributes.get('_route') %}
 <script>
         jQuery(function() {
 
@@ -12,7 +13,11 @@
                         data: {
                             maxRows: 12,
                             letters: request.term,
+                            {% if ruta == 'contratacion' %}
+                            entity_alias: "aspirantes"
+                            {% else %}
                             entity_alias: "empleados"
+                            {% endif %}
                         },
                         success: function( data ) {
                             response( jQuery.map( data, function( item ) {
@@ -100,7 +105,7 @@
      </div>
 {% endfor %}
 
-     {% set ruta = app.request.attributes.get('_route') %}
+     
      {% if ruta == 'contratacion' %}
      <h3 class="text-center"> Consulta de aspirantes </h3>
      <p class="text-center">De click en seleccionar para registrar un aspirante como empleado</p>

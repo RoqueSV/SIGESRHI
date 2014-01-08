@@ -85,7 +85,7 @@
                 </tr>
                 <tr>    
                     <th>Telefono (movil):</th>
-                    <td>{{ exp.telefonomovil }}</td>
+                    <td>{{ exp.telefonomovil | telefono }}</td>
                 </tr>
         </table>
       </td>
@@ -102,8 +102,8 @@
         <th>No. NIP (docentes)</th>
     </tr>
     <tr>
-        <td>{{ exp.dui }}</td>
-        <td>{{ exp.nit }}</td>
+        <td>{{ exp.dui |dui }}</td>
+        <td>{{ exp.nit |nit }}</td>
         <td>{{ exp.isss }}</td>
         <td>{{ exp.nup }}</td>
         <td>{{ exp.nip }}</td>

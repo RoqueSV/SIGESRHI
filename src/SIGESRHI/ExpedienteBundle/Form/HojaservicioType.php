@@ -57,8 +57,7 @@ class HojaservicioType extends AbstractType
             ->add('isss',null, array(
                   'label'=>'Número ISSS',
                   'attr'=>array(
-                  'class'=>'input-medium',
-                  'readonly'=>true)))
+                  'class'=>'input-medium')))
             ->add('nit',null,array(
                   'label'=>'NIT',
                   'attr'=>array(

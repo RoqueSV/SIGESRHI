@@ -102,7 +102,7 @@ class SegurovidaController extends Controller
         
 
         // Mostrar
-        $rowAction1 = new RowAction('Mostrar', 'segurovida_show_consultar');
+        $rowAction1 = new RowAction('Consultar', 'segurovida_show_consultar');
         $grid->addRowAction($rowAction1);
 
         

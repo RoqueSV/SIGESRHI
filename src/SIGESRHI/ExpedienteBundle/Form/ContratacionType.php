@@ -23,7 +23,7 @@ class ContratacionType extends AbstractType
             ->add('horaslaborales',null, array(
                   'label'=>'Horas laborales',
                   'max_length'=>'2',
-                  'attr' => array('class'=>'input-mini', 'data-bvalidator'=>'number')))
+                  'attr' => array('class'=>'input-mini', 'data-bvalidator'=>'between[1:24]')))
             ->add('jornadalaboral','choice', array(
                   'label'=>'Jornada laboral',
                   'choices' => array(
@@ -43,13 +43,13 @@ class ContratacionType extends AbstractType
                   'label'=>'Fecha de autorización', 
                   'widget' => 'single_text',
                   'format'=>'dd-MM-yyyy',
-                  'attr' => array('class' => 'date input-small', 'data-bvalidator'=>'required', 'readonly'=>true))) 
+                  'attr' => array('class' => 'input-small', 'data-bvalidator'=>'required', 'readonly'=>true))) 
             ->add('numoficio',null,array(
                   'label'=>'Número de oficio',
                   'required'  => false,
                   'attr' => array('class'=>'input-small')))
             ->add('fechafincontrato',null, array(
-                  'label'=>'Fecha fin contrato',
+                  'label'=>'Fin contrato',
                   'widget' => 'single_text',
                   'format'=>'dd-MM-yyyy',
                   'required' => false,
@@ -105,11 +105,6 @@ class ContratacionType extends AbstractType
                   'parent_field'=>'unidadjefe',
                   'required' => true,
                   'attr' => array('class' => 'input-xmlarge')))
-
-           /* ->add('unidadjefe','entity',array('class' => 'AdminBundle:Unidadorganizativa','label'=>'Unidad: ', 'empty_value' => 'Seleccione', 'mapped'=>false,'attr'=>array('class'=>'input-xmlarge') ))
-            ->add('centrojefe', 'entity', array( 'label'=>'Centro: ', 'class' => 'AdminBundle:Centrounidad', 'empty_value' => 'Seleccione', 'mapped'=>false, 'attr'=>array('class'=>'input-xmlarge')))
-           ->add('puestojefe', null,array('required' => true,'label'=>'Puesto: ', 'empty_value' => 'Seleccione', 'attr'=>array('class'=>'input-medium') ))
-            */
             //->add('idempleado')
         ;
     }
