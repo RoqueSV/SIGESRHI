@@ -18,18 +18,18 @@ class LicenciaType extends AbstractType
                 ))
             ->add('duraciondias',null,array(
                 'label' => 'Número de días',
-                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number,required','maxlength'=>'2','minlength'=>'1')
+                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number,required','maxlength'=>'2','minlength'=>'1','readonly'=>true)
                 ))
             ->add('duracionhoras',null,array(
                 'label' => 'Número de horas',
-                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number','maxlength'=>'2','minlength'=>'1')
+                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number','maxlength'=>'2','minlength'=>'1','readonly'=>true)
                 ))
             ->add('duracionminutos',null,array(
                 'label' => 'Número de minutos',
-                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number','maxlength'=>'2','minlength'=>'0')
+                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number','maxlength'=>'2','minlength'=>'0','readonly'=>true)
                 ))
             ->add('congoce','choice',array(
-                'choices' => array('1'=>'Con goce de Sueldo','0'=>'Si goce de Sueldo'),                
+                'choices' => array('1'=>'Con goce de Sueldo','0'=>'Sin goce de Sueldo'),                
                 'expanded' => true,
                 'label' => 'Permiso',
 
@@ -52,12 +52,12 @@ class LicenciaType extends AbstractType
             ->add('horafinlic','time',array(
                 'label' => 'Hora de regreso',
                 ))
-            ->add('fechapermiso','date',array(
+            /*->add('fechapermiso','date',array(
                 'label' => 'Fecha Registro',
                 'widget' => 'single_text', 
                 'format'=>'dd-MM-yyyy',
-                'attr' => array('class' => 'date input-small', 'data-bvalidator'=>'required', 'readonly'=>true),
-                ))
+                'attr' => array('class' => 'input-medium', 'data-bvalidator'=>'required', 'readonly'=>true),
+                ))*/
             //->add('idcontratacion')
         ;
     }

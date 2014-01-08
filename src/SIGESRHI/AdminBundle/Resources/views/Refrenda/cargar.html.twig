@@ -1,0 +1,58 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+<script type='text/javascript'>
+function guardar() {
+
+    if(confirm('\xbfEsta seguro que desea cargar esta Refrenda?')) {
+        document.getElementById('form_cargar_refrenda').submit();
+    }
+}
+function validar(){
+  var file = document.getElementById("arch_refrenda").value;
+  //alert("valor: "+file);
+  var pedazos=file.split(".");
+  if(!(pedazos[1]=="csv")){
+    alert("Por favor seleccione un archivo .csv");
+    document.getElementById("arch_refrenda").value="";
+  }  
+}
+</script>
+	<!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+    {{ include('AdminBundle:Ayuda/Refrenda:cargar.html.twig')}}
+
+    {% for flashMessage in app.session.flashbag.get('new') %}
+        <div class="alert alert-success">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('errornew') %}
+        <div class="alert alert-danger">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+    <br>
+
+   <h3 class="text-center">Cargar Refrenda</h3>
+   <p class="text-center"> Seleccione un archivo para cargar</p>
+
+   <form action="{{ path('refrenda_verificar') }}" method="post" id="form_cargar_refrenda">
+   	<br>
+   	<table class="table table-bordered mitable" border='1' width='100%' align='center'>
+   		<tr>
+   			<th width="20%">Archivo a Cargar:</th>
+   			<td><input type="file" name="arch_refrenda" id="arch_refrenda" onChange="validar()"required></td>
+   		</tr>
+   		<tr>
+   			<th></th>
+   			<td>Formato .csv (mas detalle, ver ayuda)</td>
+   		</tr>
+   	</table>
+   <br />
+   <div class="text-center">
+   		<button class="btn btn-primary" name="Guardar" onClick="guardar()">Guardar</button>
+        <a href="{{ path('hello_page') }}" class="btn">Cancelar</a>
+   </div>
+   </form>
+{% endblock %}

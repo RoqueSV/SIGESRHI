@@ -1,6 +1,55 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+<script type="text/javascript">
+//Funcion que ejecuta calcula los dias segun las fechas ingresadas
+function calculaduraciondias(){
+  var fechai = document.getElementById("sigesrhi_expedientebundle_licenciatype_fechainiciolic").value;
+  var fechaf = document.getElementById("sigesrhi_expedientebundle_licenciatype_fechafinlic").value;
+  if(fechaf!= "" && fechai != ""){
+    if(fechaf>fechai){
+        var dias = calculadias(fechaf,fechai);       
+        document.getElementById("sigesrhi_expedientebundle_licenciatype_duraciondias").value=dias;
+    }
+    else{
+        document.getElementById("sigesrhi_expedientebundle_licenciatype_duraciondias").value="";
+    }
+  }
+} 
+//Funcion que ejecuta calcula las horas
+function calculaduracionhoras(){
+    var horai = document.getElementById("sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").value;
+    var mini = document.getElementById("sigesrhi_expedientebundle_licenciatype_horainiciolic_minute").value;
+    var horaf = document.getElementById("sigesrhi_expedientebundle_licenciatype_horafinlic_hour").value;
+    var minf = document.getElementById("sigesrhi_expedientebundle_licenciatype_horafinlic_minute").value;
+    if(horai!= "" && horaf != "" && mini != "" && minf != ""){
+        if(parseInt(horaf) > parseInt(horai)){            
+                var horaicompleta = horai+":"+mini+":00";
+                var horafcompleta = horaf+":"+minf+":00";                
+                var difhora=calcular(horafcompleta,horaicompleta).split(":");
+                 document.getElementById("sigesrhi_expedientebundle_licenciatype_duracionhoras").value=difhora[0];
+                 document.getElementById("sigesrhi_expedientebundle_licenciatype_duracionminutos").value=difhora[1];
+        }
+        else if(horaf == horai){            
+            if(parseInt(minf) > parseInt(mini)){
+                var horaicompleta = horai+":"+mini+":00";
+                var horafcompleta = horaf+":"+minf+":00";
+                var difhora=calcular(horafcompleta,horaicompleta).split(":");
+                document.getElementById("sigesrhi_expedientebundle_licenciatype_duracionhoras").value=difhora[0];       
+                document.getElementById("sigesrhi_expedientebundle_licenciatype_duracionminutos").value=difhora[1];
+            }
+            else{
+                document.getElementById("sigesrhi_expedientebundle_licenciatype_duracionhoras").value="";
+                document.getElementById("sigesrhi_expedientebundle_licenciatype_duracionminutos").value="";
+            }
+        }
+        else{
+            document.getElementById("sigesrhi_expedientebundle_licenciatype_duracionhoras").value="";
+            document.getElementById("sigesrhi_expedientebundle_licenciatype_duracionminutos").value="";
+        }
+    }
+}
+</script>
     <!-- Botón ayuda -->
     <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
     {{ include('ExpedienteBundle:Ayuda/Licencia:registro.html.twig')}}
@@ -16,15 +65,15 @@
         </div>
     {% endfor %}
     <br>
-    {% for plaza in plazas %}
-    <h4 class="text-center">Control Interno de Permisos</h4>
+    {% for plaza in plazax %}
+    <h3 class="text-center">Control Interno de Permisos</h3>
     {% for exp in expediente %}
         <form action="{{ path('licencia_create',{'id' : exp.id, 'idc' : plaza.id}) }}" id="licencia_form" method="post" {{ form_enctype(form) }}>
 
         <table class='table table-bordered table-hover mitable' border='1' width='100%' align='center'>    
           <tr>        
-            <th width="20%">{{ form_label(form.fechapermiso) }}</th>
-            <td colspan="5">{{ form_widget(form.fechapermiso) }}</td>
+            <th width="20%">Fecha Registro:</th>
+            <td colspan="5"><b>{{ entity.fechapermiso|date('d-m-Y') | fecha }}</b></td>
 
           </tr>
           <tr>
@@ -35,9 +84,9 @@
             <th>Codigo: </th>
             <td>{{ exp.codigoempleado }}</td>
             <th>Partida: </th>
-            <td></td>
+            <td>{{ exp.partida }}</td>
             <th>Subpartida: </th>
-            <td></td>
+            <td>{{ exp.subpartida }}</td>
           </tr>
         
             <tr>
@@ -50,16 +99,32 @@
             </tr>
         
             <tr>
-                <th>N° de Tarjeta</th>
+                <th>N° de Tarjeta:</th>
                 <td colspan="5"></td>
             </tr>     
+            <tr>
+                <th>Permisos del mes:</th>
+                <td colspan="5"><b>
+                    {% if totales.tdias !='' %}
+                        {{ totales.tdias }}
+                    {% else %}
+                        0
+                    {% endif %}
+                    (dias)
+                    {% if totales.thoras !='' %}
+                        {{ totales.thoras }}
+                    {% else %}
+                        0
+                    {% endif %}
+                    (horas)</b></td>
+            </tr>
         </table>
 
         
             {#{ form_widget(form) }#}
         <table class='table table-bordered table-hover mitable' border='1' width='100%' align='center'>
             <tr>
-                <th>{{ form_label(form.concepto) }}</th>
+                <th width="20%">{{ form_label(form.concepto) }}</th>
                 <td colspan='3'>
                     <table width='100%' border='0'>
                         <tr>
@@ -86,8 +151,8 @@
             <tr>
                 <th>{{ form_label(form.fechainiciolic) }}</th>
                 <td>{{ form_widget(form.fechainiciolic) }}{{form_errors(form.fechainiciolic)}}</td>
-                <th>{{ form_label(form.horainiciolic) }}</th>
-                <td>{{ form_widget(form.horainiciolic) }}{{form_errors(form.horainiciolic)}}</td>
+                <th width="23%">{{ form_label(form.horainiciolic) }}</th>
+                <td width="20%">{{ form_widget(form.horainiciolic) }}{{form_errors(form.horainiciolic)}}</td>
             </tr>
             <tr>
                 <th>{{ form_label(form.fechafinlic) }}</th>
@@ -103,7 +168,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td></td>
+                <td style="border-lef:0px"></td>
                 <th>{{ form_label(form.duracionminutos) }}</th>
                 <td>{{ form_widget(form.duracionminutos) }}{{form_errors(form.duracionminutos)}}</td>
             </tr>
@@ -121,23 +186,34 @@
 </form>
 <script type="text/javascript">
 $( document ).ready(function() {
-        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").attr("disabled","disabled");
-        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_minute").attr("disabled","disabled");
-        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").attr("disabled","disabled");        
-        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").attr("disabled","disabled");        
-        $("#sigesrhi_expedientebundle_licenciatype_duracionhoras").attr("disabled","disabled");        
-        $("#sigesrhi_expedientebundle_licenciatype_duracionminutos").attr("disabled","disabled");        
-    $("#dias").click(function(){
-        $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").removeAttr("disabled");
-        $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").removeAttr("disabled");
-        $("#sigesrhi_expedientebundle_licenciatype_duraciondias").removeAttr("disabled");        
+        //$("#sigesrhi_expedientebundle_licenciatype_fechapermiso").removeClass("hasDatepicker date");
+        //añadimos los onchange para calcular los dias y horas
+        $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").attr("onChange","calculaduraciondias()");  
+        $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").attr("onChange","calculaduraciondias()");
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").attr("onChange","calculaduracionhoras()");
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_minute").attr("onChange","calculaduracionhoras()");        
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").attr("onChange","calculaduracionhoras()");        
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").attr("onChange","calculaduracionhoras()");        
+
 
         $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").attr("disabled","disabled");
         $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_minute").attr("disabled","disabled");
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").attr("disabled","disabled");        
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").attr("disabled","disabled");        
-        $("#sigesrhi_expedientebundle_licenciatype_duracionhoras").attr("disabled","disabled");        
-        $("#sigesrhi_expedientebundle_licenciatype_duracionminutos").attr("disabled","disabled");  
+
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").val("");
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_minute").val("");
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").val("");        
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").val("");               
+    $("#dias").click(function(){
+        $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").removeAttr("disabled");
+        $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").removeAttr("disabled");      
+
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").attr("disabled","disabled");
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_minute").attr("disabled","disabled");
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").attr("disabled","disabled");        
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").attr("disabled","disabled");        
+
         //quiatamos y agregamos nuevos requiered
         $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").attr("data-bvalidator","required");
         $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").attr("data-bvalidator","required");
@@ -150,19 +226,28 @@ $( document ).ready(function() {
         $("#sigesrhi_expedientebundle_licenciatype_duracionhoras").removeAttr("data-bvalidator");        
         $("#sigesrhi_expedientebundle_licenciatype_duracionminutos").removeAttr("data-bvalidator");
 
-
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").removeAttr("data-bvalidator");
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_minute").removeAttr("data-bvalidator");
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").removeAttr("data-bvalidator");        
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").removeAttr("data-bvalidator");
+        $("#sigesrhi_expedientebundle_licenciatype_duracionhoras").removeAttr("data-bvalidator");     
+      
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").val("");
+        $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_minute").val("");
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").val("");        
+        $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").val("");
+        $("#sigesrhi_expedientebundle_licenciatype_duracionhoras").val(""); 
+        $("#sigesrhi_expedientebundle_licenciatype_duracionminutos").val("");  
     });
     $("#horas").click(function(){
         $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").attr("disabled","disabled");
         $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").attr("disabled","disabled");
-        $("#sigesrhi_expedientebundle_licenciatype_duraciondias").attr("disabled","disabled");            
         
         $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").removeAttr("disabled");
         $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_minute").removeAttr("disabled");
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").removeAttr("disabled");        
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").removeAttr("disabled");
-        $("#sigesrhi_expedientebundle_licenciatype_duracionhoras").removeAttr("disabled");        
-        $("#sigesrhi_expedientebundle_licenciatype_duracionminutos").removeAttr("disabled");
+
         //quitamos y asigmanos nuevos required
         $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").removeAttr("data-bvalidator");
         $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").removeAttr("data-bvalidator");
@@ -173,7 +258,10 @@ $( document ).ready(function() {
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").attr("data-bvalidator","required");        
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").attr("data-bvalidator","required");
         $("#sigesrhi_expedientebundle_licenciatype_duracionhoras").attr("data-bvalidator","required,number");        
-        //$("#sigesrhi_expedientebundle_licenciatype_duracionminutos").attr("data-bvalidator","required,number");
+        
+        $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").val("");
+        $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").val("");
+        $("#sigesrhi_expedientebundle_licenciatype_duraciondias").val("");
     });
 
     $('.date2').datepicker({ 
@@ -184,5 +272,11 @@ $( document ).ready(function() {
 });
 
 </script>
+
+<style type="text/css">
+    .help-inline{
+        color: rgb(185, 74, 72); 
+        }
+</style>
     
 {% endblock %}

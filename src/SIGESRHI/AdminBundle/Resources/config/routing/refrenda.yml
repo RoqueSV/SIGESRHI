@@ -1,0 +1,11 @@
+refrenda:
+    pattern:  /
+    defaults: { _controller: "AdminBundle:Refrenda:index" }
+
+refrenda_cargar:
+    pattern:  /cargar
+    defaults: { _controller: "AdminBundle:Refrenda:cargar" }
+
+refrenda_verificar:
+    pattern:  /verificar
+    defaults: { _controller: "AdminBundle:Refrenda:verificar" }

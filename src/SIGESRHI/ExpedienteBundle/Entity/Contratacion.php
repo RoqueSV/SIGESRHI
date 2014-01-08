@@ -160,7 +160,7 @@ class Contratacion
     private $puestojefe;
 
     /**
-     * @ORM\OneToMany(targetEntity="Licencia", mappedBy="idcontratacion")
+     * @ORM\OneToMany(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Licencia", mappedBy="idcontratacion")
      */
     private $idlicencia;
 

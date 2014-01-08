@@ -38,3 +38,7 @@ cambia_opcion:
 AdminBundle_pantallas:
    resource: "@AdminBundle/Resources/config/routing/pantallas.yml"
    prefix:   /home   
+
+AdminBundle_refrenda:
+   resource: "@AdminBundle/Resources/config/routing/refrenda.yml"
+   prefix:   /refrenda

@@ -47,8 +47,6 @@ class DocpersonalController extends Controller
         );
 
         $grid->setSource($source);  
-        $grid->setNoDataMessage("No se encontraron resultados");
-
         $rowAction1 = new RowAction('Ingresar', 'docpersonal_new');
         $rowAction1->manipulateRender(
             function ($action, $row)
@@ -280,23 +278,28 @@ class DocpersonalController extends Controller
     //(GRID DOC PERSONAL EMPLEADO)
     public function indexEmpleadoAction()
     {
-        $source = new Entity('ExpedienteBundle:Expediente','grupo_empleado');
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_empleado_activo');
         $grid = $this->get('grid');
 
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias){
                 $query->Join($tableAlias.'.idempleado','e')
-                        ->Join('e.idcontratacion','c')                        
+                        //->Join('e.idcontratacion','c')                        
                         ->andWhere($tableAlias.'.tipoexpediente = :emp')
-                        ->andWhere('c.fechafincontrato IS NULL')
+                        //->andWhere('_idempleado_fechafincontrato IS NULL')
                         ->setParameter('emp','E');
             }
         );
 
-        $grid->setSource($source);  
-        $grid->setNoDataMessage("No se encontraron resultados");
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $codigo = new TextColumn(array('id' => 'codigo','source' => true,'field'=>'idempleado.codigoempleado','title' => 'Codigo',"operatorsVisible"=>false));        
+        //$plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idempleado.idcontratacion.puesto.idplaza.nombreplaza','title' => 'Plaza', 'filterable'=>false));
+        $grid->addColumn($codigo,1);
+        $grid->addColumn($NombreEmpleados,2);
+        //$grid->addColumn($plaza,3);
 
+        $grid->setSource($source);  
         $rowAction1 = new RowAction('Ingresar', 'docpersonal_new_empleado');
         $rowAction1->manipulateRender(
             function ($action, $row)
@@ -306,6 +309,7 @@ class DocpersonalController extends Controller
             }
         );
 
+        $grid->setId('grid_docpersonale_empleado');
         $grid->addRowAction($rowAction1);     
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
 
@@ -313,8 +317,8 @@ class DocpersonalController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleados", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal_empleado"));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Registrar Documentos Personales", $this->get("router")->generate("docpersonal_empleado"));
 
         return $grid->getGridResponse('ExpedienteBundle:Docpersonal:indexEmpleado.html.twig');
     }
@@ -343,9 +347,9 @@ class DocpersonalController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleados", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal_empleado"));
-        $breadcrumbs->addItem("Ingresar", "");
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Registrar Documentos Personales", $this->get("router")->generate("docpersonal_empleado"));
+        $breadcrumbs->addItem($expedienteinfo[0]['codigoempleado'],"");        
 
         return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
             'entity' => $entity,

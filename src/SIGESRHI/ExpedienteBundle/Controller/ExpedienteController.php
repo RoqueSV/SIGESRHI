@@ -487,15 +487,16 @@ public function confirmarValidoAction($id)
 //func que muestra empleados activos para pasarlos a inactivos
 public function admEmpleadoAction()
     {
-        $source = new Entity('ExpedienteBundle:Expediente','grupo_empleado');
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_empleado_activo');
         $grid = $this->get('grid');
 
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias){
                 $query->andWhere($tableAlias.'.tipoexpediente = :emp')
-                       // ->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
-                        ->setParameter('emp','E');
+                      //->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
+                      ->distinct()
+                      ->setParameter('emp','E');
                         
             }            
         );
