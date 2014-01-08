@@ -28,6 +28,10 @@ licencia_edit:
     defaults: { _controller: "ExpedienteBundle:Licencia:edit" }
 
 licencia_delete:
-    pattern:  /{id}/delete
+    pattern:  /{id}/{cf}/delete
     defaults: { _controller: "ExpedienteBundle:Licencia:delete" }
     requirements: { _method: post|delete }
+
+verReporteLicencias:
+    pattern:  /{idc}/reporte
+    defaults: { _controller: "ExpedienteBundle:Licencia:verReporteLicencias" }

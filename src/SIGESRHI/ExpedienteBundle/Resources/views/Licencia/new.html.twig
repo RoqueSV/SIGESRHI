@@ -25,8 +25,7 @@ function calculaduracionhoras(){
     if(horai!= "" && horaf != "" && mini != "" && minf != ""){
         if(parseInt(horaf) > parseInt(horai)){            
                 var horaicompleta = horai+":"+mini+":00";
-                var horafcompleta = horaf+":"+minf+":00";
-                alert(horaicompleta+horafcompleta);
+                var horafcompleta = horaf+":"+minf+":00";                
                 var difhora=calcular(horafcompleta,horaicompleta).split(":");
                  document.getElementById("sigesrhi_expedientebundle_licenciatype_duracionhoras").value=difhora[0];
                  document.getElementById("sigesrhi_expedientebundle_licenciatype_duracionminutos").value=difhora[1];
@@ -35,7 +34,6 @@ function calculaduracionhoras(){
             if(parseInt(minf) > parseInt(mini)){
                 var horaicompleta = horai+":"+mini+":00";
                 var horafcompleta = horaf+":"+minf+":00";
-                alert(horaicompleta+horafcompleta);
                 var difhora=calcular(horafcompleta,horaicompleta).split(":");
                 document.getElementById("sigesrhi_expedientebundle_licenciatype_duracionhoras").value=difhora[0];       
                 document.getElementById("sigesrhi_expedientebundle_licenciatype_duracionminutos").value=difhora[1];

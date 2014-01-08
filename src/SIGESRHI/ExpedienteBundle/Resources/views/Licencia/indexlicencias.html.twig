@@ -1,6 +1,26 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+<script>
+
+function verificarFechas(){
+
+  if($('#fechainicio').val()=="" || $('#fechafin').val()==""){
+    $('#fecha_requerida').show(); 
+    $('#fecha_invalida').hide();
+    return false;
+  }
+  if($('#fechainicio').val() > $('#fechafin').val()){
+    $('#fecha_requerida').hide(); 
+    $('#fecha_invalida').show();
+    return false;
+  }
+
+document.getElementById("formreporte").submit();
+}
+
+
+</script>
 <h4 class='text-center'>PERMISOS REGISTRADOS</h4>
 <p class="text-center">Seleccione para ver detalle</p>
 {{ grid_search(grid) }}
@@ -8,6 +28,33 @@
     {{ grid(grid,_self) }}
 
     {% block grid_filters %}{% endblock %}
+<br>
+<form action="{{path('verReporteLicencias', {'idc': idc })}}" id="formreporte" method="post">
+<fieldset><legend>Reporte de Licencias</legend>
+  <table border="0" class="centered-table">
+    <tr>
+      <td ><label for="fechainicio" id="fechainicio_label">Fecha Inicio:</label></td>
+      <td width="25px"></td>
+      <td><label for="fechafin" id="fechafin_label">Fecha Fin:</label></td>
+      <td width="25px"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><input type="text" class="date input-small" id="fechainicio" name="fechainicio" required="required" readonly></td>
+      <td ></td>
+      <td><input type="text" class="date input-small" id="fechafin" name="fechafin" readonly required="required"></td>
+      <td ></td>
+      <td><button id="enviar" type="button" onclick="verificarFechas()" class="btn">Generar Reporte</button></td>
+    </tr>
+    <tr>
+      <td colspan="5">
+      <label for="fechainicio" id="fecha_requerida" class="help-inline">* Seleccione las fechas.</label>
+      <label for="fechainicio" id="fecha_invalida" class="help-inline">* Fechas no validas.</label>  
+      </td>
+    </tr>
+  </table>
+</fieldset>
+</form>
     <br>
     <div align='center'>
         <a  href="{{ path('licencia_ver') }}" class="btn">Cancelar</a>            
@@ -27,7 +74,15 @@ $(document).ready(function(){
               yearRange: "-100:+0",});
 
          $('#grid_grid_licencias_por_contrato__fechapermiso__query__from').attr('readonly',true);
+
+         $('#fecha_requerida').hide();
+         $('#fecha_invalida').hide();
         
     });
 </script>
+<style type="text/css">
+.help-inline{
+        color: rgb(185, 74, 72); 
+        }
+</style>
 {% endblock %}

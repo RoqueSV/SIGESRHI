@@ -115,7 +115,7 @@ function eliminar() {
          {#<a href="{{ path('licencia_edit', { 'id': entity.id }) }}" class="btn">Editar Registro</a>#}
          <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
     </div>
-    <form action="{{ path('licencia_delete', { 'id': entity.id }) }}" method="post" id="form_borrar">
+    <form action="{{ path('licencia_delete', { 'id': entity.id, 'cf':comefrom }) }}" method="post" id="form_borrar">
         <input type="hidden" name="_method" value="DELETE" />
         <div class="invisible">{{ form_widget(delete_form) }}</div>
     </form>

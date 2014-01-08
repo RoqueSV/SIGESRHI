@@ -34,7 +34,7 @@
         <div class='text-center'>
             <button type="submit" class="btn btn-primary">Agregar</button>
             <a  href="{{ 
-                    path('docpersonal'                        
+                    path('docpersonal_empleado'                        
                         )
                     }}" class="btn">Cancelar</a>
         <div>
@@ -47,12 +47,15 @@
             <tr>
                 <th>Nombre del documento</th>
                 <th width='150px'>N° Correlativo</th>
+                <th>Entregado</th>
+                <th>Eliminar</th>
             </tr>
     
         {% for doc in documentos%}
             <tr>
                 <td>{{ doc.nombredocpersonal }}</td>
                 <td>{{ doc.indice }}</td>
+                <td>{% if doc.entregado == 1 %}</td>
             </tr>
         {% endfor %}
     {% else %}

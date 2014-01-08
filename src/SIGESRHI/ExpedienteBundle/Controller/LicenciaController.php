@@ -48,8 +48,10 @@ class LicenciaController extends Controller
         //Columnas para filtrar
         $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
         $codigo = new TextColumn(array('id' => 'codigo','source' => true,'field'=>'idempleado.codigoempleado','title' => 'Codigo',"operatorsVisible"=>false));        
+        $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idempleado.idcontratacion.puesto.idplaza.nombreplaza','title' => 'Plaza', 'filterable'=>false));
         $grid->addColumn($codigo,1);
         $grid->addColumn($NombreEmpleados,2);
+        $grid->addColumn($plaza,3);
 
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
@@ -111,8 +113,10 @@ class LicenciaController extends Controller
         //Columnas para filtrar
         $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
         $codigo = new TextColumn(array('id' => 'codigo','source' => true,'field'=>'idempleado.codigoempleado','title' => 'Codigo',"operatorsVisible"=>false));        
+        $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idempleado.idcontratacion.puesto.idplaza.nombreplaza','title' => 'Plaza', 'filterable'=>false));
         $grid->addColumn($codigo,1);
         $grid->addColumn($NombreEmpleados,2);
+        $grid->addColumn($plaza,3);
 
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
@@ -121,7 +125,7 @@ class LicenciaController extends Controller
         $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Ver Licencias",$this->get("router")->generate("licencia_ver"));
         
-        $rowAction1 = new RowAction('Ver', 'licencia_ver_permisos');
+        $rowAction1 = new RowAction('Ver Permisos', 'licencia_ver_permisos');
         $rowAction1->setColumn('info_column');
         $rowAction1->manipulateRender(
             function ($action, $row)
@@ -142,8 +146,8 @@ class LicenciaController extends Controller
     * Ver grid de permisos por contrato
     */
     public function indexVerPermisosAction(Request $request,$id,$idc){
-        //$id = $request->get('id');
-        //$idc = $request->get('idc');
+        $em = $this->getDoctrine()->getManager();
+        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($id,$idc);
 
         $source = new Entity('ExpedienteBundle:Licencia','licencias_por_contrato');
         $grid = $this->get('grid');
@@ -172,7 +176,27 @@ class LicenciaController extends Controller
         $grid->setDefaultOrder('fechapermiso','asc');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
-        return $grid->getGridResponse('ExpedienteBundle:Licencia:indexlicencias.html.twig');
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Ver Licencias",$this->get("router")->generate("licencia_ver"));
+        $breadcrumbs->addItem($expedienteinfo[0]['codigoempleado'],"");   
+        return $grid->getGridResponse('ExpedienteBundle:Licencia:indexlicencias.html.twig',array(
+            'idc' => $idc,
+            ));
+    }
+
+    public function verReporteLicenciasAction(Request $request, $idc){
+        $fechainicio = $this->get('request')->request->get('fechainicio');
+        $fechafin = $this->get('request')->request->get('fechafin');
+        return $this->redirect($this->generateUrl('reporte_licencias',array(
+            'id'=> $idc, 
+            'fechainicio'=> $fechainicio, 
+            'fechafin'=> $fechafin 
+            )));
+        //echo $idc.$fechainicio.$fechafin;
     }
    
 
@@ -375,7 +399,7 @@ class LicenciaController extends Controller
      * @Route("/{id}", name="licencia_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id, $cf)
     {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
@@ -391,8 +415,12 @@ class LicenciaController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
-        return $this->redirect($this->generateUrl('licencia_registrar'));
+        if($cf=='c'){
+            return $this->redirect($this->generateUrl('licencia_registrar'));    
+        }
+        else {
+            return $this->redirect($this->generateUrl('licencia_ver'));
+        }
     }
 
     /**
