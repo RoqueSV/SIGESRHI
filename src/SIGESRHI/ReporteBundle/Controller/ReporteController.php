@@ -189,4 +189,147 @@ class ReporteController extends Controller
      return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
    }
 
+public function ReporteAccionesAction()
+    {
+
+    //Incluimos camino de migas
+      
+      $breadcrumbs = $this->get("white_october_breadcrumbs");
+      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+      $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
+      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_pruebapsicologica"));
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idExp=$request->get('id');
+     $idaccion=$request->get('tipo');
+
+     if(isset($_GET['fechainicio'])){
+     $fecha1=$request->get('fechainicio');           
+     $fecha2=$request->get('fechafin');
+     $cadena= "and fecharegistroaccion between '".$fecha1."' and '".$fecha2."' ";
+    }
+    else{
+        $cadena="";
+    }
+
+     // Nombre reporte
+     $filename= 'accionpersonal.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/HojadeServicio/Hojadeservicio_tipoaccion.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("idexp", new java("java.lang.Integer", $idExp));
+     $Parametro->put("accion", new java("java.lang.Integer", $idaccion));
+     $Parametro->put("cadena", new java("java.lang.String", $cadena));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+
+
+public function ReporteHojaServicioAction()
+    {
+
+    //Incluimos camino de migas
+      
+      $breadcrumbs = $this->get("white_october_breadcrumbs");
+      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+      $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
+      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_pruebapsicologica"));
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idExp=$request->get('id');
+
+     if(isset($_GET['fechainicio'])){
+     $fecha1=$request->get('fechainicio');           
+     $fecha2=$request->get('fechafin');
+     $cadena= "and fecharegistroaccion between '".$fecha1."' and '".$fecha2."' order by fecharegistroaccion";
+    }
+    else{
+        $cadena="order by fecharegistroaccion";
+    }
+
+     // Nombre reporte
+     $filename= 'Hojadeservicio.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/HojadeServicio/Hojadeservicio.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("idexp", new java("java.lang.Integer", $idExp));
+     $Parametro->put("cadena", new java("java.lang.String", $cadena));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+public function ReporteLicenciasAction()
+    {
+
+    //Incluimos camino de migas
+      
+      $breadcrumbs = $this->get("white_october_breadcrumbs");
+      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+      $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
+      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_pruebapsicologica"));
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idExp=$request->get('id');
+
+     if(isset($_GET['fechainicio'])){
+     $fecha1=$request->get('fechainicio');           
+     $fecha2=$request->get('fechafin');
+     $cadena= "and fecharegistroaccion between '".$fecha1."' and '".$fecha2."' order by fecharegistroaccion";
+    }
+    else{
+        $cadena="order by fecharegistroaccion";
+    }
+
+     // Nombre reporte
+     $filename= 'Hojadeservicio.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/HojadeServicio/Hojadeservicio.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("idexp", new java("java.lang.Integer", $idExp));
+     $Parametro->put("cadena", new java("java.lang.String", $cadena));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+
  }

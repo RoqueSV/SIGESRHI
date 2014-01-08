@@ -21,3 +21,15 @@ reporte_solicitudempleo:
 reporte_pruebapsicologica:
     pattern:  /reportepruebapsicologica
     defaults: { _controller: ReporteBundle:Reporte:ReportePruebaPsicologica }
+
+reporte_acciones:
+    pattern:  /reporteacciones
+    defaults: { _controller: ReporteBundle:Reporte:ReporteAcciones }
+
+reporte_hojaservicio:
+    pattern:  /reporte_hojaservicio
+    defaults: { _controller: ReporteBundle:Reporte:ReporteHojaServicio }
+
+reporte_licencias:
+    pattern:  /reporte_licencias
+    defaults: { _controller: ReporteBundle:Reporte:ReporteLicencias }

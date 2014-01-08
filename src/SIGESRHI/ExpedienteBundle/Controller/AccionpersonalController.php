@@ -402,19 +402,19 @@ class AccionpersonalController extends Controller
         echo $tipo_reporte;
         
         if($tipo_reporte =="1"){
-        return $this->redirect($this->generateUrl('solicitud_show', array('id' => $idexp)));
+        return $this->redirect($this->generateUrl('reporte_hojaservicio', array('id' => $idexp)));
             }// if 1
 
         if($tipo_reporte =="2"){
-        return $this->redirect($this->generateUrl('solicitud_show', array('id' => $idexp, 'tipo'=> $tipoaccion)));
+        return $this->redirect($this->generateUrl('reporte_acciones', array('id' => $idexp, 'tipo'=> $tipoaccion)));
             }// if 2
     
         if($tipo_reporte =="3"){
-        return $this->redirect($this->generateUrl('solicitud_show', array('id' => $idexp, 'fechainicio'=> $fechainicio, 'fechafin'=>$fechafin)));
+        return $this->redirect($this->generateUrl('reporte_hojaservicio', array('id' => $idexp, 'fechainicio'=> $fechainicio, 'fechafin'=>$fechafin)));
             }// if 3
 
         if($tipo_reporte =="4"){
-        return $this->redirect($this->generateUrl('solicitud_show', array('id' => $idexp, 'tipo'=> $tipoaccion, 'fechainicio'=> $fechainicio, 'fechafin'=>$fechafin)));
+        return $this->redirect($this->generateUrl('reporte_acciones', array('id' => $idexp, 'tipo'=> $tipoaccion, 'fechainicio'=> $fechainicio, 'fechafin'=>$fechafin)));
             }// if 4
 
     }//function

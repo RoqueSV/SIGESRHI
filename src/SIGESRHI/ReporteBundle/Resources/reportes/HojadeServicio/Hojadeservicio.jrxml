@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Hojadeservicio" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b021ac6-0dfd-4221-a80e-b9adc9e37aee">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="192"/>
+	<parameter name="idexp" class="java.lang.Integer"/>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Reportes\\HojadeServicio\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cadena" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select e.id,fotografia,nombreempleado,concat(substr(hs.dui,1,8),'-',substr(hs.dui,9))as dui,hs.lugardui,hs.lugarnac, to_char(hs.fechanac,'DD "de" TMMonth "de" YYYY') as fechanac,hs.direccion,case when hs.estadoCivil= 'S' then 'Soltero(a)'
+	   when hs.estadoCivil= 'A' then 'Acompañado(a)'
+	   when hs.estadoCivil= 'V' then 'Viudo(a)'
+	   when hs.estadoCivil= 'D' then 'Divorciado(a)'
+	   else 'Casado(a)' end as estadocivil,hs.telefonofijo as telefonos,coalesce(hs.isss,'--') as isss,concat(substr(hs.nit,1,4),'-',substr(hs.nit,5,6),'-',substr(hs.nit,11,3),'-',substr(hs.nit,14)) as nit,to_char(fechaingreso,'DD "de" TMMonth "de" YYYY') as fechaingreso,to_char(hs.sueldoinicial,'$9,999.00') as sueldoinicial,coalesce(hs.informacionadicional,' ') as informacionadicional,hs.cargo,destacadoen,educacion,codigoempleado from solicitudempleo se join expediente e on(se.idexpediente=e.id)
+join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.idexpediente) where e.id=$P{idexp}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="fotografia" class="java.lang.String"/>
+	<field name="nombreempleado" class="java.lang.String"/>
+	<field name="dui" class="java.lang.String"/>
+	<field name="lugardui" class="java.lang.String"/>
+	<field name="lugarnac" class="java.lang.String"/>
+	<field name="fechanac" class="java.lang.String"/>
+	<field name="direccion" class="java.lang.String"/>
+	<field name="estadocivil" class="java.lang.String"/>
+	<field name="telefonos" class="java.lang.String"/>
+	<field name="isss" class="java.lang.String"/>
+	<field name="nit" class="java.lang.String"/>
+	<field name="fechaingreso" class="java.lang.String"/>
+	<field name="sueldoinicial" class="java.lang.String"/>
+	<field name="informacionadicional" class="java.lang.String"/>
+	<field name="cargo" class="java.lang.String"/>
+	<field name="destacadoen" class="java.lang.String"/>
+	<field name="educacion" class="java.lang.String"/>
+	<field name="codigoempleado" class="java.lang.String"/>
+	<title>
+		<band height="362">
+			<staticText>
+				<reportElement uuid="fe417893-ef2c-48e6-b5d9-8f8f94b4629e" x="0" y="257" width="85" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Destacado en:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9003cf45-6de2-4d6f-a49c-950c5d0fb35a" x="131" y="219" width="100" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Ingreso:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="31e18123-cdbb-4d18-a655-7493dd34aca4" x="373" y="148" width="82" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado Civil:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f312b835-1f17-4195-9c33-48507f0be50d" x="126" y="10" width="364" height="38"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL RECURSOS HUMANOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2deb02b3-7a74-4190-94de-ac43b6cebde1" x="104" y="190" width="68" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Educación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d87a8554-db07-4e52-ae19-559299d97f1f" x="331" y="219" width="42" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ ISSS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="839843da-aa0a-40fd-bd8d-dada6ee34b85" x="104" y="126" width="109" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lugar y fecha Nac.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="64a3bda3-ba3d-48c2-827d-4120840557a7" x="103" y="83" width="56" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="80fbd80d-11df-4dba-8f3e-e8376e264aea" x="0" y="219" width="85" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sueldo Inicial:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="18bf66d9-4cb2-4f37-8f48-c1dcbb9bc71e" x="0" y="93" width="100" height="126"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="ddfbf8d7-12c5-4d41-9139-2613df6685c9" x="187" y="105" width="81" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Extendido en:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="30571a3d-27b1-40ee-983d-645dbe551327" x="104" y="147" width="114" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfonos(Fijo,Movil):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="430fc4f0-8934-4b25-a896-824fc6614e76" x="0" y="239" width="49" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cargo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b8ec0131-2c7a-45bf-9ed1-1199e372f4a7" x="126" y="105" width="61" height="19"/>
+				<box leftPadding="1">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dui}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement uuid="6f4b8360-7a91-47fc-9e53-47c9fb1a649c" x="20" y="0" width="85" height="83"/>
+				<imageExpression><![CDATA[$P{ubicacionReport} +"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="9d0157df-67fb-4819-8b2d-b6c8170baa35" x="104" y="169" width="68" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fdc7d668-096a-4b4c-b709-aa7f2cf397eb" x="444" y="218" width="36" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIT:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a2015f4-8050-4cf0-8122-7ceb6e082a9e" x="196" y="47" width="229" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RECORD LABORAL DE UN EMPLEADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3f967468-fa01-4e34-8c25-b8215a57ad21" x="103" y="105" width="30" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DUI:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5c199437-0bfd-440b-ae63-012a8671fd07" x="0" y="277" width="121" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Informacion Adicional:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="19a64b1a-820a-4d85-83ed-bd6da5d44919" x="254" y="104" width="316" height="21"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lugardui}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9c9bf93e-d32f-4bda-9265-80d8211bdeb0" x="435" y="148" width="135" height="19"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estadocivil}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="7b2307dd-f2a7-40b2-8c36-8f5204d0bd51" x="155" y="168" width="415" height="19"/>
+				<box topPadding="2" leftPadding="3" rightPadding="0">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f62312a3-574f-4fe7-863b-1656fbe66bd1" x="210" y="147" width="163" height="19"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefonos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="dafb6e72-44a4-4c17-b489-f8c5201f3447" x="68" y="219" width="65" height="20"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sueldoinicial}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="7a094027-1306-4593-95d6-772d8acdfacf" x="0" y="299" width="570" height="50"/>
+				<box leftPadding="1" rightPadding="2"/>
+				<textElement textAlignment="Justified">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{informacionadicional}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2397e847-d504-49f7-85ef-d1ba25b860d4" x="361" y="218" width="83" height="20"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{isss}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,###.00">
+				<reportElement uuid="f2e26113-aded-4bdb-875f-b166039d21ef" x="466" y="217" width="104" height="20"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nit}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement uuid="da3e1a28-ae7f-48cc-9e9c-2d8c0f135c78" x="3" y="96" width="95" height="121">
+					<printWhenExpression><![CDATA[$F{fotografia}!=null]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../../../../web/uploads/fotografias/"+$F{fotografia}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="5612068a-267b-437b-be4f-05c0f99ce7e9" x="425" y="84" width="103" height="20"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código Empleado:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="062040d4-6a78-4cbe-af1f-b7475bf55bed" x="514" y="84" width="56" height="19"/>
+				<box leftPadding="2">
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigoempleado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="41a07b4e-4253-41c7-93d0-a562aa4433af" x="198" y="128" width="372" height="18"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lugarnac}+", "+$F{fechanac}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2a26ddca-0741-4584-8600-23cdc628b428" x="145" y="83" width="280" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreempleado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8509ddd8-9677-429b-b381-edd24cec8e78" x="218" y="218" width="113" height="20"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaingreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c9efffb9-ca2a-4037-92e1-0e92a159d52e" x="33" y="239" width="537" height="19"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cargo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b9ba761b-e5dc-43af-98c8-d8261de5f865" x="70" y="259" width="500" height="18"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{destacadoen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="951ad256-0d72-44b9-858f-3674bd38c0f8" x="159" y="189" width="411" height="20"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{educacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="cd3cf5fc-1211-48c3-a231-b241f82349e2" x="0" y="3" width="121" height="16"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECORD LABORAL]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="7386ff2e-a789-41c2-b0ba-702263f233ce" x="-2" y="21" width="572" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<subreport>
+				<reportElement uuid="15af5fb7-e0a5-451d-82fe-5c74c4e72c16" x="-2" y="27" width="572" height="18"/>
+				<subreportParameter name="subcadena">
+					<subreportParameterExpression><![CDATA[$P{cadena}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idexp">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["Hojadeservicio_subreporte1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement uuid="b0c0f8d8-7207-4943-89ef-64945cc752b7" x="151" y="-300" width="294" height="16">
+					<printWhenExpression><![CDATA[$P{cadena}.length() > 30]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Del  "+$P{cadena}.substring( 33, 43 )+"  al  "+$P{cadena}.substring( 50, 60 )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement uuid="dbe3aaa6-1ec9-418e-b9a3-d3181fd951b6" x="215" y="20" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="3661dcda-7e2c-4ee6-bf54-e5aae4294555" x="295" y="20" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
