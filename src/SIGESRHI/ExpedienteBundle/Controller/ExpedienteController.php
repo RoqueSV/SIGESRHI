@@ -494,16 +494,13 @@ public function admEmpleadoAction()
         $source->manipulateQuery(
             function($query) use ($tableAlias){
                 $query->andWhere($tableAlias.'.tipoexpediente = :emp')
-                      //->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
-                      ->distinct()
+                      ->andWhere('_idempleado_idrefrenda.id is null')
                       ->setParameter('emp','E');
                         
             }            
         );
         $grid->setSource($source);  
-        $grid->setNoDataMessage("No se encontraron resultados");
-        //$plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idempleado.idcontratacion.idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false));
-        //$grid->addColumn($plaza,3);
+        $grid->setNoDataMessage("No existen empleados no asignados a plazas");
 
         $rowAction1 = new RowAction('Inactivar', 'expediente_inactivar');
         $rowAction1->setColumn('info_column');
@@ -538,14 +535,15 @@ public function admEmpleadoAction()
 public function inactivarEmpleadoAction()
     {
         $request = $this->getRequest();
-        $numacuerdo=$this->get('request')->request->get('numacuerdo');   
+       
         $idexp=$this->get('request')->request->get('idexp');   
         $em = $this->getDoctrine()->getManager();
-        //ver expediente a inhabilitar(Principal)
-        if($request->query->get('id')!=null AND $numacuerdo==null) {            
-            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($request->query->get('id'));
-            //$plazasinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazasEmpleado($request->query->get('id'));
+        
 
+        //ver expediente a inhabilitar(Principal)
+        if($request->query->get('id')!=null) {            
+            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleado($request->get('id'));
+            
             $breadcrumbs = $this->get("white_october_breadcrumbs");
             $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
             $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
@@ -554,26 +552,24 @@ public function inactivarEmpleadoAction()
 
             return $this->render('ExpedienteBundle:Expediente:inactivar.html.twig', array(          
                 'expediente' => $expedienteinfo,
-                'numerodef' => '',
             ));
         }
 
-       //Si viene del formulario donde inserta el num acuerdo
-        elseif($numacuerdo!=null AND $idexp!=null){
-            $acuerdovalido = $em->getRepository('ExpedienteBundle:Expediente')->encontrarAcuerdo($numacuerdo);
-            if($acuerdovalido!=null){
+       //Si viene del formulario donde confirma eliminación
+        elseif($idexp!=null){
+            
                 $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
                 $entity -> setTipoexpediente('X');
                 $em -> persist($entity);
                 $em -> flush();
 
-                $this->get('session')->getFlashBag()->add('confirm','Empleado registrado como inactivo Exitosamente');                
+                $this->get('session')->getFlashBag()->add('confirm','Empleado registrado como inactivo exitosamente');                
                 return $this->redirect($this->generateUrl('expediente_adm_empleado'));            
             }
             else{
                 $em = $this->getDoctrine()->getManager();
-                $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($idexp);
-                $plazasinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazasEmpleado($idexp);
+                $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleado($idexp);
+                
                 $breadcrumbs = $this->get("white_october_breadcrumbs");
                 $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
                 $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
@@ -583,15 +579,8 @@ public function inactivarEmpleadoAction()
                 $this->get('session')->getFlashBag()->add('error','Ingrese un código de acuerdo válido para el Empleado');
                 return $this->render('ExpedienteBundle:Expediente:inactivar.html.twig', array(          
                     'expediente' => $expedienteinfo,
-                    'plazas' => $plazasinfo,
-                    'numerodef' => $numacuerdo,
                 ));
             }
-        }
-        //si no viene con nada redirigirlo a grid de la opción
-        else{
-            return $this->redirect($this->generateUrl('expediente_adm_empleado'));        
-        }
     }
 //func que muestra empleados inactivos para pasarlos a activos
 public function admEmpleadoInactivoAction()

@@ -137,7 +137,6 @@ class ContratacionController extends Controller
         $source->manipulateQuery(
             function($query) use ($tableAlias){
                 $query->andWhere($tableAlias.'.tipoexpediente = :tipo')
-                     // ->andWhere('_idempleado_idcontratacion.fechafinnom is not null')
                       ->setParameter('tipo','E');
             }
         );   
@@ -258,14 +257,21 @@ class ContratacionController extends Controller
              //Registrar acuerdo - PENDIENTE NOMBRAMIENTO
              $accionpersonal  = new Accionpersonal();
              $tipoaccion = $em->getRepository('ExpedienteBundle:Tipoaccion')->find(11);
+             
+             if(date("Y", strtotime(date_format($entity->getFechainiciocontratacion(),'Y-m-d'))) == date("Y", strtotime(date_format($entity->getFechafincontrato(),'Y-m-d')))) {
+             $fechaini = $this->fechaConvertMes($entity->getFechainiciocontratacion());
+             }
+             else{
              $fechaini = $this->fechaConvert($entity->getFechainiciocontratacion());
+             }
              $fechafin = $this->fechaConvert($entity->getFechafincontrato());
 
              $accionpersonal->setIdtipoaccion($tipoaccion);
              $accionpersonal->setIdexpediente($expediente);
              $accionpersonal->setFecharegistroaccion(new \Datetime(date('d-m-Y')));
-             $accionpersonal->setMotivoaccion($entity->getPuesto()." - Se le contrata a partir del ".$fechaini." al ".$fechafin." según contrato No. ".$request->get('numcontrato')." como ".$entity->getPuesto()." con sueldo mensual de $".$entity->getSueldoinicial());
              $accionpersonal->setNumacuerdo($request->get('numcontrato'));
+             $accionpersonal->setMotivoaccion("Contrato No ".$accionpersonal->getNumacuerdo().", ".$entity->getPuesto()." - Se le contrata a partir del ".$fechaini." al ".$fechafin." según contrato No. ".$request->get('numcontrato')." como ".$entity->getPuesto()." con sueldo mensual de $".$entity->getSueldoinicial());
+             
              $em->persist($accionpersonal);
 
              //Guardar variable session
@@ -328,7 +334,7 @@ class ContratacionController extends Controller
         if ($request->get('tipogrid')==1){//aspirante
         $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
-        $breadcrumbs->addItem($idexpediente->getIdsolicitudempleo()->getNumsolicitud(),  $this->get("router")->generate("contratacion_new"));
+        $breadcrumbs->addItem($idexpediente->getIdsolicitudempleo()->getNombrecompleto(),  $this->get("router")->generate("contratacion_new"));
        
         return $this->render('ExpedienteBundle:Contratacion:new.html.twig', array(          
             'expediente' => $expediente,
@@ -392,10 +398,10 @@ class ContratacionController extends Controller
         
            /* Definir tipo de contratación */
            if ($tipo == 1){ //Ley de salarios
-            $breadcrumbs->addItem("Registrar nombramiento / ".$idexpediente->getIdsolicitudempleo()->getNumsolicitud(),  $this->get("router")->generate("contratacion_new"));
+            $breadcrumbs->addItem("Registrar nombramiento / ".$idexpediente->getIdsolicitudempleo()->getNombrecompleto(),  $this->get("router")->generate("contratacion_new"));
            }
            else if ($tipo == 2){ //Contrato
-            $breadcrumbs->addItem("Registrar contrato / ".$idexpediente->getIdsolicitudempleo()->getNumsolicitud(),  $this->get("router")->generate("contratacion_new"));
+            $breadcrumbs->addItem("Registrar contrato / ".$idexpediente->getIdsolicitudempleo()->getNombrecompleto(),  $this->get("router")->generate("contratacion_new"));
            }
             return $this->render('ExpedienteBundle:Contratacion:contratacion.html.twig', array(
             'entity' => $entity,
@@ -554,6 +560,11 @@ class ContratacionController extends Controller
         $tipo=$request->get('tipo'); // 1-aspirante, 2-empleado
 
         $entity = $em->getRepository('ExpedienteBundle:Contratacion')->find($id);
+        
+        /*Obteniendo variables guardadas*/
+        $fechainicio = $entity->getFechainiciocontratacion();
+        $fechafinal  = $entity->getFechafincontrato();
+        /* ************************* */ 
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Contratacion entity.');
@@ -568,10 +579,8 @@ class ContratacionController extends Controller
            $empleado= $em->getRepository('ExpedienteBundle:Empleado')->findOneByCodigoempleado($request->get('codigoactual'));
 
            if($tipo == 1){//Aspirante
-
            $empleado->setCodigoempleado($request->get('codempleado'));
            $em->persist($empleado);
-
            }
 
            if($request->get('puestoactual') != $entity->getPuesto()) // Cambio el puesto
@@ -588,12 +597,34 @@ class ContratacionController extends Controller
             $refrendaAct->setCodigoempleado($empleado->getCodigoempleado());
             $em->persist($refrendaAct);
            }
+
+           if($entity->getTipocontratacion() == 2){ //Contrato
+            
+            if($fechainicio!=$entity->getFechainiciocontratacion() OR $fechafinal!=$entity->getFechafincontrato() OR $session->get('acuerdo') != $request->get('numcontrato'))        
+           //Actualizar contrato
+             {
+                echo $session->get('acuerdo');
+                echo $request->get('numcontrato');
+                echo date_format($fechafinal,'Y-m-d');
+                echo date_format($entity->getFechafincontrato(),'Y-m-d');
            
-           if($session->get('acuerdo') != $request->get('numcontrato')){ // Cambio numero de contrato/acuerdo
-            $accionpersonal = $em->getRepository('ExpedienteBundle:Accionpersonal')->findOneByNumacuerdo($session->get('acuerdo'));
-            $accionpersonal->setNumacuerdo($request->get('numcontrato'));
-            $em->persist($accionpersonal);
-           }
+              /*Comprobar fechas*/
+               if(date("Y", strtotime(date_format($entity->getFechainiciocontratacion(),'Y-m-d'))) == date("Y", strtotime(date_format($entity->getFechafincontrato(),'Y-m-d')))) {
+                 $fechaini = $this->fechaConvertMes($entity->getFechainiciocontratacion());
+               }
+               else{
+                 $fechaini = $this->fechaConvert($entity->getFechainiciocontratacion());
+               }
+              $fechafin = $this->fechaConvert($entity->getFechafincontrato());
+              /*fin fechas*/
+
+              $accionpersonal = $em->getRepository('ExpedienteBundle:Accionpersonal')->findOneByNumacuerdo($session->get('acuerdo'));
+              $accionpersonal->setNumacuerdo($request->get('numcontrato'));
+              $accionpersonal->setMotivoaccion("Contrato No ".$accionpersonal->getNumacuerdo().", ".$entity->getPuesto()." - Se le contrata a partir del ".$fechaini." al ".$fechafin." según contrato No. ".$request->get('numcontrato')." como ".$entity->getPuesto()." con sueldo mensual de $".$entity->getSueldoinicial());
+              $em->persist($accionpersonal);
+              $session->set('acuerdo',$accionpersonal->getNumacuerdo());
+             }
+           } //fin contrato
 
             $em->persist($entity);
             $em->flush();
@@ -710,6 +741,16 @@ class ContratacionController extends Controller
     $meses= array("enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre");
     
     return strftime("%d de ".$meses[date('n',strtotime($fecha))-1]." del %Y",strtotime($fecha));
+        
+    }
+
+    public function fechaConvertMes($sfecha)
+    {
+
+    $fecha = date_format($sfecha, 'Y-m-d');
+    $meses= array("enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre");
+    
+    return strftime("%d de ".$meses[date('n',strtotime($fecha))-1],strtotime($fecha));
         
     }
 

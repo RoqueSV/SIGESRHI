@@ -98,26 +98,11 @@
     <br>
     </fieldset>
     <form action="{{ path('expediente_inactivar') }}" method="post">
-    <table width="100%">
-        <tr>
-            <td align="center">Ingrese el código del acuerdo que genera la inactividad del empleado: </td>
-            <td>
-              <input type='text' id='numacuerdo' maxlength='15' name='numacuerdo' data-bvalidator='alphanum,minlength[15],maxlength[15],required' class='input-medium' value={{ numerodef }}>
-              <input type='hidden' id='idexp' name='idexp' value='{{ exp.idexpediente }}'>
-            </td>
-        </tr>
-        <tr><td>&nbsp;</td>
-        </tr>
-        <tr align="center">
-            <td width="50%">
-              <button type="submit" onclick="return confirm('¿Está seguro de registrar al empleado como inactivo? ')" class="btn btn-primary" >Aceptar</button>
-            </td>
-            <td width="50%"><a href="{{ 
-                    path('expediente_adm_empleado'                        
-                        )
-                    }}" class="btn">Cancelar</a></td>
-        </tr>
-    </table>
+    <input type='hidden' id='idexp' name='idexp' value='{{ exp.idexpediente }}'>
+    <p class="text-center">Haga click en aceptar para cambiar el estado del empleado</p><br />
+    <div class="text-center">
+     <button type="submit" onclick="return confirm('¿Está seguro de registrar al empleado como inactivo? ')" class="btn btn-primary" >Aceptar</button>
+     <a href="{{ path('expediente_adm_empleado')}}" class="btn">Cancelar</a>
     </form>  
     {% endfor %}
 {% endblock %}

@@ -11,7 +11,7 @@ class ReporteController extends Controller
 {
 	
 
-	public function crearConexion() {
+   public function crearConexion() {
         
         $host = $this->container->getParameter('database_host');
         $user = $this->container->getParameter('database_user');
@@ -24,61 +24,6 @@ class ReporteController extends Controller
     }
 
       
-
-    public function indexAction()
-    {
-      
-    	$em = $this->getDoctrine()->getManager();
-  		$query = $em->createQuery('
-          SELECT e.id idexp, s.nombres nombre FROM ExpedienteBundle:Solicitudempleo s
-          join s.idexpediente e'
-        );
-
-        $expedientes = $query->getResult();
-
-      // Incluimos camino de migas
-        $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Reportes", $this->get("router")->generate("reporte_prueba"));
-
-    	return $this->render('ReporteBundle:Reportes:reportes.html.twig',array('expedientes'=>$expedientes));
-	       
-    }
-
-    public function createAction()
-    {
-
-    //Incluimos camino de migas
-      
-      $breadcrumbs = $this->get("white_october_breadcrumbs");
-      $breadcrumbs->addItem("Reportes", $this->get("router")->generate("reporte_prueba"));
-      $breadcrumbs->addItem("Hoja de servicio", $this->get("router")->generate("reporte_create"));
-
-     /* Obtengo parametros */
-     $request=$this->getRequest();
-     $idEmp=$request->get('idemp');           
-     
-     // Nombre reporte
-     $filename= 'Hoja de servicio.pdf';
-     
-     //Llamando la funcion JRU de la libreria php-jru
-     $jru=new JRU();
-     //Ruta del reporte compilado Jasper generado por IReports
-     $Reporte=__DIR__.'/../Resources/reportes/Hojadeservicio.jasper';
-     //Ruta a donde deseo Guardar mi archivo de salida Pdf
-     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
-     //Parametro en caso de que el reporte no este parametrizado
-     $Parametro=new java('java.util.HashMap');
-     $Parametro->put("idexp", new java("java.lang.Integer", $idEmp));
-     //Funcion de Conexion a Base de datos 
-     $Conexion = $this->crearConexion();
-     //Generamos la Exportacion del reporte
-     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
-     
-     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
-   }
-
-
-
    public function ReporteSeguroVidaAction()
     {
 
@@ -93,8 +38,10 @@ class ReporteController extends Controller
      //Incluimos camino de migas 
      $breadcrumbs = $this->get("white_october_breadcrumbs");
      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-     $breadcrumbs->addItem("Consultar seguro colectivo de vida", $this->get("router")->generate("segurovida_consultar"));
-     $breadcrumbs->addItem($expediente->getIdEmpleado()->getCodigoempleado(), $this->get("router")->generate($ruta, array("id"=>$request->get('id'))));
+     $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+     $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+     $breadcrumbs->addItem("Lista de empleados", $this->get("router")->generate("segurovida_consultar"));
+     $breadcrumbs->addItem("Consultar seguro colectivo", $this->get("router")->generate($ruta, array("id"=>$request->get('id'))));
      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_segurovida"));
      
      // Nombre reporte
@@ -123,13 +70,25 @@ class ReporteController extends Controller
 
      /* Obtengo parametros */
      $request=$this->getRequest();
-     $idSol=$request->get('idsol');           
+     $idSol=$request->get('idsol'); 
+     $ruta = $request->get('ruta');          
      
     //Incluimos camino de migas 
+     $em = $this->getDoctrine()->getManager();
+     $solicitud = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($idSol);
+
      $breadcrumbs = $this->get("white_october_breadcrumbs");
      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-     $breadcrumbs->addItem("Solicitud de empleo", $this->get("router")->generate("solicitud_caspirante"));
-     $breadcrumbs->addItem("Ver registro", $this->get("router")->generate("solicitud_show",array("id"=>$idSol)));
+     $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+     if($solicitud->getIdexpediente()->getTipoexpediente() == 'E'){
+       $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+       $breadcrumbs->addItem("Listado de empleados", $this->get("router")->generate("solicitud_cempleado"));
+     }
+     else{
+       $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+       $breadcrumbs->addItem("Listado de aspirantes", $this->get("router")->generate("solicitud_caspirante"));
+     }
+     $breadcrumbs->addItem("Consultar solicitud", $this->get("router")->generate($ruta,array("id"=>$idSol)));
      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_solicitudempleo"));
 
      // Nombre reporte
@@ -157,16 +116,28 @@ class ReporteController extends Controller
    public function ReportePruebaPsicologicaAction()
     {
 
-    //Incluimos camino de migas
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idExp=$request->get('idexp');
+     $ruta=$request->get('ruta');           
+
+     //Incluimos camino de migas
+      $em = $this->getDoctrine()->getManager();
+      $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idExp);
       
       $breadcrumbs = $this->get("white_october_breadcrumbs");
       $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-      $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
+      $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+      if($expediente->getTipoexpediente() == 'E'){
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Listado de empleados", $this->get("router")->generate("pruebapsicologica"));
+      }
+      else{
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Listado de aspirantes", $this->get("router")->generate("pruebapsicologica"));
+      }
+      $breadcrumbs->addItem("Consultar prueba psicólogica", $this->get("router")->generate($ruta,array('id'=>$expediente->getIdpruebapsicologica()->getId(),'exp'=>$idExp)));
       $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_pruebapsicologica"));
-
-     /* Obtengo parametros */
-     $request=$this->getRequest();
-     $idExp=$request->get('idexp');           
      
      // Nombre reporte
      $filename= 'Prueba psicologica.pdf';
@@ -189,20 +160,23 @@ class ReporteController extends Controller
      return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
    }
 
-public function ReporteAccionesAction()
+  public function ReporteAccionesAction()
     {
-
-    //Incluimos camino de migas
-      
-      $breadcrumbs = $this->get("white_october_breadcrumbs");
-      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-      $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
-      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_pruebapsicologica"));
 
      /* Obtengo parametros */
      $request=$this->getRequest();
      $idExp=$request->get('id');
      $idaccion=$request->get('tipo');
+
+     //Incluimos camino de migas
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+     $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+     $breadcrumbs->addItem("Lista de empleados", $this->get("router")->generate("accionpersonal_cempleados"));
+     $breadcrumbs->addItem("Consultar hoja de servicio", $this->get("router")->generate("accionpersonal_cacuerdos", array("id"=>$idExp)));
+     $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_acciones"));
+
 
      if(isset($_GET['fechainicio'])){
      $fecha1=$request->get('fechainicio');           
@@ -239,27 +213,29 @@ public function ReporteAccionesAction()
 
 
 
-public function ReporteHojaServicioAction()
+  public function ReporteHojaServicioAction()
     {
-
-    //Incluimos camino de migas
-      
-      $breadcrumbs = $this->get("white_october_breadcrumbs");
-      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-      $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
-      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_pruebapsicologica"));
 
      /* Obtengo parametros */
      $request=$this->getRequest();
      $idExp=$request->get('id');
 
+     //Incluimos camino de migas
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+     $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+     $breadcrumbs->addItem("Lista de empleados", $this->get("router")->generate("accionpersonal_cempleados"));
+     $breadcrumbs->addItem("Consultar hoja de servicio", $this->get("router")->generate("accionpersonal_cacuerdos", array("id"=>$idExp)));
+     $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_hojaservicio"));
+
      if(isset($_GET['fechainicio'])){
      $fecha1=$request->get('fechainicio');           
      $fecha2=$request->get('fechafin');
-     $cadena= "and fecharegistroaccion between '".$fecha1."' and '".$fecha2."' order by fecharegistroaccion";
+     $cadena= "and fecharegistroaccion between '".$fecha1."' and '".$fecha2."' ";
     }
     else{
-        $cadena="order by fecharegistroaccion";
+        $cadena="";
     }
 
      // Nombre reporte
@@ -285,7 +261,7 @@ public function ReporteHojaServicioAction()
      return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
    }
 
-public function ReporteLicenciasAction()
+  public function ReporteLicenciasAction()
     {
 
     //Incluimos camino de migas

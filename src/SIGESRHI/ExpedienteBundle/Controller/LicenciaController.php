@@ -182,7 +182,7 @@ class LicenciaController extends Controller
         $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Ver Licencias",$this->get("router")->generate("licencia_ver"));
-        $breadcrumbs->addItem($expedienteinfo[0]['codigoempleado'],"");   
+        $breadcrumbs->addItem($expedienteinfo['codigoempleado'],$this->get("router")->generate("licencia_ver"));   
         return $grid->getGridResponse('ExpedienteBundle:Licencia:indexlicencias.html.twig',array(
             'idc' => $idc,
             ));
@@ -276,7 +276,7 @@ class LicenciaController extends Controller
         $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Registrar Licencias",$this->get("router")->generate("licencia_registrar"));
-        $breadcrumbs->addItem($expedienteinfo[0]['codigoempleado'],"");
+        $breadcrumbs->addItem($entity->getIdcontratacion()->getIdempleado()->getCodigoempleado(),$this->get("router")->generate("licencia_registrar"));
         return $this->render('ExpedienteBundle:Licencia:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),

@@ -51,6 +51,19 @@ public function obtenerExpedienteEmpleadoInfo($idexp,$idc)
           ->getResult();
 }
 
+public function obtenerExpedienteEmpleado($idexp)
+  {
+  return $this->getEntityManager()
+    ->createQuery("SELECT s.id,e.id as idexpediente,s.nombrecompleto, CONCAT(COALESCE(m.nombremunicipio,''),CONCAT(', ',d.nombredepartamento)) as direccion, s.estadocivil, s.telefonofijo,
+                          s.telefonomovil, s.email,s.lugarnac, s.fechanac, s.fotografia,s.dui,s.nit,s.isss,s.nup,s.nip,s.sexo,s.fechadui,s.lugardui, em.codigoempleado,
+                          e.fechaexpediente
+                         FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN e.idempleado em JOIN s.idmunicipio m JOIN m.iddepartamento d
+                         WHERE e.id=:idexp
+                         ")
+          ->setParameter('idexp',$idexp)
+          ->getResult();
+}
+
 public function obtenerPlazasEmpleado($idexp)
   {
   return $this->getEntityManager()

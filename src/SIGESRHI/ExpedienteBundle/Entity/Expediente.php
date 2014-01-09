@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @GRID\Source(columns="id,idsolicitudempleo.nombrecompleto, idsolicitudempleo.id, tipoexpediente, idempleado.codigoempleado", groups={"grupo_solicitud_empleado"})
  * @GRID\Source(columns="id,idsolicitudempleo.nombrecompleto, tipoexpediente, idempleado.codigoempleado, idempleado.idrefrenda.idplaza.nombreplaza", groups={"grupo_acciones_empleado"})
  * @GRID\Source(columns="id,idempleado.codigoempleado,tipoexpediente,idsolicitudempleo.nombrecompleto,idempleado.idcontratacion.id,idempleado.idcontratacion.puesto.idplaza.nombreplaza", groups={"grupo_empleado"})
- * @GRID\Source(columns="id,idempleado.codigoempleado,tipoexpediente,idsolicitudempleo.nombrecompleto", groups={"grupo_empleado_activo"})
+ * @GRID\Source(columns="id,idempleado.codigoempleado,idempleado.idrefrenda.id,tipoexpediente,idsolicitudempleo.nombrecompleto", groups={"grupo_empleado_activo"})
  */
 class Expediente
 {
@@ -63,6 +63,7 @@ class Expediente
      * @GRID\Column(field="idempleado.idrefrenda.idplaza.nombreplaza", groups={"grupo_segurovida","grupo_empleado","grupo_contratacion_empleado","grupo_empleado_inactivo","grupo_acciones_empleado"},type="text", title="Plaza", filterable=false, joinType="inner")
      * @GRID\Column(field="idempleado.idcontratacion.puesto.idplaza.nombreplaza", groups={"grupo_contratacion_consultar"},type="text", title="Plaza", filterable=false, joinType="inner")
      * @GRID\Column(field="idempleado.idcontratacion.id", groups={"grupo_empleado","grupo_contratacion_consultar","grupo_empleado_activo"}, filterable=false, joinType="inner", visible=false)
+     * @GRID\Column(field="idempleado.idrefrenda.id", groups={"grupo_empleado_activo"}, filterable=false, visible=false)
      */
          //@GRID\Column(field="idempleado.idcontratacion.idlicencia.id", groups="grupo_empleado", filterable=false, visible=false)
     private $idempleado;
