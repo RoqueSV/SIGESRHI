@@ -1,0 +1,19 @@
+#
+# Archivo .htacces configurado por LPaulino - rgijeru@gmail.com
+#
+
+
+# protegemos el propio archivo .htacces
+
+<files .htaccess>
+Order allow,deny
+Deny from all
+</files>
+
+# Evitamos que se listen los directorios
+Options All -Indexes
+
+# Se evita que se muestren los archivos de los directorios (directorios en blanco) ** Basta con no mostrar los directorios (opcion anterior) **
+# IndexIgnore *
+
+

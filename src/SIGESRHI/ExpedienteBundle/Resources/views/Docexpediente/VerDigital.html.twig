@@ -35,8 +35,10 @@ function eliminar() {
 <br>
 <br>
 <br>
-
-			<button type="button" class="btn" onclick="javascript: window.history.back(1)">Regresar al listado</button>
+				{# usando javascript #}
+			{#<button type="button" class="btn" onclick="javascript: window.history.back(1)">Regresar al listado con javascript</button> #}
+			{# usando rutas #}			
+			<a class="btn" href="{{path('docdigital_new', {'id': id, 'tipogrid':tipogrid})}}" >Regresar al listado</a>
             <button type="button" class="btn btn-danger" onclick="eliminar()">Borrar</button>
 
 	<form class="invisible" action="{{ path('docdigital_delete', { 'id': entity.id }) }}" method="post" id="form_borrar">
