@@ -89,6 +89,7 @@ class LicenciaController extends Controller
 
         $resultado = $query2->getResult();
         $idemps=array();
+        $idexp[]=0;
         if(!is_null($resultado)){
             foreach ($resultado as $val) {
                 foreach ($val as $v){
@@ -123,7 +124,7 @@ class LicenciaController extends Controller
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Ver Licencias",$this->get("router")->generate("licencia_ver"));
+        $breadcrumbs->addItem("Consultar Licencias",$this->get("router")->generate("licencia_ver"));
         
         $rowAction1 = new RowAction('Ver Permisos', 'licencia_ver_permisos');
         $rowAction1->setColumn('info_column');
@@ -181,7 +182,7 @@ class LicenciaController extends Controller
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Ver Licencias",$this->get("router")->generate("licencia_ver"));
+        $breadcrumbs->addItem("Consultar Licencias",$this->get("router")->generate("licencia_ver"));
         $breadcrumbs->addItem($expedienteinfo[0]['codigoempleado'],"");   
         return $grid->getGridResponse('ExpedienteBundle:Licencia:indexlicencias.html.twig',array(
             'idc' => $idc,
@@ -318,7 +319,7 @@ class LicenciaController extends Controller
             $breadcrumbs->addItem("Datos Registrados","");
         }
         elseif($comefrom=='v'){
-            $breadcrumbs->addItem("Ver Licencias",$this->get("router")->generate("licencia_ver"));
+            $breadcrumbs->addItem("Consultar Licencias",$this->get("router")->generate("licencia_ver"));
         }
         $breadcrumbs->addItem($expedienteinfo[0]['codigoempleado'],"");
 

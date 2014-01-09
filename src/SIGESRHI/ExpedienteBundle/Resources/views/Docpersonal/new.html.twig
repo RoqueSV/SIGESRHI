@@ -1,6 +1,16 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+<style type="text/css">
+.table
+{
+margin-bottom: 0px;
+}
+.recompone
+{
+margin-bottom: 0px;
+}
+</style>
     <!-- Botón ayuda -->
     <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
     {{ include('ExpedienteBundle:Ayuda/Docpersonal:registro.html.twig')}}
@@ -17,10 +27,8 @@
     {% endfor %}
 
     <h4 class='text-center'>RECORD DEL EXPEDIENTE PERSONAL</h4>
-    {% for exp in expediente %}
-    <p>Nombre: <b>{{exp.nombres}}</b><p><br/>
-    <form action="{{ path('docpersonal_create',{'exp':exp.id}) }}" id= "docpersonal_form" method="post" {{ form_enctype(form) }}>
-    {% endfor %}
+    <p>Nombre: <b>{{expediente[0].nombres}}</b><p><br/>
+    <form action="{{ path('docpersonal_create',{'exp':expediente[0].id}) }}" id= "docpersonal_form" method="post" {{ form_enctype(form) }}>
         {#{ form_widget(form) }#}
         <fieldset><legend>Agregar Documento Personal</legend>
               <table width='80%'>
@@ -41,27 +49,46 @@
     </form>
     <br/>
     <fieldset><legend>Documentos Registrados</legend>
-    <div class='centered'>
+    <div class='text-centered'>
     {% if documentos|length > 0 %}
-        <table class='table table-bordered table-hover' border='1' width='100%' align='center'>
+        <table class='table table-bordered table-hover mitable' border='1' width='100%' align='center'>
             <tr>
+                <th width='20px'></th>
                 <th>Nombre del documento</th>
-                <th width='150px'>N° Correlativo</th>
-                <th>Entregado</th>
-                <th>Eliminar</th>
+                <th width='110px'>N° Correlativo</th>                
+                <th width='180px'>Acción</th>            
             </tr>
-    
-        {% for doc in documentos%}
-            <tr>
-                <td>{{ doc.nombredocpersonal }}</td>
-                <td>{{ doc.indice }}</td>
-                <td>{% if doc.entregado == 1 %}</td>
+        </table>        
+        {% for doc in documentos %}
+        <form action="{{ path('docpersonal_update',{'id':doc.id,'idexp':expediente[0].id }) }}" id= "docpersonal_form_edit{{ doc.id }}" method="post" class="recompone">
+        <table class='table table-bordered table-hover mitable' border='1' width='100%' align='center'>
+            <tr>                          
+                <td width='20px'>                
+                    {% if doc.entregado == 1 %}
+                    <img src="{{ asset('images/true.png') }}" alt="entregado" height="16px" width="16px">
+                    {% else %}
+                    <img src="{{ asset('images/false.png') }}" alt="no entregado" height="16px" width="16px" >
+                    {% endif %}
+                    <input type="hidden" value="{{ doc.entregado }}" id="entregado" name="entregado">
+                </td>
+                <td>
+                    {{ doc.nombredocpersonal }}                    
+                    <input type="hidden" value="{{ doc.nombredocpersonal }}" name="nombredocpersonal" id="nombredocpersonal">
+                </td>
+                <td width='110px'>
+                    <input type="text" class="input-small" btn-validator="number" value="{{ doc.indice }}" name="indice" id="indice">
+                </td>
+                <td width='180px'>                                                        
+                    <button type="submit" class="btn" >Actualizar</button>
+                    <button type="button" class="btn btn-danger" onClick="">Borrar</button>
+                </td>                        
             </tr>
-        {% endfor %}
+        </table>
+        </form>
+        {% endfor %}        
     {% else %}
     No existen registros
     {% endif %}
-        </table>
     </div>
     </fieldset>
 {% endblock %}

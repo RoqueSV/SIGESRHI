@@ -8,14 +8,10 @@
     {% endfor %}
 
     <h3 class="text-center"> Datos registrados </h3>    
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover mitable">
     {% for exp in expediente %}
     <tr>
-        <th>Fecha:</th>
-        <td> {{ exp.fechaexpediente | date('d-m-Y') | fecha }} </td>
-    </tr>
-    <tr>
-        <th>Nombre:</th>
+        <th width="25%">Nombre:</th>
         <td> {{ exp.nombres  }} </td>
     </tr>
     <tr>
@@ -30,7 +26,7 @@
     
     <br/>
     <h5>Prueba Psicologica</h5>
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover mitable">
         <tbody>
             <tr>
                 <th>Coeficiente Intelectual (C.I.)</th>

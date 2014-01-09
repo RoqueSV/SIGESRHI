@@ -16,14 +16,10 @@
     {% endfor %}
     <h4 class='text-center'>RESULTADO DE LAS PRUEBAS PSICOLÓGICAS</h4>
     <h5>Datos Generales del evaluado</h5>
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover mitable">
     {% for exp in expediente %}
     <tr>
-        <th>Fecha:</th>
-        <td><b> {{ exp.fechaexpediente | date('d-m-Y') | fecha}} </b></td>
-    </tr>
-    <tr>
-        <th>Nombre:</th>
+        <th width="25%">Nombre:</th>
         <td><b> {{ exp.nombres  }}</b></td>
     </tr>
     <tr>
