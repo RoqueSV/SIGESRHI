@@ -31,7 +31,7 @@
                 </tr>
                 <tr>
                     <th>Numero de DUI: </th>
-                    <td>{{entity.hojaservicio.dui}}</td>
+                    <td>{{entity.hojaservicio.dui|dui}}</td>
                 </tr>
                 <tr>
                     <th>Extendido en: </th>
@@ -76,7 +76,7 @@
             <table class="table table-bordered table-hover mitable">
                 <tr>
                     <th>Teléfono: </th>
-                    <td>  {{entity.hojaservicio.telefonofijo}} </td>
+                    <td>  {{entity.hojaservicio.telefonofijo|telefono}} </td>
                 </tr>
                 <tr>
                     <th width="25%">Educación: </th>
@@ -100,7 +100,7 @@
                 </tr>
                 <tr>
                     <th>Numero de NIT : </th>
-                    <td>{{entity.hojaservicio.nit}}</td>
+                    <td>{{entity.hojaservicio.nit|nit}}</td>
                 </tr>
                 <tr>
                     <th>Destacado en: </th>
@@ -121,13 +121,20 @@
 
 {{ grid_search(grid) }} 
 <br>
+<div align="right">
+{% if numpuestos > 0 %}
+
+    <b>Registrar Nuevo Acuerdo: </b>
+<a class="btn" onclick="location.href='{{path('accionpersonal_new', {'idexp': entity.id, 'vista_retorno':vista_retorno} )}}'" title="Registrar Nuevo Acuerdo"><div class="con-plus-sign"> + </div></a>
+{% else %}
+<b>El Empleado no posee Nombramiento activo.</b>
+{% endif %}
+</div>
 {{ grid(grid,_self) }}  
 <br>
 {% block grid_filters %}{% endblock %} 
 
-<div align="right">
-<a class="btn" onclick="location.href='{{path('accionpersonal_new', {'idexp': entity.id} )}}'" title="Registrar Nuevo Acuerdo"><div class="con-plus-sign">+</div></a>
-</div>
+
 
 <div class="text-center">
 <br>
@@ -155,7 +162,7 @@ $(document).ready(function(){
               changeYear: true,
               yearRange: "-100:+0",});
 
-         $('#grid_grid_acuerdos__fecharegistroaccion__query__from').attr('readonly');
+         $('#grid_grid_acuerdos__fecharegistroaccion__query__from').attr('readonly',true);
         
     });
 </script>

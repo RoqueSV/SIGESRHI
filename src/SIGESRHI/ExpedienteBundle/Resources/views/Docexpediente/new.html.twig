@@ -1,6 +1,9 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal %}
+<a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+
+{{ include('ExpedienteBundle:Ayuda/DocExpedienteDigitales:registro_consulta.html.twig')}}
 
 {% for flashMessage in app.session.flashbag.get('new') %}
     <div class="alert alert-success">
@@ -20,7 +23,7 @@
     </div>
 {% endfor %}
 
-    <h4 class="text-center">AGREGAR DOCUMENTOS DIGITALES</h4>
+    <h4 class="text-center">REGISTRAR DOCUMENTOS DIGITALES</h4>
 
     <br>
 
@@ -69,7 +72,7 @@
                     </tr>
                     <tr>
                         <th>Tel&eacute;fonos:</th>
-                        <td>{{expediente.idsolicitudempleo.telefonofijo|telefono}} ~ ~ ~ {{expediente.idsolicitudempleo.telefonomovil|telefono}}</td>
+                        <td>{{expediente.idsolicitudempleo.telefonofijo|telefono}} &nbsp;&nbsp; ~ &nbsp;&nbsp; {{expediente.idsolicitudempleo.telefonomovil|telefono}}</td>
                     </tr>
                     <tr>
                         <th>Correo electr&oacute;nico: </th>
@@ -122,7 +125,7 @@
     
     <p class="help-block justifyText"> Los Archivos permitidos son: Imagenes (png, jpg) - Documentos (pdf, doc, docx) - Archivos comprimidos (zip)</p>
 
-    <form action="{{ path('docdigital_create', {'id':id}) }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('docdigital_create', {'id':id, 'tipogrid':tipogrid}) }}" method="post" {{ form_enctype(form) }}>
         
         <br>
         
@@ -166,7 +169,7 @@
                 <tr>
                     <td>{{documento.nombredocexp}}</td>
                     <td> {{(documento.fechadocexp|date('d-m-Y'))|fecha}} </td>
-                    <td><a href="{{path('docdigital_ver_docdigital', {'iddoc': documento.id})}}" > Ver Archivo registrado</a></td>
+                    <td><a href="{{path('docdigital_ver_docdigital', {'iddoc': documento.id, 'tipogrid':tipogrid, 'id':id})}}" > Ver Archivo registrado</a></td>
                 </tr>
 
                 {% endfor %}

@@ -141,4 +141,16 @@ public function obtenerPlazaEmpleado($idcontratacion)
                 ->getResult();
   }
 
+    public function obtenerExpedienteAspirante($idexp)
+    {
+    return $this->getEntityManager()
+      ->createQuery('SELECT e.id id, s.nombrecompleto nombres, p.nombreplaza nombreplaza, t.nombretitulo nombretitulo,e.tipoexpediente
+                           FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN s.idplaza p JOIN s.Destudios i JOIN i.idtitulo t
+                           WHERE e.id=:idexp order by t.niveltitulo DESC
+                           ')
+      ->setMaxResults(1)
+            ->setParameter('idexp',$idexp)
+            ->getResult();
+  }
+
 }

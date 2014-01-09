@@ -92,11 +92,11 @@ class Acceso
         }
         else if ($this->getIdaccesosup()->getIdaccesosup() == null) {
            $prefix .= "&nbsp;&nbsp;";
-            return html_entity_decode($prefix).">> ".$this->getNombrepagina();
+            return html_entity_decode($prefix,ENT_QUOTES, 'UTF-8').">> ".$this->getNombrepagina();
         }
         else {
             $prefix .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-            return html_entity_decode($prefix).$this->getNombrepagina();
+            return html_entity_decode($prefix,ENT_QUOTES, 'UTF-8').$this->getNombrepagina();
         }
     }
 

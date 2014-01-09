@@ -50,7 +50,6 @@ class Solicitudempleo
      * @ORM\Column(name="numsolicitud", type="string", length=9, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el numero de solicitud")
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      * @GRID\Column(filterable=false, align="center", title="Solicitud", groups={"solicitud_empleo"}, visible=false)
      */
     private $numsolicitud;
@@ -64,7 +63,6 @@ class Solicitudempleo
      * maxMessage = "El apellido de casada no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $apellidocasada;
 
@@ -78,8 +76,6 @@ class Solicitudempleo
      * maxMessage = "El primer apellido no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(title="Apellido", filterable=false, groups={"grupo_pruebapsicologica","apellidos", "solicitud_empleo","vista_basica_expediente"}, operators={"like","eq"},visible=false)
-     * @GRID\Column(title="Apellido", filterable=false, groups={"grupo_pruebapsicologica","apellidos"}, operators={"like","eq"},visible=false)
      */
     private $primerapellido;
 
@@ -127,7 +123,6 @@ class Solicitudempleo
      * maxMessage = "La colonia no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $colonia;
 
@@ -140,7 +135,6 @@ class Solicitudempleo
      * maxMessage = "La calle no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $calle;
 
@@ -154,7 +148,6 @@ class Solicitudempleo
      * maxMessage = "El estado civil no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $estadocivil;
 
@@ -168,7 +161,6 @@ class Solicitudempleo
      * maxMessage = "El telefono no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $telefonofijo;
 
@@ -182,7 +174,6 @@ class Solicitudempleo
      * maxMessage = "El telefono movil no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $telefonomovil;
 
@@ -195,7 +186,6 @@ class Solicitudempleo
      *     message = "El correo '{{ value }}' no es un correo valido."
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $email;
 
@@ -209,7 +199,6 @@ class Solicitudempleo
      * maxMessage = "El lugar de nacimiento no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $lugarnac;
 
@@ -219,7 +208,6 @@ class Solicitudempleo
      * @ORM\Column(name="fechanac", type="date", nullable=false)
      * 
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $fechanac;
 
@@ -233,7 +221,6 @@ class Solicitudempleo
      * maxMessage = "El DUI no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $dui;
 
@@ -247,7 +234,6 @@ class Solicitudempleo
      * maxMessage = "El lugar de emision del DUI no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $lugardui;
 
@@ -255,9 +241,8 @@ class Solicitudempleo
      * @var \DateTime
      *
      * @ORM\Column(name="fechadui", type="date", nullable=false)
-     **
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)     
-      */
+     *
+     */
     private $fechadui;
 
     /**
@@ -269,7 +254,6 @@ class Solicitudempleo
      * maxMessage = "El NIT no debe exceder los {{limit}} caracteres"
      *)
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $nit;
 
@@ -282,7 +266,6 @@ class Solicitudempleo
      * maxMessage = "El N° ISSS no debe exceder los {{limit}} caracteres"
      *)
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $isss;
 
@@ -295,7 +278,6 @@ class Solicitudempleo
      * maxMessage = "El NUP no debe exceder los {{limit}} caracteres"
      *)
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $nup;
 
@@ -308,7 +290,6 @@ class Solicitudempleo
      * maxMessage = "El NIP no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $nip;
 
@@ -319,7 +300,6 @@ class Solicitudempleo
      * @Assert\NotNull(message="Debe seleccionar el sexo")
      *
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $sexo;
 
@@ -332,7 +312,6 @@ class Solicitudempleo
      * maxMessage = "El nombre o ruta de la fotografia no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $fotografia;
 
@@ -347,7 +326,6 @@ class Solicitudempleo
      *
      * @Vich\UploadableField(mapping="fotografias", fileNameProperty="fotografia")
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $file;
 
@@ -367,7 +345,6 @@ class Solicitudempleo
      * @ORM\Column(name="fechamodificacion", type="date", nullable=false)
      * 
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $fechamodificacion;
 
@@ -386,7 +363,6 @@ class Solicitudempleo
      * )
      *
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $nombreparinst;
 
@@ -400,7 +376,6 @@ class Solicitudempleo
      * maxMessage = "El Parentesco no debe exceder los {{limit}} caracteres"
      * )
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $parentescoparinst;
 
@@ -412,7 +387,7 @@ class Solicitudempleo
      *      @ORM\JoinColumns({
      * @ORM\JoinColumn(name="dependenciaparinst", referencedColumnName="id")
      * })
-     **/
+     */
     private $dependenciaparinst;
 
 
@@ -551,6 +526,7 @@ class Solicitudempleo
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, visible=false, groups={"vista_basica_expediente"})
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, groups={"solicitud_empleo"}, visible=true, filter="Select", operatorsVisible=false )
      * @GRID\Column(field="idexpediente.fechaexpediente",type="date", joinType="inner", filterable=false, groups={"lista_expediente"}, visible=true, title="Fecha registro")
+     * @GRID\Column(field="idexpediente.idpruebapsicologica.id", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica"}, visible=false)
      */
     private $idexpediente;
 

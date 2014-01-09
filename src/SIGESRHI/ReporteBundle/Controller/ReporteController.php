@@ -230,13 +230,13 @@ class ReporteController extends Controller
      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_hojaservicio"));
 
      if(isset($_GET['fechainicio'])){
-     $fecha1=$request->get('fechainicio');           
-     $fecha2=$request->get('fechafin');
-     $cadena= "and fecharegistroaccion between '".$fecha1."' and '".$fecha2."' ";
-    }
-    else{
+        $fecha1=$request->get('fechainicio');           
+        $fecha2=$request->get('fechafin');
+        $cadena= "and fecharegistroaccion between '".$fecha1."' and '".$fecha2."' ";
+     }
+     else{
         $cadena="";
-    }
+      }
 
      // Nombre reporte
      $filename= 'Hojadeservicio.pdf';
@@ -273,30 +273,32 @@ class ReporteController extends Controller
 
      /* Obtengo parametros */
      $request=$this->getRequest();
-     $idExp=$request->get('id');
+     $idcontrato=$request->get('id');
 
      if(isset($_GET['fechainicio'])){
      $fecha1=$request->get('fechainicio');           
      $fecha2=$request->get('fechafin');
-     $cadena= "and fecharegistroaccion between '".$fecha1."' and '".$fecha2."' order by fecharegistroaccion";
+     $cadena= "and fechainiciolic between '".$fecha1."' and '".$fecha2."'";
     }
     else{
-        $cadena="order by fecharegistroaccion";
+        $cadena=" ";
     }
 
      // Nombre reporte
-     $filename= 'Hojadeservicio.pdf';
+     $filename= 'Licenciasempleado.pdf';
      
      //Llamando la funcion JRU de la libreria php-jru
      $jru=new JRU();
      //Ruta del reporte compilado Jasper generado por IReports
-     $Reporte=__DIR__.'/../Resources/reportes/HojadeServicio/Hojadeservicio.jasper';
+     $Reporte=__DIR__.'/../Resources/reportes/HojadeServicio/reporte_licenciasdeempleado.jasper';
      //Ruta a donde deseo Guardar mi archivo de salida Pdf
      $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
      //Paso los parametros necesarios
      $Parametro=new java('java.util.HashMap');
-     $Parametro->put("idexp", new java("java.lang.Integer", $idExp));
+     $Parametro->put("idcontratacion", new java("java.lang.Integer", $idcontrato));
      $Parametro->put("cadena", new java("java.lang.String", $cadena));
+    $Parametro->put("fechainicio", new java("java.lang.String", $fecha1));
+     $Parametro->put("fechafin", new java("java.lang.String", $fecha2));
      $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
 
      //Funcion de Conexion a Base de datos 

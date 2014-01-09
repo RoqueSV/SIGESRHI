@@ -211,7 +211,11 @@ class DocpersonalController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $exp = $request->query->get('idexp');
+        $indice = $this->get('request')->request->get('indice');
+        $nombre = $this->get('request')->request->get('nombredocpersonal');
+        $entregado = $this->get('request')->request->get('entregado');
+        echo "exp: ".$exp." indice: ".$indice." nombre: ".$nombre." entregado: ".$entregado;
         $entity = $em->getRepository('ExpedienteBundle:Docpersonal')->find($id);
 
         if (!$entity) {
@@ -226,7 +230,7 @@ class DocpersonalController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('docpersonal_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $id,'exp' => $exp)));
         }
 
         return array(

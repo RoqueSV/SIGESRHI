@@ -1,0 +1,125 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    
+    <div class="text-center">
+<h4>OTRAS ACCIONES DE PERSONAL</h4>
+</div>
+
+            
+<table border="0" width="90%" class="centered-table">
+    <tr>
+        <td width="25%" align="center"> 
+                    <table border="3" align="center" width="150px" height="192px">
+                        <tr>
+                            <td>
+                                <img src="{{asset('uploads/fotografias/' ~ entity.idsolicitudempleo.fotografia)}}" class="fotoSol" />
+                            </td>
+                        </tr>
+                    </table>
+                    <br>
+            </td>
+        </td>
+        <td>
+            <table class="table table-bordered table-hover mitable">
+                <tr>
+                    <th width="35%">Nombre: </th>
+                    <td>{{entity.hojaservicio.nombreempleado}}</td>
+                </tr>
+                <tr>
+                    <th>Código empleado: </th>
+                    <td>{{entity.idempleado.codigoempleado}}</td>
+                </tr>
+                <tr>
+                    <th>Numero de DUI: </th>
+                    <td>{{entity.hojaservicio.dui|dui}}</td>
+                </tr>
+                <tr>
+                    <th>Extendido en: </th>
+                    <td>{{entity.hojaservicio.lugardui}}</td>
+                </tr>
+                <tr>
+                    <th>Lugar y fecha de nac.: </th>
+                    <td>{{entity.hojaservicio.lugarnac}} {{entity.hojaservicio.fechanac|date('d-m-Y')|fecha}}</td>
+                </tr>
+                <tr>
+                    <th>Estado civil: </th>
+                    <td>
+                        {% if entity.hojaservicio.estadocivil == 'S' %} Soltero {% endif %}
+                        {% if entity.hojaservicio.estadocivil == 'A' %} Acompañado {% endif %}
+                        {% if entity.hojaservicio.estadocivil == 'C' %} Casado {% endif %}
+                        {% if entity.hojaservicio.estadocivil == 'D' %} Divorciado {% endif %}
+                        {% if entity.hojaservicio.estadocivil == 'V' %} Viudo {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Estado del empleado: </th>
+                    <td>
+                        {% if entity.tipoexpediente == "T" %}
+                        Interino
+                        {% elseif entity.tipoexpediente == "E" %}
+                        Permanente
+                        {% elseif entity.tipoexpediente == "X" %}
+                        Inactivo
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Dirección: </th>
+                    <td>{{entity.hojaservicio.direccion}}</td>
+                </tr>
+            </table>
+        </tr>
+    </table>
+
+
+
+{{ grid_search(grid) }} 
+<br>
+
+<div align="right">
+{% if numpuestos > 0 %}
+    <b>Registrar Nueva Acci&oacute;n: </b>
+<a class="btn" onclick="location.href='{{path('accionpersonal_new_otros', {'idexp': entity.id, 'vista_retorno':vista_retorno} )}}'" title="Registrar Nuevo Acuerdo"><div class="con-plus-sign"> + </div></a>
+{% else %}
+<b>El Empleado no posee Nombramiento activo.</b>
+{% endif %}
+</div>
+{{ grid(grid,_self) }}  
+<br>
+{% block grid_filters %}{% endblock %} 
+
+
+
+<div class="text-center">
+<br>
+
+{% if entity.idaccion|length > 0 %} {#{{path('accionpersonal_eligereporte', {'id':entity.id})}}#}
+<button class="btn" onclick="location.href='#'">Generar Reporte Historico </button>
+{% endif %}
+<button class="btn" onclick="location.href='{{path('accionpersonal_cempleados')}}'"> Cancelar </button>
+</div>
+
+<style type="text/css">
+#grid_grid_otros_acuerdos__fecharegistroaccion__query__from{
+    width: 100px; 
+}
+</style>
+
+
+<script>
+
+$(document).ready(function(){
+
+         $("#grid_grid_otros_acuerdos__fecharegistroaccion__query__from").datepicker({ 
+              dateFormat: 'yy-mm-dd',  
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "-100:+0",});
+
+         $('#grid_grid_otros_acuerdos__fecharegistroaccion__query__from').attr('readonly',true);
+        
+    });
+</script>
+
+{% endblock %}

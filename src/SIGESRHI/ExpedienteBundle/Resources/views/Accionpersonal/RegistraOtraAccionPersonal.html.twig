@@ -2,10 +2,10 @@
 
 {% block principal -%}
     
-    <h4 class="text-center">REGISTRO DE ACCIONES DE PERSONAL</h4>
+    <h4 class="text-center">REGISTRO DE OTRAS ACCIONES DE PERSONAL</h4>
     <br>
 
-    <form action="{{ path('accionpersonal_create', {'idexp':idexp, 'vista_retorno':vista_retorno} ) }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('accionpersonal_create_otros', {'idexp':idexp, 'vista_retorno':vista_retorno} ) }}" method="post" {{ form_enctype(form) }}>
         
 
         <table>
@@ -26,10 +26,6 @@
             <tr>
                 <td>{{form_label(form.fecharegistroaccion)}}</td>
                 <td>{{form_widget(form.fecharegistroaccion)}}{{form_errors(form.fecharegistroaccion)}}</td>
-            </tr>
-            <tr>
-                <td>{{form_label(form.numacuerdo)}}</td>
-                <td>{{form_widget(form.numacuerdo)}}{{form_errors(form.numacuerdo)}}</td>
             </tr>
             <tr>
                 <td>{{form_label(form.motivoaccion)}}</td>
@@ -58,7 +54,7 @@
                 $.each(data, function(key, val){
                     if(key=='rows'){
                         $.each(val, function(id, registro){
-                            $('#sigesrhi_expedientebundle_accionpersonaltype_motivoaccion').val(registro['cell'][0]);
+                            $('#sigesrhi_expedientebundle_otraaccionpersonaltype_motivoaccion').val(registro['cell'][0]);
                         });
 
                     }

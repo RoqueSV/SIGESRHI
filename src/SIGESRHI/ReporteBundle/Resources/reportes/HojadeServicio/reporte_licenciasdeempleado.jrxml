@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_licenciasdeempleado" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="821508bb-4b37-41e6-87b8-39d5dcd41e38">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
+	<parameter name="fechainicio" class="java.lang.String"/>
+	<parameter name="fechafin" class="java.lang.String"/>
+	<parameter name="cadena" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idcontratacion" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select ct.idempleado,to_char(current_date,'DD" de "TMMonth" de" YYYY') as fechaactual,emp.codigoempleado,se.nombrecompleto,upper(pl.nombreplaza) as nombreplaza,nombreunidad,
+upper(nombrecentro)as nombrecentro,sueldoinicial,tipocontratacion,concepto,congoce,coalesce(duraciondias,0)as duraciondias,coalesce(duracionhoras,0) as duracionhoras,coalesce(duracionminutos,0) as duracionminutos,coalesce(to_char(horainiciolic,'HH12:MI AM'),'--')as horainiciolic,coalesce(to_char(horafinlic,'HH12:MI AM'),'--')as horafinlic,coalesce(to_char(fechafinlic,'DD "/" MM"/" YYYY'),'--') as fechafinlic,coalesce(to_char(fechainiciolic,'DD "/"MM"/" YYYY'),'--') as fechainiciolic,to_char(fechapermiso,'DD"/"MM"/"YYYY') as fechapermiso
+from solicitudempleo se join expediente exp on (se.idexpediente=exp.id)
+join empleado emp on (emp.idexpediente=exp.id)
+join contratacion ct on (emp.id=ct.idempleado)
+join refrendaact rfa on (ct.puesto=rfa.id)
+join plaza pl on (rfa.idplaza=pl.id)
+join unidadorganizativa ua on (ua.id=rfa.idunidad)
+join centrounidad cu on (cu.id=ua.idcentro)
+join licencia lic on (ct.id=lic.idcontratacion)
+where ct.id=$P{idcontratacion} $P!{cadena} order by concepto]]>
+	</queryString>
+	<field name="idempleado" class="java.lang.Integer"/>
+	<field name="fechaactual" class="java.lang.String"/>
+	<field name="codigoempleado" class="java.lang.String"/>
+	<field name="nombrecompleto" class="java.lang.String"/>
+	<field name="nombreplaza" class="java.lang.String"/>
+	<field name="nombreunidad" class="java.lang.String"/>
+	<field name="nombrecentro" class="java.lang.String"/>
+	<field name="sueldoinicial" class="java.lang.Double"/>
+	<field name="tipocontratacion" class="java.lang.String"/>
+	<field name="concepto" class="java.lang.String"/>
+	<field name="congoce" class="java.lang.Boolean"/>
+	<field name="duraciondias" class="java.lang.Integer"/>
+	<field name="duracionhoras" class="java.lang.Integer"/>
+	<field name="duracionminutos" class="java.lang.Integer"/>
+	<field name="horainiciolic" class="java.lang.String"/>
+	<field name="horafinlic" class="java.lang.String"/>
+	<field name="fechafinlic" class="java.lang.String"/>
+	<field name="fechainiciolic" class="java.lang.String"/>
+	<field name="fechapermiso" class="java.lang.String"/>
+	<variable name="totaldias" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{duraciondias}]]></variableExpression>
+	</variable>
+	<variable name="totalhoras" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{duracionhoras}]]></variableExpression>
+	</variable>
+	<variable name="totalcongoce" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[($F{congoce})? 1:0]]></variableExpression>
+		<initialValueExpression><![CDATA[new java.lang.Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="tipo" class="java.lang.String">
+		<variableExpression><![CDATA[($F{congoce})? "C":"S"]]></variableExpression>
+	</variable>
+	<variable name="totalsingoce" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[($F{congoce})? 0:1]]></variableExpression>
+		<initialValueExpression><![CDATA[new java.lang.Integer(0)]]></initialValueExpression>
+	</variable>
+	<group name="licenciasxdias">
+		<groupExpression><![CDATA[$F{fechapermiso}]]></groupExpression>
+		<groupHeader>
+			<band height="39">
+				<textField>
+					<reportElement uuid="65490672-b41b-4e43-9a92-619f88ace596" x="2" y="0" width="100" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{fechapermiso}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="7da3a400-7905-45fc-9812-2ac69082179d" mode="Opaque" x="222" y="19" width="100" height="20" backcolor="#CCCCCC"/>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha inicio licencia]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="cda4105f-1d2f-4bd5-a536-b103376de021" mode="Opaque" x="322" y="19" width="100" height="20" backcolor="#CCCCCC"/>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Fecha fin licencia]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="c23f398c-25cd-4f0a-ba98-fb8b3901de8a" mode="Opaque" x="422" y="19" width="54" height="20" isRemoveLineWhenBlank="true" backcolor="#CCCCCC"/>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Hora inicio]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="1791f352-54aa-4577-9362-5f8cfa8596e2" mode="Opaque" x="476" y="19" width="49" height="20" backcolor="#CCCCCC"/>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Hora fin]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="2761d6c2-b748-408c-be8c-dc7e52744005" mode="Opaque" x="525" y="19" width="77" height="20" backcolor="#CCCCCC"/>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Duración(Días)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="6da95fbc-6b11-4e74-a871-33b8c5be72a0" mode="Opaque" x="602" y="19" width="81" height="20" backcolor="#CCCCCC"/>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Duración(Horas)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="51c1b0a8-01bb-4ecb-966f-4cb70ed16ddd" mode="Opaque" x="683" y="19" width="69" height="20" backcolor="#CCCCCC"/>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Duracion(Min)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="ab3f8164-dcee-4818-95b0-9df5deecf1a0" mode="Opaque" x="0" y="19" width="193" height="20" backcolor="#CCCCCC"/>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Motivo de Licencia]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="1288e38b-640d-4967-b3f0-de0bd90f9057" mode="Opaque" x="193" y="19" width="29" height="20" backcolor="#CCCCCC"/>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tipo*]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="249" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="e5c798fd-b3f7-4c00-9817-49f491c976fa" x="209" y="27" width="357" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL
+DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" hAlign="Center">
+				<reportElement uuid="10c5d58f-b039-44bc-9080-ae2213ebf278" x="81" y="9" width="86" height="77"/>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="b627d711-a84c-4a37-ae5b-f7b502ce39d0" x="168" y="67" width="426" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE LICENCIAS DE EMPLEADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a261a44f-e228-45c7-8deb-4e7004d9f559" x="2" y="137" width="87" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b69d61dd-41ae-4138-b485-3304af621b4c" x="2" y="158" width="87" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empleado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fce66e8e-bb26-400f-8141-eb504f0c862f" x="2" y="199" width="87" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Destacado en:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="93364abe-7e94-4322-9a01-b89307cac7af" x="2" y="179" width="87" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Puesto:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="2c670af8-49af-4e97-ab5b-ce703d7a15f3" x="81" y="137" width="112" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{codigoempleado}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="c256ab9a-3a80-4de7-8804-fa094f8bdbdc" x="0" y="134" width="752" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="468652f3-1466-41f9-bddd-1bf295efd8c1" x="0" y="115" width="371" height="19"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<text><![CDATA[DATOS GENERALES DE EMPLEADO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="05fb1d24-0102-4e13-84a9-a0fa9d6bf52c" x="548" y="116" width="201" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Fecha de elaboración: "+$F{fechaactual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="86759c85-f862-41bf-9ae8-93c24b491e31" x="81" y="179" width="378" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="62b1c8ae-03d3-471d-a636-99878cc1c1a8" x="81" y="158" width="294" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1db9224a-8ea3-4c7a-9022-c3c211665618" x="81" y="199" width="493" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombrecentro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ccd5e4a8-0926-4aa5-948d-d0076b975e4f" x="0" y="229" width="371" height="19"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<text><![CDATA[LICENCIAS OTORGADAS AL EMPLEADO]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="e24eb13d-df44-4776-ad02-0c905e60af19" x="0" y="248" width="752" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="79cf6280-c145-47a1-a350-8db8b111a625" x="169" y="82" width="426" height="20">
+					<printWhenExpression><![CDATA[$P{cadena}.length()>0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Del: "+$P{fechainicio}+ " al "+$P{fechafin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="1aed6387-b128-4c03-892f-02465a32c465" x="393" y="230" width="358" height="19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[*Tipo: "S": Licencia sin goce de sueldo  "C": Licencia con goce de sueldo]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="6b4297c8-11b0-461f-b32a-b8ed927cfd73" x="0" y="0" width="193" height="20"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{concepto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="a5af8d55-48b7-4b61-a6f7-fd398caa01f9" x="222" y="0" width="100" height="20"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fechainiciolic}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="9b8e907e-e8a0-476c-b560-35f56cef4d08" x="322" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fechafinlic}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="cc3d2fd4-5664-4dfe-bb77-f3cc5f89d0c3" x="525" y="0" width="77" height="20" isRemoveLineWhenBlank="true"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{duraciondias}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="053a9b97-b211-407b-867f-db815837c61e" x="602" y="0" width="81" height="20" isRemoveLineWhenBlank="true"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{duracionhoras}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="44264ab5-ebe8-4303-8eff-c6b4388796f5" x="683" y="0" width="69" height="20" isRemoveLineWhenBlank="true"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{duracionminutos}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="361eaa3a-573e-4867-9828-fdef67b86117" x="422" y="0" width="54" height="20" isRemoveLineWhenBlank="true"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{horainiciolic}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="bd1cac37-f87a-4e04-afb9-df68984837bd" x="476" y="0" width="49" height="20" isRemoveLineWhenBlank="true"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{horafinlic}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d1be73f6-d664-4db5-842d-7a4456947559" x="193" y="0" width="29" height="20"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{tipo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement uuid="71b9374a-eca3-4427-b77f-bed3cee04951" x="393" y="6" width="35" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="aaca7435-4c5c-40af-bad3-a093fc5ba10e" x="313" y="6" width="80" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="83">
+			<frame>
+				<reportElement uuid="202dd6fd-51b2-4a02-bbf6-63284ff7208d" x="2" y="13" width="492" height="70"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textField>
+					<reportElement uuid="f6abb40b-0d71-4ff2-a9a3-0c01eb11ff97" x="5" y="19" width="223" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Número de licencias registradas:     "+$V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="c9af98a5-72ef-4f50-a6e5-a1c62e7d417e" x="266" y="35" width="225" height="16"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Total días solicitados:   "+ $V{totaldias}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="fb98dc74-42bc-4f7f-a1ed-86023a058b67" x="4" y="6" width="100" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[RESUMEN:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="f0399a6d-de08-44f1-a162-a05ed587a24f" x="266" y="16" width="225" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Total horas solicitadas: "+$V{totalhoras}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="fa9e2bff-39ed-4c4c-ac0e-bafc0cd98294" x="5" y="35" width="223" height="15"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Total licencias con goce de sueldo: "+$V{totalcongoce}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="c05b46f5-b2b8-43e6-916f-e7d96f80771e" x="5" y="46" width="223" height="18"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Total licencias sin goce de sueldo:  "+$V{totalsingoce}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>

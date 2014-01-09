@@ -26,16 +26,27 @@
             </tr>
             <tr>
                 <th># de acuerdo: </th>
-                <td>{{ entity.numacuerdo }}</td>
+                <td>
+                    {% if vista_retorno == 3 or vista_retorno == 4 %}
+                    N/A
+                    {% else %}
+                    {{ entity.numacuerdo }}
+                    {% endif %}
+                </td>
             </tr>
         </tbody>
     </table>
 
     <div class="text-center">
-        <a  class="btn" href="{{ path('accionpersonal_cacuerdos', {'id':entity.idexpediente.id}) }}">
-            Ir a Hoja de servicio
-        </a>
-
+        {% if vista_retorno == 1 %}
+        <a  class="btn" href="{{ path('accionpersonal_cacuerdos', {'id':entity.idexpediente.id, 'vista_retorno':vista_retorno}) }}"> Ir a Hoja de servicio </a>
+        {% elseif vista_retorno == 2 %}
+        <a  class="btn" href="{{ path('accionpersonal_cacuerdos', {'id':entity.idexpediente.id, 'vista_retorno':vista_retorno}) }}"> Ir a Hoja de servicio </a>
+        {% elseif vista_retorno == 3 %}
+        <a  class="btn" href="{{ path('accionpersonal_cotrosacuerdos', {'id':entity.idexpediente.id, 'vista_retorno':vista_retorno}) }}"> Ir a Otras Acciones </a>
+        {% elseif vista_retorno == 4 %}
+        <a  class="btn" href="{{ path('accionpersonal_cotrosacuerdos', {'id':entity.idexpediente.id, 'vista_retorno':vista_retorno}) }}"> Ir a Otras Acciones </a>
+        {% endif %}
     </div>
 
 {#
