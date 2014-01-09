@@ -35,7 +35,7 @@ class LicenciaType extends AbstractType
 
                 ))
             ->add('fechainiciolic','date',array(
-                'label' => 'Fecha de Incio',
+                'label' => 'Fecha de Permiso',
                 'widget' => 'single_text', 
                 'format'=>'dd-MM-yyyy',
                 'attr' => array('class' => 'date2 input-small', 'data-bvalidator'=>'required', 'readonly'=>true),

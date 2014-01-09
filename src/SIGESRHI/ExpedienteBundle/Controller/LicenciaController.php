@@ -40,6 +40,7 @@ class LicenciaController extends Controller
             function($query) use ($tableAlias){
                 $query->andWhere($tableAlias.'.tipoexpediente = :emp')
                       ->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
+                      ->andWhere('_idempleado_idcontratacion.fechafinnom IS NULL')
                       //->andWhere('_idempleado_idcontratacion.fechafinnom IS NULL')
                       ->setParameter('emp','E');
             }
@@ -106,6 +107,7 @@ class LicenciaController extends Controller
                 $query->andWhere($tableAlias.'.tipoexpediente = :emp')
                       ->andWhere($query->expr()->in('_idempleado_idcontratacion.idempleado', $idemps))
                         ->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
+                        ->andWhere('_idempleado_idcontratacion.fechafinnom IS NULL')
                         //->andWhere($query->expr()->isNotNull('_idempleado_idcontratacion_idlicencia.id'))
                         ->setParameter('emp','E');
             }
@@ -225,7 +227,21 @@ class LicenciaController extends Controller
         }
 
         $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($id,$idc);
-        $plazainfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazaEmpleado($idc);        
+        $plazainfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazaEmpleado($idc);     
+
+        //ver los dias y horas de permiso totales en el mes
+        $fechaactual=Date('Y-m');
+        $finicio=$fechaactual.'-01';
+        $ffin=$fechaactual.'-31';
+        $query1 = $em->createQuery('SELECT sum(l.duraciondias) tdias, sum(l.duracionhoras) thoras
+                           FROM ExpedienteBundle:Licencia l
+                           WHERE l.idcontratacion=:idc AND l.fechapermiso BETWEEN :fi AND :ff
+                           ')
+                ->setParameter('idc',$idc)
+                ->setParameter('fi',$finicio)
+                ->setParameter('ff',$ffin);
+        $res = $query1->getResult();
+
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
@@ -240,6 +256,7 @@ class LicenciaController extends Controller
             'form'   => $form->createView(),
             'expediente' => $expedienteinfo,
             'plazax' => $plazainfo,
+            'totales' => $res[0],
         ));
     }
 
@@ -261,7 +278,7 @@ class LicenciaController extends Controller
         //ver los dias y horas de permiso totales en el mes
         $fechaactual=Date('Y-m');
         $finicio=$fechaactual.'-01';
-        $ffin=$fechaactual.'-31';
+        $ffin=$fechaactual.'-31';        
         $query1 = $em->createQuery('SELECT sum(l.duraciondias) tdias, sum(l.duracionhoras) thoras
                            FROM ExpedienteBundle:Licencia l
                            WHERE l.idcontratacion=:idc AND l.fechapermiso BETWEEN :fi AND :ff
@@ -270,14 +287,13 @@ class LicenciaController extends Controller
                 ->setParameter('fi',$finicio)
                 ->setParameter('ff',$ffin);
         $res = $query1->getResult();
-
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Registrar Licencias",$this->get("router")->generate("licencia_registrar"));
-        $breadcrumbs->addItem($entity->getIdcontratacion()->getIdempleado()->getCodigoempleado(),$this->get("router")->generate("licencia_registrar"));
+        $breadcrumbs->addItem($entity->getidcontratacion()->getIdempleado()->getCodigoEmpleado(),"");
         return $this->render('ExpedienteBundle:Licencia:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),

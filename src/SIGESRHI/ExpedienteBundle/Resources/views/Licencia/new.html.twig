@@ -21,9 +21,9 @@ function calculaduracionhoras(){
     var horai = document.getElementById("sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").value;
     var mini = document.getElementById("sigesrhi_expedientebundle_licenciatype_horainiciolic_minute").value;
     var horaf = document.getElementById("sigesrhi_expedientebundle_licenciatype_horafinlic_hour").value;
-    var minf = document.getElementById("sigesrhi_expedientebundle_licenciatype_horafinlic_minute").value;
+    var minf = document.getElementById("sigesrhi_expedientebundle_licenciatype_horafinlic_minute").value;    
     if(horai!= "" && horaf != "" && mini != "" && minf != ""){
-        if(parseInt(horaf) > parseInt(horai)){            
+        if(parseInt(horaf) > parseInt(horai)){
                 var horaicompleta = horai+":"+mini+":00";
                 var horafcompleta = horaf+":"+minf+":00";                
                 var difhora=calcular(horafcompleta,horaicompleta).split(":");
@@ -150,28 +150,32 @@ function calculaduracionhoras(){
             </tr>        
             <tr>
                 <th>{{ form_label(form.fechainiciolic) }}</th>
-                <td>{{ form_widget(form.fechainiciolic) }}{{form_errors(form.fechainiciolic)}}</td>
-                <th width="23%">{{ form_label(form.horainiciolic) }}</th>
-                <td width="20%">{{ form_widget(form.horainiciolic) }}{{form_errors(form.horainiciolic)}}</td>
+                <td colspan='3'>{{ form_widget(form.fechainiciolic) }}{{form_errors(form.fechainiciolic)}}</td>
             </tr>
             <tr>
                 <th>{{ form_label(form.fechafinlic) }}</th>
                 <td>{{ form_widget(form.fechafinlic) }}{{form_errors(form.fechafinlic)}}</td>
-                <th>{{ form_label(form.horafinlic) }}</th>
-                <td>{{ form_widget(form.horafinlic) }}{{form_errors(form.horafinlic)}}</td>
+                <th width="23%">{{ form_label(form.horainiciolic) }}</th>
+                <td width="20%">{{ form_widget(form.horainiciolic) }}{{form_errors(form.horainiciolic)}}</td>
             </tr>
             <tr>
                 <th>{{ form_label(form.duraciondias) }}</th>
                 <td>{{ form_widget(form.duraciondias) }}{{form_errors(form.duraciondias)}}</td>
+                <th>{{ form_label(form.horafinlic) }}</th>
+                <td>{{ form_widget(form.horafinlic) }}{{form_errors(form.horafinlic)}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="border-lef:0px"></td>
                 <th>{{ form_label(form.duracionhoras) }}</th>
-                <td>{{ form_widget(form.duracionhoras) }}{{form_errors(form.duracionhoras)}}</td>
+                <td>{{ form_widget(form.duracionhoras) }}{{form_errors(form.duracionhoras)}}</td>                
             </tr>
             <tr>
                 <td></td>
                 <td style="border-lef:0px"></td>
                 <th>{{ form_label(form.duracionminutos) }}</th>
-                <td>{{ form_widget(form.duracionminutos) }}{{form_errors(form.duracionminutos)}}</td>
-            </tr>
+                <td>{{ form_widget(form.duracionminutos) }}{{form_errors(form.duracionminutos)}}</td>                
+            </tr>            
         </table>
     {% endfor %}    
     {% endfor %}
@@ -206,7 +210,7 @@ $( document ).ready(function() {
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_hour").val("");        
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").val("");               
     $("#dias").click(function(){
-        $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").removeAttr("disabled");
+        
         $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").removeAttr("disabled");      
 
         $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").attr("disabled","disabled");
@@ -215,7 +219,7 @@ $( document ).ready(function() {
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").attr("disabled","disabled");        
 
         //quiatamos y agregamos nuevos requiered
-        $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").attr("data-bvalidator","required");
+        
         $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").attr("data-bvalidator","required");
         $("#sigesrhi_expedientebundle_licenciatype_duraciondias").attr("data-bvalidator","required,number");        
 
@@ -240,7 +244,7 @@ $( document ).ready(function() {
         $("#sigesrhi_expedientebundle_licenciatype_duracionminutos").val("");  
     });
     $("#horas").click(function(){
-        $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").attr("disabled","disabled");
+        
         $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").attr("disabled","disabled");
         
         $("#sigesrhi_expedientebundle_licenciatype_horainiciolic_hour").removeAttr("disabled");
@@ -249,7 +253,7 @@ $( document ).ready(function() {
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").removeAttr("disabled");
 
         //quitamos y asigmanos nuevos required
-        $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").removeAttr("data-bvalidator");
+        
         $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").removeAttr("data-bvalidator");
         $("#sigesrhi_expedientebundle_licenciatype_duraciondias").removeAttr("data-bvalidator");        
 
@@ -259,7 +263,7 @@ $( document ).ready(function() {
         $("#sigesrhi_expedientebundle_licenciatype_horafinlic_minute").attr("data-bvalidator","required");
         $("#sigesrhi_expedientebundle_licenciatype_duracionhoras").attr("data-bvalidator","required,number");        
         
-        $("#sigesrhi_expedientebundle_licenciatype_fechainiciolic").val("");
+        
         $("#sigesrhi_expedientebundle_licenciatype_fechafinlic").val("");
         $("#sigesrhi_expedientebundle_licenciatype_duraciondias").val("");
     });

@@ -83,6 +83,10 @@ function eliminar() {
                 </tr>
             {% else %}                              
                 <tr>
+                    <th>Fecha de inicio Permiso</th>
+                    <td><b>{{ entity.fechainiciolic|date('d-m-Y')|fecha }}</b></td>
+                </tr>
+                <tr>
                     <th>Hora inicio Permiso</th>
                     <td><b>{{ entity.horainiciolic|date('H:i A') }}</b></td>
                 </tr>

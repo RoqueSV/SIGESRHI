@@ -129,9 +129,10 @@ class Licencia
     {
         $fechainiciolic = $this->getFechainiciolic();
         $fechafinlic =  $this->getFechafinlic();
-
-        if($fechainiciolic > $fechafinlic){
-            $context->addViolationAt('fechainiciolic','Debe introducir Fechas Validas',array(),null);
+        if($fechafinlic!=''){
+            if($fechainiciolic > $fechafinlic){
+                $context->addViolationAt('fechainiciolic','Debe introducir Fechas Validas',array(),null);
+            }
         }
     }
 
