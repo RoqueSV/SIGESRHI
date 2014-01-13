@@ -64,7 +64,11 @@
       {% if nogrid == 0 %}
                 <button type="button" class="btn" onclick="window.history.back(1);">Regresar</button>
             {% else %}
-                <button type="button" class="btn" onclick="location.href='{{ path ('pruebapsicologica_index_edit') }}'">Regresar</button>
+                {% if noasp == 0 %}
+                    <button type="button" class="btn" onclick="location.href='{{ path ('pruebapsicologica_index_edit') }}'">Regresar</button>
+                {% else %}
+                    <button type="button" class="btn" onclick="location.href='{{ path ('pruebapsicologica_index_edit_empleado') }}'">Regresar</button>
+                {% endif %}
             {% endif %}     
      <a href="{{ path('pruebapsicologica_edit', { 'id': entity.id, 'exp': exp.id, 'pr': entity.id }) }}" class="btn">Editar Registro</a>
      </div>

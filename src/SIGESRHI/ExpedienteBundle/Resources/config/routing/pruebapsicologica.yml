@@ -36,3 +36,7 @@ pruebapsicologica_delete:
 pruebapsicologica_index_edit:
     pattern:  /indexedit
     defaults: { _controller: "ExpedienteBundle:Pruebapsicologica:indexExpedientesEdit" }
+
+pruebapsicologica_index_edit_empleado:
+    pattern:  /indexeditempleado
+    defaults: { _controller: "ExpedienteBundle:Pruebapsicologica:indexExpedientesEmpleadoEdit" }

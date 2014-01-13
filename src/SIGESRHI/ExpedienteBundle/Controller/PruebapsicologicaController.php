@@ -104,7 +104,7 @@ class PruebapsicologicaController extends Controller
         $grid->addColumn($plaza,2);
         
         // Attach a rowAction to the Actions Column
-        $rowAction1 = new RowAction('Ver', 'pruebapsicologica_show');
+        $rowAction1 = new RowAction('Consultar', 'pruebapsicologica_show');
         $rowAction1->setColumn('info_column');
         //Setear parametros al route
         //manipulamos la presentacion del rowaction
@@ -212,6 +212,69 @@ class PruebapsicologicaController extends Controller
 
 
         return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientes.html.twig');
+
+    }
+    /**
+    * Index Consultar prueba psicologica empleados
+    */
+        public function indexExpedientesEmpleadoEditAction()
+    {
+        $source = new Entity('ExpedienteBundle:Solicitudempleo','grupo_pruebapsicologica_empleadoedit');
+        $grid = $this->get('grid');
+
+        $em = $this->getDoctrine()->getManager();
+        $query2 = $em->createQuery("SELECT identity(p.idexpediente)
+                         FROM ExpedienteBundle:Pruebapsicologica p");
+        $resultado = $query2->getResult();
+        $idexp=array();
+        $idexp[]=0;
+        if(!is_null($resultado)){
+            foreach ($resultado as $val) {
+                foreach ($val as $v){
+                    $idexp[]=$v;
+                }
+            }
+        }
+        else{
+            $idexp[]=0;
+        }
+
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias,$idexp){
+                $query->andWhere('_idexpediente.tipoexpediente = :emp')
+                      ->andWhere($query->expr()->in($tableAlias.'.idexpediente', $idexp))
+                      ->setParameter('emp','E');
+            }
+        );
+        $grid->setSource($source);  
+
+        //Columnas a filtrar
+        $NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"filterable"=>false));
+        $codigo = new TextColumn(array('id' => 'codigoempleado','source' => true,'field'=>'idexpediente.idempleado.codigoempleado','title' => 'Codigo', "operatorsVisible"=>false, 'filterable'=>true, 'visible'=> true));
+        $grid->addColumn($NombreAspirante,2);
+        $grid->addColumn($codigo,1);
+        
+        $rowAction1 = new RowAction('Consultar', 'pruebapsicologica_show');
+        $rowAction1->setColumn('info_column');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                $action->setRouteParameters(array('id' => $row->getField('idexpediente.idpruebapsicologica.id'),'exp'=> $row->getField('idexpediente.id'), 'noasp'=>1  ));
+                return $action;
+            }
+        );
+        $grid->addRowAction($rowAction1);  
+        $grid->setId('grid_prueba_empleados_con');   
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Consultar Prueba Psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit_empleado"));
+
+        return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientesEmpleadosCon.html.twig');
 
     }
 
@@ -322,11 +385,18 @@ class PruebapsicologicaController extends Controller
     {
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
-        $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteAspirante($request->query->get('exp'));
+        $var = $request->get('noasp');
+        $noasp = (isset($var))?1:0;
+        if($noasp=1){
+            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleado($request->query->get('exp'));
+        }        
+        else{
+            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerEmpleado($request->query->get('exp'));
+        }
         $entity = $em->getRepository('ExpedienteBundle:Pruebapsicologica')->find($id);
 
         $var = $request->get('nogrid');
-        $nogrid = (isset($var))?0:1;
+        $nogrid = (isset($var))?0:1;        
 
         if (!$entity) {
             throw $this->createNotFoundException('No existe entidad Pruebapsicologica.');
@@ -336,16 +406,24 @@ class PruebapsicologicaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Consultar Prueba Psicologica",$this->get("router")->generate("pruebapsicologica_index_edit"));
-        $breadcrumbs->addItem($expedienteinfo[0]['nombres'],"");
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));        
+        if($noasp==1){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Consultar Prueba Psicologica",$this->get("router")->generate("pruebapsicologica_index_edit_empleado"));
+            $breadcrumbs->addItem($expedienteinfo[0]['codigo'],"");
+        }
+        else{
+            $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Consultar Prueba Psicologica",$this->get("router")->generate("pruebapsicologica_index_edit"));
+            $breadcrumbs->addItem($expedienteinfo[0]['nombres'],"");
+        }
 
         return $this->render('ExpedienteBundle:Pruebapsicologica:show.html.twig', array(
             'entity'      => $entity,
             'expediente' => $expedienteinfo,
             'delete_form' => $deleteForm->createView(),        
             'nogrid' => $nogrid,
+            'noasp' => $noasp,
             ));
     }
 
