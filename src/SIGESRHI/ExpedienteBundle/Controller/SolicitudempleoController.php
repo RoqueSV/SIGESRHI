@@ -42,6 +42,13 @@ class SolicitudempleoController extends Controller
         // Get a grid instance
         $grid = $this->get('grid');
 
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Consultar Solicitud de Empleo", $this->get("router")->generate("solicitud_caspirante"));
+        //fin camino de miga
        
           $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
@@ -85,6 +92,17 @@ class SolicitudempleoController extends Controller
         $grid->setDefaultOrder('nombrecompleto', 'asc');
         
         $rowAction1 = new RowAction('Mostrar', 'solicitud_show');
+
+        //vista_retorno 1 consulta de aspirantes, 2 consulta de empleados, 3 consulta de inactivos
+        //4 modificar de aspirantes, 5 modificar empleados
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                 $action->setRouteParameters(array('id','vista_retorno'=> 1));
+                return $action;
+            }
+        );
+
         $rowAction1->setColumn('info_column');
 
         $grid->addRowAction($rowAction1);     
@@ -724,6 +742,14 @@ public function asignarNumsolAction($id){
         // Get a grid instance
         $grid = $this->get('grid');
 
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Consultar Datos de Empleado", $this->get("router")->generate("solicitud_cempleado"));
+        //fin camino de miga
+
        
           $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
@@ -748,13 +774,16 @@ public function asignarNumsolAction($id){
         $grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
         
         $rowAction1 = new RowAction('Mostrar', 'solicitud_show');
+
         $rowAction1->setColumn('info_column');
 
         //reasignamos el id que se utilizara para la ruta (id de solicitud en vez de id de expediente)
+        //vista_retorno 1 consulta de aspirantes, 2 consulta de empleados, 3 consulta de inactivos
+        //4 modificar de aspirantes, 5 modificar empleados
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
-             $action->setRouteParameters(array('id'=> $row->getField('idsolicitudempleo.id')));
+             $action->setRouteParameters(array('id'=> $row->getField('idsolicitudempleo.id'),'vista_retorno'=> 2));
               return $action;
             }
         );
@@ -774,6 +803,14 @@ public function asignarNumsolAction($id){
         $source = new Entity('ExpedienteBundle:Expediente', 'grupo_solicitud_empleado');
         // Get a grid instance
         $grid = $this->get('grid');
+
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado Inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
+        $breadcrumbs->addItem("Consultar Datos de Empleado", $this->get("router")->generate("solicitud_cinactivo"));
+        //fin camino de miga
 
         $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
@@ -798,6 +835,17 @@ public function asignarNumsolAction($id){
         $grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
         
         $rowAction1 = new RowAction('Mostrar', 'solicitud_show');
+
+        //vista_retorno 1 consulta de aspirantes, 2 consulta de empleados, 3 consulta de inactivos
+        //4 modificar de aspirantes, 5 modificar empleados
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                 $action->setRouteParameters(array('id','vista_retorno'=> 3));
+                return $action;
+            }
+        );
+
         $rowAction1->setColumn('info_column');
 
         //reasignamos el id que se utilizara para la ruta (id de solicitud en vez de id de expediente)

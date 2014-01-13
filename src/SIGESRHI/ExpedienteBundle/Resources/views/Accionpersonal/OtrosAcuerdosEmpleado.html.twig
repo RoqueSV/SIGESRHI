@@ -1,11 +1,14 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+    {{ include('ExpedienteBundle:Ayuda/AccionPersonal:ConsultaOtrasAcciones.html.twig')}}
     
     <div class="text-center">
 <h4>CONSULTA/REGISTRO DE OTRAS ACCIONES DE PERSONAL</h4>
 </div>
-
+<br>
             
 <table border="0" width="90%" class="centered-table">
     <tr>
