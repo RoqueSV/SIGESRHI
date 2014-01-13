@@ -20,9 +20,9 @@ order by fecharegistroaccion]]>
 	<field name="motivoaccion" class="java.lang.String"/>
 	<field name="numacuerdo" class="java.lang.String"/>
 	<detail>
-		<band height="32" splitType="Stretch">
+		<band height="46" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="18b974c4-12f4-48aa-9e7e-7de39c945b35" positionType="Float" x="0" y="0" width="572" height="32"/>
+				<reportElement uuid="18b974c4-12f4-48aa-9e7e-7de39c945b35" positionType="Float" x="0" y="0" width="572" height="35"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html"/>
 				<textFieldExpression><![CDATA[$F{fecharegistroaccion2}+"<br>"+$F{numacuerdo}+" "+$F{motivoaccion}]]></textFieldExpression>
 			</textField>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Hojadeservicio" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b021ac6-0dfd-4221-a80e-b9adc9e37aee">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="122"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="415"/>
 	<parameter name="idexp" class="java.lang.Integer"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -16,7 +16,9 @@
 	   when hs.estadoCivil= 'A' then 'Acompañado(a)'
 	   when hs.estadoCivil= 'V' then 'Viudo(a)'
 	   when hs.estadoCivil= 'D' then 'Divorciado(a)'
-	   else 'Casado(a)' end as estadocivil,hs.telefonofijo as telefonos,coalesce(hs.isss,'--') as isss,concat(substr(hs.nit,1,4),'-',substr(hs.nit,5,6),'-',substr(hs.nit,11,3),'-',substr(hs.nit,14)) as nit,to_char(fechaingreso,'DD "de" TMMonth "de" YYYY') as fechaingreso,to_char(hs.sueldoinicial,'$9,999.00') as sueldoinicial,coalesce(hs.informacionadicional,' ') as informacionadicional,hs.cargo,destacadoen,educacion,codigoempleado from solicitudempleo se join expediente e on(se.idexpediente=e.id)
+	   else 'Casado(a)' end as estadocivil,hs.telefonofijo as telefonos,coalesce(hs.isss,'--') as isss,concat(substr(hs.nit,1,4),'-',substr(hs.nit,5,6),'-',substr(hs.nit,11,3),'-',substr(hs.nit,14)) as nit,to_char(fechaingreso,'DD "de" TMMonth "de" YYYY') as fechaingreso,to_char(hs.sueldoinicial,'$9,999.00') as sueldoinicial,coalesce(hs.informacionadicional,' ') as informacionadicional,hs.cargo,destacadoen,educacion,codigoempleado,
+(select count(*) from accionpersonal where idexpediente = $P{idexp} $P!{cadena}) as bandera
+from solicitudempleo se join expediente e on(se.idexpediente=e.id)
 join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.idexpediente) where e.id=$P{idexp}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
@@ -38,17 +40,18 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 	<field name="destacadoen" class="java.lang.String"/>
 	<field name="educacion" class="java.lang.String"/>
 	<field name="codigoempleado" class="java.lang.String"/>
+	<field name="bandera" class="java.lang.Long"/>
 	<title>
 		<band height="362">
 			<staticText>
-				<reportElement uuid="fe417893-ef2c-48e6-b5d9-8f8f94b4629e" x="0" y="257" width="85" height="20"/>
+				<reportElement uuid="fe417893-ef2c-48e6-b5d9-8f8f94b4629e" x="0" y="259" width="85" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Destacado en:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9003cf45-6de2-4d6f-a49c-950c5d0fb35a" x="131" y="219" width="100" height="20"/>
+				<reportElement uuid="9003cf45-6de2-4d6f-a49c-950c5d0fb35a" x="0" y="218" width="113" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -76,7 +79,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<text><![CDATA[Educación:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d87a8554-db07-4e52-ae19-559299d97f1f" x="342" y="219" width="42" height="20"/>
+				<reportElement uuid="d87a8554-db07-4e52-ae19-559299d97f1f" x="217" y="240" width="42" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -97,7 +100,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="80fbd80d-11df-4dba-8f3e-e8376e264aea" x="0" y="219" width="85" height="20"/>
+				<reportElement uuid="80fbd80d-11df-4dba-8f3e-e8376e264aea" x="0" y="239" width="85" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -121,7 +124,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<text><![CDATA[Teléfonos(Fijo,Movil):]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="430fc4f0-8934-4b25-a896-824fc6614e76" x="0" y="239" width="49" height="20"/>
+				<reportElement uuid="430fc4f0-8934-4b25-a896-824fc6614e76" x="218" y="218" width="49" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -149,7 +152,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<text><![CDATA[Dirección:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fdc7d668-096a-4b4c-b709-aa7f2cf397eb" x="444" y="218" width="36" height="20"/>
+				<reportElement uuid="fdc7d668-096a-4b4c-b709-aa7f2cf397eb" x="397" y="240" width="36" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -170,7 +173,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<text><![CDATA[DUI:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5c199437-0bfd-440b-ae63-012a8671fd07" x="0" y="277" width="308" height="20"/>
+				<reportElement uuid="5c199437-0bfd-440b-ae63-012a8671fd07" x="0" y="279" width="308" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -217,7 +220,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{telefonos}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement uuid="dafb6e72-44a4-4c17-b489-f8c5201f3447" x="68" y="219" width="65" height="20"/>
+				<reportElement uuid="dafb6e72-44a4-4c17-b489-f8c5201f3447" x="74" y="238" width="71" height="20"/>
 				<box leftPadding="3">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -227,7 +230,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{sueldoinicial}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="7a094027-1306-4593-95d6-772d8acdfacf" x="0" y="299" width="570" height="50"/>
+				<reportElement uuid="7a094027-1306-4593-95d6-772d8acdfacf" x="0" y="301" width="570" height="50"/>
 				<box leftPadding="1" rightPadding="2"/>
 				<textElement textAlignment="Justified">
 					<font fontName="SansSerif"/>
@@ -235,7 +238,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{informacionadicional}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2397e847-d504-49f7-85ef-d1ba25b860d4" x="373" y="218" width="71" height="20"/>
+				<reportElement uuid="2397e847-d504-49f7-85ef-d1ba25b860d4" x="248" y="240" width="118" height="20"/>
 				<box leftPadding="3">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.0"/>
@@ -249,7 +252,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{isss}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.00">
-				<reportElement uuid="f2e26113-aded-4bdb-875f-b166039d21ef" x="466" y="217" width="106" height="20"/>
+				<reportElement uuid="f2e26113-aded-4bdb-875f-b166039d21ef" x="424" y="240" width="148" height="20"/>
 				<box leftPadding="3">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -309,7 +312,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{nombreempleado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="8509ddd8-9677-429b-b381-edd24cec8e78" x="218" y="218" width="124" height="20"/>
+				<reportElement uuid="8509ddd8-9677-429b-b381-edd24cec8e78" x="95" y="218" width="122" height="20"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -319,7 +322,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{fechaingreso}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="c9efffb9-ca2a-4037-92e1-0e92a159d52e" x="33" y="239" width="539" height="19"/>
+				<reportElement uuid="c9efffb9-ca2a-4037-92e1-0e92a159d52e" x="253" y="219" width="319" height="19"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -329,7 +332,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{cargo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="b9ba761b-e5dc-43af-98c8-d8261de5f865" x="70" y="259" width="502" height="18"/>
+				<reportElement uuid="b9ba761b-e5dc-43af-98c8-d8261de5f865" x="74" y="262" width="498" height="18"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -339,7 +342,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{destacadoen}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="951ad256-0d72-44b9-858f-3674bd38c0f8" x="159" y="189" width="413" height="20"/>
+				<reportElement uuid="951ad256-0d72-44b9-858f-3674bd38c0f8" x="161" y="189" width="411" height="20"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -351,7 +354,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 		</band>
 	</title>
 	<detail>
-		<band height="45" splitType="Stretch">
+		<band height="72" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="cd3cf5fc-1211-48c3-a231-b241f82349e2" x="0" y="3" width="121" height="16"/>
 				<textElement verticalAlignment="Bottom">
@@ -385,6 +388,13 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				</textElement>
 				<textFieldExpression><![CDATA["Del  "+$P{cadena}.substring( 33, 43 )+"  al  "+$P{cadena}.substring( 50, 60 )]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="e1a2f4af-5c4f-4068-944e-dc681f81bda4" positionType="Float" x="0" y="51" width="145" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{bandera} == 0]]></printWhenExpression>
+				</reportElement>
+				<textElement/>
+				<text><![CDATA[No hay datos que mostrar]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<pageFooter>

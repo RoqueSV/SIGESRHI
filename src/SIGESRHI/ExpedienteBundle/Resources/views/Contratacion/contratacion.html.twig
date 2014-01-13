@@ -2,6 +2,12 @@
 
 {% block principal %}
 
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <div class="alert alert-danger">
+       <p> {{ flashMessage }}</p>
+    </div>
+{% endfor %}
+
 <!-- Botón ayuda -->
     <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
 
@@ -29,9 +35,9 @@
          <label for="codempleado" class="control-label required">C&oacute;digo empleado</label>
          <div class="controls">
         {% if tipocontratacion == 1 %}
-         <input type="text" name="codempleado" id="codempleado" required="required" class="input-small"/>
+         <input type="text" name="codempleado" id="codempleado" maxlength="5" required="required" class="input-small"/>
         {% else %}
-         <input type="text" name="codempleado" id="codempleado" required="required" value={{codigo}} class="input-small"/>
+         <input type="text" name="codempleado" id="codempleado" maxlength="5" required="required" value={{codigo}} class="input-small"/>
         {% endif %}
          </div>
     </div>
@@ -40,7 +46,11 @@
 
     {{form_row(form.centro)}}
     {{form_row(form.unidad)}}
+    {% if tipocontratacion == 1 %}
+    {{form_row(form.puesto,{value : plaza})}}
+    {% else %}  
     {{form_row(form.puesto)}}
+    {% endif %}
    
 
     {{form_row(form.sueldoinicial)}}

@@ -35,7 +35,12 @@ security:
         # - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         # Change these rules to adapt them to your needs
         - { path: ^/expediente/solicitud/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/expediente/solicitud/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/expediente/docdigital/new, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/expediente/docdigital/documento, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/expediente/docdigital/[^/]+/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/expediente/docdigital/fin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/expediente/solicitud/consultarMunicipiosJSON, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
         - { path: ^/expediente/, role: [ROLE_EMPLEADORRHH] }
         - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }

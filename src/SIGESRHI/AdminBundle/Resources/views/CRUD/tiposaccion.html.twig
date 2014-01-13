@@ -1,0 +1,10 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+{% block field %}
+{% spaceless %}
+    {% if value == "1" %}
+        Genera acuerdo
+    {% else %}
+        No genera acuerdo
+    {% endif %}
+{% endspaceless %}
+{% endblock %}

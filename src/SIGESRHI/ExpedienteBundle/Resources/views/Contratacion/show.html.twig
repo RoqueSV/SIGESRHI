@@ -108,8 +108,16 @@ function eliminar() {
     </table>
     <br />
     {% if entity.doccontratacion is not null %}
-    <p class="text-center"> Documento de nombramiento o contrato </p>
-    <embed src="{{ asset('uploads/docs_contratacion/'~ entity.doccontratacion) }}" class="pdf"></embed>
+
+       <p class="text-center"> Documento de nombramiento o contrato </p>
+       {% if extension|lower != "jpg" and extension|lower != "jpeg" and extension|lower != "png" and extension|lower != "pdf" %}
+         <div class="text-center">
+          No se puede previsualizar el archivo: <a href="{{ asset('uploads/docs_contratacion/'~ entity.doccontratacion) }}"> Descargar </a>
+         </div>
+       {% else %}
+          <embed src="{{ asset('uploads/docs_contratacion/'~ entity.doccontratacion) }}" class="pdf"></embed>
+       {% endif %}
+
     {% endif %}
     
     <br />

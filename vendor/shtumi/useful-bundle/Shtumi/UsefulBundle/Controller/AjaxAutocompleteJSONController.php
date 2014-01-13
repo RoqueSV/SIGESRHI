@@ -69,6 +69,18 @@ class AjaxAutocompleteJSONController extends Controller
 
         }
 
+        else if($entity_alias == 'noempleados'){
+           $results = $em->createQuery(
+            'SELECT e.' . $property . '
+             FROM ' . $entity_inf['class'] . ' e JOIN e.idexpediente ex ' .
+             $where_clause_lhs . ' ' . $where_clause_rhs . ' ' .
+            'AND ex.tipoexpediente != :tipo ORDER BY e.' . $property)
+            ->setParameter('like', $like )
+            ->setParameter('tipo', 'I' )
+            ->setMaxResults($maxRows)
+            ->getScalarResult();
+        }
+
         else if($entity_alias == 'aspirantes'){
            $results = $em->createQuery(
             'SELECT e.' . $property . '

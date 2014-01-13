@@ -45,7 +45,7 @@ class AccionpersonalController extends Controller
            // obtenemos los puestos a los que esta asociado el empleado.
         $query = $em->createQuery('
           SELECT pl.nombreplaza, re.id, re.partida, re.subpartida, re.sueldoactual
-          FROM AdminBundle:refrendaact re
+          FROM AdminBundle:RefrendaAct re
           join re.idplaza pl
           WHERE re.id =:idrefrenda'
         )->setParameter('idrefrenda', $idrefrenda);

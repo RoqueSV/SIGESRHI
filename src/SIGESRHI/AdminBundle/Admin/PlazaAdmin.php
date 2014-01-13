@@ -173,7 +173,7 @@ class PlazaAdmin extends Admin
            ->end()
            ->with('Documentación')
              ->add('name',null, array('label'=>'Nombre documento'))
-             ->add('path', 'string',array('label'=>'Documento','template' => 'AdminBundle:Documentos:documentos.html.twig'))
+             ->add('path', 'string',array('label'=>'Documento','template' => 'AdminBundle:CRUD:documentos.html.twig'))
              ->add('observaciones',null, array('label'=>'Observaciones'))
            ->end()
         ;

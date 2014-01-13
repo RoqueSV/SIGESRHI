@@ -256,7 +256,7 @@ class ContratacionController extends Controller
                
              //Registrar acuerdo - PENDIENTE NOMBRAMIENTO
              $accionpersonal  = new Accionpersonal();
-             $tipoaccion = $em->getRepository('ExpedienteBundle:Tipoaccion')->find(11);
+             $tipoaccion = $em->getRepository('ExpedienteBundle:Tipoaccion')->find(6);
              
              if(date("Y", strtotime(date_format($entity->getFechainiciocontratacion(),'Y-m-d'))) == date("Y", strtotime(date_format($entity->getFechafincontrato(),'Y-m-d')))) {
              $fechaini = $this->fechaConvertMes($entity->getFechainiciocontratacion());
@@ -300,6 +300,8 @@ class ContratacionController extends Controller
         }
         
         //Error
+        $this->get('session')->getFlashBag()->add('error', 'Error en el registro de datos.');
+        $em = $this->getDoctrine()->getManager();
         $expediente = $em->getRepository('ExpedienteBundle:Contratacion')->obtenerAspiranteValido($request->get('idexpediente'));
         $tipo=$request->get('tipo');
         return $this->render('ExpedienteBundle:Contratacion:contratacion.html.twig', array(
@@ -308,7 +310,7 @@ class ContratacionController extends Controller
             'expediente'=>$expediente,
             'tipo'=>$request->get('tipo'),
             'tipocontratacion'=>$tipocontratacion,
-            'codigo'=>$entity->getIdempleado->getCodigoempleado(),
+            'codigo'=>'',
         ));
     }
 
@@ -393,7 +395,7 @@ class ContratacionController extends Controller
         //Obtengo plaza para asignarla si es aspirante
         $idplaza = $em->getRepository('AdminBundle:Plaza')->find($idexpediente->getIdsolicitudempleo()->getIdplaza()->getId());
         $idrefrenda = $em->getRepository('AdminBundle:RefrendaAct')->findOneByIdplaza($idplaza->getId());
-
+         
         $entity->setPuesto($idrefrenda); //Asignar por defecto plaza por la que optó
         
            /* Definir tipo de contratación */
@@ -408,6 +410,7 @@ class ContratacionController extends Controller
             'expediente' => $expediente,
             'tipo' => $tipo,
             'tipocontratacion'=>$tipocontratacion,
+            'plaza'=> $idrefrenda->getId(),
             'form' => $form->createView(),
             ));
             
@@ -458,6 +461,10 @@ class ContratacionController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
+
+        if($entity->getDoccontratacion() != null){
+          $extension=substr($entity->getDoccontratacion(),-3,3);
+        }
         
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
@@ -478,6 +485,17 @@ class ContratacionController extends Controller
         $breadcrumbs->addItem("Consultar datos de contratación", $this->get("router")->generate("contratacion_consultar"));
         $breadcrumbs->addItem($entity->getIdempleado()->getCodigoempleado(),  $this->get("router")->generate("contratacion_consultar"));
         }
+
+        if($entity->getDoccontratacion() != null){
+          $extension=substr($entity->getDoccontratacion(),-3,3);
+
+          return $this->render('ExpedienteBundle:Contratacion:show.html.twig', array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(), 
+            'tipo' => $tipo,  
+            'extension' => $extension,     ));//tipo: 1-aspirante, 2-empleado
+        }
+
         return $this->render('ExpedienteBundle:Contratacion:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(), 

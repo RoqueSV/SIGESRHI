@@ -76,3 +76,9 @@ services:
       tags:
         - { name: sonata.admin, manager_type: orm, group: Institución, label: Teléfonos, show_in_dashboard: false}
       arguments: [null, SIGESRHI\AdminBundle\Entity\Telefono, AdminBundle:TelefonoAdmin]
+
+   sonata.admin.admin.tipoaccion:
+      class: SIGESRHI\AdminBundle\Admin\TipoaccionAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Institución, label: Tipos de acciones de personal}
+      arguments: [null, SIGESRHI\ExpedienteBundle\Entity\Tipoaccion, AdminBundle:TipoaccionAdmin]

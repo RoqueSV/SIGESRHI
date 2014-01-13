@@ -47,7 +47,7 @@ class ContratacionType extends AbstractType
             ->add('numoficio',null,array(
                   'label'=>'Número de oficio',
                   'required'  => false,
-                  'attr' => array('class'=>'input-small')))
+                  'attr' => array('class'=>'input-small','max_length'=>'10')))
             ->add('fechafincontrato',null, array(
                   'label'=>'Fin contrato',
                   'widget' => 'single_text',

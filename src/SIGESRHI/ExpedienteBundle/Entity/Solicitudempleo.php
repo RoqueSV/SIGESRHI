@@ -24,7 +24,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Assert\Callback(methods={"esNitValido"})
  * @Vich\Uploadable
  *
- * @GRID\Source(columns="id,nombrecompleto,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
+ * @GRID\Source(columns="id,nombrecompleto,idexpediente.tipoexpediente,idexpediente.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
  * @GRID\Source(columns="id,numsolicitud, nombrecompleto, idplaza.nombreplaza, idexpediente.tipoexpediente",groups={"solicitud_empleo"})
  * @GRID\Source(columns="id,nombrecompleto,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.fechaexpediente",groups={"lista_expediente"})
  */

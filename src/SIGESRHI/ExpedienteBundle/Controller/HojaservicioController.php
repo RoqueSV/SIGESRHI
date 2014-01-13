@@ -146,7 +146,7 @@ class HojaservicioController extends Controller
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
         $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
-        $breadcrumbs->addItem("Registrar hoja de servicio / ".$solicitud->getNumsolicitud(),  $this->get("router")->generate("hojaservicio"));
+        $breadcrumbs->addItem("Registrar hoja de servicio / ".$solicitud->getNombrecompleto(),  $this->get("router")->generate("hojaservicio"));
 
         return $this->render('ExpedienteBundle:Hojaservicio:new.html.twig', array(
             'entity' => $entity,
