@@ -573,6 +573,8 @@ class AccionpersonalController extends Controller
 
     public function ElegirReporteAction($id)
     {
+        $request = $this->getRequest();
+        $vista_retorno = $request->get('vista_retorno');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -589,6 +591,7 @@ class AccionpersonalController extends Controller
         return $this->render('ExpedienteBundle:Accionpersonal:Reporte.html.twig', array(
             'idexp'      => $id,
             'tipos_acuerdo' => $tipos_acuerdo,
+            'vista_retorno'=> $vista_retorno,
         ));
     }
 
@@ -601,23 +604,24 @@ class AccionpersonalController extends Controller
         $fechainicio = $request->get('fechainicio');
         $fechafin = $request->get('fechafin');
         $tipoaccion = $request->get('tipo_accion');
+        $vista_retorno = $request->get('vista_retorno');
 
         echo $tipo_reporte;
         
         if($tipo_reporte =="1"){
-        return $this->redirect($this->generateUrl('reporte_hojaservicio', array('id' => $idexp)));
+        return $this->redirect($this->generateUrl('reporte_hojaservicio', array('id' => $idexp, 'vista_retorno'=>$vista_retorno)));
             }// if 1
 
         if($tipo_reporte =="2"){
-        return $this->redirect($this->generateUrl('reporte_acciones', array('id' => $idexp, 'tipo'=> $tipoaccion)));
+        return $this->redirect($this->generateUrl('reporte_acciones', array('id' => $idexp, 'tipo'=> $tipoaccion, 'vista_retorno'=>$vista_retorno)));
             }// if 2
     
         if($tipo_reporte =="3"){
-        return $this->redirect($this->generateUrl('reporte_hojaservicio', array('id' => $idexp, 'fechainicio'=> $fechainicio, 'fechafin'=>$fechafin)));
+        return $this->redirect($this->generateUrl('reporte_hojaservicio', array('id' => $idexp, 'fechainicio'=> $fechainicio, 'fechafin'=>$fechafin, 'vista_retorno'=>$vista_retorno)));
             }// if 3
 
         if($tipo_reporte =="4"){
-        return $this->redirect($this->generateUrl('reporte_acciones', array('id' => $idexp, 'tipo'=> $tipoaccion, 'fechainicio'=> $fechainicio, 'fechafin'=>$fechafin)));
+        return $this->redirect($this->generateUrl('reporte_acciones', array('id' => $idexp, 'tipo'=> $tipoaccion, 'fechainicio'=> $fechainicio, 'fechafin'=>$fechafin, 'vista_retorno'=>$vista_retorno)));
             }// if 4
 
     }//function

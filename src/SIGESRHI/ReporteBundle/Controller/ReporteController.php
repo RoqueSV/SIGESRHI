@@ -167,6 +167,7 @@ class ReporteController extends Controller
      $request=$this->getRequest();
      $idExp=$request->get('id');
      $idaccion=$request->get('tipo');
+     $vista_retorno=$request->get('vista_retorno');
 
      //Incluimos camino de migas
      $breadcrumbs = $this->get("white_october_breadcrumbs");
@@ -174,7 +175,7 @@ class ReporteController extends Controller
      $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
      $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
      $breadcrumbs->addItem("Lista de empleados", $this->get("router")->generate("accionpersonal_cempleados"));
-     $breadcrumbs->addItem("Consultar hoja de servicio", $this->get("router")->generate("accionpersonal_cacuerdos", array("id"=>$idExp)));
+     $breadcrumbs->addItem("Consultar hoja de servicio", $this->get("router")->generate("accionpersonal_cacuerdos", array("id"=>$idExp, 'vista_retorno'=>$vista_retorno)));
      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_acciones"));
 
 
@@ -219,6 +220,7 @@ class ReporteController extends Controller
      /* Obtengo parametros */
      $request=$this->getRequest();
      $idExp=$request->get('id');
+     $vista_retorno=$request->get('vista_retorno');
 
      //Incluimos camino de migas
      $breadcrumbs = $this->get("white_october_breadcrumbs");
@@ -226,7 +228,7 @@ class ReporteController extends Controller
      $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
      $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
      $breadcrumbs->addItem("Lista de empleados", $this->get("router")->generate("accionpersonal_cempleados"));
-     $breadcrumbs->addItem("Consultar hoja de servicio", $this->get("router")->generate("accionpersonal_cacuerdos", array("id"=>$idExp)));
+     $breadcrumbs->addItem("Consultar hoja de servicio", $this->get("router")->generate("accionpersonal_cacuerdos", array("id"=>$idExp, 'vista_retorno'=>$vista_retorno)));
      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_hojaservicio"));
 
      if(isset($_GET['fechainicio'])){
