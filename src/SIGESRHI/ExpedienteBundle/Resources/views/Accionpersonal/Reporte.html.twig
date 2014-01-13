@@ -5,7 +5,7 @@
 
 <h4 class="text-center"> Seleccione el tipo de reporte a generar</h4>
 
-<form action="{{path('accionpersonal_llamareporte', {'id': idexp})}}" id="miform" method="post">
+<form action="{{path('accionpersonal_llamareporte', {'id': idexp, 'vista_retorno':vista_retorno})}}" id="miform" method="post">
 <br>
 <fieldset>
 	<legend>Tipo de reporte</legend>
@@ -58,7 +58,8 @@ El empleado no tiene acuerdos registrados.
 <div class="text-center">
 	
 <button id="enviar" type="button" onclick="llamar_controlador()" class="btn">Generar Reporte</button>
-<button type="button" onclick="location.href='{{path('accionpersonal_cacuerdos', {'id': idexp})}}'" class="btn">Cancelar </button>
+
+<button type="button" onclick="location.href='{{path('accionpersonal_cacuerdos', {'id': idexp, 'vista_retorno':vista_retorno})}}'" class="btn">Cancelar </button>
 </div>
 </form>
 
