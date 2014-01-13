@@ -38,7 +38,7 @@ expediente_validar:
     defaults: { _controller: "ExpedienteBundle:Expediente:validar" }
 
 expediente_confirm_valid:
-    pattern:  /{id}/validar
+    pattern:  /{id}/confirmarvalido
     defaults: { _controller: "ExpedienteBundle:Expediente:confirmarValido" }
 
 expediente_aspirantes:

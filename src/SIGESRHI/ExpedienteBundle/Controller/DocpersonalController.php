@@ -55,15 +55,20 @@ class DocpersonalController extends Controller
                 return $action;
             }
         );
+        $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false, "filterable" => false));
+        $Nombre = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $grid->addColumn($Nombre,2);
+        $grid->addColumn($plaza,3);
 
+        $grid->setId("grid_docpersonal_aspirantes");
         $grid->addRowAction($rowAction1);     
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
 
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_aspirante",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal"));
 
         return $grid->getGridResponse('ExpedienteBundle:Docpersonal:index.html.twig');
@@ -94,9 +99,9 @@ class DocpersonalController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", "hello_page");
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal"));
-        $breadcrumbs->addItem("Registrar","");
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante",array('id'=>1)));
+        $breadcrumbs->addItem("Registrar Documentos Personales", $this->get("router")->generate("docpersonal"));
+        $breadcrumbs->addItem($entity->getIdexpediente()->getIdsolicitudempleo()->getNombrecompleto(),"");
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -135,7 +140,9 @@ class DocpersonalController extends Controller
 
         $Documentos = $em->getRepository('ExpedienteBundle:Docpersonal')->findBy(array(
                                                                                     'idexpediente' => $request->query->get('exp'),
-                                                                                    ));
+                                                                                        ));
+        $var = $request->get('nogrid');
+        $nogrid = (isset($var))?0:1;
 
         $entity = new Docpersonal();
         $entity->setIdexpediente($expediente);
@@ -145,16 +152,17 @@ class DocpersonalController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirantes", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal"));
-        $breadcrumbs->addItem("Ingresar", "");
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_aspirante",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirantes", $this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Registrar Documentos Personales", $this->get("router")->generate("docpersonal"));
+        $breadcrumbs->addItem($entity->getIdexpediente()->getIdsolicitudempleo()->getNombrecompleto(),"");
 
         return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
             'entity' => $entity,
             'expediente' => $expedienteinfo,
             'documentos' => $Documentos,
             'form'   => $form->createView(),
+            'nogrid' => $nogrid,
         ));
     }
 
