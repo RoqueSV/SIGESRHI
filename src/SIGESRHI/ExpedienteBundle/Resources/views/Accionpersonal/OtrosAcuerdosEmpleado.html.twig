@@ -3,7 +3,7 @@
 {% block principal -%}
     
     <div class="text-center">
-<h4>OTRAS ACCIONES DE PERSONAL</h4>
+<h4>CONSULTA/REGISTRO DE OTRAS ACCIONES DE PERSONAL</h4>
 </div>
 
             
@@ -97,7 +97,12 @@
 {% if entity.idaccion|length > 0 %} {#{{path('accionpersonal_eligereporte', {'id':entity.id})}}#}
 <button class="btn" onclick="location.href='#'">Generar Reporte Historico </button>
 {% endif %}
-<button class="btn" onclick="location.href='{{path('accionpersonal_cempleados')}}'"> Cancelar </button>
+
+{% if vista_retorno == 3 %}
+<button class="btn" onclick="location.href='{{path('accionpersonal_cempleadosotros')}}'"> Cancelar </button>
+{% elseif vista_retorno == 4 %}
+<button class="btn" onclick="location.href='{{path('accionpersonal_cempleadosotros')}}'"> Cancelar </button>
+{% endif %}
 </div>
 
 <style type="text/css">

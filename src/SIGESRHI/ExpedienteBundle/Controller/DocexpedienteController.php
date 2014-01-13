@@ -82,8 +82,10 @@ class DocexpedienteController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
             'id' => $entity->getIdexpediente()->getId(),
+            'expediente'=> $expediente,
             'documentos' => $Documentos,
             'tipogrid' => $tipogrid,
+
         ));
     }
 
@@ -127,13 +129,13 @@ class DocexpedienteController extends Controller
         }
         //tipo 3 es empleado y consulta
         if($tipogrid==3){
-        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
-        $breadcrumbs->addItem("Consultar Documentos Digitales", $this->get("router")->generate("docdigital_caspirante"));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Consultar Documentos Digitales", $this->get("router")->generate("docdigital_cempleado"));
         }
         //tipo 4 es empleado y registro
         if($tipogrid==4){
-        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
-        $breadcrumbs->addItem("Registrar Documentos Digitales", $this->get("router")->generate("docdigital_raspirante"));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Registrar Documentos Digitales", $this->get("router")->generate("docdigital_rempleado"));
         }
         $breadcrumbs->addItem($expediente->getIdsolicitudempleo()->getnombrecompleto(), $this->get("router")->generate("docdigital_new", array('id'=>$id, 'tipogrid'=>$tipogrid)));
 
@@ -234,6 +236,8 @@ class DocexpedienteController extends Controller
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
+        $tipogrid = $request->query->get('tipogrid');
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('ExpedienteBundle:Docexpediente')->find($id);
@@ -249,7 +253,7 @@ class DocexpedienteController extends Controller
 
             //mensaje de eliminado correctamente
             $this->get('session')->getFlashBag()->add('del', 'El documento digital se ha eliminado correctamente.'); 
-            return $this->redirect($this->generateUrl('docdigital_new', array('id' => $idexpediente)));
+            return $this->redirect($this->generateUrl('docdigital_new', array('id' => $idexpediente, 'tipogrid'=>$tipogrid)));
         }
 
         return $this->redirect($this->generateUrl('hello_page'));
@@ -295,6 +299,17 @@ class DocexpedienteController extends Controller
         }
             );
 
+        //Manipular Fila
+        $source->manipulateRow(
+            function ($row)
+            {
+                if($row->getField('idsolicitudempleo.numsolicitud') =="0" ){
+                   $row->setField('idsolicitudempleo.numsolicitud', "N/A");                  
+                }//if
+                return $row;
+            }
+        );
+
         // Attach the source to the grid
         $grid->setId('grid_docdigital_aspirantes');
         $grid->setSource($source);
@@ -325,6 +340,71 @@ class DocexpedienteController extends Controller
     }
 
 
+    //funcion de grid para agregar documentos digitales a un expediente de empleado (Docexpediente)
+    public function RegistraDocEmpleadosAction()
+    {
+
+        //incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Registrar Documentos Digitales", $this->get("router")->generate("docdigital_raspirante"));
+
+
+        $source = new Entity('ExpedienteBundle:Expediente', 'grupo_docdigital');
+        // Get a grid instance
+        $grid = $this->get('grid');
+
+
+        $tableAlias=$source->getTableAlias();
+        $source->manipulateQuery(
+        function($query) use ($tableAlias){
+            $query->andWhere($tableAlias.".tipoexpediente = 'T' or ".$tableAlias.".tipoexpediente = 'E'");
+        }
+            );
+
+         //Manipular Fila
+        $source->manipulateRow(
+            function ($row)
+            {
+                if($row->getField('idsolicitudempleo.numsolicitud') =="0" ){
+                   $row->setField('idsolicitudempleo.numsolicitud', "N/A");                  
+                }//if
+                return $row;
+            }
+        );
+
+        // Attach the source to the grid
+        $grid->setId('grid_docdigital_empleados');
+        $grid->setSource($source);
+        
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $grid->addColumn($NombreEmpleados,3);
+          
+        $grid->setNoDataMessage("No se encontraron resultados");
+        $grid->setDefaultOrder('idsolicitudempleo.numsolicitud', 'asc');
+        
+        $rowAction1 = new RowAction('Registrar', 'docdigital_new');
+
+        //tipogrid 1 consultar, 2 registrar
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                 $action->setRouteParameters(array('id','tipogrid'=> 4));
+                return $action;
+            }
+        );
+
+        $grid->addRowAction($rowAction1);     
+ 
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+    return $grid->getGridResponse('ExpedienteBundle:Docexpediente:grid_registrar_empleados.html.twig');
+
+    }
+
+
     //funcion de grid para consultar documentos digitales de un expediente (Docexpediente)
     public function ConsultaDocAspirantesAction()
     {
@@ -348,6 +428,17 @@ class DocexpedienteController extends Controller
             $query->andWhere($tableAlias.".tipoexpediente = 'I' or ".$tableAlias.".tipoexpediente = 'A'");
         }
             );
+
+         //Manipular Fila
+        $source->manipulateRow(
+            function ($row)
+            {
+                if($row->getField('idsolicitudempleo.numsolicitud') =="0" ){
+                   $row->setField('idsolicitudempleo.numsolicitud', "N/A");                  
+                }//if
+                return $row;
+            }
+        );
 
         // Attach the source to the grid
         $grid->setId('grid_docdigital_aspirantes');
@@ -379,15 +470,15 @@ class DocexpedienteController extends Controller
     }
 
 //funcion de grid para agregar documentos digitales a un expediente (Docexpediente)
-    public function ConsultaRegDocEmpleadosAction()
+    public function ConsultaDocEmpleadosAction()
     {
 
             //incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirantes", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Agregar Documentos Digitales", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Consultar Documentos Digitales", $this->get("router")->generate("docdigital_rempleado"));
 
         
         $source = new Entity('ExpedienteBundle:Expediente', 'grupo_docdigital');
@@ -402,6 +493,17 @@ class DocexpedienteController extends Controller
         }
             );
 
+         //Manipular Fila
+        $source->manipulateRow(
+            function ($row)
+            {
+                if($row->getField('idsolicitudempleo.numsolicitud') =="0" ){
+                   $row->setField('idsolicitudempleo.numsolicitud', "N/A");                  
+                }//if
+                return $row;
+            }
+        );
+
         // Attach the source to the grid
         $grid->setId('grid_docdigital_empleados');
         $grid->setSource($source);
@@ -412,12 +514,21 @@ class DocexpedienteController extends Controller
         $grid->setNoDataMessage("No se encontraron resultados");
         $grid->setDefaultOrder('idsolicitudempleo.numsolicitud', 'asc');
         
-        $rowAction1 = new RowAction('Registrar', 'docdigital_new');        
+        $rowAction1 = new RowAction('Consultar', 'docdigital_new'); 
+
+        //tipogrid 3 consultar, 4 registrar
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                 $action->setRouteParameters(array('id','tipogrid'=> 3));
+                return $action;
+            }
+        );       
         $grid->addRowAction($rowAction1);     
  
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
 
-    return $grid->getGridResponse('ExpedienteBundle:Docexpediente:grid_agregar_ver_empleados.html.twig');
+    return $grid->getGridResponse('ExpedienteBundle:Docexpediente:grid_consultar_empleados.html.twig');
 
     }
 
@@ -446,16 +557,29 @@ class DocexpedienteController extends Controller
             $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
                
             //tipo 1 o 2 es aspirante y consulta
-            if($tipogrid==1 || $tipogrid==2){
+            if($tipogrid==1){
             $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
             $breadcrumbs->addItem("Consultar Documentos Digitales", $this->get("router")->generate("docdigital_caspirante"));
             }
-       
-            //tipo 3 o 4 es empleado y consulta
-            if($tipogrid==3 || $tipogrid==4){
-            $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
-            $breadcrumbs->addItem("Consultar Documentos Digitales", $this->get("router")->generate("docdigital_caspirante"));
+
+            //tipo 2 es aspirante y registro
+            if($tipogrid==2){
+            $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+            $breadcrumbs->addItem("Registrar Documentos Digitales", $this->get("router")->generate("docdigital_raspirante"));
             }
+       
+            //tipo 3 es empleado y consulta
+            if($tipogrid==3){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+            $breadcrumbs->addItem("Consultar Documentos Digitales", $this->get("router")->generate("docdigital_cempleado"));
+            }
+
+            //tipo 4 es empleado y registro
+            if($tipogrid==4){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+            $breadcrumbs->addItem("Consultar Documentos Digitales", $this->get("router")->generate("docdigital_rempleado"));
+            }
+
             $breadcrumbs->addItem($expediente->getIdsolicitudempleo()->getnombrecompleto(), $this->get("router")->generate("docdigital_new", array('id'=>$idexp, 'tipogrid'=>$tipogrid)));
             $breadcrumbs->addItem($entity->getnombredocexp(), $this->get("router")->generate("hello_page"));
 
@@ -476,4 +600,18 @@ class DocexpedienteController extends Controller
         ));
 
     }//fin function VerDigitalAction()
+
+
+
+    public function finRegistroAspiranteAction() 
+    {
+
+             //incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+
+        return $this->render('ExpedienteBundle:Docexpediente:fin_registro_aspirante.html.twig');
+
+    }// finRegistroAspirante
 }

@@ -45,7 +45,7 @@ class AccionpersonalController extends Controller
            // obtenemos los puestos a los que esta asociado el empleado.
         $query = $em->createQuery('
           SELECT pl.nombreplaza, re.id, re.partida, re.subpartida, re.sueldoactual
-          FROM AdminBundle:refrendaact re
+          FROM AdminBundle:RefrendaAct re
           join re.idplaza pl
           WHERE re.id =:idrefrenda'
         )->setParameter('idrefrenda', $idrefrenda);
@@ -61,7 +61,7 @@ class AccionpersonalController extends Controller
         $tipo_accion = $entity->getIdtipoaccion()->getId(); 
         if ($tipo_accion =="1" || $tipo_accion=="2")
         {
-            $refrendaact = $em->getRepository('AdminBundle:Refrendaact')->find($idrefrenda);
+            $refrendaact = $em->getRepository('AdminBundle:RefrendaAct')->find($idrefrenda);
             echo  $refrendaact->getIdempleado();
             $refrendaact->setIdempleado(null);
             $em->persist($refrendaact);
@@ -130,6 +130,24 @@ class AccionpersonalController extends Controller
         //obtenemos el manejador de doctrine
         $em = $this->getDoctrine()->getManager();
 
+         $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+
+        if($vista_retorno==1){
+        $breadcrumbs->addItem("Consulta de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_cempleados"));
+            }
+        if($vista_retorno==2){
+        $breadcrumbs->addItem("Registro de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_rempleados"));            
+        }
+        $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));
+        $breadcrumbs->addItem("Nuevo Acuerdo", $this->get("router")->generate("accionpersonal_new", array('idexp'=>$idexp, 'vista_retorno'=>$vista_retorno)));            
+
+
         // obtenemos los puestos a los que esta asociado el empleado.
         $query = $em->createQuery('
           SELECT pl.nombreplaza, re.id, re.partida, re.subpartida, re.sueldoactual
@@ -169,10 +187,40 @@ class AccionpersonalController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ExpedienteBundle:Accionpersonal')->find($id);
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($entity->getIdexpediente()->getId());
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Accionpersonal entity.');
         }
+
+        if (!$expediente) {
+            throw $this->createNotFoundException('Unable to find expediente entity.');
+        }
+
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+
+        if($vista_retorno==1){
+        $breadcrumbs->addItem("Consulta de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_cempleados"));
+        $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));
+            }
+        if($vista_retorno==2){
+        $breadcrumbs->addItem("Registro de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_rempleados"));
+        $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));            
+        }
+        if($vista_retorno==3){
+        $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cempleadosotros"));
+        $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cotrosacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));
+            }
+        if($vista_retorno==4){
+        $breadcrumbs->addItem("Registro de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_rempleadosotros"));
+        $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cotrosacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));            
+        }
+        $breadcrumbs->addItem("Acción de Personal", $this->get("router")->generate("accionpersonal_show", array('id'=>$id, 'vista_retorno'=>$vista_retorno)));            
+
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -285,7 +333,7 @@ class AccionpersonalController extends Controller
 
     $request = $this->getRequest();
     $idTipo = $request->get('idtipoaccion');
-    $em=$this->getDoctrine()->getEntityManager(); //agregado
+    $em=$this->getDoctrine()->getManager(); //agregado
     $TipoAccion = $em->getRepository('ExpedienteBundle:TipoAccion')->find($idTipo); //agregado
        
     $numfilas = count($TipoAccion);
@@ -313,6 +361,21 @@ class AccionpersonalController extends Controller
        $source = new Entity('ExpedienteBundle:Expediente', 'grupo_acciones_empleado');
         // Get a grid instance
         $grid = $this->get('grid');
+
+        ////////////////////////////////////////
+        //Camino de miga
+        ////////////////////////////////////////
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Consulta de Record Laboral", $this->get("router")->generate("accionpersonal_cempleados"));
+
+        ////////////////////////////////////////
+        // Fin Camino de miga
+        ////////////////////////////////////////
+
 
        
           $tableAlias=$source->getTableAlias();
@@ -363,6 +426,20 @@ class AccionpersonalController extends Controller
        $source = new Entity('ExpedienteBundle:Expediente', 'grupo_acciones_empleado');
         // Get a grid instance
         $grid = $this->get('grid');
+
+        ////////////////////////////////////////
+        //Camino de miga
+        ////////////////////////////////////////
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Registro de Record Laboral", $this->get("router")->generate("accionpersonal_rempleados"));
+
+        ////////////////////////////////////////
+        // Fin Camino de miga
+        ////////////////////////////////////////
 
        
           $tableAlias=$source->getTableAlias();
@@ -438,15 +515,29 @@ class AccionpersonalController extends Controller
         );
        
         $grid->setId('grid_acuerdos');
-
         $grid->setSource($source);
 
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+
+
+         //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+
+        if($vista_retorno==1){
+        $breadcrumbs->addItem("Consulta de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_cempleados"));
+            }
+        if($vista_retorno==2){
+        $breadcrumbs->addItem("Registro de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_rempleados"));            
+        }
+        $breadcrumbs->addItem($entity->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cacuerdos", array('id'=>$entity->getId(), 'vista_retorno'=>$vista_retorno)));
+
           
           //obtenemos el numero de puestos para los cuales el empleado tiene refrenda
-        // (los puestos que ocupa)
+          // (los puestos que ocupa)
           $numpuestos= count($entity->getIdempleado()->getIdrefrenda());
 
         $grid->setNoDataMessage("No se encontraron resultados");
@@ -473,7 +564,6 @@ class AccionpersonalController extends Controller
         'entity'=>$entity,
         'numpuestos'=>$numpuestos,
         'vista_retorno' => $vista_retorno,
-
         ));
        
     }
@@ -544,6 +634,21 @@ class AccionpersonalController extends Controller
         // Get a grid instance
         $grid = $this->get('grid');
 
+        ////////////////////////////////////////
+        //Camino de miga
+        ////////////////////////////////////////
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cempleadosotros"));
+
+        ////////////////////////////////////////
+        // Fin Camino de miga
+        ////////////////////////////////////////
+
+
        
           $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
@@ -592,6 +697,21 @@ class AccionpersonalController extends Controller
        $source = new Entity('ExpedienteBundle:Expediente', 'grupo_acciones_empleado');
         // Get a grid instance
         $grid = $this->get('grid');
+
+        ////////////////////////////////////////
+        //Camino de miga
+        ////////////////////////////////////////
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Registro de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_rempleadosotros"));
+
+        ////////////////////////////////////////
+        // Fin Camino de miga
+        ////////////////////////////////////////
+
 
        
           $tableAlias=$source->getTableAlias();
@@ -643,9 +763,8 @@ class AccionpersonalController extends Controller
         $idexp = $request->get('id');
 
         $vista_retorno = $request->get('vista_retorno');
-        //camino de miga
-
-       $source = new Entity('ExpedienteBundle:Accionpersonal', 'grupo_consultar_acuerdo');
+       
+        $source = new Entity('ExpedienteBundle:Accionpersonal', 'grupo_consultar_acuerdo');
         // Get a grid instance
         $grid = $this->get('grid');
 
@@ -670,13 +789,25 @@ class AccionpersonalController extends Controller
         );
        
         $grid->setId('grid_otros_acuerdos');
-
         $grid->setSource($source);
 
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
-          
+       
+         //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+
+        if($vista_retorno==3){
+        $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cempleadosotros"));
+            }
+        if($vista_retorno==4){
+        $breadcrumbs->addItem("Registro de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_rempleadosotros"));            
+        }
+        $breadcrumbs->addItem($entity->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cotrosacuerdos", array('id'=>$entity->getId(), 'vista_retorno'=>$vista_retorno)));
+
           //obtenemos el numero de puestos para los cuales el empleado tiene refrenda
         // (los puestos que ocupa)
           $numpuestos= count($entity->getIdempleado()->getIdrefrenda());
@@ -720,6 +851,22 @@ class AccionpersonalController extends Controller
 
         //obtenemos el manejador de doctrine
         $em = $this->getDoctrine()->getManager();
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+
+        if($vista_retorno==3){
+        $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cempleadosotros"));
+            }
+        if($vista_retorno==4){
+        $breadcrumbs->addItem("Registro de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_rempleadosotros"));            
+        }
+        $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cotrosacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));
+        $breadcrumbs->addItem("Nueva Acción", $this->get("router")->generate("accionpersonal_new_otros", array('idexp'=>$idexp, 'vista_retorno'=>$vista_retorno)));            
 
         // obtenemos los puestos a los que esta asociado el empleado.
         $query = $em->createQuery('
@@ -766,7 +913,7 @@ class AccionpersonalController extends Controller
            // obtenemos los puestos a los que esta asociado el empleado.
         $query = $em->createQuery('
           SELECT pl.nombreplaza, re.id, re.partida, re.subpartida, re.sueldoactual
-          FROM AdminBundle:refrendaact re
+          FROM AdminBundle:RefrendaAct re
           join re.idplaza pl
           WHERE re.id =:idrefrenda'
         )->setParameter('idrefrenda', $idrefrenda);

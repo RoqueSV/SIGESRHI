@@ -32,10 +32,10 @@ class Docpersonal
     /**
      * @var string
      *
-     * @ORM\Column(name="nombredocpersonal", type="string", length=25, nullable=false)
+     * @ORM\Column(name="nombredocpersonal", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre del documento")
      * @Assert\Length(
-     * max = "25",
+     * max = "100",
      * maxMessage = "El nombre del documento no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -52,8 +52,7 @@ class Docpersonal
     /**
      * @var integer
      *
-     * @ORM\Column(name="indice", type="integer", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar el indice")
+     * @ORM\Column(name="indice", type="integer", nullable=true)
      */
     private $indice;
 
