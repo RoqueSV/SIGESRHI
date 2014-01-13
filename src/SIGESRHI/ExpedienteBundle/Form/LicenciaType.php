@@ -22,7 +22,7 @@ class LicenciaType extends AbstractType
                 ))
             ->add('duracionhoras',null,array(
                 'label' => 'Número de horas',
-                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number','maxlength'=>'2','minlength'=>'1','readonly'=>true)
+                'attr' => array('class'=> 'input-small','maxlength'=>'2','minlength'=>'1','readonly'=>true)
                 ))
             ->add('duracionminutos',null,array(
                 'label' => 'Número de minutos',

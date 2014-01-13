@@ -268,11 +268,11 @@ class ReporteController extends Controller
 
     //Incluimos camino de migas
       
-      $breadcrumbs = $this->get("white_october_breadcrumbs");
+     /* $breadcrumbs = $this->get("white_october_breadcrumbs");
       $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
       $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
       $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_pruebapsicologica"));
-
+      */
      /* Obtengo parametros */
      $request=$this->getRequest();
      $idcontrato=$request->get('id');

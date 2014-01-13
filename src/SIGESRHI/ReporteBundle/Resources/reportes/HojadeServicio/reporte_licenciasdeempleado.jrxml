@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_licenciasdeempleado" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="821508bb-4b37-41e6-87b8-39d5dcd41e38">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="119"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="fechainicio" class="java.lang.String"/>
 	<parameter name="fechafin" class="java.lang.String"/>
@@ -144,7 +144,7 @@ where ct.id=$P{idcontratacion} $P!{cadena} order by concepto]]>
 						<rightPen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9" isBold="true"/>
+						<font size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Duración(Horas)]]></text>
 				</staticText>
@@ -157,7 +157,7 @@ where ct.id=$P{idcontratacion} $P!{cadena} order by concepto]]>
 						<rightPen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="9" isBold="true"/>
+						<font size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Duracion(Min)]]></text>
 				</staticText>
@@ -291,7 +291,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA["Del: "+$P{fechainicio}+ " al "+$P{fechafin}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="1aed6387-b128-4c03-892f-02465a32c465" x="393" y="230" width="358" height="19"/>
+				<reportElement uuid="1aed6387-b128-4c03-892f-02465a32c465" x="371" y="230" width="380" height="19"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[*Tipo: "S": Licencia sin goce de sueldo  "C": Licencia con goce de sueldo]]></text>
 			</staticText>

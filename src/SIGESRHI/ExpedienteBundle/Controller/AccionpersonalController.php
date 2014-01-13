@@ -334,7 +334,7 @@ class AccionpersonalController extends Controller
     $request = $this->getRequest();
     $idTipo = $request->get('idtipoaccion');
     $em=$this->getDoctrine()->getManager(); //agregado
-    $TipoAccion = $em->getRepository('ExpedienteBundle:TipoAccion')->find($idTipo); //agregado
+    $TipoAccion = $em->getRepository('ExpedienteBundle:Tipoaccion')->find($idTipo); //agregado
        
     $numfilas = count($TipoAccion);
 
