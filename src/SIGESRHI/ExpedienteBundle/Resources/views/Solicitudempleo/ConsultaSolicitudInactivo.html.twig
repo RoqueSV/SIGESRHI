@@ -12,7 +12,7 @@
                         data: {
                             maxRows: 12,
                             letters: request.term,
-                            entity_alias: "empleados"
+                            entity_alias: "noempleados"
                         },
                         success: function( data ) {
                             response( jQuery.map( data, function( item ) {
@@ -73,7 +73,7 @@
 {% endfor %}
 
     <div class="text-center">
-    <h3> Consultar datos de Empleados Inactivos</h3>
+    <h3> Consultar Datos de Empleados Inactivos</h3>
     </div>
 
 {{ grid_search(grid) }} 
