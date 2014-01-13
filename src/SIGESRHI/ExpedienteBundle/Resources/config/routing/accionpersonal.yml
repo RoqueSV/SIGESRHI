@@ -34,7 +34,7 @@ accionpersonal_cempleados:
     defaults: { _controller: "ExpedienteBundle:Accionpersonal:ConsultarEmpleadosAcuerdos" }
 
 accionpersonal_cacuerdos:
-    pattern:  /cacuerdos/{id}
+    pattern:  /cacuerdos/{id}/{vista_retorno}
     defaults: { _controller: "ExpedienteBundle:Accionpersonal:ConsultarAcuerdosEmpleado" }
 
 accionpersonal_eligereporte:
@@ -50,7 +50,7 @@ accionpersonal_cempleadosotros:
     defaults: { _controller: "ExpedienteBundle:Accionpersonal:ConsultarEmpleadosOtrosAcuerdos" }
 
 accionpersonal_cotrosacuerdos:
-    pattern:  /cotrosacuerdos/{id}
+    pattern:  /cotrosacuerdos/{id}/{vista_retorno}
     defaults: { _controller: "ExpedienteBundle:Accionpersonal:ConsultarOtrosAcuerdosEmpleado" }
 
 accionpersonal_new_otros:

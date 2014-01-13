@@ -40,9 +40,11 @@ class LicenciaController extends Controller
             function($query) use ($tableAlias){
                 $query->andWhere($tableAlias.'.tipoexpediente = :emp')
                       ->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
-                      ->andWhere('_idempleado_idcontratacion.fechafinnom IS NULL')
+                        ->orWhere('_idempleado_idcontratacion.fechafincontrato >= :factual')
+                        ->andWhere('_idempleado_idcontratacion.fechafinnom IS NULL')
                       //->andWhere('_idempleado_idcontratacion.fechafinnom IS NULL')
-                      ->setParameter('emp','E');
+                      ->setParameter('emp','E')
+                      ->setParameter('factual',date('Y-m-d'));
             }
         );        
 
@@ -104,12 +106,14 @@ class LicenciaController extends Controller
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias,$idemps){
-                $query->andWhere($tableAlias.'.tipoexpediente = :emp')
-                      ->andWhere($query->expr()->in('_idempleado_idcontratacion.idempleado', $idemps))
-                        ->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
-                        ->andWhere('_idempleado_idcontratacion.fechafinnom IS NULL')
+                $query->andWhere('_idempleado_idcontratacion.fechafincontrato IS NULL')
+                        ->orWhere('_idempleado_idcontratacion.fechafincontrato >= :factual')
+                        ->andWhere($tableAlias.'.tipoexpediente = :emp')
+                      ->andWhere($query->expr()->in('_idempleado_idcontratacion.idempleado', $idemps))                        
+                        ->andWhere('_idempleado_idcontratacion.fechafinnom IS NULL')                        
                         //->andWhere($query->expr()->isNotNull('_idempleado_idcontratacion_idlicencia.id'))
-                        ->setParameter('emp','E');
+                        ->setParameter('emp','E')
+                        ->setParameter('factual',date('Y-m-d'));
             }
         );        
 

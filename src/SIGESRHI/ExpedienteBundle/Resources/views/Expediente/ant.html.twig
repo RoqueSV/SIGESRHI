@@ -1,6 +1,11 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+    {% for flashMessage in app.session.flashbag.get('confirm') %}
+        <div class="alert alert-success">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
     <!-- Botón ayuda -->
     <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
     {{ include('ExpedienteBundle:Ayuda/PruebaPsicologica:registro.html.twig')}}

@@ -45,22 +45,14 @@ class ExpedienteController extends Controller
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias){
-                $query->Join($tableAlias.'.idexpediente','e')
-                       ->andWhere('e.tipoexpediente = :inv')
+                $query->andWhere('_idexpediente.tipoexpediente = :inv')
                        ->setParameter('inv','I');
             }
         );
-        $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false));
+        $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false, "filterable" => false));
+        $Nombre = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $grid->addColumn($Nombre,2);
         $grid->addColumn($plaza,3);
-    /*    $source->manipulateRow(
-            function ($row)
-            {                    
-                if($row->getField('idexpediente.tipoexpediente')!='I'){
-                    return null;
-                }
-                return $row;
-            }
-        );*/
         $rowAction1 = new RowAction('Validar', 'expediente_validar');
         $rowAction1->setColumn('info_column');
         $rowAction1->manipulateRender(
@@ -70,15 +62,16 @@ class ExpedienteController extends Controller
                 return $action; 
             }
         );
+        $grid->setId("grid_aspirantes_invalidos");
         $grid->addRowAction($rowAction1); 
 
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Validar",  $this->get("router")->generate("expediente_aspirantes"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("pantalla_aspirante",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Validar Expediente",  "");
         
         return $grid->getGridResponse('ExpedienteBundle:Expediente:index.html.twig');
     }    
@@ -266,20 +259,13 @@ public function validarAction()
         
         $em = $this->getDoctrine()->getManager();
         $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteInvalido($request->query->get('exp'));
-        //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
-
-        //$entity = new Pruebapsicologica();
-        //$entity->setIdexpediente($expediente);
-        //$form   = $this->createForm(new PruebapsicologicaType(), $entity);
-
-        //$em = $this->getDoctrine()->getManager();
-        //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);        
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Validar",  $this->get("router")->generate("expediente_aspirantes"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("pantalla_aspirante",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Validar Expediente",  $this->get("router")->generate("expediente_aspirantes"));
+        $breadcrumbs->addItem($expedienteinfo[0]['nombrecompleto'], "");
         return $this->render('ExpedienteBundle:Expediente:validar.html.twig', array(          
             'expediente' => $expedienteinfo,
         ));
@@ -292,8 +278,39 @@ public function confirmarValidoAction($id)
         
         $em = $this->getDoctrine()->getManager();
         $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->registrarValido($id);
-        //$expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
-        $this->get('session')->getFlashBag()->add('confirm','Expediente de aspirante validado');
+        
+        //funcion para asiganar num solicitud
+        $numSolicitud;        
+        //establecemos el id de la solicitud
+        $query = $em->createQuery("SELECT COUNT(s.numsolicitud) AS  numsolicitud 
+        FROM ExpedienteBundle:Solicitudempleo s 
+        where  substring(s.numsolicitud,locate('-',s.numsolicitud)+1, 4) = :actual")
+       ->setParameter('actual', date('Y'));
+
+        $Resultado = $query->getsingleResult();
+
+        $num=$Resultado['numsolicitud'];
+
+        if($num==0){
+
+            $numsolicitud="1-".date('Y');
+        }
+        if($num > 0){
+            $num++;
+            $numsolicitud = $num."-".date('Y');
+        }
+
+        $entity = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($id);
+
+        $num_anterior=$entity->getnumsolicitud();
+        if($num_anterior == 0 ){
+            $entity->setnumsolicitud($numsolicitud);
+            $em->persist($entity);
+            $em->flush();
+        }
+        //fin funcion
+
+        $this->get('session')->getFlashBag()->add('confirm',"Expediente del aspirante: ".$entity->getNombrecompleto().". Validado correctamente");
         return $this->redirect($this->generateUrl("expediente_aspirantes"));
         
     }
@@ -478,9 +495,9 @@ public function confirmarValidoAction($id)
             }
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('confirm','Información eliminada exitosamente');
+            $this->get('session')->getFlashBag()->add('confirm','Información de Aspirante eliminada exitosamente');
             //return $this->render('ExpedienteBundle:Expediente:seleliminar.html.twig');
-            return $this->redirect($this->generateUrl('eliminar_aspirantes'));        
+            return $this->redirect($this->generateUrl('expediente_elim_ant'));        
         }
 
     }

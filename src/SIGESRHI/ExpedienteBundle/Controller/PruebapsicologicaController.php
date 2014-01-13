@@ -41,7 +41,7 @@ class PruebapsicologicaController extends Controller
     public function indexExpedientesEditAction()
     {
         // Creates simple grid based on your entity (ORM)
-        $source = new Entity('ExpedienteBundle:Solicitudempleo','grupo_pruebapsicologica');
+        $source = new Entity('ExpedienteBundle:Solicitudempleo','grupo_pruebapsicologica_edit');
 
         // Get a grid instance
         $grid = $this->get('grid');
@@ -104,14 +104,14 @@ class PruebapsicologicaController extends Controller
         $grid->addColumn($plaza,2);
         
         // Attach a rowAction to the Actions Column
-        $rowAction1 = new RowAction('Modificar', 'pruebapsicologica_edit');
+        $rowAction1 = new RowAction('Ver', 'pruebapsicologica_show');
         $rowAction1->setColumn('info_column');
         //Setear parametros al route
         //manipulamos la presentacion del rowaction
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
-                $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id'),'pr'=> $row->getField('idexpediente.idpruebapsicologica.id') ));
+                $action->setRouteParameters(array('id' => $row->getField('idexpediente.idpruebapsicologica.id'),'exp'=> $row->getField('idexpediente.id')  ));
                 return $action;
             }
         );
@@ -155,7 +155,6 @@ class PruebapsicologicaController extends Controller
         else{
             $idexp[]=0;
         }
-
         //manipulando la Consulta del grid
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
@@ -326,6 +325,9 @@ class PruebapsicologicaController extends Controller
         $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteAspirante($request->query->get('exp'));
         $entity = $em->getRepository('ExpedienteBundle:Pruebapsicologica')->find($id);
 
+        $var = $request->get('nogrid');
+        $nogrid = (isset($var))?0:1;
+
         if (!$entity) {
             throw $this->createNotFoundException('No existe entidad Pruebapsicologica.');
         }
@@ -343,6 +345,7 @@ class PruebapsicologicaController extends Controller
             'entity'      => $entity,
             'expediente' => $expedienteinfo,
             'delete_form' => $deleteForm->createView(),        
+            'nogrid' => $nogrid,
             ));
     }
 

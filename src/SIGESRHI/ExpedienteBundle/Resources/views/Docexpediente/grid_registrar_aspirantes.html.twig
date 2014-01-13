@@ -13,7 +13,7 @@
                         data: {
                             maxRows: 12,
                             letters: request.term,
-                            entity_alias: "empleados"
+                            entity_alias: "aspirantes"
                         },
                         success: function( data ) {
                             response( jQuery.map( data, function( item ) {
@@ -39,7 +39,7 @@
 
 
     <div class="text-center">
-    <h3> Registrar Documentos Digitales a Expediente de Aspirantes</h3>
+    <h3> Registrar Documentos Digitales (Aspirantes)</h3>
     </div>
  
 {{ grid_search(grid) }} 

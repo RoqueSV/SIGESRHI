@@ -61,7 +61,11 @@
      <div class="text-center">
      <input type="hidden" id='idexp' name='idexp' value={{ exp.id }} />
      <button type="submit" class="btn btn-primary">Generar PDF</button>
-     <button type="button" class="btn" onclick="location.href='{{ path ('pruebapsicologica_index_edit') }}'">Regresar al listado</button>
+      {% if nogrid == 0 %}
+                <button type="button" class="btn" onclick="window.history.back(1);">Regresar</button>
+            {% else %}
+                <button type="button" class="btn" onclick="location.href='{{ path ('pruebapsicologica_index_edit') }}'">Regresar</button>
+            {% endif %}     
      <a href="{{ path('pruebapsicologica_edit', { 'id': entity.id, 'exp': exp.id, 'pr': entity.id }) }}" class="btn">Editar Registro</a>
      </div>
     {% endfor %}

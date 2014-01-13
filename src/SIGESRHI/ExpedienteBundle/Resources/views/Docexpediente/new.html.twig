@@ -23,7 +23,7 @@
     </div>
 {% endfor %}
 
-    <h4 class="text-center">REGISTRAR DOCUMENTOS DIGITALES</h4>
+    <h4 class="text-center">REGISTRO/CONSULTA DE DOCUMENTOS DIGITALES</h4>
 
     <br>
 
@@ -148,16 +148,31 @@
         <div class="text-center">
         
             <button type="submit"  class="btn btn-primary">Guardar Documentos</button>
-            <a href="{{path('hello_page')}}" class="btn"> Cancelar </a>
         
+        {% if app.user %}
+
+            {% if tipogrid == 1 %}
+            <a href="{{path('docdigital_caspirante')}}" class="btn"> Cancelar </a>
+            {% elseif tipogrid == 2 %}
+            <a href="{{path('docdigital_raspirante')}}" class="btn"> Cancelar </a>
+            {% elseif tipogrid == 3 %}
+            <a href="{{path('docdigital_cempleado')}}" class="btn"> Cancelar </a>
+            {% elseif tipogrid == 4 %}
+            <a href="{{path('docdigital_rempleado')}}" class="btn"> Cancelar </a>
+            {% endif %}
+
+        {% else %}
+        <button onclick='window.location.replace("{{path('docdigital_finregistro')}}")' class="btn" > Finalizar</button>
+        {% endif %}
         </div>
         <br>
 
+    <div class="text-center">
         {% if documentos|length > 0 %}
-        <div class="text-center">
+        
             <h3>Documentos Digitales Registrados</h3>
 
-            <table width="100%" border="2" class="table table-bordered table-hover">
+            <table width="100%" border="2" class="table table-bordered table-hover mitable">
                 <tr>
                     <th>Nombre del Archivo:</th>
                     <th>Fecha de Registro: </th>
@@ -175,11 +190,10 @@
                 {% endfor %}
 
             </table>
-
-
-        </div>
+        {% else %}
+        <h4>*Sin Documentos Digitales Registrados</h4>
         {% endif %}
-        
+        </div>
     </form>
 
 {% endblock %}

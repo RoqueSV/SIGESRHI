@@ -4,6 +4,7 @@
     
 <div class="text-center">
 <h4>HOJA DE SERVICIO</h4>
+<h5>CONSULTA/REGISTRO DE ACUERDOS LABORALES</h5>
 
 
 <table border="0" width="90%" class="centered-table">
@@ -142,7 +143,13 @@
 {% if entity.idaccion|length > 0 %}
 <button class="btn" onclick="location.href='{{path('accionpersonal_eligereporte', {'id':entity.id})}}'">Generar Reporte </button>
 {% endif %}
+
+{% if vista_retorno == 1 %}
 <button class="btn" onclick="location.href='{{path('accionpersonal_cempleados')}}'"> Cancelar </button>
+{% elseif vista_retorno == 2 %}
+<button class="btn" onclick="location.href='{{path('accionpersonal_rempleados')}}'"> Cancelar </button>
+{% endif %}
+
 </div>
 
 <style type="text/css">

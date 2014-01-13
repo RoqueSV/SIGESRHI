@@ -107,12 +107,12 @@
         <tr align="center">
             <td><a href="{{ 
                     path('solicitud_show',
-                        { 'id': exp.id }
+                        { 'id': exp.id, 'nogrid':0 }
                         )
                     }}">Consultar solicitud de empleo registrada</a></td>
             <td><a href="{{ 
                     path('docpersonal_new',
-                        { 'id': exp.id , 'exp': exp.idexpediente}                    
+                        { 'id': exp.id , 'exp': exp.idexpediente, 'nogrid':0}                    
                         )
                     }}">Consultar Documentación registrada</a></td>
         </tr><tr><td>&nbsp;</td></tr>

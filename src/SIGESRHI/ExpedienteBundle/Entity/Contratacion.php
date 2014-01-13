@@ -120,7 +120,7 @@ class Contratacion
     private $fechaautorizacion;
 
     /**
-     * @var integer
+     * @var string
      *
      * @ORM\Column(name="numoficio", type="string", length=10, nullable=true)
      */

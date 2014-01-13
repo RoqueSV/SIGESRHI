@@ -5,7 +5,7 @@
 <script>
         jQuery(function() {
 
-            jQuery("#grid_grid_docdigital_aspirantes__empleados__query__from").autocomplete({
+            jQuery("#grid_grid_docdigital_empleados__empleados__query__from").autocomplete({
                 source: function( request, response ) {
                     jQuery.ajax({
                         url: "{{ path('shtumi_ajaxautocomplete') }}",
@@ -13,7 +13,7 @@
                         data: {
                             maxRows: 12,
                             letters: request.term,
-                            entity_alias: "aspirantes"
+                            entity_alias: "empleados"
                         },
                         success: function( data ) {
                             response( jQuery.map( data, function( item ) {
@@ -39,9 +39,9 @@
 
 
     <div class="text-center">
-    <h3> Consultar Documentos Digitales (Aspirantes)</h3>
+    <h3> Consultar Documentos Digitales (Empleados)</h3>
     </div>
- 
+
 {{ grid_search(grid) }} 
 <br>
 {{ grid(grid,_self) }}  

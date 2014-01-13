@@ -126,7 +126,7 @@
         </td>
         {% if exp.idprueba is not null %}
         <td>
-          <a href="{{ path('pruebapsicologica_show', {'id': exp.idprueba, 'exp': exp.id}) }}">
+          <a href="{{ path('pruebapsicologica_show', {'id': exp.idprueba, 'exp': exp.id, 'nogrid':0}) }}">
             Consultar prueba psicológica</a>
         </td>
         {% endif %}

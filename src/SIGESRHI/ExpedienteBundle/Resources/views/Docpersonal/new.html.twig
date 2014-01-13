@@ -41,10 +41,14 @@ margin-bottom: 0px;
         {{ form_rest(form) }}
         <div class='text-center'>
             <button type="submit" class="btn btn-primary">Agregar</button>
-            <a  href="{{ 
+            {% if nogrid == 0 %}
+                <button type="button" class="btn" onclick="window.history.back(1);">Regresar</button>
+            {% else %}
+                <a  href="{{ 
                     path('docpersonal_empleado'                        
                         )
-                    }}" class="btn">Cancelar</a>
+                    }}" class="btn">Regresar</a>
+            {% endif %}
         <div>
     </form>
     <br/>

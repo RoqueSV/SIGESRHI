@@ -1,60 +1,52 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+<script>
+    jQuery(function() {
+        jQuery("#grid_grid_aspirantes_invalidos__nombrecompleto__query__from").autocomplete({
+            source: function( request, response ) {
+                jQuery.ajax({
+                    url: "{{ path('shtumi_ajaxautocomplete') }}",
+                    dataType: "json",
+                    data: {
+                        maxRows: 12,
+                        letters: request.term,
+                        entity_alias: "aspirantes"
+                    },
+                    success: function( data ) {
+                        response( jQuery.map( data, function( item ) {
+                            return {
+                                label: item,
+                                value: item
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 2,
+            open: function() {
+                jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+            },
+            close: function() {
+                jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+            }
+        });
+    });
+</script>
 {% for flashMessage in app.session.flashbag.get('confirm') %}
     <div class="alert alert-success">
         <p> {{ flashMessage }} </p>
     </div>
 {% endfor %}
-<h4 class='text-center'>SELECCIONE UN ASPIRANTE</h4>
+<h4 class='text-center'>ASPIRANTES CON SOLICITUD NO VALIDADA</h4>
+<p class="text-center">Seleccione para validar Aspirante</p>
 {{ grid_search(grid) }}
 
     {{ grid(grid,_self) }}
 
     {% block grid_filters %}{% endblock %}
-
-{# block body -%}
-    <h1>Expediente list</h1>
-
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Fechaexpediente</th>
-                <th>Tipoexpediente</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('expediente_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{% if entity.fechaexpediente %}{{ entity.fechaexpediente|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.tipoexpediente }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('expediente_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('expediente_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('expediente_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock #}
+    <br>
     <div align='center'>
-        <a  href="{{ path('hello_page') }}" class="btn">Cancelar</a>            
+        <a  href="{{ path('pantalla_aspirante') }}" class="btn">Cancelar</a>            
     </div>
 {% endblock %}

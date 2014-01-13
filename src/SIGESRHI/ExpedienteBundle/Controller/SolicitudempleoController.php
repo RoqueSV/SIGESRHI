@@ -12,6 +12,7 @@ use SIGESRHI\ExpedienteBundle\Entity\Datosfamiliares;
 use SIGESRHI\ExpedienteBundle\Entity\Informacionacademica;
 use SIGESRHI\ExpedienteBundle\Entity\Idioma;
 use SIGESRHI\ExpedienteBundle\Entity\Expediente;
+use SIGESRHI\ExpedienteBundle\Entity\Docpersonal;
 
 use SIGESRHI\ExpedienteBundle\Entity\Municipio;
 use SIGESRHI\ExpedienteBundle\Entity\Centrounidad;
@@ -217,14 +218,59 @@ class SolicitudempleoController extends Controller
         $expediente->setTipoexpediente('I');
 
          $em->persist($expediente);
-         $em->flush();
+         //$em->flush();
        
        //asignamos a solicitud el id del nuevo expediente
         $entity->setIdexpediente($expediente);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
+            //$em->flush();
+        
+        //creeamos todos los docpersonal que el aspirante debera presentar.
+            $documento1 = new Docpersonal(); ;$documento1->setIdexpediente($expediente); $documento1->setEntregado(false); $documento1->setNombredocpersonal('Solicitud de empleo');
+            $em->persist($documento1);
+            $documento2 = new Docpersonal(); $documento2->setIdexpediente($expediente); $documento2->setEntregado(false); $documento2->setNombredocpersonal('Prueba Psicológica');
+            $em->persist($documento2);
+            $documento3 = new Docpersonal(); $documento3->setIdexpediente($expediente); $documento3->setEntregado(false); $documento3->setNombredocpersonal('Curriculum Vitae');
+            $em->persist($documento3);
+            $documento4 = new Docpersonal(); $documento4->setIdexpediente($expediente); $documento4->setEntregado(false); $documento4->setNombredocpersonal('Solvencia Policia Nacional Civil');
+            $em->persist($documento4);
+            $documento5 = new Docpersonal(); $documento5->setIdexpediente($expediente); $documento5->setEntregado(false); $documento5->setNombredocpersonal('Fotocopia de Titulo');
+            $em->persist($documento5);
+            $documento6 = new Docpersonal(); $documento6->setIdexpediente($expediente); $documento6->setEntregado(false); $documento6->setNombredocpersonal('Fotocopia de Certificados');
+            $em->persist($documento6);
+            $documento7 = new Docpersonal(); $documento7->setIdexpediente($expediente); $documento7->setEntregado(false); $documento7->setNombredocpersonal('Fotocopia de Partida de Nacimiento');
+            $em->persist($documento7);
+            $documento8 = new Docpersonal(); $documento8->setIdexpediente($expediente); $documento8->setEntregado(false); $documento8->setNombredocpersonal('Fotocopia de DUI');
+            $em->persist($documento8);
+            $documento9 = new Docpersonal(); $documento9->setIdexpediente($expediente); $documento9->setEntregado(false); $documento9->setNombredocpersonal('Fotocopia de NIT');
+            $em->persist($documento9);
+            $documento10 = new Docpersonal(); $documento10->setIdexpediente($expediente); $documento10->setEntregado(false); $documento10->setNombredocpersonal('Fotocopia Número del ISSS');
+            $em->persist($documento10);
+            $documento11 = new Docpersonal(); $documento11->setIdexpediente($expediente); $documento11->setEntregado(false); $documento11->setNombredocpersonal('Fotocopia Número del IPSFA');
+            $em->persist($documento11);
+            $documento12 = new Docpersonal(); $documento12->setIdexpediente($expediente); $documento12->setEntregado(false); $documento12->setNombredocpersonal('Fotocopia Número Único de Previsión Social NUP');
+            $em->persist($documento12);
+            $documento13 = new Docpersonal(); $documento13->setIdexpediente($expediente); $documento13->setEntregado(false); $documento13->setNombredocpersonal('Recomendaciones Laborales');
+            $em->persist($documento13);
+            $documento14 = new Docpersonal(); $documento14->setIdexpediente($expediente); $documento14->setEntregado(false); $documento14->setNombredocpersonal('Recomendaciones Personales');
+            $em->persist($documento14);
+            $documento15 = new Docpersonal(); $documento15->setIdexpediente($expediente); $documento15->setEntregado(false); $documento15->setNombredocpersonal('Declaración de Beneficiarios');
+            $em->persist($documento15);
+            $documento16 = new Docpersonal(); $documento16->setIdexpediente($expediente); $documento16->setEntregado(false); $documento16->setNombredocpersonal('Declaración Jurada de Normas Técnicas de Control Interno');
+            $em->persist($documento16);
+            $documento17 = new Docpersonal(); $documento17->setIdexpediente($expediente); $documento17->setEntregado(false); $documento17->setNombredocpersonal('Declaración Jurada de Ética');
+            $em->persist($documento17);
+            $documento18 = new Docpersonal(); $documento18->setIdexpediente($expediente); $documento18->setEntregado(false); $documento18->setNombredocpersonal('Declaración Jurada que no desempeña otra plaza con el gobierno');
+            $em->persist($documento18);
+            $documento19 = new Docpersonal(); $documento19->setIdexpediente($expediente); $documento19->setEntregado(false); $documento19->setNombredocpersonal('Declaracion Jurada que desempeña otra plaza en el gobierno y no existe incompatibilidad de horario');
+            $em->persist($documento19);
+            
+            /// mandamos a la base de datos todos los documentos creados
             $em->flush();
+        // FIN CREACION DE DOCUMENTOS DE PERSONAL
+
 
            // return $this->redirect($this->generateUrl('solicitud_show', array('id' => $entity->getId())));
             $this->get('session')->getFlashBag()->add('new', 'La solicitud de empleo se ha registrado correctamente. Si desea puede registrar sus documentos en formato digital en esta página.'); 
@@ -602,7 +648,7 @@ class SolicitudempleoController extends Controller
     $idDpto = $request->get('departamento');
     //$departamDao = new DepartamentoRepository($this->getDoctrine());
     //$municipios = $departamDao->consultarMunicipioDpto($idDpto);
-    $em=$this->getDoctrine()->getEntityManager(); //agregado
+    $em=$this->getDoctrine()->getManager(); //agregado
     $departamDao = $em->getRepository('ExpedienteBundle:Departamento')->find($idDpto); //agregado
     $municipios = $departamDao->getMunicipios();  //agregado
    

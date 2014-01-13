@@ -30,17 +30,25 @@ docdigital_delete:
     requirements: { _method: post|delete }
 
 docdigital_caspirante:
-    pattern:  /consultar/aspirante
+    pattern:  /caspirante
     defaults: { _controller: "ExpedienteBundle:Docexpediente:ConsultaDocAspirantes" }
 
 docdigital_raspirante:
-    pattern:  /registrar/aspirante
+    pattern:  /raspirante
     defaults: { _controller: "ExpedienteBundle:Docexpediente:RegistraDocAspirantes" }
 
 docdigital_ver_docdigital:
     pattern:  /documento/{iddoc}
     defaults: { _controller: "ExpedienteBundle:Docexpediente:VerDigital" }
 
-docdigital_crempleado:
-    pattern:  /empleado
-    defaults: { _controller: "ExpedienteBundle:Docexpediente:ConsultaRegDocEmpleados" }
+docdigital_cempleado:
+    pattern:  /cempleado
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:ConsultaDocEmpleados" }
+
+docdigital_rempleado:
+    pattern:  /rempleado
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:RegistraDocEmpleados" }
+
+docdigital_finregistro:
+    pattern:  /fin
+    defaults: { _controller: "ExpedienteBundle:Docexpediente:finRegistroAspirante" }

@@ -18,7 +18,7 @@ function eliminar() {
 	
 	<h4>Nombre: {{entity.nombredocexp}}</h4>
 	<br>
-	{% if extension|lower == "jpg" or extension|lower == "png" %}
+	{% if extension|lower == "jpg" or extension|lower == "png" or extension|lower == "jpe" %}
 	<img src="{{ asset('uploads/docs_expediente/'~ entity.rutadocexp) }}" width="500px" height="500px"></img>
 	{% endif %}
 
@@ -26,7 +26,7 @@ function eliminar() {
 	<embed src="{{ asset('uploads/docs_expediente/'~ entity.rutadocexp) }}" width="700px" height="500px"></embed>
 	{% endif %}
 
-	{% if extension|lower != "jpg" and extension|lower != "png" and extension|lower != "pdf" %}
+	{% if extension|lower != "jpg" and extension|lower != "png" and extension|lower != "pdf" and extension|lower != "jpe" %}
 	No se puede previsualizar el archivo: <a href="{{ asset('uploads/docs_expediente/'~ entity.rutadocexp) }}" > Descargar </a>
 	{% endif %}
 
@@ -41,7 +41,7 @@ function eliminar() {
 			<a class="btn" href="{{path('docdigital_new', {'id': id, 'tipogrid':tipogrid})}}" >Regresar al listado</a>
             <button type="button" class="btn btn-danger" onclick="eliminar()">Borrar</button>
 
-	<form class="invisible" action="{{ path('docdigital_delete', { 'id': entity.id }) }}" method="post" id="form_borrar">
+	<form class="invisible" action="{{ path('docdigital_delete', { 'id': entity.id, 'tipogrid':tipogrid }) }}" method="post" id="form_borrar">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
         </form>
