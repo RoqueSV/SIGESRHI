@@ -1,0 +1,49 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+<script>
+    jQuery(function() {
+        jQuery("#grid_grid_prueba_empleados_con__codigoempleado__query__from").autocomplete({
+            source: function( request, response ) {
+                jQuery.ajax({
+                    url: "{{ path('shtumi_ajaxautocomplete') }}",
+                    dataType: "json",
+                    data: {
+                        maxRows: 12,
+                        letters: request.term,
+                        entity_alias: "codigos"
+                    },
+                    success: function( data ) {
+                        response( jQuery.map( data, function( item ) {
+                            return {
+                                label: item,
+                                value: item
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 2,
+            open: function() {
+                jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+            },
+            close: function() {
+                jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+            }
+        });
+    });
+</script>
+<h4 class='text-center'>PRUEBA PSICOLOGICA</h4>
+<p class="text-center">Seleccione para ver y editar</p>
+{{ grid_search(grid) }}
+
+    {{ grid(grid,_self) }}
+    
+    {#{{grid (grid)}}#}
+
+    {% block grid_filters %}{% endblock %}
+
+<div align='center'>
+<a  href="{{ path('hello_page') }}" class="btn">Cancelar</a>            
+</div>   
+{% endblock %}

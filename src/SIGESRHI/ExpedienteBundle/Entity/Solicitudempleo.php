@@ -23,8 +23,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Assert\Callback(methods={"esDuiValido"})
  * @Assert\Callback(methods={"esNitValido"})
  * @Vich\Uploadable
+ *
  * @GRID\Source(columns="id,nombrecompleto,idexpediente.tipoexpediente,idexpediente.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
  * @GRID\Source(columns="id,nombrecompleto,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica_edit"})
+ * @GRID\Source(columns="id,nombrecompleto,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id,idexpediente.idempleado.codigoempleado",groups={"grupo_pruebapsicologica_empleadoedit"})
  * @GRID\Source(columns="id,numsolicitud, nombrecompleto, idplaza.nombreplaza, idexpediente.tipoexpediente",groups={"solicitud_empleo"})
  * @GRID\Source(columns="id,nombrecompleto,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.fechaexpediente",groups={"lista_expediente"})
  */
@@ -40,7 +42,7 @@ class Solicitudempleo
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="solicitudempleo_id_seq", allocationSize=1, initialValue=1)
      *
-     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica","grupo_pruebapsicologica_edit","solicitud_empleo","vista_basica_expediente","lista_expediente"}, visible=false)
+     * @GRID\Column(filterable=false, groups={"grupo_pruebapsicologica","grupo_pruebapsicologica_edit","grupo_pruebapsicologica_empleadoedit","solicitud_empleo","vista_basica_expediente","lista_expediente"}, visible=false)
      */
     private $id;
 
@@ -108,7 +110,7 @@ class Solicitudempleo
      * @var string
      *
      * @ORM\Column(name="nombrecompleto", type="string", length=100, nullable=true)
-     * @GRID\Column(title="Nombre", filter="input", groups={"grupo_pruebapsicologica","grupo_pruebapsicologica_edit", "solicitud_empleo","vista_basica_expediente"}, type="text", operators={"like"}, operatorsVisible=false, visible=false, filterable=false)
+     * @GRID\Column(title="Nombre", filter="input", groups={"grupo_pruebapsicologica","grupo_pruebapsicologica_edit","grupo_pruebapsicologica_empleadoedit","solicitud_empleo","vista_basica_expediente"}, type="text", operators={"like"}, operatorsVisible=false, visible=false, filterable=false)
       *@GRID\Column(title="Nombre", groups={"lista_expediente"}, filterable=false)
      */
     private $nombrecompleto;
@@ -521,12 +523,13 @@ class Solicitudempleo
      *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
      * })
      *
-     * @GRID\Column(primary=true, field="idexpediente.id", title="Idexpediente", joinType="inner",visible=false, filterable=false, groups={"grupo_pruebapsicologica","grupo_pruebapsicologica_edit","vista_basica_expediente"})
+     * @GRID\Column(primary=true, field="idexpediente.id", title="Idexpediente", joinType="inner",visible=false, filterable=false, groups={"grupo_pruebapsicologica","grupo_pruebapsicologica_edit","vista_basica_expediente","grupo_pruebapsicologica_empleadoedit"})
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica","grupo_pruebapsicologica_edit","lista_expediente"})
-     * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, visible=false, groups={"vista_basica_expediente"})
+     * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, visible=false, groups={"vista_basica_expediente","grupo_pruebapsicologica_empleadoedit"})
      * @GRID\Column(field="idexpediente.tipoexpediente", title="Estado", joinType="inner", filterable=false, groups={"solicitud_empleo"}, visible=true, filter="Select", operatorsVisible=false )
      * @GRID\Column(field="idexpediente.fechaexpediente",type="date", joinType="inner", filterable=false, groups={"lista_expediente"}, visible=true, title="Fecha registro")
-     * @GRID\Column(field="idexpediente.idpruebapsicologica.id", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica_edit",}, visible=false)
+     * @GRID\Column(field="idexpediente.idpruebapsicologica.id", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica_edit","grupo_pruebapsicologica_empleadoedit"}, visible=false)
+     * @GRID\Column(field="idexpediente.idempleado.codigoempleado", joinType="inner", filterable=false, groups={"grupo_pruebapsicologica_empleadoedit"}, visible=false, operators={"like"})     
      */
     private $idexpediente;
 
