@@ -1,0 +1,142 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+<h4 class='text-center'>CONSULTA DE ESTADO DE EXPEDIENTE </h4>
+<br />
+<h5> Datos generales </h5>
+{% for exp in expediente %}
+<table class="table table-bordered table-hover mitable">
+            <tr>
+                <th>Nombre:</th>
+                <td>{{ exp.nombrecompleto}}</td>
+            </tr>
+            <tr>
+                <th>Dirección:</th>
+                <td>{{ exp.direccion}}</td>
+            </tr>
+            <tr>
+                <th>Estado civil:</th>
+                <td>
+                    {% set gen='o' %}
+                    {% if exp.sexo=='F' %}
+                          {% set gen='a' %}
+                    {% endif %} 
+                    {% if exp.estadocivil=='C' %}
+                          Casad{{gen}}
+                    {% elseif exp.estadocivil=='S' %}
+                          Solter{{gen}}
+                    {% elseif exp.estadocivil=='D' %}
+                          Divorciad{{gen}}
+                    {% elseif exp.estadocivil=='A' %}
+                          Acompañad{{gen}}
+                    {% elseif exp.estadocivil=='V' %}
+                          Viud{{gen}}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Correo electrónico:</th>
+                <td>{{ exp.email }}</td>
+            </tr>
+            <tr>
+                <th>Fecha de nacimiento:</th>
+                <td>{{ exp.fechanac | date('d-m-Y') | fecha }}</td>
+            </tr>
+            <tr>    
+                <th>Teléfono (móvil):</th>
+                <td>{{ exp.telefonomovil | telefono }}</td>
+            </tr>
+</table>
+{% endfor %}
+
+<h5 class="text-center"> Estado actual </h5>
+<div class="text-center">
+<table class="centered-table">
+    <tr>
+    {% if tipo == 'I' %}
+        <td>
+            <img src="{{ asset('images/estados/aspirante.jpg') }}" class="imageEst img-polaroid"/>
+        </td>
+        <td>
+            <img src="{{ asset('images/estados/aspirante_validooff.jpg') }}" class="imageEst"/>
+        </td>
+        <td>
+            <img src="{{ asset('images/estados/empleado_activooff.jpg') }}" class="imageEstSm"/>
+        </td>
+        <td>
+            <img src="{{ asset('images/estados/empleado_inactivooff.jpg') }}" class="imageEstSm"/>
+        </td>
+    {% elseif tipo == 'A' %}
+        <td>
+            <img src="{{ asset('images/estados/aspiranteoff.jpg') }}" class="imageEst"/>
+        </td>
+        <td>
+            <img src="{{ asset('images/estados/aspirante_valido.jpg') }}" class="imageEst img-polaroid"/>
+        </td>
+        <td>
+            <img src="{{ asset('images/estados/empleado_activooff.jpg') }}" class="imageEstSm"/>
+        </td>
+        <td>
+            <img src="{{ asset('images/estados/empleado_inactivooff.jpg') }}" class="imageEstSm"/>
+        </td>
+    {% elseif tipo == 'E' %}
+        <td>
+            <img src="{{ asset('images/estados/aspiranteoff.jpg') }}" class="imageEst"/>
+        </td>
+        <td>
+            <img src="{{ asset('images/estados/aspirante_validooff.jpg') }}" class="imageEst"/>
+        </td>
+        <td>
+            <img src="{{ asset('images/estados/empleado_activo.jpg') }}" class="imageEstSm img-polaroid"/>
+        </td>
+        <td>
+            <img src="{{ asset('images/estados/empleado_inactivooff.jpg') }}" class="imageEstSm"/>
+        </td>
+    {% elseif tipo == 'X' %}
+        <td>
+            <img src="{{ asset('images/estados/aspiranteoff.jpg') }}" alt="imageEst"/>
+        </td>
+        <td>
+            <img src="{{ asset('images/estados/aspirante_validooff.jpg') }}" alt="imageEst"/>
+        </td>
+        <td>
+            <img src="{{ asset('images/estados/empleado_activooff.jpg') }}" alt="imageEstSm"/>
+        </td>
+        <td>
+            <img src="{{ asset('images/estados/empleado_inactivo.jpg') }}" alt="imageEstSm img-polaroid"/>
+        </td>
+    {% endif %}
+    </tr>
+    <tr>
+    {% if tipo == 'I' %}
+        <td><span class="imagetext label label-info">Aspirante</span></td>
+        <th><span class="imagetext">Aspirante válido</span></th>
+        <th><span class="imagetext">Empleado activo</span></th>
+        <th><span class="imagetext">Empleado inactivo</span></th>
+    {% elseif tipo == 'A' %}
+        <th><span class="imagetext">Aspirante</span></th>
+        <td><span class="imagetext label label-info">Aspirante válido</span></td>
+        <th><span class="imagetext">Empleado activo</span></th>
+        <th><span class="imagetext">Empleado inactivo</span></th>
+    {% elseif tipo == 'E' %}
+        <th><span class="imagetext">Aspirante</span></th>
+        <th><span class="imagetext">Aspirante válido</span></th>
+        <td><span class="imagetext label label-info">Empleado activo</span></td>
+        <th><span class="imagetext">Empleado inactivo</span></th>
+    {% elseif tipo == 'X' %}
+        <th><span class="imagetext">Aspirante</span></th>
+        <th><span class="imagetext">Aspirante válido</span></th>
+        <th><span class="imagetext">Empleado activo</span></th>
+        <td><span class="imagetext label label-info">Empleado inactivo</span></td>
+    {% endif %}
+    </tr>
+</table>
+
+<br/><br/>
+
+
+<a href="{{ path('consultar_estado') }}"  class="btn">Cancelar</a>
+</div>
+    
+{% endblock %}

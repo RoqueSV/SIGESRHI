@@ -55,11 +55,8 @@
 
     {{form_row(form.sueldoinicial)}}
 
-    {{form_label(form.numoficio)}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    {{form_widget(form.numoficio)}}<span class="help-inline">* número del documento que autoriza contratación</span>
-    {{form_errors(form.numoficio)}}
-    <br/><br/>
-
+    {{form_row(form.numoficio)}}
+    
     {{form_row(form.fechaautorizacion)}}
     
     {% if tipo == 1 %}

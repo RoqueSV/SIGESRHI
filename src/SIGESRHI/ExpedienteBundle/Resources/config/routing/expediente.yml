@@ -80,3 +80,11 @@ expediente_adm_empleado_inactivo:
 expediente_activar:
     pattern:  /empleado/activar
     defaults: { _controller: "ExpedienteBundle:Expediente:activarEmpleado" }
+
+consultar_estado:
+    pattern:  /consultarestado
+    defaults: { _controller: "ExpedienteBundle:Expediente:consultarEstado" }
+
+consultar_persona:
+    pattern: /estadoexpediente
+    defaults: { _controller: "ExpedienteBundle:Expediente:estadoExpediente" }

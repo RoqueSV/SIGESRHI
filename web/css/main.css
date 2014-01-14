@@ -153,3 +153,24 @@ textarea {
   padding: 5px;
   line-height: 15px;
 }
+
+/* Imagenes estados */
+.imageEst {
+    height: 120px;
+    width: 120px;
+    margin-right: 40px;
+}
+
+.imageEstSm {
+    height: 118px;
+    width: 120px;
+    padding-bottom: 17px;
+    margin-right: 40px;
+}
+
+.imagetext {
+    width: 120px;
+    margin-right: 40px;
+}
+
+/*******************/

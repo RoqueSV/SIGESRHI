@@ -707,5 +707,68 @@ public function activarEmpleadoAction()
         }
     }
 
+public function consultarEstadoAction(){
+
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_consultar_estado');
+        
+        $grid = $this->get('grid'); 
+        
+        $grid->setId('grid_consultar_estado');
+        $grid->setSource($source);       
+
+         //Columnas para filtrar
+        $Nombres = new TextColumn(array('id' => 'nombres','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre','operatorsVisible'=>false));
+        $grid->addColumn($Nombres,2);        
+        
+        // Crear
+        $rowAction1 = new RowAction('Consultar', 'consultar_persona');
+        $grid->addRowAction($rowAction1);
+
+        $grid->setDefaultOrder('nombres', 'asc');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Consultar estado de expediente", $this->get("router")->generate("consultar_estado"));
+        
+        return $grid->getGridResponse('ExpedienteBundle:Estado:consultar_estado.html.twig');   
+    }
+
+public function estadoExpedienteAction(){
+    
+    $request=$this->getRequest();
+    $em = $this->getDoctrine()->getManager();
+
+    $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->get('id'));
+    $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteInvalido($request->get('id'));
+    
+     // Incluimos camino de migas
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+     if($expediente->getTipoexpediente() == 'I' or $expediente->getTipoexpediente() == 'A')
+     {
+       $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+     }
+     else if($expediente->getTipoexpediente() == 'E')
+     {
+        $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_aspirante"));
+     }
+     else
+     {
+        $breadcrumbs->addItem("Empleado inactivo", $this->get("router")->generate("pantalla_empleadoactivo"));
+     }
+     $breadcrumbs->addItem("Consultar estado de expediente", $this->get("router")->generate("consultar_estado"));
+     $breadcrumbs->addItem($expediente->getIdsolicitudempleo()->getNombrecompleto(), $this->get("router")->generate("consultar_estado"));
+
+    return $this->render('ExpedienteBundle:Estado:estadopersona.html.twig', array(
+           'tipo' => $expediente->getTipoexpediente(),
+           'expediente' => $expedienteinfo,
+           ));
+
+   }
+
 }
 

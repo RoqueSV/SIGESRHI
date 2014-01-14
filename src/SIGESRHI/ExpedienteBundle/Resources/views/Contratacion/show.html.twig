@@ -84,14 +84,10 @@ function eliminar() {
             <tr>
                 <th>Jornada laboral</th>
                 <td>
-                    {% if entity.jornadalaboral == 'D' %} 
-                    Diurna
-                    {% elseif entity.jornadalaboral == 'M' %}
-                    Matutina
-                    {% elseif entity.jornadalaboral == 'V' %}
-                    Vespertina
+                    {% if entity.jornadalaboral == 'C' %} 
+                    Tiempo completo
                     {% else %}
-                    Nocturna
+                    Turno rotativo
                     {% endif %}
                 </td>
             </tr>

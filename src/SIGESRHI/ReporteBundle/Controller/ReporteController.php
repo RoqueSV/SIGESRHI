@@ -265,17 +265,23 @@ class ReporteController extends Controller
 
   public function ReporteLicenciasAction()
     {
-
-    //Incluimos camino de migas
-      
-     /* $breadcrumbs = $this->get("white_october_breadcrumbs");
-      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-      $breadcrumbs->addItem("Prueba psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
-      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_pruebapsicologica"));
-      */
+     
      /* Obtengo parametros */
      $request=$this->getRequest();
      $idcontrato=$request->get('id');
+
+     $em = $this->getDoctrine()->getManager();
+     $contratacion = $em->getRepository('ExpedienteBundle:Contratacion')->find($idcontrato);
+
+     //Incluimos camino de migas
+
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+     $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+     $breadcrumbs->addItem("Lista de empleados", $this->get("router")->generate("licencia_ver"));
+     $breadcrumbs->addItem("Consultar permisos", $this->get("router")->generate("licencia_ver_permisos", array("id"=>$contratacion->getIdempleado()->getIdexpediente()->getId(),"idc"=>$idcontrato)));
+     $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_hojaservicio"));
 
      if(isset($_GET['fechainicio'])){
      $fecha1=$request->get('fechainicio');           

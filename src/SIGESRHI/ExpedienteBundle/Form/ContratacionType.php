@@ -27,7 +27,7 @@ class ContratacionType extends AbstractType
             ->add('jornadalaboral','choice', array(
                   'label'=>'Jornada laboral',
                   'choices' => array(
-                  'D' => 'Diurna', 'M' => 'Matutina', 'C' => 'Vespertina', 'N' => 'Nocturna'),
+                  'C' => 'Tiempo completo', 'R' => 'Turno rotativo'),
                   'required'  => true, 'empty_value' => 'Seleccione una opción'))
             ->add('fechainiciocontratacion',null, array(
                   'label'=>'Fecha de inicio laboral', 
