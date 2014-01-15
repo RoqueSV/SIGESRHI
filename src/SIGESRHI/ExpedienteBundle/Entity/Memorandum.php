@@ -24,12 +24,20 @@ class Memorandum
     private $id;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="correlativo", type="integer", nullable=false)
+     * @ORM\Column(name="correlativo", type="string", length=15, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el correlativo")
      */
     private $correlativo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipomemorandum", type="string", length=1, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el tipo")
+     */
+    private $tipomemorandum;
 
     /**
      * @var \Concurso
@@ -56,7 +64,7 @@ class Memorandum
     /**
      * Set correlativo
      *
-     * @param integer $correlativo
+     * @param string $correlativo
      * @return Memorandum
      */
     public function setCorrelativo($correlativo)
@@ -69,11 +77,35 @@ class Memorandum
     /**
      * Get correlativo
      *
-     * @return integer 
+     * @return string
      */
     public function getCorrelativo()
     {
         return $this->correlativo;
+    }
+
+
+    /**
+     * Set tipomemorandum
+     *
+     * @param string $tipomemorandum
+     * @return Memorandum
+     */
+    public function setTipomemorandum($tipomemorandum)
+    {
+        $this->tipomemorandum = $tipomemorandum;
+    
+        return $this;
+    }
+
+    /**
+     * Get tipomemorandum
+     *
+     * @return string
+     */
+    public function getTipomemorandum()
+    {
+        return $this->tipomemorandum;
     }
 
     /**

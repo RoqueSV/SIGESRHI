@@ -1,6 +1,6 @@
 reporte:
     resource: "@ReporteBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /reporte
 
 expediente:
     resource: "@ExpedienteBundle/Resources/config/routing.yml"

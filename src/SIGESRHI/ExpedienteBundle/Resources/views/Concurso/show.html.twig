@@ -1,0 +1,54 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Concurso</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Codigoconcurso</th>
+                <td>{{ entity.codigoconcurso }}</td>
+            </tr>
+            <tr>
+                <th>Fechaapertura</th>
+                <td>{{ entity.fechaapertura|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fechacierre</th>
+                <td>{{ entity.fechacierre|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Numeroacta</th>
+                <td>{{ entity.numeroacta }}</td>
+            </tr>
+            <tr>
+                <th>Anoacta</th>
+                <td>{{ entity.anoacta }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('concurso') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('concurso_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('concurso_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

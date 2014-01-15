@@ -290,6 +290,8 @@ class ReporteController extends Controller
     }
     else{
         $cadena=" ";
+        $fecha1=" ";           
+        $fecha2=" ";
     }
 
      // Nombre reporte
