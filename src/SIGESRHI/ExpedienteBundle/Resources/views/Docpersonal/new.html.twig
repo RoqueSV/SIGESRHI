@@ -11,6 +11,14 @@ margin-bottom: 0px;
 margin-bottom: 0px;
 }
 </style>
+<script type="text/javascript">
+    function confirmaborrar(id){
+        var resp = confirm("¿Esta seguro que desea borrar este registro?");
+        if(resp){
+            document.forms['docpersonal_form_delete'+id].submit();
+        }
+    }
+</script>
     <!-- Botón ayuda -->
     <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
     {{ include('ExpedienteBundle:Ayuda/Docpersonal:registro.html.twig')}}
@@ -69,25 +77,25 @@ margin-bottom: 0px;
             <tr>                          
                 <td width='20px'>                
                     {% if doc.entregado == 1 %}
-                    <img src="{{ asset('images/true.png') }}" alt="entregado" height="16px" width="16px">
+                    <img src="{{ asset('images/true.png') }}" title="Entregado" height="16px" width="16px">
                     {% else %}
-                    <img src="{{ asset('images/false.png') }}" alt="no entregado" height="16px" width="16px" >
-                    {% endif %}
-                    <input type="hidden" value="{{ doc.entregado }}" id="entregado" name="entregado">
+                    <img src="{{ asset('images/false.png') }}" title="No entregado" height="16px" width="16px" >
+                    {% endif %}                    
                 </td>
                 <td>
                     {{ doc.nombredocpersonal }}                    
-                    <input type="hidden" value="{{ doc.nombredocpersonal }}" name="nombredocpersonal" id="nombredocpersonal">
                 </td>
                 <td width='110px'>
-                    <input type="text" class="input-small" btn-validator="number" value="{{ doc.indice }}" name="indice" id="indice">
+                    <input type="text" class="input-small" data-bvalidator="number" value="{{ doc.indice }}" name="indice" id="indice">
                 </td>
                 <td width='180px'>                                                        
                     <button type="submit" class="btn" >Actualizar</button>
-                    <button type="button" class="btn btn-danger" onClick="">Borrar</button>
+                    <button type="button" class="btn btn-danger" onClick="confirmaborrar({{ doc.id }})">Borrar</button>
                 </td>                        
             </tr>
         </table>
+        </form>
+        <form action="{{ path('docpersonal_delete',{'id':doc.id,'idexp':expediente[0].id }) }}" id= "docpersonal_form_delete{{ doc.id }}" method="post" class="recompone">
         </form>
         {% endfor %}        
     {% else %}

@@ -121,8 +121,8 @@ class PruebapsicologicaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_aspirante",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Consultar Prueba psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
 
         return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientesCon.html.twig');
@@ -206,8 +206,8 @@ class PruebapsicologicaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_aspirante",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Registrar Prueba Psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit"));
 
 
@@ -270,8 +270,8 @@ class PruebapsicologicaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_empleadoactivo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Consultar Prueba Psicólogica", $this->get("router")->generate("pruebapsicologica_index_edit_empleado"));
 
         return $grid->getGridResponse('ExpedienteBundle:Pruebapsicologica:indexExpedientesEmpleadosCon.html.twig');
@@ -364,8 +364,8 @@ class PruebapsicologicaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_aspirante",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Registrar Prueba Psicologica",$this->get("router")->generate("pruebapsicologica"));
         $breadcrumbs->addItem($expedienteinfo[0]['nombres'],"");
 
@@ -387,11 +387,19 @@ class PruebapsicologicaController extends Controller
         $em = $this->getDoctrine()->getManager();
         $var = $request->get('noasp');
         $noasp = (isset($var))?1:0;
-        if($noasp=1){
-            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleado($request->query->get('exp'));
+        if($noasp==1){
+            //$expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleado($request->query->get('exp'));
+            $query = $em->createQuery("SELECT s.id,e.id as idexpediente,s.nombrecompleto,                    
+                         t.nombretitulo nombretitulo,e.tipoexpediente, r.nombreplaza
+                         FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN e.idempleado em JOIN s.Destudios i JOIN i.idtitulo t JOIN em.idrefrenda r
+                         WHERE e.id=:idexp order by t.niveltitulo DESC
+                         ")
+                        ->setMaxResults(1)
+                        ->setParameter('idexp',$request->query->get('exp'));
+          $expedienteinfo= $query->getResult();
         }        
         else{
-            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerEmpleado($request->query->get('exp'));
+            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteAspirante($request->query->get('exp'));
         }
         $entity = $em->getRepository('ExpedienteBundle:Pruebapsicologica')->find($id);
 
@@ -405,17 +413,18 @@ class PruebapsicologicaController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));        
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));        
         if($noasp==1){
-            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_empleadoactivo",array('id'=>1)));        
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
             $breadcrumbs->addItem("Consultar Prueba Psicologica",$this->get("router")->generate("pruebapsicologica_index_edit_empleado"));
-            $breadcrumbs->addItem($expedienteinfo[0]['codigo'],"");
+            $breadcrumbs->addItem($entity->getIdexpediente()->getIdempleado()->getCodigoempleado(),"");
         }
         else{
-            $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_aspirante",array('id'=>1)));        
+            $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
             $breadcrumbs->addItem("Consultar Prueba Psicologica",$this->get("router")->generate("pruebapsicologica_index_edit"));
-            $breadcrumbs->addItem($expedienteinfo[0]['nombres'],"");
+            $breadcrumbs->addItem($entity->getIdexpediente()->getIdsolicitudempleo()->getNombrecompleto(),"");
         }
 
         return $this->render('ExpedienteBundle:Pruebapsicologica:show.html.twig', array(
@@ -449,8 +458,8 @@ class PruebapsicologicaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_aspirante",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Modificar Prueba Psicologica",$this->get("router")->generate("pruebapsicologica_index_edit"));
         $breadcrumbs->addItem($expedienteinfo[0]['nombres'],"");
 
@@ -526,8 +535,8 @@ class PruebapsicologicaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente",$this->get("router")->generate("pantalla_aspirante",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Modificar Prueba Psicologica",$this->get("router")->generate("pruebapsicologica_index_edit"));
         $breadcrumbs->addItem($expedienteinfo[0]['nombres'],"");
         $this->get('session')->getFlashBag()->add('editerror','Error en la información de la Prueba Psicologica');

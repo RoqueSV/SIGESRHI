@@ -88,13 +88,17 @@ class DocpersonalController extends Controller
         $Documentos = $em->getRepository('ExpedienteBundle:Docpersonal')->findBy(array(
                                                                                     'idexpediente' => $idexp,
                                                                                     ));
+        $var = $request->get('nogrid');
+        $nogrid = (isset($var))?0:1;
 
         $entity  = new Docpersonal();
         $entity->setIdexpediente($expediente);
+        $indice=$this->get('request')->request->get('indice');   
+        
         $entity->setentregado(1);
+        
         $form = $this->createForm(new DocpersonalType(), $entity);
         $form->bind($request);
-
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", "hello_page");
@@ -115,15 +119,18 @@ class DocpersonalController extends Controller
             'expediente' => $expedienteinfo,
             'documentos' => $Documentos,
             'form'   => $form->createView(),
+            'nogrid' => $nogrid,
         ));
         }
 
         $this->get('session')->getFlashBag()->add('errornew','Errores en el Documento registrado');
+        return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $entity->getId(), 'exp' => $idexp )));
         return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
             'entity' => $entity,
             'expediente' => $expedienteinfo,
             'documentos' => $Documentos,
             'form'   => $form->createView(),
+            'nogrid' => $nogrid,
         ));
     }
 
@@ -146,7 +153,7 @@ class DocpersonalController extends Controller
 
         $entity = new Docpersonal();
         $entity->setIdexpediente($expediente);
-        $entity->setentregado(1);
+        
         $form   = $this->createForm(new DocpersonalType(), $entity);
 
         //Camino de migas
@@ -221,31 +228,36 @@ class DocpersonalController extends Controller
         $em = $this->getDoctrine()->getManager();
         $exp = $request->query->get('idexp');
         $indice = $this->get('request')->request->get('indice');
-        $nombre = $this->get('request')->request->get('nombredocpersonal');
-        $entregado = $this->get('request')->request->get('entregado');
-        echo "exp: ".$exp." indice: ".$indice." nombre: ".$nombre." entregado: ".$entregado;
         $entity = $em->getRepository('ExpedienteBundle:Docpersonal')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Docpersonal entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new DocpersonalType(), $entity);
-        $editForm->bind($request);
+        //$deleteForm = $this->createDeleteForm($id);
+        //$editForm = $this->createForm(new DocpersonalType(), $entity);
+        //$editForm->bind($request);
+        if (is_numeric($indice) OR $indice=="") {            
+            $entregado=true;
+            if($indice=="" OR $indice==0){
+                $indice =0;
+                $entregado=false;
+            }
 
-        if ($editForm->isValid()) {
+            $entity->setIndice($indice);
+            $entity->setEntregado($entregado);
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('new','Registro de Documentación Personal actualizada correctamente');            
             return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $id,'exp' => $exp)));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        $this->get('session')->getFlashBag()->add('errornew','Error en la Actualización de Documentacion Personal');
+        return $this->render('ExpedienteBundle:Docpersonal:new.html.twig',array(
+            'id'      => $id,
+            'exp'   => $exp,
+        ));
     }
 
     /**
@@ -254,22 +266,22 @@ class DocpersonalController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $exp = $request->query->get('idexp');
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ExpedienteBundle:Docpersonal')->find($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ExpedienteBundle:Docpersonal')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Docpersonal entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            //throw $this->createNotFoundException('Unable to find Docpersonal entity.');
+            $this->get('session')->getFlashBag()->add('errornew','Error al borrar el registro de Documentación Personal');            
+            return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $id,'exp' => $exp)));
         }
 
-        return $this->redirect($this->generateUrl('docpersonal'));
+        $em->remove($entity);
+        $em->flush();
+    
+        $this->get('session')->getFlashBag()->add('new','Registro de Documentación Personal Borrado correctamente');            
+        return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $id,'exp' => $exp)));
+        //return $this->redirect($this->generateUrl('docpersonal'));
     }
 
     /**
