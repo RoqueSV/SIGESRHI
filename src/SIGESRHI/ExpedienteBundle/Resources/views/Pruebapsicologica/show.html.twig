@@ -12,7 +12,11 @@
     {% for exp in expediente %}
     <tr>
         <th width="25%">Nombre:</th>
-        <td> {{ exp.nombres  }} </td>
+        {% if noasp == 1 %}
+            <td> {{ exp.nombrecompleto  }} </td>
+        {% else %}
+            <td> {{ exp.nombres  }} </td>
+        {% endif %}
     </tr>
     <tr>
         <th>Escolaridad:</th>
@@ -69,8 +73,10 @@
                 {% else %}
                     <button type="button" class="btn" onclick="location.href='{{ path ('pruebapsicologica_index_edit_empleado') }}'">Regresar</button>
                 {% endif %}
-            {% endif %}     
+            {% endif %}  
+    {% if noasp == 0 %}   
      <a href="{{ path('pruebapsicologica_edit', { 'id': entity.id, 'exp': exp.id, 'pr': entity.id }) }}" class="btn">Editar Registro</a>
+     {% endif %}
      </div>
     {% endfor %}
     </form>

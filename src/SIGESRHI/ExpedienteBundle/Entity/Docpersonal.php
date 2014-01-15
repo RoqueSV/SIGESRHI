@@ -11,11 +11,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="docpersonal")
  * @ORM\Entity
-  * @UniqueEntity(
- *     fields={"indice"},
- *     errorPath="indice",
- *     message="Este indice ya fue ingresado"
- * )
  */
 class Docpersonal
 {

@@ -4,21 +4,38 @@
 <script>
 
 function verificarFechas(){
-
-  if($('#fechainicio').val()=="" || $('#fechafin').val()==""){
-    $('#fecha_requerida').show(); 
-    $('#fecha_invalida').hide();
-    return false;
+  if($("#seltipo").val() != "all"){
+    if($('#fechainicio').val()=="" || $('#fechafin').val()==""){
+      $('#fecha_requerida').show(); 
+      $('#fecha_invalida').hide();
+      return false;
+    }
+    if($('#fechainicio').val() > $('#fechafin').val()){
+      $('#fecha_requerida').hide(); 
+      $('#fecha_invalida').show();
+      return false;
+    }
   }
-  if($('#fechainicio').val() > $('#fechafin').val()){
-    $('#fecha_requerida').hide(); 
-    $('#fecha_invalida').show();
-    return false;
-  }
-
-document.getElementById("formreporte").submit();
+  $('#fecha_invalida').hide();
+  document.getElementById("formreporte").submit();
 }
 
+function tipoform(){
+  if($("#seltipo").val() == "all"){
+    $('#fechafin').val()=="";
+    $('#fechainicio').val()=="";
+    $('#fechainicio').attr("disabled","disabled");
+    $('#fechafin').attr("disabled","disabled");
+    $('#fechainicio').removeAttr("required","required");
+    $('#fechafin').removeAttr("required","required");
+  }
+  else if($("#seltipo").val() == "range"){
+    $('#fechainicio').removeAttr("disabled","disabled");
+    $('#fechafin').removeAttr("disabled","disabled");
+    $('#fechainicio').attr("required","required");
+    $('#fechafin').attr("required","required");
+  }
+}
 
 </script>
 <h4 class='text-center'>PERMISOS REGISTRADOS</h4>
@@ -33,6 +50,15 @@ document.getElementById("formreporte").submit();
 <fieldset><legend>Reporte de Licencias</legend>
   <table border="0" class="centered-table">
     <tr>
+      <td>Seleccione el tipo</td>
+      <td width="25px"></td>
+      <td colspan="3"><select id="seltipo" name="seltipo" onChange="tipoform()">
+            <option value="all">Todos</option>
+            <option value="range" selected="selected">Por Rangos</option>            
+          </select> 
+      </td>
+    </tr>
+    <tr>
       <td ><label for="fechainicio" id="fechainicio_label">Fecha Inicio:</label></td>
       <td width="25px"></td>
       <td><label for="fechafin" id="fechafin_label">Fecha Fin:</label></td>
@@ -40,7 +66,7 @@ document.getElementById("formreporte").submit();
       <td></td>
     </tr>
     <tr>
-      <td><input type="text" class="date input-small" id="fechainicio" name="fechainicio" required="required" readonly></td>
+      <td><input type="text" class="date input-small" id="fechainicio" name="fechainicio" required="required" disable="disabled" readonly></td>
       <td ></td>
       <td><input type="text" class="date input-small" id="fechafin" name="fechafin" readonly required="required"></td>
       <td ></td>
