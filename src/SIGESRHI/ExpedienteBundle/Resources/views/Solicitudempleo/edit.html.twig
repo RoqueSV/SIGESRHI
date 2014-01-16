@@ -18,7 +18,7 @@
 
     <h4 class="text-center">EDICIÓN DE DATOS - SOLICITUD DE EMPLEO</h4>
 
-    <form action="{{ path('solicitud_update', { 'id': entity.id}) }}" method="post" {{ form_enctype(edit_form) }}>
+    <form action="{{ path('solicitud_update', { 'id': entity.id, 'vista_retorno':vista_retorno}) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
 
 <table border="0" width="100%">
@@ -380,7 +380,16 @@
         
     <div class="text-center">
             <button type="submit" class="btn btn-primary">Modificar</button>
-            <a href="{{path('solicitud_show', {'id': entity.id})}}" class="btn">Cancelar</a>
+            
+            {% if vista_retorno == 1 %}
+            <a href="{{path('solicitud_show', {'id': entity.id, 'vista_retorno':vista_retorno})}}" class="btn">Cancelar</a>
+            {% elseif vista_retorno == 2 %}
+            <a href="{{path('solicitud_show', {'id': entity.id, 'vista_retorno':vista_retorno})}}" class="btn">Cancelar</a>
+            {% elseif vista_retorno == 4 %}
+            <a href="{{path('solicitud_maspirante')}}" class="btn">Cancelar</a>
+            {% elseif vista_retorno == 5 %}
+            <a href="{{path('solicitud_mempleado')}}" class="btn">Cancelar</a>
+            {% endif %}
     </div>
 </form>
   

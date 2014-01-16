@@ -46,6 +46,10 @@
         <a  class="btn" href="{{ path('accionpersonal_cotrosacuerdos', {'id':entity.idexpediente.id, 'vista_retorno':vista_retorno}) }}"> Ir a Otras Acciones </a>
         {% elseif vista_retorno == 4 %}
         <a  class="btn" href="{{ path('accionpersonal_cotrosacuerdos', {'id':entity.idexpediente.id, 'vista_retorno':vista_retorno}) }}"> Ir a Otras Acciones </a>
+        {% elseif vista_retorno == 5 %}
+        <a  class="btn" href="{{ path('accionpersonal_cacuerdos', {'id':entity.idexpediente.id, 'vista_retorno':vista_retorno}) }}"> Ir a Otras Acciones </a>
+        {% elseif vista_retorno == 6 %}
+        <a  class="btn" href="{{ path('accionpersonal_cotrosacuerdos', {'id':entity.idexpediente.id, 'vista_retorno':vista_retorno}) }}"> Ir a Otras Acciones </a>
         {% endif %}
     </div>
 

@@ -126,12 +126,14 @@
 {{ grid_search(grid) }} 
 <br>
 <div align="right">
-{% if numpuestos > 0 %}
+{% if entity.tipoexpediente == "E" or entity.tipoexpediente == "T" %}
+    {% if numpuestos > 0 %}
 
-    <b>Registrar Nuevo Acuerdo: </b>
-<a class="btn" onclick="location.href='{{path('accionpersonal_new', {'idexp': entity.id, 'vista_retorno':vista_retorno} )}}'" title="Registrar Nuevo Acuerdo"><div class="con-plus-sign"> + </div></a>
-{% else %}
-<b>El Empleado no posee Nombramiento activo.</b>
+        <b>Registrar Nuevo Acuerdo: </b>
+        <a class="btn" onclick="location.href='{{path('accionpersonal_new', {'idexp': entity.id, 'vista_retorno':vista_retorno} )}}'" title="Registrar Nuevo Acuerdo"><div class="con-plus-sign"> + </div></a>
+    {% else %}
+        <b>El Empleado no posee Nombramiento activo.</b>
+    {% endif %}
 {% endif %}
 </div>
 {{ grid(grid,_self) }}  
@@ -151,6 +153,8 @@
 <button class="btn" onclick="location.href='{{path('accionpersonal_cempleados')}}'"> Cancelar </button>
 {% elseif vista_retorno == 2 %}
 <button class="btn" onclick="location.href='{{path('accionpersonal_rempleados')}}'"> Cancelar </button>
+{% elseif vista_retorno == 5 %}
+<button class="btn" onclick="location.href='{{path('accionpersonal_cinactivos')}}'"> Cancelar </button>
 {% endif %}
 
 </div>

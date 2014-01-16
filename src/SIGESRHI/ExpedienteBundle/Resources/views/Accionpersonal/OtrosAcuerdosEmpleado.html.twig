@@ -81,13 +81,16 @@
 <br>
 
 <div align="right">
-{% if numpuestos > 0 %}
-    <b>Registrar Nueva Acci&oacute;n: </b>
-<a class="btn" onclick="location.href='{{path('accionpersonal_new_otros', {'idexp': entity.id, 'vista_retorno':vista_retorno} )}}'" title="Registrar Nuevo Acuerdo"><div class="con-plus-sign"> + </div></a>
-{% else %}
-<b>El Empleado no posee Nombramiento activo.</b>
+{% if entity.tipoexpediente == "E" or entity.tipoexpediente == "T" %}
+        {% if numpuestos > 0 %}
+            <b>Registrar Nueva Acci&oacute;n: </b>
+            <a class="btn" onclick="location.href='{{path('accionpersonal_new_otros', {'idexp': entity.id, 'vista_retorno':vista_retorno} )}}'" title="Registrar Nuevo Acuerdo"><div class="con-plus-sign"> + </div></a>
+        {% else %}
+        <b>El Empleado no posee Nombramiento activo.</b>
+        {% endif %}
 {% endif %}
 </div>
+
 {{ grid(grid,_self) }}  
 <br>
 {% block grid_filters %}{% endblock %} 
@@ -105,6 +108,8 @@
 <button class="btn" onclick="location.href='{{path('accionpersonal_cempleadosotros')}}'"> Cancelar </button>
 {% elseif vista_retorno == 4 %}
 <button class="btn" onclick="location.href='{{path('accionpersonal_cempleadosotros')}}'"> Cancelar </button>
+{% elseif vista_retorno == 6 %}
+<button class="btn" onclick="location.href='{{path('accionpersonal_cinactivosotros')}}'"> Cancelar </button>
 {% endif %}
 </div>
 
