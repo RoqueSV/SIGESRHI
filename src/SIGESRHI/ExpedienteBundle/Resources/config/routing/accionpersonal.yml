@@ -69,3 +69,11 @@ accionpersonal_rempleados:
 accionpersonal_rempleadosotros:
     pattern:  /rempleadosotros
     defaults: { _controller: "ExpedienteBundle:Accionpersonal:RegistrarEmpleadosOtrosAcuerdos" }
+
+accionpersonal_cinactivos:
+    pattern:  /cinactivos
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:ConsultarEmpInactivosAcuerdos" }
+
+accionpersonal_cinactivosotros:
+    pattern:  /cinactivosotros
+    defaults: { _controller: "ExpedienteBundle:Accionpersonal:ConsultarEmpInactivosOtrasAcciones" }

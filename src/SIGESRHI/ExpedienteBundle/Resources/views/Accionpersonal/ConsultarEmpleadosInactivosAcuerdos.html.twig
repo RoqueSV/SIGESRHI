@@ -1,11 +1,10 @@
-{#{% set ruta = app.request.attributes.get('_route') %} #}
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
 <script>
         jQuery(function() {
 
-            jQuery("#grid_grid_solicitud_empleado_edit__empleados__query__from").autocomplete({
+            jQuery("#grid_grid_consulta_inactivos_acuerdo__empleados__query__from").autocomplete({
                 source: function( request, response ) {
                     jQuery.ajax({
                         url: "{{ path('shtumi_ajaxautocomplete') }}",
@@ -13,7 +12,7 @@
                         data: {
                             maxRows: 12,
                             letters: request.term,
-                            entity_alias: "empleados"
+                            entity_alias: "noempleados"
                         },
                         success: function( data ) {
                             response( jQuery.map( data, function( item ) {
@@ -34,7 +33,7 @@
                 }
             });
 
-            jQuery("#grid_grid_solicitud_empleado_edit__codigos__query__from").autocomplete({
+            jQuery("#grid_grid_consulta_inactivos_acuerdo__codigos__query__from").autocomplete({
                 source: function( request, response ) {
                     jQuery.ajax({
                         url: "{{ path('shtumi_ajaxautocomplete') }}",
@@ -74,7 +73,7 @@
 {% endfor %}
 
     <div class="text-center">
-    <h3> Modificar Datos de Empleados</h3>
+    <h3> Consulta de Record Laboral Empleados Inactivos</h3>
     </div>
 
 {{ grid_search(grid) }} 

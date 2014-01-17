@@ -33,7 +33,14 @@ class AccionpersonalController extends Controller
     {
         $request = $this->getRequest();
         $idexp = $request->get('idexp');
+
         $idrefrenda = $request->get('puesto');
+        $todos_puestos= $request->get('puesto2');    
+
+        if(isset($todos_puestos)){
+            $idrefrenda=$todos_puestos;
+        }
+        
         $vista_retorno = $request->get('vista_retorno');
 
         $entity  = new Accionpersonal();
@@ -41,6 +48,28 @@ class AccionpersonalController extends Controller
         $form->bind($request);
 
         $em = $this->getDoctrine()->getManager();
+
+        //agregado para el caso que sean varias puestos a registrar el acuerdo
+        if($todos_puestos=="todos"){
+            $query = $em->createQuery('
+          SELECT pl.nombreplaza, re.id, re.partida, re.subpartida, re.sueldoactual
+          FROM ExpedienteBundle:Expediente ex
+          join ex.idempleado em
+          join em.idrefrenda re
+          join re.idplaza pl
+          WHERE ex.id =:idexp'
+        )->setParameter('idexp', $idexp);
+        $puestos = $query->getResult();
+
+            $motivo= $entity->getMotivoaccion();
+            foreach ($puestos as $unpuesto)
+            {
+                $motivo= $unpuesto['nombreplaza']." - ".$motivo." - Partida: ".$unpuesto['partida']." Subpartida: ".$unpuesto['subpartida']." Sueldo Actual: $".$unpuesto['sueldoactual'];
+            }
+            $entity->setMotivoaccion("Acuerdo: ".$entity->getNumacuerdo()." - ".$motivo);
+        }
+        else
+        {
 
            // obtenemos los puestos a los que esta asociado el empleado.
         $query = $em->createQuery('
@@ -51,10 +80,12 @@ class AccionpersonalController extends Controller
         )->setParameter('idrefrenda', $idrefrenda);
 
          $resultado = $query->getSingleResult();
-         $puesto= "Acuerdo: ".$entity->getNumacuerdo()." ".$resultado['nombreplaza']." ";
+         $puesto= "Acuerdo: ".$entity->getNumacuerdo()." - ".$resultado['nombreplaza']." ";
          $datospuesto=" Partida: ".$resultado['partida']." Subpartida: ".$resultado['subpartida']." Sueldo Actual: $".$resultado['sueldoactual'];
 
         $entity->setMotivoaccion($puesto." - ".$entity->getMotivoaccion()." - ".$datospuesto);
+        
+        }//else todos_puestos
 
         //si el tipo de acuerdo a registrar es 1 o 2 (destitucion o renuncia)
         //eliminamos la relacion entre la refrenda y el empleado.
@@ -201,22 +232,36 @@ class AccionpersonalController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
-        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        
 
         if($vista_retorno==1){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Consulta de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_cempleados"));
         $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));
             }
         if($vista_retorno==2){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Registro de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_rempleados"));
         $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));            
         }
         if($vista_retorno==3){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cempleadosotros"));
         $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cotrosacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));
             }
         if($vista_retorno==4){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Registro de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_rempleadosotros"));
+        $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cotrosacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));            
+        }
+        if($vista_retorno==5){
+            $breadcrumbs->addItem("Empleado Inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
+        $breadcrumbs->addItem("Consulta de Record Laboral", $this->get("router")->generate("accionpersonal_cinactivos"));
+        $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));            
+        }
+        if($vista_retorno==6){
+            $breadcrumbs->addItem("Empleado Inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
+        $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cinactivosotros"));
         $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cotrosacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));            
         }
         $breadcrumbs->addItem("Acción de Personal", $this->get("router")->generate("accionpersonal_show", array('id'=>$id, 'vista_retorno'=>$vista_retorno)));            
@@ -520,18 +565,36 @@ class AccionpersonalController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
 
+            if (!$entity) {
+                throw $this->createNotFoundException('No se puede encontrar la entidad Expediente.');
+            }
+
+        //calculamos el numero de otras acciones que tiene registrada el empleado
+        $query = $em->createQuery('
+          SELECT ap.id FROM ExpedienteBundle:Accionpersonal ap
+          join ap.idtipoaccion ta
+          WHERE ta.tipoaccion =:tipo and ap.idexpediente =:idexp'
+        )->setParameter('idexp', $idexp)->setParameter('tipo', "1");  //and a.idaccesosup is null
+
+        $numacuerdos = count($query->getResult());
 
          //camino de miga
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
-        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        
 
         if($vista_retorno==1){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Consulta de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_cempleados"));
             }
         if($vista_retorno==2){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Registro de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_rempleados"));            
+        }
+        if($vista_retorno== 5){
+            $breadcrumbs->addItem("Empleado Inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
+         $breadcrumbs->addItem("Consulta de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_cinactivos"));               
         }
         $breadcrumbs->addItem($entity->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cacuerdos", array('id'=>$entity->getId(), 'vista_retorno'=>$vista_retorno)));
 
@@ -564,6 +627,7 @@ class AccionpersonalController extends Controller
         'entity'=>$entity,
         'numpuestos'=>$numpuestos,
         'vista_retorno' => $vista_retorno,
+        'numacuerdos'=>$numacuerdos,
         ));
        
     }
@@ -577,6 +641,31 @@ class AccionpersonalController extends Controller
         $vista_retorno = $request->get('vista_retorno');
 
         $em = $this->getDoctrine()->getManager();
+
+        $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($id);
+
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        
+
+        if($vista_retorno==1){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Consulta de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_cempleados"));
+            }
+        if($vista_retorno==2){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Registro de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_rempleados"));            
+        }
+        if($vista_retorno==5){
+            $breadcrumbs->addItem("Empleado Inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
+        $breadcrumbs->addItem("Consulta de Acuerdo Laboral", $this->get("router")->generate("accionpersonal_cinactivos"));            
+        }
+        $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cacuerdos", array('id'=>$expediente->getId(), 'vista_retorno'=>$vista_retorno)));
+        $breadcrumbs->addItem("Selección de Reporte", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
+
 
          $query = $em->createQuery('
             SELECT DISTINCT ta.id idtipo, ta.nombretipoaccion tipoaccion 
@@ -607,23 +696,30 @@ class AccionpersonalController extends Controller
         $vista_retorno = $request->get('vista_retorno');
 
         echo $tipo_reporte;
-        
+        //Hoja servicio completa
         if($tipo_reporte =="1"){
         return $this->redirect($this->generateUrl('reporte_hojaservicio', array('id' => $idexp, 'vista_retorno'=>$vista_retorno)));
             }// if 1
 
+        //Por tipo de accion
         if($tipo_reporte =="2"){
         return $this->redirect($this->generateUrl('reporte_acciones', array('id' => $idexp, 'tipo'=> $tipoaccion, 'vista_retorno'=>$vista_retorno)));
             }// if 2
     
+        //Hoja de servicio filtrada por fechas
         if($tipo_reporte =="3"){
         return $this->redirect($this->generateUrl('reporte_hojaservicio', array('id' => $idexp, 'fechainicio'=> $fechainicio, 'fechafin'=>$fechafin, 'vista_retorno'=>$vista_retorno)));
             }// if 3
 
+        //Por tipo de accion y fechas
         if($tipo_reporte =="4"){
         return $this->redirect($this->generateUrl('reporte_acciones', array('id' => $idexp, 'tipo'=> $tipoaccion, 'fechainicio'=> $fechainicio, 'fechafin'=>$fechafin, 'vista_retorno'=>$vista_retorno)));
             }// if 4
 
+        //HOja de servicio certificada.
+        if($tipo_reporte =="5"){
+        return $this->redirect($this->generateUrl('reporte_acciones', array('id' => $idexp, 'vista_retorno'=>$vista_retorno)));
+            }// if 5
     }//function
 
 
@@ -797,18 +893,37 @@ class AccionpersonalController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+
+                if (!$entity) {
+                throw $this->createNotFoundException('No se puede encontrar la entidad Expediente.');
+                }
+
+        //calculamos el numero de otras acciones que tiene registrada el empleado
+        $query = $em->createQuery('
+          SELECT ap.id FROM ExpedienteBundle:Accionpersonal ap
+          join ap.idtipoaccion ta
+          WHERE ta.tipoaccion =:tipo and ap.idexpediente =:idexp'
+        )->setParameter('idexp', $idexp)->setParameter('tipo', "2");  //and a.idaccesosup is null
+
+        $numacuerdos = count($query->getResult());
        
          //camino de miga
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
-        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        
 
         if($vista_retorno==3){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cempleadosotros"));
             }
         if($vista_retorno==4){
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Registro de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_rempleadosotros"));            
+        }
+        if($vista_retorno==6){
+            $breadcrumbs->addItem("Empleado Inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
+        $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cinactivosotros"));            
         }
         $breadcrumbs->addItem($entity->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cotrosacuerdos", array('id'=>$entity->getId(), 'vista_retorno'=>$vista_retorno)));
 
@@ -841,6 +956,7 @@ class AccionpersonalController extends Controller
         'entity'=>$entity,
         'numpuestos'=>$numpuestos,
         'vista_retorno'=> $vista_retorno,
+        'numacuerdos'=>$numacuerdos,
 
         ));
        
@@ -968,5 +1084,127 @@ class AccionpersonalController extends Controller
     
     }
 
+    public function ConsultarEmpInactivosAcuerdosAction()
+    {
+               $source = new Entity('ExpedienteBundle:Expediente', 'grupo_acciones_empleado');
+        // Get a grid instance
+        $grid = $this->get('grid');
+
+        ////////////////////////////////////////
+        //Camino de miga
+        ////////////////////////////////////////
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+
+        $breadcrumbs->addItem("Empleado Inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
+        $breadcrumbs->addItem("Consulta de Record Laboral", $this->get("router")->generate("accionpersonal_cinactivos"));
+
+        ////////////////////////////////////////
+        // Fin Camino de miga
+        ////////////////////////////////////////
+       
+          $tableAlias=$source->getTableAlias();
+        $source->manipulateQuery(
+        function($query) use ($tableAlias){
+            $query->andWhere($tableAlias.".tipoexpediente = 'X'");
+             }
+            );
+    
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $grid->addColumn($NombreEmpleados,3);
+
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','title' => 'Código',"operatorsVisible"=>false, 'align'=>'center'));
+        $grid->addColumn($CodigoEmpleados,3);
+
+        // Attach the source to the grid
+        $grid->setId('grid_consulta_inactivos_acuerdo');
+        $grid->setSource($source);
+
+        $em = $this->getDoctrine()->getManager();
+          
+        $grid->setNoDataMessage("No se encontraron resultados");
+        $grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
+        
+        $rowAction1 = new RowAction('Consultar', 'accionpersonal_cacuerdos');
+         //vista_retorno 3 consultar otros acuerdos, 4 registrar otros acuerdos
+        // vista_retorno 5 consultar acuerdos de emleados inactivos
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                 $action->setRouteParameters(array('id','vista_retorno'=> 5));
+                return $action;
+            }
+        );
+        $rowAction1->setColumn('info_column');
+
+        $grid->addRowAction($rowAction1);     
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+    // Manage the grid redirection, exports and the response of the controller
+    return $grid->getGridResponse('ExpedienteBundle:Accionpersonal:ConsultarEmpleadosInactivosAcuerdos.html.twig');
+    }
+
+
+    public function ConsultarEmpInactivosOtrasAccionesAction()
+    {
+         $source = new Entity('ExpedienteBundle:Expediente', 'grupo_acciones_empleado');
+        // Get a grid instance
+        $grid = $this->get('grid');
+
+        ////////////////////////////////////////
+        //Camino de miga
+        ////////////////////////////////////////
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+
+        $breadcrumbs->addItem("Empleado Inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
+        $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cinactivosotros"));
+
+        ////////////////////////////////////////
+        // Fin Camino de miga
+        ////////////////////////////////////////
+       
+          $tableAlias=$source->getTableAlias();
+        $source->manipulateQuery(
+        function($query) use ($tableAlias){
+            $query->andWhere($tableAlias.".tipoexpediente = 'X'");
+             }
+            );
+    
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $grid->addColumn($NombreEmpleados,3);
+
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','title' => 'Código',"operatorsVisible"=>false, 'align'=>'center'));
+        $grid->addColumn($CodigoEmpleados,3);
+
+        // Attach the source to the grid
+        $grid->setId('grid_consulta_inactivos_otros_acuerdo');
+        $grid->setSource($source);
+
+        $em = $this->getDoctrine()->getManager();
+          
+        $grid->setNoDataMessage("No se encontraron resultados");
+        $grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
+        
+        $rowAction1 = new RowAction('Consultar', 'accionpersonal_cotrosacuerdos');
+         //vista_retorno 3 consultar otros acuerdos, 4 registrar otros acuerdos
+        // vista_retorno 5 consultar acuerdos de emleados inactivos
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                 $action->setRouteParameters(array('id','vista_retorno'=> 6));
+                return $action;
+            }
+        );
+        $rowAction1->setColumn('info_column');
+
+        $grid->addRowAction($rowAction1);     
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+    // Manage the grid redirection, exports and the response of the controller
+    return $grid->getGridResponse('ExpedienteBundle:Accionpersonal:ConsultarEmpleadosInactivosOtrosAcuerdos.html.twig');
+    }
 
 }// fin clase

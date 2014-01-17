@@ -121,6 +121,14 @@ class SolicitudempleoController extends Controller
         // Get a grid instance
         $grid = $this->get('grid');
 
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Modificar Datos de Apirante", $this->get("router")->generate("solicitud_maspirante"));
+        //fin camino de miga
+
         $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
         function($query) use ($tableAlias){
@@ -167,6 +175,17 @@ class SolicitudempleoController extends Controller
         $grid->setDefaultOrder('nombrecompleto', 'asc');
         
         $rowAction1 = new RowAction('Modificar', 'solicitud_edit');
+
+        //vista_retorno 1 consulta de aspirantes, 2 consulta de empleados, 3 consulta de inactivos
+        //4 modificar de aspirantes, 5 modificar empleados
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+             $action->setRouteParameters(array('id', 'vista_retorno'=> 4));
+              return $action;
+            }
+        );
+
         $rowAction1->setColumn('info_column');
 
         $grid->addRowAction($rowAction1);     
@@ -356,6 +375,8 @@ class SolicitudempleoController extends Controller
         
         $request = $this->getRequest();
         $var = $request->get('nogrid');
+        $vista_retorno = $request->get('vista_retorno');
+
         if(isset($var))
         {
         $nogrid=0;
@@ -373,12 +394,69 @@ class SolicitudempleoController extends Controller
             throw $this->createNotFoundException('No se puede encontrar la entidad de Solicitud de Empleo .');
         }
 
+        //CAMINO DE MIGA
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+
+        //consulta aspirante
+        if($vista_retorno== 1)
+        {
+            $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+            $breadcrumbs->addItem("Consultar Datos de Aspirante", $this->get("router")->generate("solicitud_caspirante"));
+            $breadcrumbs->addItem($entity->getNombrecompleto(), $this->get("router")->generate("solicitud_show", array('id'=>$id)));
+        }
+        //consulta empleado activo
+        if($vista_retorno== 2)
+        {
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+            $breadcrumbs->addItem("Consultar Datos de Empleado", $this->get("router")->generate("solicitud_cempleado"));
+            $breadcrumbs->addItem($entity->getIdexpediente()->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("solicitud_show", array('id'=>$id)));
+        }
+        //consulta empleado inactivo
+        if($vista_retorno== 3)
+        {
+            $breadcrumbs->addItem("Empleado Inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
+            $breadcrumbs->addItem("Consultar Datos de Empleado Inactivo", $this->get("router")->generate("solicitud_cinactivo"));
+            $breadcrumbs->addItem($entity->getNombrecompleto(), $this->get("router")->generate("solicitud_show", array('id'=>$id)));
+        }
+
+        //si el show es para consulta de info desde contratacion
+        if(isset($var))
+        {
+            if($var == 1){
+
+                //Aspirante
+                if($entity->getIdexpediente()->getTipoexpediente()=="A")
+                    {
+                    $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+                    $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
+                    $breadcrumbs->addItem($entity->getNombrecompleto(), $this->get("router")->generate("contratacion_new",array('id'=>$entity->getIdexpediente()->getId(), 'tipogrid'=>1)));
+                    }
+                //empleado
+                if($entity->getIdexpediente()->getTipoexpediente()=="E")
+                    {
+                    $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo")); 
+                    $breadcrumbs->addItem("Registrar contratación", $this->get("router")->generate("contratacion_empleado"));
+                    $breadcrumbs->addItem($entity->getIdexpediente()->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("contratacion_new", array('id'=>$entity->getIdexpediente()->getId(),'tipogrid'=>2)));
+                    }
+
+                $breadcrumbs->addItem("Consultar Solicitud", $this->get("router")->generate("hello_page"));
+    
+            }//var=1
+        }//isset
+        
+        //fin camino de miga
+
+
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ExpedienteBundle:Solicitudempleo:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-            'nogrid' =>$nogrid,      
+            'nogrid' =>$nogrid,
+            'vista_retorno'=> $vista_retorno,      
              ));
     }
 
@@ -388,6 +466,9 @@ class SolicitudempleoController extends Controller
      */
     public function editAction($id)
     {
+        $request = $this->getRequest();
+        $vista_retorno = $request->get('vista_retorno');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($id);
@@ -395,6 +476,49 @@ class SolicitudempleoController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Solicitudempleo entity.');
         }
+
+        //Camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+
+        //consulta aspirante (desde show)
+        if($vista_retorno== 1)
+        {
+            $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+            $breadcrumbs->addItem("Consultar Datos de Aspirante", $this->get("router")->generate("solicitud_caspirante"));
+            $breadcrumbs->addItem($entity->getNombrecompleto(), $this->get("router")->generate("solicitud_show", array('id'=>$id)));
+            $breadcrumbs->addItem("Modificar Datos", $this->get("router")->generate("hello_page"));
+        }
+        //consulta empleado activo (desde show)
+        if($vista_retorno== 2)
+        {
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+            $breadcrumbs->addItem("Consultar Datos de Empleado", $this->get("router")->generate("solicitud_cempleado"));
+            $breadcrumbs->addItem($entity->getIdexpediente()->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("solicitud_show", array('id'=>$id)));
+            $breadcrumbs->addItem("Modificar Datos", $this->get("router")->generate("hello_page"));
+        }
+        
+        //Edit para empleados inactivos NO esta disponible
+        if($entity->getIdexpediente()->getTipoexpediente() == "X"){
+            return $this->redirect($this->generateUrl('hello_page'));
+        }
+        
+        //editar aspirante (desde grid)
+        if($vista_retorno== 4)
+        {
+            $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+            $breadcrumbs->addItem("Modificar Datos de Aspirante", $this->get("router")->generate("solicitud_maspirante"));
+            $breadcrumbs->addItem($entity->getNombrecompleto(), $this->get("router")->generate("solicitud_edit", array('id'=>$id, 'vista_retorno'=>$vista_retorno)));
+        }
+        //editar empleado (desde grid)
+        if($vista_retorno== 5)
+        {
+            $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+            $breadcrumbs->addItem("Modificar Datos de Empleado", $this->get("router")->generate("solicitud_mempleado"));
+            $breadcrumbs->addItem($entity->getIdexpediente()->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("solicitud_edit", array('id'=>$id, 'vista_retorno'=>$vista_retorno)));
+        }        
+        
 
         //obtenemos el id del departamento que se registro
         $query=$em->createQuery('SELECT d.id depto, m.id muni FROM ExpedienteBundle:Municipio m
@@ -412,6 +536,7 @@ class SolicitudempleoController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'locacion' => $locacion,
+            'vista_retorno'=> $vista_retorno,
         ));
     }
 
@@ -421,6 +546,8 @@ class SolicitudempleoController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        $vista_retorno = $request->get('vista_retorno');
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($id);
@@ -501,6 +628,7 @@ class SolicitudempleoController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'locacion'=> $locacion,
+            'vista_retorno'=>$vista_retorno,
         ));
 
         }
@@ -514,6 +642,7 @@ class SolicitudempleoController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'locacion'=> $locacion,
+            'vista_retorno'=>$vista_retorno,
         ));
         }
 
@@ -526,6 +655,7 @@ class SolicitudempleoController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'locacion'=> $locacion,
+            'vista_retorno'=> $vista_retorno,
         ));
         }
 
@@ -602,17 +732,26 @@ class SolicitudempleoController extends Controller
 
             $em->persist($entity);
             $em->flush();
+
+            if ($vista_retorno == 4 or $vista_retorno == 5){
+            $this->get('session')->getFlashBag()->add('edit', 'Solicitud de empleo modificada correctamente');
+            return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id, 'vista_retorno'=>$vista_retorno))); 
+            }
+            if($vista_retorno == 1 or $vista_retorno == 2){
             $this->get('session')->getFlashBag()->add('show', 'Solicitud de empleo modificada correctamente'); 
-            return $this->redirect($this->generateUrl('solicitud_show', array('id' => $id)));
-        }
+            return $this->redirect($this->generateUrl('solicitud_show', array('id' => $id, 'vista_retorno'=>$vista_retorno)));    
+            }
+            
+        }//isvalid
 
      //   return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
-        $this->get('session')->getFlashBag()->add('edit', 'Ha ocurrido un error con los datos ingresados.'); 
+        $this->get('session')->getFlashBag()->add('erroredit', 'Ha ocurrido un error con los datos ingresados.'); 
       return $this->render('ExpedienteBundle:Solicitudempleo:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'locacion'=> $locacion,
+            'vista_retorno'=> $vista_retorno,
         ));
     }
 
@@ -809,7 +948,7 @@ public function asignarNumsolAction($id){
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
         $breadcrumbs->addItem("Empleado Inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
-        $breadcrumbs->addItem("Consultar Datos de Empleado", $this->get("router")->generate("solicitud_cinactivo"));
+        $breadcrumbs->addItem("Consultar Datos de Empleado Inactivo", $this->get("router")->generate("solicitud_cinactivo"));
         //fin camino de miga
 
         $tableAlias=$source->getTableAlias();
@@ -836,23 +975,16 @@ public function asignarNumsolAction($id){
         
         $rowAction1 = new RowAction('Mostrar', 'solicitud_show');
 
-        //vista_retorno 1 consulta de aspirantes, 2 consulta de empleados, 3 consulta de inactivos
-        //4 modificar de aspirantes, 5 modificar empleados
-        $rowAction1->manipulateRender(
-            function ($action, $row)
-            {
-                 $action->setRouteParameters(array('id','vista_retorno'=> 3));
-                return $action;
-            }
-        );
-
         $rowAction1->setColumn('info_column');
 
         //reasignamos el id que se utilizara para la ruta (id de solicitud en vez de id de expediente)
+                //vista_retorno 1 consulta de aspirantes, 2 consulta de empleados, 3 consulta de inactivos
+        //4 modificar de aspirantes, 5 modificar empleados
+
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
-             $action->setRouteParameters(array('id'=> $row->getField('idsolicitudempleo.id')));
+             $action->setRouteParameters(array('id'=> $row->getField('idsolicitudempleo.id'), 'vista_retorno'=> 3));
               return $action;
             }
         );
@@ -872,6 +1004,14 @@ public function asignarNumsolAction($id){
        $source = new Entity('ExpedienteBundle:Expediente', 'grupo_solicitud_empleado');
         // Get a grid instance
         $grid = $this->get('grid');
+
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+        $breadcrumbs->addItem("Modificar Datos de Empleado", $this->get("router")->generate("solicitud_mempleado"));
+        //fin camino de miga
 
        
           $tableAlias=$source->getTableAlias();
@@ -896,14 +1036,17 @@ public function asignarNumsolAction($id){
         $grid->setNoDataMessage("No se encontraron resultados");
         $grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
         
-        $rowAction1 = new RowAction('Editar', 'solicitud_edit');
+        $rowAction1 = new RowAction('Modificar', 'solicitud_edit');
+
         $rowAction1->setColumn('info_column');
 
         //reasignamos el id que se utilizara para la ruta (id de solicitud en vez de id de expediente)
+         //vista_retorno 1 consulta de aspirantes, 2 consulta de empleados, 3 consulta de inactivos
+        //4 modificar de aspirantes, 5 modificar empleados
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
-             $action->setRouteParameters(array('id'=> $row->getField('idsolicitudempleo.id')));
+             $action->setRouteParameters(array('id'=> $row->getField('idsolicitudempleo.id'), 'vista_retorno'=> 5));
               return $action;
             }
         );

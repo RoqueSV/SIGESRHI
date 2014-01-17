@@ -20,10 +20,23 @@
                 <td>Seleccione el puesto:</td>
                 <td>
                     <select id="puesto" name="puesto" required class="input-xmlarge">
+                    <option value="">Seleccione</option>                   
                     {% for puesto in puestos %}
                     <option value="{{puesto.id}}">{{puesto.nombreplaza}}</option>
                     {% endfor %}
                     </select>
+
+                    <select id="puesto2" name="puesto2" required class="input-xmlarge">
+                    <option value="">Seleccione</option>
+                    {% for puesto in puestos %}
+                    <option value="{{puesto.id}}">{{puesto.nombreplaza}}</option>
+                    {% endfor %}
+
+                    {% if puestos|length > 1 %}
+                    <option value="todos">** TODOS LOS PUESTOS **</option>
+                    {% endif %}
+                    </select>
+
                 </td>
             </tr>
             <tr>
@@ -54,6 +67,7 @@
 // Rellenar la descripcion del motivo del acuerdo al seleccionar el tipo de acuerdo
 
     $(document).ready(function(){
+
         $('#sigesrhi_expedientebundle_accionpersonaltype_idtipoaccion').change(function(){
            $.getJSON('consultarTipoAccionJSON?idtipoaccion='+$('#sigesrhi_expedientebundle_accionpersonaltype_idtipoaccion').val(),
              function(data){
@@ -72,6 +86,40 @@
 
 
         });//#idtipoaccion
+
+/////////////////////////////////////////////////////////
+//Manejo de segunda lista para puestos, cuando sean acuerdos por licencia
+    
+    //$('#puesto').val("");
+    $('#puesto2').hide();
+    $('#puesto2').prop( "disabled", true );
+
+    $('#sigesrhi_expedientebundle_accionpersonaltype_idtipoaccion').change(function(){
+        var tipo_acuerdo =  $('#sigesrhi_expedientebundle_accionpersonaltype_idtipoaccion').val();
+
+        //tipo 9 y 10 corresponde en la BD con licencia con goce y sin goce respectivamente.
+        if(tipo_acuerdo=="9" || tipo_acuerdo == "10")
+        {
+            $('#puesto').val("");
+            $('#puesto').hide();
+            $('#puesto').prop( "disabled", true );
+
+            $('#puesto2').val("");
+            $('#puesto2').show();
+            $('#puesto2').prop( "disabled", false );            
+        }
+        else
+        {
+            $('#puesto').show();
+            $('#puesto').prop( "disabled", false );
+            $('#puesto2').val("");
+            $('#puesto2').hide();   
+            $('#puesto2').prop( "disabled", true );
+        }
+    });//change function
+
+
+
 
     });//document
 

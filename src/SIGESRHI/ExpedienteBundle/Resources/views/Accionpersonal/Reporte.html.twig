@@ -11,11 +11,12 @@
 	<legend>Tipo de reporte</legend>
 	<br>
 	Seleccione el tipo de reporte a generar:
-	<select id="tipo_reporte" name="tipo_reporte">
+	<select id="tipo_reporte" name="tipo_reporte" class="input-xlarge">
 		<option value="1">Hoja de servicio</option>
 		<option value="2">Por tipo de acuerdo</option>
 		<option value="3">Hoja de servicio por rango de fechas</option>
 		<option value="4">Por tipo de acuerdo y rango de fechas</option>
+		<option value="5">Certificación (Hoja de Servicio)</option>
 	</select>
 
 <br>
@@ -134,6 +135,20 @@ $(document).ready(function(){
 			$('#tipo_accion_label').show();
 			$('#fechainicio_label').show();
 			$('#fechafin_label').show();
+
+			$('#fecha_requerida').hide();
+		}
+		if(valor=='5')
+		{
+			$('#enviar').show();
+
+			$('#tipo_accion').hide();
+			$('#fechainicio').hide();
+			$('#fechafin').hide();
+
+			$('#tipo_accion_label').hide();
+			$('#fechainicio_label').hide();
+			$('#fechafin_label').hide();
 
 			$('#fecha_requerida').hide();
 		}
