@@ -33,7 +33,14 @@ class AccionpersonalController extends Controller
     {
         $request = $this->getRequest();
         $idexp = $request->get('idexp');
+
         $idrefrenda = $request->get('puesto');
+        $todos_puestos= $request->get('puesto2');    
+
+        if(isset($todos_puestos)){
+            $idrefrenda=$todos_puestos;
+        }
+        
         $vista_retorno = $request->get('vista_retorno');
 
         $entity  = new Accionpersonal();
@@ -41,6 +48,28 @@ class AccionpersonalController extends Controller
         $form->bind($request);
 
         $em = $this->getDoctrine()->getManager();
+
+        //agregado para el caso que sean varias puestos a registrar el acuerdo
+        if($todos_puestos=="todos"){
+            $query = $em->createQuery('
+          SELECT pl.nombreplaza, re.id, re.partida, re.subpartida, re.sueldoactual
+          FROM ExpedienteBundle:Expediente ex
+          join ex.idempleado em
+          join em.idrefrenda re
+          join re.idplaza pl
+          WHERE ex.id =:idexp'
+        )->setParameter('idexp', $idexp);
+        $puestos = $query->getResult();
+
+            $motivo= $entity->getMotivoaccion();
+            foreach ($puestos as $unpuesto)
+            {
+                $motivo= $unpuesto['nombreplaza']." - ".$motivo." - Partida: ".$unpuesto['partida']." Subpartida: ".$unpuesto['subpartida']." Sueldo Actual: $".$unpuesto['sueldoactual'];
+            }
+            $entity->setMotivoaccion("Acuerdo: ".$entity->getNumacuerdo()." - ".$motivo);
+        }
+        else
+        {
 
            // obtenemos los puestos a los que esta asociado el empleado.
         $query = $em->createQuery('
@@ -51,10 +80,12 @@ class AccionpersonalController extends Controller
         )->setParameter('idrefrenda', $idrefrenda);
 
          $resultado = $query->getSingleResult();
-         $puesto= "Acuerdo: ".$entity->getNumacuerdo()." ".$resultado['nombreplaza']." ";
+         $puesto= "Acuerdo: ".$entity->getNumacuerdo()." - ".$resultado['nombreplaza']." ";
          $datospuesto=" Partida: ".$resultado['partida']." Subpartida: ".$resultado['subpartida']." Sueldo Actual: $".$resultado['sueldoactual'];
 
         $entity->setMotivoaccion($puesto." - ".$entity->getMotivoaccion()." - ".$datospuesto);
+        
+        }//else todos_puestos
 
         //si el tipo de acuerdo a registrar es 1 o 2 (destitucion o renuncia)
         //eliminamos la relacion entre la refrenda y el empleado.
@@ -534,6 +565,18 @@ class AccionpersonalController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
 
+            if (!$entity) {
+                throw $this->createNotFoundException('No se puede encontrar la entidad Expediente.');
+            }
+
+        //calculamos el numero de otras acciones que tiene registrada el empleado
+        $query = $em->createQuery('
+          SELECT ap.id FROM ExpedienteBundle:Accionpersonal ap
+          join ap.idtipoaccion ta
+          WHERE ta.tipoaccion =:tipo and ap.idexpediente =:idexp'
+        )->setParameter('idexp', $idexp)->setParameter('tipo', "1");  //and a.idaccesosup is null
+
+        $numacuerdos = count($query->getResult());
 
          //camino de miga
         $breadcrumbs = $this->get("white_october_breadcrumbs");
@@ -584,6 +627,7 @@ class AccionpersonalController extends Controller
         'entity'=>$entity,
         'numpuestos'=>$numpuestos,
         'vista_retorno' => $vista_retorno,
+        'numacuerdos'=>$numacuerdos,
         ));
        
     }
@@ -849,6 +893,19 @@ class AccionpersonalController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+
+                if (!$entity) {
+                throw $this->createNotFoundException('No se puede encontrar la entidad Expediente.');
+                }
+
+        //calculamos el numero de otras acciones que tiene registrada el empleado
+        $query = $em->createQuery('
+          SELECT ap.id FROM ExpedienteBundle:Accionpersonal ap
+          join ap.idtipoaccion ta
+          WHERE ta.tipoaccion =:tipo and ap.idexpediente =:idexp'
+        )->setParameter('idexp', $idexp)->setParameter('tipo', "2");  //and a.idaccesosup is null
+
+        $numacuerdos = count($query->getResult());
        
          //camino de miga
         $breadcrumbs = $this->get("white_october_breadcrumbs");
@@ -899,6 +956,7 @@ class AccionpersonalController extends Controller
         'entity'=>$entity,
         'numpuestos'=>$numpuestos,
         'vista_retorno'=> $vista_retorno,
+        'numacuerdos'=>$numacuerdos,
 
         ));
        
