@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Subreporte_formularioevaluacionxempleado" columnCount="4" printOrder="Horizontal" pageWidth="572" pageHeight="752" whenNoDataType="AllSectionsNoDetail" columnWidth="143" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="476ecdef-c6a3-4e03-805b-da2ae8968d5f">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="factorx" class="java.lang.String"/>
+	<parameter name="form" class="java.lang.Integer"/>
+	<parameter name="op" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Reportes\\EvaluacionesDesempeño\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select tipoformulario,nombreopcion,descripcionopcion
+from formularioevaluacion fev
+join factorevaluacion fa on (fev.id=fa.idformulario)
+join opcion op on(op.idfactor=fa.id)
+where nombrefactor=$P{factorx} and fev.id=$P{form}]]>
+	</queryString>
+	<field name="tipoformulario" class="java.lang.String"/>
+	<field name="nombreopcion" class="java.lang.String"/>
+	<field name="descripcionopcion" class="java.lang.String"/>
+	<detail>
+		<band height="92" splitType="Prevent">
+			<rectangle>
+				<reportElement uuid="32c10e89-027a-4465-8961-02df94bfa041" x="96" y="4" width="19" height="12" backcolor="#FFFFFF"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement uuid="8377d1a8-f20d-4416-85b2-e72bef88fad2" x="43" y="5" width="42" height="11"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreopcion}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement uuid="a6914870-494a-42f3-b860-f9f8a2c14436" x="96" y="4" width="19" height="12" backcolor="#000000">
+					<printWhenExpression><![CDATA[$P{op}.equals( $F{nombreopcion} )]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</rectangle>
+			<frame>
+				<reportElement uuid="a03f12b3-dd9b-46cd-9437-0c6c86ebc56a" x="0" y="0" width="143" height="18"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+			</frame>
+			<textField isStretchWithOverflow="true" pattern="">
+				<reportElement uuid="0fe971b2-8841-4464-b2a9-5f963fa18cc0" positionType="Float" x="0" y="18" width="143" height="74" backcolor="#FFFFFF"/>
+				<box topPadding="0" leftPadding="3" bottomPadding="1" rightPadding="2">
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcionopcion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

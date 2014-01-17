@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte_expedientes_aspirantes" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cc2788c2-fa3a-49b6-9c05-046fb3acd384">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
+	<parameter name="fechainicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechafin" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select ex.id,nombrecompleto,upper(nombreplaza) as nombreplaza,to_char(fechaexpediente,'DD"/"MM"/"YYYY') as fecharexpediente from solicitudempleo se join expediente  ex on (ex.id=se.idexpediente) join plaza p on (se.idplaza=p.id) where tipoexpediente='A' and fechaexpediente between $P{fechainicio} and $P{fechafin}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="nombrecompleto" class="java.lang.String"/>
+	<field name="nombreplaza" class="java.lang.String"/>
+	<field name="fecharexpediente" class="java.lang.String"/>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="9441f7ac-0150-4634-a9ac-69b8c93524ff" x="123" y="20" width="357" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL
+DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" hAlign="Center">
+				<reportElement uuid="821e6e64-8d83-48c5-a2dc-928878f85bec" x="27" y="0" width="86" height="77"/>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="bbfbbe31-b7a3-4015-b2ad-6dc0d1e6df37" x="99" y="11" width="406" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[REPORTES DE EXPEDIENTES DE ASPIRANTES EN UN DETERMINADO PERIODO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f7956b5f-3f5a-4236-9cc5-43926d01e3b8" x="194" y="46" width="112" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["De " + $P{fechainicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="29459d5e-2f59-45e1-a643-35644fbbe823" x="306" y="46" width="100" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["hasta "+$P{fechafin}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="1772d947-6bc6-4e44-b56d-a4d47aaa135f" mode="Opaque" x="27" y="0" width="223" height="27" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de aspirante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4f968eda-5b96-456f-b3ba-42824ed79087" mode="Opaque" x="505" y="0" width="67" height="27" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Registro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0b57e21f-1049-44d3-98ec-43f045556a26" mode="Opaque" x="1" y="0" width="26" height="27" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0de9f1c6-4f3c-43ce-a852-e8a102d3572c" mode="Opaque" x="250" y="0" width="255" height="27" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Plaza a la que aplica]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement uuid="0da5a365-d1e9-4f03-860b-9e0165a010b8" x="27" y="0" width="223" height="27"/>
+				<box leftPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8fbdf167-c07d-4c1f-9124-c86c755ce1d0" x="250" y="0" width="255" height="27"/>
+				<box topPadding="1" leftPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5ee415ca-8dbf-41e5-86dc-29c176c4993f" x="505" y="0" width="67" height="27"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecharexpediente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2c7a2a6e-3772-4bc9-bb44-17dbd492588a" x="1" y="0" width="26" height="27"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="07e63d74-e373-4822-bb94-3c758b185fc7" x="456" y="2" width="49" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="686bacfe-0424-46e7-a883-396570650734" x="490" y="2" width="29" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement uuid="1257bf3f-8c67-42ae-a8e9-af18a2a8c462" x="209" y="18" width="83" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="ed3819f9-d635-4e3f-babb-f8134a13a11b" x="292" y="18" width="55" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

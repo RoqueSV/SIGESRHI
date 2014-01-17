@@ -2,12 +2,34 @@
 
 
 {% block titulo %}
-<h3 id="helpLabel">Contratación</h3>
+<h3 id="helpLabel">Formulario: Contratación</h3>
+<p>Este formulario permite registrar la autorizaci&oacute;n de nombramiento emitida por la Direcci&oacute;n General de Presupuesto, para incorporar un nuevo empleado en la instituci&oacute;n ya sea por ley de salario o contrato.</p>
 {% endblock %}
 
 
 {% block contenido %}
- <p>¿Cómo llenar este formulario?</p>
-<p>Se describen a continuación los pasos necesarios:</p>
-
+<p><h4>¿Cómo llenar este formulario?</h4></p>
+Se describen a continuación los pasos necesarios:
+	<ul style="list-style-type:decimal; margin-left:25px">
+		<li> Ingrese el c&oacute;digo asignado al empleado; una cadena formada por las primeras dos inciales del primer apellido seguido de un n&uacute;mero correlativo:</li> 
+		<img src="{{asset('images/images_ayuda/codigoemp.jpg') }}" alt="ISRI"/><br><br>
+		<li> Seleccione el Centro de Atenci&oacute;n </li>
+		<img src="{{asset('images/images_ayuda/seleccioncentro.jpg') }}" alt="ISRI"/>
+		<div class="justifyText">En la lista desplegable se muestran los diferentes  centros de Atenci&oacute;n con los que cuenta el ISRI. </div>
+		<li><div class="justifyText">Una vez seleccionado el centro, seleccione la unidad organizativa y el cargo que desempe&ntilde;ar&aacute; el empleado. </div></li>
+		<img src="{{asset('images/images_ayuda/cargoemp.jpg') }}" alt="ISRI"/>
+		<div class="justifyText">Los cargos est&aacute;n identificados por el nombre de la plaza m&aacute;s un n&uacute;mero de partida y n&uacute;umero de subpartida.</div><br>
+		<li>Ingrese el sueldo,  y n&uacute;mero del documento que autoriza el nombramiento. </li>
+		<img src="{{asset('images/images_ayuda/sueldoemp.jpg') }}" alt="ISRI"/><br><br>
+		<li><div class="justifyText">Ingrese fecha de autorizaci&oacute;n del nombramiento y fecha incio laboral para el empleado.Para introducir la fecha, dar clik en el cuadro de texto, inmediatamente &eacute;ste desplegar&aacute; un calendario, seleccionar primero mes y año requerido, por ultimo seleccionar el d&iacute;a.
+		Ingrese otros datos como horas laborales, jornada laboral y observaciones si el caso lo amerita.</div></li>
+		<div class="justifyText">NOTA: Para el caso de un nombramiento por contrato, es necesario indicar la fecha inicio y fin de contrato.</div>
+		<img src="{{asset('images/images_ayuda/fechanombra.jpg') }}" alt="ISRI"/><br>
+		<li>Ingrese informaci&oacute;n del jefe :</li> 
+		<img src="{{asset('images/images_ayuda/datosjefe.jpg') }}" alt="ISRI"/><br><br>
+		<div class="justifyText">En esta secci&oacute;n se establece la cadena de mando que tendra el nuevo empleado, para ello es necesario indicar el centro, unidad organizativa y cargo que se desempe&ntilde;ar&aacute; como jefe del nuevo registro.</div>	
+		<li>Acontinuaci&oacute;n se presenta la opci&oacute;n de subir el documento en forma digital.</li>
+		 <img src="{{asset('images/images_ayuda/subirdoc.jpg') }}" alt="ISRI"/><br>
+		<li><div class="justifyText">Una vez completado el formulario presionar el bot&oacute;n registrar. El sistema confirmar&aacute; si el registro se ha realizado correctamente</div></li>
+		<li><div class="justifyText">Si es primera vez que se realiza la contrataci&oacute;n, se procede a registrar la hoja de servicio</div></li>
 {% endblock %}
