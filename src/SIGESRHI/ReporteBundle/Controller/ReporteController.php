@@ -289,9 +289,9 @@ class ReporteController extends Controller
      $cadena= "and fechainiciolic between '".$fecha1."' and '".$fecha2."'";
     }
     else{
-        $cadena=" ";
-        $fecha1=" ";           
-        $fecha2=" ";
+        $cadena="";
+        $fecha1="";           
+        $fecha2="";
     }
 
      // Nombre reporte
@@ -307,7 +307,7 @@ class ReporteController extends Controller
      $Parametro=new java('java.util.HashMap');
      $Parametro->put("idcontratacion", new java("java.lang.Integer", $idcontrato));
      $Parametro->put("cadena", new java("java.lang.String", $cadena));
-    $Parametro->put("fechainicio", new java("java.lang.String", $fecha1));
+     $Parametro->put("fechainicio", new java("java.lang.String", $fecha1));
      $Parametro->put("fechafin", new java("java.lang.String", $fecha2));
      $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
 

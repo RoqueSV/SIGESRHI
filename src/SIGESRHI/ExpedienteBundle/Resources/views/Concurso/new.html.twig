@@ -1,20 +1,126 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Concurso creation</h1>
+{% block principal -%}
+    <h3 class='text-center'>Aperturar concurso interno</h3><br>
 
-    <form action="{{ path('concurso_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
+    <form action="{{ path('concurso_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+    
+    <fieldset>
+     <legend>Datos del concurso</legend>  
+        {{form_row(form.codigoconcurso)}}
+        
+        <div style="margin-left:50px;">
+           Plaza en concurso &nbsp;&nbsp;&nbsp; 
+           <span class="alert alert-form">{{plaza.nombreplaza}}</span>
+        </div><br>
+       
+        {{form_row(form.fechaapertura)}}
+        {{form_row(form.fechacierre)}}
+        {# {{form_row(form.interesados)}} #}
+        
+        <div  class="control-group">
+         <label for="interesados" class="control-label required">
+          Interesados
+         </label>
+         <div class="controls">
+            <select id="interesados" name="interesados" required="required">
+                <option value="" disabled="disabled" selected="selected">Seleccione una opción</option>
+                <option value="ca">Centros de atención</option>
+                <option value="as">Administración superior</option>   
+                <option value="tp">Todo el personal</option>    
+            </select>
+         </div>
+        </div>
+
+
+    </fieldset>
+     <input type="hidden" name="plaza" id="plaza" value="{{plaza.id}}" />
+    {{ form_rest(form) }}
+
+      <div class="text-center">
+         <button type="submit" class="btn btn-primary">Aperturar</button>
+         <a href="{{ path('concurso') }}"  class="btn">Cancelar</a>
+      </div>
+
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('concurso') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    <h4>Descripción de la plaza</h4>
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>Nombre</th>
+                <td>{{ plaza.nombreplaza }}</td>
+            </tr>
+            <tr>
+                <th>Descripción</th>
+                <td><p class="justifyColum">{{ plaza.descripcionplaza }}</p></td>
+            </tr>
+            <tr>
+                <th>Area</th>
+                <td>{{ plaza.idarea }}</td>
+            </tr>
+        </table>  
+
+    <h4>Funciones</h4> 
+        <table class="table table-bordered table-hover">
+          {% for i in 0..(plaza.idfuncion|length - 1) if (plaza.idfuncion|length) > 1 %}
+               <tr><td><p class="justifyColum">&#8226; {{ plaza.idfuncion[i] }} </p></td></tr>
+          {% endfor %} 
+        </table>
+
+<script type="text/javascript">
+
+   $(document).ready(function() {
+    $("#sigesrhi_expedientebundle_concursotype_fechaapertura").datepicker({
+        dateFormat: 'dd-mm-yy',  
+        onSelect: function(dateText, inst){
+        
+        //Obtengo la fecha en un formato válido
+        var fecha1 = new fecha( dateText )
+        var fechaValida = fecha1.anio+"/"+fecha1.mes+"/"+fecha1.dia
+        
+        if ((new Date(fechaValida)).getDay() == 1 || (new Date(fechaValida)).getDay() == 2 ){
+        //864000000 Es el equivalente en milisegundos a 10 días. Se obtiene multiplicando 24 horas por 60 minutos
+        //por 60 segundos por 1000 milisegundos por la cantidad de días deseada 
+           var p = new Date(Date.parse(fechaValida) + 864000000); 
+        }
+        else{
+           var p = new Date(Date.parse(fechaValida) + 1036800000); 
+        }
+        //Dividimos en un valor string en formato dd-mm-yy
+        var curr_date = p.getDate();                        
+        var curr_month = p.getMonth();                      
+        //Date.getMonth() me devuelve los meses del 0 al 11, así que hay que aumentarle 1 para obtener el mes real
+        curr_month++;                                       
+        var curr_year = p.getFullYear();
+        //armamos nuestro nuevo string para ajustar el valor del segundo datepicker
+        var newdate = curr_date + "-" + curr_month + "-" + curr_year;
+
+        $("#sigesrhi_expedientebundle_concursotype_fechacierre").datepicker("setDate", newdate);
+       
+        }
+    });
+    
+    $("#sigesrhi_expedientebundle_concursotype_fechacierre").datepicker({
+        dateFormat: 'dd-mm-yy',  
+        }); 
+  });
+
+  function fecha( cadena ) {
+    //Separador para la introduccion de las fechas
+    var separador = "-"
+    //Separa por dia, mes y año
+    if ( cadena.indexOf( separador ) != -1 ) {
+        var posi1 = 0
+        var posi2 = cadena.indexOf( separador, posi1 + 1 )
+        var posi3 = cadena.indexOf( separador, posi2 + 1 )
+        this.dia = cadena.substring( posi1, posi2 )
+        this.mes = cadena.substring( posi2 + 1, posi3 )
+        this.anio = cadena.substring( posi3 + 1, cadena.length )
+    } else {
+        this.dia = 0
+        this.mes = 0
+        this.anio = 0
+    }
+}
+</script>
 {% endblock %}

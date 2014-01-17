@@ -11,13 +11,26 @@ class ConcursoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('codigoconcurso')
-            ->add('fechaapertura')
-            ->add('fechacierre')
-            ->add('numeroacta')
-            ->add('anoacta')
-            ->add('idempleado')
-            ->add('idplaza')
+            ->add('codigoconcurso',null,array(
+                  'label'=>'Código concurso',
+                  'attr'=>array('class'=>'input-small')))
+            ->add('fechaapertura',null, array(
+                  'label'=>'Fecha de apertura', 
+                  'required'  => true,
+                  'widget' => 'single_text', 
+                  'format'=>'dd-MM-yyyy',
+                  'attr' => array('class' => 'input-small', 'data-bvalidator'=>'required', 'readonly'=>true))) 
+            ->add('fechacierre',null, array(
+                  'label'=>'Fecha de cierre', 
+                  'required'  => true,
+                  'widget' => 'single_text', 
+                  'format'=>'dd-MM-yyyy',
+                  'attr' => array('class' => 'input-small', 'data-bvalidator'=>'required', 'readonly'=>true))) 
+           /* ->add('numeroacta',null,array(
+                  'label'=>'No de acta de concurso')) */
+           // ->add('anoacta')
+           // ->add('idempleado')
+           // ->add('idplaza') 
         ;
     }
 

@@ -1,49 +1,50 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-    <h1>Concurso list</h1>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Codigoconcurso</th>
-                <th>Fechaapertura</th>
-                <th>Fechacierre</th>
-                <th>Numeroacta</th>
-                <th>Anoacta</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('concurso_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.codigoconcurso }}</td>
-                <td>{% if entity.fechaapertura %}{{ entity.fechaapertura|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.fechacierre %}{{ entity.fechacierre|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.numeroacta }}</td>
-                <td>{{ entity.anoacta }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('concurso_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('concurso_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<script>
+        jQuery(function() {
 
-        <ul>
-        <li>
-            <a href="{{ path('concurso_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+            jQuery("#grid_grid_concurso__nombreplaza__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "plazas"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
+        });
+</script>
+    <h3 class="text-center"> Consulta de plazas </h3>
+    <p class="text-center">Seleccione la plaza que se sometera a concurso</p>
+
+     {{ grid_search(grid) }}
+     {{ grid(grid,_self, 'APYDataGridBundle::blocks_js.jquery.html.twig') }} 
+     {% block grid_filters %}{% endblock %}
+     <br />
+     <div class="text-center">
+     <a href="{{path('hello_page')}}" class="btn"> Cancelar </a>
+     </div>
+
+    
     {% endblock %}

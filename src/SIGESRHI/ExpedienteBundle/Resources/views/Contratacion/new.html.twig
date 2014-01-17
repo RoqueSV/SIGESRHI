@@ -3,9 +3,9 @@
 {% block principal -%}
   
   {% if tipogrid == 1 %}
-  <h4 class='text-center'>Registrar aspirante como empleado de la institución.</h4><br>
+  <h3 class='text-center'>Registrar aspirante como empleado de la institución.</h3><br>
   {% else %}
-  <h4 class='text-center'>Registrar contratación para empleados.</h4><br>
+  <h3 class='text-center'>Registrar contratación para empleados.</h3><br>
   {% endif %}
 
   <p class="help-block text-center">
@@ -117,7 +117,7 @@
   <table width="100%">
     <tr align="center">
         <td>
-          <a href="{{ path('solicitud_show', {'id': exp.idsolicitud, 'nogrid':0 }) }}">
+          <a href="{{ path('solicitud_show', {'id': exp.idsolicitud, 'nogrid':1 }) }}">
             Consultar solicitud de empleo registrada </a>
         </td>
         <td>

@@ -1,54 +1,58 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Concurso</h1>
+{% block principal -%}
+<script type='text/javascript'>
+function eliminar() {
 
-    <table class="record_properties">
-        <tbody>
+    if(confirm('\xbfEst\xE1 seguro que desea eliminar este registro?')) {
+        document.getElementById('form_borrar').submit();
+}
+}
+</script>
+<h3 class="text-center">Datos de concurso</h3>
+    <table class="table table-bordered table-hover">
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Codigoconcurso</th>
+                <th>Codigo concurso</th>
                 <td>{{ entity.codigoconcurso }}</td>
             </tr>
             <tr>
-                <th>Fechaapertura</th>
-                <td>{{ entity.fechaapertura|date('Y-m-d H:i:s') }}</td>
+                <th>Plaza en concurso</th>
+                <td>{{ entity.idplaza }}</td>
             </tr>
             <tr>
-                <th>Fechacierre</th>
-                <td>{{ entity.fechacierre|date('Y-m-d H:i:s') }}</td>
+                <th>Fecha de apertura</th>
+                <td>{{ entity.fechaapertura|date('Y-m-d')|fecha }}</td>
             </tr>
             <tr>
-                <th>Numeroacta</th>
-                <td>{{ entity.numeroacta }}</td>
+                <th>Fecha de cierre</th>
+                <td>{{ entity.fechacierre|date('Y-m-d')|fecha }}</td>
             </tr>
             <tr>
-                <th>Anoacta</th>
-                <td>{{ entity.anoacta }}</td>
+                <th>Destinatarios</th>
+                <td>
+                    {% if interesados == 'ca' %} 
+                    Centros de atención
+                    {% elseif interesados == 'as' %}
+                    Administración superior
+                    {% else %}
+                    Todo el personal
+                    {% endif %}
+                </td>
             </tr>
-        </tbody>
     </table>
+        
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('concurso') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('concurso_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('concurso_delete', { 'id': entity.id }) }}" method="post">
+
+      <div class="text-center">
+        <a href="{{ path('concurso') }}" class="btn btn-primary"> Generar memorándum</a>
+        <a href="{{ path('concurso') }}" class="btn btn-primary"> Generar cartel de apertura</a>
+        <a href="{{ path('concurso_edit', { 'id': entity.id, 'interesados':interesados}) }}" class="btn">Editar</a>
+        <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
+      </div>
+        <form action="{{ path('concurso_delete', { 'id': entity.id }) }}" id="form_borrar" method="post">
             <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <div class="invisible"> {{ form_widget(delete_form) }} </div>
         </form>
-    </li>
-</ul>
+      
+
 {% endblock %}

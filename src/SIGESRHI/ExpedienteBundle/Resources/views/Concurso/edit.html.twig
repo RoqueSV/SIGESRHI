@@ -1,28 +1,99 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Concurso edit</h1>
+{% block principal -%}
+    
+    <h3 class="text-center">Edici&oacute;n de registro de concurso</h3>
+    <br />
 
-    <form action="{{ path('concurso_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
-    </form>
+    <form action="{{ path('concurso_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
+      <input type="hidden" name="_method" value="PUT" />
+          
+        {{form_row(edit_form.codigoconcurso)}}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('concurso') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('concurso_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+        <div style="margin-left:50px;">
+           Plaza en concurso &nbsp;&nbsp;&nbsp; 
+           <span class="alert alert-form">{{entity.idplaza}}</span>
+        </div><br>
+                
+        {{form_row(edit_form.fechaapertura)}}
+        {{form_row(edit_form.fechacierre)}}
+
+        <div  class="control-group">
+            <label for="interesados" class="control-label required">
+             Interesados
+            </label>
+            <div class="controls">
+                <select id="interesados" name="interesados" required="required">
+                    <option value="" disabled="disabled">Seleccione una opción</option>
+                    <option value="ca" {% if interesados == "ca" %}selected="selected" {% endif %}>Centros de atención</option>
+                    <option value="as" {% if interesados == "as" %}selected="selected" {% endif %}>Administración superior</option>   
+                    <option value="tp" {% if interesados == "tp" %}selected="selected" {% endif %}>Todo el personal</option>    
+                </select>
+            </div>
+        </div>
+
+        {{ form_rest(edit_form) }}
+        
+        <div class="text-center">
+        <button type="submit" class="btn btn-primary">Modificar</button>
+        <a href="{{ path('concurso_show', { 'id': entity.id,'interesados':interesados }) }}" class="btn">Cancelar</a>
+      </div>
+   </form>
+
+   <script type="text/javascript">
+
+   $(document).ready(function() {
+    $("#sigesrhi_expedientebundle_concursotype_fechaapertura").datepicker({
+        dateFormat: 'dd-mm-yy',  
+        onSelect: function(dateText, inst){
+        
+        //Obtengo la fecha en un formato válido
+        var fecha1 = new fecha( dateText )
+        var fechaValida = fecha1.anio+"/"+fecha1.mes+"/"+fecha1.dia
+        
+        if ((new Date(fechaValida)).getDay() == 1 || (new Date(fechaValida)).getDay() == 2 ){
+        //864000000 Es el equivalente en milisegundos a 10 días. Se obtiene multiplicando 24 horas por 60 minutos
+        //por 60 segundos por 1000 milisegundos por la cantidad de días deseada 
+           var p = new Date(Date.parse(fechaValida) + 864000000); 
+        }
+        else{
+           var p = new Date(Date.parse(fechaValida) + 1036800000); 
+        }
+        //Dividimos en un valor string en formato dd-mm-yy
+        var curr_date = p.getDate();                        
+        var curr_month = p.getMonth();                      
+        //Date.getMonth() me devuelve los meses del 0 al 11, así que hay que aumentarle 1 para obtener el mes real
+        curr_month++;                                       
+        var curr_year = p.getFullYear();
+        //armamos nuestro nuevo string para ajustar el valor del segundo datepicker
+        var newdate = curr_date + "-" + curr_month + "-" + curr_year;
+
+        $("#sigesrhi_expedientebundle_concursotype_fechacierre").datepicker("setDate", newdate);
+       
+        }
+    });
+    
+    $("#sigesrhi_expedientebundle_concursotype_fechacierre").datepicker({
+        dateFormat: 'dd-mm-yy',  
+        }); 
+  });
+
+  function fecha( cadena ) {
+    //Separador para la introduccion de las fechas
+    var separador = "-"
+    //Separa por dia, mes y año
+    if ( cadena.indexOf( separador ) != -1 ) {
+        var posi1 = 0
+        var posi2 = cadena.indexOf( separador, posi1 + 1 )
+        var posi3 = cadena.indexOf( separador, posi2 + 1 )
+        this.dia = cadena.substring( posi1, posi2 )
+        this.mes = cadena.substring( posi2 + 1, posi3 )
+        this.anio = cadena.substring( posi3 + 1, cadena.length )
+    } else {
+        this.dia = 0
+        this.mes = 0
+        this.anio = 0
+    }
+}
+</script>
 {% endblock %}

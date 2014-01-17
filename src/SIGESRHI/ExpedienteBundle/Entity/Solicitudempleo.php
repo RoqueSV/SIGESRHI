@@ -194,10 +194,10 @@ class Solicitudempleo
     /**
      * @var string
      *
-     * @ORM\Column(name="lugarnac", type="string", length=25, nullable=false)
+     * @ORM\Column(name="lugarnac", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el lugar de nacimiento")
      * @Assert\Length(
-     * max = "25",
+     * max = "100",
      * maxMessage = "El lugar de nacimiento no debe exceder los {{limit}} caracteres"
      * )
      *

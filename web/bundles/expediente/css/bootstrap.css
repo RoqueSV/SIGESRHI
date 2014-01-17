@@ -3925,8 +3925,8 @@ input[type="submit"].btn.btn-mini {
 }
 
 .alert-form {
-  color: black;
-  background-color: white;
+  color: #555555;
+  background-color: #ffffff;
   border-color: white;
   padding: 3px 15px 3px 2px;
 }

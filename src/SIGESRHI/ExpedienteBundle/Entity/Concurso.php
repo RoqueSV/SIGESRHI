@@ -40,7 +40,6 @@ class Concurso
      *
      * @ORM\Column(name="fechaapertura", type="date", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la fecha de apertura")
-     * @Assert\DateTime()
      */
     private $fechaapertura;
 
@@ -49,7 +48,6 @@ class Concurso
      *
      * @ORM\Column(name="fechacierre", type="date", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la fecha de cierre")
-     * @Assert\DateTime()
      */
     private $fechacierre;
 
