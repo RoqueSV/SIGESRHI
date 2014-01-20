@@ -3,14 +3,32 @@
 {% block titulo %}
 
 <h3 id="helpLabel">Documentos Digitales</h3>
-
+<p>Permite a un aspirante subir documentos personales solicitados por el Departamento de Recursos Humanos, como parte de los requisitos para formar parte del banco de datos institucional. </p>
 {% endblock %}
 
 {% block contenido %}
 
-<p>¿Cómo llenar este formulario?</p>
-
+<p><h4>¿Cómo llenar este formulario?</h4></p>
 <p>Se describen a continuación los pasos necesarios:</p>
-
-
+<ul style="list-style-type:decimal; margin-left:25px">
+	<li class="justifyText">Dar click en el bot&oacute;n "Examinar", y seleccionar el archivo del explorador de documentos.</li>
+	<img src="{{asset('images/images_ayuda/subirdoc1.jpg') }}" alt="ISRI"/><br><br>
+	<li>Coloque un nombre que identifique el tipo de archivo o documento que esta por registrar.</li>
+	<img src="{{asset('images/images_ayuda/nombredoc.jpg') }}" alt="ISRI"/><br><br>
+	<li class="justifyText">Agregue uno a uno los documentos que desee. Una vez seleccionados todos los documentos presione el bot&oacute;n "Guardar Documentos"</li>
+	<img src="{{asset('images/images_ayuda/guardardoc.jpg') }}" alt="ISRI"/><br>
+	<div class="justifyText">Si el documento cumple con las extensiones aceptadas, el sistema muestra el mensaje:</div>
+	<img src="{{asset('images/images_ayuda/docexitoso.jpg') }}" alt="ISRI"/><br><br>
+	<li class="justifyText">En la parte inferior de la ventana aparecer&aacute; un cuadro conteniendo los archivos recien guardados, la fecha de registro  y  la opci&oacute;n de previsualizaci&oacute;n del archivo</li>
+	<img src="{{asset('images/images_ayuda/documentoreg.jpg') }}" alt="ISRI"/><br><br>
+	<li class="justifyText">Si no tiene mas archivos por registrar, presione el boton "Cancelar"</li>
+</ul>
+<div class="justifyText">Entre los documentos que puede adjuntar estan:
+<ul style="list-style-type:decimal; margin-left:25px">
+	<li><b> CURRICULUM VITAE</b></li>
+	<li><b> FOTOCOPIA DE TITULO AUTENTICADO Y/O SELLOS DE INSCRIPCIÓN</b></li>
+	<li><b> FOTOCOPIA DE PARTIDA DE NACIMIENTO</b></li>
+	<li><b> FOTOCOPIA DE: DUI, NIT, ISSS Y AFP</b></li>
+</ul>
+</div>
 {% endblock %}

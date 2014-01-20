@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formulario_evaluacionadministrativos" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3642e819-2001-48ac-9648-5f5f73ed3bd2">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="65"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Reportes\\EvaluacionesDesempeño\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="formeval" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select distinct tipoformulario,codigoformulario,nombrefactor,descripcionfactor from formularioevaluacion fe join factorevaluacion fa on (fe.id=fa.idformulario) where fe.id=$P{formeval}]]>
+	</queryString>
+	<field name="tipoformulario" class="java.lang.String"/>
+	<field name="codigoformulario" class="java.lang.String"/>
+	<field name="nombrefactor" class="java.lang.String"/>
+	<field name="descripcionfactor" class="java.lang.String"/>
+	<group name="Factores" keepTogether="true">
+		<groupExpression><![CDATA[$F{nombrefactor}]]></groupExpression>
+		<groupHeader>
+			<band height="86">
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="6fbf8bb8-ff91-4325-9ed9-4ee4431aff1e" x="96" y="2" width="370" height="15"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombrefactor}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="1c870621-0170-4175-b6ec-666365f86734" x="2" y="18" width="568" height="30"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Arial" size="9"/>
+						<paragraph spacingAfter="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{descripcionfactor}]]></textFieldExpression>
+				</textField>
+				<subreport>
+					<reportElement uuid="eaf6cc3b-e7f5-4608-9aad-356089fa8460" x="0" y="47" width="572" height="18"/>
+					<subreportParameter name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="factorx">
+						<subreportParameterExpression><![CDATA[$F{nombrefactor}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="formeval">
+						<subreportParameterExpression><![CDATA[$P{formeval}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["Subreporte_formularioevaluacion.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+	</group>
+	<title>
+		<band height="268" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="42cce553-24d8-41de-ba52-4370085526e3" x="3" y="5" width="157" height="32"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[MINISTERIO DE SALUD DIVISION DE ADMINISTRACION DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5674cf96-d59a-4ba8-8346-7ff71571d89b" x="49" y="38" width="474" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoformulario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="66234ddd-43c6-4dfa-9f1a-365b716c3729" x="507" y="5" width="51" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{codigoformulario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9aa8eec3-6634-4b49-9010-c930ca93d201" x="4" y="69" width="115" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[I. DATOS GENERALES]]></text>
+			</staticText>
+			<frame>
+				<reportElement uuid="5b034547-6458-4aba-b74a-b4d4997e1f62" x="1" y="89" width="571" height="155"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<staticText>
+					<reportElement uuid="2f970010-4916-41ef-85f7-1c2b8b152b2c" x="3" y="1" width="111" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Nombre del Empleado:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="78b609b7-fbb6-4fba-9937-2416c2fdda20" x="422" y="0" width="42" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Código:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="06106ebe-6e9c-4c84-9888-fc69aaeea1df" x="3" y="16" width="131" height="17"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Cargo según Nombramiento:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="b97bfd61-4120-46da-b3c0-977963833600" x="3" y="32" width="82" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Fecha de Ingreso:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="efa3f9a2-851b-4d1c-be47-83d3f2ca7496" x="150" y="32" width="43" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Partida:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="a9aa2ee8-bbdc-49a0-b4ef-9f1463b37513" x="293" y="32" width="56" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Subnúmero:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="d721a817-d48b-4fb8-8f58-1fc32e76c6cd" x="422" y="31" width="42" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Sueldo:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="8c317f03-c9ef-4988-8e94-8ebe8968ea86" x="3" y="50" width="111" height="17"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Cargo según Función:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3e772dea-0d2b-4d42-9e77-7663f15afe4d" x="3" y="68" width="131" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[A partir de:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="d38b8eb2-f5f5-4be6-a8ff-24cda24f8e4b" x="3" y="83" width="131" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Dependencia:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="8e50207e-e6d8-43b7-8376-eae622cb0e11" x="3" y="101" width="320" height="17"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Unidad Administrativa(Dirección,División,Depto.,Unidad,Sección, Area):]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="1ee41ca2-79b4-433f-96b8-695af343fde8" x="3" y="116" width="131" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Nombre del Jefe Inmediato:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="e37557b1-d774-42a6-ba5c-69450deaca58" x="234" y="134" width="40" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Puesto:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="37e79185-386f-48e6-be11-fcec5d622cb1" x="3" y="136" width="131" height="17"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Período comprendido de:]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement uuid="c3a854d0-fc1f-45a3-9b30-3e893de64d31" x="1" y="248" width="324" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[II. EVALUACION GENERAL POR PARTE DEL JEFE INMEDIATO]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

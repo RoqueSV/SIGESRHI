@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteacciones_empleado" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d0d54c01-3a51-45f1-a087-88f64d274b8e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tipo_accion" class="java.lang.String"/>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
+	<parameter name="idexp" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select nombrecompleto,e.codigoempleado,pl.nombreplaza,co.fechainiciocontratacion,partida,subpartida from solicitudempleo se join expediente exp  on (se.idexpediente=exp.id) join empleado e on (e.idexpediente=exp.id) join contratacion co on (co.idempleado=e.id) join refrendaact ref on (ref.id=co.puesto) join plaza pl on (ref.idplaza=pl.id) where exp.id=$P{idexp}]]>
+	</queryString>
+	<field name="nombrecompleto" class="java.lang.String"/>
+	<field name="codigoempleado" class="java.lang.String"/>
+	<field name="nombreplaza" class="java.lang.String"/>
+	<field name="fechainiciocontratacion" class="java.sql.Date"/>
+	<field name="partida" class="java.lang.Integer"/>
+	<field name="subpartida" class="java.lang.Integer"/>
+	<pageHeader>
+		<band height="248" splitType="Stretch">
+			<image scaleImage="FillFrame" hAlign="Center">
+				<reportElement uuid="af31fb82-5af4-497d-9146-e613765fe1c1" x="32" y="7" width="86" height="77"/>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="20d2dc34-e51b-4155-b552-6e08257f7ce5" x="131" y="28" width="357" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL
+DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7981ff24-f706-4f25-8f75-df6f5b34489a" x="69" y="84" width="446" height="36"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Reporte de "+" "+$P{tipo_accion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b1a53864-32f4-443b-9d2f-83309d58c427" x="428" y="178" width="60" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Subpartida:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="df9763ee-d4da-4f61-9a2e-6e53f0d05fe8" x="0" y="132" width="191" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[DATOS GENERALES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="39170acc-cd61-4af0-aa17-c7ead6d6f104" x="2" y="158" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Código Empleado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5cfbe858-3ad7-4fda-bc7f-cf3a4d507a43" x="2" y="198" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Plaza que ocupa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="75cb91cb-413d-45cc-bc71-fdc190af9948" x="2" y="178" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nombre empleado:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="1966ccb3-d055-4959-8e3f-330f536e476a" x="0" y="151" width="572" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="307ae189-a342-41a3-b7b1-471fd3f59719" x="2" y="218" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Fecha de ingreso:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4209243e-8cbc-4397-84ec-252ab8aa638a" x="329" y="178" width="50" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Partida:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="6aabd3f2-beeb-47af-9012-2688198d1b3b" x="102" y="158" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{codigoempleado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fcfde4fe-ab65-4adc-bb6e-53b70b802730" x="102" y="178" width="227" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="407ee70e-1f55-422f-8fe5-b2b87d267537" x="102" y="198" width="470" height="20"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="391d25a0-9cce-431d-8779-63e568137980" x="379" y="178" width="49" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{partida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a1affc53-583e-4bb3-880b-f922e58f6c2e" x="488" y="178" width="53" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{subpartida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="95b64467-dc58-4494-b663-eb022c4b0254" x="102" y="218" width="470" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fechainiciocontratacion}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="74a53567-218b-4525-a98b-d822098be6d5" x="0" y="241" width="572" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="52" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="53" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>
