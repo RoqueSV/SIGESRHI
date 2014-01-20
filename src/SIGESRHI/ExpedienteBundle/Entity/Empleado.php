@@ -65,9 +65,18 @@ class Empleado
      */
     private $idrefrenda;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Empleadoconcurso", mappedBy="idempleado")
+     */
+    private $idempleadoconcurso;
+
     public function __toString() {
         return $this->codigoempleado;
        }   
+
+    public function getNombreemp() {
+        return $this->getIdexpediente()->getIdsolicitudempleo()->getNombrecompleto();
+    }
 
     /**
      * Get id
@@ -154,6 +163,7 @@ class Empleado
     {
         $this->idcontratacion = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idrefrenda = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idempleadoconcurso = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -221,5 +231,38 @@ class Empleado
     public function getIdrefrenda()
     {
         return $this->idrefrenda;
+    }
+
+    /**
+     * Add idempleadoconcurso
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleadoconcurso $idempleadoconcurso
+     * @return Empleado
+     */
+    public function addIdempleadoconcurso(\SIGESRHI\ExpedienteBundle\Entity\Empleadoconcurso $idempleadoconcurso)
+    {
+        $this->idempleadoconcurso[] = $idempleadoconcurso;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idempleadoconcurso
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleadoconcurso $idempleadoconcurso
+     */
+    public function removeIdempleadoconcurso(\SIGESRHI\ExpedienteBundle\Entity\Empleadoconcurso $idempleadoconcurso)
+    {
+        $this->idempleadoconcurso->removeElement($idempleadoconcurso);
+    }
+
+    /**
+     * Get idempleadoconcurso
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdempleadoconcurso()
+    {
+        return $this->idempleadoconcurso;
     }
 }

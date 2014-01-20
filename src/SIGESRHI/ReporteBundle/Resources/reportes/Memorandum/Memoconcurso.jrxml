@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Memoconcurso" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b06fac72-c28d-45aa-817d-359e26b16137">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="325"/>
+	<subDataset name="dataset1" uuid="a6d3b3f8-941d-4d16-a4b1-104c8f96d297"/>
+	<parameter name="correlativo" class="java.lang.String"/>
+	<parameter name="interesados" class="java.lang.String"/>
+	<parameter name="idconcurso" class="java.lang.Integer"/>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+      (select nombreplaza from plaza where id = c.idplaza) as plaza,
+      (to_char(current_date,'DD " de " TMmonth " del " YYYY')) as fechaactual,
+      (select nombrecompleto from solicitudempleo se
+              join expediente e on (se.idexpediente=e.id)
+              join empleado em on (e.id=em.idexpediente)
+              join refrendaact ra on (em.id=ra.idempleado)
+              where nombreplaza = 'Jefe Departamento de Recursos Humanos') as jeferrhh,
+      (select nombrecompleto from solicitudempleo se
+              join expediente e on (se.idexpediente=e.id)
+              join empleado em on (e.id=em.idexpediente)
+              join refrendaact ra on (em.id=ra.idempleado)
+              where nombreplaza = 'Gerente') as gerente,
+      c.codigoconcurso
+FROM
+     concurso c
+WHERE
+     id = $P{idconcurso}]]>
+	</queryString>
+	<field name="plaza" class="java.lang.String"/>
+	<field name="fechaactual" class="java.lang.String"/>
+	<field name="jeferrhh" class="java.lang.String"/>
+	<field name="gerente" class="java.lang.String"/>
+	<field name="codigoconcurso" class="java.lang.String"/>
+	<title>
+		<band height="122" splitType="Stretch">
+			<image>
+				<reportElement uuid="3c9ce659-bbcf-433f-ae09-78476d5f828c" x="0" y="0" width="167" height="83"/>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="705f4815-5e2c-49af-a974-e26bb660ad29" x="234" y="82" width="151" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="false"/>
+				</textElement>
+				<text><![CDATA[MEMORANDUM]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="823d268f-bb67-4581-b5ab-277fefd13c99" x="466" y="42" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{correlativo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4695b6a0-5098-464e-97d4-e9ede19949d7" x="451" y="22" width="120" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Recursos Humanos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="459" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="28112bd3-c1e1-4c0d-b8b5-125c77c72ff0" x="67" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[PARA                  : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5bf7ba4d-029c-4f29-b31b-f9f2b368a1ac" x="67" y="43" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[DE                      :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="58c9d5ca-1d99-4367-a08b-270421e4dbf5" x="67" y="95" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[A TRAVES DE   :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8a36a7e5-c39d-4658-9746-1507fda39e2f" x="67" y="147" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[FECHA               :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3ece42cb-5809-4e3f-abd3-2ccb9612fa33" x="67" y="179" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[ASUNTO            :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ca133c85-b5b3-4b5f-91c3-36dcafc1c092" x="167" y="0" width="218" height="38"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA[($P{interesados}.equals("ca"))?"DIRECTORES<br>CENTROS DE ATENCION":($P{interesados}.equals("as"))?"ADMINISTRACION SUPERIOR":"TODO EL PERSONAL"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="234c5c95-98ad-48dc-8a10-95a28c1ca2a7" x="167" y="58" width="240" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Top"/>
+				<text><![CDATA[JEFE DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ad8281e9-bba1-4d37-bcb8-867601fcd123" x="167" y="110" width="100" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Top"/>
+				<text><![CDATA[GERENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7b27bf85-d068-4b25-9f53-97696b08225d" x="167" y="179" width="200" height="20"/>
+				<textElement/>
+				<text><![CDATA[CARTEL DE CONCURSO INTERNO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="615ebc59-a79f-4011-a5cf-7e34aedfb615" x="32" y="231" width="523" height="29"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Con cordiales saludos, remito un cartel de concurso interno a plaza vacante en el Instituto, según detalle;]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e670846a-aa01-4138-b7ac-c2a8b51fe680" x="82" y="282" width="408" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{plaza}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4516d72a-14bd-410f-88f6-1450b0385eb4" x="32" y="320" width="523" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Solicitándole hacerlo del conocimiento  de todo el personal bajo su responsabilidad.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="accdeb47-e729-417d-834c-d71a12b7ee18" x="32" y="340" width="267" height="20"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Agradeciendo su atención, le saludo.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1ef56c56-6b53-4591-bf50-b28e5e27c7d4" x="32" y="398" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Anexo cartel ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f1408f4a-9676-4ff5-87a1-e92d32095972" x="99" y="398" width="149" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{codigoconcurso}]]></textFieldExpression>
+			</textField>
+			<ellipse>
+				<reportElement uuid="96978e10-ea97-4b7a-96b5-8ecef71f92ec" x="72" y="287" width="3" height="2" backcolor="#000000"/>
+			</ellipse>
+			<textField>
+				<reportElement uuid="9fc464be-a19a-469b-8a73-5caaafd1ab90" x="167" y="147" width="200" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fechaactual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fe183371-64ee-4637-9227-3a40e656580c" x="167" y="43" width="240" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{jeferrhh}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="83b6f5ee-4b8d-4b06-a8a6-2a6f1505863d" x="167" y="95" width="240" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{gerente}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="2dca6a8c-d6db-4744-adaa-9d1f4fa4446e" x="0" y="211" width="572" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement uuid="5a2cb92a-e1ba-4033-a9b1-064007c8c3d7" x="0" y="19" width="188" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

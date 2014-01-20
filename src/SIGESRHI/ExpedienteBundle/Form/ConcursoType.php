@@ -26,6 +26,10 @@ class ConcursoType extends AbstractType
                   'widget' => 'single_text', 
                   'format'=>'dd-MM-yyyy',
                   'attr' => array('class' => 'input-small', 'data-bvalidator'=>'required', 'readonly'=>true))) 
+            ->add('idcentro', null, array(
+                  'label'=>'Centro al que pertenece', 
+                  'required' => true,
+                  'attr'=>array('class'=>'input-xmlarge')))
            /* ->add('numeroacta',null,array(
                   'label'=>'No de acta de concurso')) */
            // ->add('anoacta')

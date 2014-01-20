@@ -17,21 +17,6 @@ use SIGESRHI\ExpedienteBundle\Form\HojaservicioType;
 class HojaservicioController extends Controller
 {
     /**
-     * Lists all Hojaservicio entities.
-     *
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('ExpedienteBundle:Hojaservicio')->findAll();
-
-        return $this->render('ExpedienteBundle:Hojaservicio:index.html.twig', array(
-            'entities' => $entities,
-        ));
-    }
-
-    /**
      * Creates a new Hojaservicio entity.
      *
      */
@@ -146,7 +131,7 @@ class HojaservicioController extends Controller
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
         $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Registrar aspirante como empleado", $this->get("router")->generate("contratacion"));
-        $breadcrumbs->addItem("Registrar hoja de servicio / ".$solicitud->getNombrecompleto(),  $this->get("router")->generate("hojaservicio"));
+        $breadcrumbs->addItem("Registrar hoja de servicio / ".$solicitud->getNombrecompleto(),  $this->get("router")->generate("hello_page"));
 
         return $this->render('ExpedienteBundle:Hojaservicio:new.html.twig', array(
             'entity' => $entity,
@@ -158,119 +143,5 @@ class HojaservicioController extends Controller
         ));
     }
 
-    /**
-     * Finds and displays a Hojaservicio entity.
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ExpedienteBundle:Hojaservicio')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Hojaservicio entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('ExpedienteBundle:Hojaservicio:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
-    }
-
-    /**
-     * Displays a form to edit an existing Hojaservicio entity.
-     *
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ExpedienteBundle:Hojaservicio')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Hojaservicio entity.');
-        }
-
-        $editForm = $this->createForm(new HojaservicioType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('ExpedienteBundle:Hojaservicio:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Edits an existing Hojaservicio entity.
-     *
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ExpedienteBundle:Hojaservicio')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Hojaservicio entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new HojaservicioType(), $entity);
-        $editForm->bind($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('hojaservicio_edit', array('id' => $id)));
-        }
-
-        return $this->render('ExpedienteBundle:Hojaservicio:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a Hojaservicio entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ExpedienteBundle:Hojaservicio')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Hojaservicio entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('hojaservicio'));
-    }
-
-    /**
-     * Creates a form to delete a Hojaservicio entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
-    }
+    
 }

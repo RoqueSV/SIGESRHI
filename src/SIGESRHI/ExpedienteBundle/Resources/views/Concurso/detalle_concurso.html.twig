@@ -1,0 +1,92 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+<script>
+        jQuery(function() {
+
+            jQuery("#grid_grid_concurso_empleado__empleados__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "empleados"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
+
+        });
+</script>
+
+{% for flashMessage in app.session.flashbag.get('aviso') %}
+  <div class="alert alert-success">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('delete') %}
+  <div class="alert alert-danger">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
+<h3 class="text-center">Datos de concurso</h3>
+    <table class="table table-bordered table-hover">
+            <tr>
+                <th>Codigo concurso</th>
+                <td>{{ entity.codigoconcurso }}</td>
+            </tr>
+            <tr>
+                <th>Plaza en concurso</th>
+                <td>{{ entity.idplaza }}</td>
+            </tr>
+            <tr>
+                <th>Centro al que pertenece</th>
+                <td>{{entity.idcentro}}</td>
+            </tr>
+            <tr>
+                <th>Fecha de apertura</th>
+                <td>{{ entity.fechaapertura|date('Y-m-d')|fecha }}</td>
+            </tr>
+            <tr>
+                <th>Fecha de cierre</th>
+                <td>{{ entity.fechacierre|date('Y-m-d')|fecha }}</td>
+            </tr>
+    </table>
+    
+<h4 class="text-center"> Lista de empleados que han aplicado al concurso</h4>
+    {{ grid_search(grid) }}
+    <br>
+    <div class="pull-right">
+    <b>Registrar empleado: </b>
+        <a class="btn" onclick="location.href='{{path('empleadoconcurso_new',{'id':entity.id})}}'" title="Registrar empleado"><i class="icon-plus-sign"></i></a>
+    </div>
+    <br><br>
+
+    {{ grid(grid,_self, 'APYDataGridBundle::blocks_js.jquery.html.twig') }} 
+    {% block grid_filters %}{% endblock %}
+
+    <br>
+      <div class="text-center">
+        <a href="{{ path('concurso_consultar') }}" class="btn">Regresar al listado</a>
+      </div>   
+
+{% endblock %}

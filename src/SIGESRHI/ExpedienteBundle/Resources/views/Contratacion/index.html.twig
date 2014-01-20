@@ -121,8 +121,13 @@
      {{ grid(grid,_self, 'APYDataGridBundle::blocks_js.jquery.html.twig') }} 
      {% block grid_filters %}{% endblock %}
      <br />
+
      <div class="text-center">
+     {% if ruta == 'contratacion' %}
      <a href="{{path('pantalla_aspirante')}}" class="btn"> Cancelar </a>
+     {% else %}
+     <a href="{{path('pantalla_empleadoactivo')}}" class="btn"> Cancelar </a>
+     {% endif %}
      </div>
 
 {% endblock %}

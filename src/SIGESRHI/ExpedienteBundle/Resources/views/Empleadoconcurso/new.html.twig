@@ -1,0 +1,28 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+{{ form_javascript(form) }}
+{% for flashMessage in app.session.flashbag.get('error') %}
+  <div class="alert alert-danger">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
+    <h3 class="text-center">Registrar empleado para concurso interno</h3>
+    <br>
+    <form action="{{ path('empleadoconcurso_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+        {{form_row(form.idempleado)}}
+        {{form_row(form.fecharegistro)}}
+        {{form_row(form.file)}}
+
+        {{ form_rest(form) }}
+
+        <input type="hidden" name="idconcurso" id="idconcurso" value="{{id}}">
+    
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Registrar</button>
+        <a href="{{ path('detalle_concurso',{'id':id}) }}" class="btn">Cancelar</a>
+    </form>
+
+{% endblock %}

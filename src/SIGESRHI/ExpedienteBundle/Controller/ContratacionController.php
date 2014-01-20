@@ -670,7 +670,7 @@ class ContratacionController extends Controller
         )->setParameter('puestojefe', $entity->getPuestojefe());
         $puestojefe = $query->getResult();
 
-
+         $this->get('session')->getFlashBag()->add('erroredit', 'Error en la modificación de datos');
         return $this->render('ExpedienteBundle:Contratacion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),

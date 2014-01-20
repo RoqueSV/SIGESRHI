@@ -1,6 +1,13 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <div class="alert alert-danger">
+       <p> {{ flashMessage }}</p>
+    </div>
+{% endfor %}
+
     <h3 class='text-center'>Aperturar concurso interno</h3><br>
 
     <form action="{{ path('concurso_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
@@ -10,13 +17,14 @@
         {{form_row(form.codigoconcurso)}}
         
         <div style="margin-left:50px;">
-           Plaza en concurso &nbsp;&nbsp;&nbsp; 
+           Plaza en concurso &nbsp;&nbsp; 
            <span class="alert alert-form">{{plaza.nombreplaza}}</span>
         </div><br>
+
+        {{form_row(form.idcentro)}}
        
         {{form_row(form.fechaapertura)}}
         {{form_row(form.fechacierre)}}
-        {# {{form_row(form.interesados)}} #}
         
         <div  class="control-group">
          <label for="interesados" class="control-label required">

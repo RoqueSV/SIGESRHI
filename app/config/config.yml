@@ -135,6 +135,9 @@ knp_gaufrette:
         contratacion_adapter:
             local:
                 directory: %kernel.root_dir%/../web/uploads/docs_contratacion
+        concurso_adapter:
+            local:
+                directory: %kernel.root_dir%/../web/uploads/docs_concurso
 
     filesystems:
         docs_exp_fs:
@@ -143,6 +146,8 @@ knp_gaufrette:
             adapter:    fotografia_adapter
         contratacion_fs:
             adapter:    contratacion_adapter
+        concurso_fs:
+            adapter:    concurso_adapter
 
 vich_uploader:
     db_driver: orm
@@ -166,6 +171,13 @@ vich_uploader:
         docs_contratacion:
             uri_prefix: contratacion_adapter
             upload_destination: contratacion_fs 
+            namer: vich_uploader.namer_origname
+            delete_on_remove: true
+            delete_on_update: true
+
+        docs_concurso:
+            uri_prefix: concurso_adapter
+            upload_destination: concurso_fs 
             namer: vich_uploader.namer_origname
             delete_on_remove: true
             delete_on_update: true

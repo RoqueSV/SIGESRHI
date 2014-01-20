@@ -43,9 +43,13 @@
   text-justify:newspaper;
 }
 
-.grid .last-column
+.grid .last-column 
   {
    text-align: center;
+}
+
+.grid-row-actions{
+    text-align: center;
 }
 
 

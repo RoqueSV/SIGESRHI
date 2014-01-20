@@ -72,9 +72,9 @@ class Contratacion
     /**
      * @var string
      *
-     * @ORM\Column(name="doccontratacion", type="string", length=100, nullable=true)
+     * @ORM\Column(name="doccontratacion", type="string", length=200, nullable=true)
      * @Assert\Length(
-     * max = "150",
+     * max = "200",
      * maxMessage = "El nombre o ruta del documento no debe exceder los {{limit}} caracteres"
      * )
      *

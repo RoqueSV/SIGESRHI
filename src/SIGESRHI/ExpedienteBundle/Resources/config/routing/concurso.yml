@@ -2,6 +2,10 @@ concurso:
     pattern:  /
     defaults: { _controller: "ExpedienteBundle:Concurso:index" }
 
+concurso_consultar:
+    pattern:  /consultar
+    defaults: { _controller: "ExpedienteBundle:Concurso:consultar" }
+
 concurso_show:
     pattern:  /{id}/show
     defaults: { _controller: "ExpedienteBundle:Concurso:show" }
@@ -28,3 +32,11 @@ concurso_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "ExpedienteBundle:Concurso:delete" }
     requirements: { _method: post|delete }
+
+concurso_memo:
+    pattern:  /memorandum
+    defaults: { _controller: "ExpedienteBundle:Concurso:generarMemorandum" }
+
+detalle_concurso:
+    pattern:  /detalleconcurso
+    defaults: { _controller: "ExpedienteBundle:Concurso:detalleConcurso" }

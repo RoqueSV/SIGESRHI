@@ -1,6 +1,7 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+{% set ruta = app.request.attributes.get('_route') %}
 
 <script>
         jQuery(function() {
@@ -33,10 +34,52 @@
                     jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
                 }
             });
+
+            jQuery("#grid_grid_concurso__plazas__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "plazas"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
+
         });
 </script>
+
+{% for flashMessage in app.session.flashbag.get('delete') %}
+     <div class="alert alert-danger">
+       <p>{{ flashMessage }}</p>
+     </div>
+{% endfor %}
+
+ {% if ruta == 'concurso' %}
     <h3 class="text-center"> Consulta de plazas </h3>
-    <p class="text-center">Seleccione la plaza que se sometera a concurso</p>
+    <p class="text-center">Seleccione la plaza que se sometera a concurso.</p>
+ {% else %}
+    <h3 class="text-center"> Consulta de concursos </h3>
+    <p class="text-center">Seleccione un concurso para ver detalles.</p>
+ {% endif %}
 
      {{ grid_search(grid) }}
      {{ grid(grid,_self, 'APYDataGridBundle::blocks_js.jquery.html.twig') }} 

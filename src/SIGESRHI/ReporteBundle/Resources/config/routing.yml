@@ -21,3 +21,11 @@ reporte_hojaservicio:
 reporte_licencias:
     pattern:  /reporte_licencias
     defaults: { _controller: ReporteBundle:Reporte:ReporteLicencias }
+
+reporte_cartelconcurso:
+    pattern:  /reporte_concurso
+    defaults: { _controller: ReporteBundle:Reporte:concursoInterno }
+
+reporte_memoconcurso:
+    pattern:  /reporte_memoconcurso
+    defaults: { _controller: ReporteBundle:Reporte:memoConcurso }

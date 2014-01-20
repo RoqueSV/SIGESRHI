@@ -5,11 +5,14 @@ namespace SIGESRHI\ExpedienteBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use APY\DataGridBundle\Grid\Mapping as GRID;
+
 /**
  * Concurso
  *
  * @ORM\Table(name="concurso")
  * @ORM\Entity
+ * @GRID\Source(columns="id,codigoconcurso,fechaapertura,fechacierre", groups={"grupo_concurso"})
  */
 class Concurso
 {
@@ -20,6 +23,7 @@ class Concurso
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="concurso_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(filterable=false, groups={"grupo_concurso"}, visible=false)
      */
     private $id;
 
@@ -32,6 +36,7 @@ class Concurso
      * max = "15",
      * maxMessage = "El codigo del concurso no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(filterable=false, groups={"grupo_concurso"}, title="Código", align="center")
      */
     private $codigoconcurso;
 
@@ -40,6 +45,7 @@ class Concurso
      *
      * @ORM\Column(name="fechaapertura", type="date", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la fecha de apertura")
+     * @GRID\Column(filterable=false, groups={"grupo_concurso"}, type="date", title="Fecha apertura", align="center")
      */
     private $fechaapertura;
 
@@ -48,6 +54,7 @@ class Concurso
      *
      * @ORM\Column(name="fechacierre", type="date", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la fecha de cierre")
+     * @GRID\Column(filterable=false, groups={"grupo_concurso"}, type="date", title="Fecha cierre", align="center")
      */
     private $fechacierre;
 
@@ -65,20 +72,12 @@ class Concurso
      */
     private $anoacta;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Empleado")
-     * @ORM\JoinTable(name="empleadoconcurso",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idconcurso", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idempleado", referencedColumnName="id")
-     *   }
-     * )
+
+   /**
+     * @ORM\OneToMany(targetEntity="Empleadoconcurso", mappedBy="idconcurso")
+     * 
      */
-    private $idempleado;
+    private $idempleadoconcurso;
 
     /**
      * @var \SIGESRHI\AdminBundle\Entity\Plaza
@@ -87,17 +86,19 @@ class Concurso
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      * })
+     * @GRID\Column(field="idplaza.nombreplaza", groups={"grupo_concurso"},type="text", title="Plaza", filterable=false, joinType="inner")
      */
     private $idplaza;
 
     /**
-     * Constructor
+     * @var \SIGESRHI\AdminBundle\Entity\Centrounidad
+     *
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Centrounidad")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idcentro", referencedColumnName="id")
+     * })
      */
-    public function __construct()
-    {
-        $this->idempleado = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+    private $idcentro;   
 
     /**
      * Get id
@@ -225,39 +226,6 @@ class Concurso
     }
 
     /**
-     * Add idempleado
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado
-     * @return Concurso
-     */
-    public function addIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado)
-    {
-        $this->idempleado[] = $idempleado;
-    
-        return $this;
-    }
-
-    /**
-     * Remove idempleado
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado
-     */
-    public function removeIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado)
-    {
-        $this->idempleado->removeElement($idempleado);
-    }
-
-    /**
-     * Get idempleado
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIdempleado()
-    {
-        return $this->idempleado;
-    }
-
-    /**
      * Set idplaza
      *
      * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
@@ -278,5 +246,91 @@ class Concurso
     public function getIdplaza()
     {
         return $this->idplaza;
+    }
+
+    /**
+     * Set centro
+     *
+     * @param integer $centro
+     * @return Concurso
+     */
+    public function setCentro($centro)
+    {
+        $this->centro = $centro;
+    
+        return $this;
+    }
+
+    /**
+     * Get centro
+     *
+     * @return integer 
+     */
+    public function getCentro()
+    {
+        return $this->centro;
+    }
+
+    /**
+     * Set idcentro
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Centrounidad $idcentro
+     * @return Concurso
+     */
+    public function setIdcentro(\SIGESRHI\AdminBundle\Entity\Centrounidad $idcentro = null)
+    {
+        $this->idcentro = $idcentro;
+    
+        return $this;
+    }
+
+    /**
+     * Get idcentro
+     *
+     * @return \SIGESRHI\AdminBundle\Entity\Centrounidad 
+     */
+    public function getIdcentro()
+    {
+        return $this->idcentro;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idempleadoconcurso = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idempleadoconcurso
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleadoconcurso $idempleadoconcurso
+     * @return Concurso
+     */
+    public function addIdempleadoconcurso(\SIGESRHI\ExpedienteBundle\Entity\Empleadoconcurso $idempleadoconcurso)
+    {
+        $this->idempleadoconcurso[] = $idempleadoconcurso;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idempleadoconcurso
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Empleadoconcurso $idempleadoconcurso
+     */
+    public function removeIdempleadoconcurso(\SIGESRHI\ExpedienteBundle\Entity\Empleadoconcurso $idempleadoconcurso)
+    {
+        $this->idempleadoconcurso->removeElement($idempleadoconcurso);
+    }
+
+    /**
+     * Get idempleadoconcurso
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdempleadoconcurso()
+    {
+        return $this->idempleadoconcurso;
     }
 }

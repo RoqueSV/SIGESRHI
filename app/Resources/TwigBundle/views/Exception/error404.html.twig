@@ -1,0 +1,12 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block titulo %}Página no encontrada{% endblock %}
+
+{% block principal -%}
+    <div class="text-center">    
+     <h3 class="text-error">Lo sentimos, no encontramos la página que buscas</h3>
+     <img src="{{asset('images/error404.png')}}" height ="300px;" width= "300px;"/>
+     <h4>Puede que la dirección esté mal escrita o que la página que buscas ya no esté disponible</h4>
+     <a href="{{ path('hello_page') }}" class="btn btn-primary"> Inicio </a>
+    </div>
+{% endblock %}

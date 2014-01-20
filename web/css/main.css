@@ -1,4 +1,4 @@
-/***** Principa Base ****/
+/***** Principal Base ****/
 * {
 margin: 0px;
 padding: 0px;
@@ -142,6 +142,7 @@ textarea {
     height: 400px;
 } 
 
+/* textbox medianos */
 .input-xmlarge
 {
     width: 400px;

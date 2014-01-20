@@ -58,4 +58,9 @@ ExpedienteBundle_concurso:
         resource: "@ExpedienteBundle/Resources/config/routing/concurso.yml"
         prefix:   /concurso
 
+ExpedienteBundle_empleadoconcurso:
+        resource: "@ExpedienteBundle/Resources/config/routing/empleadoconcurso.yml"
+        prefix:   /empleadoconcurso
+
+
 

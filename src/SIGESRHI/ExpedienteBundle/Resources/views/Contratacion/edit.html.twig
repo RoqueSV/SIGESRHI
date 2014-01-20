@@ -1,6 +1,13 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+
+{% for flashMessage in app.session.flashbag.get('erroredit') %}
+  <div class="alert alert-success">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
     <h3 class="text-center">Edici&oacute;n de registro de contratación</h3>
     <br />
     <form action="{{ path('contratacion_update', { 'id': entity.id, 'tipo':tipo }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">

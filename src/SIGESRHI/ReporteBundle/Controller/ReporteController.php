@@ -321,4 +321,89 @@ class ReporteController extends Controller
    }
 
 
+   public function concursoInternoAction()
+    {
+
+     $em = $this->getDoctrine()->getManager();
+     
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idconcurso=$request->get('id'); 
+     
+      // Incluimos camino de migas
+     $concurso = $em->getRepository('ExpedienteBundle:Concurso')->find($idconcurso);
+
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("concurso"));
+     $breadcrumbs->addItem("Registrar concurso interno", $this->get("router")->generate("concurso"));
+     $breadcrumbs->addItem("Datos de concurso", $this->get("router")->generate("concurso_show",array('id'=>$idconcurso,'interesados'=>$request->get('interesados'))));
+     $breadcrumbs->addItem("Cartel de concurso", $this->get("router")->generate("concurso"));
+
+     // Nombre reporte
+     $filename= 'Cartel concurso.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Memorandum/rpt_informacionplaza.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("idconcurso", new java("java.lang.Integer", $idconcurso));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+   public function memoConcursoAction()
+    {
+     $em = $this->getDoctrine()->getManager();
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idconcurso  = $request->get('id'); 
+     $correlativo = $request->get('correlativo');
+     $interesados = $request->get('interesados');
+     
+      // Incluimos camino de migas
+     $concurso = $em->getRepository('ExpedienteBundle:Concurso')->find($idconcurso);
+
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("concurso"));
+     $breadcrumbs->addItem("Registrar concurso interno", $this->get("router")->generate("concurso"));
+     $breadcrumbs->addItem("Datos de concurso", $this->get("router")->generate("concurso_show",array('id'=>$idconcurso,'interesados'=>$interesados)));
+     $breadcrumbs->addItem("Memorándum de concurso", $this->get("router")->generate("concurso"));
+
+     
+     // Nombre reporte
+     $filename= 'Memorandum concurso.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Memorandum/Memoconcurso.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("idconcurso", new java("java.lang.Integer", $idconcurso));
+     $Parametro->put("correlativo", new java("java.lang.String", $correlativo));
+     $Parametro->put("interesados", new java("java.lang.String", $interesados));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+
  }

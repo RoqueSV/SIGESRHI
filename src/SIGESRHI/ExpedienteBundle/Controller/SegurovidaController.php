@@ -381,7 +381,7 @@ class SegurovidaController extends Controller
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
         $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Registrar seguro colectivo de vida", $this->get("router")->generate("segurovida"));
-        $breadcrumbs->addItem("Editar ".$idexpediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("segurovida_edit",array("id"=>$id)));
+        $breadcrumbs->addItem("Editar / ".$idexpediente->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("segurovida_edit",array("id"=>$id)));
 
         return $this->render('ExpedienteBundle:Segurovida:edit.html.twig', array(
             'entity'      => $entity,

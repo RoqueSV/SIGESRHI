@@ -1,6 +1,19 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+
+{% for flashMessage in app.session.flashbag.get('aviso') %}
+  <div class="alert alert-success">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('edit') %}
+  <div class="alert alert-success">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
 <script type='text/javascript'>
 function eliminar() {
 
@@ -18,6 +31,10 @@ function eliminar() {
             <tr>
                 <th>Plaza en concurso</th>
                 <td>{{ entity.idplaza }}</td>
+            </tr>
+            <tr>
+                <th>Centro al que pertenece</th>
+                <td>{{entity.idcentro}}</td>
             </tr>
             <tr>
                 <th>Fecha de apertura</th>
@@ -44,15 +61,15 @@ function eliminar() {
 
 
       <div class="text-center">
-        <a href="{{ path('concurso') }}" class="btn btn-primary"> Generar memorándum</a>
-        <a href="{{ path('concurso') }}" class="btn btn-primary"> Generar cartel de apertura</a>
+        <a href="{{ path('reporte_cartelconcurso',{'id':entity.id, 'interesados':interesados}) }}" class="btn btn-primary"> Generar cartel de concurso</a>
+        <a href="{{ path('concurso_memo',{ 'id': entity.id, 'interesados':interesados }) }}" class="btn btn-primary"> Generar memorándum</a>
         <a href="{{ path('concurso_edit', { 'id': entity.id, 'interesados':interesados}) }}" class="btn">Editar</a>
+        <a href="{{ path('concurso') }}" class="btn">Regresar al listado</a>
         <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
       </div>
         <form action="{{ path('concurso_delete', { 'id': entity.id }) }}" id="form_borrar" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             <div class="invisible"> {{ form_widget(delete_form) }} </div>
-        </form>
-      
+        </form>      
 
 {% endblock %}
