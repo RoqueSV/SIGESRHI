@@ -132,6 +132,17 @@ class Refrenda
      */
     private $nombrecentro;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombreplaza", type="string", length=100, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar un nombre de Plaza")
+     * @Assert\Length(
+     *  max = "100"
+     * )
+     */
+    private $nombreplaza;
+
 
 
     /**
@@ -396,5 +407,28 @@ class Refrenda
     public function getNombrecentro()
     {
         return $this->nombrecentro;
+    }
+
+    /**
+     * Set nombreplaza
+     *
+     * @param string $nombreplaza
+     * @return Refrenda
+     */
+    public function setNombreplaza($nombreplaza)
+    {
+        $this->nombreplaza = $nombreplaza;
+    
+        return $this;
+    }
+
+    /**
+     * Get nombreplaza
+     *
+     * @return string 
+     */
+    public function getNombreplaza()
+    {
+        return $this->nombreplaza;
     }
 }

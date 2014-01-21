@@ -545,7 +545,10 @@ public function admEmpleadoAction()
         $breadcrumbs->addItem("Empleado Activo",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Registrar Inactivo",  "");
         
-        return $grid->getGridResponse('ExpedienteBundle:Expediente:indexEmpleados.html.twig');
+        return $grid->getGridResponse('ExpedienteBundle:Expediente:indexEmpleados.html.twig',array(
+            'idgrid' => 'grid_adm_activos',
+            'showempleados' => 'empleados',
+            ));
     } 
 
 /* Formulario para registrar un empleado como inactivo */
@@ -629,7 +632,7 @@ public function admEmpleadoInactivoAction()
         );
         $grid->addRowAction($rowAction1); 
 
-        $grid->setId('grid_adm_activos');
+        $grid->setId('grid_adm_inactivos');
 
         //Columnas para filtrar
         $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
@@ -645,7 +648,10 @@ public function admEmpleadoInactivoAction()
         $breadcrumbs->addItem("Empleado Inactivo",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Registrar Activo",  "");
         
-        return $grid->getGridResponse('ExpedienteBundle:Expediente:indexEmpleados.html.twig');
+        return $grid->getGridResponse('ExpedienteBundle:Expediente:indexEmpleados.html.twig',array(
+            'idgrid' => 'grid_adm_inactivos',
+            'showempleados' => 'noempleados',
+            ));
     } 
 
     

@@ -3,19 +3,18 @@
 {% block principal -%}
 <script type='text/javascript'>
 function guardar() {
-
-    if(confirm('\xbfEsta seguro que desea cargar esta Refrenda?')) {
-        document.getElementById('form_cargar_refrenda').submit();
-    }
-}
-function validar(){
-  var file = document.getElementById("arch_refrenda").value;
-  //alert("valor: "+file);
-  var pedazos=file.split(".");
-  if(!(pedazos[1]=="csv")){
-    alert("Por favor seleccione un archivo .csv");
-    document.getElementById("arch_refrenda").value="";
-  }  
+  if(confirm('\xbfEsta seguro que desea cargar esta Refrenda?')) {
+    var file = document.getElementById("arch_refrenda").value;
+    var pedazos=file.split(".");
+    if(!(pedazos[1]=="csv")){
+      alert("Por favor seleccione un archivo .csv");
+      document.getElementById("arch_refrenda").value="";
+    } 
+    else{
+        document.forms['form_cargar_refrenda'].submit();
+    }      
+  }
+  
 }
 </script>
 	<!-- Botón ayuda -->
@@ -37,12 +36,15 @@ function validar(){
    <h3 class="text-center">Cargar Refrenda</h3>
    <p class="text-center"> Seleccione un archivo para cargar</p>
 
-   <form action="{{ path('refrenda_verificar') }}" method="post" id="form_cargar_refrenda">
+   <form action="{{ path('refrenda_verificar') }}" method="post" id="form_cargar_refrenda" enctype="multipart/form-data">
    	<br>
    	<table class="table table-bordered mitable" border='1' width='100%' align='center'>
    		<tr>
    			<th width="20%">Archivo a Cargar:</th>
-   			<td><input type="file" name="arch_refrenda" id="arch_refrenda" onChange="validar()"required></td>
+   			<td>
+          <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+          <input type="file" name="arch_refrenda" id="arch_refrenda" required>
+        </td>
    		</tr>
    		<tr>
    			<th></th>
@@ -51,7 +53,7 @@ function validar(){
    	</table>
    <br />
    <div class="text-center">
-   		<button class="btn btn-primary" name="Guardar" onClick="guardar()">Guardar</button>
+   		<a class="btn btn-primary" name="Guardar" onClick="guardar()" >Guardar</a>
         <a href="{{ path('hello_page') }}" class="btn">Cancelar</a>
    </div>
    </form>
