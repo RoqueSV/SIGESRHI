@@ -1,9 +1,11 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\EvaluacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Formularioevaluacion
@@ -42,10 +44,11 @@ class Formularioevaluacion
      * )
      */
     private $codigoformulario;
-    
-        public function __toString() {
-  return $this->tipoformulario;
-}
+
+       
+    public function __toString() {
+        return $this->tipoformulario;
+    }
     /**
      * Get id
      *
@@ -101,4 +104,44 @@ class Formularioevaluacion
     {
         return $this->codigoformulario;
     }
+
+
+
+
+  public function __construct()
+    {
+        $this->Factores = new ArrayCollection();
+    }
+
+
+/************************* Factores de evaluacion ***************************/
+
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="factorevaluacion", mappedBy="idformulario", cascade={"persist", "remove"})
+     * @Assert\Valid
+     */
+    protected $Factores;
+
+    /**
+     * Get Factores
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFactores()
+    {
+        return $this->Factores;
+    }
+
+    public function setFactores(\Doctrine\Common\Collections\Collection $factores)
+    {
+        $this->Factores = $factores;
+        foreach ($factores as $factor) {
+            $factor->setIdformulario($this);
+        }
+    }
+
+
+
 }

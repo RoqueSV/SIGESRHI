@@ -4,12 +4,14 @@ namespace SIGESRHI\ExpedienteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Empleado
  *
  * @ORM\Table(name="empleado")
  * @ORM\Entity
+ * @GRID\Source(columns="id , codigoempleado, idexpediente.idsolicitudempleo.nombrecompleto, idrefrenda.idplaza.nombreplaza,idrefrenda.id, idrefrenda.puestoempleado.puestojefe.id", groups={"grupo_empleados_a_evaluar"})
  */
 class Empleado
 {
@@ -20,6 +22,7 @@ class Empleado
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="empleado_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(field="id", groups={"grupo_empleados_a_evaluar"},visible=false, filterable=false)
      */
     private $id;
 
@@ -32,6 +35,7 @@ class Empleado
      * max = "5",
      * maxMessage = "El codigo de empleado no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(field="codigoempleado", groups={"grupo_empleados_a_evaluar"},visible=true, filterable=false, title="Código")
      */
     private $codigoempleado;
 
@@ -42,13 +46,14 @@ class Empleado
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idexpediente", referencedColumnName="id")
      * })
+     * @GRID\Column(field="idexpediente.idsolicitudempleo.nombrecompleto", groups={"grupo_empleados_a_evaluar"},visible=true, joinType="inner", filterable=false, title="Nombre")
      */
     private $idexpediente;
 
     /**
      * @var \Usuario
      *
-     * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\User")
+     * @ORM\OneToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="empleado")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idusuario", referencedColumnName="id")
      * })
@@ -57,11 +62,15 @@ class Empleado
 
     /**
      * @ORM\OneToMany(targetEntity="Contratacion", mappedBy="idempleado")
+     * @GRID\Column(field="idcontratacion.puestojefe.id", groups={"grupo_empleados_a_evaluar"}, visible=true, joinType="inner", filterable=false, title="idjefe (contratacion)")
      */
     private $idcontratacion;
 
     /**
      * @ORM\OneToMany(targetEntity="\SIGESRHI\AdminBundle\Entity\RefrendaAct", mappedBy="idempleado")
+     * @GRID\Column(field="idrefrenda.puestoempleado.puestojefe.id", groups={"grupo_empleados_a_evaluar"}, visible=false, joinType="inner", filterable=false, title="idjefe (refrenda)")
+     * @GRID\Column(field="idrefrenda.idplaza.nombreplaza", groups={"grupo_empleados_a_evaluar"}, visible=true, joinType="inner", filterable=false, title="Puesto")
+     * @GRID\Column(field="idrefrenda.id", groups={"grupo_empleados_a_evaluar"}, visible=false, joinType="inner", filterable=false, title="Idpuesto")
      */
     private $idrefrenda;
 

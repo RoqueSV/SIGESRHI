@@ -93,7 +93,7 @@ class AccionpersonalController extends Controller
         if ($tipo_accion =="1" || $tipo_accion=="2")
         {
             $refrendaact = $em->getRepository('AdminBundle:RefrendaAct')->find($idrefrenda);
-            echo  $refrendaact->getIdempleado();
+
             $refrendaact->setIdempleado(null);
             $em->persist($refrendaact);
 
@@ -695,7 +695,6 @@ class AccionpersonalController extends Controller
         $tipoaccion = $request->get('tipo_accion');
         $vista_retorno = $request->get('vista_retorno');
 
-        echo $tipo_reporte;
         //Hoja servicio completa
         if($tipo_reporte =="1"){
         return $this->redirect($this->generateUrl('reporte_hojaservicio', array('id' => $idexp, 'vista_retorno'=>$vista_retorno)));
@@ -1049,7 +1048,7 @@ class AccionpersonalController extends Controller
         $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
         //asignamos el id de expediente al acuerdo, mandandole el objeto de expediente
         $entity->setIdexpediente($expediente);
-        echo "hola";
+        
         if ($form->isValid()) {
             //$em = $this->getDoctrine()->getManager();
             $em->persist($entity);
@@ -1061,7 +1060,7 @@ class AccionpersonalController extends Controller
                 'vista_retorno' =>$vista_retorno,
                 )));
         }
-        echo "hola 2";
+        
          // obtenemos los puestos a los que esta asociado el empleado.
         $query = $em->createQuery('
           SELECT pl.nombreplaza, re.id

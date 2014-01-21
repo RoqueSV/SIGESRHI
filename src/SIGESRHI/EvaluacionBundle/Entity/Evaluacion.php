@@ -1,6 +1,6 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\EvaluacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -27,7 +27,6 @@ class Evaluacion
      * @var \DateTime
      *
      * @ORM\Column(name="fecharealizacion", type="date", nullable=false)
-     * @Assert\DateTime()
      * @Assert\NotNull(message="Debe ingresar la fecha de realizacion")
      */
     private $fecharealizacion;
@@ -43,8 +42,12 @@ class Evaluacion
     /**
      * @var string
      *
-     * @ORM\Column(name="semestre", type="string", nullable=false)
+     * @ORM\Column(name="semestre", type="string", length=2, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el semestre de la evaluacion")
+     * @Assert\Length(
+     * max = "2",
+     * maxMessage = "El semestre de evaluación no debe exceder los {{limit}} caracteres (I o II)"
+     * )
      */
     private $semestre;
 
@@ -67,6 +70,14 @@ class Evaluacion
      * })
      */
     private $idjefe;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="puestoemp", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el puesto del empleado evaluado")
+     */
+    private $puestoemp;
 
 
 
@@ -193,5 +204,28 @@ class Evaluacion
     public function getIdjefe()
     {
         return $this->idjefe;
+    }
+
+     /**
+     * Set puestoemp
+     *
+     * @param integer $puestoemp
+     * @return Evaluacion
+     */
+    public function setPuestoemp($puestoemp)
+    {
+        $this->puestoemp = $puestoemp;
+    
+        return $this;
+    }
+
+    /**
+     * Get puestoemp
+     *
+     * @return integer 
+     */
+    public function getPuestoemp()
+    {
+        return $this->puestoemp;
     }
 }

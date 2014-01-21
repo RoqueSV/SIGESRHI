@@ -1,0 +1,26 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+<div class="text-center">
+<h4>Seleccione el puesto para evaluar a sus subordinados</h4>
+</div>
+
+<table class="table table-bordered table-hover mitable">
+	<tr>
+		<th width="40%">Plaza</th><th width="40%">Unidad</th><th width="10%">Seleccionar</th>
+	</tr>
+	{% for puesto in empleado.idrefrenda %}
+	<tr>
+		<td>{{ puesto.idplaza.nombreplaza }}</td>
+		<td>{{puesto.idunidad.nombreunidad}} <br>({{puesto.idunidad.idcentro.nombrecentro}})</td>
+		<td><a href="{{path('evaluacion_seleccionempleado', {'idrefrenda':puesto.id})}}">Seleccionar</a></td>
+	</tr>
+{% endfor %}
+</table>
+
+<div class="text-center">
+<button type="button" class="btn" onclick="location.href='{{path('hello_page')}}'"> Cancelar </button>
+</div>
+
+{% endblock %}

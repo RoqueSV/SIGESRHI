@@ -238,6 +238,9 @@ class User extends BaseUser implements UserInterface
      * @var \DateTime
      */
     protected $credentialsExpireAt;
+
+    protected $empleado;
+
     /**
      * Sets the creation date
      *
@@ -1123,6 +1126,19 @@ class User extends BaseUser implements UserInterface
     public function preUpdate()
     {
         $this->updatedAt = new \DateTime;
+    }
+
+    
+    public function setEmpleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $empleado = null)
+    {
+        $this->empleado = $empleado;
+    
+        return $this;
+    }
+
+    public function getEmpleado()
+    {
+        return $this->empleado;
     }
 
 }
