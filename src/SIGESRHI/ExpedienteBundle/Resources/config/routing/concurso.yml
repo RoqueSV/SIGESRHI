@@ -40,3 +40,12 @@ concurso_memo:
 detalle_concurso:
     pattern:  /detalleconcurso
     defaults: { _controller: "ExpedienteBundle:Concurso:detalleConcurso" }
+
+memo_cierre:
+    pattern:  /memorandumcierre
+    defaults: { _controller: "ExpedienteBundle:Concurso:memoCierre" }
+
+acta_cierre:
+    pattern:  /actacierre
+    defaults: { _controller: "ExpedienteBundle:Concurso:ActaCierre" }
+

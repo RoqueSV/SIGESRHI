@@ -46,7 +46,7 @@ class ConcursoController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("concurso"));
+        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
         $breadcrumbs->addItem("Registrar concurso interno", $this->get("router")->generate("concurso"));
         
         return $grid->getGridResponse('ExpedienteBundle:Concurso:index.html.twig');
@@ -74,7 +74,7 @@ class ConcursoController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("concurso"));
+        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
         $breadcrumbs->addItem("Consultar concurso interno", $this->get("router")->generate("concurso"));
         
         return $grid->getGridResponse('ExpedienteBundle:Concurso:index.html.twig');
@@ -149,7 +149,7 @@ class ConcursoController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("concurso"));
+        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
         $breadcrumbs->addItem("Registrar concurso interno", $this->get("router")->generate("concurso"));
         $breadcrumbs->addItem($plaza->getNombreplaza(), $this->get("router")->generate("concurso_new"));
 
@@ -182,7 +182,7 @@ class ConcursoController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
         $breadcrumbs->addItem("Registrar concurso interno", $this->get("router")->generate("concurso"));
         $breadcrumbs->addItem("Datos de registro / ".$entity->getIdplaza()->getNombreplaza(), $this->get("router")->generate("concurso"));
 
@@ -257,7 +257,7 @@ class ConcursoController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
         $breadcrumbs->addItem("Consultar concurso interno", $this->get("router")->generate("concurso_consultar"));
         $breadcrumbs->addItem("Resultados / ".$entity->getIdplaza()->getNombreplaza(), $this->get("router")->generate("concurso"));
    
@@ -287,7 +287,7 @@ class ConcursoController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("concurso"));
+        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
         $breadcrumbs->addItem("Registrar concurso interno", $this->get("router")->generate("concurso"));
         $breadcrumbs->addItem("Datos de registro", $this->get("router")->generate("concurso_show",array('id'=>$id,'interesados'=>$request->get('interesados'))));
         $breadcrumbs->addItem("Editar concurso / ".$entity->getIdplaza()->getNombreplaza(), $this->get("router")->generate("concurso"));
@@ -409,12 +409,15 @@ class ConcursoController extends Controller
         
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
+
+        $idconcurso = $request->get('id');
         
         $correlativo = $this->correlMemorandum();
 
+        if($request->get('tipo')==1){
         //Llenar memorandum
         $memorandum = new Memorandum();
-        $concurso = $em->getRepository('ExpedienteBundle:Concurso')->find($request->get('id'));
+        $concurso = $em->getRepository('ExpedienteBundle:Concurso')->find($idconcurso);
         $memorandum->setIdconcurso($concurso);
         $memorandum->setCorrelativo($correlativo);
         $memorandum->setTipomemorandum('2');
@@ -427,6 +430,94 @@ class ConcursoController extends Controller
                                                       'id' => $request->get('id'),
                                                       'correlativo' => $correlativo,
                                                       'interesados' => $request->get('interesados'),)));
+        }
+
+        else{
+        
+        //Verificar num de empleados que participaron en concurso
+        $query=$em->createQuery('SELECT COUNT(e.id) AS numemp FROM ExpedienteBundle:Empleado e
+        join e.idempleadoconcurso ec
+        WHERE ec.idconcurso =:idconcurso')
+        ->setParameter('idconcurso', $idconcurso);
+        $resultado = $query->getSingleResult();
+
+        $num=$resultado['numemp'];
+
+        //Llenar memorandum
+        $memorandum = new Memorandum();
+        $concurso = $em->getRepository('ExpedienteBundle:Concurso')->find($idconcurso);
+        $memorandum->setIdconcurso($concurso);
+        $memorandum->setCorrelativo($correlativo);
+        $memorandum->setTipomemorandum('1');
+
+        $em->persist($memorandum);
+        $em->flush();
+        /* ********************* */
+
+
+        return $this->redirect($this->generateUrl('reporte_memocierre_concurso', array(
+                                                      'id' => $idconcurso,
+                                                      'correlativo' => $correlativo,
+                                                      'interesado' => $request->get('interesado'),
+                                                      'cargo' => $request->get('cargo'), 
+                                                      'num' => $num )));
+        }
+    }
+
+    public function memoCierreAction(){
+
+      $request = $this->getRequest();
+      $em = $this->getDoctrine()->getManager();
+
+      $idconcurso=$request->get('id');
+
+      $entity = $em->getRepository('ExpedienteBundle:Concurso')->find($idconcurso);
+     
+     // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
+        $breadcrumbs->addItem("Consultar concurso interno", $this->get("router")->generate("concurso_consultar"));
+        $breadcrumbs->addItem("Información de concurso", $this->get("router")->generate("detalle_concurso",array('id'=>$idconcurso)));
+        $breadcrumbs->addItem("Memorándum de cierre", $this->get("router")->generate("concurso_consultar"));
+      
+      return $this->render('ExpedienteBundle:Concurso:memocierre.html.twig', array(
+            'entity' => $entity,
+        ));
+
+    }
+
+     public function actaCierreAction(){
+
+      $request = $this->getRequest();
+      $em = $this->getDoctrine()->getManager();
+
+      $idconcurso=$request->get('id');
+
+      $correlativo = $this->correlActa(); //Correlativo para el acta
+
+      $entity = $em->getRepository('ExpedienteBundle:Concurso')->find($idconcurso);
+
+      
+
+      //Verificar num de empleados que participaron en concurso
+        $query=$em->createQuery('SELECT COUNT(e.id) AS numemp FROM ExpedienteBundle:Empleado e
+        join e.idempleadoconcurso ec
+        WHERE ec.idconcurso =:idconcurso')
+        ->setParameter('idconcurso', $idconcurso);
+        $resultado = $query->getSingleResult();
+
+        $num=$resultado['numemp'];
+
+        $entity->setNumeroacta($correlativo);
+        $entity->setAnoacta(date('Y'));
+
+        $em->persist($entity);
+        $em->flush();
+      
+        return $this->redirect($this->generateUrl('reporte_actacierre_concurso', array(
+                                                      'id'  => $idconcurso,
+                                                      'num' => $num )));
 
     }
 
@@ -451,6 +542,29 @@ class ConcursoController extends Controller
         if($num > 0){
             $num++;
             $correlativo = date('Y')."-".str_pad($num, 3, "0", STR_PAD_LEFT);
+        }
+        return $correlativo;
+    }
+
+    public function correlActa(){
+        $em = $this->getDoctrine()->getManager();
+        
+        //conocer correlativo
+        $query = $em->createQuery("SELECT COUNT(c.numeroacta) AS  correlativo 
+        FROM ExpedienteBundle:Concurso c 
+        where c.numeroacta is not null");
+
+        $resultado = $query->getsingleResult();
+
+        $num=$resultado['correlativo'];
+
+        if($num==0){
+
+            $correlativo= 001;
+        }
+        if($num > 0){
+            $num++;
+            $correlativo = str_pad($num, 3, "0", STR_PAD_LEFT);
         }
         return $correlativo;
     }

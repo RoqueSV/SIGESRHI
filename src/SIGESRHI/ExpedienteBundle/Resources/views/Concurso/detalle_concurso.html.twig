@@ -87,6 +87,12 @@
     <br>
       <div class="text-center">
         <a href="{{ path('concurso_consultar') }}" class="btn">Regresar al listado</a>
+        
+        {% if  "now"|date('Y-m-d') > entity.fechacierre|date('Y-m-d')  %}
+        <a href="{{ path('acta_cierre',{'id':entity.id}) }}" class="btn btn-primary">Acta de cierre</a>
+        <a href="{{ path('memo_cierre',{'id':entity.id}) }}" class="btn btn-primary">Memorándum de cierre</a>
+        {% endif %}
+      
       </div>   
 
 {% endblock %}

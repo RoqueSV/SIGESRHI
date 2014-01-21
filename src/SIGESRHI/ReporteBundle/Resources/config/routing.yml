@@ -29,3 +29,11 @@ reporte_cartelconcurso:
 reporte_memoconcurso:
     pattern:  /reporte_memoconcurso
     defaults: { _controller: ReporteBundle:Reporte:memoConcurso }
+
+reporte_memocierre_concurso:
+    pattern:  /reporte_memocierre
+    defaults: { _controller: ReporteBundle:Reporte:memoCierre }
+
+reporte_actacierre_concurso:
+    pattern:  /actacierre
+    defaults: { _controller: ReporteBundle:Reporte:ActaCierre }

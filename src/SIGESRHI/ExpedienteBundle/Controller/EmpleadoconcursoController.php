@@ -99,7 +99,7 @@ class EmpleadoconcursoController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
         $breadcrumbs->addItem("Consultar concurso interno", $this->get("router")->generate("concurso_consultar"));
         $breadcrumbs->addItem("Información de concurso", $this->get("router")->generate("detalle_concurso",array('id'=>$request->get('id'))));
         $breadcrumbs->addItem("Registrar empleado", $this->get("router")->generate("concurso_consultar"));

@@ -1,0 +1,39 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+<form action="{{ path('concurso_memo',{'id':entity.id,'tipo':2}) }}" method="post" class="form-horizontal">
+    
+    <h3 class="text-center"> Datos para memorándum de cierre de concurso</h3>
+    <br />
+       
+     <div class="control-group">
+        <label for="interesado" class=" control-label required">
+        Para
+        </label>
+        <div class="controls">
+          <input type="text" id="interesado" name="interesado" class="not-removable" required="required"/>
+        </div>
+     </div>
+
+     <div class="control-group">
+        <label for="cargo" class=" control-label required">
+        Cargo que ocupa
+        </label>
+        <div class="controls">
+          <input type="text" id="cargo" name="cargo" class="not-removable" required="required"/>
+        </div>
+     </div>
+
+      <div class="text-center">
+        {% if entity.numeroacta is null %}
+        <p class="text-error">Debe generar el acta antes de generar el memorándum</p>
+        {% else %}
+         <button type="submit" class="btn btn-primary">Generar</button>
+         {% endif %}
+         <a href="{{ path('detalle_concurso',{'id':entity.id}) }}"  class="btn">Cancelar</a>
+      </div>
+
+    </form>
+
+    {% endblock %}

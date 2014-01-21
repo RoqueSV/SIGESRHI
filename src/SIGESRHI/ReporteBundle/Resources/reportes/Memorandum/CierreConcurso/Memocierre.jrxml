@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Memocierre" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b06fac72-c28d-45aa-817d-359e26b16137">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="240"/>
+	<subDataset name="dataset1" uuid="a6d3b3f8-941d-4d16-a4b1-104c8f96d297"/>
+	<parameter name="interesado" class="java.lang.String"/>
+	<parameter name="idconcurso" class="java.lang.Integer"/>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
+	<parameter name="cargointeres" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/erick/Web/SIGESRHI/src/SIGESRHI/ReporteBundle/Resources/reportes/Memorandum/CierreConcurso/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="caso" class="java.lang.String"/>
+	<parameter name="correlativo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+      (select nombreplaza from plaza where id = c.idplaza) as plaza,
+      (to_char(current_date,'DD " de " TMmonth " del " YYYY')) as fechaactual,
+      (select nombrecompleto from solicitudempleo se
+              join expediente e on (se.idexpediente=e.id)
+              join empleado em on (e.id=em.idexpediente)
+              join refrendaact ra on (em.id=ra.idempleado)
+              where nombreplaza = 'Jefe Departamento de Recursos Humanos') as jeferrhh,
+      numeroacta,anoacta
+
+FROM
+     concurso c
+WHERE
+     id = $P{idconcurso}]]>
+	</queryString>
+	<field name="plaza" class="java.lang.String"/>
+	<field name="fechaactual" class="java.lang.String"/>
+	<field name="jeferrhh" class="java.lang.String"/>
+	<field name="numeroacta" class="java.lang.Integer"/>
+	<field name="anoacta" class="java.lang.Integer"/>
+	<variable name="caso1" class="java.lang.String">
+		<variableExpression><![CDATA[$P{caso}.equals("N")?"No habiéndose presentado aspirante interno a dicha plaza vacante, atentamente se informa que puede solicitar expedientes del banco de solicitudes de empleo para continuar con el proceso de selección del recurso.":"Se informa que se presentaron los siguientes candidatos internos para aplizar a dicha plaza vacante:"]]></variableExpression>
+	</variable>
+	<title>
+		<band height="122" splitType="Stretch">
+			<image>
+				<reportElement uuid="3c9ce659-bbcf-433f-ae09-78476d5f828c" x="0" y="0" width="167" height="83"/>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="705f4815-5e2c-49af-a974-e26bb660ad29" x="234" y="82" width="151" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="false"/>
+				</textElement>
+				<text><![CDATA[MEMORANDUM]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="823d268f-bb67-4581-b5ab-277fefd13c99" x="466" y="42" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{correlativo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4695b6a0-5098-464e-97d4-e9ede19949d7" x="451" y="22" width="120" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Recursos Humanos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="480" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="28112bd3-c1e1-4c0d-b8b5-125c77c72ff0" x="67" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[PARA                  : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5bf7ba4d-029c-4f29-b31b-f9f2b368a1ac" x="67" y="43" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[DE                     :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8a36a7e5-c39d-4658-9746-1507fda39e2f" x="67" y="100" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[FECHA               :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3ece42cb-5809-4e3f-abd3-2ccb9612fa33" x="67" y="144" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[ASUNTO            :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="234c5c95-98ad-48dc-8a10-95a28c1ca2a7" x="167" y="58" width="240" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Top"/>
+				<text><![CDATA[JEFE DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7b27bf85-d068-4b25-9f53-97696b08225d" x="167" y="144" width="307" height="20"/>
+				<textElement/>
+				<text><![CDATA[REMISION DE ACTA DE CIERRE DE CONCURSO INTERNO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="accdeb47-e729-417d-834c-d71a12b7ee18" x="32" y="372" width="267" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Agradeciendo su atención, le saludo.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1ef56c56-6b53-4591-bf50-b28e5e27c7d4" x="32" y="458" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Con Anexos]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9fc464be-a19a-469b-8a73-5caaafd1ab90" x="167" y="100" width="200" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fechaactual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fe183371-64ee-4637-9227-3a40e656580c" x="167" y="43" width="240" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{jeferrhh}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="2dca6a8c-d6db-4744-adaa-9d1f4fa4446e" x="0" y="186" width="572" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="7a58eff4-f4a8-485e-8675-1cb8cbd78ecd" x="167" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{interesado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="adb8c05a-07de-490c-aa4b-108bef385fef" x="167" y="13" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{cargointeres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4997769c-1da6-4717-beeb-d7c691a408d1" x="32" y="201" width="523" height="35"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Atentamente remito a usted, copia de acta de cierre de consurso interno a plaza vacante de "+$F{plaza}+" de ese Centro de atención."]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="0bf2dd65-0a54-4afa-a459-a433944eaacd" positionType="Float" x="0" y="291" width="572" height="1"/>
+				<subreportParameter name="id_concurso">
+					<subreportParameterExpression><![CDATA[$P{idconcurso}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subreporte1_actacierreconcurso.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement uuid="feb35990-3f78-4502-b05a-4620eaa30962" x="32" y="236" width="523" height="37"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{caso1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1495caf3-89a2-4f7c-960e-224a0909e125" positionType="Float" x="32" y="308" width="523" height="36"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Asi mismo se anexa al presente  copia del acta "+$F{numeroacta}+"/"+$F{anoacta}+" de cierre de concurso interno."]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement uuid="5a2cb92a-e1ba-4033-a9b1-064007c8c3d7" x="0" y="19" width="188" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

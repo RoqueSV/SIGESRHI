@@ -329,13 +329,10 @@ class ReporteController extends Controller
      /* Obtengo parametros */
      $request=$this->getRequest();
      $idconcurso=$request->get('id'); 
-     
-      // Incluimos camino de migas
-     $concurso = $em->getRepository('ExpedienteBundle:Concurso')->find($idconcurso);
 
      $breadcrumbs = $this->get("white_october_breadcrumbs");
      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-     $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("concurso"));
+     $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
      $breadcrumbs->addItem("Registrar concurso interno", $this->get("router")->generate("concurso"));
      $breadcrumbs->addItem("Datos de concurso", $this->get("router")->generate("concurso_show",array('id'=>$idconcurso,'interesados'=>$request->get('interesados'))));
      $breadcrumbs->addItem("Cartel de concurso", $this->get("router")->generate("concurso"));
@@ -346,7 +343,7 @@ class ReporteController extends Controller
      //Llamando la funcion JRU de la libreria php-jru
      $jru=new JRU();
      //Ruta del reporte compilado Jasper generado por IReports
-     $Reporte=__DIR__.'/../Resources/reportes/Memorandum/rpt_informacionplaza.jasper';
+     $Reporte=__DIR__.'/../Resources/reportes/Memorandum/Cartel/rpt_informacionplaza.jasper';
      //Ruta a donde deseo Guardar mi archivo de salida Pdf
      $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
      //Paso los parametros necesarios
@@ -372,11 +369,9 @@ class ReporteController extends Controller
      $interesados = $request->get('interesados');
      
       // Incluimos camino de migas
-     $concurso = $em->getRepository('ExpedienteBundle:Concurso')->find($idconcurso);
-
      $breadcrumbs = $this->get("white_october_breadcrumbs");
      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-     $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("concurso"));
+     $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
      $breadcrumbs->addItem("Registrar concurso interno", $this->get("router")->generate("concurso"));
      $breadcrumbs->addItem("Datos de concurso", $this->get("router")->generate("concurso_show",array('id'=>$idconcurso,'interesados'=>$interesados)));
      $breadcrumbs->addItem("Memorándum de concurso", $this->get("router")->generate("concurso"));
@@ -388,7 +383,7 @@ class ReporteController extends Controller
      //Llamando la funcion JRU de la libreria php-jru
      $jru=new JRU();
      //Ruta del reporte compilado Jasper generado por IReports
-     $Reporte=__DIR__.'/../Resources/reportes/Memorandum/Memoconcurso.jasper';
+     $Reporte=__DIR__.'/../Resources/reportes/Memorandum/AperturaConcurso/Memoconcurso.jasper';
      //Ruta a donde deseo Guardar mi archivo de salida Pdf
      $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
      //Paso los parametros necesarios
@@ -396,6 +391,106 @@ class ReporteController extends Controller
      $Parametro->put("idconcurso", new java("java.lang.Integer", $idconcurso));
      $Parametro->put("correlativo", new java("java.lang.String", $correlativo));
      $Parametro->put("interesados", new java("java.lang.String", $interesados));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+   public function memoCierreAction()
+    {
+     $em = $this->getDoctrine()->getManager();
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idconcurso  = $request->get('id'); 
+     $correlativo = $request->get('correlativo');
+     $interesado = $request->get('interesado');
+     $cargo = $request->get('cargo');
+     $num = $request->get('num');
+
+     if($num == 0){
+      $caso = 'N';
+     }
+     else{
+      $caso = 'A';
+     }
+
+     // Incluimos camino de migas
+    $breadcrumbs = $this->get("white_october_breadcrumbs");
+    $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+    $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
+    $breadcrumbs->addItem("Consultar concurso interno", $this->get("router")->generate("concurso_consultar"));
+    $breadcrumbs->addItem("Información de concurso", $this->get("router")->generate("detalle_concurso",array('id'=>$idconcurso)));
+    $breadcrumbs->addItem("Memorandum de cierre", $this->get("router")->generate("concurso_consultar"));
+
+     
+     // Nombre reporte
+     $filename= 'Memorandum de cierre.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Memorandum/CierreConcurso/Memocierre.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("idconcurso", new java("java.lang.Integer", $idconcurso));
+     $Parametro->put("correlativo", new java("java.lang.String", $correlativo));
+     $Parametro->put("interesado", new java("java.lang.String", $interesado));
+     $Parametro->put("cargointeres", new java("java.lang.String", $cargo));
+     $Parametro->put("caso", new java("java.lang.String", $caso));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+    public function actaCierreAction()
+    {
+     $em = $this->getDoctrine()->getManager();
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idconcurso  = $request->get('id'); 
+     $num = $request->get('num');
+
+     if($num == 0) {
+        $naplicantes = 'N';
+    }
+     else{
+        $naplicantes = 'A';
+    }
+
+    // Incluimos camino de migas
+    $breadcrumbs = $this->get("white_october_breadcrumbs");
+    $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+    $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
+    $breadcrumbs->addItem("Consultar concurso interno", $this->get("router")->generate("concurso_consultar"));
+    $breadcrumbs->addItem("Información de concurso", $this->get("router")->generate("detalle_concurso",array('id'=>$idconcurso)));
+    $breadcrumbs->addItem("Acta de cierre", $this->get("router")->generate("concurso_consultar"));
+
+     
+     // Nombre reporte
+     $filename= 'Acta de cierre.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Memorandum/ActaCierre/acta_cierreconcurso.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("idconcurso", new java("java.lang.Integer", $idconcurso));
+     $Parametro->put("n_aplicantes", new java("java.lang.String", $naplicantes));
      $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
      //Funcion de Conexion a Base de datos 
      $Conexion = $this->crearConexion();

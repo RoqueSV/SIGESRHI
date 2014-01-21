@@ -62,7 +62,7 @@ function eliminar() {
 
       <div class="text-center">
         <a href="{{ path('reporte_cartelconcurso',{'id':entity.id, 'interesados':interesados}) }}" class="btn btn-primary"> Generar cartel de concurso</a>
-        <a href="{{ path('concurso_memo',{ 'id': entity.id, 'interesados':interesados }) }}" class="btn btn-primary"> Generar memorándum</a>
+        <a href="{{ path('concurso_memo',{ 'id': entity.id, 'interesados':interesados,'tipo':1 }) }}" class="btn btn-primary"> Generar memorándum</a>
         <a href="{{ path('concurso_edit', { 'id': entity.id, 'interesados':interesados}) }}" class="btn">Editar</a>
         <a href="{{ path('concurso') }}" class="btn">Regresar al listado</a>
         <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
