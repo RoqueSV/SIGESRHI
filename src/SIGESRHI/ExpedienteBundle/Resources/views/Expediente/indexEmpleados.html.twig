@@ -4,7 +4,7 @@
 
 <script>
     jQuery(function() {
-        jQuery("#grid_grid_adm_activos__empleados__query__from").autocomplete({
+        jQuery("#grid_{{ idgrid }}__empleados__query__from").autocomplete({
             source: function( request, response ) {
                 jQuery.ajax({
                     url: "{{ path('shtumi_ajaxautocomplete') }}",
@@ -12,7 +12,7 @@
                     data: {
                         maxRows: 12,
                         letters: request.term,
-                        entity_alias: "empleados"
+                        entity_alias: "{{ showempleados }}"
                     },
                     success: function( data ) {
                         response( jQuery.map( data, function( item ) {
@@ -33,7 +33,7 @@
             }
         });
 
-        jQuery("#grid_grid_adm_activos__codigos__query__from").autocomplete({
+        jQuery("#grid_{{ idgrid }}__codigos__query__from").autocomplete({
             source: function( request, response ) {
                 jQuery.ajax({
                     url: "{{ path('shtumi_ajaxautocomplete') }}",
@@ -69,6 +69,7 @@
         <p> {{ flashMessage }} </p>
     </div>
 {% endfor %}
+<br>
 <h4 class='text-center'>ADMINISTRACION DE EMPLEADOS</h4>
 <p class="text-center">Seleccione el empleado de la lista</p>
 {{ grid_search(grid) }}
@@ -78,6 +79,8 @@
 {% block grid_filters %}{% endblock %}
 <br>
     <div align='center'>
+        <input type="hidden" id="showempleados" value="{{showempleados}}">
+        <input type="hidden" id="idgrid" value="{{idgrid}}">
         <a  href="{{ path('hello_page') }}" class="btn">Cancelar</a>            
     </div>
 {% endblock %}
