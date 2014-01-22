@@ -37,3 +37,8 @@ reporte_memocierre_concurso:
 reporte_actacierre_concurso:
     pattern:  /actacierre
     defaults: { _controller: ReporteBundle:Reporte:ActaCierre }
+
+reporte_certificacion:
+    pattern:  /reporte_certificacion
+    defaults: { _controller: ReporteBundle:Reporte:ReporteCertificacion }
+

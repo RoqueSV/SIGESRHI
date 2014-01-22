@@ -1,0 +1,29 @@
+{% extends '::PrincipalBase.html.twig' %}
+	{% block principal %}
+  <table background="{{ asset('images/evaluaciondesempeno.jpg') }}" width="150%" height="400px">
+  <tr>
+    <td width="40%">
+      <table>
+        <tr>
+          <td>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td width="60%">
+      <table width="100%">
+        {% set i=0 %}
+        {% for opcion in opciones %}
+        <br>
+        <tr>
+          <td>
+            <h5 style="margin-left:{{i}}px;"><a style="background-color: CornflowerBlue; padding: 5px 10px; border-radius: 10px; color:#ffffff;" href="{{ path('cambia_opcion', {'acceso':opcion.acceso, 'ruta': opcion.ruta}) }}">{{opcion.pagina}}</a></h5>
+          </td>
+        </tr>
+        {% set i=i+30 %}
+        {% endfor %}
+      </table>
+    </td>
+  </tr>
+  </table>
+	{% endblock %}

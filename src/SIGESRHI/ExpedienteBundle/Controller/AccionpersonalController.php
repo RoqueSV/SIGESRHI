@@ -717,7 +717,7 @@ class AccionpersonalController extends Controller
 
         //HOja de servicio certificada.
         if($tipo_reporte =="5"){
-        return $this->redirect($this->generateUrl('reporte_acciones', array('id' => $idexp, 'vista_retorno'=>$vista_retorno)));
+        return $this->redirect($this->generateUrl('reporte_certificacion', array('id' => $idexp, 'vista_retorno'=>$vista_retorno)));
             }// if 5
     }//function
 

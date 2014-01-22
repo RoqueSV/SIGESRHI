@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formulario_evaluacionxempleado" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3642e819-2001-48ac-9648-5f5f73ed3bd2">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -36,7 +36,7 @@
 	<parameter name="funcion" class="java.lang.String"/>
 	<parameter name="apartirde" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select e.id,fev.id as for,nombrecompleto,e.codigoempleado,nombrefactor,nombreopcion,descripcionfactor,tipoformulario,codigoformulario,nombreunidad,nombrecentro,pl.nombreplaza,partida,subpartida,to_char(sueldoactual,'$9,999.00') as sueldoactual,to_char(fechainiciocontratacion,'D "de" TMMonth "de" YYYY')as fechainiciocontratacion,semestre,anoevaluado,
+		<![CDATA[select e.id,fev.id as for,nombrecompleto,e.codigoempleado,nombrefactor,nombreopcion,descripcionfactor,tipoformulario,codigoformulario,nombreunidad,nombrecentro,pl.nombreplaza,partida,subpartida,to_char(sueldoactual,'$9,999.00') as sueldoactual,semestre,anoevaluado,
 (select nombrecompleto from empleado ej
 join expediente exj on (ej.idexpediente = exj.id)
 join solicitudempleo sej on (exj.id = sej.idexpediente)
@@ -48,7 +48,6 @@ from
 solicitudempleo se join expediente ex on(se.idexpediente=ex.id)
 join empleado e on(e.idexpediente= ex.id)
 join evaluacion ev on(ev.idempleado=e.id)
-join contratacion c on(e.id=c.idempleado)
 join refrendaact ref on(e.id=ref.idempleado)
 join plaza pl on(ref.idplaza=pl.id)
 join unidadorganizativa un on(ref.idunidad=un.id)
@@ -73,7 +72,6 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 	<field name="partida" class="java.lang.Integer"/>
 	<field name="subpartida" class="java.lang.Integer"/>
 	<field name="sueldoactual" class="java.lang.String"/>
-	<field name="fechainiciocontratacion" class="java.lang.String"/>
 	<field name="semestre" class="java.lang.String"/>
 	<field name="anoevaluado" class="java.lang.Integer"/>
 	<field name="nombrejefe" class="java.lang.String"/>
@@ -228,14 +226,6 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					</box>
 					<textElement verticalAlignment="Bottom"/>
 					<textFieldExpression><![CDATA[$F{nombreunidad}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement uuid="30d94fdc-e7e9-4386-8f72-5aa1a4d93685" x="85" y="31" width="250" height="17"/>
-					<box leftPadding="2">
-						<bottomPen lineWidth="0.75"/>
-					</box>
-					<textElement verticalAlignment="Bottom"/>
-					<textFieldExpression><![CDATA[$F{fechainiciocontratacion}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement uuid="73936fe6-e995-4bbd-ae52-d191daf74145" x="371" y="31" width="24" height="17"/>
