@@ -1,6 +1,6 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\EvaluacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -67,10 +67,10 @@ class Respuesta
     /**
      * Set idfactor
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Factorevaluacion $idfactor
+     * @param \SIGESRHI\EvaluacionBundle\Entity\Factorevaluacion $idfactor
      * @return Respuesta
      */
-    public function setIdfactor(\SIGESRHI\AdminBundle\Entity\Factorevaluacion $idfactor = null)
+    public function setIdfactor(\SIGESRHI\EvaluacionBundle\Entity\Factorevaluacion $idfactor = null)
     {
         $this->idfactor = $idfactor;
     
@@ -80,7 +80,7 @@ class Respuesta
     /**
      * Get idfactor
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Factorevaluacion 
+     * @return \SIGESRHI\EvaluacionBundle\Entity\Factorevaluacion 
      */
     public function getIdfactor()
     {
@@ -90,10 +90,10 @@ class Respuesta
     /**
      * Set idopcion
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Opcion $idopcion
+     * @param \SIGESRHI\EvaluacionBundle\Entity\Opcion $idopcion
      * @return Respuesta
      */
-    public function setIdopcion(\SIGESRHI\AdminBundle\Entity\Opcion $idopcion = null)
+    public function setIdopcion(\SIGESRHI\EvaluacionBundle\Entity\Opcion $idopcion = null)
     {
         $this->idopcion = $idopcion;
     
@@ -103,7 +103,7 @@ class Respuesta
     /**
      * Get idopcion
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Opcion 
+     * @return \SIGESRHI\EvaluacionBundle\Entity\Opcion 
      */
     public function getIdopcion()
     {
@@ -113,10 +113,10 @@ class Respuesta
     /**
      * Set idevaluacion
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Evaluacion $idevaluacion
+     * @param \SIGESRHI\EvluacionBundle\Entity\Evaluacion $idevaluacion
      * @return Respuesta
      */
-    public function setIdevaluacion(\SIGESRHI\AdminBundle\Entity\Evaluacion $idevaluacion = null)
+    public function setIdevaluacion(\SIGESRHI\EvaluacionBundle\Entity\Evaluacion $idevaluacion = null)
     {
         $this->idevaluacion = $idevaluacion;
     
@@ -126,7 +126,7 @@ class Respuesta
     /**
      * Get idevaluacion
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Evaluacion 
+     * @return \SIGESRHI\EvaluacionBundle\Entity\Evaluacion 
      */
     public function getIdevaluacion()
     {

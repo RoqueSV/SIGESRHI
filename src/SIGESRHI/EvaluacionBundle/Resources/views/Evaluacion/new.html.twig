@@ -1,0 +1,94 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    <div align="right">
+    <b>{{formulario.codigoformulario}}</b>&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+
+    <div class="text-center">
+    <h4>{{formulario.tipoformulario}}</h4>
+    </div>
+<br>
+
+<form action="{{ path('evaluacion_create') }}" method="post" {{ form_enctype(form) }}>
+    <fieldset>
+        <legend>I. DATOS GENERALES</legend>
+        <br>
+
+        <table class="table table-bordered table-centered table-hover mitable" width="90%">
+            <tr><th width="30%">Nombre del empleado: </th><td>{{empleado.idexpediente.idsolicitudempleo.nombrecompleto}}</td></tr>
+            <tr><th>Código:</th><td>{{empleado.codigoempleado}}</td></tr>
+            <tr><th>Cargo según nombramiento:</th><td>{{refrenda.idplaza.nombreplaza}}</td></tr>
+            <tr><th>Fecha de ingreso: </th><td>{{empleado.idexpediente.hojaservicio.fechaingreso|date('d-m-Y')|fecha}}</td></tr>
+            <tr><th>Número de partida:</th><td>{{refrenda.partida}}</td></tr>
+            <tr><th>Número de subpartida:</th><td>{{refrenda.subpartida}}</td></tr>
+            <tr><th>Sueldo:</th><td> ${{refrenda.sueldoactual}}</td></tr>
+            <tr><th>Cargo según función:</th><td>{{refrenda.idplaza.nombreplaza}}</td></tr>
+            <tr><th>A partir de:</th><td>que pedos</td></tr>
+            <tr><th>Dependencia:</th><td>{{refrenda.idunidad.idcentro.nombrecentro}}</td></tr>
+            <tr><th>Unidad administrativa:</th><td>{{refrenda.idunidad.nombreunidad}} </td></tr>
+            <tr><th>Nombre del jefe inmediato:</th><td>{{jefe.idexpediente.idsolicitudempleo.nombrecompleto}}</td></tr>
+            <tr><th>Puesto:</th><td>{{refrendajefe.idplaza.nombreplaza}}</td></tr>
+            <tr><th>Periodo comprendido de:</th><td>
+                {% if evaluacion.semestre == 'I' %} 
+                Enero a Junio de {{evaluacion.anoevaluado}} 
+                {% else %}
+                Julio a Diciembre de {{evaluacion.anoevaluado}} 
+                {% endif %}
+            </td></tr>
+            
+        </table>
+
+    </fieldset>
+
+<br>
+
+
+<fieldset>
+        <legend>II. EVALUACIÓN GENERAL POR PARTE DEL JEFE INMEDIATO</legend>
+<br>
+
+    {% for factor in formulario.factores %}
+    <table border="2">
+        <tr><td colspan="{{factor.opciones|length}}" class="text-center"><b>{{ factor.nombrefactor}}</b></td></tr>
+        <tr><td colspan="{{factor.opciones|length}}">  <p class="justifyText"> {{factor.descripcionfactor}} </p> </td></tr>
+        </tr>
+        <tr>
+            {% set indice = loop.index %}
+        {% for opcion in factor.opciones %}
+        <td class="text-center" width="{{100 / (factor.opciones|length)}}%"> <input type="radio" name="respuesta-{{indice}}[]" required="required" value="{{factor.id}}-{{opcion.id}}"/> &nbsp;<b>{{opcion.nombreopcion}} </b></td>
+        {% endfor %}
+        </tr>
+        <tr>
+        {% for opcion in factor.opciones %}
+        <td><p class="justifyText">{{opcion.descripcionopcion}}</p></td>
+        {% endfor %}
+        </tr>
+    </table>
+    <br><br>
+
+    {% endfor %}
+
+</fieldset>
+
+<div class="hide">    
+
+    {{form_row(form.fecharealizacion)}}
+    {{form_row(form.anoevaluado)}}
+    {{form_row(form.semestre)}}
+    {{form_row(form.puestoemp)}}
+    {{form_row(form.idempleado)}}
+    {{form_row(form.idjefe)}}
+</div>
+
+    
+    {{ form_rest(form) }}
+        <p>
+            <div class="text-center">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn" onclick="location.href='{{path('evaluacion_seleccionempleado', {'idrefrenda':refrendajefe.id})}}'">Cancelar</button>
+            </div>
+        </p>
+    </form>
+
+{% endblock %}

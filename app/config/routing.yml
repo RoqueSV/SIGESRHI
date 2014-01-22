@@ -1,3 +1,7 @@
+evaluacion:
+    resource: "@EvaluacionBundle/Resources/config/routing.yml"
+    prefix:   /
+
 reporte:
     resource: "@ReporteBundle/Resources/config/routing.yml"
     prefix:   /reporte

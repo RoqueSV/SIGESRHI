@@ -1,9 +1,11 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\EvaluacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Factorevaluacion
@@ -50,7 +52,7 @@ class Factorevaluacion
     /**
      * @var \Formularioevaluacion
      *
-     * @ORM\ManyToOne(targetEntity="Formularioevaluacion")
+     * @ORM\ManyToOne(targetEntity="Formularioevaluacion", inversedBy="Factores")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idformulario", referencedColumnName="id")
      * })
@@ -118,7 +120,7 @@ class Factorevaluacion
     /**
      * Set idformulario
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Formularioevaluacion $idformulario
+     * @param \SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion $idformulario
      * @return Factorevaluacion
      */
     public function setIdformulario(\SIGESRHI\AdminBundle\Entity\Formularioevaluacion $idformulario = null)
@@ -131,10 +133,47 @@ class Factorevaluacion
     /**
      * Get idformulario
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Formularioevaluacion 
+     * @return \SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion 
      */
     public function getIdformulario()
     {
         return $this->idformulario;
     }
+
+
+
+     public function __construct()
+    {
+        $this->Opciones = new ArrayCollection();
+    }
+
+
+/************************* Factores de evaluacion ***************************/
+
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Opcion", mappedBy="idfactor", cascade={"persist", "remove"})
+     * @Assert\Valid
+     */
+    protected $Opciones;
+
+    /**
+     * Get Opciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOpciones()
+    {
+        return $this->Opciones;
+    }
+
+    public function setOpciones(\Doctrine\Common\Collections\Collection $opciones)
+    {
+        $this->Opciones = $opciones;
+        foreach ($opciones as $opcion) {
+            $opcion->setIdfactor($this);
+        }
+    }
+
 }

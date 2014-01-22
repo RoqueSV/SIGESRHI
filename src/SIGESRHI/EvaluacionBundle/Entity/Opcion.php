@@ -1,6 +1,6 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\EvaluacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -57,7 +57,7 @@ class Opcion
     /**
      * @var \Factorevaluacion
      *
-     * @ORM\ManyToOne(targetEntity="Factorevaluacion")
+     * @ORM\ManyToOne(targetEntity="Factorevaluacion", inversedBy="Opciones")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idfactor", referencedColumnName="id")
      * })
@@ -148,10 +148,10 @@ class Opcion
     /**
      * Set idfactor
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Factorevaluacion $idfactor
+     * @param \SIGESRHI\EvaluacionBundle\Entity\Factorevaluacion $idfactor
      * @return Opcion
      */
-    public function setIdfactor(\SIGESRHI\AdminBundle\Entity\Factorevaluacion $idfactor = null)
+    public function setIdfactor(\SIGESRHI\EvaluacionBundle\Entity\Factorevaluacion $idfactor = null)
     {
         $this->idfactor = $idfactor;
     
@@ -161,7 +161,7 @@ class Opcion
     /**
      * Get idfactor
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Factorevaluacion 
+     * @return \SIGESRHI\ExpedienteBundle\Entity\Factorevaluacion 
      */
     public function getIdfactor()
     {

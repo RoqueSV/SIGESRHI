@@ -69,6 +69,9 @@
         <field name="token"                   type="string" length="255" column="token" nullable="true" />
         <field name="twoStepVerificationCode" type="string" length="255" column="two_step_code" nullable="true" />
 
+         <one-to-one field="empleado" target-entity="SIGESRHI\ExpedienteBundle\Entity\Empleado" mapped-by="idusuario"/>
+            
+
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="prePersist" />
             <lifecycle-callback type="preUpdate" method="preUpdate" />

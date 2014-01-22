@@ -1,6 +1,6 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\EvaluacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -157,7 +157,7 @@ class Puntaje
     /**
      * Add idformulario
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Formularioevaluacion $idformulario
+     * @param \SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion $idformulario
      * @return Puntaje
      */
     public function addIdformulario(\SIGESRHI\AdminBundle\Entity\Formularioevaluacion $idformulario)
@@ -170,7 +170,7 @@ class Puntaje
     /**
      * Remove idformulario
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Formularioevaluacion $idformulario
+     * @param \SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion $idformulario
      */
     public function removeIdformulario(\SIGESRHI\AdminBundle\Entity\Formularioevaluacion $idformulario)
     {

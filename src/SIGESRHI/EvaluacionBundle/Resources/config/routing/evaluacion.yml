@@ -1,0 +1,34 @@
+evaluacion:
+    pattern:  /inicio
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:inicio" }
+
+evaluacion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:show" }
+
+evaluacion_new:
+    pattern:  /new/{idform}/{id}/{idpuestoemp}/{idpuestojefe}
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:new" }
+
+evaluacion_create:
+    pattern:  /create
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:create" }
+    requirements: { _method: post }
+
+evaluacion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:edit" }
+
+evaluacion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:update" }
+    requirements: { _method: post|put }
+
+evaluacion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:delete" }
+    requirements: { _method: post|delete }
+
+evaluacion_seleccionempleado:
+    pattern:  /{idrefrenda}/seleccionempleado
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:EmpleadosEvaluar" }

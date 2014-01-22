@@ -1,0 +1,30 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+<div class="text-center">
+    <h3> REALIZAR EVALUACIÓN DE DESEMPEÑO</h3>
+    </div>
+
+<br>
+<b>Información del Evaluador:</b>
+
+<table class="table table-bordered table-hover mitable">
+
+    <tr><th width="30%">Jefe Evaluador: </th><td>{{empleado.idexpediente.idsolicitudempleo.nombrecompleto}}</td></tr>
+    <tr><th>Puesto: </th><td>{{refrenda.idplaza.nombreplaza}}</td></tr>
+    <tr><th>Unidad/Departamento: </th><td>{{refrenda.idunidad.nombreunidad}} <br> ({{refrenda.idunidad.idcentro.nombrecentro}})</td></tr>
+</table>
+
+
+<b> Empleados a Evaluar: </b>
+{{ grid_search(grid) }} 
+<br>
+{{ grid(grid,_self) }}  
+<br>
+{% block grid_filters %}{% endblock %} 
+
+<div class="text-center">
+<a href="{{path('evaluacion')}}" class="btn"> Cancelar </a>
+</div>
+ {% endblock %}
