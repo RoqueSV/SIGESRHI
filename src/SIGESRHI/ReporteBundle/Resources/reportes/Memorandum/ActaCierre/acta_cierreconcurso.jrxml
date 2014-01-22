@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="acta_cierreconcurso" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39356f29-aef4-4726-b41c-93444aeca7e1">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="48"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\wamp\\www\\SIGESRHI\\src\\SIGESRHI\\ReporteBundle\\Resources\\reportes\\HojadeServicio\\"]]></defaultValueExpression>
@@ -16,13 +16,18 @@
 	<queryString>
 		<![CDATA[SELECT
       (select nombreplaza from plaza where id = c.idplaza) as plaza,
-      (to_char(current_date,'DD" de " TMmonth "del " YYYY')) as fechaactual,
+      (f_convnl(to_number(to_char(current_date,'DD'),'99'))) as dias,
+      (to_char(current_date,'TMmonth')) as mes,
+      (f_convnl(to_number(to_char(current_date,'YY'),'99'))) as ano,
       (select nombrecompleto from solicitudempleo se
               join expediente e on (se.idexpediente=e.id)
               join empleado em on (e.id=em.idexpediente)
               join refrendaact ra on (em.id=ra.idempleado)
-              where nombreplaza = 'Jefe Departamento de Recursos Humanos') as jeferrhh,
-      c.codigoconcurso,id,to_char(current_timestamp,'HH24:MI') as horaactual,
+              where upper(nombreplaza) like upper('%jefe%')
+              and upper(nombreplaza) like upper('%recursos humanos%')) as jeferrhh,
+      c.codigoconcurso,id,
+      f_convnl(to_number(to_char(current_timestamp,'HH24'),'99')) as horas,
+      f_convnl(to_number(to_char(current_timestamp,'MI'),'99')) as minutos,
       c.numeroacta,c.anoacta,substring(c.codigoconcurso,6,3) as numconcurso
 FROM
      concurso c
@@ -30,11 +35,14 @@ WHERE
      id = $P{idconcurso}]]>
 	</queryString>
 	<field name="plaza" class="java.lang.String"/>
-	<field name="fechaactual" class="java.lang.String"/>
+	<field name="dias" class="java.lang.String"/>
+	<field name="mes" class="java.lang.String"/>
+	<field name="ano" class="java.lang.String"/>
 	<field name="jeferrhh" class="java.lang.String"/>
 	<field name="codigoconcurso" class="java.lang.String"/>
 	<field name="id" class="java.lang.Integer"/>
-	<field name="horaactual" class="java.lang.String"/>
+	<field name="horas" class="java.lang.String"/>
+	<field name="minutos" class="java.lang.String"/>
 	<field name="numeroacta" class="java.lang.Integer"/>
 	<field name="anoacta" class="java.lang.String"/>
 	<field name="numconcurso" class="java.lang.String"/>
@@ -103,7 +111,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 					<font size="11"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
-				<textFieldExpression><![CDATA["No habiendo mas que hacer constar confirmo la presente, el "+$F{fechaactual}+" en las oficinas del Departamento de Recursos Humanos del Instituto Salvadoreño de Rehabilitación Integral - ISRI."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["No habiendo mas que hacer constar confirmo la presente, el "+$F{dias}+" de "+$F{mes}+" del dos mil "+$F{ano}+" en las oficinas del Departamento de Recursos Humanos del Instituto Salvadoreño de Rehabilitación Integral - ISRI."]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="211694fb-ca71-405e-a09c-69b0bd2b3d91" x="0" y="4" width="572" height="92"/>
@@ -111,7 +119,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 					<font size="11"/>
 					<paragraph lineSpacing="1_1_2"/>
 				</textElement>
-				<textFieldExpression><![CDATA["San Salvador, a las "+$F{horaactual}+" horas del día "+$F{fechaactual} +", en las oficinas del Departamento de Recursos Humanos, siendo este el día establecido como fecha de cierre para la recepcion de Curriculum Vitae a los interesados en participar en el CONCURSO INTERNO A PLAZA "+$F{plaza}+", se deja constancia que a la hora antes consignada "+$V{aplican}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["San Salvador, a las "+$F{horas}+" horas con "+$F{minutos}+" minutos del día "+$F{dias}+" de "+$F{mes}+" del dos mil "+$F{ano}+", en las oficinas del Departamento de Recursos Humanos, siendo este el día establecido como fecha de cierre para la recepcion de Curriculum Vitae a los interesados en participar en el CONCURSO INTERNO A PLAZA "+$F{plaza}+", se deja constancia que a la hora antes consignada "+$V{aplican}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="e7cd77f4-9230-4e64-aa62-8996b7dd4947" positionType="Float" x="0" y="348" width="314" height="20"/>

@@ -20,13 +20,15 @@ function guardar() {
 	<!-- Botón ayuda -->
     <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
     {{ include('AdminBundle:Ayuda/Refrenda:cargar.html.twig')}}
-
+    
     {% for flashMessage in app.session.flashbag.get('new') %}
+        <br><br>
         <div class="alert alert-success">
             <p> {{ flashMessage }} </p>
         </div>
     {% endfor %}
     {% for flashMessage in app.session.flashbag.get('errornew') %}
+        <br><br>
         <div class="alert alert-danger">
             <p> {{ flashMessage }} </p>
         </div>

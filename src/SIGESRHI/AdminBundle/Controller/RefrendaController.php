@@ -33,9 +33,9 @@ class RefrendaController extends Controller
     {
       $em = $this->getDoctrine()->getManager();
       $max = $this->get('request')->request->get('MAX_FILE_SIZE');
-      $uploadfile = __DIR__."\..\..\..\..\web\uploads\RefrendaTemp\ ".basename($_FILES['arch_refrenda']['name']);
+      $uploadfile = __DIR__."/../../../../web/uploads/RefrendaTemp/".basename($_FILES['arch_refrenda']['name']);
 
-      if ((move_uploaded_file($_FILES['arch_refrenda']['tmp_name'], $uploadfile)) AND ($max>$_FILES['arch_refrenda']['size']) AND ($_FILES['arch_refrenda']['type']=="application/vnd.ms-excel") ) {
+      if ((move_uploaded_file($_FILES['arch_refrenda']['tmp_name'], $uploadfile)) AND ($max>$_FILES['arch_refrenda']['size']) AND (($_FILES['arch_refrenda']['type']=="application/vnd.ms-excel") OR ($_FILES['arch_refrenda']['type']=="text/csv") ) ) {
           
           $fila = 0;
           $sinerrores=1;
@@ -133,7 +133,7 @@ class RefrendaController extends Controller
           if($max<$_FILES['arch_refrenda']['size']){
             $this->get('session')->getFlashBag()->add('errornew','El archivo es demasiado grande');
           }elseif($_FILES['arch_refrenda']['type'] != "application/vnd.ms-excel"){
-            $this->get('session')->getFlashBag()->add('errornew','El archivo no corresponde al tipo (csv) requerido'.$_FILES['arch_refrenda']['type'].' ');
+            $this->get('session')->getFlashBag()->add('errornew','El archivo no corresponde al tipo (csv) requerido '.$_FILES['arch_refrenda']['type'].' ');
           }else{
             $this->get('session')->getFlashBag()->add('errornew','Errores en la carga del Archivo');
           }

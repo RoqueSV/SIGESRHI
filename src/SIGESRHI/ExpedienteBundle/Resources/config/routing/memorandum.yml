@@ -1,0 +1,30 @@
+memorandum:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:Memorandum:index" }
+
+memorandum_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:Memorandum:show" }
+
+memorandum_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:Memorandum:new" }
+
+memorandum_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:Memorandum:create" }
+    requirements: { _method: post }
+
+memorandum_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:Memorandum:edit" }
+
+memorandum_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:Memorandum:update" }
+    requirements: { _method: post|put }
+
+memorandum_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:Memorandum:delete" }
+    requirements: { _method: post|delete }

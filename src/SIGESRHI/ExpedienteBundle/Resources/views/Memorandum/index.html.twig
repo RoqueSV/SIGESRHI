@@ -1,0 +1,32 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+ <h3 class="text-center">Generar Memorándum</h3> 
+
+<form action="{{ path('concurso_create') }}" method="post" class="form-horizontal">
+<fieldset>
+  <legend>Seleccione el tipo de memorándum</legend>
+
+  <div  class="control-group">
+         <label for="tipomemo" class="control-label required">
+          Tipo de memorándum
+         </label>
+         <div class="controls">
+            <select id="tipomemo" name="tipomemo" required="required">
+                <option value="" disabled="disabled" selected="selected">Seleccione una opción</option>
+                <option value="1">Directo</option>
+                <option value="2">A través de</option>       
+            </select>
+         </div>
+        </div>
+
+</fieldset>
+
+<div class="text-center">
+         <button type="submit" class="btn btn-primary">Aceptar</button>
+         <a href="{{ path('hello_page') }}"  class="btn">Cancelar</a>
+</div>
+
+</form>
+
+{% endblock %}

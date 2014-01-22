@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Memoconcurso" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b06fac72-c28d-45aa-817d-359e26b16137">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="325"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="dataset1" uuid="a6d3b3f8-941d-4d16-a4b1-104c8f96d297"/>
 	<parameter name="correlativo" class="java.lang.String"/>
 	<parameter name="interesados" class="java.lang.String"/>
@@ -11,12 +11,13 @@
 	<queryString>
 		<![CDATA[SELECT
       (select nombreplaza from plaza where id = c.idplaza) as plaza,
-      (to_char(current_date,'DD " de " TMmonth " del " YYYY')) as fechaactual,
+      (to_char(current_date,'TMDay, DD " de " TMmonth " del " YYYY')) as fechaactual,
       (select nombrecompleto from solicitudempleo se
               join expediente e on (se.idexpediente=e.id)
               join empleado em on (e.id=em.idexpediente)
               join refrendaact ra on (em.id=ra.idempleado)
-              where nombreplaza = 'Jefe Departamento de Recursos Humanos') as jeferrhh,
+              where upper(nombreplaza) like upper('%jefe%')
+              and upper(nombreplaza) like upper('%recursos humanos%')) as jeferrhh,
       (select nombrecompleto from solicitudempleo se
               join expediente e on (se.idexpediente=e.id)
               join empleado em on (e.id=em.idexpediente)
