@@ -13,7 +13,7 @@ class PantallasController extends Controller
         $query = $em->createQuery('
           SELECT a.id acceso, a.nombrepagina pagina, a.ruta ruta  FROM AdminBundle:Acceso a  
           join a.idmodulo m 
-          WHERE m.id = :id and a.idaccesosup is null order by a.nombrepagina'
+          WHERE m.id = :id and a.idaccesosup is null order by a.id'
         )->setParameter('id', $id);
 
         $opciones = $query->getResult(); 
@@ -24,7 +24,28 @@ class PantallasController extends Controller
         if($id==1){
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>$id)));
         return $this->render('AdminBundle:Pantallas:pantalla_expediente.html.twig',array('opciones'=>$opciones));
+
        }
+
+       if($id==2){
+        $breadcrumbs->addItem("Promocion de Personal", $this->get("router")->generate("pantalla_modulo",array('id'=>$id)));
+        return $this->render('AdminBundle:Pantallas:pantalla_promocion.html.twig',array('opciones'=>$opciones));
+        
+       }
+
+
+       if($id==3){
+        $breadcrumbs->addItem("Capacitación Institucional", $this->get("router")->generate("pantalla_modulo",array('id'=>$id)));
+        return $this->render('AdminBundle:Pantallas:pantalla_capacitacion.html.twig',array('opciones'=>$opciones));
+        
+       }
+
+        if($id==4){
+        $breadcrumbs->addItem("Evaluación de Desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>$id)));
+        return $this->render('AdminBundle:Pantallas:pantalla_evaluacion.html.twig',array('opciones'=>$opciones));
+       }
+
+
     }
 
     public function pantallaAspiranteAction()

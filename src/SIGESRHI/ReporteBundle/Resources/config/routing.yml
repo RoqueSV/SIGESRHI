@@ -21,3 +21,7 @@ reporte_hojaservicio:
 reporte_licencias:
     pattern:  /reporte_licencias
     defaults: { _controller: ReporteBundle:Reporte:ReporteLicencias }
+
+reporte_certificacion:
+    pattern:  /reporte_certificacion
+    defaults: { _controller: ReporteBundle:Reporte:ReporteCertificacion }

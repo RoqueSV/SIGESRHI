@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_empleadosantiguos" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d7979e9e-cc58-44e8-ad97-5cd84df8502c">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="19"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="años" class="java.lang.Integer"/>
 	<queryString>
@@ -22,7 +22,7 @@ expediente exp join empleado emp on (exp.id=emp.idexpediente) join hojaservicio 
 	<pageHeader>
 		<band height="146" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="a1b443ac-1bff-4452-a634-b0746fd80e00" x="134" y="26" width="357" height="35"/>
+				<reportElement uuid="a1b443ac-1bff-4452-a634-b0746fd80e00" x="115" y="21" width="357" height="35"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -30,13 +30,13 @@ expediente exp join empleado emp on (exp.id=emp.idexpediente) join hojaservicio 
 DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 			</staticText>
 			<image scaleImage="FillFrame" hAlign="Center">
-				<reportElement uuid="ddde6c84-f899-420c-9e0d-648f49bc1fca" x="28" y="5" width="86" height="77"/>
+				<reportElement uuid="ddde6c84-f899-420c-9e0d-648f49bc1fca" x="17" y="7" width="86" height="77"/>
 				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement uuid="3b737b0d-690b-4e32-93ce-e62dcc2a1b53" x="185" y="61" width="248" height="32"/>
+				<reportElement uuid="3b737b0d-690b-4e32-93ce-e62dcc2a1b53" x="124" y="73" width="341" height="32"/>
 				<textElement textAlignment="Center">
-					<font isBold="true"/>
+					<font size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["REPORTE DE EMPLEADOS CON  "+$P{años}+" AÑOS  LABORANDO EN LA INSTITUCION "]]></textFieldExpression>
 			</textField>

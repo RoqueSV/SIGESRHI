@@ -320,5 +320,49 @@ class ReporteController extends Controller
      return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
    }
 
+public function ReporteCertificacionAction()
+    {
+     
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idexp=$request->get('id');
+     $vista_retorno=$request->get('vista_retorno');
+
+     //$em = $this->getDoctrine()->getManager();
+     //$contratacion = $em->getRepository('ExpedienteBundle:Contratacion')->find($idcontrato);
+
+     //Incluimos camino de migas
+
+     /*$breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+     $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+     $breadcrumbs->addItem("Lista de empleados", $this->get("router")->generate("licencia_ver"));
+     $breadcrumbs->addItem("Consultar permisos", $this->get("router")->generate("licencia_ver_permisos", array("id"=>$contratacion->getIdempleado()->getIdexpediente()->getId(),"idc"=>$idcontrato)));
+     $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_hojaservicio"));*/
+
+
+
+     // Nombre reporte
+     $filename= 'Certificacion_hojaservicio.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/HojadeServicio/Certificacion_hojadeservicio.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("idexp", new java("java.lang.Integer", $idexp));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
 
  }
