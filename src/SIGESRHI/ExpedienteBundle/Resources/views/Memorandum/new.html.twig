@@ -1,20 +1,89 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Memorandum creation</h1>
+{% block principal -%}
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <div class="alert alert-danger">
+       <p> {{ flashMessage }}</p>
+    </div>
+{% endfor %}
 
-    <form action="{{ path('memorandum_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
+{{ form_javascript(form) }}
+    <h3 class="text-center">Generación de memorándum</h3>
+    <h4 class="text-center">Ingrese la siguiente información para generar el memorándum</h4>
+    
+    <br>
+    <form action="{{ path('reporte_memorandum') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+      
+        {{form_row(form.empleado)}}
+        {{form_row(form.cargo)}}
+    {% if tipomemo == '1' %}
+    <div class="hide">
+        {{form_row(form.atraves)}}
+        {{form_row(form.cargoatraves)}}
+    </div>
+    {% else %}
+       {{form_row(form.atraves, {'attr': {'required': 'required'}}) }}
+       {{form_row(form.cargoatraves, {'attr': {'required': 'required'}}) }}
+    {% endif %}
+    
+       {{form_row(form.asunto)}}
+       {{form_row(form.contenido)}}
+
+
+    <input type="hidden" name="tipomemo" id="tipomemo" value="{{tipomemo}}" />
+       
+       {{form_rest(form)}}
+       <div class="text-center">
+         <button type="submit" class="btn btn-primary">Generar</button>
+         <a href="{{ path('memorandum') }}"  class="btn">Cancelar</a>
+       </div>
+    
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('memorandum') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+<script>
+// Completar cargo
+
+    $(document).ready(function(){
+
+        $('#sigesrhi_expedientebundle_memorandumtype_empleado').change(function(){
+           $.getJSON('consultarCargosJSON?idempleado='+$('#sigesrhi_expedientebundle_memorandumtype_empleado').val(),
+             function(data){
+                var i=0;
+                $.each(data, function(key, val){
+                    if(key=='rows'){
+                        $.each(val, function(id, registro){
+                            $('#sigesrhi_expedientebundle_memorandumtype_cargo').val(registro['cell'][1]);
+                        });
+
+                    }
+
+                });
+
+             });
+
+
+        });//#cargo
+
+
+        $('#sigesrhi_expedientebundle_memorandumtype_atraves').change(function(){
+           $.getJSON('consultarCargosJSON?idempleado='+$('#sigesrhi_expedientebundle_memorandumtype_atraves').val(),
+             function(data){
+                var i=0;
+                $.each(data, function(key, val){
+                    if(key=='rows'){
+                        $.each(val, function(id, registro){
+                            $('#sigesrhi_expedientebundle_memorandumtype_cargoatraves').val(registro['cell'][1]);
+                        });
+
+                    }
+
+                });
+
+             });
+
+
+        });//#atraves
+
+    });
+</script>
 {% endblock %}

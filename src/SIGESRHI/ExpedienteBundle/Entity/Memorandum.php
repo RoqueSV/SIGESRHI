@@ -50,7 +50,6 @@ class Memorandum
     private $idconcurso;
 
 
-
     /**
      * Get id
      *

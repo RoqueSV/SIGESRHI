@@ -28,3 +28,7 @@ memorandum_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "ExpedienteBundle:Memorandum:delete" }
     requirements: { _method: post|delete }
+
+memorandum_consultarCargosJSON:
+    pattern:  /consultarCargosJSON    
+    defaults: { _controller: ExpedienteBundle:Memorandum:consultarCargosJSON }

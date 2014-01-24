@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="SIGESRHI\ExpedienteBundle\Repositorio\ExpedienteRepository")
  * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto,idempleado.idrefrenda.idplaza.nombreplaza, tipoexpediente,idsegurovida.id", groups={"grupo_segurovida"})
  * @GRID\Source(columns="id,idempleado.codigoempleado,idsolicitudempleo.nombrecompleto", groups={"grupo_empleado_inactivo"})
- * @GRID\Source(columns="id,idsolicitudempleo.nombrecompleto,tipoexpediente", groups={"grupo_contratacion_aspirante"})
+ * @GRID\Source(columns="id,fechaexpediente,idsolicitudempleo.nombrecompleto,tipoexpediente", groups={"grupo_contratacion_aspirante"})
  * @GRID\Source(columns="id,tipoexpediente,idempleado.idcontratacion.puesto.idplaza.nombreplaza,idempleado.idcontratacion.id", groups={"grupo_contratacion_consultar"})
  * @GRID\Source(columns="id,tipoexpediente,idempleado.idrefrenda.idplaza.nombreplaza", groups={"grupo_contratacion_empleado"})
  * @GRID\Source(columns="id,idsolicitudempleo.numsolicitud, idsolicitudempleo.nombrecompleto, idsolicitudempleo.fecharegistro, tipoexpediente", groups={"grupo_docdigital"})
@@ -41,6 +41,7 @@ class Expediente
      * @var \DateTime
      *
      * @ORM\Column(name="fechaexpediente", type="date", nullable=false)
+     * @GRID\Column(filterable=true, groups={"grupo_contratacion_aspirante"}, visible=true, filter="input", type="date", inputType="datetime", format="d-m-Y", title="Fecha Registro", align="center", operators={"btwe","gte", "eq", "lte"}, defaultOperator="gte", operatorsVisible=true)
      */
     private $fechaexpediente;
 

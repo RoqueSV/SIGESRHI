@@ -37,5 +37,7 @@ $RECYCLE.BIN/
 .*
 !.gitignore
 !web/.htaccess
+!vendor/knplabs/knp-gaufrette-bundle/Knp/Bundle/GaufretteBundle/
+!vendor/vich/uploader-bundle/Vich/UploaderBundle
 *~
 /nbproject/private

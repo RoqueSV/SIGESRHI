@@ -2,73 +2,32 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Certificacion_hojaservicio" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b021ac6-0dfd-4221-a80e-b9adc9e37aee">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="615"/>
+	<property name="ireport.y" value="810"/>
 	<parameter name="idexp" class="java.lang.Integer"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Reportes\\HojadeServicio\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select (select nombrecompleto from solicitudempleo s
-join expediente e on (s.idexpediente = e.id)
-join empleado em on  (e.id = em.idexpediente)
-join RefrendaAct ra on (ra.idempleado = em.id)
-where nombreplaza = 'Jefe Departamento de Recursos Humanos') as jefeRRHH,concat(case  to_char(current_date,'DD')
-when  '1' then 'uno'
-when  '2' then 'dos'
-when  '3' then 'tres'
-when  '4' then 'cuatro'
-when  '5' then 'cinco'
-when  '6' then 'seis'
-when  '7' then 'siete'
-when  '8' then 'ocho'
-when  '9' then 'nueve'
-when  '10' then 'diez'
-when  '11' then 'once'
-when  '12' then 'doce'
-when  '13' then 'trece'
-when  '14' then 'catorce'
-when  '15' then 'quince'
-when  '16' then 'dieciséis'
-when  '17' then 'diecisiete'
-when  '18' then 'dieciocho'
-when  '19' then 'diecinueve'
-when  '20' then 'veinte'
-when  '21' then 'veintiuno'
-when  '22' then 'veintidos'
-when  '23' then 'veintitres'
-when  '24' then 'veinticuatro'
-when  '25' then 'veinticinco'
-when  '26' then 'veintiseis'
-when  '27' then 'veintisiete'
-when  '28' then 'veintiocho'
-when  '29' then 'veintinueve'
-when  '30' then 'treinta'
-else 'treinta y uno' end,' dias del mes de ',to_char(current_date,'TMMonth'),' de dos mil ', case  to_char(current_date,'YY') when '14' then 'Catorce'
-when  '15' then 'Quince'
-when  '16' then 'Dieciséis'
-when  '17' then 'Diecisiete'
-when  '18' then 'Dieciocho'
-when  '19' then 'Diecinueve'
-when  '20' then 'Veinte'
-when  '21' then 'Veintiuno'
-when  '22' then 'Veintidos'
-when  '23' then 'Veintitres'
-when  '24' then 'Veinticuatro'
-when  '25' then 'Veinticinco'
-when  '26' then 'Veintiseis'
-when  '27' then 'Veintisiete'
-when  '28' then 'Veintiocho'
-when  '29' then 'Veintinueve'
-else 'Treinta' end ) as fechaenletras,e.id,fotografia,nombreempleado,concat(substr(hs.dui,1,8),'-',substr(hs.dui,9))as dui,hs.lugardui,hs.lugarnac,to_char(current_date,'Day "días del mes de" TMMonth "del dos mil" YEAR' ) as fechaenletras, to_char(hs.fechanac,'DD "de" TMMonth "de" YYYY') as fechanac,hs.direccion,case when hs.estadoCivil= 'S' then 'Soltero(a)'
+		<![CDATA[select (select nombrecompleto from solicitudempleo se
+              join expediente e on (se.idexpediente=e.id)
+              join empleado em on (e.id=em.idexpediente)
+              join refrendaact ra on (em.id=ra.idempleado)
+              where upper(nombreplaza) like upper('%jefe%')
+              and upper(nombreplaza) like upper('%recursos humanos%')) as jefeRRHH,
+              (f_convnl(to_number(to_char(current_date,'DD'),'99'))) as dias,
+              (to_char(current_date,'TMmonth')) as mes,
+              (f_convnl(to_number(to_char(current_date,'YY'),'99'))) as ano,e.id,fotografia,nombreempleado,concat(substr(hs.dui,1,8),'-',substr(hs.dui,9))as dui,hs.lugardui,hs.lugarnac, to_char(hs.fechanac,'DD "de" TMmonth "de" YYYY') as fechanac,hs.direccion,case when hs.estadoCivil= 'S' then 'Soltero(a)'
 	   when hs.estadoCivil= 'A' then 'Acompañado(a)'
 	   when hs.estadoCivil= 'V' then 'Viudo(a)'
 	   when hs.estadoCivil= 'D' then 'Divorciado(a)'
-	   else 'Casado(a)' end as estadocivil,hs.telefonofijo as telefonos,coalesce(hs.isss,'--') as isss,concat(substr(hs.nit,1,4),'-',substr(hs.nit,5,6),'-',substr(hs.nit,11,3),'-',substr(hs.nit,14)) as nit,to_char(fechaingreso,'DD "de" TMMonth "de" YYYY') as fechaingreso,to_char(hs.sueldoinicial,'$9,999.00') as sueldoinicial,coalesce(hs.informacionadicional,' ') as informacionadicional,hs.cargo,destacadoen,educacion,codigoempleado from solicitudempleo se join expediente e on(se.idexpediente=e.id)
+	   else 'Casado(a)' end as estadocivil,hs.telefonofijo as telefonos,coalesce(hs.isss,'--') as isss,concat(substr(hs.nit,1,4),'-',substr(hs.nit,5,6),'-',substr(hs.nit,11,3),'-',substr(hs.nit,14)) as nit,to_char(fechaingreso,'DD "de" TMmonth "de" YYYY') as fechaingreso,to_char(hs.sueldoinicial,'$9,999.00') as sueldoinicial,coalesce(hs.informacionadicional,' ') as informacionadicional,hs.cargo,destacadoen,educacion,codigoempleado from solicitudempleo se join expediente e on(se.idexpediente=e.id)
 join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.idexpediente) where e.id=$P{idexp}]]>
 	</queryString>
 	<field name="jeferrhh" class="java.lang.String"/>
-	<field name="fechaenletras" class="java.lang.String"/>
+	<field name="dias" class="java.lang.String"/>
+	<field name="mes" class="java.lang.String"/>
+	<field name="ano" class="java.lang.String"/>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="fotografia" class="java.lang.String"/>
 	<field name="nombreempleado" class="java.lang.String"/>
@@ -98,7 +57,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<text><![CDATA[Destacado en:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9003cf45-6de2-4d6f-a49c-950c5d0fb35a" x="131" y="219" width="100" height="20"/>
+				<reportElement uuid="9003cf45-6de2-4d6f-a49c-950c5d0fb35a" x="0" y="220" width="105" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -126,7 +85,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<text><![CDATA[Educación:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d87a8554-db07-4e52-ae19-559299d97f1f" x="342" y="219" width="42" height="20"/>
+				<reportElement uuid="d87a8554-db07-4e52-ae19-559299d97f1f" x="200" y="240" width="42" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -147,7 +106,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="80fbd80d-11df-4dba-8f3e-e8376e264aea" x="0" y="219" width="85" height="20"/>
+				<reportElement uuid="80fbd80d-11df-4dba-8f3e-e8376e264aea" x="0" y="239" width="85" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -171,7 +130,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<text><![CDATA[Teléfonos(Fijo,Movil):]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="430fc4f0-8934-4b25-a896-824fc6614e76" x="0" y="239" width="49" height="20"/>
+				<reportElement uuid="430fc4f0-8934-4b25-a896-824fc6614e76" x="234" y="221" width="49" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -199,7 +158,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<text><![CDATA[Dirección:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fdc7d668-096a-4b4c-b709-aa7f2cf397eb" x="444" y="218" width="36" height="20"/>
+				<reportElement uuid="fdc7d668-096a-4b4c-b709-aa7f2cf397eb" x="399" y="240" width="36" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -267,7 +226,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{telefonos}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement uuid="dafb6e72-44a4-4c17-b489-f8c5201f3447" x="68" y="219" width="65" height="20"/>
+				<reportElement uuid="dafb6e72-44a4-4c17-b489-f8c5201f3447" x="85" y="238" width="70" height="20"/>
 				<box leftPadding="3">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -285,7 +244,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{informacionadicional}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2397e847-d504-49f7-85ef-d1ba25b860d4" x="373" y="218" width="71" height="20"/>
+				<reportElement uuid="2397e847-d504-49f7-85ef-d1ba25b860d4" x="233" y="240" width="140" height="20"/>
 				<box leftPadding="3">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.0"/>
@@ -299,7 +258,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{isss}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.00">
-				<reportElement uuid="f2e26113-aded-4bdb-875f-b166039d21ef" x="466" y="217" width="106" height="20"/>
+				<reportElement uuid="f2e26113-aded-4bdb-875f-b166039d21ef" x="425" y="240" width="147" height="20"/>
 				<box leftPadding="3">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -359,7 +318,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{nombreempleado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="8509ddd8-9677-429b-b381-edd24cec8e78" x="218" y="218" width="124" height="20"/>
+				<reportElement uuid="8509ddd8-9677-429b-b381-edd24cec8e78" x="92" y="220" width="141" height="20"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -369,7 +328,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{fechaingreso}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="c9efffb9-ca2a-4037-92e1-0e92a159d52e" x="33" y="239" width="539" height="19"/>
+				<reportElement uuid="c9efffb9-ca2a-4037-92e1-0e92a159d52e" x="271" y="221" width="301" height="19"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -462,24 +421,24 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 		</band>
 	</lastPageFooter>
 	<summary>
-		<band height="168">
+		<band height="188">
 			<textField>
 				<reportElement uuid="e0408f6e-2f69-4432-b03e-a8191690804a" x="0" y="34" width="572" height="41"/>
 				<textElement textAlignment="Justified" markup="html"/>
 				<textFieldExpression><![CDATA["El infranscrito Jefe del Departamento de Recursos Humanos del Instituto Salvadoreño de Rehabilitación Integral, certifica que las presentes copias de Hoja de Servicio del señor(a) "+$F{nombreempleado}+", es conforme con su original que se confronto en este Departamento."]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="4058b8db-b289-455a-9220-5fa924d3a45a" x="0" y="76" width="572" height="37"/>
+				<reportElement uuid="4058b8db-b289-455a-9220-5fa924d3a45a" x="0" y="76" width="572" height="30"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA["Y para los usos  que se consideren convenientes se extiende la presente en San Salvador a "+$F{fechaenletras}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Y para los usos  que se consideren convenientes se extiende la presente en San Salvador a los "+$F{dias}+" días del mes de "+$F{mes}+" del dos mil "+$F{ano}+"."]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="fa23ae9a-d402-46d5-b4b9-be2b2682c116" x="0" y="140" width="219" height="28"/>
+				<reportElement uuid="fa23ae9a-d402-46d5-b4b9-be2b2682c116" x="0" y="160" width="219" height="28"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top"/>
 				<text><![CDATA[Jefe del Departamento de Recursos Humanos ISRI]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="bbb525b0-49bc-4dbf-89fd-9f7ab09f0e57" x="0" y="124" width="219" height="16"/>
+				<reportElement uuid="bbb525b0-49bc-4dbf-89fd-9f7ab09f0e57" x="0" y="144" width="219" height="16"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 				</box>

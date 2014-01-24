@@ -91,7 +91,7 @@ WHERE
 			<textField>
 				<reportElement uuid="ca133c85-b5b3-4b5f-91c3-36dcafc1c092" x="167" y="0" width="218" height="38"/>
 				<textElement markup="html"/>
-				<textFieldExpression><![CDATA[($P{interesados}.equals("ca"))?"DIRECTORES<br>CENTROS DE ATENCION":($P{interesados}.equals("as"))?"ADMINISTRACION SUPERIOR":"TODO EL PERSONAL"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{interesados}.equals("ca"))?"DIRECTORES<br>CENTROS DE ATENCION":($P{interesados}.equals("as"))?"JEFATURAS":"TODO EL PERSONAL"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement uuid="234c5c95-98ad-48dc-8a10-95a28c1ca2a7" x="167" y="58" width="240" height="20"/>

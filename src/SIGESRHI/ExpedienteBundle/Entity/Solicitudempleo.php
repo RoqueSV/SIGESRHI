@@ -27,7 +27,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @GRID\Source(columns="id,nombrecompleto,idexpediente.tipoexpediente,idexpediente.id",groups={"grupo_pruebapsicologica","vista_basica_expediente"})
  * @GRID\Source(columns="id,nombrecompleto,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id",groups={"grupo_pruebapsicologica_edit"})
  * @GRID\Source(columns="id,nombrecompleto,idexpediente.tipoexpediente,idexpediente.id,idexpediente.idpruebapsicologica.id,idexpediente.idempleado.codigoempleado",groups={"grupo_pruebapsicologica_empleadoedit"})
- * @GRID\Source(columns="id,numsolicitud, nombrecompleto, idplaza.nombreplaza, idexpediente.tipoexpediente",groups={"solicitud_empleo"})
+ * @GRID\Source(columns="id,numsolicitud, fecharegistro,nombrecompleto, idplaza.nombreplaza, idexpediente.tipoexpediente",groups={"solicitud_empleo"})
  * @GRID\Source(columns="id,nombrecompleto,idplaza.nombreplaza,idexpediente.tipoexpediente,idexpediente.fechaexpediente",groups={"lista_expediente"})
  */
 
@@ -336,7 +336,7 @@ class Solicitudempleo
      * @var \DateTime
      *
      * @ORM\Column(name="fecharegistro", type="date", nullable=false)
-     * 
+     * @GRID\Column(visible=false, groups={"solicitud_empleo"}, filterable=false)
      *
      */
     private $fecharegistro;

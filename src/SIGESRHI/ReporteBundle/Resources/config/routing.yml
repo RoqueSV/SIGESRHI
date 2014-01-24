@@ -42,3 +42,7 @@ reporte_certificacion:
     pattern:  /reporte_certificacion
     defaults: { _controller: ReporteBundle:Reporte:ReporteCertificacion }
 
+reporte_memorandum:
+    pattern:  /memorandum
+    defaults: { _controller: ReporteBundle:Reporte:generarMemorandum }
+

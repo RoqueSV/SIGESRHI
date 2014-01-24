@@ -89,9 +89,9 @@ class SolicitudempleoController extends Controller
         $em = $this->getDoctrine()->getManager();
           
         $grid->setNoDataMessage("No se encontraron resultados");
-        $grid->setDefaultOrder('nombrecompleto', 'asc');
+        $grid->setDefaultOrder('fecharegistro', 'desc');
         
-        $rowAction1 = new RowAction('Mostrar', 'solicitud_show');
+        $rowAction1 = new RowAction('Consultar', 'solicitud_show');
 
         //vista_retorno 1 consulta de aspirantes, 2 consulta de empleados, 3 consulta de inactivos
         //4 modificar de aspirantes, 5 modificar empleados
@@ -912,7 +912,7 @@ public function asignarNumsolAction($id){
         $grid->setNoDataMessage("No se encontraron resultados");
         $grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
         
-        $rowAction1 = new RowAction('Mostrar', 'solicitud_show');
+        $rowAction1 = new RowAction('Consultar', 'solicitud_show');
 
         $rowAction1->setColumn('info_column');
 

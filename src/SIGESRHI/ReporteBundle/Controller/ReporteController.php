@@ -6,6 +6,12 @@ use SIGESRHI\ReporteBundle\Resources\PHPJRU\JdbcConnection;
 use SIGESRHI\ReporteBundle\Controller\DefaultController;
 use \Java;
 
+/* Para generar memorandum */
+use Symfony\Component\HttpFoundation\Request;
+use SIGESRHI\ExpedienteBundle\Entity\Memorandum;
+use SIGESRHI\ExpedienteBundle\Form\MemorandumType;
+/* *********************** */
+
 
 class ReporteController extends Controller
 {
@@ -328,19 +334,14 @@ public function ReporteCertificacionAction()
      $idexp=$request->get('id');
      $vista_retorno=$request->get('vista_retorno');
 
-     //$em = $this->getDoctrine()->getManager();
-     //$contratacion = $em->getRepository('ExpedienteBundle:Contratacion')->find($idcontrato);
-
      //Incluimos camino de migas
-
-     /*$breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
      $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
      $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
-     $breadcrumbs->addItem("Lista de empleados", $this->get("router")->generate("licencia_ver"));
-     $breadcrumbs->addItem("Consultar permisos", $this->get("router")->generate("licencia_ver_permisos", array("id"=>$contratacion->getIdempleado()->getIdexpediente()->getId(),"idc"=>$idcontrato)));
-     $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_hojaservicio"));*/
-
+     $breadcrumbs->addItem("Lista de empleados", $this->get("router")->generate("accionpersonal_cempleados"));
+     $breadcrumbs->addItem("Consultar hoja de servicio", $this->get("router")->generate("accionpersonal_cacuerdos", array("id"=>$idexp, 'vista_retorno'=>$vista_retorno)));
+     $breadcrumbs->addItem("Reporte certificación", $this->get("router")->generate("reporte_hojaservicio"));
 
 
      // Nombre reporte
@@ -543,6 +544,154 @@ public function ReporteCertificacionAction()
      
      return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
    }
+
+   public function generarMemorandumAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tipomemo  = $request->get('tipomemo');
+       
+        /**** Persistencia del memorándum ***/
+        $entity  = new Memorandum();
+        $form = $this->createForm(new MemorandumType(), $entity);
+        
+        $correlativo = $this->correlMemorandum(); //Correlativo de memorandum
+        $entity->setCorrelativo($correlativo);
+        $entity->setTipomemorandum($tipomemo);
+
+        $form->bind($request); //Enlazar datos del form con la entidad para validar
+
+        $idempleado  = $form->get('empleado')->getData();
+        $empleado    = $em->getRepository('ExpedienteBundle:Empleado')->find($idempleado);
+        $idhoja = $empleado->getIdexpediente()->getHojaservicio()->getId();
+
+        /* *** Obtener titulo *** */
+        $query = $em->createQuery(
+                 "SELECT (case when upper(hs.educacion) like upper ('%Ingenie%') then 'Ingeniero(a)' 
+                               when upper(hs.educacion) like upper ('%Licencia%') then 'Licenciado(a)' 
+                               when upper(hs.educacion) like upper ('%Doctor%') then 'Doctor(a)'
+                               when upper(hs.educacion) like upper ('%Profesorado%') then 'Profesor(a)'
+                               else 'Sr.'
+                               end) as titulo
+                  FROM ExpedienteBundle:Hojaservicio hs 
+                  WHERE hs.id =:idhoja")
+                 ->setParameter('idhoja', $idhoja); 
+        $resultado = $query->getSingleResult();
+        $titulo=$resultado['titulo'];
+
+         $nombreempleado = $titulo." ".$empleado->getIdexpediente()->getIdsolicitudempleo()->getNombrecompleto();
+
+        /* ********************* */
+
+        $cargo     = $form->get('cargo')->getData();       
+        $asunto    = $form->get('asunto')->getData();
+        $contenido = $form->get('contenido')->getData();
+        
+
+        if($tipomemo == '2'){ // Es de tipo "a través de"
+            $atraves   = $form->get('atraves')->getData();
+            $empleado2 = $em->getRepository('ExpedienteBundle:Empleado')->find($atraves);
+            $idhoja2 = $empleado2->getIdexpediente()->getHojaservicio()->getId();
+
+            /* *** Obtner titulo *** */
+            $query = $em->createQuery(
+                 "SELECT (case when upper(hs.educacion) like upper ('%Ingenie%') then 'Ingeniero(a)' 
+                               when upper(hs.educacion) like upper ('%Licencia%') then 'Licenciado(a)' 
+                               when upper(hs.educacion) like upper ('%Doctor%') then 'Doctor(a)'
+                               when upper(hs.educacion) like upper ('%Profesorado%') then 'Profesor(a)'
+                               else 'Sr(a).'
+                               end) as titulo
+                  FROM ExpedienteBundle:Hojaservicio hs 
+                  WHERE hs.id =:idhoja")
+                 ->setParameter('idhoja', $idhoja2); 
+            $resultado = $query->getSingleResult();
+            $titulo2=$resultado['titulo'];
+
+            $nombreatraves   = $titulo2." ".$empleado2->getIdexpediente()->getIdsolicitudempleo()->getNombrecompleto();
+
+        /* ********************* */
+
+            $cargoatraves = $form->get('cargoatraves')->getData();
+        }
+        else{
+            $nombreatraves = "";
+            $cargoatraves  = "";
+        }
+       
+        if ($form->isValid()) { //Formulario enlazado correctamente
+            $em->persist($entity);
+            $em->flush();
+        }
+        else{
+            $this->get('session')->getFlashBag()->add('error', 'Se ha producido un error. Revise la información ingresada e intente nuevamente');
+            return $this->render('ExpedienteBundle:Memorandum:new.html.twig', array(
+            'entity'   => $entity,
+            'form'     => $form->createView(),
+            'tipomemo' => $tipomemo,
+        ));
+        }
+     /* ****** Generar Reporte ****/
+
+     // Incluimos camino de migas
+    $breadcrumbs = $this->get("white_october_breadcrumbs");
+    $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+    $breadcrumbs->addItem("Documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
+    $breadcrumbs->addItem("Elegir tipo memorándum", $this->get("router")->generate("memorandum"));
+    $breadcrumbs->addItem("Nuevo memorándum", $this->get("router")->generate("memorandum_new",array('tipomemo'=>$tipomemo)));
+    $breadcrumbs->addItem("Memorándum generado", "");
+
+
+     // Nombre reporte
+     $filename= 'Memorandum.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Memorandum/Memorandum/Memorandum.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("correlativo", new java("java.lang.String", $correlativo));
+     $Parametro->put("empleado", new java("java.lang.String", $nombreempleado));
+     $Parametro->put("atraves", new java("java.lang.String", $nombreatraves));
+     $Parametro->put("cargo", new java("java.lang.String", $cargo));
+     $Parametro->put("cargoatraves", new java("java.lang.String", $cargoatraves));
+     $Parametro->put("asunto", new java("java.lang.String", $asunto));
+     $Parametro->put("contenido", new java("java.lang.String", $contenido));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+
+   /* Función que genera el correlativo del memorándum a partir del ultimo generado */
+   public function correlMemorandum(){
+        $em = $this->getDoctrine()->getManager();
+        
+        //conocer correlativo
+        $query = $em->createQuery("SELECT COUNT(m.correlativo) AS  correlativo 
+        FROM ExpedienteBundle:Memorandum m 
+        where  substring(m.correlativo,1,4) = :actual")
+       ->setParameter('actual', date('Y'));
+
+        $resultado = $query->getsingleResult();
+
+        $num=$resultado['correlativo'];
+
+        if($num==0){
+
+            $correlativo= date('Y')."-001";
+        }
+        if($num > 0){
+            $num++;
+            $correlativo = date('Y')."-".str_pad($num, 3, "0", STR_PAD_LEFT);
+        }
+        return $correlativo;
+    }
 
 
  }

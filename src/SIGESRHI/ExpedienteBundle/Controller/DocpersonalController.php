@@ -47,7 +47,7 @@ class DocpersonalController extends Controller
         );
 
         $grid->setSource($source);  
-        $rowAction1 = new RowAction('Ingresar', 'docpersonal_new');
+        $rowAction1 = new RowAction('Registrar', 'docpersonal_new');
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
@@ -149,7 +149,13 @@ class DocpersonalController extends Controller
                                                                                     'idexpediente' => $request->query->get('exp'),
                                                                                         ));
         $var = $request->get('nogrid');
-        $nogrid = (isset($var))?0:1;
+
+        if(isset($var)){
+          $nogrid = 0;
+        }
+        else{
+          $nogrid = 1;
+        }
 
         $entity = new Docpersonal();
         $entity->setIdexpediente($expediente);
@@ -362,6 +368,15 @@ class DocpersonalController extends Controller
                                                                                     'idexpediente' => $request->query->get('id'),
                                                                                     ));
 
+        $var = $request->get('nogrid');
+
+        if(isset($var)){
+          $nogrid = 0;
+        }
+        else{
+          $nogrid = 1;
+        }
+
         $entity = new Docpersonal();
         $entity->setIdexpediente($expediente);
         $entity->setentregado(1);
@@ -373,13 +388,14 @@ class DocpersonalController extends Controller
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Registrar Documentos Personales", $this->get("router")->generate("docpersonal_empleado"));
-        $breadcrumbs->addItem($expedienteinfo[0]['codigoempleado'],"");        
+        $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(),"");        
 
         return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
             'entity' => $entity,
             'expediente' => $expedienteinfo,
             'documentos' => $Documentos,
             'form'   => $form->createView(),
+            'nogrid' => $nogrid,
         ));
     }
 }

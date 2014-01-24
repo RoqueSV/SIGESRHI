@@ -16,6 +16,7 @@ use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Grid;
 use APY\DataGridBundle\Grid\Column\TextColumn;
+use APY\DataGridBundle\Grid\Export\ExcelExport;
 
 /**
  * Contratacion controller.
@@ -51,7 +52,7 @@ class ContratacionController extends Controller
         $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre','operatorsVisible'=>false));
         $grid->addColumn($NombreEmpleados,2);  
         $NombrePlazas = new TextColumn(array('id' => 'plazas','source' => true,'field'=>'idsolicitudempleo.idplaza.nombreplaza','title' => 'Plaza solicitada','operatorsVisible'=>false,'joinType'=>'inner'));
-        $grid->addColumn($NombrePlazas,3);      
+        $grid->addColumn($NombrePlazas,3);       
         
         // Crear
         $rowAction1 = new RowAction('Seleccionar', 'contratacion_new');
@@ -63,7 +64,9 @@ class ContratacionController extends Controller
             }
         );
         $grid->addRowAction($rowAction1);
-        
+
+        //$grid->setDefaultOrder('fechaexpediente', 'desc');
+        $grid->addExport(new ExcelExport('Excel','Banco de datos'));
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
         // Incluimos camino de migas
