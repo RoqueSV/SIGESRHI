@@ -1,0 +1,68 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+<style type="text/css">
+    textarea { width: 100%; margin: 0; padding: 0; border-width: 0; }
+    select { width: 100%; margin: 0; padding: 0; border-width: 0; }
+</style>
+    <!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+    {{ include('AdminBundle:Ayuda/Noticia:cargar.html.twig')}}
+    {% for flashMessage in app.session.flashbag.get('errornew') %}
+        <div class="alert alert-danger">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+    <h3 class="text-center">Cargar Noticia ISRI</h3>
+    <p class="text-center">Ingrese la Información a publicar</p>
+    <br>
+    <form action="{{ path('noticia_create') }}" method="post" {{ form_enctype(form) }}>
+        {#{ form_widget(form) }#}
+        <div class='centered'>
+        <table width="100%" class="form-inline table table-bordered table-hover mitable">
+            <tr>
+                <th width="25%"><bold>{{form_label(form.asuntonoticia)}}</bold></th>
+                <td>{{form_widget(form.asuntonoticia)}} {{form_errors(form.asuntonoticia)}}</td>
+            </tr>
+            <tr>
+                <th><bold>{{form_label(form.contenidonoticia)}}</bold></th>
+                <td>{{form_widget(form.contenidonoticia)}} {{form_errors(form.contenidonoticia)}}</td>
+            </tr>
+            <tr>
+                <th>Cargar Imagen</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Adjuntar descargas</th>
+                <td></td>
+            </tr>
+        </table>    
+        
+        <br>
+        <table class="form-inline table table-bordered table-hover mitable">
+        <tr>
+            <th width="25%">Fecha de Publicación</th><td>Inicio</td><td>Fin</td>  
+        </tr>
+        <tr>
+            <th></th><td>{{form_widget(form.fechainicionoticia)}} {{form_errors(form.fechainicionoticia)}}</td><td>{{form_widget(form.fechafinnoticia)}} {{form_errors(form.fechafinnoticia)}}</td>
+        </tr>
+        <tr>
+            <th>A quien publicar</th><td colspan="2">{{form_widget(form.idcentro)}} {{form_errors(form.idcentro)}}</td>
+        </tr>
+        </table>
+        </div>
+        {{ form_rest(form) }}
+        <div class="text-center">        
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        <a class="btn" href="{{ path('noticia') }}">
+         Cancelar
+        </a>
+        <a class="btn btn-info" href="{{ path('noticia') }}">
+         Vista previa
+        </a>
+        </div>
+    </form>        
+<script type="text/javascript">
+
+</script>
+{% endblock %}

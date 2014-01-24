@@ -1,0 +1,49 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Noticia list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fechanoticia</th>
+                <th>Asuntonoticia</th>
+                <th>Fechainicionoticia</th>
+                <th>Fechafinnoticia</th>
+                <th>Contenidonoticia</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('noticia_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{% if entity.fechanoticia %}{{ entity.fechanoticia|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.asuntonoticia }}</td>
+                <td>{% if entity.fechainicionoticia %}{{ entity.fechainicionoticia|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.fechafinnoticia %}{{ entity.fechafinnoticia|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.contenidonoticia }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('noticia_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('noticia_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('noticia_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

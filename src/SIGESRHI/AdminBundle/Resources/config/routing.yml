@@ -42,3 +42,7 @@ AdminBundle_pantallas:
 AdminBundle_refrenda:
    resource: "@AdminBundle/Resources/config/routing/refrenda.yml"
    prefix:   /refrenda
+
+AdminBundle_noticia:
+  resource: "@AdminBundle/Resources/config/routing/noticia.yml"
+  prefix:   /noticia
