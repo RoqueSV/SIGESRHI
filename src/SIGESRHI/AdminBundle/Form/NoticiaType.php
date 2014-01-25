@@ -12,7 +12,7 @@ class NoticiaType extends AbstractType
     {
         $builder        
             ->add('asuntonoticia','text',array(
-                'label'=>'Titulo',
+                'label'=>'Titulo:',
                 'attr'=>array(
                     'class'=>'input-medium',
                     'data-bvalidator'=>'required'),                                
@@ -30,15 +30,22 @@ class NoticiaType extends AbstractType
                 'attr' => array('class' => 'date input-small', 'data-bvalidator'=>'required', 'readonly'=>true),
                 ))
             ->add('contenidonoticia','textarea',array(
-                'label'=>'Contenido',
+                'label'=>'Contenido:',
                 'attr'=>array(
                     'class'=>'form-control',
                     'rows'=>3,
                     'data-bvalidator'=>'required'),
                 ))
             ->add('idcentro',null,array(
-                'label'=>'A quién publicar',
+                'label'=>'A quién publicar:',
                 'empty_value' => 'Seleccione una opción',
+                ))
+            ->add('iddocnoticia', 'collection', array(
+                'type' => new DocnoticiaType(),
+                'label' => ' hghghj',
+                'by_reference' => false,
+                'allow_add' => true, 
+                'allow_delete' => true,
                 ))
         ;
     }

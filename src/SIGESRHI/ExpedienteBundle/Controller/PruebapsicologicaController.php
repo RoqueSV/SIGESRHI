@@ -250,7 +250,7 @@ class PruebapsicologicaController extends Controller
         $grid->setSource($source);  
 
         //Columnas a filtrar
-        $NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"filterable"=>false));
+        $NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false, 'filterable'=>true, 'visible'=> true));
         $codigo = new TextColumn(array('id' => 'codigoempleado','source' => true,'field'=>'idexpediente.idempleado.codigoempleado','title' => 'Codigo', "operatorsVisible"=>false, 'filterable'=>true, 'visible'=> true));
         $grid->addColumn($NombreAspirante,2);
         $grid->addColumn($codigo,1);

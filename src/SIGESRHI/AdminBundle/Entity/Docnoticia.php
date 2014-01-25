@@ -5,11 +5,18 @@ namespace SIGESRHI\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
+use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 /**
  * Docnoticia
  *
  * @ORM\Table(name="docnoticia")
  * @ORM\Entity
+ * @Vich\Uploadable
  */
 class Docnoticia
 {
@@ -26,8 +33,7 @@ class Docnoticia
     /**
      * @var string
      *
-     * @ORM\Column(name="nombredocnoticia", type="string", length=25, nullable=false)
-     * @Assert\NotNull(message="Debe ingresar el nombre de la noticia")
+     * @ORM\Column(name="nombredocnoticia", type="string", length=25, nullable=true)
      * @Assert\Length(
      * max = "25",
      * maxMessage = "El nombre de la noticia no debe exceder los {{limit}} caracteres"
@@ -38,18 +44,33 @@ class Docnoticia
     /**
      * @var string
      *
-     * @ORM\Column(name="rutadocnoticia", type="string", length=50, nullable=true)
+     * @ORM\Column(name="rutadocnoticia", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la ruta o nombre del documento o archivo")
      * @Assert\Length(
-     * max = "50",
+     * max = "100",
      * maxMessage = "La ruta de la noticia no debe exceder los {{limit}} caracteres"
      * )
+     *
      */
     private $rutadocnoticia;
 
     /**
+     * @Assert\File(
+     * maxSize="2048k",
+     * mimeTypes = {"image/jpeg", "image/png", "application/pdf", "application/msword"},
+     * maxSizeMessage = "El tamaño maximo permitido es 2MB.",
+     * mimeTypesMessage = "Por favor suba un archivo válido (formato JPEG, PNG, PDF o DOC)."
+     * )
+     *
+     * @Vich\UploadableField(mapping="docs_docsnoticia", fileNameProperty="rutadocnoticia")
+     *
+     */
+    private $file;
+
+    /**
      * @var \Noticia
      *
-     * @ORM\ManyToOne(targetEntity="Noticia")
+     * @ORM\ManyToOne(targetEntity="Noticia", inversedBy="iddocnoticia")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idnoticia", referencedColumnName="id")
      * })
@@ -57,7 +78,10 @@ class Docnoticia
     private $idnoticia;
 
 
-
+    public function __toString()
+    {
+        return $this->nombredocnoticia;
+    }
     /**
      * Get id
      *
@@ -136,4 +160,26 @@ class Docnoticia
     {
         return $this->idnoticia;
     }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
 }

@@ -8,11 +8,14 @@
     <!-- Botón ayuda -->
     <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
     {{ include('AdminBundle:Ayuda/Noticia:cargar.html.twig')}}
+    {% if app.session.started %}
+    <br><br>
     {% for flashMessage in app.session.flashbag.get('errornew') %}
         <div class="alert alert-danger">
             <p> {{ flashMessage }} </p>
         </div>
     {% endfor %}
+    {% endif %}
     <h3 class="text-center">Cargar Noticia ISRI</h3>
     <p class="text-center">Ingrese la Información a publicar</p>
     <br>
@@ -22,47 +25,128 @@
         <table width="100%" class="form-inline table table-bordered table-hover mitable">
             <tr>
                 <th width="25%"><bold>{{form_label(form.asuntonoticia)}}</bold></th>
-                <td>{{form_widget(form.asuntonoticia)}} {{form_errors(form.asuntonoticia)}}</td>
+                <td colspan="2">{{form_widget(form.asuntonoticia)}} {{form_errors(form.asuntonoticia)}}</td>
             </tr>
             <tr>
                 <th><bold>{{form_label(form.contenidonoticia)}}</bold></th>
-                <td>{{form_widget(form.contenidonoticia)}} {{form_errors(form.contenidonoticia)}}</td>
+                <td colspan="2">{{form_widget(form.contenidonoticia)}} {{form_errors(form.contenidonoticia)}}</td>
+            </tr>            
+            <tr>
+                <th>Fecha de Publicación:</th><td>Inicio</td><td>Fin</td>  
             </tr>
             <tr>
-                <th>Cargar Imagen</th>
-                <td></td>
+                <th></th><td>{{form_widget(form.fechainicionoticia)}} {{form_errors(form.fechainicionoticia)}}</td><td>{{form_widget(form.fechafinnoticia)}} {{form_errors(form.fechafinnoticia)}}</td>
             </tr>
+        </table>        
+        <table class="form-inline table table-bordered table-hover mitable">                
             <tr>
-                <th>Adjuntar descargas</th>
-                <td></td>
+                <th width="25%">A quien publicar</th><td colspan="2">{{form_widget(form.idcentro)}} {{form_errors(form.idcentro)}}</td>
             </tr>
-        </table>    
-        
-        <br>
-        <table class="form-inline table table-bordered table-hover mitable">
-        <tr>
-            <th width="25%">Fecha de Publicación</th><td>Inicio</td><td>Fin</td>  
-        </tr>
-        <tr>
-            <th></th><td>{{form_widget(form.fechainicionoticia)}} {{form_errors(form.fechainicionoticia)}}</td><td>{{form_widget(form.fechafinnoticia)}} {{form_errors(form.fechafinnoticia)}}</td>
-        </tr>
-        <tr>
-            <th>A quien publicar</th><td colspan="2">{{form_widget(form.idcentro)}} {{form_errors(form.idcentro)}}</td>
-        </tr>
         </table>
+        {#fomr embebido#}
+        <table width="100%" class='form-inline' style='margin-bottom:20px;'>
+            <tr>
+                <th><bold>{{ form_label(form.iddocnoticia[0].file) }}</bold></th>
+            </tr>
+            <tr>
+                <td width="60%">{{ form_widget(form.iddocnoticia[0].file) }}
+                    {{ form_errors(form.iddocnoticia[0].file) }}
+                </td>
+                <td>{{ form_widget(form.iddocnoticia[0].nombredocnoticia) }}
+                    {{ form_errors(form.iddocnoticia[0].nombredocnoticia) }}
+                </td>
+            </tr>
+        </table>
+        {#crear errores asociados#}
+        {% if app.session.started %}
+                 {% set longitud =  (entity.iddocnoticia|length)-1  %} {#Obtengo numero de beneficiarios#}
+                 {% for i in 1..longitud if longitud > 0 %}
+                 
+                 <table width=100% style="margin-bottom:10px;">
+                 
+                 <tr class="text-center">
+                 <td class="text-center" width="60%">{{ form_widget(form.iddocnoticia[i].file) }}
+                 {{ form_errors(form.iddocnoticia[i].file) }}</td>
+                 <td class="text-center">{{ form_widget(form.iddocnoticia[i].nombredocnoticia) }}
+                 {{ form_errors(form.iddocnoticia[i].nombredocnoticia) }}</td>
+                 </tr>
+                 
+                 </table>
+                 {% endfor %}
+         {% endif %}
+
+        <ul class="Docnoticia unstyled" data-prototype="
+        <table width=100%>
+            <tr>
+                <td width='60%'>{{form_widget(form.iddocnoticia.vars.prototype.file)|e}} {{form_errors(form.iddocnoticia.vars.prototype.file)|e}}</td>
+                <td>{{form_widget(form.iddocnoticia.vars.prototype.nombredocnoticia)|e}} {{form_errors(form.iddocnoticia.vars.prototype.nombredocnoticia)|e}}</td>
+            <tr>
+        <table>
+        ">
+
+        {# 
+            Bloque de codigo, para cargar el formulario embebido para cuando hay un error en el registro del formulario (new) se carguen
+            En la vista con el estilo predefinido.
+        #}
+
+        {% if form.iddocnoticia|length > 1 %}
+            {% for docnoticia in form.iddocnoticia %}
+            {# Comprobacion para evitar que se imprima el iddocnoticia # 1 (ya impreso) #}
+            {% if loop.index0 > 0 %}
+            <li>
+                <table class="form-inline" style="margin-bottom:10px;">
+                    <tr>
+                        <td width="60%"></td>
+                        <td>{{form_widget(docnoticia.file)}} {{form_errors(docnoticia.file)}}</td>
+                        <td>{{form_widget(docnoticia.nombredocnoticia)}} {{form_errors(docnoticia.nombredocnoticia)}}</td>
+                    </tr>
+                </table>
+            </li>
+            {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        </ul>
+
+
         </div>
         {{ form_rest(form) }}
         <div class="text-center">        
-            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="submit" class="btn btn-primary">Cargar</button>
         <a class="btn" href="{{ path('noticia') }}">
          Cancelar
-        </a>
-        <a class="btn btn-info" href="{{ path('noticia') }}">
-         Vista previa
         </a>
         </div>
     </form>        
 <script type="text/javascript">
+// Obtiene la ul que contiene la colección de etiquetas
+var collectionHolderBen = $('ul.Docnoticia');
 
+// configura una enlace "Agregar una etiqueta"
+var $addTagLinkBen = $('<input style="margin-left: 0px;" type="button" class="btn" value="Agregar Archivo"><br /><br />');
+var $newLinkLiBen = $('<ul></ul>').append($addTagLinkBen);
+
+jQuery(document).ready(function() {
+    // Añade el ancla "Agregar una etiqueta" y las etiquetas li y ul
+    collectionHolderBen.append($newLinkLiBen);
+
+    // Añade un enlace para eliminar todas las etiquetas existentes
+    // en elementos li del formulario
+    collectionHolderBen.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // cuenta las entradas actuales en el formulario (p. ej. 2),
+    // la usa como índice al insertar un nuevo elemento (p. ej. 2)
+    collectionHolderBen.data('index', collectionHolderBen.find(':input').length);
+
+    $addTagLinkBen.on('click', function(e) {
+        // evita crear el enlace con una "#" en la URL
+        e.preventDefault();
+
+        // añade una nueva etiqueta form (ve el siguiente bloque de código)
+        addTagForm(collectionHolderBen, $newLinkLiBen);
+    });
+});
 </script>
 {% endblock %}

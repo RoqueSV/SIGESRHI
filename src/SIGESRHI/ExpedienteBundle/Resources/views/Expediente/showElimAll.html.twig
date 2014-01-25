@@ -1,14 +1,46 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-    <h4 class='text-center'>Aspirantes a Eliminar</h4>
-    <div align="center">
+<script>
+    jQuery(function() {
+        jQuery("#grid_grideliminaraspindv__nombrecompleto__query__from").autocomplete({
+            source: function( request, response ) {
+                jQuery.ajax({
+                    url: "{{ path('shtumi_ajaxautocomplete') }}",
+                    dataType: "json",
+                    data: {
+                        maxRows: 12,
+                        letters: request.term,
+                        entity_alias: "aspirantes"
+                    },
+                    success: function( data ) {
+                        response( jQuery.map( data, function( item ) {
+                            return {
+                                label: item,
+                                value: item
+                            }
+                        }));
+                    }
+                });
+            },
+            minLength: 2,
+            open: function() {
+                jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+            },
+            close: function() {
+                jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+            }
+        });
+    });
+</script>
+    <h4 class='text-center'>Aspirantes a Eliminar</h4>    
+    <p class="text-center">Seleccione y ejecute la acción para eliminar aspirantes</p>
     {{ grid_search(grid) }}     
-
+    <div align="center">
     {{ grid(grid,_self) }}
     
     {#{{grid (grid)}}#}
-
+    <br>
     {% block grid_filters %}{% endblock %}
         <!--<a href="#" onclick="history.back()" class="btn" >Cancelar</a>-->
         <a href="{{ 

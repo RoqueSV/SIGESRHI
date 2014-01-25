@@ -18,7 +18,7 @@ class LicenciaType extends AbstractType
                 ))
             ->add('duraciondias',null,array(
                 'label' => 'Número de días',
-                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number,required','maxlength'=>'2','minlength'=>'1','readonly'=>true)
+                'attr' => array('class'=> 'input-small', 'data-bvalidator'=>'number,required','maxlength'=>'2','minlength'=>'1')
                 ))
             ->add('duracionhoras',null,array(
                 'label' => 'Número de horas',

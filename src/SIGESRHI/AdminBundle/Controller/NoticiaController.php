@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use SIGESRHI\AdminBundle\Entity\Noticia;
+use SIGESRHI\AdminBundle\Entity\Docnoticia;
 use SIGESRHI\AdminBundle\Form\NoticiaType;
 
 use Doctrine\ORM\EntityRepository;
@@ -45,19 +46,25 @@ class NoticiaController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Noticia();
+        $em = $this->getDoctrine()->getManager();
         $entity -> setFechanoticia(new \Datetime(date('d-m-Y')));
         //$entity -> setFechanoticia(date('d-m-Y'));
         //$entity -> setFechanoticia('2014-01-02');
         $form = $this->createForm(new NoticiaType(), $entity);
         $form->bind($request);
+        /*$arrayColc = array();
+        $arrayColc2 = $entity->getIddocnoticia();
+        foreach ($arrayColc2 as $Documento) {
+            $arrayColc[]=$Documento;
+            echo "VALL".$Documento->getRutadocnoticia();
+        }  */      
 
-        if ($form->isValid()) {          
-            $em = $this->getDoctrine()->getManager();
+        if ($form->isValid()) {                      
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('new','Noticia registrada correctamente');            
             return $this->redirect($this->generateUrl('noticia_show', array('id' => $entity->getId())));
-        }
+        }        
         $this->get('session')->getFlashBag()->add('errornew','Errores en el Registro de la Noticia');
         return $this->render('AdminBundle:Noticia:new.html.twig', array(
             'entity' => $entity,
@@ -72,8 +79,18 @@ class NoticiaController extends Controller
     public function newAction()
     {
         $entity = new Noticia();
+
+        $datosDocnoticias = new Docnoticia();
+        $datosDocnoticias->name = 'Docnoticia 1';
+        $entity->getIddocnoticia()->add($datosDocnoticias);
+
         $form   = $this->createForm(new NoticiaType(), $entity);
 
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Noticias", "");
+        $breadcrumbs->addItem("Cargar Noticias", $this->get("router")->generate("noticia_new"));
         return $this->render('AdminBundle:Noticia:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),

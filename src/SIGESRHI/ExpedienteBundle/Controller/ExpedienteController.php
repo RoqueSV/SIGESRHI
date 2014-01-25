@@ -49,7 +49,7 @@ class ExpedienteController extends Controller
                        ->setParameter('inv','I');
             }
         );
-        $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false, "filterable" => false));
+        $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idplaza.nombreplaza','title' => 'Plaza',"operatorsVisible"=>false, "filterable" => true));
         $Nombre = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
         $grid->addColumn($Nombre,2);
         $grid->addColumn($plaza,3);
@@ -323,8 +323,7 @@ public function confirmarValidoAction($id)
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Eliminar",  $this->get("router")->generate("eliminar_aspirantes"));
-        $breadcrumbs->addItem("Antigüedad", "");
+        $breadcrumbs->addItem("Eliminar por Antigüedad",  $this->get("router")->generate("eliminar_aspirantes"));
         return $this->render('ExpedienteBundle:Expediente:ant.html.twig');
     }
 
@@ -381,8 +380,7 @@ public function confirmarValidoAction($id)
             $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
             $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
             $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
-            $breadcrumbs->addItem("Eliminar",  $this->get("router")->generate("eliminar_aspirantes"));
-            $breadcrumbs->addItem("Antigüedad", "");
+            $breadcrumbs->addItem("Eliminar por Antigüedad",  $this->get("router")->generate("eliminar_aspirantes"));
             
             return $grid->getGridResponse('ExpedienteBundle:Expediente:showElim.html.twig',array(
                 'aspirantesElim' => $aspirantesElim,
@@ -425,11 +423,14 @@ public function confirmarValidoAction($id)
         $anofind=+$pedazos[2]-1;
         $fecha_find = $anofind."-".$pedazos[1]."-".$pedazos[0];
 
-        $source = new Entity('ExpedienteBundle:Solicitudempleo','lista_expediente');
+        $source = new Entity('ExpedienteBundle:Solicitudempleo','lista_expediente2');
         $grid = $this->get('grid');
+        $grid-> setId("grideliminaraspindv");
+        $NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false, 'filterable'=>true, 'visible'=> true));
+        $grid->addColumn($NombreAspirante,1);
         $grid->setSource($source);
         $grid->addMassAction(new DeleteMassAction(true));  
-        $grid->setNoDataMessage("No se encontraron resultados");
+        //$grid->setParameter();
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias, $fecha_find){
@@ -459,24 +460,12 @@ public function confirmarValidoAction($id)
         );
 
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
-        /*$rowAction1 = new RowAction('Ingresar', 'eliminar_aspirantes_confirm');
-        $rowAction1->setColumn('info_column');
-        $rowAction1->manipulateRender(
-            function ($action, $row)
-            {
-                $action->setTitle('Eliminar')
-                $action->setRouteParameters(array('id','exp'=> $row->getField('idexpediente.id')));
-                return $action;
-            }
-        );
-        $grid->addRowAction($rowAction1);  */
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Eliminar",  $this->get("router")->generate("eliminar_aspirantes"));
-        $breadcrumbs->addItem("Individual", "");
+        $breadcrumbs->addItem("Eliminar Individualmente",  $this->get("router")->generate("eliminar_aspirantes"));
         
         return $grid->getGridResponse('ExpedienteBundle:Expediente:showElimAll.html.twig');        
     }

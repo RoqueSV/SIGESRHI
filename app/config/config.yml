@@ -138,6 +138,9 @@ knp_gaufrette:
         concurso_adapter:
             local:
                 directory: %kernel.root_dir%/../web/uploads/docs_concurso
+        docnoticia_adapter:
+            local:
+                directory: %kernel.root_dir%/../web/uploads/docs_docsnoticia
 
     filesystems:
         docs_exp_fs:
@@ -148,6 +151,8 @@ knp_gaufrette:
             adapter:    contratacion_adapter
         concurso_fs:
             adapter:    concurso_adapter
+        docnoticia_fs:
+            adapter:    docnoticia_adapter    
 
 vich_uploader:
     db_driver: orm
@@ -178,6 +183,13 @@ vich_uploader:
         docs_concurso:
             uri_prefix: concurso_adapter
             upload_destination: concurso_fs 
+            namer: vich_uploader.namer_origname
+            delete_on_remove: true
+            delete_on_update: true
+
+        docs_docsnoticia:
+            uri_prefix: docnoticia_adapter
+            upload_destination: docnoticia_fs 
             namer: vich_uploader.namer_origname
             delete_on_remove: true
             delete_on_update: true

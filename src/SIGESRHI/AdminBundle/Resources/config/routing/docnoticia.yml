@@ -1,0 +1,30 @@
+docnoticia:
+    pattern:  /
+    defaults: { _controller: "AdminBundle:Docnoticia:index" }
+
+docnoticia_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AdminBundle:Docnoticia:show" }
+
+docnoticia_new:
+    pattern:  /new
+    defaults: { _controller: "AdminBundle:Docnoticia:new" }
+
+docnoticia_create:
+    pattern:  /create
+    defaults: { _controller: "AdminBundle:Docnoticia:create" }
+    requirements: { _method: post }
+
+docnoticia_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AdminBundle:Docnoticia:edit" }
+
+docnoticia_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AdminBundle:Docnoticia:update" }
+    requirements: { _method: post|put }
+
+docnoticia_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AdminBundle:Docnoticia:delete" }
+    requirements: { _method: post|delete }
