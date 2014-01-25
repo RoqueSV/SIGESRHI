@@ -31,4 +31,4 @@ memorandum_delete:
 
 memorandum_consultarCargosJSON:
     pattern:  /consultarCargosJSON    
-    defaults: { _controller: ExpedienteBundle:Memorandum:consultarCargosJSON }
+    defaults: { _controller: "ExpedienteBundle:Memorandum:consultarCargosJSON" }

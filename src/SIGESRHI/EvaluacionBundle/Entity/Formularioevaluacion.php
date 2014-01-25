@@ -119,7 +119,7 @@ class Formularioevaluacion
 
 
     /**
-     * @ORM\OneToMany(targetEntity="factorevaluacion", mappedBy="idformulario", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Factorevaluacion", mappedBy="idformulario", cascade={"persist", "remove"})
      * @Assert\Valid
      */
     protected $Factores;

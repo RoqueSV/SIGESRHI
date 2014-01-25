@@ -1,0 +1,7 @@
+capacitacion_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: CapacitacionBundle:Default:index }
+
+CapacitacionBundle_institucion:
+    resource: "@CapacitacionBundle/Resources/config/routing/institucioncapacitadora.yml"
+    prefix:   /institucion

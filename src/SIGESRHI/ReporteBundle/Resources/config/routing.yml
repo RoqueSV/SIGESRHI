@@ -46,3 +46,7 @@ reporte_memorandum:
     pattern:  /memorandum
     defaults: { _controller: ReporteBundle:Reporte:generarMemorandum }
 
+reporte_cartatrabajo:
+    pattern:  /cartatrabajo
+    defaults: { _controller: ReporteBundle:Reporte:cartaTrabajo }
+

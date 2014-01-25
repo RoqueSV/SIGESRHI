@@ -1,0 +1,30 @@
+institucion:
+    pattern:  /
+    defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:index" }
+
+institucion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:show" }
+
+institucion_new:
+    pattern:  /new
+    defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:new" }
+
+institucion_create:
+    pattern:  /create
+    defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:create" }
+    requirements: { _method: post }
+
+institucion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:edit" }
+
+institucion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:update" }
+    requirements: { _method: post|put }
+
+institucion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:delete" }
+    requirements: { _method: post|delete }

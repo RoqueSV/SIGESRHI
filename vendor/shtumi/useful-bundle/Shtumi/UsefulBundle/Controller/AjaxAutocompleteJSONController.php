@@ -87,9 +87,23 @@ class AjaxAutocompleteJSONController extends Controller
             'SELECT e.' . $property . '
              FROM ' . $entity_inf['class'] . ' e JOIN e.idexpediente ex ' .
              $where_clause_lhs . ' ' . $where_clause_rhs . ' ' .
-            'AND ex.tipoexpediente != :tipo ORDER BY e.' . $property)
+            'AND ex.tipoexpediente != :tipoE AND ex.tipoexpediente != :tipoX ORDER BY e.' . $property)
             ->setParameter('like', $like )
-            ->setParameter('tipo', 'E' )
+            ->setParameter('tipoE', 'E' )
+            ->setParameter('tipoX', 'X' )
+            ->setMaxResults($maxRows)
+            ->getScalarResult();
+        }
+
+        else if($entity_alias == 'todosempleados'){
+           $results = $em->createQuery(
+            'SELECT e.' . $property . '
+             FROM ' . $entity_inf['class'] . ' e JOIN e.idexpediente ex ' .
+             $where_clause_lhs . ' ' . $where_clause_rhs . ' ' .
+            'AND ex.tipoexpediente != :tipoA AND ex.tipoexpediente != :tipoI ORDER BY e.' . $property)
+            ->setParameter('like', $like )
+            ->setParameter('tipoA', 'A' )
+            ->setParameter('tipoI', 'I' )
             ->setMaxResults($maxRows)
             ->getScalarResult();
         }

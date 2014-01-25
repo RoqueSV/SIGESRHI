@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="constanciadetrabajo" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="037db9c2-4363-4f2b-ad9a-c3426582682d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="141"/>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
+	<parameter name="idexp" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechafin" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idcontrato" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.nombreplaza,to_char(current_date,'DD "de" TMmonth "del" YYYY') as fechaactual,
+(f_convnl(to_number(to_char(current_date,'DD'),'99'))) as dias,
+(to_char(current_date,'TMmonth')) as mes,
+(f_convnl(to_number(to_char(current_date,'YY'),'99'))) as ano,
+(select concat((case
+       when upper(hs.educacion) like upper ('%Ingenie%') then 'Ing(a)'
+       when upper(hs.educacion) like upper ('%Licencia%') then 'Lic.'
+       when upper(hs.educacion) like upper ('%Doctor%') then 'Dr(a)'
+       when upper(hs.educacion) like upper ('%Profesorado%') then 'Prof(a)'
+       else 'Sr.'
+       end),concat(' ',nombrecompleto))
+       from solicitudempleo se
+              join expediente e on (se.idexpediente=e.id)
+              join empleado em on (e.id=em.idexpediente)
+              join refrendaact ra on (em.id=ra.idempleado)
+              join hojaservicio hs on (hs.idexpediente=e.id)
+              where upper(nombreplaza) like upper('%jefe%')
+              and upper(nombreplaza) like upper('%recursos humanos%')) as jeferrhh,upper(nombrecompleto) as nombrecompleto,concat(substr(se.dui,1, 8),'-',substr(se.dui,9))as dui,fechaingreso, case when tipoexpediente='E' then 'trabaja en la Institución, ' else 'ha trabajado en la Institución ' end as estadolaboral, case when tipoexpediente='E'then  concat('desde el día ',to_char(fechaingreso,'DD "de" TMmonth "del" YYYY hasta la fecha, '))
+else
+ concat('en el período comprendido entre el ',to_char(fechainiciocontratacion,'DD "de" TMmonth "del" YYYY'),' y ',to_char(to_date($P{fechafin},'YYYY-MM-DD'),'DD "de" TMmonth "del" YYYY')) end as periodolaboral
+ from empleado emp
+ join expediente ex on(emp.idexpediente=ex.id)
+ join contratacion ct on(ct.idempleado=emp.id)
+ join solicitudempleo se on(se.idexpediente=ex.id)
+ join hojaservicio hs on (ex.id=hs.idexpediente)
+ join refrendaact re on(re.id=ct.puesto)
+ join plaza p on (re.idplaza=p.id)
+ where ex.id=$P{idexp} and ct.id=$P{idcontrato}]]>
+	</queryString>
+	<field name="nombreplaza" class="java.lang.String"/>
+	<field name="fechaactual" class="java.lang.String"/>
+	<field name="dias" class="java.lang.String"/>
+	<field name="mes" class="java.lang.String"/>
+	<field name="ano" class="java.lang.String"/>
+	<field name="jeferrhh" class="java.lang.String"/>
+	<field name="nombrecompleto" class="java.lang.String"/>
+	<field name="dui" class="java.lang.String"/>
+	<field name="fechaingreso" class="java.sql.Date"/>
+	<field name="estadolaboral" class="java.lang.String"/>
+	<field name="periodolaboral" class="java.lang.String"/>
+	<variable name="tipo" class="java.lang.String"/>
+	<title>
+		<band height="99" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d59d6169-e376-46d8-8569-3e3092f9fc22" x="72" y="12" width="494" height="61"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="26ceaffa-13fc-41e1-b1d8-8d3646b4ab18" x="11" y="10" width="80" height="86"/>
+				<imageExpression><![CDATA[$P{ubicacionReport}+ "/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="9fafb7fa-1e7f-47a1-91ca-9bbb6704a140" x="179" y="12" width="239" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSTANCIA DE TRABAJO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5ef9daf3-bad6-4b11-9883-6176401a1b50" x="331" y="63" width="225" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["San Salvador, "+$F{fechaactual}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="349" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="aaeb7011-cfae-44e9-a869-b81e4d571caa" x="15" y="15" width="148" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[A quien corresponda:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6f0d81db-a4a7-44c1-9271-72d3482ff3ff" x="15" y="48" width="93" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Presente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="72d21fe7-d8f1-4e20-99a1-8bf57e5e26ee" x="15" y="68" width="541" height="64"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
+					<font size="11"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Por medio de la presente se hace constar que <b>"+$F{nombrecompleto}+"</b> con DUI: "+$F{dui}+" "+$F{estadolaboral}+" "+$F{periodolaboral}+" desempeñando el puesto de: "+$F{nombreplaza}+"."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d74e48ae-fb18-422c-8b4a-d7f59b0e69ef" x="15" y="280" width="226" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Jefe  Departamento de Recursos Humanos]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement uuid="dd30d7d9-e23b-418e-8fb4-95b168c2f8e3" x="15" y="146" width="541" height="46"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
+					<font size="11"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Y para los fines que el interesado estime conveniente se le extiende la presente en San Salvador,  a los "+$F{dias}+" dias del mes de "+$F{mes}+" del dos mil "+$F{ano}+"."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="df4f7d04-daa1-4538-bf53-30a439269d59" x="15" y="260" width="247" height="20"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jeferrhh}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="eacd430d-9800-47de-aa45-d87d65657dd1" x="127" y="10" width="350" height="40"/>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<text><![CDATA[Instituto Salvadoreño de Rehabilitación Integral - ISRI
+Colonia Costa Rica Avenida Irazu # 181, San Salvador, El Salvador, C.A.
+Tel. (503) 2521 - 8600
+]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

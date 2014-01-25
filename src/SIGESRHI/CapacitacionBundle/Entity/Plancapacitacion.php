@@ -1,6 +1,6 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\CapacitacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -83,7 +83,7 @@ class Plancapacitacion
     /**
      * @var \Centrounidad
      *
-     * @ORM\ManyToOne(targetEntity="Centrounidad")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Centrounidad")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idcentro", referencedColumnName="id")
      * })

@@ -1,29 +1,17 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+{{ form_javascript(form) }}
 
-<form action="{{ path('concurso_memo',{'id':entity.id,'tipo':2}) }}" method="post" class="form-horizontal">
+<form action="{{ path('concurso_memo',{'id':entity.id,'tipo':2}) }}" {{ form_enctype(form) }} method="post" class="form-horizontal">
     
     <h3 class="text-center"> Datos para memorándum de cierre de concurso</h3>
     <br />
        
-     <div class="control-group">
-        <label for="interesado" class=" control-label required">
-        Para
-        </label>
-        <div class="controls">
-          <input type="text" id="interesado" name="interesado" class="not-removable" required="required"/>
-        </div>
-     </div>
+      {{form_row(form.empleado)}}
+      {{form_row(form.cargo)}}
 
-     <div class="control-group">
-        <label for="cargo" class=" control-label required">
-        Cargo que ocupa
-        </label>
-        <div class="controls">
-          <input type="text" id="cargo" name="cargo" class="not-removable" required="required"/>
-        </div>
-     </div>
+      {{form_rest(form)}}
 
       <div class="text-center">
         {% if entity.numeroacta is null %}
@@ -35,5 +23,30 @@
       </div>
 
     </form>
+    <script>
+// Completar cargo
+
+    $(document).ready(function(){
+
+        $('#sigesrhi_expedientebundle_memocierretype_empleado').change(function(){
+           $.getJSON('consultarCargosJSON?idempleado='+$('#sigesrhi_expedientebundle_memocierretype_empleado').val(),
+             function(data){
+                var i=0;
+                $.each(data, function(key, val){
+                    if(key=='rows'){
+                        $.each(val, function(id, registro){
+                            $('#sigesrhi_expedientebundle_memocierretype_cargo').val(registro['cell'][1]);
+                        });
+
+                    }
+
+                });
+
+             });
+
+
+        });//#cargo
+    });
+</script>
 
     {% endblock %}

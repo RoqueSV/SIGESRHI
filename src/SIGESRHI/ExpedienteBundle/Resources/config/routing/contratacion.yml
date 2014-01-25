@@ -40,3 +40,7 @@ contratacion_delete:
 contratacion_tipo:
     pattern:  /tipo
     defaults: { _controller: "ExpedienteBundle:Contratacion:tipoContrato" }
+
+carta_trabajo:
+    pattern:  /cartatrabajo
+    defaults: { _controller: "ExpedienteBundle:Contratacion:cartaTrabajo" }

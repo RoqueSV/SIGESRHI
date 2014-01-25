@@ -130,7 +130,7 @@ $grid->addRowAction($rowAction);
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
 
     // Manage the grid redirection, exports and the response of the controller
-    return $grid->getGridResponse('EvaluacionBundle:Evaluacion:Empleados_a_evaluar.html.twig', array(
+    return $grid->getGridResponse('EvaluacionBundle:Evaluacion:Empleados_a_Evaluar.html.twig', array(
         'empleado'=>$empleado,
         'refrenda'=> $refrenda,
         ));

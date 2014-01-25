@@ -1,0 +1,83 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+{% set ruta = app.request.attributes.get('_route') %}
+<script>
+        jQuery(function() {
+
+            jQuery("#grid_grid_cartatrabajo__empleados__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "todosempleados"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
+
+            jQuery("#grid_grid_cartatrabajo__codigos__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "codigos"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
+
+        });
+</script>
+
+     <h3 class="text-center"> Generación de constancia de trabajo </h3>
+     <p class="text-center">Seleccione el empleado para el cual desea generar la constancia de trabajo</p>
+
+     
+     {{ grid_search(grid) }}
+     {{ grid(grid,_self) }} 
+     {% block grid_filters %}{% endblock %}
+     <br />
+
+     <div class="text-center">
+     <a href="{{path('pantalla_modulo',{'id':'5'} )}}" class="btn"> Cancelar </a>
+     </div>
+
+{% endblock %}
+

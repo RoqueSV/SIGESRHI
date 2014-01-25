@@ -208,6 +208,10 @@ shtumi_useful:
             class: ExpedienteBundle:Solicitudempleo
             property: nombrecompleto
             search: contains
+        todosempleados:
+            class: ExpedienteBundle:Solicitudempleo
+            property: nombrecompleto
+            search: contains
         personas:
             class: ExpedienteBundle:Solicitudempleo
             property: nombrecompleto

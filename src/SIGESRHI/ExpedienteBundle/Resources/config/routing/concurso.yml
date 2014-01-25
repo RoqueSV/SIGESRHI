@@ -49,3 +49,7 @@ acta_cierre:
     pattern:  /actacierre
     defaults: { _controller: "ExpedienteBundle:Concurso:ActaCierre" }
 
+concurso_consultarCargosJSON:
+    pattern:  /consultarCargosJSON    
+    defaults: { _controller: "ExpedienteBundle:Concurso:consultarCargosJSON" }
+

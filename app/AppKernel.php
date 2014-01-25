@@ -42,6 +42,7 @@ class AppKernel extends Kernel
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
             new Pcdummy\AjaxCompleteBundle\PcdummyAjaxCompleteBundle(),
             new SIGESRHI\EvaluacionBundle\EvaluacionBundle(),
+            new SIGESRHI\CapacitacionBundle\CapacitacionBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

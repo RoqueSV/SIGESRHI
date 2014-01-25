@@ -3,13 +3,16 @@
 namespace SIGESRHI\ExpedienteBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use SIGESRHI\ExpedienteBundle\Entity\Concurso;
 use SIGESRHI\ExpedienteBundle\Entity\Memorandum;
 use SIGESRHI\AdminBundle\Entity\Plaza;
+use SIGESRHI\AdminBundle\Entity\RefrendaAct;
 use SIGESRHI\ExpedienteBundle\Entity\Empleadoconcurso;
 use SIGESRHI\ExpedienteBundle\Form\ConcursoType;
+use SIGESRHI\ExpedienteBundle\Form\MemocierreType;
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Column\ActionsColumn;
 use APY\DataGridBundle\Grid\Action\RowAction;
@@ -453,13 +456,36 @@ class ConcursoController extends Controller
         $em->persist($memorandum);
         $em->flush();
         /* ********************* */
+        /**** Persistencia del memorándum ***/
+        $form = $this->createForm(new MemocierreType(), $memorandum);  
+        $form->bind($request);
+        //Generar memorandum
+        $idempleado  = $form->get('empleado')->getData();
+        $empleado    = $em->getRepository('ExpedienteBundle:Empleado')->find($idempleado);
+        $idhoja = $empleado->getIdexpediente()->getHojaservicio()->getId();
 
+        /* *** Obtener titulo *** */
+        $query = $em->createQuery(
+                 "SELECT (case when upper(hs.educacion) like upper ('%Ingenie%') then 'Ingeniero(a)' 
+                               when upper(hs.educacion) like upper ('%Licencia%') then 'Licenciado(a)' 
+                               when upper(hs.educacion) like upper ('%Doctor%') then 'Doctor(a)'
+                               when upper(hs.educacion) like upper ('%Profesorado%') then 'Profesor(a)'
+                               else 'Sr(a).'
+                               end) as titulo
+                  FROM ExpedienteBundle:Hojaservicio hs 
+                  WHERE hs.id =:idhoja")
+                 ->setParameter('idhoja', $idhoja); 
+        $resultado = $query->getSingleResult();
+        $titulo=$resultado['titulo'];
+
+        $interesado = $titulo." ".$empleado->getIdexpediente()->getIdsolicitudempleo()->getNombrecompleto();
+        $cargo      = $form->get('cargo')->getData();   
 
         return $this->redirect($this->generateUrl('reporte_memocierre_concurso', array(
                                                       'id' => $idconcurso,
                                                       'correlativo' => $correlativo,
-                                                      'interesado' => $request->get('interesado'),
-                                                      'cargo' => $request->get('cargo'), 
+                                                      'interesado' => $interesado,
+                                                      'cargo' => $cargo, 
                                                       'num' => $num )));
         }
     }
@@ -472,6 +498,10 @@ class ConcursoController extends Controller
       $idconcurso=$request->get('id');
 
       $entity = $em->getRepository('ExpedienteBundle:Concurso')->find($idconcurso);
+
+      /**** memorandum para generar el form de memocierre ****/
+      $memorandum = new Memorandum();
+      $form   = $this->createForm(new MemocierreType(), $memorandum);
      
      // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
@@ -483,6 +513,7 @@ class ConcursoController extends Controller
       
       return $this->render('ExpedienteBundle:Concurso:memocierre.html.twig', array(
             'entity' => $entity,
+            'form'   => $form->createView(),
         ));
 
     }
@@ -568,4 +599,39 @@ class ConcursoController extends Controller
         }
         return $correlativo;
     }
+
+        /*  Consultar cargos - Memocierre */
+        public function consultarCargosJSONAction(){
+
+        $request = $this->getRequest();
+        $idEmpleado = $request->get('idempleado');
+        $em=$this->getDoctrine()->getManager(); 
+        $Empleado = $em->getRepository('ExpedienteBundle:Empleado')->find($idEmpleado); //agregado
+        $puestos = $Empleado->getIdrefrenda();  
+        $numfilas = count($puestos);
+
+        $puesto = new RefrendaAct();
+        $i = 0;
+
+        foreach ($puestos as $puesto){
+         $rows[$i]['id'] = $puesto->getId();
+         $rows[$i]['cell'] = array($puesto->getId(), 
+            $puesto->getNombreplaza(),
+            $puesto->getIdempleado());
+         $i++;
+        }
+
+        $datos = json_encode($rows);
+        $pages = floor($numfilas / 10) +1;
+
+        $jsonresponse = '{
+          "page":"1",
+          "total":"'.$pages.'",
+          "records":"'.$numfilas.'",
+          "rows":'.$datos.'}';
+
+          $response= new Response($jsonresponse);
+          return $response;
+       }//fin funcion
+
 }

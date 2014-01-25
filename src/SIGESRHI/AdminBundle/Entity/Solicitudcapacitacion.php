@@ -65,7 +65,7 @@ class Solicitudcapacitacion
     /**
      * @var \Capacitacion
      *
-     * @ORM\ManyToOne(targetEntity="Capacitacion")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\CapacitacionBundle\Entity\Capacitacion")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idcapacitacion", referencedColumnName="id")
      * })

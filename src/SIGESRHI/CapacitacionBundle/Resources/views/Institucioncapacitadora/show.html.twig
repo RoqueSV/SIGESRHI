@@ -1,0 +1,54 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Institucioncapacitadora</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombreinstitucion</th>
+                <td>{{ entity.nombreinstitucion }}</td>
+            </tr>
+            <tr>
+                <th>Nombrecontacto</th>
+                <td>{{ entity.nombrecontacto }}</td>
+            </tr>
+            <tr>
+                <th>Telefonocontacto</th>
+                <td>{{ entity.telefonocontacto }}</td>
+            </tr>
+            <tr>
+                <th>Cargocontacto</th>
+                <td>{{ entity.cargocontacto }}</td>
+            </tr>
+            <tr>
+                <th>Emailcontacto</th>
+                <td>{{ entity.emailcontacto }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('institucion') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('institucion_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('institucion_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

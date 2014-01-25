@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="acta_cierreconcurso" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39356f29-aef4-4726-b41c-93444aeca7e1">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="144"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\wamp\\www\\SIGESRHI\\src\\SIGESRHI\\ReporteBundle\\Resources\\reportes\\HojadeServicio\\"]]></defaultValueExpression>
@@ -19,10 +19,18 @@
       (f_convnl(to_number(to_char(current_date,'DD'),'99'))) as dias,
       (to_char(current_date,'TMmonth')) as mes,
       (f_convnl(to_number(to_char(current_date,'YY'),'99'))) as ano,
-      (select nombrecompleto from solicitudempleo se
+      (select concat((case
+       when upper(hs.educacion) like upper ('%Ingenie%') then 'Ingeniero(a)'
+       when upper(hs.educacion) like upper ('%Licencia%') then 'Licenciado(a)'
+       when upper(hs.educacion) like upper ('%Doctor%') then 'Doctor(a)'
+       when upper(hs.educacion) like upper ('%Profesorado%') then 'Profesor(a)'
+       else 'Sr.'
+       end),concat(' ',nombrecompleto))
+       from solicitudempleo se
               join expediente e on (se.idexpediente=e.id)
               join empleado em on (e.id=em.idexpediente)
               join refrendaact ra on (em.id=ra.idempleado)
+              join hojaservicio hs on (hs.idexpediente=e.id)
               where upper(nombreplaza) like upper('%jefe%')
               and upper(nombreplaza) like upper('%recursos humanos%')) as jeferrhh,
       c.codigoconcurso,id,
@@ -96,7 +104,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[Jefe del Departamento de Recursos Humanos]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="853ae194-73ec-4e72-8f19-90ddf1118b5a" positionType="Float" x="0" y="267" width="260" height="20"/>
+				<reportElement uuid="853ae194-73ec-4e72-8f19-90ddf1118b5a" positionType="Float" x="0" y="267" width="375" height="20"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 				</box>

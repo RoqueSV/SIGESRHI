@@ -1,6 +1,6 @@
 <?php
 
-namespace SIGESRHI\AdminBundle\Entity;
+namespace SIGESRHI\CapacitacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -50,7 +50,7 @@ class Institucioncapacitadora
     /**
      * @var string
      *
-     * @ORM\Column(name="telefonocontacto", type="string", nullable=true)
+     * @ORM\Column(name="telefonocontacto", type="string", length=8, nullable=true)
      */
     private $telefonocontacto;
 

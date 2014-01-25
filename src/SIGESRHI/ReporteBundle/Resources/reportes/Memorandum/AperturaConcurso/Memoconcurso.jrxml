@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Memoconcurso" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b06fac72-c28d-45aa-817d-359e26b16137">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="114"/>
 	<subDataset name="dataset1" uuid="a6d3b3f8-941d-4d16-a4b1-104c8f96d297"/>
 	<parameter name="correlativo" class="java.lang.String"/>
 	<parameter name="interesados" class="java.lang.String"/>
@@ -12,16 +12,33 @@
 		<![CDATA[SELECT
       (select nombreplaza from plaza where id = c.idplaza) as plaza,
       (to_char(current_date,'TMDay, DD " de " TMmonth " del " YYYY')) as fechaactual,
-      (select nombrecompleto from solicitudempleo se
+      (select concat((case
+       when upper(hs.educacion) like upper ('%Ingenie%') then 'Ingeniero(a)'
+       when upper(hs.educacion) like upper ('%Licencia%') then 'Licenciado(a)'
+       when upper(hs.educacion) like upper ('%Doctor%') then 'Doctor(a)'
+       when upper(hs.educacion) like upper ('%Profesorado%') then 'Profesor(a)'
+       else 'Sr.'
+       end),concat(' ',nombrecompleto))
+       from solicitudempleo se
               join expediente e on (se.idexpediente=e.id)
               join empleado em on (e.id=em.idexpediente)
               join refrendaact ra on (em.id=ra.idempleado)
+              join hojaservicio hs on (hs.idexpediente=e.id)
               where upper(nombreplaza) like upper('%jefe%')
               and upper(nombreplaza) like upper('%recursos humanos%')) as jeferrhh,
-      (select nombrecompleto from solicitudempleo se
+
+      (select concat((case
+       when upper(hs.educacion) like upper ('%Ingenie%') then 'Ingeniero(a)'
+       when upper(hs.educacion) like upper ('%Licencia%') then 'Licenciado(a)'
+       when upper(hs.educacion) like upper ('%Doctor%') then 'Doctor(a)'
+       when upper(hs.educacion) like upper ('%Profesorado%') then 'Profesor(a)'
+       else 'Sr.'
+       end),concat(' ',nombrecompleto))
+       from solicitudempleo se
               join expediente e on (se.idexpediente=e.id)
               join empleado em on (e.id=em.idexpediente)
               join refrendaact ra on (em.id=ra.idempleado)
+              join hojaservicio hs on (hs.idexpediente=e.id)
               where nombreplaza = 'Gerente') as gerente,
       c.codigoconcurso
 FROM
@@ -89,17 +106,17 @@ WHERE
 				<text><![CDATA[ASUNTO            :]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="ca133c85-b5b3-4b5f-91c3-36dcafc1c092" x="167" y="0" width="218" height="38"/>
+				<reportElement uuid="ca133c85-b5b3-4b5f-91c3-36dcafc1c092" x="167" y="0" width="299" height="38"/>
 				<textElement markup="html"/>
 				<textFieldExpression><![CDATA[($P{interesados}.equals("ca"))?"DIRECTORES<br>CENTROS DE ATENCION":($P{interesados}.equals("as"))?"JEFATURAS":"TODO EL PERSONAL"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="234c5c95-98ad-48dc-8a10-95a28c1ca2a7" x="167" y="58" width="240" height="20"/>
+				<reportElement uuid="234c5c95-98ad-48dc-8a10-95a28c1ca2a7" x="167" y="58" width="299" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
 				<text><![CDATA[JEFE DE RECURSOS HUMANOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ad8281e9-bba1-4d37-bcb8-867601fcd123" x="167" y="110" width="100" height="20"/>
+				<reportElement uuid="ad8281e9-bba1-4d37-bcb8-867601fcd123" x="167" y="110" width="200" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
 				<text><![CDATA[GERENTE]]></text>
 			</staticText>
@@ -153,12 +170,12 @@ WHERE
 				<textFieldExpression><![CDATA[$F{fechaactual}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="fe183371-64ee-4637-9227-3a40e656580c" x="167" y="43" width="240" height="20"/>
+				<reportElement uuid="fe183371-64ee-4637-9227-3a40e656580c" x="167" y="43" width="299" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{jeferrhh}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="83b6f5ee-4b8d-4b06-a8a6-2a6f1505863d" x="167" y="95" width="240" height="20"/>
+				<reportElement uuid="83b6f5ee-4b8d-4b06-a8a6-2a6f1505863d" x="167" y="95" width="299" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{gerente}]]></textFieldExpression>
 			</textField>

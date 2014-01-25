@@ -755,6 +755,7 @@ class ContratacionController extends Controller
         ;
     }
 
+    /* ***** Funciones de fechas ***** */
     public function fechaConvert($sfecha)
     {
 
@@ -773,6 +774,59 @@ class ContratacionController extends Controller
     
     return strftime("%d de ".$meses[date('n',strtotime($fecha))-1],strtotime($fecha));
         
+    }
+
+    /* ******* Constancias de trabajo ******** */
+
+    public function cartaTrabajoAction(){
+
+        $source = new Entity('ExpedienteBundle:Expediente','grupo_contratacion_consultar');
+        
+        $grid = $this->get('grid');
+
+
+        /* Empleados activos e inactivos */
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->andWhere($tableAlias.'.tipoexpediente = :tipoA')
+                      ->orWhere($tableAlias.'.tipoexpediente = :tipoI')
+                      ->setParameter('tipoA','E')
+                      ->setParameter('tipoI','X');
+            }
+        );   
+        
+        $grid->setId('grid_cartatrabajo');
+        $grid->setSource($source);       
+
+         //Columnas para filtrar
+        $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre','operatorsVisible'=>false,'joinType'=>'inner'));
+        $grid->addColumn($NombreEmpleados,3);  
+        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','align'=>'center','title' => 'Código',"operatorsVisible"=>false,'joinType'=>'inner'));
+        $grid->addColumn($CodigoEmpleados,2);      
+        
+        // Crear
+        $rowAction1 = new RowAction('Generar', 'reporte_cartatrabajo');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                $action->setRouteParameters(array('id'=> $row->getField('idempleado.idcontratacion.id')));
+                return $action;
+            }
+        );
+        $grid->addRowAction($rowAction1);
+        
+        $grid->setDefaultOrder('codigos', 'asc');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Reportes", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
+        $breadcrumbs->addItem("Documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
+        $breadcrumbs->addItem("Constancia de trabajo", "");
+        
+        return $grid->getGridResponse('ExpedienteBundle:Contratacion:carta_trabajo.html.twig');
     }
 
 }

@@ -570,7 +570,7 @@ public function ReporteCertificacionAction()
                                when upper(hs.educacion) like upper ('%Licencia%') then 'Licenciado(a)' 
                                when upper(hs.educacion) like upper ('%Doctor%') then 'Doctor(a)'
                                when upper(hs.educacion) like upper ('%Profesorado%') then 'Profesor(a)'
-                               else 'Sr.'
+                               else 'Sr(a).'
                                end) as titulo
                   FROM ExpedienteBundle:Hojaservicio hs 
                   WHERE hs.id =:idhoja")
@@ -634,7 +634,7 @@ public function ReporteCertificacionAction()
      // Incluimos camino de migas
     $breadcrumbs = $this->get("white_october_breadcrumbs");
     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-    $breadcrumbs->addItem("Documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
+    $breadcrumbs->addItem("Documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
     $breadcrumbs->addItem("Elegir tipo memorándum", $this->get("router")->generate("memorandum"));
     $breadcrumbs->addItem("Nuevo memorándum", $this->get("router")->generate("memorandum_new",array('tipomemo'=>$tipomemo)));
     $breadcrumbs->addItem("Memorándum generado", "");
@@ -692,6 +692,66 @@ public function ReporteCertificacionAction()
         }
         return $correlativo;
     }
+
+    public function cartaTrabajoAction()
+    {
+     $em = $this->getDoctrine()->getManager();
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idcontratacion  = $request->get('id'); 
+
+     $contratacion = $em->getRepository('ExpedienteBundle:Contratacion')->find($idcontratacion);
+     
+     if($contratacion->getTipocontratacion()=='1'){
+        $fechafin=$contratacion->getFechafinnom();
+     }
+     else{
+        $fechafin=$contratacion->getFechafincontrato();
+     }
+
+     if ($fechafin == null){
+        $fechafin = "";
+     }
+     else{
+         $fechafin = date_format($fechafin, 'Y-m-d');
+     }
+ 
+     $idexp = $contratacion->getIdempleado()->getIdexpediente()->getId();
+
+
+     
+     //Incluimos camino de migas
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Reportes", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
+     $breadcrumbs->addItem("Documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
+     $breadcrumbs->addItem("Nueva constancia de trabajo", $this->get("router")->generate("carta_trabajo"));
+     $breadcrumbs->addItem("Constancia de trabajo generada", $this->get("router")->generate("carta_trabajo"));
+
+     
+     // Nombre reporte
+     $filename= 'Constancia trabajo.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Constancia/constanciadetrabajo.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("idcontrato", new java("java.lang.Integer", $idcontratacion));
+     $Parametro->put("idexp", new java("java.lang.Integer", $idexp));
+     $Parametro->put("fechafin", new java("java.lang.String", $fechafin));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
 
 
  }

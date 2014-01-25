@@ -1,0 +1,24 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    <h3 class="text-center">Registro de instituciones</h3>
+    <p class="text-center"> Ingrese la siguiente información para el registro de instituciones</p>
+    <br/><br/>
+
+    <form action="{{ path('institucion_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" >
+       
+        {{ form_row(form.nombreinstitucion) }}
+        {{ form_row(form.nombrecontacto) }}
+        {{ form_row(form.telefonocontacto) }}
+        {{ form_row(form.cargocontacto) }}
+        {{ form_row(form.emailcontacto) }}
+
+
+        {{ form_rest(form) }}
+              
+       <div class="text-center">
+         <button type="submit" class="btn btn-primary">Registrar</button>
+         <a href="{{ path('concurso') }}"  class="btn">Cancelar</a>
+      </div>
+    </form>
+{% endblock %}

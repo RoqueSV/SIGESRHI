@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Memocierre" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b06fac72-c28d-45aa-817d-359e26b16137">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="88"/>
 	<subDataset name="dataset1" uuid="a6d3b3f8-941d-4d16-a4b1-104c8f96d297"/>
 	<parameter name="interesado" class="java.lang.String"/>
 	<parameter name="idconcurso" class="java.lang.Integer"/>
@@ -15,26 +15,37 @@
 	<parameter name="correlativo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
-      (select nombreplaza from plaza where id = c.idplaza) as plaza,
+      (select nombreplaza from plaza p join concurso c on (p.id=c.idplaza) where c.id = $P{idconcurso})     as plaza,
       (to_char(current_date,'TMDay, DD " de " TMmonth " del " YYYY')) as fechaactual,
-      (select nombrecompleto from solicitudempleo se
-              join expediente e on (se.idexpediente=e.id)
-              join empleado em on (e.id=em.idexpediente)
-              join refrendaact ra on (em.id=ra.idempleado)
-              where upper(nombreplaza) like upper('%jefe%')
-              and upper(nombreplaza) like upper('%recursos humanos%')) as jeferrhh,
-              numeroacta,anoacta
+      nombrecompleto as jeferrhh,
+      (select numeroacta from concurso  where id = $P{idconcurso}) as numeroacta,
+      (select anoacta from concurso  where id = $P{idconcurso}) as anoacta,
+      (case
+       when upper(hs.educacion) like upper ('%Ingenie%') then 'Ingeniero(a)'
+       when upper(hs.educacion) like upper ('%Licencia%') then 'Licenciado(a)'
+       when upper(hs.educacion) like upper ('%Doctor%') then 'Doctor(a)'
+       when upper(hs.educacion) like upper ('%Profesorado%') then 'Profesor(a)'
+       else 'Sr.'
+       end) as titulo
 
 FROM
-     concurso c
+        solicitudempleo se
+        join expediente e on (se.idexpediente=e.id)
+        join empleado em on (e.id=em.idexpediente)
+        join refrendaact ra on (em.id=ra.idempleado)
+        join hojaservicio hs on (e.id=hs.idexpediente)
+
 WHERE
-     id = $P{idconcurso}]]>
+        upper(nombreplaza) like upper('%jefe%')
+        and upper(nombreplaza) like upper('%recursos humanos%')
+        ]]>
 	</queryString>
 	<field name="plaza" class="java.lang.String"/>
 	<field name="fechaactual" class="java.lang.String"/>
 	<field name="jeferrhh" class="java.lang.String"/>
 	<field name="numeroacta" class="java.lang.Integer"/>
 	<field name="anoacta" class="java.lang.String"/>
+	<field name="titulo" class="java.lang.String"/>
 	<variable name="caso1" class="java.lang.String">
 		<variableExpression><![CDATA[$P{caso}.equals("N")?"No habiéndose presentado aspirante interno a dicha plaza vacante, atentamente se informa que puede solicitar expedientes del banco de solicitudes de empleo para continuar con el proceso de selección del recurso.":"Se informa que se presentaron los siguientes candidatos internos para aplizar a dicha plaza vacante:"]]></variableExpression>
 	</variable>
@@ -88,7 +99,7 @@ WHERE
 				<text><![CDATA[ASUNTO            :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="234c5c95-98ad-48dc-8a10-95a28c1ca2a7" x="167" y="58" width="240" height="20"/>
+				<reportElement uuid="234c5c95-98ad-48dc-8a10-95a28c1ca2a7" x="167" y="58" width="307" height="20"/>
 				<textElement textAlignment="Left" verticalAlignment="Top"/>
 				<text><![CDATA[JEFE DE RECURSOS HUMANOS]]></text>
 			</staticText>
@@ -115,20 +126,20 @@ WHERE
 				<textFieldExpression><![CDATA[$F{fechaactual}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="fe183371-64ee-4637-9227-3a40e656580c" x="167" y="43" width="240" height="20"/>
+				<reportElement uuid="fe183371-64ee-4637-9227-3a40e656580c" x="167" y="43" width="307" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{jeferrhh}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{titulo}+" "+$F{jeferrhh}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement uuid="2dca6a8c-d6db-4744-adaa-9d1f4fa4446e" x="0" y="186" width="572" height="1"/>
 			</line>
 			<textField>
-				<reportElement uuid="7a58eff4-f4a8-485e-8675-1cb8cbd78ecd" x="167" y="0" width="100" height="20"/>
+				<reportElement uuid="7a58eff4-f4a8-485e-8675-1cb8cbd78ecd" x="167" y="0" width="307" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$P{interesado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="adb8c05a-07de-490c-aa4b-108bef385fef" x="167" y="13" width="100" height="20"/>
+				<reportElement uuid="adb8c05a-07de-490c-aa4b-108bef385fef" x="167" y="13" width="307" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$P{cargointeres}]]></textFieldExpression>
 			</textField>
