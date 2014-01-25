@@ -42,6 +42,14 @@ class DocexpedienteController extends Controller
      */
     public function createAction(Request $request, $id)
     {
+        //Si es un usuario anonimo utilizaremos el id que esta en variable de sesion desde el create de solicitud.
+         $user = $this->get('security.context')->getToken()->getUser();
+            if($user== "anon."){
+                $anonimo = $this->getRequest()->getSession();
+                $id = $anonimo->get('anonimo');
+                }
+
+
         $request = $this->getRequest();
         $tipogrid = $request->query->get('tipogrid');
 
@@ -99,6 +107,13 @@ class DocexpedienteController extends Controller
         $request = $this->getRequest();
         $id= $request->query->get('id');
         $tipogrid = $request->query->get('tipogrid');
+
+        //Si es un usuario anonimo utilizaremos el id que esta en variable de sesion desde el create de solicitud.
+        $user = $this->get('security.context')->getToken()->getUser();
+        if($user== "anon."){
+            $anonimo = $this->getRequest()->getSession();
+            $id = $anonimo->get('anonimo');
+        }
 
         $entity = new Docexpediente();
         $form   = $this->createForm(new DocexpedienteType(), $entity);
@@ -539,11 +554,26 @@ class DocexpedienteController extends Controller
         $request = $this->getRequest();
         $tipogrid = $request->query->get('tipogrid');
         $idexp = $request->query->get('id');
+
+        //Si es un usuario anonimo utilizaremos el id que esta en variable de sesion desde el create de solicitud.
+         $user = $this->get('security.context')->getToken()->getUser();
+            if($user== "anon."){
+                $anonimo = $this->getRequest()->getSession();
+                $idexp = $anonimo->get('anonimo');
+                }
         
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ExpedienteBundle:Docexpediente')->find($iddoc);
         $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+
+        //Si es un usuario anonimo utilizaremos el id que esta en variable de sesion desde el create de solicitud.
+         $user = $this->get('security.context')->getToken()->getUser();
+            if($user== "anon."){
+                if($entity->getIdexpediente()->getId() != $idexp){
+                    throw $this->createNotFoundException('Documento NO disponible.');
+                    }
+                }
 
         if (!$entity) {
             throw $this->createNotFoundException('No se puede encontrar la entidad de Documento Digital.');
@@ -605,6 +635,14 @@ class DocexpedienteController extends Controller
 
     public function finRegistroAspiranteAction() 
     {
+
+        //establecemos a 0 la variable de session, asi no podra ingresar nuevamente a registrar documentos ni ver sus datos
+            $user = $this->get('security.context')->getToken()->getUser();
+            if($user== "anon."){
+             $anonimo = $this->getRequest()->getSession();
+             $anonimo->set('anonimo',0);
+            }
+
 
              //incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");

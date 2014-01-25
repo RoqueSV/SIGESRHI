@@ -123,7 +123,7 @@ class Factorevaluacion
      * @param \SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion $idformulario
      * @return Factorevaluacion
      */
-    public function setIdformulario(\SIGESRHI\AdminBundle\Entity\Formularioevaluacion $idformulario = null)
+    public function setIdformulario(\SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion $idformulario = null)
     {
         $this->idformulario = $idformulario;
     
@@ -145,6 +145,7 @@ class Factorevaluacion
      public function __construct()
     {
         $this->Opciones = new ArrayCollection();
+        $this->Incidentes = new ArrayCollection();
     }
 
 
@@ -176,4 +177,29 @@ class Factorevaluacion
         }
     }
 
+     /************************ INCIDENTES ****************************/
+
+     /**
+     * @ORM\OneToMany(targetEntity="Incidente", mappedBy="idfactorevaluacion", cascade={"persist", "remove"})
+     * @Assert\Valid
+     */
+    protected $Incidentes;
+
+    /**
+     * Get Incidentes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIncidentes()
+    {
+        return $this->Incidentes;
+    }
+
+    public function setIncidentes(\Doctrine\Common\Collections\Collection $incidentes)
+    {
+        $this->Incidentes = $incidentes;
+        foreach ($incidentes as $incidente) {
+            $incidente->setIdfactorevaluacion($this);
+        }
+    }
 }

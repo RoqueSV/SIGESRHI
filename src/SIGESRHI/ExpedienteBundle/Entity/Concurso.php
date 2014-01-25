@@ -66,7 +66,7 @@ class Concurso
     private $numeroacta;
 
     /**
-     * @var integer
+     * @var string
      *
      * @ORM\Column(name="anoacta", type="string", length=4, nullable=true)
      */

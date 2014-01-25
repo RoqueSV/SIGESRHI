@@ -54,7 +54,7 @@ class Puntaje
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Formularioevaluacion")
+     * @ORM\ManyToMany(targetEntity="Formularioevaluacion", inversedBy="Puntajes")
      * @ORM\JoinTable(name="formulariopuntaje",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idpuntaje", referencedColumnName="id")

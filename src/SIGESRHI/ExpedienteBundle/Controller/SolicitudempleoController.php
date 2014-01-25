@@ -308,6 +308,14 @@ class SolicitudempleoController extends Controller
             $em->flush();
         // FIN CREACION DE DOCUMENTOS DE PERSONAL
 
+            //creamos una variable de sesion si es un aspirante (usuario anon.)
+            //con la cual ingresara los documentos digitales a su solicitud
+            $user = $this->get('security.context')->getToken()->getUser();
+            if($user== "anon."){
+             $anonimo = $this->getRequest()->getSession();
+             $anonimo->set('anonimo',$expediente->getId());
+            }
+
 
            // return $this->redirect($this->generateUrl('solicitud_show', array('id' => $entity->getId())));
             $this->get('session')->getFlashBag()->add('new', 'La solicitud de empleo se ha registrado correctamente. Si desea puede registrar sus documentos en formato digital en esta página.'); 

@@ -10,9 +10,10 @@
     </div>
 <br>
 
-<form action="{{ path('evaluacion_create') }}" method="post" {{ form_enctype(form) }}>
-    <fieldset>
-        <legend>I. DATOS GENERALES</legend>
+<form action="{{ path('evaluacion_create') }}" method="post" {{ form_enctype(form) }} id="frm_evaluacion">
+    
+    <h4>I. DATOS GENERALES</h4>
+        <br>
         <br>
 
         <table class="table table-bordered table-centered table-hover mitable" width="90%">
@@ -39,37 +40,33 @@
             
         </table>
 
-    </fieldset>
-
 <br>
 
 
-<fieldset>
-        <legend>II. EVALUACIÓN GENERAL POR PARTE DEL JEFE INMEDIATO</legend>
-<br>
+
+        <h4>II. EVALUACIÓN GENERAL POR PARTE DEL JEFE INMEDIATO</h4>
+<br><br>
 
     {% for factor in formulario.factores %}
-    <table border="2">
-        <tr><td colspan="{{factor.opciones|length}}" class="text-center"><b>{{ factor.nombrefactor}}</b></td></tr>
+    <table border="2" class="table-bordered">
+        <tr><th colspan="{{factor.opciones|length}}" class="text-center"><b>{{ factor.nombrefactor}}</b></th></tr>
         <tr><td colspan="{{factor.opciones|length}}">  <p class="justifyText"> {{factor.descripcionfactor}} </p> </td></tr>
         </tr>
         <tr>
             {% set indice = loop.index %}
         {% for opcion in factor.opciones %}
-        <td class="text-center" width="{{100 / (factor.opciones|length)}}%"> <input type="radio" name="respuesta-{{indice}}[]" required="required" value="{{factor.id}}-{{opcion.id}}"/> &nbsp;<b>{{opcion.nombreopcion}} </b></td>
+        <td class="text-center" width="{{100 / (factor.opciones|length)}}%"> <input type="radio" name="respuesta-{{indice}}" required="required" value="{{factor.id}}-{{opcion.id}}"/> &nbsp;<b>{{opcion.nombreopcion}} </b></td>
         {% endfor %}
         </tr>
         <tr>
         {% for opcion in factor.opciones %}
-        <td><p class="justifyText">{{opcion.descripcionopcion}}</p></td>
+        <td><p class="justifyText opcionformulario">{{opcion.descripcionopcion}}</p></td>
         {% endfor %}
         </tr>
     </table>
-    <br><br>
+    <br>
 
     {% endfor %}
-
-</fieldset>
 
 <div class="hide">    
 
@@ -79,16 +76,27 @@
     {{form_row(form.puestoemp)}}
     {{form_row(form.idempleado)}}
     {{form_row(form.idjefe)}}
+    <input type="hidden" name="numfactores" value="{{formulario.factores|length}}"/>
 </div>
 
     
     {{ form_rest(form) }}
         <p>
             <div class="text-center">
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary" >Guardar</button>
             <button type="button" class="btn" onclick="location.href='{{path('evaluacion_seleccionempleado', {'idrefrenda':refrendajefe.id})}}'">Cancelar</button>
             </div>
         </p>
     </form>
 
+{#
+<script type='text/javascript'>
+function registrar() {
+
+        if(confirm('\xbf Se registrara esta evaluación, seguro de continuar?')) {
+            document.getElementById('frm_evaluacion').submit();
+            }
+        }
+</script>
+#}
 {% endblock %}

@@ -44,10 +44,6 @@ class Evaluacion
      *
      * @ORM\Column(name="semestre", type="string", length=2, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el semestre de la evaluacion")
-     * @Assert\Length(
-     * max = "2",
-     * maxMessage = "El semestre de evaluación no debe exceder los {{limit}} caracteres (I o II)"
-     * )
      */
     private $semestre;
 
@@ -74,11 +70,24 @@ class Evaluacion
     /**
      * @var integer
      *
-     * @ORM\Column(name="puestoemp", type="integer", nullable=false)
+     * @ORM\Column(name="puestoemp", type="integer", nullable=true)
      * @Assert\NotNull(message="Debe ingresar el puesto del empleado evaluado")
      */
     private $puestoemp;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observacion", type="string", length=250, nullable=true)
+     */
+    private $observacion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tiemposupervisar", type="string", length=50, nullable=true)
+     */
+    private $tiemposupervisar;
 
 
     /**
@@ -227,5 +236,116 @@ class Evaluacion
     public function getPuestoemp()
     {
         return $this->puestoemp;
+    }
+
+     /**
+     * Set observacion
+     *
+     * @param string $observacion
+     * @return Evaluacion
+     */
+    public function setObservacion($observacion)
+    {
+        $this->observacion = $observacion;
+    
+        return $this;
+    }
+
+    /**
+     * Get observacion
+     *
+     * @return string 
+     */
+    public function getObservacion()
+    {
+        return $this->observacion;
+    }
+
+
+     /**
+     * Set tiemposupervisar
+     *
+     * @param string $tiemposupervisar
+     * @return Evaluacion
+     */
+    public function setTiemposupervisar($tiemposupervisar)
+    {
+        $this->tiemposupervisar = $tiemposupervisar;
+    
+        return $this;
+    }
+
+    /**
+     * Get tiemposupervisar
+     *
+     * @return string 
+     */
+    public function getTiemposupervisar()
+    {
+        return $this->tiemposupervisar;
+    }
+
+
+    /************************ RESPUESTAS ****************************/
+    /**
+     * @ORM\OneToMany(targetEntity="Respuesta", mappedBy="idevaluacion", cascade={"persist", "remove"})
+     * @Assert\Valid
+     */
+    protected $Respuestas;
+
+    /**
+     * Get Respuestas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRespuestas()
+    {
+        return $this->Respuestas;
+    }
+
+    public function setRespuestas(\Doctrine\Common\Collections\Collection $respuestas)
+    {
+        $this->Respuestas = $respuestas;
+        foreach ($respuestas as $respuesta) {
+            $respuesta->setIdrespuesta($this);
+        }
+    }
+
+   
+     /************************ INCIDENTES ****************************/
+    /**
+     * @ORM\OneToMany(targetEntity="Incidente", mappedBy="idevaluacion", cascade={"persist", "remove"})
+     * @Assert\Valid
+     */
+    protected $Incidentes;
+
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->Respuestas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->Incidentes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    
+     public function setIncidentes(\Doctrine\Common\Collections\Collection $incidentes)
+    {
+        $this->Incidentes = $incidentes;
+        foreach ($incidentes as $incidente) {
+            $incidente->setIdevaluacion($this);
+        }
+    }
+   
+
+    /**
+     * Get Incidentes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIncidentes()
+    {
+        return $this->Incidentes;
     }
 }

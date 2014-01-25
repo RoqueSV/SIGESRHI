@@ -1,46 +1,85 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Evaluacion</h1>
+{% block principal -%}
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Fecharealizacion</th>
-                <td>{{ entity.fecharealizacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Anoevaluado</th>
-                <td>{{ entity.anoevaluado }}</td>
-            </tr>
-            <tr>
-                <th>Semestre</th>
-                <td>{{ entity.semestre }}</td>
-            </tr>
-        </tbody>
-    </table>
+<h4> III. RESULTADO DE EVALUACIÓN </h4>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('evaluacion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('evaluacion_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('evaluacion_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+    <div class="text-center">
+        <br>
+
+        <b>TABLA DE VALORACIÓN</b>
+        {% set puntuacion = 0 %}
+        <br>
+
+        <table class="table-bordered table-hover mitable table">
+            <tr>
+                <th width="70%">FACTOR </th><th width="15%"> RESPUESTA </th><th width="15%"> <b class="centerColum">VALORACIÓN </b></th>
+            </tr>
+        {% for respuesta in evaluacion.Respuestas %}
+        <tr>
+            <td>{{loop.index}}. {{respuesta.idfactor.nombrefactor}}</td><td> <div class="centerColum">{{respuesta.idopcion.nombreopcion}} </div></td><td><div class="centerColum">{{respuesta.idopcion.valoropcion}}</div></td>
+        </tr>
+          {% set puntuacion = puntuacion + respuesta.idopcion.valoropcion %}
+            
+            {% if loop.last %}
+                <tr><td></td><td><div class="centerColum"><b>PUNTUACIÓN: </b></div> </td><td><div class="centerColum"><b>{{puntuacion}}</b></div></td></tr>
+            {% endif %}
+        {% endfor %}       
+
+        </table>
+    </div>
+
+    <div class="text-center">
+    <b>CALIFICACIÓN POR PUNTOS Y POR RANGOS</b>
+    {% set calificacion = "" %}
+
+            <table class="table-bordered table-hover mitable centered-table" width="50%">
+                <tr>
+                    <th>Calificación</th><th>Puntuación</th>
+                </tr>
+            
+                {% for puntaje in evaluacion.Respuestas[0].idfactor.idformulario.Puntajes %}
+                    <tr>
+                        <td>{{puntaje.nombrepuntaje}}</td><td>de {{puntaje.puntajemin}} a {{puntaje.puntajemax}}</td>
+                    </tr>
+                        {% if puntuacion >= puntaje.puntajemin and puntuacion <= puntaje.puntajemax %}
+                        {% set calificacion = puntaje.nombrepuntaje %}
+                        {% endif %}
+
+                {% endfor %}
+            </table>
+
+<br>
+            Con base a la evaluaci&oacute;n realizada el empleado merece una calificación de:
+            <h3>{{ calificacion|upper }}</h>
+    </div>
+
+<br>
+
+<form action="" method="post">
+     Tiempo de supervisar al empleado:  <input type="text" name="supervisa" size="100"/>
+<br>
+    Comentarios: &nbsp;&nbsp;&nbsp;
+    <textarea rows="3" cols="100"></textarea> 
+
+<br><br>
+
+<div class="text-center">
+<b>¿Registrar Incidentes cr&iacute;ticos?</b>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SI <input type="radio" name="registra_incidente" required="required" value="SI"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO <input type="radio" name="registra_incidente" required="required" value="NO"/>
+<br><br>
+<input type="button" value="Aceptar" class="btn btn-primary" />
+<input type="button" value="Cancelar" class="btn" />
+</div>
+
+</form>
+
+
+<style>
+    textarea {
+        width:70%;
+    }
+</style>
 {% endblock %}
