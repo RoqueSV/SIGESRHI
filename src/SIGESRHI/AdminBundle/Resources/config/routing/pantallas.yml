@@ -13,3 +13,15 @@ pantalla_empleadoactivo:
 pantalla_empleadoinactivo:
     pattern:  /empleadoinactivo
     defaults: { _controller: "AdminBundle:Pantallas:pantallaEmpleadoInactivo" }
+
+pantalla_capacitaciones:
+    pattern:  /capacitaciones
+    defaults: { _controller: "AdminBundle:Pantallas:pantallaCapacitaciones" }
+
+pantalla_instituciones:
+    pattern:  /instituciones
+    defaults: { _controller: "AdminBundle:Pantallas:pantallaInstituciones" }
+
+pantalla_facilitadores:
+    pattern:  /facilitadores
+    defaults: { _controller: "AdminBundle:Pantallas:pantallaFacilitadores" }

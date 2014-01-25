@@ -1,15 +1,19 @@
 {% extends 'ExpedienteBundle:Ayuda:plantilla_ayuda.html.twig' %}
 
 {% block titulo %}
-<h3 id="helpLabel">Formulario:Acción Personal</h3>
+<h3 id="helpLabel">Formulario:Registrar Acuerdos</h3>
 <p>Este formulario </p>
 {% endblock %}
 
 {% block contenido %}
 
-<p>¿Cómo llenar este formulario?</p>
-
+<p><h4>¿Cómo llenar este formulario?</h4></p>
 <p>Se describen a continuación los pasos necesarios:</p>
-
+<ul style="list-style-type:decimal; margin-left:25px">
+		<li>Seleccione de la lista desplegable "Tipo de Acuerdo" que desea registrar. </li>
+		<img src="{{asset('images/images_ayuda/tipoacuerdo.jpg') }}" alt="ISRI"/><br><br> 
+		<li>Seleccione el puesto del empleado al que registrar&aacute; el acuerdo.</li>
+		<img src="{{asset('images/images_ayuda/seleccionpuesto.jpg') }}" alt="ISRI"/><br><br>
+		<div class="justifyText">En la lista desplegable se muestran las plazas que posee el empleado en la Instituci&oacute;n, puede registrar un acuerdo a una determinada plaza o aplicar dicho registro a ambas plazas.</div>
 
 {% endblock %}
