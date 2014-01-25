@@ -66,7 +66,7 @@ class InstitucioncapacitadoraController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
-        $breadcrumbs->addItem("Instituciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Instituciones", $this->get("router")->generate("pantalla_instituciones"));
         $breadcrumbs->addItem("Registrar institución", $this->get("router")->generate("hello_page"));
 
         return $this->render('CapacitacionBundle:Institucioncapacitadora:new.html.twig', array(
@@ -90,6 +90,14 @@ class InstitucioncapacitadoraController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
+
+         // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Instituciones", $this->get("router")->generate("pantalla_instituciones"));
+        $breadcrumbs->addItem("Registrar institución", $this->get("router")->generate("institucion_new"));
+        $breadcrumbs->addItem("Datos de registro", $this->get("router")->generate("institucion_new"));
 
         return $this->render('CapacitacionBundle:Institucioncapacitadora:show.html.twig', array(
             'entity'      => $entity,

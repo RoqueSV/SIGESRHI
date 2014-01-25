@@ -1,24 +1,56 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+<style>
+.tabla{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+</style>
+
     <h3 class="text-center">Registro de instituciones</h3>
     <p class="text-center"> Ingrese la siguiente información para el registro de instituciones</p>
     <br/><br/>
 
-    <form action="{{ path('institucion_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" >
+    <form action="{{ path('institucion_create') }}" method="post" {{ form_enctype(form) }} >
        
-        {{ form_row(form.nombreinstitucion) }}
-        {{ form_row(form.nombrecontacto) }}
-        {{ form_row(form.telefonocontacto) }}
-        {{ form_row(form.cargocontacto) }}
-        {{ form_row(form.emailcontacto) }}
+     <table class="table table-bordered table-hover form-inline mitable tabla">
+       <tr>
+        <th> {{ form_label(form.nombreinstitucion) }} </th>
+        <td> {{ form_widget(form.nombreinstitucion) }} {{ form_errors(form.nombreinstitucion) }}</td>
+       </tr>
+       <tr> 
+        <th> {{ form_label(form.nombrecontacto) }} </th>
+        <td> {{ form_widget(form.nombrecontacto) }} {{ form_errors(form.nombrecontacto) }} </td>
+       </tr>
+       <tr> 
+        <th> {{ form_label(form.telefonocontacto) }} </th>
+        <td> {{ form_widget(form.telefonocontacto) }} {{ form_errors(form.telefonocontacto) }} </td>
+       </tr>
+       <tr> 
+        <th> {{ form_label(form.cargocontacto) }} </th>
+        <td> {{ form_widget(form.cargocontacto) }} {{ form_errors(form.cargocontacto) }} </td>
+       </tr>
+       <tr>
+        <th> {{ form_label(form.emailcontacto) }} </th>
+        <td> {{ form_widget(form.emailcontacto) }} {{ form_errors(form.emailcontacto) }} </td>    
+       </tr>
+     </table>    
+
+     {{ form_row(form.nombreinstitucion) }}
+     {{ form_row(form.nombrecontacto) }}
+     {{ form_row(form.telefonocontacto) }}
+     {{ form_row(form.cargocontacto) }}
 
 
         {{ form_rest(form) }}
+
+        <br/><br/>
               
        <div class="text-center">
          <button type="submit" class="btn btn-primary">Registrar</button>
-         <a href="{{ path('concurso') }}"  class="btn">Cancelar</a>
+         <a href="{{ path('pantalla_instituciones') }}"  class="btn" onclick="return confirm('Si cancela, perderá los datos del formulario actual ¿Está seguro de cancelar?')">Cancelar</a>
       </div>
     </form>
 {% endblock %}

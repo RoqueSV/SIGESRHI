@@ -14,10 +14,10 @@ class InstitucioncapacitadoraType extends AbstractType
             ->add('nombreinstitucion',null,array(
                   'label'=>'Nombre institución',
                   'required'=>true,
-                  'attr'=>array('class'=>'input-medium')))
+                  'attr'=>array('class'=>'input-xlarge')))
             ->add('nombrecontacto',null,array(
                   'label'=>'Nombre contacto',
-                  'attr'=>array('class'=>'input-medium')))
+                  'attr'=>array('class'=>'input-xlarge')))
             ->add('telefonocontacto',null,array(
                   'label'=>'Teléfono',
                   'max_length'=>'8', 

@@ -1,54 +1,57 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Institucioncapacitadora</h1>
+{% block principal -%}
 
-    <table class="record_properties">
+<script type='text/javascript'>
+function eliminar() {
+
+    if(confirm('\xbfEst\xE1 seguro que desea eliminar este registro?')) {
+        document.getElementById('form_borrar').submit();
+}
+}
+</script>
+<style>
+.tabla{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+</style>
+
+    <h3 class="text-center">Datos registrados</h3>
+
+    <table class="table table-bordered table-hover tabla">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombreinstitucion</th>
+                <th>Nombre institución</th>
                 <td>{{ entity.nombreinstitucion }}</td>
             </tr>
             <tr>
-                <th>Nombrecontacto</th>
+                <th>Nombre contacto</th>
                 <td>{{ entity.nombrecontacto }}</td>
             </tr>
             <tr>
-                <th>Telefonocontacto</th>
-                <td>{{ entity.telefonocontacto }}</td>
+                <th>Telefono contacto</th>
+                <td>{{ entity.telefonocontacto|telefono }}</td>
             </tr>
             <tr>
-                <th>Cargocontacto</th>
+                <th>Cargo contacto</th>
                 <td>{{ entity.cargocontacto }}</td>
             </tr>
             <tr>
-                <th>Emailcontacto</th>
+                <th>Email contacto</th>
                 <td>{{ entity.emailcontacto }}</td>
             </tr>
         </tbody>
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('institucion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('institucion_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
+    <br/><br/>
+    <div class="text-center">
+    <a href="{{ path('pantalla_instituciones') }}" class="btn btn-primary"> Finalizar </a>
+    <a href="{{ path('institucion_edit', { 'id': entity.id }) }}" class="btn"> Editar </a>
+    <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
         <form action="{{ path('institucion_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <div class="invisible">{{ form_widget(delete_form) }}</div>
         </form>
-    </li>
-</ul>
+    </div>
 {% endblock %}
