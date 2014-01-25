@@ -1,0 +1,16 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+	
+	{% block principal %}
+	{% set ruta=app.request.attributes.get('_route') %}
+	 <div>
+	 {% if ruta == 'pantalla_capacitaciones' %}
+    <img src="{{ asset('images/capacitacionesISRI.jpg') }}" width="800" heigth="300" alt="ISRI"/>
+    {% elseif ruta == 'pantalla_instituciones' %}
+    <img src="{{ asset('images/institucionescapacitadoras.jpg') }}" width="800" heigth="300" alt="ISRI"/>
+    {% elseif ruta == 'pantalla_facilitadores' %}
+    <img src="{{ asset('images/facilitadores.jpg') }}" width="800" heigth="300" alt="ISRI"/>
+    {% endif %}
+	</div>
+
+	{% endblock %}

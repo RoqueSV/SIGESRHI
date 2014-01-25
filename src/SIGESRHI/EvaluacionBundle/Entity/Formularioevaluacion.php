@@ -111,12 +111,11 @@ class Formularioevaluacion
   public function __construct()
     {
         $this->Factores = new ArrayCollection();
+        $this->Puntajes = new ArrayCollection();
     }
 
 
 /************************* Factores de evaluacion ***************************/
-
-
 
     /**
      * @ORM\OneToMany(targetEntity="Factorevaluacion", mappedBy="idformulario", cascade={"persist", "remove"})
@@ -143,5 +142,29 @@ class Formularioevaluacion
     }
 
 
+/******************************************************************************/
 
+    /**
+     *
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\ManyToMany(targetEntity="Puntaje", mappedBy="idformulario")
+    */
+    protected $Puntajes;
+
+ public function setPuntajes(\Doctrine\Common\Collections\Collection $puntajes)
+    {
+        $this->Puntajes = $puntajes;
+        foreach ($puntajes as $puntaje) {
+            $puntaje->setIdformulario($this);
+        }
+    }
+    /**
+     * Get Puntajes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPuntajes()
+    {
+        return $this->Puntajes;
+    }
 }

@@ -80,4 +80,42 @@ class PantallasController extends Controller
         $breadcrumbs->addItem("Empleado inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
         return $this->render('AdminBundle:Pantallas:pantalla_hexpediente.html.twig');
     }
+
+
+
+    public function pantallaCapacitacionesAction()
+    {
+
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitación Institucional", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_capacitaciones"));
+        return $this->render('AdminBundle:Pantallas:pantalla_hcapacitacion.html.twig');
+    }
+
+
+ public function pantallaInstitucionesAction()
+    {
+
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitación Institucional", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Instituciones", $this->get("router")->generate("pantalla_instituciones"));
+        return $this->render('AdminBundle:Pantallas:pantalla_hcapacitacion.html.twig');
+    }
+
+ public function pantallaFacilitadoresAction()
+    {
+
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitación Institucional", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Facilitadores", $this->get("router")->generate("pantalla_facilitadores"));
+        return $this->render('AdminBundle:Pantallas:pantalla_hcapacitacion.html.twig');
+    }
+
+
 }

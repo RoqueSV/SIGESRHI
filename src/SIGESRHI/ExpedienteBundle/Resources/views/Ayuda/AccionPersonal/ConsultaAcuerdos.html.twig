@@ -1,19 +1,20 @@
 {% extends 'ExpedienteBundle:Ayuda:plantilla_ayuda.html.twig' %}
 
 {% block titulo %}
-<h3 id="helpLabel">Formulario:Registro Acción Personal</h3>
-<p align="justify">Este formulario permite el registro de acciones  </p>
+<h3 id="helpLabel">Consultar Record Laboral</h3>
+<p align="justify">Este ventana permite consultar el record laboral de un determinado empleado, as&iacute; como tambi&eacute;n el registro de acuerdos</p>
 {% endblock %}
 
 {% block contenido %}
 
-<p><h4>¿Cómo llenar este formulario?</h4></p>
-<p>Se describen a continuaci&oacute;n los pasos necesarios:</p>
+<p><h4>¿Realizar b&uacute;squeda de un acuerdo?</h4></p>
 <ul style="list-style-type:decimal; margin-left:25px">
-		<li>Seleccione de la lista desplegable "Tipo de Acuerdo" que desea registrar. </li>
-		<img src="{{asset('images/images_ayuda/tipoacuerdo.jpg') }}" alt="ISRI"/><br><br> 
-		<li>Seleccione el puesto del empleado al que registrar&aacute; el acuerdo.</li>
-		<img src="{{asset('images/images_ayuda/seleccionpuesto.jpg') }}" alt="ISRI"/><br><br>
-		<div class="justifyText">En la lista desplegable se muestran las plazas que posee el empleado en la Instituci&oacute;n, puede registrar un acuerdo a una determinada plaza o aplicar dicho registro a ambas plazas.</div>
+		<li>Se puede realizar una b&uacute;squeda de un acuerdo previamente registrado a un empleado por tipo de acuerdo y por fecha de registro de acuerdo</li>
+		<img src="{{asset('images/images_ayuda/busqueda_acuerdo.jpg') }}" alt="ISRI"/><br><br> 
+		<div class="justifyText">Para realizar una b&uacute;squeda por tipo de acuerdo, seleccione de la lista desplegable el tipo de acuerdo y presione el bot&oacute;n buscar.
+		Para una b&uacute;squeda por fecha, seleccione una fecha del calendario que se despliega al dar click en la caja de texto</div>
+
+</ul>
+
 
 {% endblock %}

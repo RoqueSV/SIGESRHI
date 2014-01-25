@@ -45,7 +45,7 @@ class Respuesta
     /**
      * @var \Evaluacion
      *
-     * @ORM\ManyToOne(targetEntity="Evaluacion")
+     * @ORM\ManyToOne(targetEntity="Evaluacion", inversedBy="Respuestas")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idevaluacion", referencedColumnName="id")
      * })

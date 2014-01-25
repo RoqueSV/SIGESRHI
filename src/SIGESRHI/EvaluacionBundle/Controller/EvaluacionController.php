@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use SIGESRHI\EvaluacionBundle\Entity\Evaluacion;
 use SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion;
 use SIGESRHI\ExpedienteBundle\Entity\Empleado;
+use SIGESRHI\EvaluacionBundle\Entity\Respuesta;
+use SIGESRHI\EvaluacionBundle\Entity\Factorevaluacion;
+use SIGESRHI\EvaluacionBundle\Entity\Opcion;
 
 use SIGESRHI\AdminBundle\Entity\RefrendaAct;
 use Application\Sonata\UserBundle\Entity\User;
@@ -142,22 +145,48 @@ $grid->addRowAction($rowAction);
      */
     public function createAction(Request $request)
     {
-        $entity  = new Evaluacion();
-        $form = $this->createForm(new EvaluacionType(), $entity);
+        $numfactores = $request->get('numfactores');
+        
+        $evaluacion  = new Evaluacion();
+        $form = $this->createForm(new EvaluacionType(), $evaluacion);
         $form->bind($request);
 
+       
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($evaluacion);
+
+             for ($i=1; $i<=$numfactores; $i++){
+
+                  $var = $request->get('respuesta-'.$i);
+                
+                $aux = explode("-",$var);
+
+                echo "<br> Opcion: ".$i." : ".$aux[0]."-separador-".$aux[1];
+
+                $factor = $em->getRepository('EvaluacionBundle:Factorevaluacion')->find((int)$aux[0]);
+                $opcion = $em->getRepository('EvaluacionBundle:Opcion')->find((int)$aux[1]);
+                //creamos las instancias de respuesta
+                $respuesta = new Respuesta();
+                $respuesta->setIdfactor($factor);
+                $respuesta->setIdopcion($opcion);
+                $respuesta->setIdevaluacion($evaluacion);
+
+                $em->persist($respuesta);
+                  }
+
+
             $em->flush();
 
-            return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $evaluacion->getId())));
         }
 
         return $this->render('EvaluacionBundle:Evaluacion:new.html.twig', array(
-            'entity' => $entity,
+            'entity' => $evaluacion,
             'form'   => $form->createView(),
         ));
+
+        
     }
 
     /**
@@ -254,16 +283,16 @@ $grid->addRowAction($rowAction);
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('EvaluacionBundle:Evaluacion')->find($id);
+        $evaluacion = $em->getRepository('EvaluacionBundle:Evaluacion')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Evaluacion entity.');
+        if (!$evaluacion) {
+            throw $this->createNotFoundException('No se puede encontrar la entidad Evaluación.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('EvaluacionBundle:Evaluacion:show.html.twig', array(
-            'entity'      => $entity,
+            'evaluacion'      => $evaluacion,
             'delete_form' => $deleteForm->createView(),        ));
     }
 
@@ -369,6 +398,7 @@ $grid->addRowAction($rowAction);
         $empleado = new Empleado();
 
         $user = $this->get('security.context')->getToken()->getUser();
+        
         $empleado = $user->getEmpleado();
 
         if(!$empleado){
