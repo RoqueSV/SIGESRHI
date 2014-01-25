@@ -89,12 +89,22 @@ class Noticia
      */
     private $idcentro;
 
+     /**
+     * @var \DocNoticia
+     *
+     * @ORM\OneToMany(targetEntity="DocNoticia", mappedBy="idnoticia",cascade={"persist"})
+     * @Assert\Valid
+     *
+     */
+    private $iddocnoticia;
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->idcentro = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->iddocnoticia = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -254,5 +264,23 @@ class Noticia
     public function getIdcentro()
     {
         return $this->idcentro;
+    }
+
+    /**
+     * Get iddocnoticia
+     *
+     * @return \SIGESRHI\AdminBundle\Entity\DocNoticia 
+     */
+    public function getIddocnoticia()
+    {
+        return $this->iddocnoticia;
+    }
+
+    public function setIddocnoticia(\Doctrine\Common\Collections\Collection $iddocnoticia)
+    {
+        $this->iddocnoticia = $iddocnoticia;
+        foreach ($iddocnoticia as $docnoticia) {
+            $docnoticia->setIdnoticia($this);
+        }
     }
 }

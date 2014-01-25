@@ -2,6 +2,7 @@
 
 {% block principal -%}
     <h4 class='text-center'>Aspirantes a Eliminar</h4>
+    <p class="text-center">Ejecute la acción si desea eliminar estos aspirantes</p>
     <div align="center">
     {{ grid_search(grid) }}     
 
@@ -9,33 +10,7 @@
     
     {#{{grid (grid)}}#}
 
-    {% block grid_filters %}{% endblock %}
-    {#
-    <fieldset><legend>Aspirantes con más de <b>{{anos}}</b> años de antigüedad</legend>
-    {% if aspirantesElim %}
-        <table class='table table-bordered table-hover'>                
-        <tr>
-            <th>Nombre de Aspirante</th><th>Puesto al que aplica</th><th>Estado</th><th>Fecha Registro</th>
-        </tr>                
-        {% for aspirante in aspirantesElim %}
-        <tr>
-            <td>{{aspirante.nombres}}</td><td>{{aspirante.nombreplaza | capitalize}}</td>
-                <td>
-                {% if aspirante.estado == 'I' %}
-                    Invalido
-                {% elseif aspirante.estado == 'A' %}
-                    Válido
-                {% endif %}
-                </td>
-            <td>{{aspirante.fechaexpediente | date('d-m-Y')}}</td>
-        </tr>
-        {% endfor %}
-        </table>
-    {% else %}
-        [No se encontraron resultados]
-    {% endif %}
-    </fieldset>
-    #}        
+    {% block grid_filters %}{% endblock %}       
         {% if aspirantesElim %}
         <a href="{{ 
                     path('eliminar_aspirantes_confirm',
@@ -43,6 +18,7 @@
                         )
                     }}" class="btn btn-danger" onclick="return confirm('Se borraran los datos de los aspirantes mostrados ¿Está seguro de Eliminar? ')">Eliminar</a>
         {% endif %}
+        <br>
             <a href="{{ 
                 path('eliminar_aspirantes')
                 }}" class="btn">Cancelar</a>

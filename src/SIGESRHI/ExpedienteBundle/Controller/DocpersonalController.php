@@ -47,7 +47,7 @@ class DocpersonalController extends Controller
         );
 
         $grid->setSource($source);  
-        $rowAction1 = new RowAction('Registrar', 'docpersonal_new');
+        $rowAction1 = new RowAction('Consultar', 'docpersonal_new');
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
@@ -104,7 +104,7 @@ class DocpersonalController extends Controller
         $breadcrumbs->addItem("Inicio", "hello_page");
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante",array('id'=>1)));
-        $breadcrumbs->addItem("Registrar Documentos Personales", $this->get("router")->generate("docpersonal"));
+        $breadcrumbs->addItem("Consultar Documentos Personales", $this->get("router")->generate("docpersonal"));
         $breadcrumbs->addItem($entity->getIdexpediente()->getIdsolicitudempleo()->getNombrecompleto(),"");
 
         if ($form->isValid()) {
@@ -149,14 +149,14 @@ class DocpersonalController extends Controller
                                                                                     'idexpediente' => $request->query->get('exp'),
                                                                                         ));
         $var = $request->get('nogrid');
-
+        $var2 = $request->get('noasp');
         if(isset($var)){
           $nogrid = 0;
         }
         else{
           $nogrid = 1;
         }
-
+        $noasp = (isset($var2))?1:0;
         $entity = new Docpersonal();
         $entity->setIdexpediente($expediente);
         
@@ -167,7 +167,7 @@ class DocpersonalController extends Controller
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_aspirante",array('id'=>1)));
         $breadcrumbs->addItem("Aspirantes", $this->get("router")->generate("pantalla_aspirante"));
-        $breadcrumbs->addItem("Registrar Documentos Personales", $this->get("router")->generate("docpersonal"));
+        $breadcrumbs->addItem("Consultar Documentos Personales", $this->get("router")->generate("docpersonal"));
         $breadcrumbs->addItem($entity->getIdexpediente()->getIdsolicitudempleo()->getNombrecompleto(),"");
 
         return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
@@ -176,6 +176,7 @@ class DocpersonalController extends Controller
             'documentos' => $Documentos,
             'form'   => $form->createView(),
             'nogrid' => $nogrid,
+            'noasp' => $noasp,
         ));
     }
 
@@ -330,11 +331,11 @@ class DocpersonalController extends Controller
         //$grid->addColumn($plaza,3);
 
         $grid->setSource($source);  
-        $rowAction1 = new RowAction('Ingresar', 'docpersonal_new_empleado');
+        $rowAction1 = new RowAction('Consultar', 'docpersonal_new_empleado');
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
-                $action->setRouteParameters(array('id'));
+                $action->setRouteParameters(array('id','noasp'=>1));
                 return $action;
             }
         );
@@ -348,7 +349,7 @@ class DocpersonalController extends Controller
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Registrar Documentos Personales", $this->get("router")->generate("docpersonal_empleado"));
+        $breadcrumbs->addItem("Documentos Personales", $this->get("router")->generate("docpersonal_empleado"));
 
         return $grid->getGridResponse('ExpedienteBundle:Docpersonal:indexEmpleado.html.twig');
     }
@@ -369,13 +370,14 @@ class DocpersonalController extends Controller
                                                                                     ));
 
         $var = $request->get('nogrid');
-
+        $var2 = $request->get('noasp');
         if(isset($var)){
           $nogrid = 0;
         }
         else{
           $nogrid = 1;
         }
+        $noasp = (isset($var2))?1:0;
 
         $entity = new Docpersonal();
         $entity->setIdexpediente($expediente);
@@ -387,7 +389,7 @@ class DocpersonalController extends Controller
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Registrar Documentos Personales", $this->get("router")->generate("docpersonal_empleado"));
+        $breadcrumbs->addItem("Consultar Documentos Personales", $this->get("router")->generate("docpersonal_empleado"));
         $breadcrumbs->addItem($expediente->getIdempleado()->getCodigoempleado(),"");        
 
         return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
@@ -396,6 +398,7 @@ class DocpersonalController extends Controller
             'documentos' => $Documentos,
             'form'   => $form->createView(),
             'nogrid' => $nogrid,
+            'noasp' => $noasp,
         ));
     }
 }

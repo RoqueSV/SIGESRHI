@@ -52,10 +52,17 @@ margin-bottom: 0px;
             {% if nogrid == 0 %}
                 <button type="button" class="btn" onclick="window.history.back(1);">Regresar</button>
             {% else %}
+                {% if noasp == 1 %}
                 <a  href="{{ 
                     path('docpersonal_empleado'                        
                         )
                     }}" class="btn">Regresar</a>
+                {% else %}
+                <a  href="{{ 
+                    path('docpersonal'                        
+                        )
+                    }}" class="btn">Regresar</a>
+                {% endif %}
             {% endif %}
         <div>
     </form>

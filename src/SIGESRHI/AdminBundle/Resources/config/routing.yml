@@ -46,3 +46,7 @@ AdminBundle_refrenda:
 AdminBundle_noticia:
   resource: "@AdminBundle/Resources/config/routing/noticia.yml"
   prefix:   /noticia
+
+AdminBundle_docnoticia:
+   resource: "@AdminBundle/Resources/config/routing/docnoticia.yml"
+   prefix:   /docnoticia
