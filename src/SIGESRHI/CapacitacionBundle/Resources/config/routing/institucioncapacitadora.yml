@@ -1,6 +1,14 @@
 institucion:
     pattern:  /
-    defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:index" }
+    defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:consultar" }
+
+institucion_modificar:
+    pattern:  /modificar
+    defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:modificar" }
+
+institucion_eliminar:
+    pattern:  /eliminar
+    defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:eliminar" }
 
 institucion_show:
     pattern:  /{id}/show
@@ -28,3 +36,7 @@ institucion_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:delete" }
     requirements: { _method: post|delete }
+
+institucion_confelim:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "CapacitacionBundle:Institucioncapacitadora:confEliminar" }

@@ -1,0 +1,51 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Plancapacitacion list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombreplan</th>
+                <th>Anoplan</th>
+                <th>Objetivoplan</th>
+                <th>Descripcionplan</th>
+                <th>Resultadosplan</th>
+                <th>Tipoplan</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('plancapacitacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.nombreplan }}</td>
+                <td>{{ entity.anoplan }}</td>
+                <td>{{ entity.objetivoplan }}</td>
+                <td>{{ entity.descripcionplan }}</td>
+                <td>{{ entity.resultadosplan }}</td>
+                <td>{{ entity.tipoplan }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('plancapacitacion_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('plancapacitacion_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('plancapacitacion_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

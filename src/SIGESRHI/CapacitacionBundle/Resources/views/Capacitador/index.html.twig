@@ -7,11 +7,13 @@
     <p>{{ flashMessage }}</p>
   </div>
 {% endfor %}
+
 {% set ruta = app.request.attributes.get('_route') %}
+
 <script>
         jQuery(function() {
 
-            jQuery("#grid_grid_institucion__nombreinstitucion__query__from").autocomplete({
+            jQuery("#grid_grid_capacitador__nombrecapacitador__query__from").autocomplete({
                 source: function( request, response ) {
                     jQuery.ajax({
                         url: "{{ path('shtumi_ajaxautocomplete') }}",
@@ -19,7 +21,7 @@
                         data: {
                             maxRows: 12,
                             letters: request.term,
-                            entity_alias: "instituciones"
+                            entity_alias: "facilitadores"
                         },
                         success: function( data ) {
                             response( jQuery.map( data, function( item ) {
@@ -48,18 +50,18 @@
        <p>{{ flashMessage }}</p>
      </div>
 {% endfor %}
+ 
+    {% if ruta == 'capacitador' %}
+    <h3 class="text-center"> Consulta de facilitadores </h3>
+    <p class="text-center">Seleccione el facilitador para ver más detalles.</p>
 
-    {% if ruta == 'institucion' %}
-    <h3 class="text-center"> Consulta de instituciones capacitadoras </h3>
-    <p class="text-center">Seleccione la institución para ver más detalles.</p>
+    {% elseif ruta == 'capacitador_modificar'  %}
+    <h3 class="text-center"> Modificación de facilitadores </h3>
+    <p class="text-center">Seleccione el facilitador que desea modificar.</p>
 
-    {% elseif ruta == 'institucion_modificar' %}
-    <h3 class="text-center"> Modificación de instituciones capacitadoras </h3>
-    <p class="text-center">Seleccione la institución que desea modificar.</p>
-
-    {% elseif ruta == 'institucion_eliminar' %}
-    <h3 class="text-center"> Eliminación de instituciones capacitadoras </h3>
-    <p class="text-center">Seleccione la institución que desea eliminar.</p>
+    {% elseif ruta == 'capacitador_eliminar' %}
+    <h3 class="text-center"> Eliminación de facilitadores </h3>
+    <p class="text-center">Seleccione el facilitador que desea eliminar.</p>
     {% endif %}
 
      {{ grid_search(grid) }}
@@ -68,8 +70,8 @@
      
      <br />
      <div class="text-center">
-     <a href="{{path('pantalla_instituciones')}}" class="btn"> Cancelar </a>
+     <a href="{{path('pantalla_facilitadores')}}" class="btn"> Cancelar </a>
      </div>
 
     
-    {% endblock %}
+{% endblock %}

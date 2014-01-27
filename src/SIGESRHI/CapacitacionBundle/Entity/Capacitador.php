@@ -3,6 +3,7 @@
 namespace SIGESRHI\CapacitacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -10,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="capacitador")
  * @ORM\Entity
+ * @GRID\Source(columns="id,nombrecapacitador,telefonocapacitador,idinstitucion.nombreinstitucion", groups={"grupo_capacitador"})
  */
 class Capacitador
 {
@@ -20,6 +22,7 @@ class Capacitador
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="capacitador_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(filterable=false, groups={"grupo_capacitador"}, visible=false)
      */
     private $id;
 
@@ -32,6 +35,7 @@ class Capacitador
      * max = "50",
      * maxMessage = "El nombre del capacitador no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(filterable=true, groups={"grupo_capacitador"}, title="Nombre", operators={"like"}, operatorsVisible=false)
      */
     private $nombrecapacitador;
 
@@ -44,6 +48,7 @@ class Capacitador
      * max = "8",
      * maxMessage = "El numero de telefono no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(filterable=false, groups={"grupo_capacitador"}, title="Teléfono", align="center")
      */
     private $telefonocapacitador;
 
@@ -77,14 +82,22 @@ class Capacitador
     /**
      * @var \Institucioncapacitadora
      *
-     * @ORM\ManyToOne(targetEntity="Institucioncapacitadora")
+     * @ORM\ManyToOne(targetEntity="Institucioncapacitadora", inversedBy="idcapacitador")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idinstitucion", referencedColumnName="id")
      * })
+     * @GRID\Column(field="idinstitucion.nombreinstitucion", groups="grupo_capacitador", type="text", title="Institución", joinType="inner", filterable=false) 
      */
     private $idinstitucion;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Capacitacion", mappedBy="idcapacitador")
+     */
+    private $idcapacitacion;
 
+    public function __toString(){
+        return $this->getNombrecapacitador();
+    }
 
     /**
      * Get id
@@ -191,10 +204,10 @@ class Capacitador
     /**
      * Set idinstitucion
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Institucioncapacitadora $idinstitucion
+     * @param \SIGESRHI\CapacitacionBundle\Entity\Institucioncapacitadora $idinstitucion
      * @return Capacitador
      */
-    public function setIdinstitucion(\SIGESRHI\AdminBundle\Entity\Institucioncapacitadora $idinstitucion = null)
+    public function setIdinstitucion(\SIGESRHI\CapacitacionBundle\Entity\Institucioncapacitadora $idinstitucion = null)
     {
         $this->idinstitucion = $idinstitucion;
     
@@ -204,10 +217,50 @@ class Capacitador
     /**
      * Get idinstitucion
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Institucioncapacitadora 
+     * @return \SIGESRHI\CapacitacionBundle\Entity\Institucioncapacitadora 
      */
     public function getIdinstitucion()
     {
         return $this->idinstitucion;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idcapacitacion = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idcapacitacion
+     *
+     * @param \SIGESRHI\CapacitacionBundle\Entity\Capacitacion $idcapacitacion
+     * @return Capacitador
+     */
+    public function addIdcapacitacion(\SIGESRHI\CapacitacionBundle\Entity\Capacitacion $idcapacitacion)
+    {
+        $this->idcapacitacion[] = $idcapacitacion;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idcapacitacion
+     *
+     * @param \SIGESRHI\CapacitacionBundle\Entity\Capacitacion $idcapacitacion
+     */
+    public function removeIdcapacitacion(\SIGESRHI\CapacitacionBundle\Entity\Capacitacion $idcapacitacion)
+    {
+        $this->idcapacitacion->removeElement($idcapacitacion);
+    }
+
+    /**
+     * Get idcapacitacion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdcapacitacion()
+    {
+        return $this->idcapacitacion;
     }
 }

@@ -1,0 +1,105 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+<style>
+.tabla{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+</style>
+
+    <h3 class="text-center">Registro de facilitador</h3>
+    <p class="text-center"> Ingrese la siguiente información para el registro de facilitadores</p>
+    <br/><br/>
+
+    <form action="{{ path('capacitador_create') }}" method="post" {{ form_enctype(form) }} >
+       
+     <table class="table table-bordered form-inline mitable tabla">
+       <tr>
+        <th> {{ form_label(form.nombrecapacitador) }} </th>
+        <td> {{ form_widget(form.nombrecapacitador) }} {{ form_errors(form.nombrecapacitador) }}</td>
+       </tr>
+       <tr> 
+        <th> {{ form_label(form.telefonocapacitador) }} </th>
+        <td> {{ form_widget(form.telefonocapacitador) }} {{ form_errors(form.telefonocapacitador) }} </td>
+       </tr>
+       <tr> 
+        <th> {{ form_label(form.correocapacitador) }} </th>
+        <td> {{ form_widget(form.correocapacitador) }} {{ form_errors(form.correocapacitador) }} </td>
+       </tr>
+       <tr> 
+        <th> {{ form_label(form.tematicacapacitador) }} </th>
+        <td> {{ form_widget(form.tematicacapacitador) }} {{ form_errors(form.tematicacapacitador) }} </td>
+       </tr>
+       <tr>
+        <th> {{ form_label(form.idinstitucion) }} </th>
+        <td> {{ form_widget(form.idinstitucion) }} {{ form_errors(form.idinstitucion) }}
+             <a href="#new" class="btn tool" data-toggle="modal" title="Click para agregar nueva"><i class="icon-plus-sign"></i></a>
+        </td>    
+       </tr>
+     </table>    
+
+        {{ form_rest(form) }}
+
+        <br/><br/>
+              
+       <div class="text-center">
+         <button type="submit" class="btn btn-primary">Registrar</button>
+         <a href="{{ path('pantalla_facilitadores',{'pag':2}) }}"  class="btn" onclick="return confirm('Si cancela, perderá los datos del formulario actual ¿Está seguro de cancelar?')">Cancelar</a>
+      </div>
+    </form>
+
+
+<!-- Formulario instituciones -->
+<div class="modal fade" id="new" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Ingresar Institución</h4>
+      </div>
+      <div class="modal-body">
+       <form action="{{ path('institucion_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" id="institucion">
+        {{form_row(forminst.nombreinstitucion)}}
+        {{form_row(forminst.nombrecontacto)}}
+        {{form_row(forminst.telefonocontacto)}}
+        {{form_row(forminst.cargocontacto)}}
+        {{form_row(forminst.emailcontacto)}}
+        {{form_rest(forminst)}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+      </form>
+    </div><!-- /.modal-contenido -->
+  </div><!-- /.modal-dialogo -->
+</div><!-- /.modal -->
+
+<script>
+$(document).ready( function() {
+
+   jQuery(function($) {
+       $('#institucion').on('submit', function(event) {
+           var $form = $(this);
+           var $target = $($form.attr('data-target'));
+
+           $.ajax({
+               type: $form.attr('method'),
+               url: $form.attr('action'),
+               data: $form.serialize(),
+
+               success: function(data, status) {
+                   alert("Registro exitoso");
+                   location.reload();
+                   //$('#new').modal('hide');
+               }
+           });
+
+           event.preventDefault();
+       });
+   });
+
+});
+</script>
+{% endblock %}

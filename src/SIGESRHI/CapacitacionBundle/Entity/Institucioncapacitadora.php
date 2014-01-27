@@ -3,6 +3,7 @@
 namespace SIGESRHI\CapacitacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -10,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="institucioncapacitadora")
  * @ORM\Entity
+ * @GRID\Source(columns="id,nombreinstitucion,nombrecontacto,telefonocontacto", groups={"grupo_institucion"})
  */
 class Institucioncapacitadora
 {
@@ -20,6 +22,7 @@ class Institucioncapacitadora
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="institucioncapacitadora_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(filterable=false, groups={"grupo_institucion"}, visible=false)
      */
     private $id;
 
@@ -32,6 +35,7 @@ class Institucioncapacitadora
      * max = "50",
      * maxMessage = "El nombre de la institucion no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(filterable=true, groups={"grupo_institucion"}, title="Nombre", operators={"like"},operatorsVisible=false)
      */
     private $nombreinstitucion;
 
@@ -44,6 +48,7 @@ class Institucioncapacitadora
      * max = "50",
      * maxMessage = "El nombre del contacto no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(filterable=false, groups={"grupo_institucion"}, title="Contacto")
      */
     private $nombrecontacto;
 
@@ -51,6 +56,7 @@ class Institucioncapacitadora
      * @var string
      *
      * @ORM\Column(name="telefonocontacto", type="string", length=8, nullable=true)
+     * @GRID\Column(filterable=false, groups={"grupo_institucion"}, title="Teléfono", align="center")
      */
     private $telefonocontacto;
 
@@ -76,7 +82,14 @@ class Institucioncapacitadora
      */
     private $emailcontacto;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Capacitador", mappedBy="idinstitucion")
+     */
+    private $idcapacitador;
 
+    public function __toString(){
+        return $this->getNombreinstitucion();
+    } 
 
     /**
      * Get id
@@ -201,5 +214,45 @@ class Institucioncapacitadora
     public function getEmailcontacto()
     {
         return $this->emailcontacto;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idcapacitador = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idcapacitador
+     *
+     * @param \SIGESRHI\CapacitacionBundle\Entity\Capacitador $idcapacitador
+     * @return Institucioncapacitadora
+     */
+    public function addIdcapacitador(\SIGESRHI\CapacitacionBundle\Entity\Capacitador $idcapacitador)
+    {
+        $this->idcapacitador[] = $idcapacitador;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idcapacitador
+     *
+     * @param \SIGESRHI\CapacitacionBundle\Entity\Capacitador $idcapacitador
+     */
+    public function removeIdcapacitador(\SIGESRHI\CapacitacionBundle\Entity\Capacitador $idcapacitador)
+    {
+        $this->idcapacitador->removeElement($idcapacitador);
+    }
+
+    /**
+     * Get idcapacitador
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdcapacitador()
+    {
+        return $this->idcapacitador;
     }
 }

@@ -35,52 +35,40 @@ function eliminar() {
     <table class="table table-bordered table-hover tabla">
         <tbody>
             <tr>
-                <th>Nombre institución</th>
-                <td>{{ entity.nombreinstitucion }}</td>
+                <th>Nombre facilitador</th>
+                <td>{{ entity.nombrecapacitador }}</td>
             </tr>
             <tr>
-                <th>Nombre contacto</th>
-                <td>{{ entity.nombrecontacto }}</td>
+                <th>Teléfono</th>
+                <td>{{ entity.telefonocapacitador|telefono }}</td>
             </tr>
             <tr>
-                <th>Teléfono contacto</th>
-                <td>{{ entity.telefonocontacto|telefono }}</td>
+                <th>Email</th>
+                <td>{{ entity.correocapacitador }}</td>
             </tr>
             <tr>
-                <th>Cargo contacto</th>
-                <td>{{ entity.cargocontacto }}</td>
+                <th>Temática que expone</th>
+                <td>{{ entity.tematicacapacitador }}</td>
             </tr>
             <tr>
-                <th>Email contacto</th>
-                <td>{{ entity.emailcontacto }}</td>
+                <th>Institución a la que pertenece</th>
+                <td>{{ entity.idinstitucion }}</td>
             </tr>
         </tbody>
     </table>
-    <br/>
-
-    {% if (entity.idcapacitador|length > 0) %}
-    <h4> Capacitadores asociados </h4>
-          {% for i in 0..(entity.idcapacitador|length - 1) %}
-               <p class="justifyColum">&#8226; {{ entity.idcapacitador[i] }} </p>
-          {% endfor %} 
-    {% endif %}
-
-    <br/>
+    <br/><br/>
 
     <div class="text-center">
     {% if pag == 1 %}
-     <a href="{{ path('institucion') }}" class="btn"> Cancelar </a>
+     <a href="{{ path('capacitador') }}" class="btn"> Cancelar </a>
     {% else %}
-     <a href="{{ path('pantalla_instituciones') }}" class="btn btn-primary"> Finalizar </a>
+     <a href="{{ path('pantalla_facilitadores') }}" class="btn btn-primary"> Finalizar </a>
     {% endif %}
-    <a href="{{ path('institucion_edit', { 'id': entity.id,'pag':pag }) }}" class="btn"> Editar </a>
-
-    {% if (entity.idcapacitador|length == 0) %}
+    <a href="{{ path('capacitador_edit', { 'id': entity.id,'pag':pag }) }}" class="btn"> Editar </a>
     <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
-        <form action="{{ path('institucion_delete', { 'id': entity.id,'pag':pag }) }}" method="post" id="form_borrar">
+        <form action="{{ path('capacitador_delete', { 'id': entity.id,'pag':pag }) }}" method="post" id="form_borrar">
             <input type="hidden" name="_method" value="DELETE" />
             <div class="invisible">{{ form_widget(delete_form) }}</div>
         </form>
-    {% endif %}
     </div>
 {% endblock %}

@@ -15,7 +15,7 @@
 
     <form action="{{ path('institucion_create') }}" method="post" {{ form_enctype(form) }} >
        
-     <table class="table table-bordered table-hover form-inline mitable tabla">
+     <table class="table table-bordered form-inline mitable tabla">
        <tr>
         <th> {{ form_label(form.nombreinstitucion) }} </th>
         <td> {{ form_widget(form.nombreinstitucion) }} {{ form_errors(form.nombreinstitucion) }}</td>
@@ -37,12 +37,6 @@
         <td> {{ form_widget(form.emailcontacto) }} {{ form_errors(form.emailcontacto) }} </td>    
        </tr>
      </table>    
-
-     {{ form_row(form.nombreinstitucion) }}
-     {{ form_row(form.nombrecontacto) }}
-     {{ form_row(form.telefonocontacto) }}
-     {{ form_row(form.cargocontacto) }}
-
 
         {{ form_rest(form) }}
 

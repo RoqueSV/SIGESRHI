@@ -26,10 +26,10 @@ class Tipoaccion
     /**
      * @var string
      *
-     * @ORM\Column(name="nombretipoaccion", type="string", length=50, nullable=false)
+     * @ORM\Column(name="nombretipoaccion", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre del tipo de accion")
      * @Assert\Length(
-     * max = "50",
+     * max = "100",
      * maxMessage = "El nombre del tipo de accion no debe exceder los {{limit}} caracteres"
      * )
      */

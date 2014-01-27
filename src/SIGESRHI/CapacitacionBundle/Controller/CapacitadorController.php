@@ -5,35 +5,37 @@ namespace SIGESRHI\CapacitacionBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use SIGESRHI\CapacitacionBundle\Entity\Capacitador;
+use SIGESRHI\CapacitacionBundle\Form\CapacitadorType;
+
 use SIGESRHI\CapacitacionBundle\Entity\Institucioncapacitadora;
 use SIGESRHI\CapacitacionBundle\Form\InstitucioncapacitadoraType;
 
 use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Grid;
-
 /**
- * Institucioncapacitadora controller.
+ * Capacitador controller.
  *
  */
-class InstitucioncapacitadoraController extends Controller
+class CapacitadorController extends Controller
 {
     /**
-     * Lists all Institucioncapacitadora entities.
+     * Lists all Capacitador entities.
      *
      */
     public function consultarAction()
     {
-        $source = new Entity('CapacitacionBundle:Institucioncapacitadora','grupo_institucion');
+        $source = new Entity('CapacitacionBundle:Capacitador','grupo_capacitador');
         
         $grid = $this->get('grid');
   
         
-        $grid->setId('grid_institucion');
+        $grid->setId('grid_capacitador');
         $grid->setSource($source);             
         
         // Crear
-        $rowAction1 = new RowAction('Consultar', 'institucion_show');
+        $rowAction1 = new RowAction('Consultar', 'capacitador_show');
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
@@ -50,24 +52,24 @@ class InstitucioncapacitadoraController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
-        $breadcrumbs->addItem("Instituciones", $this->get("router")->generate("pantalla_instituciones"));
-        $breadcrumbs->addItem("Consultar instituciones", "");
+        $breadcrumbs->addItem("Facilitadores", $this->get("router")->generate("pantalla_facilitadores"));
+        $breadcrumbs->addItem("Consultar facilitador", $this->get("router")->generate("hello_page"));
 
-        return $grid->getGridResponse('CapacitacionBundle:Institucioncapacitadora:index.html.twig');
+        return $grid->getGridResponse('CapacitacionBundle:Capacitador:index.html.twig');
     }
 
     public function modificarAction()
     {
-        $source = new Entity('CapacitacionBundle:Institucioncapacitadora','grupo_institucion');
+        $source = new Entity('CapacitacionBundle:Capacitador','grupo_capacitador');
         
         $grid = $this->get('grid');
   
         
-        $grid->setId('grid_institucion');
+        $grid->setId('grid_capacitador');
         $grid->setSource($source);             
         
-        // Crear
-        $rowAction1 = new RowAction('Modificar', 'institucion_edit');
+        // Modificar
+        $rowAction1 = new RowAction('Modificar', 'capacitador_edit');
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
@@ -84,24 +86,24 @@ class InstitucioncapacitadoraController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
-        $breadcrumbs->addItem("Instituciones", $this->get("router")->generate("pantalla_instituciones"));
-        $breadcrumbs->addItem("Modificar institución", "");
+        $breadcrumbs->addItem("Facilitadores", $this->get("router")->generate("pantalla_facilitadores"));
+        $breadcrumbs->addItem("Modificar facilitador", $this->get("router")->generate("hello_page"));
 
-        return $grid->getGridResponse('CapacitacionBundle:Institucioncapacitadora:index.html.twig');
+        return $grid->getGridResponse('CapacitacionBundle:Capacitador:index.html.twig');
     }
 
     public function eliminarAction()
     {
-        $source = new Entity('CapacitacionBundle:Institucioncapacitadora','grupo_institucion');
+        $source = new Entity('CapacitacionBundle:Capacitador','grupo_capacitador');
         
         $grid = $this->get('grid');
   
         
-        $grid->setId('grid_institucion');
+        $grid->setId('grid_capacitador');
         $grid->setSource($source);             
         
-        // Crear
-        $rowAction1 = new RowAction('Eliminar', 'institucion_confelim');
+        // Eliminar
+        $rowAction1 = new RowAction('Eliminar', 'capacitador_confelim');
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
@@ -118,21 +120,20 @@ class InstitucioncapacitadoraController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
-        $breadcrumbs->addItem("Instituciones", $this->get("router")->generate("pantalla_instituciones"));
-        $breadcrumbs->addItem("Eliminar institución", "");
+        $breadcrumbs->addItem("Facilitadores", $this->get("router")->generate("pantalla_facilitadores"));
+        $breadcrumbs->addItem("ELiminar facilitador", $this->get("router")->generate("hello_page"));
 
-        return $grid->getGridResponse('CapacitacionBundle:Institucioncapacitadora:index.html.twig');
+        return $grid->getGridResponse('CapacitacionBundle:Capacitador:index.html.twig');
     }
 
-
     /**
-     * Creates a new Institucioncapacitadora entity.
+     * Creates a new Capacitador entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity  = new Institucioncapacitadora();
-        $form = $this->createForm(new InstitucioncapacitadoraType(), $entity);
+        $entity  = new Capacitador();
+        $form = $this->createForm(new CapacitadorType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -140,51 +141,56 @@ class InstitucioncapacitadoraController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('aviso', 'Institución registrada correctamente.');
-
-            return $this->redirect($this->generateUrl('institucion_show', array('id' => $entity->getId(),'pag'=>2)));
+            $this->get('session')->getFlashBag()->add('aviso', 'Capacitador registrado correctamente.');
+            return $this->redirect($this->generateUrl('capacitador_show', array('id' => $entity->getId(),'pag'=>2)));
         }
 
-        return $this->render('CapacitacionBundle:Institucioncapacitadora:new.html.twig', array(
+        return $this->render('CapacitacionBundle:Capacitador:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Displays a form to create a new Institucioncapacitadora entity.
+     * Displays a form to create a new Capacitador entity.
      *
      */
     public function newAction()
     {
-        $entity = new Institucioncapacitadora();
-        $form   = $this->createForm(new InstitucioncapacitadoraType(), $entity);
+        $entity = new Capacitador();
+        $form   = $this->createForm(new CapacitadorType(), $entity);
 
-          // Incluimos camino de migas
+        /*** -Institucion ***/
+        $institucion = new Institucioncapacitadora();
+        $forminst   = $this->createForm(new InstitucioncapacitadoraType(), $institucion);
+        /** ---- **/
+      
+         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
-        $breadcrumbs->addItem("Instituciones", $this->get("router")->generate("pantalla_instituciones"));
-        $breadcrumbs->addItem("Registrar institución", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Facilitadores", $this->get("router")->generate("pantalla_facilitadores"));
+        $breadcrumbs->addItem("Registrar facilitador", $this->get("router")->generate("hello_page"));
 
-        return $this->render('CapacitacionBundle:Institucioncapacitadora:new.html.twig', array(
+        return $this->render('CapacitacionBundle:Capacitador:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'forminst'=>$forminst->createView(),
         ));
     }
 
     /**
-     * Finds and displays a Institucioncapacitadora entity.
+     * Finds and displays a Capacitador entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CapacitacionBundle:Institucioncapacitadora')->find($id);
+        $entity = $em->getRepository('CapacitacionBundle:Capacitador')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Institucioncapacitadora entity.');
+            throw $this->createNotFoundException('Unable to find Capacitador entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -192,111 +198,108 @@ class InstitucioncapacitadoraController extends Controller
         $request = $this->getRequest();
         $pagina = $request->get('pag');
 
-         // Incluimos camino de migas
+        // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
-        $breadcrumbs->addItem("Instituciones", $this->get("router")->generate("pantalla_instituciones"));
+        $breadcrumbs->addItem("Facilitadores", $this->get("router")->generate("pantalla_facilitadores"));
 
         if($pagina == 1){
-           $breadcrumbs->addItem("Consultar institución", $this->get("router")->generate("institucion")); 
+           $breadcrumbs->addItem("Consultar facilitador", $this->get("router")->generate("capacitador")); 
         }
         else{
-           $breadcrumbs->addItem("Registrar institución", $this->get("router")->generate("institucion_new")); 
+           $breadcrumbs->addItem("Registrar facilitador", $this->get("router")->generate("capacitador_new")); 
         }
-        $breadcrumbs->addItem("Datos de registro", $this->get("router")->generate("institucion_new"));
+        $breadcrumbs->addItem("Datos de registro", $this->get("router")->generate("capacitador_new"));
 
-        return $this->render('CapacitacionBundle:Institucioncapacitadora:show.html.twig', array(
+        return $this->render('CapacitacionBundle:Capacitador:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-            'pag'         => $pagina,        ));
+            'delete_form' => $deleteForm->createView(),   
+            'pag'         => $pagina,     ));
     }
 
     /**
-     * Displays a form to edit an existing Institucioncapacitadora entity.
+     * Displays a form to edit an existing Capacitador entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
-
-        $entity = $em->getRepository('CapacitacionBundle:Institucioncapacitadora')->find($id);
+   
+        $entity = $em->getRepository('CapacitacionBundle:Capacitador')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Institucioncapacitadora entity.');
+            throw $this->createNotFoundException('Unable to find Capacitador entity.');
         }
 
-        $editForm = $this->createForm(new InstitucioncapacitadoraType(), $entity);
+        $editForm = $this->createForm(new CapacitadorType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-
-        // Incluimos camino de migas
+         // Incluimos camino de migas
         $pagina = $request->get('pag');
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
-        $breadcrumbs->addItem("Instituciones", $this->get("router")->generate("pantalla_instituciones"));
+        $breadcrumbs->addItem("Facilitadores", $this->get("router")->generate("pantalla_facilitadores"));
 
         if($pagina == 1){
-          $breadcrumbs->addItem("Consultar Institución", $this->get("router")->generate("institucion"));  
-          $breadcrumbs->addItem("Datos de registro", $this->get("router")->generate("institucion_show",array('id'=>$id,'pag'=>$pagina)));
+          $breadcrumbs->addItem("Consultar facilitador", $this->get("router")->generate("capacitador"));  
+          $breadcrumbs->addItem("Datos de registro", $this->get("router")->generate("capacitador_show",array('id'=>$id,'pag'=>$pagina)));
         }
         else if($pagina == 2){
-          $breadcrumbs->addItem("Registrar institución", $this->get("router")->generate("institucion_new")); 
-          $breadcrumbs->addItem("Datos de registro", $this->get("router")->generate("institucion_show",array('id'=>$id,'pag'=>$pagina)));
+          $breadcrumbs->addItem("Registrar facilitador", $this->get("router")->generate("capacitador_new"));
+          $breadcrumbs->addItem("Datos de registro", $this->get("router")->generate("capacitador_show",array('id'=>$id,'pag'=>$pagina)));
         }   
         else{
-          $breadcrumbs->addItem("Modificar institucion", $this->get("router")->generate("institucion_modificar")); 
+          $breadcrumbs->addItem("Modificar facilitador", $this->get("router")->generate("capacitador_modificar")); 
         }
-
+        
         $breadcrumbs->addItem("Edición de datos", "");
 
-
-        return $this->render('CapacitacionBundle:Institucioncapacitadora:edit.html.twig', array(
+        return $this->render('CapacitacionBundle:Capacitador:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            'pag'         => $request->get('pag'),
+            'pag'         => $pagina,
         ));
     }
 
     /**
-     * Edits an existing Institucioncapacitadora entity.
+     * Edits an existing Capacitador entity.
      *
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CapacitacionBundle:Institucioncapacitadora')->find($id);
+        $entity = $em->getRepository('CapacitacionBundle:Capacitador')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Institucioncapacitadora entity.');
+            throw $this->createNotFoundException('Unable to find Capacitador entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new InstitucioncapacitadoraType(), $entity);
+        $editForm = $this->createForm(new CapacitadorType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-        
-        $this->get('session')->getFlashBag()->add('edit', 'Registro modificado correctamente.');
+            $this->get('session')->getFlashBag()->add('edit', 'Registro modificado correctamente.');
 
-        
-        if($request->get('pag') == 3){
-               return $this->redirect($this->generateUrl('institucion_edit', array('id' => $id,'pag'=>$request->get('pag')))); 
+            if($request->get('pag') == 3){
+               return $this->redirect($this->generateUrl('capacitador_edit', array('id' => $id,'pag'=>$request->get('pag')))); 
             }
             else{
-               return $this->redirect($this->generateUrl('institucion_show', array('id' => $id,'pag'=>$request->get('pag'))));  
+               return $this->redirect($this->generateUrl('capacitador_show', array('id' => $id,'pag'=>$request->get('pag'))));  
             }
 
+            
         }
 
-        return $this->render('CapacitacionBundle:Institucioncapacitadora:edit.html.twig', array(
+        return $this->render('CapacitacionBundle:Capacitador:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -304,41 +307,40 @@ class InstitucioncapacitadoraController extends Controller
         ));
     }
 
-
     public function confEliminarAction($id){
 
      $request = $this->getRequest();
      $em = $this->getDoctrine()->getManager();
 
-     $entity = $em->getRepository('CapacitacionBundle:Institucioncapacitadora')->find($id);
+     $entity = $em->getRepository('CapacitacionBundle:Capacitador')->find($id);
      
      $deleteForm = $this->createDeleteForm($id);
 
      if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Institucioncapacitadora entity.');
+            throw $this->createNotFoundException('Unable to find Capacitador entity.');
         }
 
-     $numcapacitadores = count($entity->getIdcapacitador());
-          
+    $numcapacitaciones = count($entity->getIdcapacitacion());
+
      //Incluimos camino de migas
      $breadcrumbs = $this->get("white_october_breadcrumbs");
      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
      $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
-     $breadcrumbs->addItem("Instituciones", $this->get("router")->generate("pantalla_facilitadores"));
-     $breadcrumbs->addItem("Eliminar institucion", $this->get("router")->generate("institucion_eliminar"));
-     $breadcrumbs->addItem("Eliminar registro", "");
+     $breadcrumbs->addItem("Facilitadores", $this->get("router")->generate("pantalla_facilitadores"));
+     $breadcrumbs->addItem("Eliminar facilitador", $this->get("router")->generate("capacitador_eliminar"));
+     $breadcrumbs->addItem("Eliminar registro", $this->get("router")->generate("pantalla_facilitadores"));
 
-    return $this->render('CapacitacionBundle:Institucioncapacitadora:delete.html.twig', array(
+    return $this->render('CapacitacionBundle:Capacitador:delete.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
             'pag'         => $request->get('pag'),
-            'numcapacitadores'=>$numcapacitadores,
+            'numcapacitaciones' => $numcapacitaciones,
         ));
 
     }
 
     /**
-     * Deletes a Institucioncapacitadora entity.
+     * Deletes a Capacitador entity.
      *
      */
     public function deleteAction(Request $request, $id)
@@ -348,10 +350,10 @@ class InstitucioncapacitadoraController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('CapacitacionBundle:Institucioncapacitadora')->find($id);
+            $entity = $em->getRepository('CapacitacionBundle:Capacitador')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Institucioncapacitadora entity.');
+                throw $this->createNotFoundException('Unable to find Capacitador entity.');
             }
 
             $em->remove($entity);
@@ -361,20 +363,19 @@ class InstitucioncapacitadoraController extends Controller
         $this->get('session')->getFlashBag()->add('delete', 'Registro eliminado correctamente');
         
         $pagina = $request->get('pag');
-        if($pagina == 1){//consultar
-           return $this->redirect($this->generateUrl('institucion')); 
+        if($pagina == 1){ // consultar
+           return $this->redirect($this->generateUrl('capacitador')); 
         }
         else if($pagina == 4){ //eliminar
-           return $this->redirect($this->generateUrl('institucion_eliminar'));  
+           return $this->redirect($this->generateUrl('capacitador_eliminar'));  
         }
         else{
-           return $this->redirect($this->generateUrl('pantalla_instituciones'));  
+           return $this->redirect($this->generateUrl('pantalla_facilitadores'));  
         }
-        
     }
 
     /**
-     * Creates a form to delete a Institucioncapacitadora entity by id.
+     * Creates a form to delete a Capacitador entity by id.
      *
      * @param mixed $id The entity id
      *

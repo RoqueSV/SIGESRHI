@@ -121,7 +121,7 @@
             Consultar solicitud de empleo registrada </a>
         </td>
         <td>
-          <a href="{{ path('docpersonal_new', {'id': exp.idsolicitud , 'exp': exp.id}) }}">
+          <a href="{{ path('docpersonal_new', {'id': exp.idsolicitud , 'exp': exp.id, 'nogrid':0}) }}">
             Consultar documentación registrada </a>
         </td>
         {% if exp.idprueba is not null %}

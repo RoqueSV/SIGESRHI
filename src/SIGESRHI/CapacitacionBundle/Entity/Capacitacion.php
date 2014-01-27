@@ -192,7 +192,7 @@ class Capacitacion
     /**
      * @var \Capacitador
      *
-     * @ORM\ManyToOne(targetEntity="Capacitador")
+     * @ORM\ManyToOne(targetEntity="Capacitador", inversedBy="idcapacitacion")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idcapacitador", referencedColumnName="id")
      * })

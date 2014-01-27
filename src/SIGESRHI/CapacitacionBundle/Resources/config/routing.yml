@@ -5,3 +5,11 @@ capacitacion_homepage:
 CapacitacionBundle_institucion:
     resource: "@CapacitacionBundle/Resources/config/routing/institucioncapacitadora.yml"
     prefix:   /institucion
+
+CapacitacionBundle_capacitador:
+    resource: "@CapacitacionBundle/Resources/config/routing/capacitador.yml"
+    prefix:   /capacitador
+
+CapacitacionBundle_plancapacitacion:
+    resource: "@CapacitacionBundle/Resources/config/routing/plancapacitacion.yml"
+    prefix:   /plancapacitacion

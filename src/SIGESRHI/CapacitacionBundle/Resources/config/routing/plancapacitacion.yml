@@ -1,0 +1,30 @@
+plancapacitacion:
+    pattern:  /
+    defaults: { _controller: "CapacitacionBundle:Plancapacitacion:index" }
+
+plancapacitacion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "CapacitacionBundle:Plancapacitacion:show" }
+
+plancapacitacion_new:
+    pattern:  /new
+    defaults: { _controller: "CapacitacionBundle:Plancapacitacion:new" }
+
+plancapacitacion_create:
+    pattern:  /create
+    defaults: { _controller: "CapacitacionBundle:Plancapacitacion:create" }
+    requirements: { _method: post }
+
+plancapacitacion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "CapacitacionBundle:Plancapacitacion:edit" }
+
+plancapacitacion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "CapacitacionBundle:Plancapacitacion:update" }
+    requirements: { _method: post|put }
+
+plancapacitacion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "CapacitacionBundle:Plancapacitacion:delete" }
+    requirements: { _method: post|delete }

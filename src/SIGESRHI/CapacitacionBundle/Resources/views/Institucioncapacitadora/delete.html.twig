@@ -1,0 +1,68 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+<style>
+.tabla{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+</style>
+    
+    {% if numcapacitadores == 0 %}
+    <h3 class="text-center">Confirmar eliminación</h3>
+    <p class="text-center"> ¿Está seguro que desea eliminar este registro? <p>
+    {% else %}
+    <h3 class="text-center">No se puede eliminar este registro</h3>
+    <p class="text-center"> Existen capacitadores pertenecientes a la institución seleccionada <p>
+    {% endif %}
+    <br/>    
+    
+    <table class="table table-bordered table-hover tabla">
+        <tbody>
+            <tr>
+                <th>Nombre institución</th>
+                <td>{{ entity.nombreinstitucion }}</td>
+            </tr>
+            <tr>
+                <th>Nombre contacto</th>
+                <td>{{ entity.nombrecontacto }}</td>
+            </tr>
+            <tr>
+                <th>Teléfono contacto</th>
+                <td>{{ entity.telefonocontacto|telefono }}</td>
+            </tr>
+            <tr>
+                <th>Cargo contacto</th>
+                <td>{{ entity.cargocontacto }}</td>
+            </tr>
+            <tr>
+                <th>Email contacto</th>
+                <td>{{ entity.emailcontacto }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br/><br/>
+
+    {% if (numcapacitadores > 0) %}
+    <h4> Capacitadores asociados </h4>
+          {% for i in 0..(entity.idcapacitador|length - 1) %}
+               <p class="justifyColum">&#8226; {{ entity.idcapacitador[i] }} </p>
+          {% endfor %} 
+          <br/>
+    {% endif %}
+
+    <div class="text-center">
+        {% if numcapacitadores == 0 %}
+        <form action="{{ path('institucion_delete', { 'id': entity.id,'pag':pag }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            <div class="hide">{{ form_widget(delete_form) }}</div>
+            <button type="submit"  class="btn btn-danger">Si, Eliminar</button>
+            <a href="{{ path('institucion_eliminar') }}" class="btn"> No, Cancelar </a>
+        </form>
+        {% else %}
+            <a href="{{ path('institucion_eliminar') }}" class="btn"> Cancelar </a>
+        {% endif %}
+    </div>
+{% endblock %}

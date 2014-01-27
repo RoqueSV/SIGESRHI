@@ -1,0 +1,42 @@
+capacitador:
+    pattern:  /
+    defaults: { _controller: "CapacitacionBundle:Capacitador:consultar" }
+
+capacitador_modificar:
+    pattern:  /modificar
+    defaults: { _controller: "CapacitacionBundle:Capacitador:modificar" }
+
+capacitador_eliminar:
+    pattern:  /eliminar
+    defaults: { _controller: "CapacitacionBundle:Capacitador:eliminar" }
+
+capacitador_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "CapacitacionBundle:Capacitador:show" }
+
+capacitador_new:
+    pattern:  /new
+    defaults: { _controller: "CapacitacionBundle:Capacitador:new" }
+
+capacitador_create:
+    pattern:  /create
+    defaults: { _controller: "CapacitacionBundle:Capacitador:create" }
+    requirements: { _method: post }
+
+capacitador_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "CapacitacionBundle:Capacitador:edit" }
+
+capacitador_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "CapacitacionBundle:Capacitador:update" }
+    requirements: { _method: post|put }
+
+capacitador_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "CapacitacionBundle:Capacitador:delete" }
+    requirements: { _method: post|delete }
+
+capacitador_confelim:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "CapacitacionBundle:Capacitador:confEliminar" }

@@ -1,0 +1,61 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+{% for flashMessage in app.session.flashbag.get('edit') %}
+  <div class="alert alert-success">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
+<style>
+.tabla{
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+</style>
+
+    <h3 class="text-center">Edición de datos de facilitador</h3>
+
+    <form action="{{ path('capacitador_update', { 'id': entity.id,'pag':pag }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <input type="hidden" name="_method" value="PUT" />
+        
+
+     <table class="table table-bordered form-inline mitable tabla">
+       <tr>
+          <th> {{ form_label(edit_form.nombrecapacitador) }} </th>
+          <td> {{ form_widget(edit_form.nombrecapacitador) }} {{ form_errors(edit_form.nombrecapacitador) }}</td>
+       </tr>
+       <tr> 
+          <th> {{ form_label(edit_form.telefonocapacitador) }} </th>
+          <td> {{ form_widget(edit_form.telefonocapacitador) }} {{ form_errors(edit_form.telefonocapacitador) }} </td>
+       </tr>
+       <tr> 
+          <th> {{ form_label(edit_form.correocapacitador) }} </th>
+          <td> {{ form_widget(edit_form.correocapacitador) }} {{ form_errors(edit_form.correocapacitador) }} </td>
+       </tr>
+       <tr> 
+          <th> {{ form_label(edit_form.tematicacapacitador) }} </th>
+          <td> {{ form_widget(edit_form.tematicacapacitador) }} {{ form_errors(edit_form.tematicacapacitador) }} </td>
+       </tr>
+       <tr>
+          <th> {{ form_label(edit_form.idinstitucion) }} </th>
+          <td> {{ form_widget(edit_form.idinstitucion) }} {{ form_errors(edit_form.idinstitucion) }} </td>    
+       </tr>
+     </table>    
+
+        {{ form_rest(edit_form) }}
+
+        <br/><br/>
+                
+        <div class="text-center">
+         <button type="submit" class="btn btn-primary">Actualizar</button>
+
+         {% if pag == 3 %} {# modificar #}
+         <a href="{{ path('capacitador_modificar') }}"  class="btn">Cancelar</a>
+         {% else %}
+         <a href="{{ path('capacitador_show',{'id':entity.id, 'pag':pag }) }}"  class="btn">Cancelar</a>
+         {% endif %}
+       </div>
+    </form>
+{% endblock %}

@@ -236,6 +236,14 @@ shtumi_useful:
             class: AdminBundle:Plaza
             property: nombreplaza
             search: contains
+        instituciones:
+            class: CapacitacionBundle:Institucioncapacitadora
+            property: nombreinstitucion
+            search: contains
+        facilitadores:
+            class: CapacitacionBundle:Capacitador
+            property: nombrecapacitador
+            search: contains
 
     dependent_filtered_entities:
         centro_unidad:
