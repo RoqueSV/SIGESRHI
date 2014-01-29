@@ -28,3 +28,11 @@ noticia_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "AdminBundle:Noticia:delete" }
     requirements: { _method: post|delete }
+
+noticia_indexdelete:
+    pattern:  /indexeliminar
+    defaults: { _controller: "AdminBundle:Noticia:indexEliminar" }
+
+noticia_confirm_delete:
+    pattern:  /{id}/confirmdelete
+    defaults: { _controller: "AdminBundle:Noticia:confirmdelete" }

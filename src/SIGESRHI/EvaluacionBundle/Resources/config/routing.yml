@@ -1,8 +1,8 @@
-evaluacion_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: EvaluacionBundle:Default:index }
-
 EvaluacionBundle_evaluacion:
     resource: "@EvaluacionBundle/Resources/config/routing/evaluacion.yml"
-    prefix:   /evaluacion
+    prefix:   /evaluar
+
+EvaluacionBundle_periodoeval:
+    resource: "@EvaluacionBundle/Resources/config/routing/periodoeval.yml"
+    prefix:   /periodoeval
 

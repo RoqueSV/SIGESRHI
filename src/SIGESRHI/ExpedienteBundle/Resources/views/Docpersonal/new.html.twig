@@ -36,7 +36,7 @@ margin-bottom: 0px;
 
     <h4 class='text-center'>RECORD DEL EXPEDIENTE PERSONAL</h4>
     <p>Nombre: <b>{{expediente[0].nombres}}</b><p><br/>
-    <form action="{{ path('docpersonal_create',{'exp':expediente[0].id}) }}" id= "docpersonal_form" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('docpersonal_create',{'exp':expediente[0].id, 'nogrid':nogrid, 'noasp':noasp}) }}" id= "docpersonal_form" method="post" {{ form_enctype(form) }}>
         {#{ form_widget(form) }#}
         <fieldset><legend>Agregar Documento Personal</legend>
               <table width='80%'>
@@ -50,7 +50,10 @@ margin-bottom: 0px;
         <div class='text-center'>
             <button type="submit" class="btn btn-primary">Agregar</button>
             {% if nogrid == 0 %}
-                <button type="button" class="btn" onclick="window.history.back(1);">Regresar</button>
+                <a  href="{{ 
+                    path('expediente_validar',{ 'exp': expediente[0].id } 
+                        )
+                    }}" class="btn">Regresar</a>
             {% else %}
                 {% if noasp == 1 %}
                 <a  href="{{ 
@@ -79,7 +82,7 @@ margin-bottom: 0px;
             </tr>
         </table>        
         {% for doc in documentos %}
-        <form action="{{ path('docpersonal_update',{'id':doc.id,'idexp':expediente[0].id }) }}" id= "docpersonal_form_edit{{ doc.id }}" method="post" class="recompone">
+        <form action="{{ path('docpersonal_update',{'id':doc.id,'idexp':expediente[0].id, 'nogrid': nogrid, 'noasp':noasp }) }}" id= "docpersonal_form_edit{{ doc.id }}" method="post" class="recompone">
         <table class='table table-bordered table-hover mitable' border='1' width='100%' align='center'>
             <tr>                          
                 <td width='20px'>                
@@ -102,7 +105,7 @@ margin-bottom: 0px;
             </tr>
         </table>
         </form>
-        <form action="{{ path('docpersonal_delete',{'id':doc.id,'idexp':expediente[0].id }) }}" id= "docpersonal_form_delete{{ doc.id }}" method="post" class="recompone">
+        <form action="{{ path('docpersonal_delete',{'id':doc.id,'idexp':expediente[0].id, 'nogrid': nogrid, 'noasp':noasp }) }}" id= "docpersonal_form_delete{{ doc.id }}" method="post" class="recompone">
         </form>
         {% endfor %}        
     {% else %}

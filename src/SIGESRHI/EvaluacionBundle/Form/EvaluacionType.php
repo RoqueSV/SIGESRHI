@@ -15,6 +15,7 @@ class EvaluacionType extends AbstractType
             ->add('anoevaluado', null , array('label'=>'Año evaluado: '))
             ->add('semestre', null, array('label'=>'Semestre: '))
             ->add('puestoemp', null, array('label'=>'Identificador de puesto del empleado: '))
+            ->add('puestojefe', null, array('label'=>'Identificador de puesto del jefe: '))
             ->add('idempleado', null, array('label'=>'Empleado Evaluado: '))
             ->add('idjefe', null, array('label'=>'Evaluador: '))
         ;

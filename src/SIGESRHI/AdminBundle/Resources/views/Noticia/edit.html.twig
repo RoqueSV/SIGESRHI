@@ -1,28 +1,122 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Noticia edit</h1>
+{% block principal -%}
+<style type="text/css">
+    textarea { width: 100%; margin: 0; padding: 0; border-width: 0; }
+    select { width: 100%; margin: 0; padding: 0; border-width: 0; }
+    span.help-inline{ color: rgb(185, 74, 72);}
+</style>
+    {% if app.session.started %}
+    <br><br>
+    {% for flashMessage in app.session.flashbag.get('errornew') %}
+        <div class="alert alert-danger">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+    {% endif %}
+    <h3 class="text-center">Editar Noticia ISRI</h3>
+    <p class="text-center">Ingrese la Información a publicar</p>
 
     <form action="{{ path('noticia_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
-    </form>
+        {#{ form_widget(edit_form) }#}
+        <div class='centered'>
+        <table width="100%" class="form-inline table table-bordered table-hover mitable">
+            <tr>
+                <th width="25%"><bold>{{form_label(edit_form.asuntonoticia)}}</bold></th>
+                <td colspan="2">{{form_widget(edit_form.asuntonoticia)}} {{form_errors(edit_form.asuntonoticia)}}</td>
+            </tr>
+            <tr>
+                <th><bold>{{form_label(edit_form.contenidonoticia)}}</bold></th>
+                <td colspan="2">{{form_widget(edit_form.contenidonoticia)}} {{form_errors(edit_form.contenidonoticia)}}</td>
+            </tr>            
+            <tr>
+                <th>Fecha de Publicación:</th><td>Inicio</td><td>Fin</td>  
+            </tr>
+            <tr>
+                <th></th><td>{{form_widget(edit_form.fechainicionoticia)}} {{form_errors(edit_form.fechainicionoticia)}}</td><td>{{form_widget(edit_form.fechafinnoticia)}} {{form_errors(edit_form.fechafinnoticia)}}</td>
+            </tr>
+        </table>        
+        {# form embebido #}       
+        <table class="form-inline table table-bordered table-hover mitable">                
+            <tr>
+                <th width="25%">A quien publicar</th><td colspan="2">{{form_widget(edit_form.idcentro)}} {{form_errors(edit_form.idcentro)}}</td>
+            </tr>
+        </table>
+        {#fomr embebido#}
+       <fieldset><legend>Adjuntar Imagen o Archivo:</legend>
+        <br>
+        <ul class="Docnoticia unstyled" data-prototype="
+        <table width='100%'>
+            <tr>
+                <td width='60%'>{{form_widget(edit_form.iddocnoticia.vars.prototype.file)|e}} {{form_errors(edit_form.iddocnoticia.vars.prototype.file)|e}}</td>
+                <td>{{form_widget(edit_form.iddocnoticia.vars.prototype.nombredocnoticia)|e}} {{form_errors(edit_form.iddocnoticia.vars.prototype.nombredocnoticia)|e}}</td>
+            <tr>
+        <table>
+        ">
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('noticia') }}">
-            Back to the list
+        {# 
+            Bloque de codigo, para cargar el formulario embebido para cuando hay un error en el registro del formulario (new) se carguen
+            En la vista con el estilo predefinido.
+        #}
+
+        {% if edit_form.iddocnoticia|length > 0 %}
+            {% for docnoticia in edit_form.iddocnoticia %}
+            {# Comprobacion para evitar que se imprima el iddocnoticia # 1 (ya impreso) #}
+            
+            <li>
+                <table width='100%'>
+                    <tr>
+                        <td width="60%">
+                        {{form_widget(docnoticia.file,{'required': false})}} {{form_errors(docnoticia.file)}}</td>
+                        <td>{{form_widget(docnoticia.nombredocnoticia)}} {{form_errors(docnoticia.nombredocnoticia)}}</td>
+                    </tr>
+                </table>
+            </li>
+            {% endfor %}
+        {% endif %}
+
+        </ul>
+
+        </fieldset>
+        </div>
+        {{ form_rest(edit_form) }}
+        <div class="text-center">   
+            <button class="btn btn-primary" type="submit">Modificar</button>
+            <a class="btn" href="{{ path('noticia') }}">
+            Regresar al listado
         </a>
-    </li>
-    <li>
-        <form action="{{ path('noticia_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+        </div>
+    </form>
+<script type="text/javascript">
+// Obtiene la ul que contiene la colección de etiquetas
+var collectionHolderNoti = $('ul.Docnoticia');
+
+// configura una enlace "Agregar una etiqueta"
+var $addTagLinkBen = $('<input style="margin-left: 0px;" type="button" class="btn" value="Agregar Archivo"><br /><br />');
+var $newLinkLiBen = $('<ul></ul>').append($addTagLinkBen);
+
+jQuery(document).ready(function() {
+    // Añade el ancla "Agregar una etiqueta" y las etiquetas li y ul
+    collectionHolderNoti.append($newLinkLiBen);
+
+    // Añade un enlace para eliminar todas las etiquetas existentes
+    // en elementos li del formulario
+    collectionHolderNoti.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // cuenta las entradas actuales en el formulario (p. ej. 2),
+    // la usa como índice al insertar un nuevo elemento (p. ej. 2)
+    collectionHolderNoti.data('index', collectionHolderNoti.find(':input').length);
+
+    $addTagLinkBen.on('click', function(e) {
+        // evita crear el enlace con una "#" en la URL
+        e.preventDefault();
+
+        // añade una nueva etiqueta form (ve el siguiente bloque de código)
+        addTagForm(collectionHolderNoti, $newLinkLiBen);
+    });
+});
+</script>
 {% endblock %}

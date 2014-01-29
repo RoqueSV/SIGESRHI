@@ -1,0 +1,72 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+{% for flashMessage in app.session.flashbag.get('edit') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('new') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+
+<div class="text-center">
+    <h4>PERIODO DE EVALUACI&Oacute;N</h4>
+
+    <table class="table table-bordered table-hover mitable tablachica centered-table form-inline">
+        <tbody>
+            <tr>
+                <th>Fecha de inicio: </th>
+                <td>{{ entity.fechainicio|date('d-m-Y')|fecha }}</td>
+            </tr>
+            <tr>
+                <th>Fecha de finalización: </th>
+                <td>{{ entity.fechafin|date('d-m-Y')|fecha }}</td>
+            </tr>
+            <tr>
+                <th>Semestre: </th>
+                <td>{{ entity.semestre }}</td>
+            </tr>
+            <tr>
+                <th>A&ntilde;o: </th>
+                <td>{{ entity.anio }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<br>
+<br>
+
+<div class="text-center">
+
+<button type="button" class="btn" onclick="location.href='{{path('periodoeval')}}'">Cancelar</button>
+
+<button type="button" class="btn" onclick="location.href='{{path('periodoeval_edit', {'id':entity.id})}}'">Modificar</button>
+
+<button type="button" class="btn btn-danger" onclick="eliminar()">Eliminar</button>
+
+</div>
+
+    <div class="hide">
+        <form action="{{ path('periodoeval_delete', { 'id': entity.id }) }}" method="post" id="form_borrar">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+        </form>
+
+    </div>
+  
+  <script>
+function eliminar() {
+
+        if(confirm('\xbfEsta seguro que desea eliminar este periodo de evaluacion?')) {
+            document.getElementById('form_borrar').submit();
+            }
+        }
+  </script>
+{% endblock %}

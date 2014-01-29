@@ -3,7 +3,7 @@ evaluacion:
     defaults: { _controller: "EvaluacionBundle:Evaluacion:inicio" }
 
 evaluacion_show:
-    pattern:  /{id}/show
+    pattern:  /{id}/resultado
     defaults: { _controller: "EvaluacionBundle:Evaluacion:show" }
 
 evaluacion_new:
@@ -32,3 +32,12 @@ evaluacion_delete:
 evaluacion_seleccionempleado:
     pattern:  /{idrefrenda}/seleccionempleado
     defaults: { _controller: "EvaluacionBundle:Evaluacion:EmpleadosEvaluar" }
+
+evaluacion_noperiodo:
+    pattern:  /noperiodo
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:novalido" }
+
+evaluacion_finaliza:
+    pattern:  /{id}/finalizar
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:finalizar" }
+    requirements: { _method: post }

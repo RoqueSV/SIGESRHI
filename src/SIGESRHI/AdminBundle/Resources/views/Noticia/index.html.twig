@@ -1,49 +1,45 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Noticia list</h1>
+{% block principal -%}
+{% if app.session.started %}
+    {% for flashMessage in app.session.flashbag.get('new') %}
+        <div class="alert alert-success">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+{% endif %}
+<h4 class='text-center'>NOTICIAS ISRI</h4>
+<p class="text-center">Seleccione la opción para la noticia deseada</p>
+{{ grid_search(grid) }}
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Fechanoticia</th>
-                <th>Asuntonoticia</th>
-                <th>Fechainicionoticia</th>
-                <th>Fechafinnoticia</th>
-                <th>Contenidonoticia</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('noticia_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{% if entity.fechanoticia %}{{ entity.fechanoticia|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.asuntonoticia }}</td>
-                <td>{% if entity.fechainicionoticia %}{{ entity.fechainicionoticia|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.fechafinnoticia %}{{ entity.fechafinnoticia|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.contenidonoticia }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('noticia_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('noticia_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {{ grid(grid,_self) }}
 
-        <ul>
-        <li>
-            <a href="{{ path('noticia_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+    {% block grid_filters %}{% endblock %}
+    <br>
+<div align='center'>
+    <a  href="{{ path('hello_page') }}" class="btn">Cancelar</a>
+    <a href="{{ path('noticia_new') }}" class="btn">
+        <div class="icon-plus-sign"></div>            
+    </a>
+</div>
+<style type="text/css">
+#grid_grid_noticias__fechanoticia__query__from{
+    width: 100px; 
+}
+</style>
+<script>
+$(document).ready(function(){
+         $("#grid_grid_noticias__fechanoticia__query__from").datepicker({ 
+              dateFormat: 'yy-mm-dd',  
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "-100:+0",});
+
+         $('#grid_grid_noticias__fechanoticia__query__from').attr('readonly',true);
+
+         $('#fecha_requerida').hide();
+         $('#fecha_invalida').hide();
+        
+    });
+</script>
     {% endblock %}

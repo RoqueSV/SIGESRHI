@@ -2,15 +2,27 @@
 
 {% block titulo %}
 
-<h3 id="helpLabel">Otras Acciones de Personal</h3>
-
+<h3 id="helpLabel">Registrar Acciones de Personal</h3>
+<p align="justify">Este formulario permite registrar a un empleado todas aquellas acciones de personal que no generan acuerdo.</p>
 {% endblock %}
 
 {% block contenido %}
 
-<p>¿Cómo llenar este formulario?</p>
-
+<p><h4>¿Cómo llenar este formulario?</h4></p>
 <p>Se describen a continuación los pasos necesarios:</p>
-
+<ul style="list-style-type:decimal; margin-left:25px">
+		<li>Seleccione de la lista desplegable el "Tipo de Acci&oacute;n" que desea registrar.</li>
+		<img src="{{asset('images/images_ayuda/tipoaccion.jpg') }}" alt="ISRI"/><br><br>
+		<li>Seleccione el puesto del empleado a la cual registrar&aacute; la acci&oacute;n:</li>
+		<img src="{{asset('images/images_ayuda/seleccionpuesto.jpg') }}" alt="ISRI"/><br>
+		<div class="justifyText">En la lista desplegable se muestran las plazas que posee el empleado en la Instituci&oacute;n, puede registrar una acci&oacute;n a una determinada plaza o aplicar dicho registro a todas plazas que el empleado posee.</div>
+		<li>Seleccione la fecha de registro de la acci&oacute;n. Por defecto se establece la fecha actual.</li>
+		<img src="{{asset('images/images_ayuda/fecharegistro.jpg') }}" alt="ISRI"/><br><br>
+		<li>Digite la descripci&oacute;n de la acci&oacute;n</li>
+		<img src="{{asset('images/images_ayuda/descripcionaccion.jpg') }}" alt="ISRI"/><br><br>
+		<li>Al finalizar dar click en el bot&oacute;n "Registrar" e inmediatamente el sistema despliega el mensaje que la acci&oacute;n ha sido registrada correctamente. </li><br>
+		<img src="{{asset('images/images_ayuda/accionexitosa.jpg') }}" alt="ISRI"/><br>
+</ul>
+<br>
 
 {% endblock %}

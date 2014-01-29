@@ -45,7 +45,10 @@ class PantallasController extends Controller
         return $this->render('AdminBundle:Pantallas:pantalla_evaluacion.html.twig',array('opciones'=>$opciones));
        }
 
-
+        if($id==5){
+        $breadcrumbs->addItem("Generar reportes y documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>$id)));
+        return $this->render('AdminBundle:Pantallas:pantalla_generareportes.html.twig',array('opciones'=>$opciones));
+       }
     }
 
     public function pantallaAspiranteAction()

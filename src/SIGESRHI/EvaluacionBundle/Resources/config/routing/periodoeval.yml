@@ -1,0 +1,30 @@
+periodoeval:
+    pattern:  /
+    defaults: { _controller: "EvaluacionBundle:Periodoeval:index" }
+
+periodoeval_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "EvaluacionBundle:Periodoeval:show" }
+
+periodoeval_new:
+    pattern:  /new
+    defaults: { _controller: "EvaluacionBundle:Periodoeval:new" }
+
+periodoeval_create:
+    pattern:  /create
+    defaults: { _controller: "EvaluacionBundle:Periodoeval:create" }
+    requirements: { _method: post }
+
+periodoeval_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "EvaluacionBundle:Periodoeval:edit" }
+
+periodoeval_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "EvaluacionBundle:Periodoeval:update" }
+    requirements: { _method: post|put }
+
+periodoeval_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "EvaluacionBundle:Periodoeval:delete" }
+    requirements: { _method: post|delete }

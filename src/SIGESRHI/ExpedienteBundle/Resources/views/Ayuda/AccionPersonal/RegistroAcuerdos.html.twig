@@ -2,18 +2,30 @@
 
 {% block titulo %}
 <h3 id="helpLabel">Formulario:Registrar Acuerdos</h3>
-<p>Este formulario </p>
+<p>Este formulario permite registrar todas aquellas acciones de personal que generen acuerdo.</p>
 {% endblock %}
 
 {% block contenido %}
-
-<p><h4>¿Cómo llenar este formulario?</h4></p>
+<p><h4>¿C&oacute;mo llenar este formulario?</h4></p>
 <p>Se describen a continuación los pasos necesarios:</p>
 <ul style="list-style-type:decimal; margin-left:25px">
-		<li>Seleccione de la lista desplegable "Tipo de Acuerdo" que desea registrar. </li>
-		<img src="{{asset('images/images_ayuda/tipoacuerdo.jpg') }}" alt="ISRI"/><br><br> 
-		<li>Seleccione el puesto del empleado al que registrar&aacute; el acuerdo.</li>
-		<img src="{{asset('images/images_ayuda/seleccionpuesto.jpg') }}" alt="ISRI"/><br><br>
-		<div class="justifyText">En la lista desplegable se muestran las plazas que posee el empleado en la Instituci&oacute;n, puede registrar un acuerdo a una determinada plaza o aplicar dicho registro a ambas plazas.</div>
+		<li>Seleccione de la lista desplegable el "Tipo de Acuerdo" que desea registrar.</li>
+		<img src="{{asset('images/images_ayuda/tipoacuerdo.jpg') }}" alt="ISRI"/><br><br>
+		<li>Seleccione la plaza del empleado a la cual registrar&aacute; el acuerdo.</li>
+		<img src="{{asset('images/images_ayuda/seleccionpuesto.jpg') }}" alt="ISRI"/><br>
+		<div class="justifyText">En la lista desplegable se muestran las plazas que posee el empleado en la Instituci&oacute;n, puede registrar un acuerdo a una determinada plaza o aplicar dicho registro a todas plazas que &eacute;ste posee, &eacute;sta &uacute;ltima opci&oacute;n est&aacute; disponible solo para aquellos acuerdos en donde se vean afectadas todas las plazas del empleado.</div>
+		<li>Seleccione la fecha de registro del acuerdo. Por defecto se establece la fecha actual.</li>
+		<img src="{{asset('images/images_ayuda/fecharegistro.jpg') }}" alt="ISRI"/><br><br>
+		<li>Ingrese el n&uacute;mero de acuerdo.</li>
+		<img src="{{asset('images/images_ayuda/numeroacuerdo.jpg') }}" alt="ISRI"/><br><br>
+		<li>Complete la descripci&oacute;n del acuerdo, rellenando con datos obligatorios los espacios entre los simbolos mayor y menor - << >> </li>
+		<img src="{{asset('images/images_ayuda/descripcionacuerdo.jpg') }}" alt="ISRI"/><br>
+		<div class="justifyText">La imagen anterior muestra un texto predefinido que se carga  seg&uacute;n el tipo de acuerdo seleccionado anteriormente, para &uacute;nicamente complementarlo con un rango de fechas, como se muestra en la imagen siguiente:</div>
+		<img src="{{asset('images/images_ayuda/completaracuerdo.jpg') }}" alt="ISRI"/><br>
+		<div class="justifyText"><b>NOTA:</b> Borrar los s&iacute;mbolos << >> al completar la descripci&oacute;n del acuerdo.</div>
+		<li>Al finalizar dar click en el bot&oacute;n "Registrar" e inmediatamente el sistema despliega el mensaje que el acuerdo ha sido registrado correctamente. </li><br>
+		<img src="{{asset('images/images_ayuda/accionexitosa.jpg') }}" alt="ISRI"/><br>
+</ul>
+<br>
 
 {% endblock %}

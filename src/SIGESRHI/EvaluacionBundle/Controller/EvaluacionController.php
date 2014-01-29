@@ -3,6 +3,7 @@
 namespace SIGESRHI\EvaluacionBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use SIGESRHI\EvaluacionBundle\Entity\Evaluacion;
@@ -11,6 +12,7 @@ use SIGESRHI\ExpedienteBundle\Entity\Empleado;
 use SIGESRHI\EvaluacionBundle\Entity\Respuesta;
 use SIGESRHI\EvaluacionBundle\Entity\Factorevaluacion;
 use SIGESRHI\EvaluacionBundle\Entity\Opcion;
+use SIGESRHI\EvaluacionBundle\Entity\Periodoeval;
 
 use SIGESRHI\AdminBundle\Entity\RefrendaAct;
 use Application\Sonata\UserBundle\Entity\User;
@@ -74,19 +76,16 @@ class EvaluacionController extends Controller
         // Get a grid instance
         $grid = $this->get('grid');
 
+/*
         $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
         function($query) use ($idrefrenda){
             $query->andWhere("_idrefrenda_puestoempleado_puestojefe.id =:var ")->setParameter('var',$idrefrenda);
              }
             );
-    
-  /*      $NombreEmpleados = new TextColumn(array('id' => 'empleados','source' => true,'field'=>'idsolicitudempleo.nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
-        $grid->addColumn($NombreEmpleados,3);
-
-        $CodigoEmpleados = new TextColumn(array('id' => 'codigos','source' => true,'field'=>'idempleado.codigoempleado','title' => 'Código',"operatorsVisible"=>false, 'align'=>'center'));
-        $grid->addColumn($CodigoEmpleados,3);
-*/
+  */  
+    echo "idrefrenda: ".$idrefrenda;
+ 
         // Attach the source to the grid
         $grid->setId('grid_consulta_empleados_evaluacion');
         $grid->setSource($source);
@@ -98,6 +97,16 @@ class EvaluacionController extends Controller
         
         $rowAction1 = new RowAction('Registrar', 'evaluacion_new');
 
+/* //backup
+         $rowAction1->manipulateRender(
+            function ($action, $row)use($idrefrenda)
+            {
+             $action->setRouteParameters(array('id','idform'=>1, 'idpuestojefe'=>$idrefrenda, 'idpuestoemp'=> $row->getField('idrefrenda.id')));
+              return $action;
+            }
+        );
+*/
+
          $rowAction1->manipulateRender(
             function ($action, $row)use($idrefrenda)
             {
@@ -107,26 +116,24 @@ class EvaluacionController extends Controller
         );
 
         //Editar columna del action
-        /*
-        $rowAction->manipulateRender(
-    function ($action, $row)
-    {
-        if ($row->getField('quantity') == 0) {
-            $action->setTitle('Sold out');
+ /*       $rowAction->manipulateRender(
+        function ($action, $row)
+        {
+            if ($row->getField('quantity') == 0) {
+                $action->setTitle('Sold out');
+            }
+
+            if ($row->getField('price') > 20) {
+                return null;
+            }
+
+            return $action;
         }
+        );
 
-        if ($row->getField('price') > 20) {
-            return null;
-        }
-
-        return $action;
-    }
-);
-
-$grid->addRowAction($rowAction);
-*/
-///editar columna de action
-        
+        $grid->addRowAction($rowAction);
+    ///editar columna de action
+*/        
         $rowAction1->setColumn('info_column');
         $grid->addRowAction($rowAction1);     
 
@@ -141,13 +148,17 @@ $grid->addRowAction($rowAction);
 
     /**
      * Creates a new Evaluacion entity.
-     *
      */
     public function createAction(Request $request)
     {
         $numfactores = $request->get('numfactores');
-        
+        $supervisa = $request->get('supervisa');
+        $comentario = $request->get('comentario');
+
         $evaluacion  = new Evaluacion();
+        $evaluacion->setComentario($comentario);
+        $evaluacion->setTiemposupervisar($supervisa);
+
         $form = $this->createForm(new EvaluacionType(), $evaluacion);
         $form->bind($request);
 
@@ -175,7 +186,6 @@ $grid->addRowAction($rowAction);
                 $em->persist($respuesta);
                   }
 
-
             $em->flush();
 
             return $this->redirect($this->generateUrl('evaluacion_show', array('id' => $evaluacion->getId())));
@@ -191,7 +201,6 @@ $grid->addRowAction($rowAction);
 
     /**
      * Displays a form to create a new Evaluacion entity.
-     *
      */
     public function newAction()
     {
@@ -261,6 +270,7 @@ $grid->addRowAction($rowAction);
         $evaluacion->setPuestoemp($refrenda->getId());
         $evaluacion->setIdempleado($empleadoevaluado);
         $evaluacion->setIdJefe($jefe);
+        $evaluacion->setPuestojefe($refrendajefe->getId());
 
         $form   = $this->createForm(new EvaluacionType(), $evaluacion);
 
@@ -277,7 +287,6 @@ $grid->addRowAction($rowAction);
 
     /**
      * Finds and displays a Evaluacion entity.
-     *
      */
     public function showAction($id)
     {
@@ -298,7 +307,6 @@ $grid->addRowAction($rowAction);
 
     /**
      * Displays a form to edit an existing Evaluacion entity.
-     *
      */
     public function editAction($id)
     {
@@ -322,7 +330,6 @@ $grid->addRowAction($rowAction);
 
     /**
      * Edits an existing Evaluacion entity.
-     *
      */
     public function updateAction(Request $request, $id)
     {
@@ -354,7 +361,6 @@ $grid->addRowAction($rowAction);
 
     /**
      * Deletes a Evaluacion entity.
-     *
      */
     public function deleteAction(Request $request, $id)
     {
@@ -393,6 +399,12 @@ $grid->addRowAction($rowAction);
 
     public function InicioAction()
     {
+        //validamos si es periodo de evaluacion.
+        $periodo_evaluacion= $this->VerificarPeriodoActivo();
+        if(!$periodo_evaluacion){
+            return $this->redirect($this->generateUrl('evaluacion_noperiodo'));
+        }        
+
         //Obtenemos el id de empleado del usuarioo logueado
         $user = new User();
         $empleado = new Empleado();
@@ -423,4 +435,44 @@ $grid->addRowAction($rowAction);
 
     }// Function Inicio
 
+
+    public function VerificarPeriodoActivo(){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $fechaactual= date('d-m-Y');
+        $consulta = $em->createQuery('
+            Select pe.id from EvaluacionBundle:Periodoeval pe
+            where :fechaactual between pe.fechainicio and pe.fechafin
+            ')->setParameter('fechaactual', $fechaactual);
+        $resultado = $consulta->getResult();
+        $periodo= false;
+        if(count($resultado)>0){
+            $periodo= true;
+        }
+        return $periodo;
+    }// verificarperiodo()
+
+    public function novalidoAction()
+    {
+        return $this->render('EvaluacionBundle:Evaluacion:noperiodo.html.twig');
+    }//novalidoAction()
+
+
+    //registra los comentarios y tiempo de supervisar al empleado.
+    public function finalizarAction($id){
+
+        $request = $this->getRequest();
+        $incidente = $request->get('registra_incidente');
+
+
+        if($incidente == "SI"){
+            return $this->render('EvaluacionBundle:Evaluacion:incidentes.html.twig');
+        }
+        if($incidente == "NO"){
+            return $this->render('EvaluacionBundle:Evaluacion:SeleccionPuesto.html.twig');
+        }
+
+
+    }//finalizarAction()
 }

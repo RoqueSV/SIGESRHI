@@ -1,0 +1,86 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+<script type='text/javascript'>
+function eliminar() {
+
+    if(confirm('\xbfEsta seguro que desea eliminar este registro?')) {
+        document.getElementById('form_borrar').submit();
+    }
+}
+</script>
+<style type="text/css">
+    ul.a {list-style-type:circle; padding-left: 20px;}
+    li.b {list-style-type:none; padding-left: 10px;}
+</style>
+{% if app.session.started %}
+    {% for flashMessage in app.session.flashbag.get('new') %}
+        <div class="alert alert-success">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+{% endif %}
+    <h3 class="text-center"> Datos registrados </h3>
+    <fieldset><legend>Fecha  de Registro: {{ entity.fechanoticia|date('Y-m-d H:i:s')|fecha }}</legend>
+    <div class="text-centered">
+    <table border='0' width='100%' align='center' class='table table-bordered table-hover mitable'>        
+        <tr>
+            <th  width="25%">Título Noticia</th>
+            <td>{{ entity.asuntonoticia }}</td>
+        </tr>
+        <tr> 
+            <th>Contenido</th>         
+            <td align="center">{{ entity.contenidonoticia }}</td>
+        </tr>
+        {% set longitud =  (entity.iddocnoticia|length)-1 %} {#Obtengo numero de documentos#}
+        {% if longitud >= 0 %}                
+        {% for i in 0..longitud if longitud >= 0 %}
+            <tr>
+                <th>Archivos Cargados</th>
+                <td align="center"> 
+                 {% set nombext = entity.iddocnoticia[i].rutadocnoticia|split('_',2) %}                   
+                    {{ nombext[1] }}
+                    [" {{ entity.iddocnoticia[i].nombredocnoticia }} "]
+                </td>                                              
+            </tr> 
+            
+        {% endfor %}
+        {% endif %}
+    </table>    
+    <br>
+    <table class="table table-bordered mitable">
+        <tr>
+            <th colspan="2"><bold>Publicación</bold></th>
+        </tr>           
+        <tr>
+            <th  width="25%"><bold>Inicio publicación</bold></th>
+            <td>{{ entity.fechainicionoticia|date('Y-m-d')|fecha }}</td>
+        </tr>
+        <tr>
+            <th><bold>Fin publicación</bold></th>
+            <td>{{ entity.fechafinnoticia|date('Y-m-d')|fecha }}</td>
+        </tr> 
+        <tr>
+            <th><bold>A quien se publica</bold></th>
+            <td>
+            <ul class="a">
+                {% for centros in centrosnoticia %}
+                <li>{{ centros }}</li>
+                {% endfor %}
+            </ul>
+            </td>
+        </tr>            
+    </table>
+    </div>
+<br>
+<div class="text-center">            
+    <button type="button" onClick="eliminar();" class="btn btn-danger" >Si, Eliminar</button>   
+    <a href="{{ path('noticia_indexdelete') }}" class="btn">
+        No, Regresar
+    </a>
+    <form action="{{ path('noticia_delete', { 'id': entity.id, 'from': 2 }) }}" id="form_borrar" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
+        {#{ form_widget(delete_form) }#}
+    </form>                 
+</div>
+{% endblock %}

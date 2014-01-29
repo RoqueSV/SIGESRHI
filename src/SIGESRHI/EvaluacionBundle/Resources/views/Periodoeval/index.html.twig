@@ -1,0 +1,29 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+{% for flashMessage in app.session.flashbag.get('del') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+
+<div class="text-center">
+    <h4>LISTADO DE PERIODOS DE EVALUACI&Oacute;N</h4>
+
+</div>
+
+    {{ grid_search(grid) }} 
+    <br>
+    <div align="right">
+        <b>Registrar Nuevo Periodo: </b>
+        <a class="btn" onclick="location.href='{{path('periodoeval_new')}}'" title="Registrar Nuevo Periodo"><div class="icon-plus-sign"></div></a>
+    </div>
+    {{ grid(grid,_self) }}  
+    <br>
+    {% block grid_filters %}{% endblock %} 
+
+    <div class="text-center">
+    <a href="{{path('hello_page')}}" class="btn"> Cancelar </a>
+    </div>
+{% endblock %}

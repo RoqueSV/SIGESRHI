@@ -3,13 +3,18 @@
 namespace SIGESRHI\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\ExecutionContextInterface;
 /**
  * Noticia
  *
  * @ORM\Table(name="noticia")
  * @ORM\Entity
+ * @GRID\Source(columns="id,asuntonoticia,fechanoticia,fechainicionoticia,fechafinnoticia",groups={"news"})
+ * @Assert\Callback(methods={"fechasValidas"})
  */
 class Noticia
 {
@@ -20,6 +25,7 @@ class Noticia
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="noticia_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(filterable=false, groups={"news"}, visible=false)
      */
     private $id;
 
@@ -29,6 +35,7 @@ class Noticia
      * @ORM\Column(name="fechanoticia", type="date", nullable=false)
      * @Assert\DateTime()
      * @Assert\NotNull(message="Debe ingresar la fecha de la noticia")
+     * @GRID\Column(align="center",type="date",title="Fecha de Registro",groups={"news"},filter="input", inputType="datetime", format="Y-m-d",operators={"gte", "eq", "lte"}, defaultOperator="gte"))
      */
     private $fechanoticia;
 
@@ -41,6 +48,7 @@ class Noticia
      * max = "50",
      * maxMessage = "El asunto de la noticia no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(align="center",title="Titulo",groups={"news"},filter="input", inputType="text",operators={"like"}, operatorsVisible=false))
      */
     private $asuntonoticia;
 
@@ -50,6 +58,7 @@ class Noticia
      * @ORM\Column(name="fechainicionoticia", type="date", nullable=false)
      * @Assert\DateTime()
      * @Assert\NotNull(message="Debe ingresar la fecha de inicio de la noticia")
+     * @GRID\Column(filterable=false, groups={"news"}, visible=false)
      */
     private $fechainicionoticia;
 
@@ -59,6 +68,7 @@ class Noticia
      * @ORM\Column(name="fechafinnoticia", type="date", nullable=true)
      * @Assert\DateTime()
      * @Assert\NotNull(message="Debe ingresar la fecha de fin de la noticia")
+     * @GRID\Column(filterable=false, groups={"news"}, visible=false)
      */
     private $fechafinnoticia;
 
@@ -92,7 +102,7 @@ class Noticia
      /**
      * @var \DocNoticia
      *
-     * @ORM\OneToMany(targetEntity="DocNoticia", mappedBy="idnoticia",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="DocNoticia", mappedBy="idnoticia",cascade={"persist","remove"})
      * @Assert\Valid
      *
      */
@@ -107,6 +117,17 @@ class Noticia
         $this->iddocnoticia = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
+    /************************Validacion de las Fechas y horas*****************/
+    public function fechasValidas(ExecutionContextInterface $context)
+    {
+        $fechainicionoticia = $this->getFechainicionoticia();
+        $fechafinnoticia =  $this->getFechafinnoticia();
+        if($fechafinnoticia!=''){
+            if($fechainicionoticia > $fechafinnoticia){
+                $context->addViolationAt('fechainicionoticia','Debe introducir Fechas Validas',array(),null);
+            }
+        }
+    }
 
     /**
      * Get id

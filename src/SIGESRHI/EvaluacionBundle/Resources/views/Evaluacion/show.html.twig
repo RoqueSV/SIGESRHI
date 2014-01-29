@@ -54,15 +54,18 @@
             <h3>{{ calificacion|upper }}</h>
     </div>
 
-<br>
+    <table class="table table-centered table-hover table-bordered">
+        <tr>
+            <th width="35%">Tiempo de supervisar al empleado: </th><td>{{evaluacion.tiemposupervisar}}</td>
+        </tr>
+        <tr>
+            <th>Comentario brindado: </th><td>{{evaluacion.comentario}}</td>
+        </tr>
+    </table>
 
-<form action="" method="post">
-     Tiempo de supervisar al empleado:  <input type="text" name="supervisa" size="100"/>
-<br>
-    Comentarios: &nbsp;&nbsp;&nbsp;
-    <textarea rows="3" cols="100"></textarea> 
+<form action="{{path('evaluacion_finaliza',{'id':evaluacion.id})}}" method="post">
 
-<br><br>
+<br>
 
 <div class="text-center">
 <b>¿Registrar Incidentes cr&iacute;ticos?</b>
@@ -70,16 +73,10 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SI <input type="radio" name="registra_incidente" required="required" value="SI"/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO <input type="radio" name="registra_incidente" required="required" value="NO"/>
 <br><br>
-<input type="button" value="Aceptar" class="btn btn-primary" />
+<input type="submit" value="Aceptar" class="btn btn-primary" />
 <input type="button" value="Cancelar" class="btn" />
 </div>
 
 </form>
 
-
-<style>
-    textarea {
-        width:70%;
-    }
-</style>
 {% endblock %}
