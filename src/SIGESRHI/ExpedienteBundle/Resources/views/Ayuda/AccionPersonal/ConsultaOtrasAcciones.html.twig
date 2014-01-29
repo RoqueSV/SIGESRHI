@@ -2,15 +2,31 @@
 
 {% block titulo %}
 
-<h3 id="helpLabel">Otras Acciones de Personal</h3>
-
+<h3 id="helpLabel">Consultar otras Acciones de Personal</h3>
+<p align="justify">Esta ventana permite consultar los registros de acciones de personal que un empleado posee y que no generan acuerdo.</p>
 {% endblock %}
 
 {% block contenido %}
 
-<p>¿Cómo llenar este formulario?</p>
-
-<p>Se describen a continuación los pasos necesarios:</p>
-
-
+<p><h4>¿Consultar una acci&oacute;n?</h4></p>
+<ul style="list-style-type:decimal; margin-left:25px">
+		<li>Se puede realizar una consulta de una acci&oacute;n registrada a un empleado utilizando par&aacute;metros de b&uacute;squeda como: tipo de acci&oacute;n, fecha de registro o utilizando ambos par&aacute;metros de b&uacute;squeda.</li>
+		<img src="{{asset('images/images_ayuda/busqueda_accion.jpg') }}" alt="ISRI"/><br> 
+		<div class="justifyText"><b>Para realizar una b&uacute;squeda por tipo de acuerdo:</b> Seleccione de la lista desplegable el tipo de acuerdo y luego presione el bot&oacute;n "Buscar".<br>
+		<b>Para una b&uacute;squeda por fecha:</b> Seleccionar de la lista una de las opciones que permiten delimitar la b&uacute;squeda de un acuerdo, las opciones que se presentan son:<br>
+					<ul style="list-style-type:decimal; margin-left:25px">
+						<li>Mayor o igual que</li>
+						<li>Igual a</li>
+						<li>Menor o igual que</li>
+					</ul><br>
+		Ejemplo:<br>
+		<img src="{{asset('images/images_ayuda/ejemplobusqueda.jpg') }}" alt="ISRI"/>
+		La imagen anterior muestra la fecha: "12-04-2012"  con la opci&oacute;n "Mayor o igual que" seleccionada; con esto se delimita unicamente a obtener como resultados, todos los acuerdos que hayan sido registrados a partir del d&iacute;a "12-04-2012".<br>
+		<b>Nota:</b> Puede realizar una b&uacute;squeda m&aacute;s espec&iacute;fica indicando el tipo de acuerdo mas una fecha determinada de registro.<br><br>
+		Los resultados de la b&uacute;squeda aparecen en la parte inferior de la ventana :</div>
+		<img src="{{asset('images/images_ayuda/resultadoaccion.jpg') }}" alt="ISRI"/><br><br>
+		<li>Para registrar una nueva acci&oacute;n, dar click en el bot&oacute;n con el signo(+), se desplegar&aacute; una  nueva ventana para su registro.</li>
+</ul>
+<br>
+<br>
 {% endblock %}

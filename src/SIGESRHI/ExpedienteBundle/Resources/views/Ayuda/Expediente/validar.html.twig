@@ -3,26 +3,30 @@
 
 {% block titulo %}
 <h3 id="helpLabel">Validar Solicitud de Aspirante</h3>
-<p>Este formulario FALTA MODIFICARLO</p>
+<p>Esta ventana permite verificar la documentaci&oacute;n de un aspirante como requisito previo antes de ingresar al Banco de Datos Institucional (ISRI) </p>
 {% endblock %}
 
 
 {% block contenido %}
- <p><h4>¿Cómo llenar este formulario?</h4></p>
-<div class="justifyText">El formulario consta de 5 criterios, en los cuales debe seleccionar un rango para establecer el resultado obtenido por el aspirante en dicho criterio. <br>
-Para el registro del criterio de Coeficiente Intelectual primero debe seleccionar el rango y luego establecer la calificaci&oacute;n al aspirante.<br></div> 
-<center><img src="{{asset('images/images_ayuda/coeficiente.jpg') }}" alt="ISRI"/></center>
-<center>En el resto de los criterios basta con seleccionar un rango determinado.</center>
-<div class="justifyText">Una vez ingresados todos los resultados presione el bot&oacute;n "Guardar". Aparecer&aacute; una nueva ventana indicando el registro exitoso de resultados</div>
-<center><img src="{{asset('images/images_ayuda/exitoprueba.jpg') }}" alt="ISRI"/></center>
-<center><img src="{{asset('images/images_ayuda/resultadosprueba.jpg') }}" alt="ISRI"/><br></center>
-<div class="justifyText">Se despliega tambi&eacute;n los resultados registrados al aspirante, con las siguientes opciones:</div>
-<center><img src="{{asset('images/images_ayuda/accionesprueba.jpg') }}" alt="ISRI"/></center><br>
+ <p><h4>¿C&oacute;mo ingresar un aspirante al Banco de Datos Institucional?</h4></p>
+<p>Se describen a continuaci&oacute;n los pasos necesarios:</p>
 <ul style="list-style-type:disc; margin-left:25px">
-	<b><li>Generar pdf:</li></b>Permite generar los resultados de prueba psicologica en formato Pdf, permite adem&aacute;s la impresi&oacute;n de los resultados.
-	<b><li>Regresar al listado:</li></b> Permite regresar al listado, donde se encuentran los aspirantes aun por registrar resultados.
-	<b><li>Editar registro:</li></b>Permite modificar los resultados antes de la impresion de los mismos.
-	<b><li>Borrar:</li></b> Elimina el registro de resultados.
+<li>Consultar la solicitud de empleo y documentaci&oacute;n registrada por el aspirante, por medio de los link que se muestran en la siguiente imagen:</li>
+<img src="{{asset('images/images_ayuda/cosultardoc.jpg') }}" alt="ISRI"/>
+<div class="justifyText"><b>Al seleccionar "Consultar solicitud de Empleo"</b> se despliega una nueva ventana, donde se muestra la solicitud del aspirante, junto con la opci&oacute;n de impresi&oacute;n  de la misma.<br>
+<b>Al consultar "documentaci&oacute;n registrada:"</b> Se muestran los documentos que debe entregar un aspirante para formar parte del Banco de Datos, asignando un n&uacute;mero correlativo que corresponde al expediente del aspirante<br></div>
+<img src="{{asset('images/images_ayuda/docregistrado.jpg') }}" alt="ISRI"/><br><br>
+<li>Para registrar un nuevo documento, digite el nombre del documento y n&uacute;mero correlativo, al finalizar presione el bot&oacute;n "Agregar"</li>
+<img src="{{asset('images/images_ayuda/agregardoc.jpg') }}" alt="ISRI"/><br><br>
+<li>Se mostrar&aacute; un mensaje con la confirmaci&oacute;n del registro del documento</li>
+<img src="{{asset('images/images_ayuda/docexpediente.jpg') }}" alt="ISRI"/><br><br>
+<li>Verifique en la lista de documentos registrados, el archivo recien ingresado. Puede realizar acciones sobre dichos documentos como: actualizar o eliminar.</li>
+<li>Una vez verificada la informaci&oacute;n del aspirante. Para ingresar el aspirante al banco de datos presione el bot&oacute;n "Aceptar"</li>
+<img src="{{asset('images/images_ayuda/validaraspirantes.jpg') }}" alt="ISRI"/><br><br>
+<li>El sistema solicitar&aacute; confirmar el nuevo registro. Presione "Aceptar"</li>
+<img src="{{asset('images/images_ayuda/confirmarvalidez.jpg') }}" alt="ISRI"/><br><br>
+<li>Se presenta un nuevo mensaje indicando el nombre del aspirante </li>
+<img src="{{asset('images/images_ayuda/aspirantevalido.jpg') }}" alt="ISRI"/><br><br>
 </ul>
 <br><br>
 {% endblock %}

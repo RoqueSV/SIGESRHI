@@ -7,13 +7,27 @@
 
 {% block contenido %}
 
-<p><h4>¿Realizar b&uacute;squeda de un acuerdo?</h4></p>
+<p><h4>¿Consultar un acuerdo?</h4></p>
 <ul style="list-style-type:decimal; margin-left:25px">
-		<li>Se puede realizar una b&uacute;squeda de un acuerdo previamente registrado a un empleado por tipo de acuerdo y por fecha de registro de acuerdo</li>
-		<img src="{{asset('images/images_ayuda/busqueda_acuerdo.jpg') }}" alt="ISRI"/><br><br> 
-		<div class="justifyText">Para realizar una b&uacute;squeda por tipo de acuerdo, seleccione de la lista desplegable el tipo de acuerdo y presione el bot&oacute;n buscar.
-		Para una b&uacute;squeda por fecha, seleccione una fecha del calendario que se despliega al dar click en la caja de texto</div>
-
+		<li>Se puede realizar una consulta de un acuerdo registrado a un empleado utilizando par&aacute;metros de b&uacute;squeda como: tipo de acuerdo, fecha de registro o utilizando ambos par&aacute;metros de b&uacute;squeda.</li>
+		<img src="{{asset('images/images_ayuda/busqueda_acuerdo.jpg') }}" alt="ISRI"/><br> 
+		<div class="justifyText"><b>Para realizar una b&uacute;squeda por tipo de acuerdo:</b> Seleccione de la lista desplegable el tipo de acuerdo y luego presione el bot&oacute;n "Buscar".<br>
+		<b>Para una b&uacute;squeda por fecha:</b> Seleccionar de la lista una de las opciones que permiten delimitar la b&uacute;squeda de un acuerdo, las opciones que se presentan son:<br>
+					<ul style="list-style-type:decimal; margin-left:25px">
+						<li>Mayor o igual que</li>
+						<li>Igual a</li>
+						<li>Menor o igual que</li>
+					</ul><br>
+		Ejemplo:<br>
+		<img src="{{asset('images/images_ayuda/ejemplobusqueda.jpg') }}" alt="ISRI"/>
+		La imagen anterior muestra la fecha: "12-04-2012"  con la opci&oacute;n "Mayor o igual que" seleccionada; con esto se delimita unicamente a obtener como resultados, todos los acuerdos que hayan sido registrados a partir del d&iacute;a "12-04-2012".<br>
+		<b>Nota:</b> Puede realizar una b&uacute;squeda m&aacute;s espec&iacute;fica indicando el tipo de acuerdo mas una fecha determinada de registro.<br><br>
+		Los resultados de la b&uacute;squeda aparecen en la parte inferior de la ventana :</div>
+		<img src="{{asset('images/images_ayuda/resultadoacuerdo.jpg') }}" alt="ISRI"/>
+		<div class="justifyText">Para m&aacute;s informaci&oacute;n del acuerdo, dar click en "Mostrar" ubicado en la columna acciones.<br><br>
+		<li>Para registrar un nuevo acuerdo, dar click en el bot&oacute;n con el signo(+), se desplegar&aacute; una  nueva ventana para su registro.</li>
+		<center><img src="{{asset('images/images_ayuda/registroacuerdo.jpg') }}" alt="ISRI"/></center><br>
+		<li>Adem&aacute;s se presentan la opci&oacute;n de "Generar Reporte", en la que puede elegir entre los diferentes reportes que se presentan. </li>
 </ul>
 
 
