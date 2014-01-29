@@ -4,6 +4,7 @@
 <style type="text/css">
     textarea { width: 100%; margin: 0; padding: 0; border-width: 0; }
     select { width: 100%; margin: 0; padding: 0; border-width: 0; }
+    span.help-inline{ color: rgb(185, 74, 72);}
 </style>
     <!-- Botón ayuda -->
     <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
@@ -37,46 +38,22 @@
             <tr>
                 <th></th><td>{{form_widget(form.fechainicionoticia)}} {{form_errors(form.fechainicionoticia)}}</td><td>{{form_widget(form.fechafinnoticia)}} {{form_errors(form.fechafinnoticia)}}</td>
             </tr>
-        </table>        
+        </table> 
+        {# form embebido #}       
         <table class="form-inline table table-bordered table-hover mitable">                
             <tr>
-                <th width="25%">A quien publicar</th><td colspan="2">{{form_widget(form.idcentro)}} {{form_errors(form.idcentro)}}</td>
+                <th width="25%">A quien publicar</th>
+                <td colspan="2">{{form_widget(form.idcentro)}} {{form_errors(form.idcentro)}}
+                    <br>
+                    <button class="btn" type="button" id="todos">Seleccionar todos</button>
+                </td>
             </tr>
         </table>
         {#fomr embebido#}
-        <table width="100%" class='form-inline' style='margin-bottom:20px;'>
-            <tr>
-                <th><bold>{{ form_label(form.iddocnoticia[0].file) }}</bold></th>
-            </tr>
-            <tr>
-                <td width="60%">{{ form_widget(form.iddocnoticia[0].file) }}
-                    {{ form_errors(form.iddocnoticia[0].file) }}
-                </td>
-                <td>{{ form_widget(form.iddocnoticia[0].nombredocnoticia) }}
-                    {{ form_errors(form.iddocnoticia[0].nombredocnoticia) }}
-                </td>
-            </tr>
-        </table>
-        {#crear errores asociados#}
-        {% if app.session.started %}
-                 {% set longitud =  (entity.iddocnoticia|length)-1  %} {#Obtengo numero de beneficiarios#}
-                 {% for i in 1..longitud if longitud > 0 %}
-                 
-                 <table width=100% style="margin-bottom:10px;">
-                 
-                 <tr class="text-center">
-                 <td class="text-center" width="60%">{{ form_widget(form.iddocnoticia[i].file) }}
-                 {{ form_errors(form.iddocnoticia[i].file) }}</td>
-                 <td class="text-center">{{ form_widget(form.iddocnoticia[i].nombredocnoticia) }}
-                 {{ form_errors(form.iddocnoticia[i].nombredocnoticia) }}</td>
-                 </tr>
-                 
-                 </table>
-                 {% endfor %}
-         {% endif %}
-
+       <fieldset><legend>Adjuntar Imagen o Archivo:</legend>
+        <br>
         <ul class="Docnoticia unstyled" data-prototype="
-        <table width=100%>
+        <table width='100%'>
             <tr>
                 <td width='60%'>{{form_widget(form.iddocnoticia.vars.prototype.file)|e}} {{form_errors(form.iddocnoticia.vars.prototype.file)|e}}</td>
                 <td>{{form_widget(form.iddocnoticia.vars.prototype.nombredocnoticia)|e}} {{form_errors(form.iddocnoticia.vars.prototype.nombredocnoticia)|e}}</td>
@@ -89,26 +66,25 @@
             En la vista con el estilo predefinido.
         #}
 
-        {% if form.iddocnoticia|length > 1 %}
+        {% if form.iddocnoticia|length > 0 %}
             {% for docnoticia in form.iddocnoticia %}
             {# Comprobacion para evitar que se imprima el iddocnoticia # 1 (ya impreso) #}
-            {% if loop.index0 > 0 %}
+            
             <li>
-                <table class="form-inline" style="margin-bottom:10px;">
+                <table width='100%'>
                     <tr>
-                        <td width="60%"></td>
-                        <td>{{form_widget(docnoticia.file)}} {{form_errors(docnoticia.file)}}</td>
+                        <td width="60%">
+                        {{form_widget(docnoticia.file)}} {{form_errors(docnoticia.file)}}</td>
                         <td>{{form_widget(docnoticia.nombredocnoticia)}} {{form_errors(docnoticia.nombredocnoticia)}}</td>
                     </tr>
                 </table>
             </li>
-            {% endif %}
             {% endfor %}
         {% endif %}
 
         </ul>
 
-
+        </fieldset>
         </div>
         {{ form_rest(form) }}
         <div class="text-center">        
@@ -120,7 +96,7 @@
     </form>        
 <script type="text/javascript">
 // Obtiene la ul que contiene la colección de etiquetas
-var collectionHolderBen = $('ul.Docnoticia');
+var collectionHolderNoti = $('ul.Docnoticia');
 
 // configura una enlace "Agregar una etiqueta"
 var $addTagLinkBen = $('<input style="margin-left: 0px;" type="button" class="btn" value="Agregar Archivo"><br /><br />');
@@ -128,25 +104,28 @@ var $newLinkLiBen = $('<ul></ul>').append($addTagLinkBen);
 
 jQuery(document).ready(function() {
     // Añade el ancla "Agregar una etiqueta" y las etiquetas li y ul
-    collectionHolderBen.append($newLinkLiBen);
+    collectionHolderNoti.append($newLinkLiBen);
 
     // Añade un enlace para eliminar todas las etiquetas existentes
     // en elementos li del formulario
-    collectionHolderBen.find('li').each(function() {
+    collectionHolderNoti.find('li').each(function() {
         addTagFormDeleteLink($(this));
     });
 
     // cuenta las entradas actuales en el formulario (p. ej. 2),
     // la usa como índice al insertar un nuevo elemento (p. ej. 2)
-    collectionHolderBen.data('index', collectionHolderBen.find(':input').length);
+    collectionHolderNoti.data('index', collectionHolderNoti.find(':input').length);
 
     $addTagLinkBen.on('click', function(e) {
         // evita crear el enlace con una "#" en la URL
         e.preventDefault();
 
         // añade una nueva etiqueta form (ve el siguiente bloque de código)
-        addTagForm(collectionHolderBen, $newLinkLiBen);
+        addTagForm(collectionHolderNoti, $newLinkLiBen);
     });
+});
+$("#todos").click(function(){
+    $("#sigesrhi_adminbundle_noticiatype_idcentro option").prop('selected', true);
 });
 </script>
 {% endblock %}

@@ -33,7 +33,8 @@ class Docnoticia
     /**
      * @var string
      *
-     * @ORM\Column(name="nombredocnoticia", type="string", length=25, nullable=true)
+     * @ORM\Column(name="nombredocnoticia", type="string", length=25, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre del archivo")
      * @Assert\Length(
      * max = "25",
      * maxMessage = "El nombre de la noticia no debe exceder los {{limit}} caracteres"
@@ -45,7 +46,6 @@ class Docnoticia
      * @var string
      *
      * @ORM\Column(name="rutadocnoticia", type="string", length=50, nullable=false)
-     * @Assert\NotNull(message="Debe ingresar la ruta o nombre del documento o archivo")
      * @Assert\Length(
      * max = "100",
      * maxMessage = "La ruta de la noticia no debe exceder los {{limit}} caracteres"
@@ -57,7 +57,7 @@ class Docnoticia
     /**
      * @Assert\File(
      * maxSize="2048k",
-     * mimeTypes = {"image/jpeg", "image/png", "application/pdf", "application/msword"},
+     * mimeTypes = {"image/jpeg", "image/png", "application/pdf", "application/msword", "application/zip"},
      * maxSizeMessage = "El tamaño maximo permitido es 2MB.",
      * mimeTypesMessage = "Por favor suba un archivo válido (formato JPEG, PNG, PDF o DOC)."
      * )

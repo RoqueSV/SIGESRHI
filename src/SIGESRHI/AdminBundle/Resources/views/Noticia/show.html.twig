@@ -10,7 +10,8 @@ function eliminar() {
 }
 </script>
 <style type="text/css">
-    ul.a {list-style-type:circle; padding-left: 10px;}
+    ul.a {list-style-type:circle; padding-left: 20px;}
+    li.b {list-style-type:none; padding-left: 10px;}
 </style>
 {% if app.session.started %}
     {% for flashMessage in app.session.flashbag.get('new') %}
@@ -20,30 +21,85 @@ function eliminar() {
     {% endfor %}
 {% endif %}
     <h3 class="text-center"> Datos registrados </h3>
-    <fieldset><legend>Fecha Registro noticia: {{ entity.fechanoticia|date('Y-m-d H:i:s')|fecha }}</legend>
-    <table class="table table-bordered table-hover mitable" border='1' width='100%' align='center'>
+    <fieldset><legend>Fecha  de Registro: {{ entity.fechanoticia|date('Y-m-d H:i:s')|fecha }}</legend>
+    <div class="text-centered">
+    <table border='0' width='100%' align='center'>
         <br>
         <tr>
-            <th width="25%"><bold>Titulo</bold></th>
-            <td>{{ entity.asuntonoticia }}</td>
+            <td><h3 class="text-center"> {{ entity.asuntonoticia }} </h3></td>
         </tr>
+        <tr>          
+            <td align="center">{{ entity.contenidonoticia }}</td>
+        </tr>
+        {% set longitud =  (entity.iddocnoticia|length)-1 %} {#Obtengo numero de documentos#}
+        {% if longitud >= 0 %}                
+        {% for i in 0..longitud if longitud >= 0 %}
+        {% set ext = entity.iddocnoticia[i].rutadocnoticia|split('.',2) %}
+            {% if ext[1] == 'jpeg' or ext[1] == 'jpg' or ext[1] == 'png' %}
+            <tr>
+                <td align="center">                    
+                    <img width="400px" height="450px" src="{{asset('uploads/docs_docsnoticia/' ~ entity.iddocnoticia[i].rutadocnoticia)}}"  title="{{ entity.iddocnoticia[i].nombredocnoticia }}" />
+                    <li class="b"><a href="#myModal{{ i }}" data-toggle="modal">Ver</a></li>
+                    <!-- Modal -->
+                    <div id="myModal{{ i }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:800px;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="{{asset('uploads/docs_docsnoticia/' ~ entity.iddocnoticia[i].rutadocnoticia)}}">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+                        </div>
+                    </div>
+                </td>                                                
+            </tr> 
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+    </table>
+    </div>
+    <fieldset><legend>Descargas:</legend>
+    <table>                
+        {% set longitud =  (entity.iddocnoticia|length)-1 %} {#Obtengo numero de documentos#}
+        {% set siencontro = 0 %}
+        {% if longitud >= 0 %}                
         <tr>
-            <th><bold>Contenidonoticia</bold></th>
-            <td>{{ entity.contenidonoticia }}</td>
-        </tr> 
+        <td colspan ="2"><ul class="a">
+        {% for i in 0..longitud if longitud >= 0 %}
+            {% set ext = entity.iddocnoticia[i].rutadocnoticia|split('.',2) %}
+            {% if ext[1] == 'pdf' or ext[1] == 'doc' or ext[1] == 'docx' %}            
+                <li><a href="{{asset('uploads/docs_docsnoticia/' ~ entity.iddocnoticia[i].rutadocnoticia)}}" target="_blank">{{entity.iddocnoticia[i].nombredocnoticia }}</a></li>
+                {% set siencontro = 1 %}
+            {% endif %}
+        {% endfor %}
+        </ul></td>
+        </tr>
+        {% endif %}
+        {% if siencontro == 0 %}
+        <tr>
+            <td colspan="2">
+                No hay descargas disponibles
+            </td>
+        </tr>
+        {% endif %}            
+    </table>      
+    </fieldset> 
+    <br><br>
+    <table class="table table-bordered mitable">
         <tr>
             <th colspan="2"><bold>Publicación</bold></th>
         </tr>           
         <tr>
-            <th><bold>Inicio</bold></th>
+            <th><bold>Inicio publicación</bold></th>
             <td>{{ entity.fechainicionoticia|date('Y-m-d')|fecha }}</td>
         </tr>
         <tr>
-            <th><bold>Fechafinnoticia</bold></th>
+            <th><bold>Fin publicación</bold></th>
             <td>{{ entity.fechafinnoticia|date('Y-m-d')|fecha }}</td>
         </tr> 
         <tr>
-            <th><bold>A quien se publicará</bold></th>
+            <th><bold>A quien se publica</bold></th>
             <td>
             <ul class="a">
                 {% for centros in centrosnoticia %}
@@ -55,20 +111,21 @@ function eliminar() {
     </table>
     </fieldset>
 <br>
-<div class="text-center">
+<div class="text-center">        
+    {% if nogrid == 0 %}
+        <button type="button" class="btn" onclick="window.history.back(1);">Regresar</button>
+    {% else %}
         <a href="{{ path('noticia') }}" class="btn">
-            Regresar
+            Regresar al listado
         </a>
-        <a href="{{ path('noticia_edit', { 'id': entity.id }) }}" class="btn">
-            Editar
-        </a>
-        <button type="button" onClick="eliminar();" class="btn btn-danger" id="form_borrar">Borrar</button>   
-        <a class="btn btn-info" href="{{ path('noticia') }}">
-         Vista previa
-        </a>
-        <form action="{{ path('noticia_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {#{ form_widget(delete_form) }#}
-        </form>                 
+    {% endif %}
+    <a href="{{ path('noticia_edit', { 'id': entity.id }) }}" class="btn">
+        Editar
+    </a>
+    <button type="button" onClick="eliminar();" class="btn btn-danger" >Borrar</button>   
+    <form action="{{ path('noticia_delete', { 'id': entity.id, 'from': 1 }) }}" id="form_borrar" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
+        {#{ form_widget(delete_form) }#}
+    </form>                 
 </div>
 {% endblock %}

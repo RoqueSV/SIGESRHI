@@ -14,7 +14,7 @@ class NoticiaType extends AbstractType
             ->add('asuntonoticia','text',array(
                 'label'=>'Titulo:',
                 'attr'=>array(
-                    'class'=>'input-medium',
+                    'class'=>'input-xxlarge',
                     'data-bvalidator'=>'required'),                                
                 ))
             ->add('fechainicionoticia','date',array(
@@ -42,10 +42,11 @@ class NoticiaType extends AbstractType
                 ))
             ->add('iddocnoticia', 'collection', array(
                 'type' => new DocnoticiaType(),
-                'label' => ' hghghj',
+                'label' => ' ',
                 'by_reference' => false,
                 'allow_add' => true, 
                 'allow_delete' => true,
+                'by_reference' => false,
                 ))
         ;
     }

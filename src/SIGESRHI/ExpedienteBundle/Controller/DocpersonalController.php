@@ -89,7 +89,9 @@ class DocpersonalController extends Controller
                                                                                     'idexpediente' => $idexp,
                                                                                     ));
         $var = $request->get('nogrid');
-        $nogrid = (isset($var))?0:1;
+        $var2 = $request->get('noasp');
+        $nogrid = (isset($var))?$var:1;
+        $noasp = (isset($var2))?$var2:0;
 
         $entity  = new Docpersonal();
         $entity->setIdexpediente($expediente);
@@ -113,25 +115,35 @@ class DocpersonalController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('new','Documento Registrado correctamente');
-            return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $entity->getId(), 'exp' => $idexp )));
-            return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
+            if($noasp==0){
+                return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $entity->getId(), 'exp' => $idexp, 'nogrid' => $nogrid, 'noasp' => $noasp, )));
+            }elseif ($noasp==1) {
+                return $this->redirect($this->generateUrl('docpersonal_new_empleado', array('id' => $idexp, 'nogrid' => $nogrid, 'noasp' => $noasp, )));   
+            }    
+            /*return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
             'entity' => $entity,
             'expediente' => $expedienteinfo,
             'documentos' => $Documentos,
             'form'   => $form->createView(),
             'nogrid' => $nogrid,
-        ));
+            'noasp' => $noasp,
+        ));*/
         }
 
         $this->get('session')->getFlashBag()->add('errornew','Errores en el Documento registrado');
-        return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $entity->getId(), 'exp' => $idexp )));
-        return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
+        if($noasp==0){
+            return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $entity->getId(), 'exp' => $idexp, 'nogrid' => $nogrid, 'noasp' => $noasp, )));
+        }elseif($noasp==1){
+            return $this->redirect($this->generateUrl('docpersonal_new_empleado', array('id' => $idexp, 'nogrid' => $nogrid, 'noasp' => $noasp, )));
+        }
+        /*return $this->render('ExpedienteBundle:Docpersonal:new.html.twig', array(
             'entity' => $entity,
             'expediente' => $expedienteinfo,
             'documentos' => $Documentos,
             'form'   => $form->createView(),
             'nogrid' => $nogrid,
-        ));
+            'noasp' => $noasp,
+        ));*/
     }
 
     /**
@@ -150,13 +162,8 @@ class DocpersonalController extends Controller
                                                                                         ));
         $var = $request->get('nogrid');
         $var2 = $request->get('noasp');
-        if(isset($var)){
-          $nogrid = 0;
-        }
-        else{
-          $nogrid = 1;
-        }
-        $noasp = (isset($var2))?1:0;
+        $nogrid = (isset($var))?$var:1;
+        $noasp = (isset($var2))?$var2:0;
         $entity = new Docpersonal();
         $entity->setIdexpediente($expediente);
         
@@ -240,7 +247,10 @@ class DocpersonalController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Docpersonal entity.');
         }
-
+        $var = $request->get('nogrid');
+        $var2 = $request->get('noasp');
+        $nogrid = (isset($var))?$var:1;
+        $noasp = (isset($var2))?$var2:0;
         //$deleteForm = $this->createDeleteForm($id);
         //$editForm = $this->createForm(new DocpersonalType(), $entity);
         //$editForm->bind($request);
@@ -257,14 +267,37 @@ class DocpersonalController extends Controller
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('new','Registro de Documentación Personal actualizada correctamente');            
-            return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $id,'exp' => $exp)));
+            if($noasp==0){
+                return $this->redirect($this->generateUrl('docpersonal_new', array(
+                    'id' => $id,
+                    'exp' => $exp,
+                    'nogrid' => $nogrid,
+                    'noasp' => $noasp,
+                    )));
+            }elseif ($noasp==1) {
+                return $this->redirect($this->generateUrl('docpersonal_new_empleado', array(
+                    'id' => $exp,
+                    'nogrid' => $nogrid,
+                    'noasp' => $noasp,
+                    )));
+            }
         }
 
         $this->get('session')->getFlashBag()->add('errornew','Error en la Actualización de Documentacion Personal');
-        return $this->render('ExpedienteBundle:Docpersonal:new.html.twig',array(
-            'id'      => $id,
-            'exp'   => $exp,
-        ));
+        if($noasp==0){
+            return $this->redirect($this->generateUrl('docpersonal_new', array(
+                'id' => $id,
+                'exp' => $exp,
+                'nogrid' => $nogrid,
+                'noasp' => $noasp,
+                )));    
+        }elseif ($noasp==1) {
+            return $this->redirect($this->generateUrl('docpersonal_new_empleado', array(
+                'id' => $exp,
+                'nogrid' => $nogrid,
+                'noasp' => $noasp,
+                )));
+        }
     }
 
     /**
@@ -277,17 +310,40 @@ class DocpersonalController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ExpedienteBundle:Docpersonal')->find($id);
 
+        $var = $request->get('nogrid');
+        $var2 = $request->get('noasp');
+        $nogrid = (isset($var))?$var:1;
+        $noasp = (isset($var2))?$var2:0;
+
         if (!$entity) {
             //throw $this->createNotFoundException('Unable to find Docpersonal entity.');
-            $this->get('session')->getFlashBag()->add('errornew','Error al borrar el registro de Documentación Personal');            
-            return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $id,'exp' => $exp)));
+            $this->get('session')->getFlashBag()->add('errornew','Error al borrar el registro de Documentación Personal');
+            if($noasp==0){            
+                return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $id,'exp' => $exp,'exp' => $exp,'nogrid' => $nogrid,'noasp' => $noasp,)));
+            }elseif($noasp==1){
+                return $this->redirect($this->generateUrl('docpersonal_new_empleado', array('id' => $exp,'nogrid' => $nogrid,'noasp' => $noasp,)));
+            }
         }
 
         $em->remove($entity);
         $em->flush();
     
         $this->get('session')->getFlashBag()->add('new','Registro de Documentación Personal Borrado correctamente');            
-        return $this->redirect($this->generateUrl('docpersonal_new', array('id' => $id,'exp' => $exp)));
+        if($noasp==0){
+            return $this->redirect($this->generateUrl('docpersonal_new', array(
+                'id' => $id,
+                'exp' => $exp,
+                'nogrid' => $nogrid,
+                'noasp' => $noasp,
+                )));
+        }
+        elseif($noasp==1){
+            return $this->redirect($this->generateUrl('docpersonal_new_empleado', array(
+                'id' => $exp,
+                'nogrid' => $nogrid,
+                'noasp' => $noasp,
+                )));
+        }
         //return $this->redirect($this->generateUrl('docpersonal'));
     }
 
@@ -335,7 +391,7 @@ class DocpersonalController extends Controller
         $rowAction1->manipulateRender(
             function ($action, $row)
             {
-                $action->setRouteParameters(array('id','noasp'=>1));
+                $action->setRouteParameters(array('id','noasp'=>1,'noasp'=>1));
                 return $action;
             }
         );
@@ -371,13 +427,8 @@ class DocpersonalController extends Controller
 
         $var = $request->get('nogrid');
         $var2 = $request->get('noasp');
-        if(isset($var)){
-          $nogrid = 0;
-        }
-        else{
-          $nogrid = 1;
-        }
-        $noasp = (isset($var2))?1:0;
+        $nogrid = (isset($var))?$var:1;
+        $noasp = (isset($var2))?$var2:0;
 
         $entity = new Docpersonal();
         $entity->setIdexpediente($expediente);
