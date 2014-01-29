@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="plancapacitacion")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="SIGESRHI\CapacitacionBundle\Repositorio\PlancapacitacionRepository")
  */
 class Plancapacitacion
 {
@@ -33,7 +34,7 @@ class Plancapacitacion
     /**
      * @var integer
      *
-     * @ORM\Column(name="anoplan", type="integer", nullable=false)
+     * @ORM\Column(name="anoplan", type="string", length=4, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el año del plan")
      */
     private $anoplan;

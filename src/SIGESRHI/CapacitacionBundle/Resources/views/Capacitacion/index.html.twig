@@ -1,0 +1,71 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Capacitacion list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tematica</th>
+                <th>Fechacapacitacion</th>
+                <th>Horainiciocapacitacion</th>
+                <th>Horafincapacitacion</th>
+                <th>Lugarcapacitacion</th>
+                <th>Areacapacitacion</th>
+                <th>Objetivocapacitacion</th>
+                <th>Perfilcapacitacion</th>
+                <th>Cupo</th>
+                <th>Metodologia</th>
+                <th>Resultadoscapacitacion</th>
+                <th>Plazocapacitacion</th>
+                <th>Contactocapacitacion</th>
+                <th>Materialcapacitacion</th>
+                <th>Estadocapacitacion</th>
+                <th>Justificacioncambios</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('capacitacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.tematica }}</td>
+                <td>{% if entity.fechacapacitacion %}{{ entity.fechacapacitacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.horainiciocapacitacion }}</td>
+                <td>{{ entity.horafincapacitacion }}</td>
+                <td>{{ entity.lugarcapacitacion }}</td>
+                <td>{{ entity.areacapacitacion }}</td>
+                <td>{{ entity.objetivocapacitacion }}</td>
+                <td>{{ entity.perfilcapacitacion }}</td>
+                <td>{{ entity.cupo }}</td>
+                <td>{{ entity.metodologia }}</td>
+                <td>{{ entity.resultadoscapacitacion }}</td>
+                <td>{% if entity.plazocapacitacion %}{{ entity.plazocapacitacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.contactocapacitacion }}</td>
+                <td>{{ entity.materialcapacitacion }}</td>
+                <td>{{ entity.estadocapacitacion }}</td>
+                <td>{{ entity.justificacioncambios }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('capacitacion_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('capacitacion_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('capacitacion_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

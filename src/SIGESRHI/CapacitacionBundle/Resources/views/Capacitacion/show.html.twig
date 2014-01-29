@@ -1,0 +1,98 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Capacitacion</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Tematica</th>
+                <td>{{ entity.tematica }}</td>
+            </tr>
+            <tr>
+                <th>Fechacapacitacion</th>
+                <td>{{ entity.fechacapacitacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Horainiciocapacitacion</th>
+                <td>{{ entity.horainiciocapacitacion|date('H:i')  }}</td>
+            </tr>
+            <tr>
+                <th>Horafincapacitacion</th>
+                <td>{{ entity.horafincapacitacion|date('H:i')  }}</td>
+            </tr>
+            <tr>
+                <th>Lugarcapacitacion</th>
+                <td>{{ entity.lugarcapacitacion }}</td>
+            </tr>
+            <tr>
+                <th>Areacapacitacion</th>
+                <td>{{ entity.areacapacitacion }}</td>
+            </tr>
+            <tr>
+                <th>Objetivocapacitacion</th>
+                <td>{{ entity.objetivocapacitacion }}</td>
+            </tr>
+            <tr>
+                <th>Perfilcapacitacion</th>
+                <td>{{ entity.perfilcapacitacion }}</td>
+            </tr>
+            <tr>
+                <th>Cupo</th>
+                <td>{{ entity.cupo }}</td>
+            </tr>
+            <tr>
+                <th>Metodologia</th>
+                <td>{{ entity.metodologia }}</td>
+            </tr>
+            <tr>
+                <th>Resultadoscapacitacion</th>
+                <td>{{ entity.resultadoscapacitacion }}</td>
+            </tr>
+            <tr>
+                <th>Plazocapacitacion</th>
+                <td>{{ entity.plazocapacitacion|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Contactocapacitacion</th>
+                <td>{{ entity.contactocapacitacion }}</td>
+            </tr>
+            <tr>
+                <th>Materialcapacitacion</th>
+                <td>{{ entity.materialcapacitacion }}</td>
+            </tr>
+            <tr>
+                <th>Estadocapacitacion</th>
+                <td>{{ entity.estadocapacitacion }}</td>
+            </tr>
+            <tr>
+                <th>Justificacioncambios</th>
+                <td>{{ entity.justificacioncambios }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('capacitacion') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('capacitacion_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('capacitacion_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

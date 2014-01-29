@@ -12,6 +12,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContratacionRepository extends EntityRepository
 {
+  /* Descripción: Función utilizada para obtener la información de un expediente en especifico 
+     Retorno:     Información acerca del expediente indicado
+     Author:      Roquet  */
 	public function obtenerAspiranteValido($idexp)
     {
     return $this->getEntityManager()

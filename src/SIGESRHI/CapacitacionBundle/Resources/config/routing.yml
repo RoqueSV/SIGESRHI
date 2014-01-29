@@ -13,3 +13,7 @@ CapacitacionBundle_capacitador:
 CapacitacionBundle_plancapacitacion:
     resource: "@CapacitacionBundle/Resources/config/routing/plancapacitacion.yml"
     prefix:   /plancapacitacion
+
+CapacitacionBundle_capacitacion:
+    resource: "@CapacitacionBundle/Resources/config/routing/capacitacion.yml"
+    prefix:   /capacitacion

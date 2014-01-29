@@ -121,6 +121,7 @@ sonata_user:
 
 #Bootstrap
 parameters:
+    mopa_bootstrap.form.render_required_asterisk: true
     mopa_bootstrap.form.render_optional_text: false
 
 # Vich

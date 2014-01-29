@@ -1,20 +1,55 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Plancapacitacion creation</h1>
+{% block principal -%}
 
-    <form action="{{ path('plancapacitacion_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
+{% for flashMessage in app.session.flashbag.get('errorcreate') %}
+  <div class="alert alert-danger">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
+    <h3 class="text-center">Registro de plan de capacitaciones</h3>
+    <p class="text-center"> Información general del plan de capacitaciones</p>
+    <br/><br/>
+
+    <form action="{{ path('plancapacitacion_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+        
+        {{ form_row(form.nombreplan) }}
+        {{ form_row(form.anoplan) }}
+        {{ form_row(form.objetivoplan) }}
+        {{ form_row(form.descripcionplan) }}
+        {{ form_row(form.resultadosplan) }}
+        {{ form_row(form.tipoplan) }}
+        {{ form_row(form.idcentro) }}
+
+        {{ form_rest(form) }}
+
+        <div class="text-center">
+           <button type="submit" class="btn btn-primary">Registrar</button>
+           <a href="{{ path('pantalla_capacitaciones') }}"  class="btn" onclick="return confirm('Si cancela, perderá los datos del formulario actual ¿Está seguro de cancelar?')">Cancelar</a>
+        </div>
+        
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('plancapacitacion') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    <script>
+    $(document).ready(function(){
+       $('#sigesrhi_capacitacionbundle_plancapacitaciontype_idcentro_control_group').hide();
+
+       $('#sigesrhi_capacitacionbundle_plancapacitaciontype_tipoplan').change(function(){
+           var tipo_plan =  $('#sigesrhi_capacitacionbundle_plancapacitaciontype_tipoplan').val();
+
+           if(tipo_plan == 'C'){
+              $('#sigesrhi_capacitacionbundle_plancapacitaciontype_idcentro_control_group').show();
+              $('#sigesrhi_capacitacionbundle_plancapacitaciontype_idcentro').prop('required',true);
+           }
+           else{
+              $('#sigesrhi_capacitacionbundle_plancapacitaciontype_idcentro_control_group').hide();
+              $('#sigesrhi_capacitacionbundle_plancapacitaciontype_idcentro').prop('selectedIndex',0);
+              $('#sigesrhi_capacitacionbundle_plancapacitaciontype_idcentro').prop('required',false);
+           }
+
+       });
+    });
+    </script>
+        
 {% endblock %}

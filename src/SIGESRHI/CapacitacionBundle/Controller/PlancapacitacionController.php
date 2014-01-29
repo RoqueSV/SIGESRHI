@@ -35,16 +35,36 @@ class PlancapacitacionController extends Controller
      */
     public function createAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $entity  = new Plancapacitacion();
         $form = $this->createForm(new PlancapacitacionType(), $entity);
         $form->bind($request);
 
+        //Comprobar si ya hay un plan para el año seleccionado
+        $cant_anyo = $em->getRepository('CapacitacionBundle:Plancapacitacion')->comprobarAnyo($entity->getAnoplan());
+
+        if($cant_anyo > 0){
+            $this->get('session')->getFlashBag()->add('errorcreate', 'Error. Ya existe un plan registrado para el año seleccionado!');
+            
+            return $this->render('CapacitacionBundle:Plancapacitacion:new.html.twig', array(
+               'entity' => $entity,
+               'form'   => $form->createView(),
+           ));
+        }
+        /* ******** Fin comprobar año ********* */
+
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+           
             $em->persist($entity);
             $em->flush();
+        
+            //Mandar a pantalla de capacitaciones - Controlador
+            $this->get('session')->getFlashBag()->add('aviso', 'Datos registrados correctamente.');
 
-            return $this->redirect($this->generateUrl('plancapacitacion_show', array('id' => $entity->getId())));
+            $response = $this->forward('CapacitacionBundle:Capacitacion:new', array(
+                        'idplan'  => $entity->getId(),
+                        ));
+            return $response;
         }
 
         return $this->render('CapacitacionBundle:Plancapacitacion:new.html.twig', array(
@@ -62,6 +82,13 @@ class PlancapacitacionController extends Controller
         $entity = new Plancapacitacion();
         $form   = $this->createForm(new PlancapacitacionType(), $entity);
 
+       // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Plan de capacitaciones", $this->get("router")->generate("pantalla_capacitaciones"));
+        $breadcrumbs->addItem("Registrar plan","");
+        
         return $this->render('CapacitacionBundle:Plancapacitacion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),

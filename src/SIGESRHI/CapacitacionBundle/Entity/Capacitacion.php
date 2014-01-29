@@ -26,10 +26,10 @@ class Capacitacion
     /**
      * @var string
      *
-     * @ORM\Column(name="tematica", type="string", length=50, nullable=false)
+     * @ORM\Column(name="tematica", type="string", length=75, nullable=false)
      * @Assert\NotNull(message="Debe ingresar una tematica")
      * @Assert\Length(
-     * max = "50",
+     * max = "75",
      * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -39,7 +39,6 @@ class Capacitacion
      * @var \DateTime
      *
      * @ORM\Column(name="fechacapacitacion", type="date", nullable=false)
-     * @Assert\DateTime()
      */
     private $fechacapacitacion;
 
@@ -47,7 +46,6 @@ class Capacitacion
      * @var \DateTime
      *
      * @ORM\Column(name="horainiciocapacitacion", type="time", nullable=false)
-     * @Assert\DateTime()
      */
     private $horainiciocapacitacion;
 
@@ -55,16 +53,15 @@ class Capacitacion
      * @var \DateTime
      *
      * @ORM\Column(name="horafincapacitacion", type="time", nullable=false)
-     * @Assert\DateTime()
      */
     private $horafincapacitacion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lugarcapacitacion", type="string", length=50, nullable=false)
+     * @ORM\Column(name="lugarcapacitacion", type="string", length=100, nullable=false)
       * @Assert\Length(
-     * max = "50",
+     * max = "100",
      * maxMessage = "El nombre del lugar de capacitacion no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -73,9 +70,9 @@ class Capacitacion
     /**
      * @var string
      *
-     * @ORM\Column(name="areacapacitacion", type="string", length=40, nullable=true)
+     * @ORM\Column(name="areacapacitacion", type="string", length=50, nullable=true)
      * @Assert\Length(
-     * max = "40",
+     * max = "50",
      * maxMessage = "El nombre del area de capacitacion no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -95,9 +92,9 @@ class Capacitacion
     /**
      * @var string
      *
-     * @ORM\Column(name="perfilcapacitacion", type="string", length=150, nullable=true)
+     * @ORM\Column(name="perfilcapacitacion", type="string", length=250, nullable=true)
      * @Assert\Length(
-     * max = "150",
+     * max = "250",
      * maxMessage = "El perfil de capacitacion no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -124,7 +121,7 @@ class Capacitacion
     /**
      * @var string
      *
-     * @ORM\Column(name="resultadoscapacitacion", type="string", length=500, nullable=true)
+     * @ORM\Column(name="resultadoscapacitacion", type="text", length=500, nullable=true)
      * max = "500",
      * maxMessage = "Los resultados de la capacitacion no debe exceder los {{limit}} caracteres"
      * )
@@ -135,16 +132,15 @@ class Capacitacion
      * @var \DateTime
      *
      * @ORM\Column(name="plazocapacitacion", type="date", nullable=true)
-     * @Assert\DateTime()
      */
     private $plazocapacitacion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="contactocapacitacion", type="string", length=50, nullable=true)
+     * @ORM\Column(name="contactocapacitacion", type="string", length=70, nullable=true)
      * @Assert\Length(
-     * max = "50",
+     * max = "70",
      * maxMessage = "Contacto de capacitacion no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -582,10 +578,10 @@ class Capacitacion
     /**
      * Set idplan
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Plancapacitacion $idplan
+     * @param \SIGESRHI\CapacitacionBundle\Entity\Plancapacitacion $idplan
      * @return Capacitacion
      */
-    public function setIdplan(\SIGESRHI\AdminBundle\Entity\Plancapacitacion $idplan = null)
+    public function setIdplan(\SIGESRHI\CapacitacionBundle\Entity\Plancapacitacion $idplan = null)
     {
         $this->idplan = $idplan;
     
@@ -605,10 +601,10 @@ class Capacitacion
     /**
      * Set idcapacitador
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Capacitador $idcapacitador
+     * @param \SIGESRHI\CapacitacionBundle\Entity\Capacitador $idcapacitador
      * @return Capacitacion
      */
-    public function setIdcapacitador(\SIGESRHI\AdminBundle\Entity\Capacitador $idcapacitador = null)
+    public function setIdcapacitador(\SIGESRHI\CapacitacionBundle\Entity\Capacitador $idcapacitador = null)
     {
         $this->idcapacitador = $idcapacitador;
     

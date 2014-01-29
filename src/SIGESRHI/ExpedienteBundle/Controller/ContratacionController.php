@@ -259,7 +259,7 @@ class ContratacionController extends Controller
                
              //Registrar acuerdo - PENDIENTE NOMBRAMIENTO
              $accionpersonal  = new Accionpersonal();
-             $tipoaccion = $em->getRepository('ExpedienteBundle:Tipoaccion')->find(6);
+             $tipoaccion = $em->getRepository('ExpedienteBundle:Tipoaccion')->find(7);
              
              if(date("Y", strtotime(date_format($entity->getFechainiciocontratacion(),'Y-m-d'))) == date("Y", strtotime(date_format($entity->getFechafincontrato(),'Y-m-d')))) {
              $fechaini = $this->fechaConvertMes($entity->getFechainiciocontratacion());

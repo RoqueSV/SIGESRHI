@@ -1,0 +1,30 @@
+capacitacion:
+    pattern:  /
+    defaults: { _controller: "CapacitacionBundle:Capacitacion:index" }
+
+capacitacion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "CapacitacionBundle:Capacitacion:show" }
+
+capacitacion_new:
+    pattern:  /new
+    defaults: { _controller: "CapacitacionBundle:Capacitacion:new" }
+
+capacitacion_create:
+    pattern:  /create
+    defaults: { _controller: "CapacitacionBundle:Capacitacion:create" }
+    requirements: { _method: post }
+
+capacitacion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "CapacitacionBundle:Capacitacion:edit" }
+
+capacitacion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "CapacitacionBundle:Capacitacion:update" }
+    requirements: { _method: post|put }
+
+capacitacion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "CapacitacionBundle:Capacitacion:delete" }
+    requirements: { _method: post|delete }
