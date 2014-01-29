@@ -447,12 +447,26 @@ class SolicitudempleoController extends Controller
                     {
                     $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo")); 
                     $breadcrumbs->addItem("Registrar contratación", $this->get("router")->generate("contratacion_empleado"));
-                    $breadcrumbs->addItem($entity->getIdexpediente()->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("contratacion_new", array('id'=>$entity->getIdexpediente()->getId(),'tipogrid'=>2)));
+                    $breadcrumbs->addItem($entity->getIdexpediente()->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("contratacion_new", array('id'=>$entity->getIdexpediente()->getIdsolicitudempleo(),'tipogrid'=>2)));
                     }
 
                 $breadcrumbs->addItem("Consultar Solicitud", $this->get("router")->generate("hello_page"));
     
             }//var=1
+
+            if($var == 2){
+
+                //Aspirante
+                if($entity->getIdexpediente()->getTipoexpediente()=="I")
+                    {
+                    $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+                    $breadcrumbs->addItem("validar expediente", $this->get("router")->generate("expediente_aspirantes"));
+                    $breadcrumbs->addItem($entity->getNombrecompleto(), $this->get("router")->generate("expediente_validar",array('id'=>$entity->getIdexpediente()->getId(), 'exp'=>$entity->getIdexpediente()->getId())));
+                    }
+                
+                $breadcrumbs->addItem("Consultar Solicitud", $this->get("router")->generate("hello_page"));
+    
+            }//var=2
         }//isset
         
         //fin camino de miga

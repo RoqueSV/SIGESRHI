@@ -50,7 +50,7 @@ class Evaluacion
     /**
      * @var \SIGESRHI\ExpedienteBundle\Entity\Empleado
      *
-     * @ORM\ManyToOne(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Empleado")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Empleado", inversedBy="idevaluacion")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idempleado", referencedColumnName="id")
      * })
@@ -75,12 +75,27 @@ class Evaluacion
      */
     private $puestoemp;
 
+     /**
+     * @var integer
+     *
+     * @ORM\Column(name="puestojefe", type="integer", nullable=true)
+     * @Assert\NotNull(message="Debe ingresar el puesto del empleado evaluador")
+     */
+    private $puestojefe;
+
     /**
      * @var string
      *
      * @ORM\Column(name="observacion", type="string", length=250, nullable=true)
      */
     private $observacion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comentario", type="string", length=250, nullable=true)
+     */
+    private $comentario;
 
     /**
      * @var string
@@ -238,6 +253,29 @@ class Evaluacion
         return $this->puestoemp;
     }
 
+    /**
+     * Set puestojefe
+     *
+     * @param integer $puestojefe
+     * @return Evaluacion
+     */
+    public function setPuestojefe($puestojefe)
+    {
+        $this->puestojefe = $puestojefe;
+    
+        return $this;
+    }
+
+    /**
+     * Get puestojefe
+     *
+     * @return integer 
+     */
+    public function getPuestojefe()
+    {
+        return $this->puestojefe;
+    }
+
      /**
      * Set observacion
      *
@@ -261,6 +299,28 @@ class Evaluacion
         return $this->observacion;
     }
 
+    /**
+     * Set comentario
+     *
+     * @param string $comentario
+     * @return Evaluacion
+     */
+    public function setComentario($comentario)
+    {
+        $this->comentario = $comentario;
+    
+        return $this;
+    }
+
+    /**
+     * Get comentario
+     *
+     * @return string 
+     */
+    public function getComentario()
+    {
+        return $this->comentario;
+    }
 
      /**
      * Set tiemposupervisar

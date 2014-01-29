@@ -13,8 +13,6 @@
 <form action="{{ path('evaluacion_create') }}" method="post" {{ form_enctype(form) }} id="frm_evaluacion">
     
     <h4>I. DATOS GENERALES</h4>
-        <br>
-        <br>
 
         <table class="table table-bordered table-centered table-hover mitable" width="90%">
             <tr><th width="30%">Nombre del empleado: </th><td>{{empleado.idexpediente.idsolicitudempleo.nombrecompleto}}</td></tr>
@@ -45,7 +43,6 @@
 
 
         <h4>II. EVALUACIÓN GENERAL POR PARTE DEL JEFE INMEDIATO</h4>
-<br><br>
 
     {% for factor in formulario.factores %}
     <table border="2" class="table-bordered">
@@ -65,7 +62,7 @@
         </tr>
     </table>
     <br>
-
+    <br>
     {% endfor %}
 
 <div class="hide">    
@@ -76,9 +73,18 @@
     {{form_row(form.puestoemp)}}
     {{form_row(form.idempleado)}}
     {{form_row(form.idjefe)}}
+    {{form_row(form.puestojefe)}}
     <input type="hidden" name="numfactores" value="{{formulario.factores|length}}"/>
 </div>
 
+
+
+ Tiempo de supervisar al empleado:  <input type="text" name="supervisa" id="supervisa" size="100" required="required"/>
+<br>
+    Comentarios: &nbsp;&nbsp;&nbsp;
+    <textarea rows="3" cols="100" required="required" name="comentario" id="comentario"></textarea> 
+
+<br><br>
     
     {{ form_rest(form) }}
         <p>
@@ -89,6 +95,11 @@
         </p>
     </form>
 
+<style>
+    textarea {
+        width:70%;
+    }
+</style>
 {#
 <script type='text/javascript'>
 function registrar() {

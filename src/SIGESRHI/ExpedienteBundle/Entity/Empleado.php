@@ -11,7 +11,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  *
  * @ORM\Table(name="empleado")
  * @ORM\Entity
- * @GRID\Source(columns="id , codigoempleado, idexpediente.idsolicitudempleo.nombrecompleto, idrefrenda.idplaza.nombreplaza,idrefrenda.id, idrefrenda.puestoempleado.puestojefe.id", groups={"grupo_empleados_a_evaluar"})
+ * @GRID\Source(columns="id , codigoempleado, idexpediente.idsolicitudempleo.nombrecompleto, idrefrenda.idplaza.nombreplaza,idrefrenda.id, idrefrenda.puestoempleado.puestojefe.id, idevaluacion.semestre, idevaluacion.anoevaluado", groups={"grupo_empleados_a_evaluar"})
  */
 class Empleado
 {
@@ -22,7 +22,7 @@ class Empleado
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="empleado_id_seq", allocationSize=1, initialValue=1)
-     * @GRID\Column(field="id", groups={"grupo_empleados_a_evaluar"},visible=false, filterable=false)
+     * @GRID\Column(field="id", groups={"grupo_empleados_a_evaluar"},visible=true, filterable=false)
      */
     private $id;
 
@@ -78,6 +78,13 @@ class Empleado
      * @ORM\OneToMany(targetEntity="Empleadoconcurso", mappedBy="idempleado")
      */
     private $idempleadoconcurso;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\SIGESRHI\EvaluacionBundle\Entity\Evaluacion", mappedBy="idempleado")
+     * @GRID\Column(field="idevaluacion.semestre", groups={"grupo_empleados_a_evaluar"}, visible=true, joinType="left", filterable=false, title="Semestre")
+     * @GRID\Column(field="idevaluacion.anoevaluado", groups={"grupo_empleados_a_evaluar"}, visible=true, joinType="left", filterable=false, title="Año")
+     */
+    private $idevaluacion;
 
     public function __toString() {
         return $this->codigoempleado;
@@ -173,6 +180,7 @@ class Empleado
         $this->idcontratacion = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idrefrenda = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idempleadoconcurso = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idevaluacion = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -273,5 +281,39 @@ class Empleado
     public function getIdempleadoconcurso()
     {
         return $this->idempleadoconcurso;
+    }
+
+
+    /**
+     * Add idevaluacion
+     *
+     * @param \SIGESRHI\EvaluacionBundle\Entity\Evaluacion $idevaluacion
+     * @return Evaluacion
+     */
+    public function addIdevaluacion(\SIGESRHI\EvaluacionBundle\Entity\Evaluacion $idevaluacion)
+    {
+        $this->idevaluacion[] = $idevaluacion;
+    
+        return $this;
+    }
+
+    /**
+     * Remove Evaluacion
+     *
+     * @param \SIGESRHI\EvaluacionBundle\Entity\Evaluacion $idevaluacion
+     */
+    public function removeIdevaluacion(\SIGESRHI\EvaluacionBundle\Entity\Evaluacion $idevaluacion)
+    {
+        $this->idevaluacion->removeElement($idevaluacion);
+    }
+
+    /**
+     * Get idevaluacion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdevaluacion()
+    {
+        return $this->idevaluacion;
     }
 }

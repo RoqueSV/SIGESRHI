@@ -3,9 +3,23 @@
 {% block principal -%}
 
 <div class="text-center">
-<h4>Seleccione el puesto para evaluar a sus subordinados</h4>
+
+<h4>SELECCIÓN DE PUESTO PARA EVALUAR EMPLEADOS</h4>
 </div>
 
+Datos Generales:
+<table class="table table-bordered table-hover mitable tablachica" >
+	<tr>
+		<th>Código: </th>
+		<td>{{empleado.codigoempleado}}</td>
+	</tr>
+	<tr>
+		<th width="25%">Nombre: </th>
+		<td>{{empleado.idexpediente.idsolicitudempleo.nombrecompleto}}</td>
+	</tr>
+</table>
+
+Puestos en la actualidad:
 <table class="table table-bordered table-hover mitable">
 	<tr>
 		<th width="40%">Plaza</th><th width="40%">Unidad</th><th width="10%">Seleccionar</th>

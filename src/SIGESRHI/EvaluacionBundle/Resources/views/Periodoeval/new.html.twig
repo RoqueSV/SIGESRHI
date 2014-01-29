@@ -1,0 +1,49 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+{% for flashMessage in app.session.flashbag.get('new') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('new_error') %}
+    <div class="alert alert-danger">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+
+    <h4 class="text-center">REGISTRO DE PERIODOS DE EVALUACI&Oacute;N</h4>
+    <br>
+
+
+<p class="help-block text-center">Registre el periodo de tiempo para el cual estará disponible la realización de evaluaciones.</p>
+<br>
+    <form action="{{ path('periodoeval_create') }}" method="post" {{ form_enctype(form) }}>
+        
+        <table class="table table-bordered mitable tablachica centered-table form-inline">
+            <tr>
+                <th>{{form_label(form.fechainicio)}}</th><td>{{form_widget(form.fechainicio)}} {{form_errors(form.fechainicio)}}</td>
+            </tr>
+            <tr>
+                <th>{{form_label(form.fechafin)}}</th><td>{{form_widget(form.fechafin)}} {{form_errors(form.fechafin)}}</td>
+            </tr>
+            <tr>
+                <th>{{form_label(form.semestre)}}</th><td>{{form_widget(form.semestre)}} {{form_errors(form.semestre)}}</td>
+            </tr>
+        </table>
+
+        <br>
+        
+            {{form_rest(form)}}
+        <p class="text-center">
+            
+            <br><br>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="button" class="btn" onclick="location.href='{{path('periodoeval')}}'">Cancelar</button>
+        </p>
+    </form>
+
+
+{% endblock %}
