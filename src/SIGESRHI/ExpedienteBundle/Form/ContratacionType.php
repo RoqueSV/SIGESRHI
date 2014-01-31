@@ -42,6 +42,7 @@ class ContratacionType extends AbstractType
             ->add('fechaautorizacion',null, array(
                   'label'=>'Fecha de autorización', 
                   'widget' => 'single_text',
+                  'required'  => true,
                   'format'=>'dd-MM-yyyy',
                   'attr' => array('class' => 'input-small', 'data-bvalidator'=>'required', 'readonly'=>true))) 
             ->add('numoficio',null,array(

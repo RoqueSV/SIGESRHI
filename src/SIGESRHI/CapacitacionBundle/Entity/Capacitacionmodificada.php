@@ -436,10 +436,10 @@ class Capacitacionmodificada
     /**
      * Set idcapacitacion
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Capacitacion $idcapacitacion
+     * @param \SIGESRHI\CapacitacionBundle\Entity\Capacitacion $idcapacitacion
      * @return Capacitacionmodificada
      */
-    public function setIdcapacitacion(\SIGESRHI\AdminBundle\Entity\Capacitacion $idcapacitacion = null)
+    public function setIdcapacitacion(\SIGESRHI\CapacitacionBundle\Entity\Capacitacion $idcapacitacion = null)
     {
         $this->idcapacitacion = $idcapacitacion;
     

@@ -24,11 +24,13 @@ margin-bottom: 0px;
     {{ include('ExpedienteBundle:Ayuda/Docpersonal:registro.html.twig')}}
 
     {% for flashMessage in app.session.flashbag.get('new') %}
+    <br>
         <div class="alert alert-success">
             <p> {{ flashMessage }} </p>
         </div>
     {% endfor %}
     {% for flashMessage in app.session.flashbag.get('errornew') %}
+    <br>
         <div class="alert alert-danger">
             <p> {{ flashMessage }} </p>
         </div>

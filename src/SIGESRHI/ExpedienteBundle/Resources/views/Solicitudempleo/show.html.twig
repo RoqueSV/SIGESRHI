@@ -3,6 +3,7 @@
 {% block principal -%}
 
 {% for flashMessage in app.session.flashbag.get('show') %}
+<br/>
     <div class="alert alert-success">
         <p> {{ flashMessage }} </p>
     </div>
@@ -354,7 +355,7 @@
     {% if nogrid == 0 %}
 
         <div class="text-center">
-        <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id, 'ruta':ruta, 'vista':vista_retorno }) }}" class="btn btn-primary">Generar PDF</a>
+        <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id, 'ruta':ruta, 'vista':vista_retorno, 'nogrid':nogrid }) }}" class="btn btn-primary">Generar PDF</a>
         <button type="button" class="btn" onclick="window.history.back(1);">Regresar</button>
         {#{% if entity.numsolicitud == 0 %}
         <a href="{{ path('solicitud_pruebanumsol', { 'id': entity.id }) }}" class="btn">Asignar Numero de Solicitud</a>
@@ -363,7 +364,7 @@
 
     {% else %}
         <div class="text-center">
-        <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id, 'ruta':ruta, 'vista':vista_retorno }) }}" class="btn btn-primary">Generar PDF</a>
+        <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id, 'ruta':ruta, 'vista':vista_retorno, 'nogrid':nogrid }) }}" class="btn btn-primary">Generar PDF</a>
         <button type="button" class="btn" onclick="location.href='{% if entity.idexpediente.tipoexpediente == 'I' or entity.idexpediente.tipoexpediente == 'A' %} {{ path ('solicitud_caspirante') }} {% elseif entity.idexpediente.tipoexpediente == 'E' or entity.idexpediente.tipoexpediente == 'T' %}{{ path ('solicitud_cempleado') }} {% elseif entity.idexpediente.tipoexpediente == 'X' %} {{ path('solicitud_cinactivo')}} {% endif %}'">Regresar al listado</button>
         {% if vista_retorno == 1 or vista_retorno == 2 or vista_retorno == 4 or vista_retorno == 5 %}
         <a href="{{ path('solicitud_edit', { 'id': entity.id, 'vista_retorno':vista_retorno }) }}" class="btn">Editar Registro</a>

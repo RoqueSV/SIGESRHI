@@ -11,7 +11,9 @@ class HojaservicioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombreempleado',null, array('label'=>'Nombre empleado'))
+            ->add('nombreempleado',null, array('label'=>'Nombre empleado',
+                  'attr'=>array(
+                  'class'=>'input-xlarge')))
             ->add('dui',null,array('label'=>'DUI No.','attr'=>array('class'=>'input-small','readonly'=>true)))
             ->add('lugardui',null,array('label'=>'Extendido en ','attr'=>array('class'=>'input-medium','readonly'=>true)))
             ->add('lugarnac',null,array('label'=>'Lugar de nacimiento','attr'=>array('class'=>'input-medium')))
@@ -36,7 +38,9 @@ class HojaservicioType extends AbstractType
                   'attr'=>array(
                   'class'=>'input-small telefono', 
                   'data-bvalidator'=>'phone,required')))
-            ->add('educacion',null,array('label'=>'Educación'))
+            ->add('educacion',null,array('label'=>'Educación',
+                  'attr'=>array(
+                  'class'=>'input-xlarge')))
             ->add('fechaingreso',null, array(
                   'label'=>'Fecha de ingreso', 
                   'widget' => 'single_text', 

@@ -160,7 +160,7 @@ class Puntaje
      * @param \SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion $idformulario
      * @return Puntaje
      */
-    public function addIdformulario(\SIGESRHI\AdminBundle\Entity\Formularioevaluacion $idformulario)
+    public function addIdformulario(\SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion $idformulario)
     {
         $this->idformulario[] = $idformulario;
     
@@ -172,7 +172,7 @@ class Puntaje
      *
      * @param \SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion $idformulario
      */
-    public function removeIdformulario(\SIGESRHI\AdminBundle\Entity\Formularioevaluacion $idformulario)
+    public function removeIdformulario(\SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion $idformulario)
     {
         $this->idformulario->removeElement($idformulario);
     }

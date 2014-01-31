@@ -1,6 +1,6 @@
 capacitacion:
     resource: "@CapacitacionBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /capacitacion
 
 evaluacion:
     resource: "@EvaluacionBundle/Resources/config/routing.yml"

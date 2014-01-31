@@ -19,7 +19,7 @@ var bValidatorOptions = {
 			'between':    'Por favor, introduzca un numero entre {0} y {1}.',
 			'required':   'Este campo es obligatorio.',
 			'alpha':      'Por favor, introduzca s\xF3lo caracteres alfab\xE9ticos.',
-			'alphanum':   'Por favor, introduzca s\xF3lo caracteres alfanuméricos.',
+			'alphanum':   'Por favor, introduzca s\xF3lo caracteres alfanum\xE9ricos.',
 			'digit':      'Por favor, introduzca s\xF3lo d\xEDgitos.',
 			'number':     'Por favor, introduzca un n\xFAmero v\xE1lido.',
 			'email':      'Por favor, introduzca un e-mail v\xE1lido.',

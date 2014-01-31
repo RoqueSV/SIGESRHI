@@ -54,6 +54,12 @@ class ContratacionController extends Controller
         $NombrePlazas = new TextColumn(array('id' => 'plazas','source' => true,'field'=>'idsolicitudempleo.idplaza.nombreplaza','title' => 'Plaza solicitada','operatorsVisible'=>false,'joinType'=>'inner'));
         $grid->addColumn($NombrePlazas,3);       
         
+      /* $grid->getColumn('fechaexpediente')->manipulateRenderCell(
+    function($value, $row, $router) {
+        return $router->generate('contratacion_new', array('tipogrid'=> 1));
+    }
+);*/
+
         // Crear
         $rowAction1 = new RowAction('Seleccionar', 'contratacion_new');
         $rowAction1->manipulateRender(
@@ -94,6 +100,20 @@ class ContratacionController extends Controller
                       ->setParameter('tipo','E');
             }
         );   
+
+        $source->manipulateRow(
+          function ($row)
+            {
+             if ( ($row->getField('idempleado.idcontratacion.tipocontratacion') == 1 AND $row->getField('idempleado.idcontratacion.fechafinnom') != null) OR ( $row->getField('idempleado.idcontratacion.tipocontratacion') == 2 AND $row->getField('idempleado.idcontratacion.fechafincontrato') < new \Datetime('now')) ) {
+                $row->setClass('text-error');  // add a css class to the <tr> tag
+                $row->setColor('#E6E8FA');  // set background-color as inline style
+               }
+
+             return $row;
+            }
+        );
+
+
         
         $grid->setId('grid_contratacion');
         $grid->setSource($source);       

@@ -78,7 +78,8 @@ class ReporteController extends Controller
      $request=$this->getRequest();
      $idSol=$request->get('idsol'); 
      $ruta = $request->get('ruta');
-     $vista = $request->get('vista');          
+     $vista = $request->get('vista');   
+     $nogrid = $request->get('nogrid');       
      
     //Incluimos camino de migas 
      $em = $this->getDoctrine()->getManager();
@@ -95,7 +96,7 @@ class ReporteController extends Controller
        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
        $breadcrumbs->addItem("Listado de aspirantes", $this->get("router")->generate("solicitud_caspirante"));
      }
-     $breadcrumbs->addItem("Consultar solicitud", $this->get("router")->generate($ruta,array("id"=>$idSol,"vista_retorno"=>$vista)));
+     $breadcrumbs->addItem("Consultar solicitud", $this->get("router")->generate($ruta,array("id"=>$idSol,"vista_retorno"=>$vista,"nogrid"=>$nogrid)));
      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_solicitudempleo"));
 
      // Nombre reporte

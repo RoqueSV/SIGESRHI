@@ -653,7 +653,7 @@ public function activarEmpleadoAction()
         $em = $this->getDoctrine()->getManager();
         //ver expediente a inhabilitar(Principal)
         if($request->query->get('id')!=null AND $numacuerdo==null) {            
-            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($request->query->get('id'));
+            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleado($request->query->get('id'));
 
             $breadcrumbs = $this->get("white_october_breadcrumbs");
             $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
@@ -681,7 +681,7 @@ public function activarEmpleadoAction()
             }
             else{
                 $em = $this->getDoctrine()->getManager();
-                $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleadoInfo($idexp);
+                $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleado($idexp);
 
                 $breadcrumbs = $this->get("white_october_breadcrumbs");
                 $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
