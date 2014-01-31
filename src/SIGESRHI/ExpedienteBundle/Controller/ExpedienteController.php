@@ -272,7 +272,7 @@ public function validarAction()
     }
 
 /* Confirma un expediente de aspirante como valido*/
-public function confirmarValidoAction($id)
+public function confirmarValidoAction($id,$idsol)
     {
         $request = $this->getRequest();
         
@@ -300,11 +300,11 @@ public function confirmarValidoAction($id)
             $numsolicitud = $num."-".date('Y');
         }
 
-        $entity = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($id);
+        $entity = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($idsol);
 
         $num_anterior=$entity->getNumsolicitud();
         if($num_anterior == 0 ){
-            $entity->setnumsolicitud($numsolicitud);
+            $entity->setNumsolicitud($numsolicitud);
             $em->persist($entity);
             $em->flush();
         }
@@ -663,15 +663,14 @@ public function activarEmpleadoAction()
 
             return $this->render('ExpedienteBundle:Expediente:activar.html.twig', array(          
                 'expediente' => $expedienteinfo,
-                'numerodef' => '',
             ));
         }
 
        //Si viene del formulario donde inserta el num acuerdo
-        elseif($numacuerdo!=null AND $idexp!=null){
-            $acuerdovalido = $em->getRepository('ExpedienteBundle:Expediente')->encontrarAcuerdo($numacuerdo);
-            if($acuerdovalido!=null){
-                $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+        elseif($idexp!=null){
+            //$acuerdovalido = $em->getRepository('ExpedienteBundle:Expediente')->encontrarAcuerdo($numacuerdo);
+            $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idexp);
+            if($entity!=null){
                 $entity -> setTipoexpediente('E');
                 $em -> persist($entity);
                 $em -> flush();
@@ -692,7 +691,6 @@ public function activarEmpleadoAction()
                 $this->get('session')->getFlashBag()->add('error','Ingrese un código de acuerdo válido para el Empleado');
                 return $this->render('ExpedienteBundle:Expediente:activar.html.twig', array(          
                     'expediente' => $expedienteinfo,
-                    'numerodef' => $numacuerdo,
                 ));
             }
         }

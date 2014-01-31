@@ -122,7 +122,7 @@
         <tr align="center">
             <td><a href="{{ 
                     path('expediente_confirm_valid',
-                        { 'id': exp.idexpediente }
+                        { 'id': exp.idexpediente, 'idsol': exp.id }
                         )
                     }}" onclick="return confirm('¿Está seguro de registrarlo como válido? ')" class="btn btn-primary">Aceptar</a></td>
             <td><a href="#" onclick="history.back()" class="btn">Cancelar</a></td>

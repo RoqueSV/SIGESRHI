@@ -100,11 +100,11 @@
     <form action="{{ path('expediente_activar') }}" method="post">
     <table width="100%">
         <tr>
-            <td align="center">Ingrese el código del acuerdo que permite registar al empleado como activo: </td>
-            <td>
-              <input type='text' id='numacuerdo' maxlength='15' name='numacuerdo' data-bvalidator='alphanum,minlength[5],maxlength[15],required' class='input-medium' value={{ numerodef }}>
+            <td colspan="2" align="center">Valide para registar al empleado como activo: </td>
+            
+              <!--<input type='text' id='numacuerdo' maxlength='15' name='numacuerdo' data-bvalidator='alphanum,minlength[5],maxlength[15],required' class='input-medium' value={#{ numerodef }#}>-->
               <input type='hidden' id='idexp' name='idexp' value='{{ exp.idexpediente }}'>
-            </td>
+            
         </tr>
         <tr><td>&nbsp;</td>
         </tr>

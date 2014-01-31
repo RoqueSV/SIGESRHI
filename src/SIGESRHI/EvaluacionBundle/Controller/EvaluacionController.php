@@ -76,16 +76,15 @@ class EvaluacionController extends Controller
         // Get a grid instance
         $grid = $this->get('grid');
 
-/*
+
         $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
         function($query) use ($idrefrenda){
             $query->andWhere("_idrefrenda_puestoempleado_puestojefe.id =:var ")->setParameter('var',$idrefrenda);
              }
             );
-  */  
-    echo "idrefrenda: ".$idrefrenda;
- 
+    
+     
         // Attach the source to the grid
         $grid->setId('grid_consulta_empleados_evaluacion');
         $grid->setSource($source);
@@ -96,6 +95,7 @@ class EvaluacionController extends Controller
         //$grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
         
         $rowAction1 = new RowAction('Registrar', 'evaluacion_new');
+        $rowAction2 = new RowAction('Consultar', 'evaluacion_show');
 
 /* //backup
          $rowAction1->manipulateRender(
@@ -107,42 +107,57 @@ class EvaluacionController extends Controller
         );
 */
 
+        //Consultamos los datos de periodo de evaluacion vigente.
+        $fechaactual = date('d-m-Y');
+        $periodo_query = $em->CreateQuery('
+            select pe.anio, pe.semestre from EvaluacionBundle:periodoeval pe
+            where :fechaactual between pe.fechainicio and pe.fechafin
+            ')->setParameter('fechaactual', $fechaactual);
+        
+        $periodo = $periodo_query->getsingleResult();
+
+        $periodo_evaluar= "Año: ".$periodo['anio']." - Semestre: ".$periodo['semestre'];
+
+        //manipulamos el action de registro
          $rowAction1->manipulateRender(
-            function ($action, $row)use($idrefrenda)
+            function ($action, $row)use($idrefrenda, $periodo)
             {
-             $action->setRouteParameters(array('id','idform'=>1, 'idpuestojefe'=>$idrefrenda, 'idpuestoemp'=> $row->getField('idrefrenda.id')));
-              return $action;
+                if( ($periodo['anio'] == $row->getField('idevaluacion.anoevaluado') ) and $periodo['semestre']==$row->getField('idevaluacion.semestre')  ){
+                   return null;
+                }
+                else{
+                     $action->setRouteParameters(array('id','idform'=>1, 'idpuestojefe'=>$idrefrenda, 'idpuestoemp'=> $row->getField('idrefrenda.id')));
+                    return $action;
+                }
             }
         );
 
-        //Editar columna del action
- /*       $rowAction->manipulateRender(
-        function ($action, $row)
-        {
-            if ($row->getField('quantity') == 0) {
-                $action->setTitle('Sold out');
+        //Manipulamos el action de consulta
+        $rowAction2->manipulateRender(
+            function ($action, $row)use($idrefrenda, $periodo)
+            {
+                if($periodo['anio'] == $row->getField('idevaluacion.anoevaluado') and $periodo['semestre']==$row->getField('idevaluacion.semestre')){
+                    return $action;
+                }
+                else{
+                    return null;
+                }
             }
-
-            if ($row->getField('price') > 20) {
-                return null;
-            }
-
-            return $action;
-        }
         );
 
-        $grid->addRowAction($rowAction);
-    ///editar columna de action
-*/        
+       
         $rowAction1->setColumn('info_column');
+        $rowAction2->setColumn('info_column');
         $grid->addRowAction($rowAction1);     
-
+        $grid->addRowAction($rowAction2);     
+        
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
 
     // Manage the grid redirection, exports and the response of the controller
     return $grid->getGridResponse('EvaluacionBundle:Evaluacion:Empleados_a_Evaluar.html.twig', array(
         'empleado'=>$empleado,
         'refrenda'=> $refrenda,
+        'periodo_evaluar'=>$periodo_evaluar,
         ));
     }
 
@@ -172,8 +187,6 @@ class EvaluacionController extends Controller
                   $var = $request->get('respuesta-'.$i);
                 
                 $aux = explode("-",$var);
-
-                echo "<br> Opcion: ".$i." : ".$aux[0]."-separador-".$aux[1];
 
                 $factor = $em->getRepository('EvaluacionBundle:Factorevaluacion')->find((int)$aux[0]);
                 $opcion = $em->getRepository('EvaluacionBundle:Opcion')->find((int)$aux[1]);
@@ -465,14 +478,15 @@ class EvaluacionController extends Controller
         $request = $this->getRequest();
         $incidente = $request->get('registra_incidente');
 
-
+/*
         if($incidente == "SI"){
             return $this->render('EvaluacionBundle:Evaluacion:incidentes.html.twig');
         }
         if($incidente == "NO"){
             return $this->render('EvaluacionBundle:Evaluacion:SeleccionPuesto.html.twig');
         }
-
+*/
+                  return $this->redirect($this->generateUrl('evaluacion'));
 
     }//finalizarAction()
 }
