@@ -11,7 +11,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  *
  * @ORM\Table(name="empleado")
  * @ORM\Entity
- * @GRID\Source(columns="id , codigoempleado, idexpediente.idsolicitudempleo.nombrecompleto, idrefrenda.idplaza.nombreplaza,idrefrenda.id, idrefrenda.puestoempleado.puestojefe.id, idevaluacion.semestre, idevaluacion.anoevaluado", groups={"grupo_empleados_a_evaluar"})
+ * @GRID\Source(columns="id , codigoempleado, idexpediente.idsolicitudempleo.nombrecompleto, idrefrenda.idplaza.nombreplaza,idrefrenda.id, idrefrenda.puestoempleado.puestojefe.id, idevaluacion.semestre, idevaluacion.anoevaluado, idevaluacion.id", groups={"grupo_empleados_a_evaluar"})
  */
 class Empleado
 {
@@ -83,6 +83,7 @@ class Empleado
      * @ORM\OneToMany(targetEntity="\SIGESRHI\EvaluacionBundle\Entity\Evaluacion", mappedBy="idempleado")
      * @GRID\Column(field="idevaluacion.semestre", groups={"grupo_empleados_a_evaluar"}, visible=false, joinType="left", filterable=false, title="Semestre")
      * @GRID\Column(field="idevaluacion.anoevaluado", groups={"grupo_empleados_a_evaluar"}, visible=false, joinType="left", filterable=false, title="Año")
+     * @GRID\Column(field="idevaluacion.id", groups={"grupo_empleados_a_evaluar"}, visible=false, joinType="left", filterable=false, title="Año")
      */
     private $idevaluacion;
 
