@@ -1,0 +1,14 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+	
+	{% block principal %}
+	{% set ruta=app.request.attributes.get('_route') %}
+	 <div>
+	 {% if ruta == 'pantalla_evaluacion' %}
+    <img src="{{ asset('images/evaluaciondesempeno.jpg') }}" width="800" heigth="300" alt="ISRI"/>
+    {% elseif ruta == 'pantalla_formularios' %}
+    <img src="{{ asset('images/evaluaciondesempeno.jpg') }}" width="800" heigth="300" alt="ISRI"/>
+    {% endif %}
+	</div>
+
+	{% endblock %}
