@@ -110,7 +110,7 @@ class EvaluacionController extends Controller
         //Consultamos los datos de periodo de evaluacion vigente.
         $fechaactual = date('d-m-Y');
         $periodo_query = $em->CreateQuery('
-            select pe.anio, pe.semestre from EvaluacionBundle:periodoeval pe
+            select pe.anio, pe.semestre from EvaluacionBundle:Periodoeval pe
             where :fechaactual between pe.fechainicio and pe.fechafin
             ')->setParameter('fechaactual', $fechaactual);
         

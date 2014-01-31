@@ -22,7 +22,7 @@ class Empleado
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="empleado_id_seq", allocationSize=1, initialValue=1)
-     * @GRID\Column(field="id", groups={"grupo_empleados_a_evaluar"},visible=true, filterable=false)
+     * @GRID\Column(field="id", groups={"grupo_empleados_a_evaluar"},visible=false, filterable=false)
      */
     private $id;
 
@@ -81,8 +81,8 @@ class Empleado
 
     /**
      * @ORM\OneToMany(targetEntity="\SIGESRHI\EvaluacionBundle\Entity\Evaluacion", mappedBy="idempleado")
-     * @GRID\Column(field="idevaluacion.semestre", groups={"grupo_empleados_a_evaluar"}, visible=true, joinType="left", filterable=false, title="Semestre")
-     * @GRID\Column(field="idevaluacion.anoevaluado", groups={"grupo_empleados_a_evaluar"}, visible=true, joinType="left", filterable=false, title="Año")
+     * @GRID\Column(field="idevaluacion.semestre", groups={"grupo_empleados_a_evaluar"}, visible=false, joinType="left", filterable=false, title="Semestre")
+     * @GRID\Column(field="idevaluacion.anoevaluado", groups={"grupo_empleados_a_evaluar"}, visible=false, joinType="left", filterable=false, title="Año")
      */
     private $idevaluacion;
 
