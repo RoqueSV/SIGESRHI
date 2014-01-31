@@ -1,0 +1,30 @@
+incidente:
+    pattern:  /
+    defaults: { _controller: "EvaluacionBundle:Incidente:index" }
+
+incidente_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "EvaluacionBundle:Incidente:show" }
+
+incidente_new:
+    pattern:  /new
+    defaults: { _controller: "EvaluacionBundle:Incidente:new" }
+
+incidente_create:
+    pattern:  /create
+    defaults: { _controller: "EvaluacionBundle:Incidente:create" }
+    requirements: { _method: post }
+
+incidente_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "EvaluacionBundle:Incidente:edit" }
+
+incidente_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "EvaluacionBundle:Incidente:update" }
+    requirements: { _method: post|put }
+
+incidente_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "EvaluacionBundle:Incidente:delete" }
+    requirements: { _method: post|delete }

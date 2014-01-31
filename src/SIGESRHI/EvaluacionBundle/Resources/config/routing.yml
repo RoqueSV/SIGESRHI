@@ -6,3 +6,7 @@ EvaluacionBundle_periodoeval:
     resource: "@EvaluacionBundle/Resources/config/routing/periodoeval.yml"
     prefix:   /periodoeval
 
+EvaluacionBundle_incidente:
+    resource: "@EvaluacionBundle/Resources/config/routing/incidente.yml"
+    prefix:   /incidente
+

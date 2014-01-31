@@ -202,7 +202,7 @@ class Solicitudcapacitacion
     /**
      * Get idcapacitacion
      *
-     * @return \SIGESRHI\AdminBundle\Entity\Capacitacion 
+     * @return \SIGESRHI\CapacitacionBundle\Entity\Capacitacion 
      */
     public function getIdcapacitacion()
     {
