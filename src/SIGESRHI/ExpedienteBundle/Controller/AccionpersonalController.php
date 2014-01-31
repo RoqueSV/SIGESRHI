@@ -90,7 +90,7 @@ class AccionpersonalController extends Controller
         //si el tipo de acuerdo a registrar es 1 o 2 (destitucion o renuncia)
         //eliminamos la relacion entre la refrenda y el empleado.
         $tipo_accion = $entity->getIdtipoaccion()->getId(); 
-        if ($tipo_accion =="1" || $tipo_accion=="2")
+        if ($tipo_accion =="1" || $tipo_accion=="2" || $tipo_accion=="3")
         {
             $refrendaact = $em->getRepository('AdminBundle:RefrendaAct')->find($idrefrenda);
 
