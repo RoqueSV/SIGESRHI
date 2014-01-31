@@ -60,6 +60,18 @@ class ConcursoController extends Controller
         $source = new Entity('ExpedienteBundle:Concurso','grupo_concurso');
         
         $grid = $this->get('grid');
+
+        $source->manipulateRow(
+          function ($row)
+            {
+             if ( $row->getField('fechacierre') <= new \Datetime('now') ) {
+                $row->setClass('text-error');  // add a css class to the <tr> tag
+                $row->setColor('#E6E8FA');  // set background-color as inline style
+               }
+
+             return $row;
+            }
+        );
            
         $grid->setId('grid_concurso');
         $grid->setSource($source);              

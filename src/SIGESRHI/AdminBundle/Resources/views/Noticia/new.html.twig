@@ -23,7 +23,7 @@
     <form action="{{ path('noticia_create') }}" method="post" {{ form_enctype(form) }}>
         {#{ form_widget(form) }#}
         <div class='centered'>
-        <table width="100%" class="form-inline table table-bordered table-hover mitable">
+        <table width="100%" class="form-inline table table-bordered mitable">
             <tr>
                 <th width="25%"><bold>{{form_label(form.asuntonoticia)}}</bold></th>
                 <td colspan="2">{{form_widget(form.asuntonoticia)}} {{form_errors(form.asuntonoticia)}}</td>
@@ -40,7 +40,7 @@
             </tr>
         </table> 
         {# form embebido #}       
-        <table class="form-inline table table-bordered table-hover mitable">                
+        <table class="form-inline table table-bordered mitable">                
             <tr>
                 <th width="25%">A quien publicar</th>
                 <td colspan="2">{{form_widget(form.idcentro)}} {{form_errors(form.idcentro)}}

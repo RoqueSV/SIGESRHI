@@ -25,3 +25,19 @@ pantalla_instituciones:
 pantalla_facilitadores:
     pattern:  /facilitadores
     defaults: { _controller: "AdminBundle:Pantallas:pantallaFacilitadores" }
+
+pantalla_documentos:
+    pattern:  /documentos
+    defaults: { _controller: "AdminBundle:Pantallas:pantallaDocumentos" }
+
+pantalla_reportes:
+    pattern:  /reportes
+    defaults: { _controller: "AdminBundle:Pantallas:pantallaReportes" }
+
+pantalla_evaluacion:
+    pattern:  /evaluacion
+    defaults: { _controller: "AdminBundle:Pantallas:pantallaRealizarEvaluacion" }
+
+pantalla_formularios:
+    pattern:  /formularios
+    defaults: { _controller: "AdminBundle:Pantallas:pantallaFormulariosEvaluacion" }

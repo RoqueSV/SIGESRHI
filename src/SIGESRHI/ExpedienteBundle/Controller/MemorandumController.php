@@ -30,7 +30,8 @@ class MemorandumController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
+        $breadcrumbs->addItem("Generar reportes y documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
+        $breadcrumbs->addItem("Documentos", $this->get("router")->generate("pantalla_documentos"));
         $breadcrumbs->addItem("Elegir tipo memorándum", $this->get("router")->generate("memorandum"));
 
         return $this->render('ExpedienteBundle:Memorandum:index.html.twig', array(
@@ -83,7 +84,8 @@ class MemorandumController extends Controller
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
+        $breadcrumbs->addItem("Generar reportes y documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
+        $breadcrumbs->addItem("Documentos", $this->get("router")->generate("pantalla_documentos"));
         $breadcrumbs->addItem("Elegir tipo memorándum", $this->get("router")->generate("memorandum"));
         $breadcrumbs->addItem("Nuevo memorándum", $this->get("router")->generate("memorandum_new",array('tipomemo'=>$tipomemo)));
 

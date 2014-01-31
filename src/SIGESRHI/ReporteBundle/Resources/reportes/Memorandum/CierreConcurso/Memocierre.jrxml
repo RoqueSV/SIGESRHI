@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Memocierre" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b06fac72-c28d-45aa-817d-359e26b16137">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="88"/>
+	<property name="ireport.y" value="328"/>
 	<subDataset name="dataset1" uuid="a6d3b3f8-941d-4d16-a4b1-104c8f96d297"/>
 	<parameter name="interesado" class="java.lang.String"/>
 	<parameter name="idconcurso" class="java.lang.Integer"/>
@@ -37,8 +37,7 @@ FROM
 
 WHERE
         upper(nombreplaza) like upper('%jefe%')
-        and upper(nombreplaza) like upper('%recursos humanos%')
-        ]]>
+        and upper(nombreplaza) like upper('%recursos humanos%')]]>
 	</queryString>
 	<field name="plaza" class="java.lang.String"/>
 	<field name="fechaactual" class="java.lang.String"/>
@@ -109,14 +108,14 @@ WHERE
 				<text><![CDATA[REMISION DE ACTA DE CIERRE DE CONCURSO INTERNO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="accdeb47-e729-417d-834c-d71a12b7ee18" x="32" y="372" width="267" height="20"/>
+				<reportElement uuid="accdeb47-e729-417d-834c-d71a12b7ee18" positionType="Float" x="32" y="372" width="267" height="20"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Agradeciendo su atención, le saludo.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1ef56c56-6b53-4591-bf50-b28e5e27c7d4" x="32" y="458" width="100" height="20"/>
+				<reportElement uuid="1ef56c56-6b53-4591-bf50-b28e5e27c7d4" positionType="Float" x="32" y="458" width="100" height="20"/>
 				<textElement/>
 				<text><![CDATA[Con Anexos]]></text>
 			</staticText>

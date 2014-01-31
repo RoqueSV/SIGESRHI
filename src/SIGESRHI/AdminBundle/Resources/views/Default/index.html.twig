@@ -3,7 +3,11 @@
 	
 	{% block principal %}
 	<div class=text-center>
+	{% if app.user %}
     <img src="{{ asset('images/principalISRI.jpg') }}" alt="ISRI"/>
+    {% else %}
+    <img src="{{ asset('images/aspirante_pantalla.jpg') }}" alt="ISRI"/>
+    {% endif %}
 	</div>
 	{% endblock %}
 

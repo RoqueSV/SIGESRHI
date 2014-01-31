@@ -100,9 +100,9 @@ class Noticia
     private $idcentro;
 
      /**
-     * @var \DocNoticia
+     * @var \Docnoticia
      *
-     * @ORM\OneToMany(targetEntity="DocNoticia", mappedBy="idnoticia",cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Docnoticia", mappedBy="idnoticia",cascade={"persist","remove"})
      * @Assert\Valid
      *
      */
@@ -290,7 +290,7 @@ class Noticia
     /**
      * Get iddocnoticia
      *
-     * @return \SIGESRHI\AdminBundle\Entity\DocNoticia 
+     * @return \SIGESRHI\AdminBundle\Entity\Docnoticia 
      */
     public function getIddocnoticia()
     {

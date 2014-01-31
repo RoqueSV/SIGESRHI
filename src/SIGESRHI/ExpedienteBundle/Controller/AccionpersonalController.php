@@ -445,7 +445,7 @@ class AccionpersonalController extends Controller
         $grid->setNoDataMessage("No se encontraron resultados");
         $grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
         
-        $rowAction1 = new RowAction('Mostrar', 'accionpersonal_cacuerdos');
+        $rowAction1 = new RowAction('Consultar', 'accionpersonal_cacuerdos');
         //vista_retorno 1 consultar acuerdos, 2 registrar acuerdos
         $rowAction1->manipulateRender(
             function ($action, $row)

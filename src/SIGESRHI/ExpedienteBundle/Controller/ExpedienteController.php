@@ -302,7 +302,7 @@ public function confirmarValidoAction($id)
 
         $entity = $em->getRepository('ExpedienteBundle:Solicitudempleo')->find($id);
 
-        $num_anterior=$entity->getnumsolicitud();
+        $num_anterior=$entity->getNumsolicitud();
         if($num_anterior == 0 ){
             $entity->setnumsolicitud($numsolicitud);
             $em->persist($entity);
