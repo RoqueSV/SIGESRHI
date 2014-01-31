@@ -17,7 +17,7 @@ class ExpedienteRepository extends EntityRepository
     {
 		return $this->getEntityManager()
 			->createQuery('SELECT e.fechaexpediente fechaexpediente, s.nombrecompleto nombres, p.nombreplaza nombreplaza, t.nombretitulo nombretitulo,e.tipoexpediente,e.id id
-                           FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN s.idplaza p JOIN s.Destudios i JOIN i.idtitulo t
+                           FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN s.idplaza p LEFT JOIN s.Destudios i LEFT JOIN i.idtitulo t
                            WHERE e.id=:idexp order by t.niveltitulo DESC
                            ')
 			->setMaxResults(1)
