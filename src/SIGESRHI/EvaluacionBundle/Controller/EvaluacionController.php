@@ -76,6 +76,16 @@ class EvaluacionController extends Controller
         // Get a grid instance
         $grid = $this->get('grid');
 
+        //Consultamos los datos de periodo de evaluacion vigente.
+        $fechaactual = date('d-m-Y');
+        $periodo_query = $em->CreateQuery('
+            select pe.anio, pe.semestre from EvaluacionBundle:periodoeval pe
+            where :fechaactual between pe.fechainicio and pe.fechafin
+            ')->setParameter('fechaactual', $fechaactual);
+        
+        $periodo = $periodo_query->getsingleResult();
+        //fin consulta
+
 
         $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
@@ -137,6 +147,7 @@ class EvaluacionController extends Controller
             function ($action, $row)use($idrefrenda, $periodo)
             {
                 if($periodo['anio'] == $row->getField('idevaluacion.anoevaluado') and $periodo['semestre']==$row->getField('idevaluacion.semestre')){
+                    $action->setRouteParameters(array('id'=> $row->getField('idevaluacion.id')));
                     return $action;
                 }
                 else{
@@ -144,7 +155,15 @@ class EvaluacionController extends Controller
                 }
             }
         );
-
+    /*    //
+         $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+             $action->setRouteParameters(array('id'=> $row->getField('idsolicitudempleo.id'),'vista_retorno'=> 2));
+              return $action;
+            }
+        );
+      */  //
        
         $rowAction1->setColumn('info_column');
         $rowAction2->setColumn('info_column');
