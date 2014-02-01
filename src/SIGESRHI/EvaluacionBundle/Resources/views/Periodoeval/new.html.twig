@@ -2,6 +2,10 @@
 
 {% block principal -%}
 
+<a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+
+{{ include('EvaluacionBundle:Ayuda/PeriodoEval:Registrar.html.twig')}}
+
 {% for flashMessage in app.session.flashbag.get('new') %}
     <div class="alert alert-success">
         <p> {{ flashMessage }} </p>

@@ -41,3 +41,7 @@ evaluacion_finaliza:
     pattern:  /{id}/finalizar
     defaults: { _controller: "EvaluacionBundle:Evaluacion:finalizar" }
     requirements: { _method: post }
+
+evaluacion_sformulario:
+    pattern:  /{idempleado}/sformulario
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:SeleccionFormulario" }

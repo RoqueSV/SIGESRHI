@@ -45,6 +45,14 @@ class Formularioevaluacion
      */
     private $codigoformulario;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombrebreve", type="string", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre breve del formulario")
+     */
+    private $nombrebreve;
+
        
     public function __toString() {
         return $this->tipoformulario;
@@ -105,6 +113,29 @@ class Formularioevaluacion
         return $this->codigoformulario;
     }
 
+
+    /**
+     * Set nombrebreve
+     *
+     * @param string $nombrebreve
+     * @return Formularioevaluacion
+     */
+    public function setNombrebreve($nombrebreve)
+    {
+        $this->nombrebreve = $nombrebreve;
+    
+        return $this;
+    }
+
+    /**
+     * Get nombrebreve
+     *
+     * @return string 
+     */
+    public function getNombrebreve()
+    {
+        return $this->nombrebreve;
+    }
 
 
 

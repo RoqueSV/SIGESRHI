@@ -1,0 +1,23 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+<div class="text-center">
+<h3>Selecci&oacute;n de Formulario</h3>
+
+<select class="input-xmlarge" id="tipo_form">
+{% for formulario in formularios %}
+
+<option value="{{formulario.id}}" required="required">{{formulario.nombrebreve}}</option>
+
+{% endfor %}
+</select>
+
+</div>
+
+<script>
+$(document).ready(function(){
+	$('#tipo_form').prop("selectedIndex",-1);
+	});
+</script>
+
+{% endblock %}

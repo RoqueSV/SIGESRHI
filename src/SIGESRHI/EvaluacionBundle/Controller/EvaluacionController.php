@@ -458,7 +458,16 @@ class EvaluacionController extends Controller
 
         $numpuestos=count($entity->getIdrefrenda());
 
+        //Si el empleado evaluador solo posee una plaza, lo redirigimos directamente a la vista de seleccion de subordinados
+        if($numpuestos = 1)
+        {
+            $refrenda = $entity->getIdrefrenda();
+            return $this->redirect($this->generateUrl('evaluacion_seleccionempleado', array(
+                'idrefrenda' => $refrenda[0]->getId(),
+            )));
+        }
 
+        //si el empleado tiene mas de 1 un puesto lo mandamos a elegir el puesto con el cual desea evaluar a sus empleados
          return $this->render('EvaluacionBundle:Evaluacion:SeleccionPuesto.html.twig', array(
             'empleado'      => $entity,
             'numpuestos' => $numpuestos,
@@ -497,15 +506,27 @@ class EvaluacionController extends Controller
         $request = $this->getRequest();
         $incidente = $request->get('registra_incidente');
 
-/*
         if($incidente == "SI"){
             return $this->render('EvaluacionBundle:Evaluacion:incidentes.html.twig');
         }
         if($incidente == "NO"){
             return $this->render('EvaluacionBundle:Evaluacion:SeleccionPuesto.html.twig');
         }
-*/
-                  return $this->redirect($this->generateUrl('evaluacion'));
+
+                //  return $this->redirect($this->generateUrl('evaluacion'));
 
     }//finalizarAction()
+
+
+    public function SeleccionFormularioAction($idempleado){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $formularios = $em->getRepository('EvaluacionBundle:FormularioEvaluacion')->findAll();
+
+        return $this->render('EvaluacionBundle:Evaluacion:SeleccionFormulario.html.twig', 
+            array(
+                'formularios'=>$formularios
+                ));
+    }
 }
