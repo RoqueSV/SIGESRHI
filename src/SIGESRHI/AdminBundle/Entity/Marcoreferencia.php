@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Manejoequipo
+ * Marcoreferencia
  *
- * @ORM\Table(name="manejoequipo")
+ * @ORM\Table(name="marcoreferencia")
  * @ORM\Entity
  */
-class Manejoequipo
+class Marcoreferencia
 {
     /**
      * @var integer
@@ -19,32 +19,32 @@ class Manejoequipo
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\SequenceGenerator(sequenceName="manejoequipo_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\SequenceGenerator(sequenceName="marcoreferencia_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombremanejo", type="string", length=75, nullable=false)
-     * @Assert\NotNull(message="Debe ingresar el manejo de equipo")
+     * @ORM\Column(name="nombremarcoref", type="string", length=250, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la descripción del marco de referencia")
      * @Assert\Length(
-     * max = "75",
-     * maxMessage = "El manejo de equipo no debe exceder los {{limit}} caracteres"
+     * max = "250",
+     * maxMessage = "El marco de referencia no debe exceder los {{limit}} caracteres"
      * )
      */
-    private $nombremanejo;
+    private $nombremarcoref;
     
      /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Plaza", mappedBy="idmanejoequipo")
+     * @ORM\ManyToMany(targetEntity="Plaza", mappedBy="idmarcoreferencia")
      */
     private $idplaza;
 
-        public function __toString() {
-  return $this->nombremanejo;
-}
+    public function __toString() {
+      return $this->nombremarcoref;
+      }
     /**
      * Get id
      *
@@ -56,26 +56,26 @@ class Manejoequipo
     }
 
     /**
-     * Set nombremanejo
+     * Set nombremarcoref
      *
-     * @param string $nombremanejo
-     * @return Manejoequipo
+     * @param string $nombremarcoref
+     * @return Marcoreferencia
      */
-    public function setNombremanejo($nombremanejo)
+    public function setNombremarcoref($nombremarcoref)
     {
-        $this->nombremanejo = $nombremanejo;
+        $this->nombremarcoref = $nombremarcoref;
     
         return $this;
     }
 
     /**
-     * Get nombremanejo
+     * Get nombremarcoref
      *
      * @return string 
      */
-    public function getNombremanejo()
+    public function getNombremarcoref()
     {
-        return $this->nombremanejo;
+        return $this->nombremarcoref;
     }
     /**
      * Constructor
@@ -84,18 +84,26 @@ class Manejoequipo
     {
         $this->idplaza = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+    public function setIdplaza($idplaza)
+    {
+    if (count($idplaza) > 0) {
+        foreach ($idplaza as $i) {
+            $this->addIdplaza($i);
+        }
+     }
+    }
     
     /**
      * Add idplaza
      *
      * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
-     * @return Manejoequipo
+     * @return Marcoreferencia
      */
     public function addIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
     {
-        $this->idplaza[] = $idplaza;
-    
-        return $this;
+       $idplaza->setIdmarcoreferencia($this);
+       $this->idplaza->add($idplaza);
     }
 
     /**

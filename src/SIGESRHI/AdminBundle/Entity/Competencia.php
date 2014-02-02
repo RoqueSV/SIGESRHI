@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Habilidad
+ * Competencia
  *
- * @ORM\Table(name="habilidad")
+ * @ORM\Table(name="competencia")
  * @ORM\Entity
  */
-class Habilidad
+class Competencia
 {
     /**
      * @var integer
@@ -19,32 +19,33 @@ class Habilidad
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\SequenceGenerator(sequenceName="habilidad_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\SequenceGenerator(sequenceName="competencia_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombrehabilidad", type="string", length=75, nullable=false)
+     * @ORM\Column(name="nombrecompetencia", type="string", length=255, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de Habilidad")
      * @Assert\Length(
-     * max = "75",
+     * max = "255",
      * maxMessage = "El nombre de la habilidad no debe exceder los {{limit}} caracteres"
      * )
      */
-    private $nombrehabilidad;
+    private $nombrecompetencia;
     
      /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Plaza", mappedBy="idhabilidad")
+     * @ORM\ManyToMany(targetEntity="Plaza", mappedBy="idcompetencia")
      */
     private $idplaza;
     
-        public function __toString() {
-        return $this->nombrehabilidad;
-        }
+    public function __toString() {
+        return $this->nombrecompetencia;
+    }
+    
     /**
      * Get id
      *
@@ -61,9 +62,9 @@ class Habilidad
      * @param string $nombrehabilidad
      * @return Habilidad
      */
-    public function setNombrehabilidad($nombrehabilidad)
+    public function setNombrecompetencia($nombrecompetencia)
     {
-        $this->nombrehabilidad = $nombrehabilidad;
+        $this->nombrecompetencia = $nombrecompetencia;
     
         return $this;
     }
@@ -73,9 +74,9 @@ class Habilidad
      *
      * @return string 
      */
-    public function getNombrehabilidad()
+    public function getNombrecompetencia()
     {
-        return $this->nombrehabilidad;
+        return $this->nombrecompetencia;
     }
     /**
      * Constructor
@@ -85,17 +86,25 @@ class Habilidad
         $this->idplaza = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
+    public function setIdplaza($idplaza)
+    {
+    if (count($idplaza) > 0) {
+        foreach ($idplaza as $i) {
+            $this->addIdplaza($i);
+        }
+     }
+    }
+    
     /**
      * Add idplaza
      *
      * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
-     * @return Habilidad
+     * @return Marcoreferencia
      */
     public function addIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
     {
-        $this->idplaza[] = $idplaza;
-    
-        return $this;
+       $idplaza->setIdcompetencia($this);
+       $this->idplaza->add($idplaza);
     }
 
     /**

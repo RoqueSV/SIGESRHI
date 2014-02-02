@@ -1,11 +1,11 @@
 <?php
 
-//src/SIGESRHI/AdminBundle/Controller/HabilidadAdminController.php
+//src/SIGESRHI/AdminBundle/Controller/ManejoAdminController.php
 
 namespace SIGESRHI\AdminBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 
-class HabilidadAdminController extends Controller
+class MarcoreferenciaAdminController extends Controller
 {
 }

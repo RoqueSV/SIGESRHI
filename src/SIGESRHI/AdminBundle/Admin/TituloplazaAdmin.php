@@ -1,7 +1,7 @@
 <?php
 
 
-//src/SIGESRHI/AdminBundle/Admin/AreaAdmin.php
+//src/SIGESRHI/AdminBundle/Admin/TituloAdmin.php
 
 namespace SIGESRHI\AdminBundle\Admin;
 
@@ -10,16 +10,20 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 
-class AreaAdmin extends Admin
+class TituloplazaAdmin extends Admin
 {
    // public $supportsPreviewMode = true;
     //Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('nombrearea', 'text', array('label' => 'Area'))
-            ->add('descripcionarea', 'textarea', array('label' => 'Descripción'))
-            ->setHelps(array('nombrearea'=>'Ingrese un area'))
+            ->add('idtitulo','sonata_type_model', array('label' => 'Titulo'))
+            //->add('idplaza', null, array('label' => 'Plaza'))
+            ->add('tipotitulo', 'choice', array(
+                  'choices'=> array('I' => 'Indispensable', 
+                                    'D' => 'Deseable'),
+                  'empty_value'=>'Seleccione',
+                  'required'  => true, 'label'=>'Tipo'))
            
              ;
     }
@@ -28,8 +32,7 @@ class AreaAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('nombrearea', null, array('label' => 'Area'))
-           // ->add('descripcionarea', null, array('label' => 'Descripción'))
+         // ->add('idtitulo', null, array('label' => 'Titulo'))
         ;
     }
     
@@ -37,9 +40,7 @@ class AreaAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('nombrearea', null,array('label' => 'Descripción'))
-          //  ->add('descripcionarea', null, array('label' => 'Descripción'))
-                     
+          //->addIdentifier('idtitulo', null,array('label' => 'Titulo'))                   
         ;
     }
     

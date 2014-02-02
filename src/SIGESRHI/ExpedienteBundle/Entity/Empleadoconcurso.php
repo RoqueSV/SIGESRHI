@@ -25,7 +25,7 @@ class Empleadoconcurso
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\SequenceGenerator(sequenceName="concurso_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\SequenceGenerator(sequenceName="idemconcurso_id_seq", allocationSize=1, initialValue=1)
      * @GRID\Column(filterable=false, groups={"grupo_empleado_concurso"}, visible=false)
      */
     private $id;

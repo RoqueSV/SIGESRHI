@@ -20,7 +20,7 @@ class PlazaAdmin extends Admin
     {    
 
 
-        $em = $this->modelManager->getEntityManager('ExpedienteBundle:Titulo');
+       /* $em = $this->modelManager->getEntityManager('ExpedienteBundle:Titulo');
 
         $queryt = $em->createQueryBuilder('t')
                      ->select('t')
@@ -33,79 +33,98 @@ class PlazaAdmin extends Admin
         $queryc = $em->createQueryBuilder('c')
                      ->select('c')
                      ->from('AdminBundle:Conocimiento', 'c')
-                     ->orderBy('c.nombreconocimiento', 'ASC');
+                     ->orderBy('c.nombreconocimiento', 'ASC');*/
 
-        $em = $this->modelManager->getEntityManager('AdminBundle:Habilidad');
+        $em = $this->modelManager->getEntityManager('AdminBundle:Competencia');
 
-        $queryh = $em->createQueryBuilder('h')
-                     ->select('h')
-                     ->from('AdminBundle:Habilidad', 'h')
-                     ->orderBy('h.nombrehabilidad', 'ASC');
+        $queryc = $em->createQueryBuilder('c')
+                     ->select('c')
+                     ->from('AdminBundle:Competencia', 'c')
+                     ->orderBy('c.nombrecompetencia', 'ASC');
 
-        $em = $this->modelManager->getEntityManager('AdminBundle:Manejoequipo');
+        $em = $this->modelManager->getEntityManager('AdminBundle:Marcoreferencia');
 
         $querym = $em->createQueryBuilder('m')
                      ->select('m')
-                     ->from('AdminBundle:Manejoequipo', 'm')
-                     ->orderBy('m.nombremanejo', 'ASC');
+                     ->from('AdminBundle:Marcoreferencia', 'm')
+                     ->orderBy('m.nombremarcoref', 'ASC');
 
        $formMapper
            ->with('General')    
             ->add('nombreplaza', null, array('label' => 'Plaza','help'=>'Digite el nombre de la plaza'))
-            ->add('descripcionplaza', 'textarea', array('label' => 'Descripción','help'=>'Ingrese una descripción para la plaza'))
-            ->add('edad', 'integer', array('max_length'=>'2','label' => 'Edad requerida', 'help'=>'Ingrese la edad requerida'))
-            ->add('experiencia', 'integer', array('max_length'=>'2','label' => 'Experiencia requerida', 'help'=>'Ingrese una cantidad en años'))
-            ->add('sexo', 'choice', array('choices'   => array('M' => 'Masculino', 'F' => 'Femenino','A'=>'Ambos'),'empty_value'=>'Seleccione...','required'  => true, 'label'=>'Sexo'))
-            ->add('idarea','sonata_type_model',array('required'=>'required', 'label'=>'Area'))
-            ->add('estadoplaza', 'choice', array('choices'   => array('A' => 'Activa', 'I' => 'Inactiva'),'required'  => true, 'label'=>'Estado'))
+            ->add('misionplaza', 'textarea', array('label' => 'Misión','help'=>'Ingrese la misión del puesto de trabajo'))
+            ->add('unidad', null, array('label'=>'Unidad organizativa','help'=>'Ingrese la(s) unidade(s) organizativa(s) a la que pertenece'))
+            ->add('experiencia', 'integer', array('max_length'=>'2','required'=>false,'label' => 'Experiencia requerida', 'help'=>'Ingrese una cantidad en años'))  
+            ->add('idplazasup',null,array('label' => 'Plaza superior','help'=>'Seleccione la plaza de la cual depende, si la hay'))
            ->end()
-           ->with('Titulo', array('description' => 'Selección de titulos.'))
-             ->add('idtitulo', 'sonata_type_model', array(
-                   'required'=>true,
-                   'label'=> 'Titulos',
+           ->with('Marco de referencia', array('description' => 'Marco de referencia para la actuación.'))
+              ->add('idmarcoreferencia', 'sonata_type_model', array(
+                   'label'=> 'Marco de referencia',
                    'required' => false,
                    'expanded' => true,
                    'multiple' => true,
-                   'query'    =>$queryt
+                   'query'    =>$querym
                    ))
            ->end()
-           ->with('Funciones',array('description'=> 'Selección de funciones.'))
+           ->with('Funciones',array('description'=> 'Funciones/Actividades básicas.'))
              ->add('idfuncion', 'pcdummy_ajaxcomplete_m2m', array(
                    'required'=>true,
                    'label'=> 'Funciones',
-                   'required' => false,
+                   'expanded' => true,
+                   'multiple' => true,
+                   'help'=>'Digite para buscar una función'
+                   ))
+           ->end()
+           ->with('Resultados',array('description'=> 'Resultados esperados.'))
+             ->add('idresultado', 'sonata_type_model', array(
+                   'required'=>true,
+                   'label'=> 'Resultados esperados',
                    'expanded' => true,
                    'multiple' => true,
                    ))
            ->end()
-           ->with('Conocimientos', array('description' => 'Selección de conocimientos.'))
-              ->add('idconocimiento', 'sonata_type_model', array(
-                   'required'=>true,
-                   'label'=> 'Conocimientos',
-                   'required' => false,
+           ->with('Formación Académica', array('description' => 'Selección de titulos.'))
+             ->add('idtituloplaza', 'sonata_type_collection', 
+             array('by_reference'=>false,'required'=>false,'label'=>'Titulos'), 
+             array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable' => 'position',
+            ))
+           ->end()
+           ->with('Otros idiomas', array('description' => 'Otros idiomas.'))
+             ->add('ididiomasplaza', 'sonata_type_collection', 
+             array('by_reference'=>false,'required'=>false,'label'=>'Idiomas'), 
+             array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable' => 'position',
+            ))
+           ->end()
+           ->with('Conocimientos', array('description' => 'Conocimientos especificos.'))
+             ->add('idconocimientoplaza', 'sonata_type_collection', 
+             array('by_reference'=>false,'required'=>false,'label'=>'Conocimientos'), 
+             array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable' => 'position',
+            ))
+           ->end()
+           ->with('Competencias', array('description' => 'Competencias conductuales.'))
+              ->add('idcompetencia', 'sonata_type_model', array(
+                   'required'=>false,
+                   'label'=> 'Competencias',
                    'expanded' => true,
                    'multiple' => true,
                    'query'    =>$queryc
                    ))
            ->end()
-           ->with('Habilidades', array('description' => 'Selección de habilidades.'))
-              ->add('idhabilidad', 'sonata_type_model', array(
+           ->with('Otros aspectos', array('description' => 'Otros aspectos.'))
+              ->add('idotrosaspectos', 'sonata_type_model', array(
                    'required'=>false,
-                   'label'=> 'Habilidades',
-                   'required' => false,
+                   'label'=> 'Otros aspectos',
                    'expanded' => true,
                    'multiple' => true,
-                   'query'    =>$queryh
-                   ))
-           ->end()
-           ->with('Manejo de Equipo', array('description' => 'Selección de manejo de equipo.'))
-              ->add('idmanejoequipo', 'sonata_type_model', array(
-                   'required'=>false,
-                   'label'=> 'Manejo de equipo',
-                   'required' => false,
-                   'expanded' => true,
-                   'multiple' => true,
-                   'query'    =>$querym
                    ))
            ->end()
            ->with('Documentación', array('description' => 'En esta sección tiene la posibilidad de adjuntar el documento necesario (imagen o pdf) que respalde la acción realizada sobre la plaza.'))
@@ -122,8 +141,7 @@ class PlazaAdmin extends Admin
     {
         $datagridMapper
             ->add('nombreplaza', null, array('label' => 'Plaza'))
-            ->add('estadoplaza', null, array('label'=>'Estado'))
-            ->add('idarea', null, array('label' => 'Area'))
+            ->add('idplazasup', null, array('label'=>'Plaza superior'))
         ;
     }
     
@@ -132,9 +150,7 @@ class PlazaAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('nombreplaza',null,array('label'=>'Plaza','route' => array('name' => 'show')))
-            ->add('descripcionplaza', null, array('label' => 'Descripción'))
-            ->add('estadoplaza', null, array('label'=>'Estado'))
-            ->add('idarea', 'textarea', array('label' => 'Area',))
+            ->add('misionplaza', null, array('label' => 'Misión del puesto'))
 
           /* ->add('_action', 'actions', array(
                 'actions' => array(
@@ -149,27 +165,34 @@ class PlazaAdmin extends Admin
     {
         $showMapper
             ->with('Generales')     
-            ->add('nombreplaza', null, array('label' => 'Plaza'))
-            ->add('descripcionplaza', 'textarea', array('label' => 'Descripción'))
-            ->add('edad', null, array('label' => 'Edad requerida'))
-            ->add('sexo')
-            ->add('estadoplaza', null, array('label'=>'Estado'))
-            ->add('idarea',null,array('label'=>'Area'))
+              ->add('nombreplaza', null, array('label' => 'Plaza'))
+              ->add('misionplaza', 'textarea', array('label' => 'Descripción'))
+              ->add('unidad', null, array('label'=>'Unidad organizativa'))
+              ->add('idplazasuperior',null,array('label'=>'Plaza de la que depende'))
            ->end()
-           ->with('Titulo (s)')
-             ->add('idtitulo',null,array('label'=>'Titulo Requerido'))
+           ->with('Marco de referencia para la actuación.')
+              ->add('idmarcoreferencia', null, array('label'=> 'Marco de referencia'))
            ->end()
-           ->with('Funciones')
-             ->add('idfuncion',null,array('label'=>'Funciones'))
+           ->with('Funciones/Actividades básicas.')
+             ->add('idfuncion', null, array('label'=> 'Funciones'))
            ->end()
-           ->with('Conocimientos')
-             ->add('idconocimiento',null,array('label'=>'Conocimientos'))
+           ->with('Resultados esperados.')
+             ->add('idresultado', null, array('label'=> 'Resultados esperados'))
            ->end()
-           ->with('Habilidades')
-             ->add('idhabilidad',null,array('label'=>'Habilidades')) 
+           ->with('Formación Académica')
+             ->add('idtituloplaza', null, array('label'=>'Formación académica'))
            ->end()
-           ->with('Manejo de Equipo')
-             ->add('idmanejoequipo',null,array('label'=>'Manejo de Equipo'))
+           ->with('Otros idiomas')
+             ->add('idotrosidiomas',null, array('label'=>'Otros idiomas'))
+           ->end()
+           ->with('Conocimientos especificos')
+             ->add('idconocimientoplaza',null, array('label'=>'Conocimientos especificos'))
+           ->end()
+           ->with('Competencias conductuales.')
+              ->add('idcompetencia', null, array('label'=> 'Competencias'))
+           ->end()
+           ->with('Otros aspectos')
+              ->add('idotrosaspectos', null, array('label'=> 'Otros aspectos'))
            ->end()
            ->with('Documentación')
              ->add('name',null, array('label'=>'Nombre documento'))
@@ -181,10 +204,14 @@ class PlazaAdmin extends Admin
     
     public function prePersist($plaza) {
        $this->saveFile($plaza);
+       $this->preUpdate($plaza);
     }
 
     public function preUpdate($plaza) {
        $this->saveFile($plaza);
+       $plaza->setIdtituloplaza($plaza->getIdtituloplaza());
+       $plaza->setIdidiomasplaza($plaza->getIdidiomasplaza());
+       $plaza->setIdconocimientoplaza($plaza->getIdconocimientoplaza());
     }
 
     public function saveFile($plaza) {

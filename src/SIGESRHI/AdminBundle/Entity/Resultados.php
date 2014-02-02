@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Area
+ * Resultados
  *
- * @ORM\Table(name="area")
+ * @ORM\Table(name="resultados")
  * @ORM\Entity
  */
-class Area
+class Resultados
 {
     /**
      * @var integer
@@ -19,40 +19,32 @@ class Area
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\SequenceGenerator(sequenceName="area_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\SequenceGenerator(sequenceName="resultados_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombrearea", type="string", length=100, nullable=false)
+     * @ORM\Column(name="nombreresultado", type="string", length=150, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de area")
      * @Assert\Length(
-     *  max = "100",
-     * maxMessage = "El area no debe exceder los {{limit}} caracteres"
+     *  max = "150",
+     * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
      * )
      */
-    private $nombrearea;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="descripcionarea", type="string", length=500, nullable=true)
-     * @Assert\Length(
-     * max = "500",
-     * maxMessage = "El area no debe exceder los {{limit}} caracteres"
-     * )
-     */
-    private $descripcionarea;
+    private $nombreresultado;
     
-     /**
-     * @ORM\OneToMany(targetEntity="Plaza", mappedBy="idarea")
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Plaza", mappedBy="idresultado")
      */
+    
     private $idplaza;
    
     public function __toString() {
-  return $this->nombrearea;
+  return $this->nombreresultado;
 }
     /**
      * Get id
@@ -65,50 +57,28 @@ class Area
     }
 
     /**
-     * Set nombrearea
+     * Set nombreresultado
      *
-     * @param string $nombrearea
-     * @return Area
+     * @param string $nombreresultado
+     * @return Resultados
      */
-    public function setNombrearea($nombrearea)
+    public function setNombreresultado($nombreresultado)
     {
-        $this->nombrearea = $nombrearea;
+        $this->nombreresultado = $nombreresultado;
     
         return $this;
     }
 
     /**
-     * Get nombrearea
+     * Get nombreresultado
      *
      * @return string 
      */
-    public function getNombrearea()
+    public function getNombreresultado()
     {
-        return $this->nombrearea;
+        return $this->nombreresultado;
     }
 
-    /**
-     * Set descripcionarea
-     *
-     * @param string $descripcionarea
-     * @return Area
-     */
-    public function setDescripcionarea($descripcionarea)
-    {
-        $this->descripcionarea = $descripcionarea;
-    
-        return $this;
-    }
-
-    /**
-     * Get descripcionarea
-     *
-     * @return string 
-     */
-    public function getDescripcionarea()
-    {
-        return $this->descripcionarea;
-    }
     /**
      * Constructor
      */
@@ -121,7 +91,7 @@ class Area
      * Add idplaza
      *
      * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
-     * @return Area
+     * @return Resultados
      */
     public function addIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
     {

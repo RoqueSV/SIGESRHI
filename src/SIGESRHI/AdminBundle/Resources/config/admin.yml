@@ -35,11 +35,11 @@ services:
         - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Administrar Plazas }
       arguments: [null, SIGESRHI\AdminBundle\Entity\Plaza, AdminBundle:PlazaAdmin]
 
-   sonata.admin.admin.area:
-      class: SIGESRHI\AdminBundle\Admin\AreaAdmin
+   sonata.admin.admin.resultados:
+      class: SIGESRHI\AdminBundle\Admin\ResultadosAdmin
       tags:
-        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Areas, show_in_dashboard: false }
-      arguments: [null, SIGESRHI\AdminBundle\Entity\Area, AdminBundle:AreaAdmin]
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Resultados, show_in_dashboard: false }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Resultados, AdminBundle:ResultadosAdmin]
 
    sonata.admin.admin.conocimiento:
       class: SIGESRHI\AdminBundle\Admin\ConocimientoAdmin
@@ -47,11 +47,11 @@ services:
         - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Conocimientos, show_in_dashboard: false }
       arguments: [null, SIGESRHI\AdminBundle\Entity\Conocimiento, AdminBundle:ConocimientoAdmin]
 
-   sonata.admin.admin.habilidad:
-      class: SIGESRHI\AdminBundle\Admin\HabilidadAdmin
+   sonata.admin.admin.competencia:
+      class: SIGESRHI\AdminBundle\Admin\CompetenciaAdmin
       tags:
-        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Habilidades, show_in_dashboard: false }
-      arguments: [null, SIGESRHI\AdminBundle\Entity\Habilidad, AdminBundle:HabilidadAdmin]
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Competencias, show_in_dashboard: false }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Competencia, AdminBundle:CompetenciaAdmin]
 
    sonata.admin.admin.funcion:
       class: SIGESRHI\AdminBundle\Admin\FuncionAdmin
@@ -59,11 +59,11 @@ services:
         - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Funciones, show_in_dashboard: false }
       arguments: [null, SIGESRHI\AdminBundle\Entity\Funcion, AdminBundle:FuncionAdmin]
 
-   sonata.admin.admin.manejo:
-      class: SIGESRHI\AdminBundle\Admin\ManejoAdmin
+   sonata.admin.admin.marcoref:
+      class: SIGESRHI\AdminBundle\Admin\MarcoreferenciaAdmin
       tags:
-        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Manejo de equipo, show_in_dashboard: false }
-      arguments: [null, SIGESRHI\AdminBundle\Entity\Manejoequipo, AdminBundle:ManejoAdmin]
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Marco de referencia, show_in_dashboard: false }
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Marcoreferencia, AdminBundle:MarcoreferenciaAdmin]
 
    sonata.admin.admin.titulo:
       class: SIGESRHI\AdminBundle\Admin\TituloAdmin
@@ -82,3 +82,33 @@ services:
       tags:
         - { name: sonata.admin, manager_type: orm, group: Institución, label: Tipos de acciones de personal}
       arguments: [null, SIGESRHI\ExpedienteBundle\Entity\Tipoaccion, AdminBundle:TipoaccionAdmin]
+
+   sonata.admin.admin.tituloplaza:
+      class: SIGESRHI\AdminBundle\Admin\TituloplazaAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Titulo plaza, show_in_dashboard: false}
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Tituloplaza, AdminBundle:TituloplazaAdmin]
+
+   sonata.admin.admin.otrosidiomas:
+      class: SIGESRHI\AdminBundle\Admin\OtrosidiomasAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Otros idiomas, show_in_dashboard: false}
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Otrosidiomas, AdminBundle:OtrosidiomasAdmin]
+
+   sonata.admin.admin.idiomasplaza:
+      class: SIGESRHI\AdminBundle\Admin\IdiomasplazaAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Idiomas, show_in_dashboard: false}
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Idiomasplaza, AdminBundle:IdiomasplazaAdmin]
+
+   sonata.admin.admin.conocimientoplaza:
+      class: SIGESRHI\AdminBundle\Admin\ConocimientoplazaAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Conocimiento plaza, show_in_dashboard: false}
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Conocimientoplaza, AdminBundle:ConocimientoplazaAdmin]
+
+   sonata.admin.admin.otrosaspectos:
+      class: SIGESRHI\AdminBundle\Admin\OtrosaspectosAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Manual de puestos, label: Otros aspectos, show_in_dashboard: false}
+      arguments: [null, SIGESRHI\AdminBundle\Entity\Otrosaspectos, AdminBundle:OtrosaspectosAdmin]

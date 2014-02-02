@@ -10,15 +10,15 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 
-class HabilidadAdmin extends Admin
+class CompetenciaAdmin extends Admin
 {
    // public $supportsPreviewMode = true;
     //Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('nombrehabilidad', 'textarea', array('label' => 'Descripción habilidad'))
-            ->setHelps(array('nombrehabilidad'=>'Ingrese la descripción de habilidades requeridas'))
+            ->add('nombrecompetencia', 'textarea', array('label' => 'Descripción competencia'))
+            ->setHelps(array('nombrecompetencia'=>'Ingrese la descripción de competencias conductuales'))
            
              ;
     }
@@ -27,7 +27,7 @@ class HabilidadAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-          ->add('nombrehabilidad', null, array('label' => 'Descripción habilidad'))
+          ->add('nombrecompetencia', null, array('label' => 'Descripción competencia'))
         ;
     }
     
@@ -35,7 +35,7 @@ class HabilidadAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('nombrehabilidad', null,array('label' => 'Descripción habilidad'))
+            ->addIdentifier('nombrecompetencia', null,array('label' => 'Descripción competencia'))
                    
         ;
     }

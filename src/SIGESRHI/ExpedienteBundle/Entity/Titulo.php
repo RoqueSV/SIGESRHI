@@ -55,11 +55,9 @@ class Titulo
     private $idinformacionacademica;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza", mappedBy="idtitulo")
+     * @ORM\OneToMany(targetEntity="\SIGESRHI\AdminBundle\Entity\Tituloplaza", mappedBy="idtitulo")
      */
-    private $idplaza;
+    private $idtituloplaza;
     
     public function __toString(){
         return $this->getNombretitulo();
@@ -136,7 +134,7 @@ class Titulo
     public function __construct()
     {
         $this->idinformacionacademica = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idplaza = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idtituloplaza = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -162,36 +160,38 @@ class Titulo
         $this->idinformacionacademica->removeElement($idinformacionacademica);
     }
 
+    
+
     /**
-     * Add idplaza
+     * Add idtituloplaza
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     * @param \SIGESRHI\AdminBundle\Entity\Tituloplaza $idtituloplaza
      * @return Titulo
      */
-    public function addIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    public function addIdtituloplaza(\SIGESRHI\AdminBundle\Entity\Tituloplaza $idtituloplaza)
     {
-        $this->idplaza[] = $idplaza;
+        $this->idtituloplaza[] = $idtituloplaza;
     
         return $this;
     }
 
     /**
-     * Remove idplaza
+     * Remove idtituloplaza
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     * @param \SIGESRHI\AdminBundle\Entity\Tituloplaza $idtituloplaza
      */
-    public function removeIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    public function removeIdtituloplaza(\SIGESRHI\AdminBundle\Entity\Tituloplaza $idtituloplaza)
     {
-        $this->idplaza->removeElement($idplaza);
+        $this->idtituloplaza->removeElement($idtituloplaza);
     }
 
     /**
-     * Get idplaza
+     * Get idtituloplaza
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getIdplaza()
+    public function getIdtituloplaza()
     {
-        return $this->idplaza;
+        return $this->idtituloplaza;
     }
 }

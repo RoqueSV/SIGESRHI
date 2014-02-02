@@ -45,99 +45,91 @@ class Plaza
         return $this->getNombreplaza();
     }
 
-
-
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcionplaza", type="string", length=500, nullable=false)
+     * @ORM\Column(name="misionplaza", type="text", length=500, nullable=false)
      * @Assert\NotNull(message="Debe ingresar la descripcion de la plaza")
      * @Assert\Length(
      * max = "500",
      * maxMessage = "La descripcion de la plaza no debe exceder los {{limit}} caracteres"
      * )
-     * @GRID\Column(filterable=false, groups="grupo_plaza", title="Descripción")
+     * @GRID\Column(filterable=false, groups="grupo_plaza", title="Misión")
      */
-    private $descripcionplaza;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="edad", type="integer", nullable=true)
-     * 
-     */
-    private $edad;
-    
-     /**
-     * @var integer
-     *
-     * @ORM\Column(name="experiencia", type="integer", nullable=true)
-     * @Assert\NotNull(message="Debe ingresar una cantidad para la experiencia requerida")
-     */
-    private $experiencia;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="sexo", type="string", nullable=true)
-     *
-     */
-    private $sexo;
+    private $misionplaza;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="estadoplaza", type="string", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar el estado de la plaza")
+     * @ORM\Column(name="unidad", type="string", length=200, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar la unidad organizativa de la plaza")
+     * @Assert\Length(
+     * max = "200",
+     * maxMessage = "La unidad de la plaza no debe exceder los {{limit}} caracteres"
+     * )
+     * @GRID\Column(filterable=false, groups="grupo_plaza", title="Unidad organizativa")
      */
-    private $estadoplaza;
+    private $unidad;
+
 
      /**
-     * @var \Area
+     * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Area",  inversedBy="idplaza")
+     * @ORM\Column(name="experiencia", type="integer", nullable=true)
+     */
+    private $experiencia;
+    
+    /**
+     * @var \Plaza
+     *
+     * @ORM\ManyToOne(targetEntity="Plaza", inversedBy="idplazahija")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idarea", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="idplazasup", referencedColumnName="id")
      * })
      */
-    private $idarea;
-    
-     /**
+    private $idplazasup;
+
+    /**
+      * @ORM\OneToMany(targetEntity="Plaza", mappedBy="idplazasup")
+      */
+
+    private $idplazahija;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Titulo", inversedBy="idplaza")
-     * @ORM\JoinTable(name="tituloplaza",
+     * @ORM\ManyToMany(targetEntity="Resultados", inversedBy="idplaza")
+     * @ORM\JoinTable(name="resultadoplaza",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idtitulo", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="idresultado", referencedColumnName="id")
      *   }
      * )
      */
-    private $idtitulo;
+    private $idresultado;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Tituloplaza", mappedBy="idplaza", cascade={"all"})
+     * @Assert\Valid
+     */
+    private $idtituloplaza;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Idiomasplaza", mappedBy="idplaza", cascade={"all"})
+     */
+    private $ididiomasplaza;
 
     /**
      * @ORM\OneToMany(targetEntity="RefrendaAct", mappedBy="idplaza")
      */
     private $idrefrenda;
     
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Conocimiento", inversedBy="idplaza")
-     * @ORM\JoinTable(name="conocimientoplaza",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idconocimiento", referencedColumnName="id")
-     *   }
-     * )
+     /**
+     * @ORM\OneToMany(targetEntity="Conocimientoplaza", mappedBy="idplaza", cascade={"all"})
      */
-
-    private $idconocimiento;
-
+    private $idconocimientoplaza;
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
@@ -156,32 +148,47 @@ class Plaza
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Habilidad", inversedBy="idplaza")
-     * @ORM\JoinTable(name="habilidadplaza",
+     * @ORM\ManyToMany(targetEntity="Competencia", inversedBy="idplaza")
+     * @ORM\JoinTable(name="competenciaplaza",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idhabilidad", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="idcompetencia", referencedColumnName="id")
      *   }
      * )
      */
-    private $idhabilidad;
+    private $idcompetencia;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Manejoequipo", inversedBy="idplaza")
-     * @ORM\JoinTable(name="manejoequipoplaza",
+     * @ORM\ManyToMany(targetEntity="Marcoreferencia", inversedBy="idplaza")
+     * @ORM\JoinTable(name="marcoreferenciaplaza",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idmanejoequipo", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="idmarcoreferencia", referencedColumnName="id")
      *   }
      * )
      */
-    private $idmanejoequipo;
+    private $idmarcoreferencia;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Otrosaspectos", inversedBy="idplaza")
+     * @ORM\JoinTable(name="otrosaspectosplaza",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="idotrosaspectos", referencedColumnName="id")
+     *   }
+     * )
+     */
+    private $idotrosaspectos;
    
     /**
      * @var string
@@ -213,19 +220,8 @@ class Plaza
      *     mimeTypesMessage = "El archivo debe ser una imagen o archivo pdf")
      */
     private $file;
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-       
-        $this->idconocimiento = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idfuncion = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idhabilidad = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idmanejoequipo = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idtitulo = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idrefrenda = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    
+    
     
 
     /**
@@ -252,73 +248,28 @@ class Plaza
     }
 
     /**
-     * Set descripcionplaza
+     * Set misionplaza
      *
-     * @param string $descripcionplaza
+     * @param string $misionplaza
      * @return Plaza
      */
-    public function setDescripcionplaza($descripcionplaza)
+    public function setMisionplaza($misionplaza)
     {
-        $this->descripcionplaza = $descripcionplaza;
+        $this->misionplaza = $misionplaza;
     
         return $this;
     }
 
     /**
-     * Get descripcionplaza
+     * Get misionplaza
      *
      * @return string 
      */
-    public function getDescripcionplaza()
+    public function getMisionplaza()
     {
-        return $this->descripcionplaza;
+        return $this->misionplaza;
     }
 
-    /**
-     * Set edad
-     *
-     * @param integer $edad
-     * @return Plaza
-     */
-    public function setEdad($edad)
-    {
-        $this->edad = $edad;
-    
-        return $this;
-    }
-
-    /**
-     * Get edad
-     *
-     * @return integer 
-     */
-    public function getEdad()
-    {
-        return $this->edad;
-    }
-
-    /**
-     * Set estadoplaza
-     *
-     * @param string $estadoplaza
-     * @return Plaza
-     */
-    public function setEstadoplaza($estadoplaza)
-    {
-        $this->estadoplaza = $estadoplaza;
-    
-        return $this;
-    }
-
-    /**
-     * Get estadoplaza
-     *
-     * @return string 
-     */
-    public function getEstadoplaza()
-    {
-        return $this->estadoplaza;
-    }
     
     /**
      * Set observaciones
@@ -343,61 +294,7 @@ class Plaza
         return $this->observaciones;
     }
     
-     /**
-     * Set idarea
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Area $idarea
-     * @return Plaza
-     */
-    public function setIdarea(\SIGESRHI\AdminBundle\Entity\Area $idarea = null)
-    {
-        $this->idarea = $idarea;
-    
-        return $this;
-    }
-
-    /**
-     * Get idarea
-     *
-     * @return \SIGESRHI\AdminBundle\Entity\Area
-     */
-    public function getIdarea()
-    {
-        return $this->idarea;
-    }
-
-    /**
-     * Add idconocimiento
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Conocimiento $idconocimiento
-     * @return Plaza
-     */
-    public function addIdconocimiento(\SIGESRHI\AdminBundle\Entity\Conocimiento $idconocimiento)
-    {
-        $this->idconocimiento[] = $idconocimiento;
-    
-        return $this;
-    }
-
-    /**
-     * Remove idconocimiento
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Conocimiento $idconocimiento
-     */
-    public function removeIdconocimiento(\SIGESRHI\AdminBundle\Entity\Conocimiento $idconocimiento)
-    {
-        $this->idconocimiento->removeElement($idconocimiento);
-    }
-
-    /**
-     * Get idconocimiento
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIdconocimiento()
-    {
-        return $this->idconocimiento;
-    }
+     
 
     /**
      * Add idfuncion
@@ -431,72 +328,7 @@ class Plaza
     {
         return $this->idfuncion;
     }
-
-    /**
-     * Add idhabilidad
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Habilidad $idhabilidad
-     * @return Plaza
-     */
-    public function addIdhabilidad(\SIGESRHI\AdminBundle\Entity\Habilidad $idhabilidad)
-    {
-        $this->idhabilidad[] = $idhabilidad;
-    
-        return $this;
-    }
-
-    /**
-     * Remove idhabilidad
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Habilidad $idhabilidad
-     */
-    public function removeIdhabilidad(\SIGESRHI\AdminBundle\Entity\Habilidad $idhabilidad)
-    {
-        $this->idhabilidad->removeElement($idhabilidad);
-    }
-
-    /**
-     * Get idhabilidad
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIdhabilidad()
-    {
-        return $this->idhabilidad;
-    }
-
-    /**
-     * Add idmanejoequipo
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Manejoequipo $idmanejoequipo
-     * @return Plaza
-     */
-    public function addIdmanejoequipo(\SIGESRHI\AdminBundle\Entity\Manejoequipo $idmanejoequipo)
-    {
-        $this->idmanejoequipo[] = $idmanejoequipo;
-    
-        return $this;
-    }
-
-    /**
-     * Remove idmanejoequipo
-     *
-     * @param \SIGESRHI\AdminBundle\Entity\Manejoequipo $idmanejoequipo
-     */
-    public function removeIdmanejoequipo(\SIGESRHI\AdminBundle\Entity\Manejoequipo $idmanejoequipo)
-    {
-        $this->idmanejoequipo->removeElement($idmanejoequipo);
-    }
-
-    /**
-     * Get idmanejoequipo
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIdmanejoequipo()
-    {
-        return $this->idmanejoequipo;
-    }
+   
     
     /***  Manejo de archivos  ***/
     
@@ -672,84 +504,6 @@ class Plaza
         $this->upload();
     }
 
-    /**
-     * Set experiencia
-     *
-     * @param integer $experiencia
-     * @return Plaza
-     */
-    public function setExperiencia($experiencia)
-    {
-        $this->experiencia = $experiencia;
-    
-        return $this;
-    }
-
-    /**
-     * Get experiencia
-     *
-     * @return integer 
-     */
-    public function getExperiencia()
-    {
-        return $this->experiencia;
-    }
-
-    /**
-     * Set sexo
-     *
-     * @param string $sexo
-     * @return Plaza
-     */
-    public function setSexo($sexo)
-    {
-        $this->sexo = $sexo;
-    
-        return $this;
-    }
-
-    /**
-     * Get sexo
-     *
-     * @return string 
-     */
-    public function getSexo()
-    {
-        return $this->sexo;
-    }
-
-    /**
-     * Add idtitulo
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo
-     * @return Plaza
-     */
-    public function addIdtitulo(\SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo)
-    {
-        $this->idtitulo[] = $idtitulo;
-    
-        return $this;
-    }
-
-    /**
-     * Remove idtitulo
-     *
-     * @param \SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo
-     */
-    public function removeIdtitulo(\SIGESRHI\ExpedienteBundle\Entity\Titulo $idtitulo)
-    {
-        $this->idtitulo->removeElement($idtitulo);
-    }
-
-    /**
-     * Get idtitulo
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIdtitulo()
-    {
-        return $this->idtitulo;
-    }
 
     /**
      * Add idrefrenda
@@ -782,5 +536,404 @@ class Plaza
     public function getIdrefrenda()
     {
         return $this->idrefrenda;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idplazahija = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idresultado = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idtituloplaza = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ididiomasplaza = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idrefrenda = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idconocimientoplaza = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idfuncion = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idcompetencia = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idmarcoreferencia = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idotrosaspectos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Set unidad
+     *
+     * @param string $unidad
+     * @return Plaza
+     */
+    public function setUnidad($unidad)
+    {
+        $this->unidad = $unidad;
+    
+        return $this;
+    }
+
+    /**
+     * Get unidad
+     *
+     * @return string 
+     */
+    public function getUnidad()
+    {
+        return $this->unidad;
+    }
+
+    /**
+     * Set experiencia
+     *
+     * @param integer $experiencia
+     * @return Plaza
+     */
+    public function setExperiencia($experiencia)
+    {
+        $this->experiencia = $experiencia;
+    
+        return $this;
+    }
+
+    /**
+     * Get experiencia
+     *
+     * @return integer 
+     */
+    public function getExperiencia()
+    {
+        return $this->experiencia;
+    }
+
+    /**
+     * Set idplazasup
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplazasup
+     * @return Plaza
+     */
+    public function setIdplazasup(\SIGESRHI\AdminBundle\Entity\Plaza $idplazasup = null)
+    {
+        $this->idplazasup = $idplazasup;
+    
+        return $this;
+    }
+
+    /**
+     * Get idplazasup
+     *
+     * @return \SIGESRHI\AdminBundle\Entity\Plaza 
+     */
+    public function getIdplazasup()
+    {
+        return $this->idplazasup;
+    }
+
+    /**
+     * Add idplazahija
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplazahija
+     * @return Plaza
+     */
+    public function addIdplazahija(\SIGESRHI\AdminBundle\Entity\Plaza $idplazahija)
+    {
+        $this->idplazahija[] = $idplazahija;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idplazahija
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplazahija
+     */
+    public function removeIdplazahija(\SIGESRHI\AdminBundle\Entity\Plaza $idplazahija)
+    {
+        $this->idplazahija->removeElement($idplazahija);
+    }
+
+    /**
+     * Get idplazahija
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdplazahija()
+    {
+        return $this->idplazahija;
+    }
+
+    /**
+     * Add idresultado
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Resultados $idresultado
+     * @return Plaza
+     */
+    public function addIdresultado(\SIGESRHI\AdminBundle\Entity\Resultados $idresultado)
+    {
+        $this->idresultado[] = $idresultado;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idresultado
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Resultados $idresultado
+     */
+    public function removeIdresultado(\SIGESRHI\AdminBundle\Entity\Resultados $idresultado)
+    {
+        $this->idresultado->removeElement($idresultado);
+    }
+
+    /**
+     * Get idresultado
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdresultado()
+    {
+        return $this->idresultado;
+    }
+
+    public function setIdtituloplaza($idtituloplaza)
+    {
+    if (count($idtituloplaza) > 0) {
+        foreach ($idtituloplaza as $i) {
+            $this->addIdtituloplaza($i);
+        }
+    }
+
+    return $this;
+    }
+
+    /**
+     * Add idtituloplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Tituloplaza $idtituloplaza
+     * @return Plaza
+     */
+    public function addIdtituloplaza(\SIGESRHI\AdminBundle\Entity\Tituloplaza $idtituloplaza)
+    {
+       // $this->idtituloplaza[] = $idtituloplaza;
+     
+       $idtituloplaza->setIdplaza($this);
+       $this->idtituloplaza->add($idtituloplaza);
+    }
+
+    /**
+     * Remove idtituloplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Tituloplaza $idtituloplaza
+     */
+    public function removeIdtituloplaza(\SIGESRHI\AdminBundle\Entity\Tituloplaza $idtituloplaza)
+    {
+        $this->idtituloplaza->removeElement($idtituloplaza);
+    }
+
+    /**
+     * Get idtituloplaza
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdtituloplaza()
+    {
+        return $this->idtituloplaza;
+    }
+
+
+    public function setIdidiomasplaza($ididiomasplaza)
+    {
+    if (count($ididiomasplaza) > 0) {
+        foreach ($ididiomasplaza as $i) {
+            $this->addIdidiomasplaza($i);
+        }
+    }
+
+    return $this;
+    }
+
+    /**
+     * Add ididiomasplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Idiomasplaza $ididiomasplaza
+     * @return Plaza
+     */
+    public function addIdidiomasplaza(\SIGESRHI\AdminBundle\Entity\Idiomasplaza $ididiomasplaza)
+    {
+       /* $this->ididiomasplaza[] = $ididiomasplaza;
+    
+        return $this;*/
+       $ididiomasplaza->setIdplaza($this);
+       $this->ididiomasplaza->add($ididiomasplaza);
+    }
+
+    /**
+     * Remove ididiomasplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Idiomasplaza $ididiomasplaza
+     */
+    public function removeIdidiomasplaza(\SIGESRHI\AdminBundle\Entity\Idiomasplaza $ididiomasplaza)
+    {
+        $this->ididiomasplaza->removeElement($ididiomasplaza);
+    }
+
+    /**
+     * Get ididiomasplaza
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdidiomasplaza()
+    {
+        return $this->ididiomasplaza;
+    }
+
+
+    public function setIdconocimientoplaza($idconocimientoplaza)
+    {
+    if (count($idconocimientoplaza) > 0) {
+        foreach ($idconocimientoplaza as $i) {
+            $this->addIdconocimientoplaza($i);
+        }
+    }
+
+    return $this;
+    }
+    /**
+     * Add idconocimientoplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Conocimientoplaza $idconocimientoplaza
+     * @return Plaza
+     */
+    public function addIdconocimientoplaza(\SIGESRHI\AdminBundle\Entity\Conocimientoplaza $idconocimientoplaza)
+    {
+       /*$this->idconocimientoplaza[] = $idconocimientoplaza;
+    
+        return $this;*/
+       $idconocimientoplaza->setIdplaza($this);
+       $this->idconocimientoplaza->add($idconocimientoplaza);
+    }
+
+    /**
+     * Remove idconocimientoplaza
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Conocimientoplaza $idconocimientoplaza
+     */
+    public function removeIdconocimientoplaza(\SIGESRHI\AdminBundle\Entity\Conocimientoplaza $idconocimientoplaza)
+    {
+        $this->idconocimientoplaza->removeElement($idconocimientoplaza);
+    }
+
+    /**
+     * Get idconocimientoplaza
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdconocimientoplaza()
+    {
+        return $this->idconocimientoplaza;
+    }
+
+    
+    /**
+     * Remove idcompetencia
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Competencia $idcompetencia
+     */
+    public function removeIdcompetencia(\SIGESRHI\AdminBundle\Entity\Competencia $idcompetencia)
+    {
+        $this->idcompetencia->removeElement($idcompetencia);
+    }
+
+    public function setIdcompetencia($idcompetencia)
+    {
+    if (count($idcompetencia) > 0) {
+        foreach ($idcompetencia as $i) {
+            $this->addIdcompetencia($i);
+        }
+     }
+    }
+
+    public function addIdcompetencia(\SIGESRHI\AdminBundle\Entity\Competencia $idcompetencia)
+    {
+       /*$this->idconocimientoplaza[] = $idconocimientoplaza;
+    
+        return $this;*/
+       $idcompetencia->setIdplaza($this);
+       $this->idcompetencia->add($idcompetencia);
+    }
+
+    /**
+     * Get idcompetencia
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdcompetencia()
+    {
+        return $this->idcompetencia;
+    }
+
+    /**
+     * Remove idmarcoreferencia
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Marcoreferencia $idmarcoreferencia
+     */
+    public function removeIdmarcoreferencia(\SIGESRHI\AdminBundle\Entity\Marcoreferencia $idmarcoreferencia)
+    {
+        $this->idmarcoreferencia->removeElement($idmarcoreferencia);
+    }
+
+    public function setIdmarcoreferencia($idmarcoreferencia)
+    {
+    if (count($idmarcoreferencia) > 0) {
+        foreach ($idmarcoreferencia as $i) {
+            $this->addIdmarcoreferencia($i);
+        }
+     }
+    }
+
+    public function addIdmarcoreferencia(\SIGESRHI\AdminBundle\Entity\Marcoreferencia $idmarcoreferencia)
+    {
+       /*$this->idconocimientoplaza[] = $idconocimientoplaza;
+    
+        return $this;*/
+       $idmarcoreferencia->setIdplaza($this);
+       $this->idmarcoreferencia->add($idmarcoreferencia);
+    }
+
+    /**
+     * Get idmarcoreferencia
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdmarcoreferencia()
+    {
+        return $this->idmarcoreferencia;
+    }
+
+    /**
+     * Add idotrosaspectos
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Otrosaspectos $idotrosaspectos
+     * @return Plaza
+     */
+    public function addIdotrosaspecto(\SIGESRHI\AdminBundle\Entity\Otrosaspectos $idotrosaspectos)
+    {
+        $this->idotrosaspectos[] = $idotrosaspectos;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idotrosaspectos
+     *
+     * @param \SIGESRHI\AdminBundle\Entity\Otrosaspectos $idotrosaspectos
+     */
+    public function removeIdotrosaspecto(\SIGESRHI\AdminBundle\Entity\Otrosaspectos $idotrosaspectos)
+    {
+        $this->idotrosaspectos->removeElement($idotrosaspectos);
+    }
+
+    /**
+     * Get idotrosaspectos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdotrosaspectos()
+    {
+        return $this->idotrosaspectos;
     }
 }

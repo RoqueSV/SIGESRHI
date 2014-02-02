@@ -19,9 +19,9 @@ class TituloAdmin extends Admin
         $formMapper
             ->add('nombretitulo', null, array('label' => 'Titulo'))
             ->add('niveltitulo', 'choice', array('choices'   
-                                           => array('Educación Media' => 'Educación Media', 
-                                                    'Educación Superior' => 'Educación Superior',
-                                                    'Postgrado'=>'Postgrado'),
+                                           => array('3.Bachillerato' => 'Educación Media', 
+                                                    '4.Universitarios' => 'Educación Superior',
+                                                    '5.Postgrados'=>'Postgrado'),
                                            'required'  => true, 'label'=>'Nivel'))
             ->setHelps(array('nombretitulo'=>'Ingrese el titulo requerido'))
            

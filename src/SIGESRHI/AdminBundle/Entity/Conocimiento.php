@@ -35,16 +35,14 @@ class Conocimiento
      */
     private $nombreconocimiento;
     
-        /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Plaza", mappedBy="idconocimiento")
+    /**
+     * @ORM\OneToMany(targetEntity="Conocimientoplaza", mappedBy="idconocimiento")
      */
-    private $idplaza;
+    private $idconocimientoplaza;
 
-        public function __toString() {
-  return $this->nombreconocimiento;
-}
+    public function __toString() {
+      return $this->nombreconocimiento;
+    }
     /**
      * Get id
      *
@@ -82,39 +80,39 @@ class Conocimiento
      */
     public function __construct()
     {
-        $this->idplaza = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idconocimientoplaza = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
-     * Add idplaza
+     * Add idconocimientoplaza
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     * @param \SIGESRHI\AdminBundle\Entity\Conocimientoplaza $idconocimientoplaza
      * @return Conocimiento
      */
-    public function addIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    public function addIdconocimientoplaza(\SIGESRHI\AdminBundle\Entity\Conocimientoplaza $idconocimientoplaza)
     {
-        $this->idplaza[] = $idplaza;
+        $this->idconocimientoplaza[] = $idconocimientoplaza;
     
         return $this;
     }
 
     /**
-     * Remove idplaza
+     * Remove idconocimientoplaza
      *
-     * @param \SIGESRHI\AdminBundle\Entity\Plaza $idplaza
+     * @param \SIGESRHI\AdminBundle\Entity\Conocimientoplaza $idconocimientoplaza
      */
-    public function removeIdplaza(\SIGESRHI\AdminBundle\Entity\Plaza $idplaza)
+    public function removeIdconocimientoplaza(\SIGESRHI\AdminBundle\Entity\Conocimientoplaza $idconocimientoplaza)
     {
-        $this->idplaza->removeElement($idplaza);
+        $this->idconocimientoplaza->removeElement($idconocimientoplaza);
     }
 
     /**
-     * Get idplaza
+     * Get idconocimientoplaza
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getIdplaza()
+    public function getIdconocimientoplaza()
     {
-        return $this->idplaza;
+        return $this->idconocimientoplaza;
     }
 }

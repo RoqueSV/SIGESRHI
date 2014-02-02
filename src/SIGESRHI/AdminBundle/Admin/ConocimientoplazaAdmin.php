@@ -1,7 +1,7 @@
 <?php
 
 
-//src/SIGESRHI/AdminBundle/Admin/ManejoAdmin.php
+//src/SIGESRHI/AdminBundle/Admin/TituloAdmin.php
 
 namespace SIGESRHI\AdminBundle\Admin;
 
@@ -10,15 +10,20 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 
-class ManejoAdmin extends Admin
+class ConocimientoplazaAdmin extends Admin
 {
    // public $supportsPreviewMode = true;
     //Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('nombremanejo', 'textarea', array('label' => 'Descripción manejo de equipo'))
-            ->setHelps(array('nombremanejo'=>'Ingrese la descripción de manejos de equipo requeridos'))
+            ->add('idconocimiento','sonata_type_model', array('label' => 'Titulo'))
+            //->add('idplaza', null, array('label' => 'Plaza'))
+            ->add('tipoconocimiento', 'choice', array(
+                  'choices'=> array('I' => 'Indispensable', 
+                                    'D' => 'Deseable'),
+                  'empty_value'=>'Seleccione',
+                  'required'  => true, 'label'=>'Tipo'))
            
              ;
     }
@@ -27,7 +32,7 @@ class ManejoAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-          ->add('nombremanejo', null, array('label' => 'Descripción manejo de equipo'))
+         // ->add('idtitulo', null, array('label' => 'Titulo'))
         ;
     }
     
@@ -35,8 +40,7 @@ class ManejoAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('nombremanejo', null,array('label' => 'Descripción manejo de equipo'))
-                   
+          //->addIdentifier('idtitulo', null,array('label' => 'Titulo'))                   
         ;
     }
     
