@@ -44,7 +44,7 @@
 
         <h4>II. EVALUACIÓN GENERAL POR PARTE DEL JEFE INMEDIATO</h4>
 
-    {% for factor in formulario.factores %}
+    {% for factor in formulario.factores|sort %}
     <table border="2" class="table-bordered">
         <tr><th colspan="{{factor.opciones|length}}" class="text-center"><b>{{ factor.nombrefactor}}</b></th></tr>
         <tr><td colspan="{{factor.opciones|length}}">  <p class="justifyText"> {{factor.descripcionfactor}} </p> </td></tr>

@@ -146,6 +146,18 @@ class RefrendaAct
      */
     private $idunidad;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=2, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el tipo de puesto")
+     * @Assert\Length(
+     * max = "2",
+     * maxMessage = "El tipo de puesto no debe exceder {{limit}} caracteres"
+     * )
+     */
+    private $tipo;
+
     public function __toString() {
         return $this->getNombreplaza();
        }
@@ -490,5 +502,51 @@ class RefrendaAct
     public function removeIdpuestojefe(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $idpuestojefe)
     {
         $this->idpuestojefe->removeElement($idpuestojefe);
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     * @return RefrendaAct
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+    
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string 
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Add puestoempleado
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $puestoempleado
+     * @return RefrendaAct
+     */
+    public function addPuestoempleado(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $puestoempleado)
+    {
+        $this->puestoempleado[] = $puestoempleado;
+    
+        return $this;
+    }
+
+    /**
+     * Remove puestoempleado
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Contratacion $puestoempleado
+     */
+    public function removePuestoempleado(\SIGESRHI\ExpedienteBundle\Entity\Contratacion $puestoempleado)
+    {
+        $this->puestoempleado->removeElement($puestoempleado);
     }
 }

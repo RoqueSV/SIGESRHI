@@ -143,6 +143,18 @@ class Refrenda
      */
     private $nombreplaza;
 
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=2, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el tipo de puesto")
+     * @Assert\Length(
+     * max = "2",
+     * maxMessage = "El tipo de puesto no debe exceder {{limit}} caracteres"
+     * )
+     */
+    private $tipo;
+
 
 
     /**
@@ -430,5 +442,28 @@ class Refrenda
     public function getNombreplaza()
     {
         return $this->nombreplaza;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     * @return Refrenda
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+    
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string 
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
     }
 }
