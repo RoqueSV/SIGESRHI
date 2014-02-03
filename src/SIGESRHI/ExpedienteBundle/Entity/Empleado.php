@@ -81,8 +81,8 @@ class Empleado
 
     /**
      * @ORM\OneToMany(targetEntity="\SIGESRHI\EvaluacionBundle\Entity\Evaluacion", mappedBy="idempleado")
-     * @GRID\Column(field="idevaluacion.semestre", groups={"grupo_empleados_a_evaluar"}, visible=true, joinType="left", filterable=false, title="Semestre")
-     * @GRID\Column(field="idevaluacion.anoevaluado", groups={"grupo_empleados_a_evaluar"}, visible=true, joinType="left", filterable=false, title="Año")
+     * @GRID\Column(field="idevaluacion.semestre", groups={"grupo_empleados_a_evaluar"}, visible=false, joinType="left", filterable=false, title="Semestre")
+     * @GRID\Column(field="idevaluacion.anoevaluado", groups={"grupo_empleados_a_evaluar"}, visible=false, joinType="left", filterable=false, title="Año")
      * @GRID\Column(field="idevaluacion.id", groups={"grupo_empleados_a_evaluar"}, visible=false, joinType="left", filterable=false, title="Año")
      */
     private $idevaluacion;
