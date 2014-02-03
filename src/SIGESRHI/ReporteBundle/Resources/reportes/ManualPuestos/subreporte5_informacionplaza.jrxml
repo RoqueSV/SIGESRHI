@@ -7,10 +7,10 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.id,nombremanejo from plaza p join manejoequipoplaza mep on (p.id=mep.idplaza) join manejoequipo me on (me.id=mep.idmanejoequipo) where p.id=$P{idplaza}]]>
+		<![CDATA[select p.id,nombreresultado from plaza p join resultadoplaza rp on (p.id=rp.idplaza) join resultados r on (r.id=rp.idresultado) where p.id=$P{idplaza}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
-	<field name="nombremanejo" class="java.lang.String"/>
+	<field name="nombreresultado" class="java.lang.String"/>
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<staticText>
@@ -18,7 +18,7 @@
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[MANEJO DE EQUIPO]]></text>
+				<text><![CDATA[RESULTADOS PRINCIPALES:]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -27,7 +27,7 @@
 			<textField>
 				<reportElement uuid="f1453b5b-75f0-4f0d-99cf-1ce19934ed82" positionType="Float" x="0" y="0" width="572" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA["- "+$F{nombremanejo}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["- "+$F{nombreresultado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

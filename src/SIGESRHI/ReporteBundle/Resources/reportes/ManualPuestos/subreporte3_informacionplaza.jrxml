@@ -7,10 +7,10 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.id,nombrehabilidad from plaza p join habilidadplaza hp on (p.id=hp.idplaza) join habilidad h on (h.id=hp.idhabilidad) where p.id=$P{idplaza}]]>
+		<![CDATA[select p.id,nombremarcoref from plaza p join marcoreferenciaplaza mrp on (p.id=mrp.idplaza) join marcoreferencia mr on (mr.id=mrp.idmarcoreferencia) where p.id=$P{idplaza}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
-	<field name="nombrehabilidad" class="java.lang.String"/>
+	<field name="nombremarcoref" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -21,7 +21,7 @@
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[HABILIDADES]]></text>
+				<text><![CDATA[MARCO DE REFERENCIA PARA LA ACTUACION:]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -30,7 +30,7 @@
 			<textField>
 				<reportElement uuid="22384c4d-2a0d-4caf-a32f-fb26d9d7b909" x="0" y="0" width="572" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["- "+$F{nombrehabilidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["- "+$F{nombremarcoref}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
