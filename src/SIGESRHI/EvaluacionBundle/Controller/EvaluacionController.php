@@ -190,7 +190,7 @@ class EvaluacionController extends Controller
         $evaluacion->setComentario($comentario);
         $evaluacion->setTiemposupervisar($supervisa);
         $evaluacion->setCargofuncion($cargo);
-        $evaluacion->setFechacargofuncion($fechacargo);
+        $evaluacion->setFechacargofuncion(new \Datetime($fechacargo));
 
         $form = $this->createForm(new EvaluacionType(), $evaluacion);
         $form->bind($request);
@@ -505,8 +505,36 @@ class EvaluacionController extends Controller
         $request = $this->getRequest();
         $incidente = $request->get('registra_incidente');
 
+         $em = $this->getDoctrine()->getManager();
+
+         
+
         if($incidente == "SI"){
-            return $this->render('EvaluacionBundle:Evaluacion:incidentes.html.twig');
+
+            //obtenemos la entidad evaluacion del empleado
+            $evaluacion = $em->getRepository('EvaluacionBundle:Evaluacion')->find($id);
+
+          if(!$evaluacion){
+            throw $this->createNotFoundException('No se encontro la evaluacion del empleado.');
+        }
+        //obtenemos datos del empleo del empleado
+        $puestoemp = $em->getRepository('AdminBundle:Refrendaact')->find($evaluacion->getPuestoemp());
+
+          if(!$puestoemp){
+            throw $this->createNotFoundException('No se encontro la plaza del empleado.');
+        }
+        //obtenemos datos de empleo del jefe
+        $puestojefe = $em->getRepository('AdminBundle:Refrendaact')->find($evaluacion->getPuestojefe());
+
+          if(!$puestojefe){
+            throw $this->createNotFoundException('No se encontro la plaza del jefe.');
+        }
+
+            return $this->render('EvaluacionBundle:Evaluacion:incidentes.html.twig', array(
+                'evaluacion' => $evaluacion,
+                'puestoemp' => $puestoemp,
+                'puestojefe' => $puestojefe,
+                ));
         }
         if($incidente == "NO"){
             return $this->redirect($this->generateUrl('evaluacion'));
