@@ -37,6 +37,7 @@ class EvaluacionController extends Controller
      */
     public function EmpleadosEvaluarAction($idrefrenda)
     {
+
         //Obtenemos el id de empleado del usuarioo logueado
         $user = new User();
         $empleado = new Empleado();
@@ -48,6 +49,12 @@ class EvaluacionController extends Controller
             throw $this->createNotFoundException('Inicie sesión para acceder a esta página');
         }
         
+        //validamos si es periodo de evaluacion.
+        $periodo_evaluacion= $this->VerificarPeriodoActivo();
+        if(!$periodo_evaluacion){
+            return $this->redirect($this->generateUrl('evaluacion_noperiodo'));
+        } 
+
         //empleado >>> es el jefe (quien evaluara)
         $empleado = $user->getEmpleado();
         $idjefe = $empleado->getId();
@@ -84,17 +91,23 @@ class EvaluacionController extends Controller
             ')->setParameter('fechaactual', $fechaactual);
         
         $periodo = $periodo_query->getsingleResult();
+
+        
         //fin consulta
 
 
         $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
-        function($query) use ($idrefrenda){
-            $query->andWhere("_idrefrenda_puestoempleado_puestojefe.id =:var ")->setParameter('var',$idrefrenda);
-             }
+        function($query) use ($idrefrenda, $periodo){
+            $query->andWhere("_idrefrenda_puestoempleado_puestojefe.id =:var ")
+            ->andWhere("_idevaluacion.anoevaluado =:anio or _idevaluacion.anoevaluado is null")
+            ->andWhere("_idevaluacion.semestre =:semestre or _idevaluacion.semestre is null")
+            ->setParameter('var',$idrefrenda)
+            ->setParameter('anio',$periodo['anio'])
+            ->setParameter('semestre',$periodo['semestre'])
+             ;}
             );
     
-     
         // Attach the source to the grid
         $grid->setId('grid_consulta_empleados_evaluacion');
         $grid->setSource($source);
@@ -104,18 +117,9 @@ class EvaluacionController extends Controller
         $grid->setNoDataMessage("No posee subordinados registrados para este Puesto.");
         //$grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
         
-        $rowAction1 = new RowAction('Registrar', 'evaluacion_new');
+        $rowAction1 = new RowAction('Registrar', 'evaluacion_sformulario');
         $rowAction2 = new RowAction('Consultar', 'evaluacion_show');
 
-/* //backup
-         $rowAction1->manipulateRender(
-            function ($action, $row)use($idrefrenda)
-            {
-             $action->setRouteParameters(array('id','idform'=>1, 'idpuestojefe'=>$idrefrenda, 'idpuestoemp'=> $row->getField('idrefrenda.id')));
-              return $action;
-            }
-        );
-*/
 
         //Consultamos los datos de periodo de evaluacion vigente.
         $fechaactual = date('d-m-Y');
@@ -136,7 +140,7 @@ class EvaluacionController extends Controller
                    return null;
                 }
                 else{
-                     $action->setRouteParameters(array('id','idform'=>1, 'idpuestojefe'=>$idrefrenda, 'idpuestoemp'=> $row->getField('idrefrenda.id')));
+                     $action->setRouteParameters(array('id','idpuestojefe'=>$idrefrenda, 'idpuestoemp'=> $row->getField('idrefrenda.id')));
                     return $action;
                 }
             }
@@ -155,16 +159,7 @@ class EvaluacionController extends Controller
                 }
             }
         );
-    /*    //
-         $rowAction1->manipulateRender(
-            function ($action, $row)
-            {
-             $action->setRouteParameters(array('id'=> $row->getField('idsolicitudempleo.id'),'vista_retorno'=> 2));
-              return $action;
-            }
-        );
-      */  //
-       
+           
         $rowAction1->setColumn('info_column');
         $rowAction2->setColumn('info_column');
         $grid->addRowAction($rowAction1);     
@@ -188,10 +183,14 @@ class EvaluacionController extends Controller
         $numfactores = $request->get('numfactores');
         $supervisa = $request->get('supervisa');
         $comentario = $request->get('comentario');
+        $cargo = $request->get('cargofuncion');
+        $fechacargo = $request->get('fechacargofuncion');
 
         $evaluacion  = new Evaluacion();
         $evaluacion->setComentario($comentario);
         $evaluacion->setTiemposupervisar($supervisa);
+        $evaluacion->setCargofuncion($cargo);
+        $evaluacion->setFechacargofuncion(new \Datetime($fechacargo));
 
         $form = $this->createForm(new EvaluacionType(), $evaluacion);
         $form->bind($request);
@@ -506,11 +505,40 @@ class EvaluacionController extends Controller
         $request = $this->getRequest();
         $incidente = $request->get('registra_incidente');
 
+         $em = $this->getDoctrine()->getManager();
+
+         
+
         if($incidente == "SI"){
-            return $this->render('EvaluacionBundle:Evaluacion:incidentes.html.twig');
+
+            //obtenemos la entidad evaluacion del empleado
+            $evaluacion = $em->getRepository('EvaluacionBundle:Evaluacion')->find($id);
+
+          if(!$evaluacion){
+            throw $this->createNotFoundException('No se encontro la evaluacion del empleado.');
+        }
+        //obtenemos datos del empleo del empleado
+        $puestoemp = $em->getRepository('AdminBundle:Refrendaact')->find($evaluacion->getPuestoemp());
+
+          if(!$puestoemp){
+            throw $this->createNotFoundException('No se encontro la plaza del empleado.');
+        }
+        //obtenemos datos de empleo del jefe
+        $puestojefe = $em->getRepository('AdminBundle:Refrendaact')->find($evaluacion->getPuestojefe());
+
+          if(!$puestojefe){
+            throw $this->createNotFoundException('No se encontro la plaza del jefe.');
+        }
+
+            return $this->render('EvaluacionBundle:Evaluacion:incidentes.html.twig', array(
+                'evaluacion' => $evaluacion,
+                'puestoemp' => $puestoemp,
+                'puestojefe' => $puestojefe,
+                ));
         }
         if($incidente == "NO"){
-            return $this->render('EvaluacionBundle:Evaluacion:SeleccionPuesto.html.twig');
+            return $this->redirect($this->generateUrl('evaluacion'));
+            //return $this->render('EvaluacionBundle:Evaluacion:SeleccionPuesto.html.twig');
         }
 
                 //  return $this->redirect($this->generateUrl('evaluacion'));
@@ -518,15 +546,38 @@ class EvaluacionController extends Controller
     }//finalizarAction()
 
 
-    public function SeleccionFormularioAction($idempleado){
+    public function SeleccionFormularioAction($id, $idpuestoemp, $idpuestojefe){
 
         $em = $this->getDoctrine()->getManager();
 
+         $puestoemp = $em->getRepository('AdminBundle:RefrendaAct')->find($idpuestoemp);
+
+          if(!$puestoemp){
+            throw $this->createNotFoundException('No se encontro la refrenda del empleado.');
+        }
+
         $formularios = $em->getRepository('EvaluacionBundle:FormularioEvaluacion')->findAll();
+
+         if(!$formularios){
+            throw $this->createNotFoundException('No hay formularios registrados en el sistema.');
+        }
 
         return $this->render('EvaluacionBundle:Evaluacion:SeleccionFormulario.html.twig', 
             array(
-                'formularios'=>$formularios
+                'formularios'=>$formularios,
+                'puestoemp'=>$puestoemp,
+                'id'=>$id,
+                'idpuestoemp'=>$idpuestoemp,
+                'idpuestojefe'=>$idpuestojefe,
                 ));
-    }
+    }// SeleccionFormulario
+
+    public function LlamarFormularioAction($id, $idpuestoemp, $idpuestojefe)
+    {
+        $request = $this->getRequest();
+        $idform = $request->get('tipo_form');
+
+        return $this->redirect($this->generateUrl('evaluacion_new',array('idform'=>$idform, 'id'=>$id, 'idpuestoemp'=>$idpuestoemp,'idpuestojefe'=>$idpuestojefe)));
+
+    }//LlamarFormulario
 }

@@ -4,19 +4,45 @@
 <div class="text-center">
 <h3>Selecci&oacute;n de Formulario</h3>
 
-<select class="input-xmlarge" id="tipo_form">
+<h4>Datos del empleado: </h4>
+<table class="table table-bordered table-hover mitable">
+	<tr>
+		<th width="30%">C&oacute;digo: </th><td>{{puestoemp.idempleado.codigoempleado}}</td>
+	</tr>
+	<tr>
+		<th>Nombre: </th><td>{{puestoemp.idempleado.idexpediente.idsolicitudempleo.nombrecompleto}}</td>
+	</tr>
+	<tr>
+		<th>Plaza que se eval&uacute;a: </th><td>{{puestoemp.idplaza.nombreplaza}}</td>
+	</tr>
+	<tr>
+		<th>Unidad/Departamento: </th><td>{{puestoemp.idunidad.nombreunidad}} / {{puestoemp.idunidad.idcentro.nombrecentro}}</td>
+	</tr>
+</table>
+
+Seleccione el tipo de formulario para evaluar al empleado:
+
+<form action="{{path('evaluacion_llamaformulario', {'id':id, 'idpuestoemp':idpuestoemp, 'idpuestojefe':idpuestojefe})}}"  >
+<select class="input-xmlarge" id="tipo_form" name="tipo_form">
 {% for formulario in formularios %}
 
-<option value="{{formulario.id}}" required="required">{{formulario.nombrebreve}}</option>
+<option value="{{formulario.id}}" required="required" >{{formulario.nombrebreve}}</option>
 
 {% endfor %}
 </select>
-
+<br><br>
+<button type="submit" class="btn btn-primary" id="evaluar">Evaluar</button>
+<button type="button" class="btn">Cancelar</button>
+</form>
 </div>
 
 <script>
 $(document).ready(function(){
 	$('#tipo_form').prop("selectedIndex",-1);
+	$('#evaluar').hide();
+	$('#tipo_form').change(function(){
+		$('#evaluar').show();
+	});//change
 	});
 </script>
 

@@ -1,6 +1,11 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+
+<a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+
+{{ include('EvaluacionBundle:Ayuda/Evaluacion:Registrar.html.twig')}}
+
     <div align="right">
     <b>{{formulario.codigoformulario}}</b>&nbsp;&nbsp;&nbsp;&nbsp;
     </div>
@@ -14,25 +19,25 @@
     
     <h4>I. DATOS GENERALES</h4>
 
-        <table class="table table-bordered table-centered table-hover mitable" width="90%">
+        <table class="table table-bordered table-centered mitable form-inline" width="90%">
             <tr><th width="30%">Nombre del empleado: </th><td>{{empleado.idexpediente.idsolicitudempleo.nombrecompleto}}</td></tr>
             <tr><th>Código:</th><td>{{empleado.codigoempleado}}</td></tr>
-            <tr><th>Cargo según nombramiento:</th><td>{{refrenda.idplaza.nombreplaza}} --DUDAS??</td></tr>
+            <tr><th>Cargo según nombramiento:</th><td>{{refrenda.idplaza.nombreplaza}}</td></tr>
             <tr><th>Fecha de ingreso: </th><td>{{empleado.idexpediente.hojaservicio.fechaingreso|date('d-m-Y')|fecha}}</td></tr>
             <tr><th>Número de partida:</th><td>{{refrenda.partida}}</td></tr>
             <tr><th>Número de subpartida:</th><td>{{refrenda.subpartida}}</td></tr>
             <tr><th>Sueldo:</th><td> ${{refrenda.sueldoactual}}</td></tr>
-            <tr><th>Cargo según función:</th><td>{{refrenda.idplaza.nombreplaza}} --DUDAS??</td></tr>
-            <tr><th>A partir de:</th><td> --DUDAS??</td></tr>
+            <tr><th>Cargo según función:</th><td> <input type="text" name="cargofuncion" class="input-xxlarge"/></td></tr>
+            <tr><th>A partir de:</th><td> <input type="text" class="date input-small" name="fechacargofuncion" readonly="readonly"/></td></tr>
             <tr><th>Dependencia:</th><td>{{refrenda.idunidad.idcentro.nombrecentro}}</td></tr>
             <tr><th>Unidad administrativa:</th><td>{{refrenda.idunidad.nombreunidad}} </td></tr>
             <tr><th>Nombre del jefe inmediato:</th><td>{{jefe.idexpediente.idsolicitudempleo.nombrecompleto}}</td></tr>
             <tr><th>Puesto:</th><td>{{refrendajefe.idplaza.nombreplaza}}</td></tr>
-            <tr><th>Periodo comprendido de:</th><td>
+            <tr><th>Periodo:</th><td>
                 {% if evaluacion.semestre == 'I' %} 
-                Enero a Junio de {{evaluacion.anoevaluado}} 
+                Primer Semestre {{evaluacion.anoevaluado}} 
                 {% else %}
-                Julio a Diciembre de {{evaluacion.anoevaluado}} 
+                Segundo Semestre {{evaluacion.anoevaluado}} 
                 {% endif %}
             </td></tr>
             
@@ -44,7 +49,7 @@
 
         <h4>II. EVALUACIÓN GENERAL POR PARTE DEL JEFE INMEDIATO</h4>
 
-    {% for factor in formulario.factores|sort %}
+    {% for factor in formulario.factores %}
     <table border="2" class="table-bordered">
         <tr><th colspan="{{factor.opciones|length}}" class="text-center"><b>{{ factor.nombrefactor}}</b></th></tr>
         <tr><td colspan="{{factor.opciones|length}}">  <p class="justifyText"> {{factor.descripcionfactor}} </p> </td></tr>

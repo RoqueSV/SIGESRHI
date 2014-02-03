@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte6_informacionplaza" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="968298e3-ae20-472a-b5c8-67f4e0d29221">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idplaza" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.id,case when tipoidioma='D' then 'Deseable' else 'Indispensable' end tipoidioma,case when nivelidioma='B' then 'nivel básico del idioma'
+	      when nivelidioma='I' then 'nivel Intermedio del idioma'
+	 else
+	'nivel avanzado del idioma' end as nivel,nombreidioma
+from plaza p
+ left outer join idiomasplaza ip on (p.id=ip.idplaza)
+ left outer join otrosidiomas i on (ip.idotrosidiomas=i.id)
+where p.id=2 order by tipoidioma]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="tipoidioma" class="java.lang.String"/>
+	<field name="nivel" class="java.lang.String"/>
+	<field name="nombreidioma" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d6a6223e-ef40-4db0-9846-6e29779d6a89" x="0" y="0" width="187" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OTROS IDIOMAS:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="d7b8cf56-a03a-4ec4-8d6c-b5111e17500f" x="0" y="0" width="572" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tipoidioma}+" "+$F{nivel}+" "+$F{nombreidioma}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

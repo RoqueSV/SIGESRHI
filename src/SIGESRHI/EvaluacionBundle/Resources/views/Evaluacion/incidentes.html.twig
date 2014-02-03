@@ -1,17 +1,31 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-Incidentes!
 
+<h4 class="text-center">REGISTRO INDIVIDUAL DE INCIDENTES CRITICOS DE DESEMPE&Ntilde;O PARA {{evaluacion.Respuestas[0].idfactor.idformulario.nombrebreve}}</h4>
+<br>
 <table class="table table-bordered table-hover mitable">
 	<tr>
-		<th>Nombre del empleado: </th><td></td><th>Puesto que ocupa:</th><td></td>
+		<th width="50%">Nombre del empleado: </th><th>Puesto que ocupa:</th>
 	</tr>
 	<tr>
-		<th>Nombre del jefe: </th><td></td><th>Puesto que ocupa:</th><td></td>
+		<td>{{puestoemp.idempleado.idexpediente.idsolicitudempleo.nombrecompleto}}</td><td>{{puestoemp.idplaza.nombreplaza}}</td>
+	</tr>
+	<tr>
+		<th>Nombre del jefe inmediato: </th><th>Puesto que ocupa:</th>
+	</tr>
+	<tr>
+		<td>{{puestojefe.idempleado.idexpediente.idsolicitudempleo.nombrecompleto}}</td><td>{{puestojefe.idplaza.nombreplaza}}</td>
 	</tr>
 </table>
 
-Factores que observan:
+<div class="text-center">
+Factores que observan: <br>
+<table border="1" class="centered-table table-bordered table-hover" width="50%" align="center">
+{% for factor in evaluacion.Respuestas[0].idfactor.idformulario.Factores %}
+		<tr><td>{{loop.index}}. {{ factor.nombrefactor}} </td></tr>
+{% endfor %}
+</table>
+</div>
 
 {% endblock %}

@@ -43,5 +43,9 @@ evaluacion_finaliza:
     requirements: { _method: post }
 
 evaluacion_sformulario:
-    pattern:  /{idempleado}/sformulario
+    pattern:  /{id}/{idpuestoemp}/{idpuestojefe}/sformulario
     defaults: { _controller: "EvaluacionBundle:Evaluacion:SeleccionFormulario" }
+
+evaluacion_llamaformulario:
+    pattern:  /{id}/{idpuestoemp}/{idpuestojefe}/llamaformulario
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:LlamarFormulario"}

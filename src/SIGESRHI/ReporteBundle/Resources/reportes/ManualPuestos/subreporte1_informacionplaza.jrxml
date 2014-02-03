@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte1_informacionplaza" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="837ac732-8bc5-46b8-9f40-588c0628da47">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idplaza" class="java.lang.Integer">
@@ -18,17 +18,22 @@
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[FUNCIONES GENERALES:]]></text>
+				<text><![CDATA[FUNCIONES GENERALES / ACTIVIDADES BASICAS:]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="23" splitType="Stretch">
-			<textField>
-				<reportElement uuid="d55236cb-b29a-42ca-90fa-1045cde9c524" positionType="Float" x="0" y="0" width="572" height="23"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="d55236cb-b29a-42ca-90fa-1045cde9c524" positionType="Float" x="14" y="0" width="558" height="23"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}+"- "+$F{nombrefuncion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombrefuncion}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="de880a08-6a20-40ca-9fdc-e324d22b2b77" x="0" y="0" width="14" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[-]]></text>
+			</staticText>
 		</band>
 	</detail>
 </jasperReport>

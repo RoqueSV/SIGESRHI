@@ -104,6 +104,20 @@ class Evaluacion
      */
     private $tiemposupervisar;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cargofuncion", type="string", length=100, nullable=true)
+     */
+    private $cargofuncion;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="fechacargofuncion", type="date", nullable=true)
+     */
+    private $fechacargofuncion;    
+
 
     /**
      * Get id
@@ -408,4 +422,51 @@ class Evaluacion
     {
         return $this->Incidentes;
     }
-}
+
+    /**
+     * Set cargofuncion
+     *
+     * @param string $cargofuncion
+     * @return Evaluacion
+     */
+    public function setCargofuncion($cargofuncion)
+    {
+        $this->cargofuncion = $cargofuncion;
+    
+        return $this;
+    }
+
+    /**
+     * Get cargofuncion
+     *
+     * @return string 
+     */
+    public function getCargofuncion()
+    {
+        return $this->cargofuncion;
+    }
+
+    /**
+     * Set fechacargofuncion
+     *
+     * @param \DateTime $fechacargofuncion
+     * @return Evaluacion
+     */
+    public function setFechacargofuncion($fechacargofuncion)
+    {
+        $this->fechacargofuncion = $fechacargofuncion;
+    
+        return $this;
+    }
+
+    /**
+     * Get fechacargofuncion
+     *
+     * @return \DateTime 
+     */
+    public function getFechacargofuncion()
+    {
+        return $this->fechacargofuncion;
+    }
+
+ }
