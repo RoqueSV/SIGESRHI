@@ -74,8 +74,14 @@
     {{form_row(form.jornadalaboral)}}
     
     <div class="control-group">
-      {% if tipo == 2 %}
-         <label for="numcontrato" class="control-label required">N&uacute;mero de contrato</label>
+      {% if tipo == 1 %}
+         <label for="numacuerdo" class="control-label required">N&uacute;mero de acuerdo *</label>
+         <div class="controls">
+         <input type="text" name="numacuerdo" id="numacuerdo" required="required" class="input-small"/>
+         <span class="help-inline">* número del acuerdo generado</span>
+         </div>
+      {% else %}
+         <label for="numcontrato" class="control-label required">N&uacute;mero de contrato*</label>
          <div class="controls">
          <input type="text" name="numcontrato" id="numcontrato" required="required" class="input-small"/>
          <span class="help-inline">* número del contrato generado</span>

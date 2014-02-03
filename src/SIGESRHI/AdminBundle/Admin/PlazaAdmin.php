@@ -20,20 +20,20 @@ class PlazaAdmin extends Admin
     {    
 
 
-       /* $em = $this->modelManager->getEntityManager('ExpedienteBundle:Titulo');
+        $em = $this->modelManager->getEntityManager('AdminBundle:Resultados');
 
-        $queryt = $em->createQueryBuilder('t')
-                     ->select('t')
-                     ->from('ExpedienteBundle:Titulo', 't')
-                     ->orderBy('t.nombretitulo', 'ASC');
+        $queryr = $em->createQueryBuilder('r')
+                     ->select('r')
+                     ->from('AdminBundle:Resultados', 'r')
+                     ->orderBy('r.nombreresultado', 'ASC');
 
 
         $em = $this->modelManager->getEntityManager('AdminBundle:Conocimiento');
 
-        $queryc = $em->createQueryBuilder('c')
-                     ->select('c')
-                     ->from('AdminBundle:Conocimiento', 'c')
-                     ->orderBy('c.nombreconocimiento', 'ASC');*/
+        $queryo = $em->createQueryBuilder('o')
+                     ->select('o')
+                     ->from('AdminBundle:Otrosaspectos', 'o')
+                     ->orderBy('o.nombreotrosaspectos', 'ASC');
 
         $em = $this->modelManager->getEntityManager('AdminBundle:Competencia');
 
@@ -81,6 +81,7 @@ class PlazaAdmin extends Admin
                    'label'=> 'Resultados esperados',
                    'expanded' => true,
                    'multiple' => true,
+                   'query'    =>$queryr
                    ))
            ->end()
            ->with('Formación Académica', array('description' => 'Selección de titulos.'))
@@ -125,6 +126,7 @@ class PlazaAdmin extends Admin
                    'label'=> 'Otros aspectos',
                    'expanded' => true,
                    'multiple' => true,
+                   'query'    =>$queryo
                    ))
            ->end()
            ->with('Documentación', array('description' => 'En esta sección tiene la posibilidad de adjuntar el documento necesario (imagen o pdf) que respalde la acción realizada sobre la plaza.'))
@@ -166,9 +168,9 @@ class PlazaAdmin extends Admin
         $showMapper
             ->with('Generales')     
               ->add('nombreplaza', null, array('label' => 'Plaza'))
-              ->add('misionplaza', 'textarea', array('label' => 'Descripción'))
+              ->add('misionplaza', 'textarea', array('label' => 'Misión del puesto'))
               ->add('unidad', null, array('label'=>'Unidad organizativa'))
-              ->add('idplazasuperior',null,array('label'=>'Plaza de la que depende'))
+              ->add('idplazasup','entity',array('label'=>'Plaza de la que depende'))
            ->end()
            ->with('Marco de referencia para la actuación.')
               ->add('idmarcoreferencia', null, array('label'=> 'Marco de referencia'))
@@ -183,7 +185,7 @@ class PlazaAdmin extends Admin
              ->add('idtituloplaza', null, array('label'=>'Formación académica'))
            ->end()
            ->with('Otros idiomas')
-             ->add('idotrosidiomas',null, array('label'=>'Otros idiomas'))
+             ->add('ididiomasplaza',null, array('label'=>'Otros idiomas'))
            ->end()
            ->with('Conocimientos especificos')
              ->add('idconocimientoplaza',null, array('label'=>'Conocimientos especificos'))

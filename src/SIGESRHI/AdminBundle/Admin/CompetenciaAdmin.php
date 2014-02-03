@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 class CompetenciaAdmin extends Admin
 {
@@ -38,6 +39,10 @@ class CompetenciaAdmin extends Admin
             ->addIdentifier('nombrecompetencia', null,array('label' => 'Descripción competencia'))
                    
         ;
+    }
+
+    public function configureRoutes(RouteCollection $collection){
+    $collection->clearExcept(array('show'));
     }
     
 }

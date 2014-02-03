@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 class OtrosaspectosAdmin extends Admin
 {
@@ -36,6 +37,10 @@ class OtrosaspectosAdmin extends Admin
         $listMapper
           //->addIdentifier('idtitulo', null,array('label' => 'Titulo'))                   
         ;
+    }
+
+    public function configureRoutes(RouteCollection $collection){
+    $collection->clearExcept(array('show'));
     }
     
 }

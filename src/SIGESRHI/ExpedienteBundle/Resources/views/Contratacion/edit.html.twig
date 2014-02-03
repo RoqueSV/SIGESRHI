@@ -62,8 +62,14 @@
 
     {# Número de nombramiento o contrato #}
     <div class="control-group">
-      {% if entity.tipocontratacion == 2 %}
-        <label for="numcontrato" class="control-label required">N&uacute;mero de contrato</label>
+      {% if entity.tipocontratacion == 1 %}
+        <label for="numacuerdo" class="control-label required">N&uacute;mero de acuerdo *</label>
+        <div class="controls">
+          <input type="text" name="numacuerdo" id="numacuerdo" required="required" value={{ app.session.get('acuerdo')}} class="input-small"
+          <span class="help-inline">* número del acuerdo generado</span>
+        </div>
+      {% else %}
+        <label for="numcontrato" class="control-label required">N&uacute;mero de contrato *</label>
         <div class="controls">
           <input type="text" name="numcontrato" id="numcontrato" required="required" value={{ app.session.get('acuerdo')}} class="input-small"
           <span class="help-inline">* número del contrato generado</span>

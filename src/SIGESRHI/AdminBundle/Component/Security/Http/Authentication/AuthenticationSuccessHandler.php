@@ -33,10 +33,10 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         }*/
         elseif ($this->security->isGranted('ROLE_USER'))
         {
-            // redirect the user to where they were before the login process begun.
-            $referer_url = $request->headers->get('referer');
-                        
-            $response = new RedirectResponse($referer_url);
+          //redirect the user to where they were before the login process begun.
+          /*$referer_url = $request->headers->get('referer');     
+            $response = new RedirectResponse($referer_url);*/
+            $response = new RedirectResponse($this->router->generate('hello_page'));  
         }
             
         return $response;

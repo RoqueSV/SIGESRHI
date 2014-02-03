@@ -30,8 +30,21 @@ class PlazaController extends Controller
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias){
-                $query->andWhere($tableAlias.'.nombreplaza != :es')
-                      ->setParameter('es','PRESIDENCIA');
+                $query->andWhere($tableAlias.'.nombreplaza != :p')
+                      ->andWhere($tableAlias.'.nombreplaza != :pr')
+                      ->setParameter('p','PRESIDENTE')
+                      ->setParameter('pr','PRESIDENCIA');
+            }
+        );
+
+        //Manipular Fila
+        $source->manipulateRow(
+            function ($row)
+            {
+                if(strlen($row->getField('misionplaza')) >= 200 ){
+                   $row->setField('misionplaza', substr($row->getField('misionplaza'),0,200)." ...");          
+                }//if
+                return $row;
             }
         );
            
@@ -43,7 +56,7 @@ class PlazaController extends Controller
        $rowAction1 = new RowAction('Seleccionar', 'plaza_ver');
        $grid->addRowAction($rowAction1);
         
-        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        $grid->setLimits(array(5 => '5', 15 => '15', 25 => '25'));
         
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");

@@ -59,7 +59,26 @@ class Idiomasplaza
     private $nivelidioma;
    
     public function __toString(){
-        return $this->getIdotrosidiomas()->getNombreidioma()." - ".$this->getTipoidioma()." - ".$this->getNivelidioma();
+        $cadena = " ";
+        if ($this->getNivelidioma() == 'B'){
+            if($this->getTipoidioma() == 'I')
+              $cadena.="Nivel básico del idioma ".$this->getIdotrosidiomas()->getNombreidioma()." (Indispensable)"; 
+            else
+              $cadena.="Nivel básico del idioma ".$this->getIdotrosidiomas()->getNombreidioma()." (Deseable)";  
+        }
+        else if($this->getNivelidioma() == 'I'){
+            if($this->getTipoidioma() == 'I')
+              $cadena.="Nivel intermedio del idioma ".$this->getIdotrosidiomas()->getNombreidioma()." (Indispensable)"; 
+            else
+              $cadena.="Nivel intermedio del idioma ".$this->getIdotrosidiomas()->getNombreidioma()." (Deseable)";
+        }
+        else if($this->getNivelidioma() == 'A'){
+            if($this->getTipoidioma() == 'I')
+              $cadena.="Nivel avanzado del idioma ".$this->getIdotrosidiomas()->getNombreidioma()." (Indispensable)"; 
+            else
+              $cadena.="Nivel avanzado del idioma ".$this->getIdotrosidiomas()->getNombreidioma()." (Deseable)";
+        }
+        return $cadena;
     } 
 
     /**

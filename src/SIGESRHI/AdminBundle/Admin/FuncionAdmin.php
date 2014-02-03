@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 class FuncionAdmin extends Admin
 {
@@ -38,6 +39,10 @@ class FuncionAdmin extends Admin
             ->addIdentifier('nombrefuncion', null,array('label' => 'Descripción funcion'))
                    
         ;
+    }
+
+    public function configureRoutes(RouteCollection $collection){
+    $collection->clearExcept(array('show'));
     }
     
 }

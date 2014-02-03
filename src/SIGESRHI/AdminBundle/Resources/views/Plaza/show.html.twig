@@ -6,33 +6,50 @@
     <table class="table table-bordered table-hover">
         <tbody>
             <tr>
-                <th>Nombre</th>
+                <th><p class="text-center">Nombre</p></th>
                 <td>{{ entity.nombreplaza }}</td>
             </tr>
             <tr>
-                <th>Descripción</th>
-                <td><p class="justifyColum">{{ entity.descripcionplaza }}</p></td>
+                <th><p class="text-center">Misión del puesto</p></th>
+                <td><p class="justifyColum">{{ entity.misionplaza }}</p></td>
             </tr>
              <tr>
-                <th>Area</th>
-                <td>{{ entity.idarea}} </td>
+                <th><p class="text-center">Puesto superior inmediato</p></th>
+                <td>{{ entity.idplazasup}} </td>
             </tr>
             <tr>
-                <th>Edad requerida</th>
-                <td>{{ entity.edad }} años</td>
-            </tr>
-            <tr>
-                <th>Experiencia requerida</th>
-                <td>{{ entity.experiencia }} años</td>
-            </tr>
-            <tr>
-                <th>Sexo</th>
-                <td>{%if (entity.sexo =='A') %} Ambos {% elseif (entity.sexo =='F') %} Femenino {% else %} Masculino {% endif %}</td>
+                <th><p class="text-center">Experiencia requerida</p></th>
+                <td>
+                    {% if entity.experiencia is not null %}
+                       {{ entity.experiencia }} años de experiencia en puestos similares
+                    {% else %}
+                       No definido
+                    {% endif %}
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <h4>Funciones generales</h4>
+    <h4>Marco de referencia para la actuación</h4>
+     {% if entity.idmarcoreferencia|length > 0 %}
+
+            <table class="table table-bordered table-hover mitable">                   
+
+            {% for marcoref in entity.idmarcoreferencia %}
+                    <tr>
+                       <td><p class="justifyColum"> &#8226; {{marcoref.nombremarcoref}} </p></td>
+                    </tr>      
+            {% endfor %}
+             
+            </table>
+
+     {% else %}
+
+        <p>No definido.</p>
+
+     {% endif %}
+
+    <h4>Funciones/Actividades básicas</h4>
      {% if entity.idfuncion|length > 0 %}
 
             <table class="table table-bordered table-hover">                   
@@ -45,90 +62,167 @@
              
             </table>
 
-        {% else %}
+     {% else %}
 
-        <p>No aplica.</p>
+        <p>No definido.</p>
 
-        {% endif %}
+     {% endif %}
+    
     <fieldset>
-    <legend>Requisitos del puesto</legend>
-    <h4>Formacion académica</h4>
-     {% if entity.idtitulo|length > 0 %}
+    <legend>Estructura del puesto</legend>
+    <h5>Nombre de los puestos bajo su responsabilidad y función principal</h5>
+     {% if entity.idplazahija|length > 0 %}
 
             <table class="table table-bordered table-hover">                   
 
-            {% for titulo in entity.idtitulo %}
+            {% for hijas in entity.idplazahija %}
                     <tr>
-                       <td><p class="justifyColum"> &#8226; {{titulo.nombretitulo}} </p></td>
+                       <th>{{hijas.nombreplaza}}</th>
+                       <td><p class="justifyColum"> {{hijas.misionplaza}} </p></td>
                     </tr>      
             {% endfor %}
              
             </table>
 
-        {% else %}
+     {% else %}
 
-        <p>No aplica.</p>
+        <p>No definido.</p>
 
-        {% endif %}
+     {% endif %}
+    </fieldset> 
 
-    <h4>Habilidades</h4>
-     {% if entity.idhabilidad|length > 0 %}
+    <h4>Resultados principales</h4>
+     {% if entity.idresultado|length > 0 %}
 
-            <table class="table table-bordered table-hover">                   
+            <table class="table table-bordered table-hover mitable">                   
 
-            {% for habilidad in entity.idhabilidad %}
+            {% for resultado in entity.idresultado %}
                     <tr>
-                       <td><p class="justifyColum"> &#8226; {{habilidad.nombrehabilidad}} </p></td>
+                       <td><p class="justifyColum"> {{resultado.nombreresultado}} </p></td>
                     </tr>      
             {% endfor %}
              
             </table>
 
-        {% else %}
+     {% else %}
 
+        <p>No definido.</p>
+
+     {% endif %}
+
+    <fieldset>
+    <legend>Perfil de contratación</legend>
+    <h5>Formacion indispensable</h5>
+     {% if entity.idtituloplaza|length > 0 %}
+      
+            <p>Grado universitario en cualquiera de las carreras siguientes:</p><br/>
+            {% for titulo in entity.idtituloplaza if titulo.tipotitulo == 'I' %}
+                   <p class="justifyColum"> &#8226; {{titulo.idtitulo.nombretitulo}} </p>
+            {% endfor %}
+
+     {% else %}
         <p>No aplica.</p>
+     {% endif %}
 
-        {% endif %}
+    <h5>Formacion deseable</h5>
+     {% if entity.idtituloplaza|length > 0  %}
+                 
+            {% for titulo in entity.idtituloplaza if titulo.tipotitulo == 'D' %}
+                <p class="justifyColum"> &#8226; {{titulo.idtitulo.nombretitulo}} </p> 
+            {% else %}
+                <p>Ninguna.</p>        
+            {% endfor %}
 
-    <h4>Conocimientos</h4>
-     {% if entity.idconocimiento|length > 0 %}
+     {% else %}
+        <p>No definido.</p>
+     {% endif %}
 
-            <table class="table table-bordered table-hover">                   
+    <h5>Otros idiomas</h5>
+     {% if entity.ididiomasplaza|length > 0 %}
+                 
+            {% for idioma in entity.ididiomasplaza %}
+              {% if idioma.tipoidioma == 'I' %}
+                <p class="justifyColum"> &#8226; Indispensable nivel 
+                    {% if idioma.nivelidioma =='B'%}
+                         básico
+                    {% elseif idioma.nivelidioma == 'I' %}
+                        intermedio
+                    {% else %}
+                        avanzado
+                    {% endif %} 
+                del idioma {{idioma.idotrosidiomas.nombreidioma}} </p>   
 
-            {% for conocimiento in entity.idconocimiento %}
+              {% else %}
+                <p class="justifyColum"> &#8226; Deseable nivel 
+                    {% if idioma.nivelidioma =='B'%}
+                         básico
+                    {% elseif idioma.nivelidioma == 'I' %}
+                        intermedio
+                    {% else %}
+                        avanzado
+                    {% endif %} 
+                del idioma {{idioma.idotrosidiomas.nombreidioma}} </p>   
+              {% endif %}      
+            {% endfor %}
+
+     {% else %}
+        <p>No definido.</p>
+     {% endif %}
+
+     <h5>Conocimientos específicos indispensables</h5>
+     {% if entity.idconocimientoplaza|length > 0 %}
+                 
+            {% for conocimiento in entity.idconocimientoplaza if conocimiento.tipoconocimiento == 'I' %}
+                <p class="justifyColum"> &#8226; {{conocimiento.idconocimiento.nombreconocimiento}} </p>        
+            {% endfor %}
+     
+     {% else %}
+            <p>No definido.</p>  
+     {% endif %}
+
+     <h5>Conocimientos específicos deseables</h5>
+     {% if entity.idtituloplaza|length > 0 %}
+                 
+            {% for conocimiento in entity.idconocimientoplaza if conocimiento.tipoconocimiento == 'D' %}
+                <p class="justifyColum"> &#8226; {{conocimiento.idconocimiento.nombreconocimiento}} </p>   
+            {% else %}
+                <p>Ninguno.</p>      
+            {% endfor %}
+
+     {% else %}
+            <p>No definido.</p>      
+     {% endif %}
+
+     <h5>Competencias conductuales</h5>
+     {% if entity.idcompetencia|length > 0 %}
+                 
+            {% for competencia in entity.idcompetencia %}
+                <p class="justifyColum"> &#8226; {{competencia.nombrecompetencia}} </p>       
+            {% endfor %}
+
+     {% else %}
+            <p>Ninguno.</p>      
+     {% endif %}
+    </fieldset> 
+
+    <h4>Otros aspectos</h4>
+     {% if entity.idotrosaspectos|length > 0 %}
+
+            <table class="table table-bordered table-hover mitable">                   
+
+            {% for aspectos in entity.idotrosaspectos %}
                     <tr>
-                       <td><p class="justifyColum"> &#8226; {{conocimiento.nombreconocimiento}} </p></td>
+                       <td><p class="justifyColum">&#8226; {{aspectos.nombreotrosaspectos}} </p></td>
                     </tr>      
             {% endfor %}
              
             </table>
 
-        {% else %}
+     {% else %}
 
         <p>No aplica.</p>
 
-    {% endif %}
-
-    <h4>Manejo de equipo</h4>
-     {% if entity.idmanejoequipo|length > 0 %}
-
-            <table class="table table-bordered table-hover">                   
-
-            {% for manejo in entity.idmanejoequipo %}
-                    <tr>
-                       <td><p class="justifyColum"> &#8226; {{manejo.nombremanejo}} </p></td>
-                    </tr>      
-            {% endfor %}
-             
-            </table>
-
-        {% else %}
-
-        <p>No aplica.</p>
-
-    {% endif %}
-
-   </fieldset>
+     {% endif %}
 
     <div class="text-center">
      <a href="{{ path('solicitud_new', { 'id': entity.id }) }}" class="btn btn-primary">Registrar solicitud</a>

@@ -156,7 +156,7 @@ class RefrendaAct
      * maxMessage = "El tipo de puesto no debe exceder {{limit}} caracteres"
      * )
      */
-    private $tipo;
+   // private $tipo;
 
     public function __toString() {
         return $this->getNombreplaza();

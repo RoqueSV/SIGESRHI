@@ -275,9 +275,31 @@ class ContratacionController extends Controller
              
              } //Fin empleado
 
-             if($request->get('tipo') == 2) { //Contrato
-               
-             //Registrar acuerdo - PENDIENTE NOMBRAMIENTO
+             /* Registrar acuerdo x contrato o nombramiento */
+             if($request->get('tipo') == 1) { //Nombramiento
+             
+             $accionpersonal  = new Accionpersonal();
+             $tipoaccion = $em->getRepository('ExpedienteBundle:Tipoaccion')->find(6);            
+             $fechaini = $this->fechaConvert($entity->getFechainiciocontratacion());
+
+             $idrefrenda = $em->getRepository('AdminBundle:RefrendaAct')->find($entity->getPuesto()->getId());
+             $partida = $idrefrenda->getPartida();
+             $subpartida = $idrefrenda->getSubpartida();
+            
+             $accionpersonal->setIdtipoaccion($tipoaccion);
+             $accionpersonal->setIdexpediente($expediente);
+             $accionpersonal->setFecharegistroaccion(new \Datetime(date('d-m-Y')));
+             $accionpersonal->setNumacuerdo($request->get('numacuerdo'));
+             $accionpersonal->setMotivoaccion("Acuerdo ".$accionpersonal->getNumacuerdo().", ".$entity->getPuesto()." - Se registra su nombramiento a partir del ".$fechaini." como ".$entity->getPuesto().".- Partida: ".$partida." Subpartida: ".$subpartida." con sueldo mensual de $".$entity->getSueldoinicial());
+             
+             $em->persist($accionpersonal);
+
+             //Guardar variable session
+             $session = $this->getRequest()->getSession();
+             $session->set('acuerdo',$accionpersonal->getNumacuerdo());
+
+             }
+             else{ // Contrato
              $accionpersonal  = new Accionpersonal();
              $tipoaccion = $em->getRepository('ExpedienteBundle:Tipoaccion')->find(7);
              
@@ -301,6 +323,8 @@ class ContratacionController extends Controller
              $session = $this->getRequest()->getSession();
              $session->set('acuerdo',$accionpersonal->getNumacuerdo());
              }
+
+             /* ****************** */
              
              //Actualizar RefrendaAct
              $refrendaAct = $em->getRepository('AdminBundle:RefrendaAct')->find($entity->getPuesto()->getId());
@@ -641,14 +665,10 @@ class ContratacionController extends Controller
 
            if($entity->getTipocontratacion() == 2){ //Contrato
             
-            if($fechainicio!=$entity->getFechainiciocontratacion() OR $fechafinal!=$entity->getFechafincontrato() OR $session->get('acuerdo') != $request->get('numcontrato'))        
+            if($fechainicio!=$entity->getFechainiciocontratacion() OR $fechafinal!=$entity->getFechafincontrato() OR $session->get('acuerdo') != $request->get('numcontrato') OR $request->get('puestoactual') != $entity->getPuesto())        
            //Actualizar contrato
              {
-                echo $session->get('acuerdo');
-                echo $request->get('numcontrato');
-                echo date_format($fechafinal,'Y-m-d');
-                echo date_format($entity->getFechafincontrato(),'Y-m-d');
-           
+                           
               /*Comprobar fechas*/
                if(date("Y", strtotime(date_format($entity->getFechainiciocontratacion(),'Y-m-d'))) == date("Y", strtotime(date_format($entity->getFechafincontrato(),'Y-m-d')))) {
                  $fechaini = $this->fechaConvertMes($entity->getFechainiciocontratacion());
@@ -666,6 +686,23 @@ class ContratacionController extends Controller
               $session->set('acuerdo',$accionpersonal->getNumacuerdo());
              }
            } //fin contrato
+
+           if($entity->getTipocontratacion() == 1){ //Nombramiento
+            
+            if($fechainicio!=$entity->getFechainiciocontratacion() OR $session->get('acuerdo') != $request->get('numacuerdo') OR $request->get('puestoactual') != $entity->getPuesto())
+            {
+              $fechaini = $this->fechaConvert($entity->getFechainiciocontratacion());
+              $idrefrenda = $em->getRepository('AdminBundle:RefrendaAct')->find($entity->getPuesto()->getId());
+              $partida = $idrefrenda->getPartida();
+              $subpartida = $idrefrenda->getSubpartida();
+
+              $accionpersonal = $em->getRepository('ExpedienteBundle:Accionpersonal')->findOneByNumacuerdo($session->get('acuerdo'));
+              $accionpersonal->setNumacuerdo($request->get('numacuerdo'));
+              $accionpersonal->setMotivoaccion("Acuerdo ".$accionpersonal->getNumacuerdo().", ".$entity->getPuesto()." - Se registra su nombramiento a partir del ".$fechaini." como ".$entity->getPuesto().".- Partida: ".$partida." Subpartida: ".$subpartida." con sueldo mensual de $".$entity->getSueldoinicial());
+              $em->persist($accionpersonal);
+              $session->set('acuerdo',$accionpersonal->getNumacuerdo());
+            }
+           } //Fin nombramiento
 
             $em->persist($entity);
             $em->flush();
@@ -738,11 +775,10 @@ class ContratacionController extends Controller
 
             }//Fin aspirante
 
-            if($entity->getTipocontratacion() == 2){ //Contrato
-                $accionpersonal = $em->getRepository('ExpedienteBundle:Accionpersonal')->findOneByFecharegistroaccion(new \Datetime(date('d-m-Y')));
-                $em->remove($accionpersonal);
-            }
-
+            //Eliminar acuerdo en hoja de servicio generado por nombramiento o contrato
+            $accionpersonal = $em->getRepository('ExpedienteBundle:Accionpersonal')->findOneByFecharegistroaccion(new \Datetime(date('d-m-Y')));
+            $em->remove($accionpersonal);
+            
             $refrenda = $em->getRepository('AdminBundle:RefrendaAct')->find($entity->getPuesto());
             $refrenda->setIdempleado(null);
             $refrenda->setCodigoempleado(null);

@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 class ConocimientoplazaAdmin extends Admin
 {
@@ -17,7 +18,7 @@ class ConocimientoplazaAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('idconocimiento','sonata_type_model', array('label' => 'Titulo'))
+            ->add('idconocimiento','sonata_type_model', array('label' => 'Conocimiento'))
             //->add('idplaza', null, array('label' => 'Plaza'))
             ->add('tipoconocimiento', 'choice', array(
                   'choices'=> array('I' => 'Indispensable', 
@@ -32,7 +33,7 @@ class ConocimientoplazaAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-         // ->add('idtitulo', null, array('label' => 'Titulo'))
+          ->add('idconocimiento',null, array('label' => 'Conocimiento'))   
         ;
     }
     
@@ -40,8 +41,12 @@ class ConocimientoplazaAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-          //->addIdentifier('idtitulo', null,array('label' => 'Titulo'))                   
+          ->add('idconocimiento',null, array('label' => 'Conocimiento'))      
         ;
+    }
+
+    public function configureRoutes(RouteCollection $collection){
+    $collection->clearExcept(array('show'));
     }
     
 }

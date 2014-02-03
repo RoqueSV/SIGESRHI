@@ -48,7 +48,7 @@ class Formularioevaluacion
     /**
      * @var string
      *
-     * @ORM\Column(name="nombrebreve", type="string", nullable=false)
+     * @ORM\Column(name="nombrebreve", type="string", length=25, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre breve del formulario")
      */
     private $nombrebreve;

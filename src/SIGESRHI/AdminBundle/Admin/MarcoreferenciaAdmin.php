@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 class MarcoreferenciaAdmin extends Admin
 {
@@ -38,6 +39,10 @@ class MarcoreferenciaAdmin extends Admin
             ->addIdentifier('nombremarcoref', null,array('label' => 'Descripción marcos de referencia'))
                    
         ;
+    }
+
+    public function configureRoutes(RouteCollection $collection){
+    $collection->clearExcept(array('show'));
     }
     
 }

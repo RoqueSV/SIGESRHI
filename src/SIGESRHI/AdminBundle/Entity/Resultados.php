@@ -26,10 +26,10 @@ class Resultados
     /**
      * @var string
      *
-     * @ORM\Column(name="nombreresultado", type="string", length=150, nullable=false)
+     * @ORM\Column(name="nombreresultado", type="text", length=350, nullable=false)
      * @Assert\NotNull(message="Debe ingresar un nombre de area")
      * @Assert\Length(
-     *  max = "150",
+     *  max = "300",
      * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
      * )
      */

@@ -11,7 +11,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  *
  * @ORM\Table(name="plaza")
  * @ORM\Entity
- * @GRID\Source(columns="id,nombreplaza,descripcionplaza", groups={"grupo_plaza"})
+ * @GRID\Source(columns="id,nombreplaza,misionplaza", groups={"grupo_plaza"})
  * @ORM\HasLifecycleCallbacks
  */
 class Plaza
@@ -67,7 +67,6 @@ class Plaza
      * max = "200",
      * maxMessage = "La unidad de la plaza no debe exceder los {{limit}} caracteres"
      * )
-     * @GRID\Column(filterable=false, groups="grupo_plaza", title="Unidad organizativa")
      */
     private $unidad;
 
@@ -98,7 +97,7 @@ class Plaza
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Resultados", inversedBy="idplaza")
+     * @ORM\ManyToMany(targetEntity="Resultados", inversedBy="idplaza", cascade={"all"})
      * @ORM\JoinTable(name="resultadoplaza",
      *   joinColumns={
      *     @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
@@ -107,6 +106,7 @@ class Plaza
      *     @ORM\JoinColumn(name="idresultado", referencedColumnName="id")
      *   }
      * )
+     * @Assert\Valid
      */
     private $idresultado;
     
@@ -118,6 +118,7 @@ class Plaza
 
     /**
      * @ORM\OneToMany(targetEntity="Idiomasplaza", mappedBy="idplaza", cascade={"all"})
+     * @Assert\Valid
      */
     private $ididiomasplaza;
 
@@ -126,8 +127,9 @@ class Plaza
      */
     private $idrefrenda;
     
-     /**
+    /**
      * @ORM\OneToMany(targetEntity="Conocimientoplaza", mappedBy="idplaza", cascade={"all"})
+     * @Assert\Valid
      */
     private $idconocimientoplaza;
     /**
@@ -142,6 +144,7 @@ class Plaza
      *     @ORM\JoinColumn(name="idfuncion", referencedColumnName="id")
      *   }
      * )
+     * @Assert\Valid
      */
     private $idfuncion;
 
@@ -157,6 +160,7 @@ class Plaza
      *     @ORM\JoinColumn(name="idcompetencia", referencedColumnName="id")
      *   }
      * )
+     * @Assert\Valid
      */
     private $idcompetencia;
 
@@ -172,6 +176,7 @@ class Plaza
      *     @ORM\JoinColumn(name="idmarcoreferencia", referencedColumnName="id")
      *   }
      * )
+     * @Assert\Valid
      */
     private $idmarcoreferencia;
 
@@ -187,6 +192,7 @@ class Plaza
      *     @ORM\JoinColumn(name="idotrosaspectos", referencedColumnName="id")
      *   }
      * )
+     * @Assert\Valid
      */
     private $idotrosaspectos;
    
@@ -208,7 +214,7 @@ class Plaza
      */
     private $path;
     
-        /**
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $updated;

@@ -16,8 +16,8 @@
      <legend>Datos del concurso</legend>  
         {{form_row(form.codigoconcurso)}}
         
-        <div style="margin-left:55px;">
-           Plaza en concurso &nbsp;&nbsp; 
+        <div style="margin-left:50px;">
+           Plaza en concurso &nbsp;&nbsp;&nbsp; 
            <span class="alert alert-form">{{plaza.nombreplaza}}</span>
         </div><br>
 
@@ -59,12 +59,12 @@
                 <td>{{ plaza.nombreplaza }}</td>
             </tr>
             <tr>
-                <th>Descripción</th>
-                <td><p class="justifyColum">{{ plaza.descripcionplaza }}</p></td>
+                <th>Misión</th>
+                <td><p class="justifyColum">{{ plaza.misionplaza }}</p></td>
             </tr>
             <tr>
-                <th>Area</th>
-                <td>{{ plaza.idarea }}</td>
+                <th>Puesto superior inmediato</th>
+                <td><p class="justifyColum">{{ plaza.idplazasup}}</p></td>
             </tr>
         </table>  
 

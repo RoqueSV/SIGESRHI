@@ -6,6 +6,7 @@
 namespace SIGESRHI\AdminBundle\Admin;
 
 use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -38,7 +39,7 @@ class IdiomasplazaAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-         // ->add('idtitulo', null, array('label' => 'Titulo'))
+         ->add('idotrosidiomas',null, array('label' => 'Idioma'))
         ;
     }
     
@@ -46,8 +47,12 @@ class IdiomasplazaAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-          //->addIdentifier('idtitulo', null,array('label' => 'Titulo'))                   
+          ->add('idotrosidiomas',null, array('label' => 'Idioma'))                  
         ;
+    }
+
+    public function configureRoutes(RouteCollection $collection){
+    $collection->clearExcept(array('show'));
     }
     
 }

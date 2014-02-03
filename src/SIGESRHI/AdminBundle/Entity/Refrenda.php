@@ -143,7 +143,7 @@ class Refrenda
      */
     private $nombreplaza;
 
-        /**
+    /**
      * @var string
      *
      * @ORM\Column(name="tipo", type="string", length=2, nullable=false)
@@ -153,7 +153,7 @@ class Refrenda
      * maxMessage = "El tipo de puesto no debe exceder {{limit}} caracteres"
      * )
      */
-    private $tipo;
+    //private $tipo;
 
 
 

@@ -51,7 +51,10 @@ class Tituloplaza
     private $tipotitulo;
 
     public function __toString(){
-        return $this->getIdtitulo()->getNombretitulo()." - ".$this->getTipotitulo();
+        if($this->getTipotitulo() == 'I')
+           return $this->getIdtitulo()->getNombretitulo()." (Indispensable) ";
+        else
+           return $this->getIdtitulo()->getNombretitulo()." (Deseable) ";   
     } 
 
     /**

@@ -51,7 +51,10 @@ class Conocimientoplaza
     private $tipoconocimiento;
 
     public function __toString(){
-        return $this->getIdconocimiento()->getNombreconocimiento()." - ".$this->getTipoconocimiento();
+        if($this->getTipoconocimiento() == 'I')
+           return $this->getIdconocimiento()->getNombreconocimiento()." (Indispensable) ";
+        else
+           return $this->getIdconocimiento()->getNombreconocimiento()." (Deseable) ";   
     } 
 
     /**
