@@ -1,0 +1,7 @@
+parameters:
+#    sigesrhi_portal_empleado.example.class: SIGESRHI\PortalEmpleadoBundle\Example
+
+services:
+#    sigesrhi_portal_empleado.example:
+#        class: %sigesrhi_portal_empleado.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

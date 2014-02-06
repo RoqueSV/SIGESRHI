@@ -1,3 +1,7 @@
+sigesrhi_portal_empleado:
+    resource: "@SIGESRHIPortalEmpleadoBundle/Resources/config/routing.yml"
+    prefix:   /
+
 capacitacion:
     resource: "@CapacitacionBundle/Resources/config/routing.yml"
     prefix:   /capacitacion

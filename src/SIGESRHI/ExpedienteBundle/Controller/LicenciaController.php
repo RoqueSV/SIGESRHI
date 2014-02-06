@@ -281,8 +281,11 @@ class LicenciaController extends Controller
         $plazainfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerPlazaEmpleado($idc);
         //ver los dias y horas de permiso totales en el mes
         $fechaactual=Date('Y-m');
+        $year=Date("Y");
+        $month=Date("m");
         $finicio=$fechaactual.'-01';
-        $ffin=$fechaactual.'-31';        
+        $lastday=date("d",(mktime(0,0,0,$month+1,1,$year)-1));        
+        $ffin=$fechaactual.'-'.$lastday;
         $query1 = $em->createQuery('SELECT sum(l.duraciondias) tdias, sum(l.duracionhoras) thoras
                            FROM ExpedienteBundle:Licencia l
                            WHERE l.idcontratacion=:idc AND l.fechapermiso BETWEEN :fi AND :ff
