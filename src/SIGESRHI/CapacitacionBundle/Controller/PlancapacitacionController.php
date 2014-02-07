@@ -98,11 +98,13 @@ class PlancapacitacionController extends Controller
         /* Capacitaciones ya realizadas */
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
-            function($query) use ($tableAlias){
+            function($query) use ($tableAlias,$id){
                 $query->andWhere($tableAlias.'.fechacapacitacion < :actual')
                       ->andWhere($tableAlias.'.estadocapacitacion <> :estado')
+                       ->andWhere('_idplan.id= :id')
                       ->setParameter('actual',new \Datetime('now'))
-                      ->setParameter('estado','F');
+                      ->setParameter('estado','F')
+                      ->setParameter('id',$id);
             }
         );   
            
@@ -220,6 +222,14 @@ class PlancapacitacionController extends Controller
         $source = new Entity('CapacitacionBundle:Capacitacion','grupo_capacitacion');
         
         $grid = $this->get('grid');
+
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias, $id){
+                $query->andWhere('_idplan.id = :id')
+                      ->setParameter('id',$id);
+            }
+        );   
            
         $grid->setId('grid_capacitacion');
 
