@@ -1,0 +1,7 @@
+sigesrhi_portal_empleado_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: SIGESRHIPortalEmpleadoBundle:Default:index }
+
+SIGESRHIPortalEmpleadoBundle_solicitudcapacitacion:
+    resource: "@SIGESRHIPortalEmpleadoBundle/Resources/config/routing/solicitudcapacitacion.yml"
+    prefix:   /solicitudcapacitacion

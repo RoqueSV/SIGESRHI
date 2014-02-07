@@ -43,6 +43,7 @@ class AppKernel extends Kernel
             new Pcdummy\AjaxCompleteBundle\PcdummyAjaxCompleteBundle(),
             new SIGESRHI\EvaluacionBundle\EvaluacionBundle(),
             new SIGESRHI\CapacitacionBundle\CapacitacionBundle(),
+            new SIGESRHI\PortalEmpleadoBundle\SIGESRHIPortalEmpleadoBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

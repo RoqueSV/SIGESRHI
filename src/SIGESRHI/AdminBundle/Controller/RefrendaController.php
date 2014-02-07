@@ -4,6 +4,7 @@ namespace SIGESRHI\AdminBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
 use SIGESRHI\AdminBundle\Entity\Refrenda;
+use SIGESRHI\ExpedienteBundle\Entity\Accionpersonal;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,12 +43,12 @@ class RefrendaController extends Controller
           $msj="";
           if (($gestor = fopen($uploadfile, "r")) !== FALSE) {              
               while ((($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) AND ($sinerrores==1)) {
-                 if($fila!=0){
+                 if($fila!=0 AND $datos[1]!=""){
                   //verificamos el año de la refrenda////
                   $entityRef = $this->getDoctrine()
                                         ->getRepository('AdminBundle:Refrenda')
-                                        ->findOneByCodigolp($datos[11]);  
-                  if(substr_compare(date('Y'),$datos[11], 0,4) != 0 ){
+                                        ->findOneByCodigolp($datos[12]);  
+                  if(substr_compare(date('Y'),$datos[12], 0,4) != 0 ){
                     $sinerrores=0;
                     $msj="Refrenda no pertenece al año actual";
                   }
@@ -55,27 +56,32 @@ class RefrendaController extends Controller
                     $sinerrores=4;
                     $msj="Refrenda ya cargada";
                   }
+                  elseif($datos[13]!="ls" AND $datos[13]!="c"){
+                    $sinerrores=5;
+                    $msj="Los tipos de contrato no coinciden. Validos son (c: Contrato, ls: Ley de salario)".$datos[13]; 
+                  }
                   else{
                     $entity  = new Refrenda();
-                    $plaza = $this->fullUpperFromDb($datos[4]);
-                    if(($totalblank=substr_count($datos[0]," "))>0){
-                      $codigocortado = explode(" ", $datos[0]);
+                    $plaza = $this->fullUpperFromDb($datos[5]);
+                    if(($totalblank=substr_count($datos[1]," "))>0){
+                      $codigocortado = explode(" ", $datos[1]);
                       $codigoempleado=$codigocortado[$totalblank];
                     }else{
-                      $codigoempleado=$datos[0];
+                      $codigoempleado=$datos[1];
                     }         
                     $entity->setCodigoempleado($codigoempleado);
-                    $entity->setPartida($datos[1]);
-                    $entity->setSubpartida($datos[2]);
-                    $entity->setNombreempleado($this->fullUpperFromDb($datos[3]));                    
-                    $entity->setSueldoactual($datos[5]);
-                    $entity->setNombrecentro($this->fullUpperFromDb($datos[6])); 
-                    $entity->setSalariominimo($datos[7]); 
-                    $entity->setSalariomaximo($datos[8]); 
-                    $entity->setUnidadpresupuestaria($this->fullUpperFromDb($datos[9])); 
-                    $entity->setLineapresupuestaria($this->fullUpperFromDb($datos[10])); 
-                    $entity->setCodigolp($datos[11]);
+                    $entity->setPartida($datos[2]);
+                    $entity->setSubpartida($datos[3]);
+                    $entity->setNombreempleado($this->fullUpperFromDb($datos[4]));                    
+                    $entity->setSueldoactual($datos[6]);
+                    $entity->setNombrecentro($this->fullUpperFromDb($datos[7])); 
+                    $entity->setSalariominimo($datos[8]); 
+                    $entity->setSalariomaximo($datos[9]); 
+                    $entity->setUnidadpresupuestaria($this->fullUpperFromDb($datos[10])); 
+                    $entity->setLineapresupuestaria($this->fullUpperFromDb($datos[11])); 
+                    $entity->setCodigolp($datos[12]);
                     $entity->setNombreplaza($plaza);
+                    $entity->setTipo($datos[13]);
 
                     $em->persist($entity);
                     //Actualizar RefrendaAct////
@@ -84,29 +90,57 @@ class RefrendaController extends Controller
                                         ->findOneByNombreplaza($plaza);  
                     if($entityPlaza!=null){
                       $idPlaza = $entityPlaza->getId();
+                      
                       $entityRefAct=$this->getDoctrine()
                           ->getRepository('AdminBundle:RefrendaAct')
                           ->findOneBy(array('codigoempleado'=>$codigoempleado,
                                          'idplaza'=>$idPlaza));                         
+                    
                       if($entityRefAct!=null){
-                        $entityRefAct->setPartida($datos[1]);
-                        $entityRefAct->setSubpartida($datos[2]);
-                        $entityRefAct->setSueldoactual($datos[5]);
-                        $entityRefAct->setUnidadpresupuestaria($this->fullUpperFromDb($datos[9])); 
-                        $entityRefAct->setLineapresupuestaria($this->fullUpperFromDb($datos[10])); 
-                        $entityRefAct->setCodigolp($datos[11]);
+                        $entityRefAct->setPartida($datos[2]);
+                        $entityRefAct->setSubpartida($datos[3]);
+                        $entityRefAct->setSueldoactual($datos[6]);
+                        $entityRefAct->setUnidadpresupuestaria($this->fullUpperFromDb($datos[10])); 
+                        $entityRefAct->setLineapresupuestaria($this->fullUpperFromDb($datos[11])); 
+                        $entityRefAct->setCodigolp($datos[12]);
                         $entityRefAct->setNombreplaza($plaza);
+                        $entityRefAct->setTipo($datos[13]);
 
                         $em->persist($entityRefAct);
+
+                        //Crear acuerdo por refrenda para los empleados con LS
+                        if($datos[13]=='ls'){
+                        $freg = new \Datetime(date('d-m-Y'));
+                        //$fhasta = strtotime('+1 year',strtotime($finicio));
+                        $anyo = date("Y");
+                        $finicio = "01-01-".$anyo;
+                        $fhasta = "31-12-".$anyo;
+                        $numAcuerdo="GA-001/".$anyo;
+                        $entityAcu  = new Accionpersonal();
+                        $entityTipoaccion = $this->getDoctrine()->getRepository('ExpedienteBundle:Tipoaccion')->findOneByNombretipoaccion('Refrenda');
+                        $entityAcu->setIdtipoaccion($entityTipoaccion);
+                        $entityAcu->setIdexpediente($entityRefAct->getIdempleado()->getIdexpediente());
+                        $entityAcu->setFecharegistroaccion($freg);
+                        $entityAcu->setNumacuerdo($numAcuerdo);
+                        //Para ley de salario registramos acuerdo
+                        
+                          $entityAcu->setMotivoaccion("Acuerdo: ".$numAcuerdo." ".$plaza."- Se refrenda su nombramiento a partir del: ".$finicio." al: ".$fhasta.". En PDA: ".$datos[2]." SUB N°: ".$datos[3].". Sueldo: ".$datos[6]);                        
+                        $em->persist($entityAcu);
+                        }
+                        //Para contrato se obvia
+
                       }
                       else{
                         $sinerrores=3;
-                        $msj="Existe inconsistencia con las contrataciones actuales, CODEMPLEADO:".$codigoempleado;
+                        if($codigoempleado!="") 
+                          $msj="Inconsistencia en el sistema, Empleado:".$codigoempleado." no se encuentra relacionado con la Plaza: ".$plaza;
+                        else 
+                          $msj="Inconsistencia entre la Refrenda y Manual de Puestos, PLAZA:".$plaza." no se encuentra";
 
                       }                        
                     }else{
                       $sinerrores=2;
-                      $msj="Existe inconsistencia entre la Refrenda y Manual de Puestos, PLAZA:".$plaza;
+                      $msj="Inconsistencia entre la Refrenda y Manual de Puestos, PLAZA:".$plaza;
                     }                      
                       
                   }
@@ -124,7 +158,7 @@ class RefrendaController extends Controller
             $exit=0;
           }
           if($exit==1 AND $sinerrores==1)
-            $this->get('session')->getFlashBag()->add('new','Archivo de Refrendas cargado correctamente');            
+            $this->get('session')->getFlashBag()->add('new','Archivo de Refrendas cargado correctamente - Acuerdos por refrenda por contratos de Ley de Salario Generados Automáticamente');            
           elseif($sinerrores!=1)
             $this->get('session')->getFlashBag()->add('errornew',$msj);
           else

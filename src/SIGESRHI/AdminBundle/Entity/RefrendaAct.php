@@ -149,14 +149,14 @@ class RefrendaAct
     /**
      * @var string
      *
-     * @ORM\Column(name="tipo", type="string", length=2, nullable=false)
+     * @ORM\Column(name="tipo", type="string", length=2, nullable=true)
      * @Assert\NotNull(message="Debe ingresar el tipo de puesto")
      * @Assert\Length(
      * max = "2",
      * maxMessage = "El tipo de puesto no debe exceder {{limit}} caracteres"
      * )
      */
-   // private $tipo;
+    private $tipo;
 
     public function __toString() {
         return $this->getNombreplaza();

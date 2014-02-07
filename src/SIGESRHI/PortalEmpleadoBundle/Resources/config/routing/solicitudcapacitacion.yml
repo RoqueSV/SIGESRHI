@@ -1,0 +1,30 @@
+solicitudcapacitacion:
+    pattern:  /
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:index" }
+
+solicitudcapacitacion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:show" }
+
+solicitudcapacitacion_new:
+    pattern:  /new
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:new" }
+
+solicitudcapacitacion_create:
+    pattern:  /create
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:create" }
+    requirements: { _method: post }
+
+solicitudcapacitacion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:edit" }
+
+solicitudcapacitacion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:update" }
+    requirements: { _method: post|put }
+
+solicitudcapacitacion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:delete" }
+    requirements: { _method: post|delete }
