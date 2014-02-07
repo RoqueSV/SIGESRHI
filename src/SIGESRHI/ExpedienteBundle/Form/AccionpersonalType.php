@@ -19,7 +19,7 @@ class AccionpersonalType extends AbstractType
             ->add('idtipoaccion', 'entity', array('label'=>'Tipo de Acuerdo: ', 'empty_value' => 'Seleccione', 'required' => true, 'attr' => array('class' => 'input-xlarge'), 
                 'class' => 'ExpedienteBundle:Tipoaccion', 
                         'query_builder' => function(EntityRepository $er) {
-                                           return $er->createQueryBuilder('u')->AndWhere('u.tipoaccion = :var')->setParameter('var','1');
+                                           return $er->createQueryBuilder('u')->AndWhere('u.tipoaccion = :var and u.id not in (4,6,7)')->setParameter('var','1');
                                            },
                                     ))//fin add
 

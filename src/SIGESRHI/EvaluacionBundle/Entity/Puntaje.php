@@ -73,6 +73,11 @@ class Puntaje
     {
         $this->idformulario = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+
+    public function __toString() {
+        return $this->nombrepuntaje;
+    }
     
 
     /**

@@ -2,12 +2,16 @@ solicitudcapacitacion:
     pattern:  /
     defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:index" }
 
+capacitacionesdisponibles:
+    pattern:  /disponibles
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:indexCapas" }
+
 solicitudcapacitacion_show:
     pattern:  /{id}/show
     defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:show" }
 
 solicitudcapacitacion_new:
-    pattern:  /new
+    pattern:  /{idcapa}/new
     defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:new" }
 
 solicitudcapacitacion_create:

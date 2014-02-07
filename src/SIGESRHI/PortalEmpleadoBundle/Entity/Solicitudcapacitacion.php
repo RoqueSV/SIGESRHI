@@ -3,6 +3,7 @@
 namespace SIGESRHI\PortalEmpleadoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -10,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="solicitudcapacitacion")
  * @ORM\Entity
+ * @GRID\Source(columns="id,aprobacionsolicitud,idcapacitacion.tematica,fechasolicitud",groups={"solEmpleado"})
  */
 class Solicitudcapacitacion
 {
@@ -20,6 +22,7 @@ class Solicitudcapacitacion
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="solicitudcapacitacion_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(groups={"solEmpleado"},visible=false, filterable=false)
      */
     private $id;
 
@@ -29,13 +32,15 @@ class Solicitudcapacitacion
      * @ORM\Column(name="fechasolicitud", type="date", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la fecha de solicitud")
      * @Assert\DateTime()
+     * @GRID\Column(type="date",title="Fecha Solicitud",groups={"solEmpleado"},filter="input", inputType="datetime", format="Y-m-d",operators={"gte", "eq", "lte"}, defaultOperator="gte"))
      */
     private $fechasolicitud;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="aprobacionsolicitud", type="integer", nullable=false)
+     * @ORM\Column(name="aprobacionsolicitud", type="string", length=1 ,nullable=false)
+     * @GRID\Column(groups={"solEmpleado"},align="center", title="Aprobación", filterable=false)
      */
     private $aprobacionsolicitud;
 
@@ -69,6 +74,7 @@ class Solicitudcapacitacion
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idcapacitacion", referencedColumnName="id")
      * })
+     * @GRID\Column(align="center",field="idcapacitacion.tematica", groups={"solEmpleado"},type="text", title="Capacitación", joinType="inner",operatorsVisible=false, operators={"like"})
      */
     private $idcapacitacion;
 
@@ -215,7 +221,7 @@ class Solicitudcapacitacion
      * @param \SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado
      * @return Solicitudcapacitacion
      */
-    public function setIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idusuario = null)
+    public function setIdempleado(\SIGESRHI\ExpedienteBundle\Entity\Empleado $idempleado = null)
     {
         $this->idempleado = $idempleado;
     

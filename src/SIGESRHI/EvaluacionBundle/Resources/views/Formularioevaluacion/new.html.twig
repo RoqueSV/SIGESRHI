@@ -1,0 +1,102 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+<a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+{{ include('EvaluacionBundle:Ayuda/Formulario:Registrar.html.twig')}}
+
+    <h4 class="text-center">REGISTRO DE NUEVO FORMULARIO DE EVALUACI&Oacute;N</h4>
+
+    <form action="{{ path('formularioevaluacion_create') }}" method="post" {{ form_enctype(form) }}>
+       <br>
+
+<p><b>Informaci&oacute;n del formulario de evaluación: </b></p>
+<br>
+        <table class="table table-bordered form-inline">
+            <tr>
+                <th width="30%">{{form_label(form.tipoformulario)}}</th><td>{{form_widget(form.tipoformulario)}} {{form_errors(form.tipoformulario)}}</td>
+            </tr>
+            <tr>
+                <th>{{form_label(form.codigoformulario)}}</th><td>{{form_widget(form.codigoformulario)}} {{form_errors(form.codigoformulario)}}</td>
+            </tr>
+            <tr>
+                <th>{{form_label(form.nombrebreve)}}</th><td>{{form_widget(form.nombrebreve)}} {{form_errors(form.nombrebreve)}}</td>
+            </tr>
+        </table>
+
+        <br>
+        <p><b>Factores de evaluación: </b></p>
+        <br>
+        <table class="table table-bordered form-inline">
+            <tr>
+                <th width="30%">{{form_label(form.Factores[0].nombrefactor)}}</th><td>{{form_widget(form.Factores[0].nombrefactor)}} {{form_errors(form.Factores[0].nombrefactor)}}</td>
+            </tr>
+            <tr>
+                <th>{{form_label(form.Factores[0].descripcionfactor)}}</th><td>{{form_widget(form.Factores[0].descripcionfactor)}} {{form_errors(form.Factores[0].descripcionfactor)}}</td>
+            </tr>
+        </table>
+
+        <ul class="Factores unstyled" data-prototype="
+
+            <table class='table table-bordered form-inline'>
+                <tr>
+                    <th width='30%''>{{form_label(form.Factores.vars.prototype.nombrefactor)|e}}</th>
+                    <td>{{form_widget(form.Factores.vars.prototype.nombrefactor)|e}} {{form_errors(form.Factores.vars.prototype.nombrefactor)|e}}</td>
+                </tr>
+                <tr>
+                    <th>{{form_label(form.Factores.vars.prototype.descripcionfactor)|e}}</th>
+                    <td>{{form_widget(form.Factores.vars.prototype.descripcionfactor)|e}} {{form_errors(form.Factores.vars.prototype.descripcionfactor)|e}}</td>
+                </tr>
+            </table>
+               ">
+           </ul>
+
+
+    <div class="hide">
+        {{ form_rest(form) }}
+    </div>
+        
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="button" class="btn">Cancelar</button>
+        </div>
+    </form>
+
+
+
+<script>
+
+/*********************************** Datos de Empleo ****************************************/
+// Obtiene la ul que contiene la colección de etiquetas
+var collectionHolderFac = $('ul.Factores');
+
+// configura una enlace "Agregar una etiqueta"
+var $addTagLinkFac = $('<input type="button" value="Agregar Factor" class="btn">');
+var $newLinkLiFac = $('<ul></ul>').append($addTagLinkFac);
+
+jQuery(document).ready(function() {
+    // Añade el ancla "Agregar una etiqueta" y las etiquetas li y ul
+    collectionHolderFac.append($newLinkLiFac);
+
+    // Añade un enlace para eliminar todas las etiquetas existentes
+    // en elementos li del formulario
+    collectionHolderFac.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // cuenta las entradas actuales en el formulario (p. ej. 2),
+    // la usa como índice al insertar un nuevo elemento (p. ej. 2)
+    collectionHolderFac.data('index', collectionHolderFac.find(':input').length);
+
+    $addTagLinkFac.on('click', function(e) {
+        // evita crear el enlace con una "#" en la URL
+        e.preventDefault();
+
+        // añade una nueva etiqueta form (ve el siguiente bloque de código)
+        addTagForm(collectionHolderFac, $newLinkLiFac);
+    });
+ });
+
+</script>
+
+{% endblock %}

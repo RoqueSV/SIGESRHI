@@ -5,8 +5,19 @@ namespace SIGESRHI\PortalEmpleadoBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Application\Sonata\UserBundle\Entity\User;
+use SIGESRHI\ExpedienteBundle\Entity\Empleado;
+
 use SIGESRHI\PortalEmpleadoBundle\Entity\Solicitudcapacitacion;
 use SIGESRHI\PortalEmpleadoBundle\Form\SolicitudcapacitacionType;
+
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+
+use APY\DataGridBundle\Grid\Grid;
+use APY\DataGridBundle\Grid\Column\ActionsColumn;
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Action\RowAction;
 
 /**
  * Solicitudcapacitacion controller.
@@ -19,14 +30,82 @@ class SolicitudcapacitacionController extends Controller
      *
      */
     public function indexAction()
-    {
+    {        
         $em = $this->getDoctrine()->getManager();
+        $user = new User();
+        $empleado = new Empleado();
 
-        $entities = $em->getRepository('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion')->findAll();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $empleado = $user->getEmpleado();
+        $idempleado = $empleado->getId();
 
-        return $this->render('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        $source = new Entity('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion','solEmpleado');
+        $grid = $this->get('grid');
+        $grid->setSource($source); 
+        
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias,$idempleado){
+                $query->andWhere($tableAlias.'.idempleado = :emp')
+                      ->setParameter('emp', $idempleado);
+            }
+        );        
+        $rowAction1 = new RowAction('Ver detalle', 'solicitudcapacitacion_show');
+        $rowAction1->setColumn('info_column');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                $action->setRouteParameters(array('id'));
+                return $action; 
+            }
+        );
+        $grid->addRowAction($rowAction1);
+
+        $grid->setId('grid_solicitudesEmpleado');
+        $grid->setDefaultOrder('fechasolicitud','asc');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        
+        return $grid->getGridResponse('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:index.html.twig');
+    }
+    /**
+    *Ver capacitaciones disponibles para el empleado
+    */
+    public function indexCapasAction(){
+        $em = $this->getDoctrine()->getManager();
+        $user = new User();
+        $empleado = new Empleado();
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        $empleado = $user->getEmpleado();
+        $idempleado = $empleado->getId();
+
+        $source = new Entity('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion','solEmpleado');
+        $grid = $this->get('grid');
+        $grid->setSource($source); 
+        
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias,$idempleado){
+                $query->andWhere($tableAlias.'.idempleado = :emp')
+                      ->setParameter('emp', $idempleado);
+            }
+        );        
+        $rowAction1 = new RowAction('Ver detalle', 'solicitudcapacitacion_show');
+        $rowAction1->setColumn('info_column');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                $action->setRouteParameters(array('id'));
+                return $action; 
+            }
+        );
+        $grid->addRowAction($rowAction1);
+
+        $grid->setId('grid_solicitudesEmpleado');
+        $grid->setDefaultOrder('fechasolicitud','asc');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        
+        return $grid->getGridResponse('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:indexCapas.html.twig');
     }
 
     /**
@@ -35,37 +114,69 @@ class SolicitudcapacitacionController extends Controller
      */
     public function createAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $empleadoform = $em->getRepository('ExpedienteBundle:Empleado')->find($request->get('idempleado'));
+        $capacitacionform = $em->getRepository('CapacitacionBundle:Capacitacion')->find($request->get('idcapa'));
+        
         $entity  = new Solicitudcapacitacion();
+        $entity -> setAprobacionsolicitud('R');
+        $entity -> setFechasolicitud(new \Datetime(date('d-m-Y')));        
+        $entity -> setIdcapacitacion($capacitacionform);
+        $entity -> setIdempleado($empleadoform);        
         $form = $this->createForm(new SolicitudcapacitacionType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('solicitudcapacitacion_show', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add('new','Solicitud registrada correctamente'); 
+            return $this->redirect($this->generateUrl('solicitudcapacitacion'));
         }
+        //retornamos al form
+        $user = new User();
+        $empleado = new Empleado();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $empleado = $user->getEmpleado();
 
-        return $this->render('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        $capacitacion = $em->getRepository('CapacitacionBundle:Capacitacion')->find($idcapa);
+        if($capacitacion!=null AND $empleado!=null){
+            $this->get('session')->getFlashBag()->add('errornew','Errores en el Registro de Solicitud');
+            return $this->render('  SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:new.html.twig', array(
+                'entity' => $entity,
+                'form'   => $form->createView(),
+                'capacitacion' => $capacitacion,
+                'empleado' => $empleado,
+            ));
+        }
+        throw $this->createNotFoundException('No se encontro capacitacion, ni empleado');
     }
 
     /**
      * Displays a form to create a new Solicitudcapacitacion entity.
      *
      */
-    public function newAction()
+    public function newAction($idcapa)
     {
-        $entity = new Solicitudcapacitacion();
-        $form   = $this->createForm(new SolicitudcapacitacionType(), $entity);
+        $user = new User();
+        $empleado = new Empleado();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $empleado = $user->getEmpleado();
 
-        return $this->render('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        $em = $this->getDoctrine()->getManager();
+        $capacitacion = $em->getRepository('CapacitacionBundle:Capacitacion')->find($idcapa);
+        if($capacitacion!=null AND $empleado!=null){
+            $entity = new Solicitudcapacitacion();
+            $form   = $this->createForm(new SolicitudcapacitacionType(), $entity);            
+
+            return $this->render('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:new.html.twig', array(
+                'entity' => $entity,
+                'form'   => $form->createView(),
+                'capacitacion' => $capacitacion,
+                'empleado' => $empleado,
+            ));
+        }
+        else
+            throw $this->createNotFoundException('No se encontro capacitacion, ni empleado');
     }
 
     /**

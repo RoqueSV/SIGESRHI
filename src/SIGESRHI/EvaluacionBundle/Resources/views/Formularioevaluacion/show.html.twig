@@ -1,0 +1,46 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Formularioevaluacion</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Tipoformulario</th>
+                <td>{{ entity.tipoformulario }}</td>
+            </tr>
+            <tr>
+                <th>Codigoformulario</th>
+                <td>{{ entity.codigoformulario }}</td>
+            </tr>
+            <tr>
+                <th>Nombrebreve</th>
+                <td>{{ entity.nombrebreve }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('formularioevaluacion') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('formularioevaluacion_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('formularioevaluacion_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

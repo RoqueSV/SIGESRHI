@@ -1,0 +1,30 @@
+formularioevaluacion:
+    pattern:  /
+    defaults: { _controller: "EvaluacionBundle:Formularioevaluacion:index" }
+
+formularioevaluacion_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "EvaluacionBundle:Formularioevaluacion:show" }
+
+formularioevaluacion_new:
+    pattern:  /new
+    defaults: { _controller: "EvaluacionBundle:Formularioevaluacion:new" }
+
+formularioevaluacion_create:
+    pattern:  /create
+    defaults: { _controller: "EvaluacionBundle:Formularioevaluacion:create" }
+    requirements: { _method: post }
+
+formularioevaluacion_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "EvaluacionBundle:Formularioevaluacion:edit" }
+
+formularioevaluacion_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "EvaluacionBundle:Formularioevaluacion:update" }
+    requirements: { _method: post|put }
+
+formularioevaluacion_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "EvaluacionBundle:Formularioevaluacion:delete" }
+    requirements: { _method: post|delete }
