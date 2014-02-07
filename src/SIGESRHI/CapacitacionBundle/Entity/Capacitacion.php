@@ -236,7 +236,7 @@ class Capacitacion
 
     /**
      *
-     * @ORM\OneToMany(targetEntity="\SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion", mappedBy="idcapacitacion")
+     * @ORM\OneToMany(targetEntity="\SIGESRHI\PortalEmpleadoBundle\Entity\Solicitudcapacitacion", mappedBy="idcapacitacion")
      */
     private $idsolicitudcapacitacion;
 
@@ -710,7 +710,6 @@ class Capacitacion
     }
 
     /**
-<<<<<<< HEAD
      * Set numasistentes
      *
      * @param integer $numasistentes
@@ -719,7 +718,10 @@ class Capacitacion
     public function setNumasistentes($numasistentes)
     {
         $this->numasistentes = $numasistentes;
-=======
+     
+     }
+
+    /*
      * Add idsolicitudcapacitacion
      *
      * @param \SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion $idsolicitudcapacitacion
@@ -728,13 +730,11 @@ class Capacitacion
     public function addIdsolicitudcapacitacion(\SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion $idsolicitudcapacitacion)
     {
         $this->idsolicitudcapacitacion[] = $idsolicitudcapacitacion;
->>>>>>> 1e83460cfaf0b1124ff15adc35993faee2aa2616
     
         return $this;
     }
 
     /**
-<<<<<<< HEAD
      * Get numasistentes
      *
      * @return integer 
@@ -765,7 +765,9 @@ class Capacitacion
     public function getOtrasconsideraciones()
     {
         return $this->otrasconsideraciones;
-=======
+    }
+
+    /*
      * Remove idsolicitudcapacitacion
      *
      * @param \SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion $idsolicitudcapacitacion
@@ -783,6 +785,5 @@ class Capacitacion
     public function getIdsolicitudcapacitacion()
     {
         return $this->idsolicitudcapacitacion;
->>>>>>> 1e83460cfaf0b1124ff15adc35993faee2aa2616
     }
 }
