@@ -11,12 +11,19 @@ class SolicitudcapacitacionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fechasolicitud')
-            ->add('aprobacionsolicitud')
-            ->add('motivosolicitud')
-            ->add('comentariosolicitud')
-            ->add('idcapacitacion')
-            ->add('idempleado')
+            //->add('fechasolicitud')
+            //->add('aprobacionsolicitud')
+            ->add('motivosolicitud','textarea',array(
+                'label'=>'Motivo de la solicitud',
+                'attr' => array('class'=>'input-xxlarge','rows'=>'2'),
+                ))
+            ->add('comentariosolicitud','textarea',array(
+                'label'=>'Comentario',
+                'attr' => array('class'=>'input-xxlarge','rows'=>'2'),
+                'required' => false,               
+                ))
+            //->add('idcapacitacion')
+            //->add('idempleado')
         ;
     }
 

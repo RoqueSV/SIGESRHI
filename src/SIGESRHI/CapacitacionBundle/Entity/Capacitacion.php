@@ -203,6 +203,7 @@ class Capacitacion
      */
     private $idcapacitador;
 
+
     /**
      * @ORM\OneToMany(targetEntity="Capacitacionmodificada", mappedBy="idcapacitacion")
      */

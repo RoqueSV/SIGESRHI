@@ -1,20 +1,84 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Solicitudcapacitacion creation</h1>
+{% block principal -%}
+{% for flashMessage in app.session.flashbag.get('errornew') %}
+    <div class="alert alert-danger">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+<br>
+<!-- Botón ayuda -->
+<a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+{{ include('SIGESRHIPortalEmpleadoBundle:Ayuda/Solicitudcapacitacion:registro.html.twig')}}
+    <h3 class="text-center">Registro de Solicitud para participación de Capacitación</h3>
 
     <form action="{{ path('solicitudcapacitacion_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
-    </form>
+        {#{ form_widget(form) }#}
+    <fieldset><legend>Detalles Capacitación</legend>
+    <table class='table mitable' border='0' width='100%' align='center'>    <br>    
+        <tr>
+            <th>Temática</th>
+            <td colspan="3" width="75%">{{ capacitacion.tematica }}</td>
+        </tr>
+        <tr>
+            <th>Capacitador</th>
+            <td colspan="3">{{ capacitacion.idcapacitador.nombrecapacitador }}</td>
+        </tr>
+        <tr>
+            <th width="25%">Lugar</th>
+            <td>{{ capacitacion.lugarcapacitacion }}</td>
+            <th>Fecha</th>
+            <td>{{ capacitacion.fechacapacitacion | date('d-m-Y') | fecha }}</td>
+        </tr>
+        <tr>
+            <th>Hora inicio</th>
+            <td>{{ capacitacion.horainiciocapacitacion | date('h:m') }}</td>
+            <th>Hora Finalizacion</th>
+            <td>{{ capacitacion.horafincapacitacion | date('h:m') }}</td>
+        </tr>
+        <tr>
+            <th>Objetivo</th>
+            <td colspan="3" width="75%">{{ capacitacion.objetivocapacitacion}}</td>
+        </tr>
+        <tr>
+            <th>Perfil</th>
+            <td colspan="3" width="75%">{{ capacitacion.perfilcapacitacion }}</td>
+        </tr>
+        <tr>
+            <th width="25%">Capacitador</th>
+            <td>{{ capacitacion.idcapacitador.nombrecapacitador }}</td>
+            <th width="25%">Institucion</th>
+            <td>{{ capacitacion.idcapacitador.idinstitucion.nombreinstitucion }}</td>
+        </tr>
+        <tr>
+            <th>Cupo disponible</th>
+            <td colspan="3" width="75%"></td>
+        </tr>
+    </table>
+    </fieldset>
+    <fieldset><legend>Aplicar para participar en Capacitacion</legend>
+    <table class='table table-bordered table-hover mitable' border='1' width='100%' align='center'>    
+        <tr>
+            <th width="25%">{{ form_label(form.motivosolicitud) }}</th>
+            <td>{{ form_widget(form.motivosolicitud) }}</td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.comentariosolicitud) }}</th>
+            <td>{{ form_widget(form.comentariosolicitud) }}</td>
+        </tr>
+    </table>
+    <input type="hidden" name="idcapa" id="idcapa" value="{{ capacitacion.id }}">
+    <input type="hidden" name="idempleado" id="idempleado" value="{{ empleado.id }}">
+    </fieldset>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('solicitudcapacitacion') }}">
-            Back to the list
+    {{ form_rest(form) }}
+    <div class='text-center'>
+        <button type="submit" class="btn btn-primary">Aplicar</button>
+        <a  href="{{ 
+                path('solicitudcapacitacion'                        
+                    )
+                }}" class="btn">Regresar
         </a>
-    </li>
-</ul>
+    <div>
+    </form>
 {% endblock %}
