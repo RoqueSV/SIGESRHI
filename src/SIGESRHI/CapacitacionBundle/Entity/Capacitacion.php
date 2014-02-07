@@ -12,7 +12,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  *
  * @ORM\Table(name="capacitacion")
  * @ORM\Entity
- * @GRID\Source(columns="id,tematica,fechacapacitacion,horainiciocapacitacion,horafincapacitacion", groups={"grupo_capacitacion"})
+ * @GRID\Source(columns="id,tematica,fechacapacitacion,horainiciocapacitacion,horafincapacitacion,idplan.idcentro.idunidad.idrefrenda.idempleado.id", groups={"grupo_capacitacion"})
  */
 class Capacitacion
 {
@@ -190,6 +190,7 @@ class Capacitacion
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idplan", referencedColumnName="id")
      * })
+     * @GRID\Column(field="idplan.idcentro.idunidad.idrefrenda.idempleado.id", visible=false, groups={"grupo_capacitacion"}, filterable=false)
      */
     private $idplan;
 
@@ -208,6 +209,12 @@ class Capacitacion
      * @ORM\OneToMany(targetEntity="Capacitacionmodificada", mappedBy="idcapacitacion")
      */
     private $idcapacitacionmod;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="\SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion", mappedBy="idcapacitacion")
+     */
+    private $idsolicitudcapacitacion;
 
     public function __toString(){
         return $this->getTematica();
@@ -676,5 +683,38 @@ class Capacitacion
     public function getIdcapacitacionmod()
     {
         return $this->idcapacitacionmod;
+    }
+
+    /**
+     * Add idsolicitudcapacitacion
+     *
+     * @param \SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion $idsolicitudcapacitacion
+     * @return Capacitacion
+     */
+    public function addIdsolicitudcapacitacion(\SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion $idsolicitudcapacitacion)
+    {
+        $this->idsolicitudcapacitacion[] = $idsolicitudcapacitacion;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idsolicitudcapacitacion
+     *
+     * @param \SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion $idsolicitudcapacitacion
+     */
+    public function removeIdsolicitudcapacitacion(\SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion $idsolicitudcapacitacion)
+    {
+        $this->idsolicitudcapacitacion->removeElement($idsolicitudcapacitacion);
+    }
+
+    /**
+     * Get idsolicitudcapacitacion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdsolicitudcapacitacion()
+    {
+        return $this->idsolicitudcapacitacion;
     }
 }

@@ -1,16 +1,11 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Solicitudcapacitacion</h1>
+{% block principal -%}
+    <h3 class="text-center">Solicitud para participación de Capacitación</h3>
 
-    <table class="record_properties">
-        <tbody>
+    <table class="table mitable" width="100%" align="center">
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Fechasolicitud</th>
+                <th>Fecha Solicitud</th>
                 <td>{{ entity.fechasolicitud|date('Y-m-d H:i:s') }}</td>
             </tr>
             <tr>
@@ -25,7 +20,6 @@
                 <th>Comentariosolicitud</th>
                 <td>{{ entity.comentariosolicitud }}</td>
             </tr>
-        </tbody>
     </table>
 
         <ul class="record_actions">
