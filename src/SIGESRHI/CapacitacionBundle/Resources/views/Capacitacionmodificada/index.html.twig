@@ -1,0 +1,63 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Capacitacionmodificada list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fechamodificada</th>
+                <th>Horainiciomodificada</th>
+                <th>Horafinmodificada</th>
+                <th>Lugarmodificado</th>
+                <th>Perfilmodificado</th>
+                <th>Cupomodificado</th>
+                <th>Metodologiamodificada</th>
+                <th>Resultadosmodificados</th>
+                <th>Plazomodificado</th>
+                <th>Contactomodificado</th>
+                <th>Materialmodificado</th>
+                <th>Justificacionmodificacion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('capacitacionmodificada_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{% if entity.fechamodificada %}{{ entity.fechamodificada|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.horainiciomodificada }}</td>
+                <td>{{ entity.horafinmodificada }}</td>
+                <td>{{ entity.lugarmodificado }}</td>
+                <td>{{ entity.perfilmodificado }}</td>
+                <td>{{ entity.cupomodificado }}</td>
+                <td>{{ entity.metodologiamodificada }}</td>
+                <td>{{ entity.resultadosmodificados }}</td>
+                <td>{% if entity.plazomodificado %}{{ entity.plazomodificado|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.contactomodificado }}</td>
+                <td>{{ entity.materialmodificado }}</td>
+                <td>{{ entity.justificacionmodificacion }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('capacitacionmodificada_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('capacitacionmodificada_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('capacitacionmodificada_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

@@ -4,4 +4,8 @@
 
 {%block extendido -%}
 <embed src="{{ asset('uploads/reportes/'~ reportes) }}" class="pdf"></embed>
-{%endblock%}
+<div class="text-center">
+ <button type="button" class="btn" onclick="window.history.back(1);">Regresar</button>
+</div>
+{% endblock %}
+

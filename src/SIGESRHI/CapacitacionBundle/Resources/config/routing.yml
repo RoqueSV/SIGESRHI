@@ -17,3 +17,8 @@ CapacitacionBundle_plancapacitacion:
 CapacitacionBundle_capacitacion:
     resource: "@CapacitacionBundle/Resources/config/routing/capacitacion.yml"
     prefix:   /capacitacion
+
+CapacitacionBundle_capacitacionmodificada:
+    resource: "@CapacitacionBundle/Resources/config/routing/capacitacionmodificada.yml"
+    prefix:   /capacitacionmodificada
+

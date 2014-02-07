@@ -6,7 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use SIGESRHI\CapacitacionBundle\Entity\Capacitacion;
+use SIGESRHI\CapacitacionBundle\Entity\Capacitacionmodificada;
 use SIGESRHI\CapacitacionBundle\Form\CapacitacionType;
+use SIGESRHI\CapacitacionBundle\Form\CapacitacionmodificadaType;
 
 /**
  * Capacitacion controller.
@@ -141,6 +143,15 @@ class CapacitacionController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
+        //Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Plan de capacitaciones", $this->get("router")->generate("pantalla_capacitaciones"));
+        $breadcrumbs->addItem("Consultar plan de capacitacion",$this->get("router")->generate("plancapacitacion"));
+        $breadcrumbs->addItem("Listado de capacitaciones",$this->get("router")->generate("plancapacitacion_show",array('id'=>$entity->getIdplan()->getId())));
+        $breadcrumbs->addItem("Datos de capacitacion",$this->get("router")->generate("plancapacitacion"));
+
         return $this->render('CapacitacionBundle:Capacitacion:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
@@ -184,12 +195,35 @@ class CapacitacionController extends Controller
             throw $this->createNotFoundException('Unable to find Capacitacion entity.');
         }
 
+        /********* Capacitacion Modificada *******/
+        $modificada = new Capacitacionmodificada();
+
+        $modificada->setFechamodificada($entity->getFechacapacitacion());
+        $modificada->setHorainiciomodificada($entity->getHorainiciocapacitacion());
+        $modificada->setHorafinmodificada($entity->getHorafincapacitacion());
+        $modificada->setTematicamodificada($entity->getTematica());
+        $modificada->setMetodologiamodificada($entity->getMetodologia());
+        $modificada->setResultadosmodificados($entity->getResultadoscapacitacion());
+        $modificada->setLugarmodificado($entity->getLugarcapacitacion());
+        $modificada->setPerfilmodificado($entity->getPerfilcapacitacion());
+        $modificada->setCupomodificado($entity->getCupo());
+        $modificada->setPlazomodificado($entity->getPlazocapacitacion());
+        $modificada->setMaterialmodificado($entity->getMaterialcapacitacion());
+        $modificada->setContactomodificado($entity->getContactocapacitacion());
+        $modificada->setIdcapacitacion($entity);
+
+        $entity->setEstadocapacitacion($request->get('tipomod'));
+        /* ******************************************/
+
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new CapacitacionType(), $entity);
         $editForm->bind($request);
 
+        $modificada->setJustificacionmodificacion($entity->getJustificacioncambios());
+
         if ($editForm->isValid()) {
             $em->persist($entity);
+            $em->persist($modificada);
             $em->flush();
 
             return $this->redirect($this->generateUrl('capacitacion_edit', array('id' => $id)));
@@ -239,5 +273,33 @@ class CapacitacionController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    public function modificarAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('CapacitacionBundle:Capacitacion')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Capacitacion entity.');
+        }
+
+        $editForm = $this->createForm(new CapacitacionType(), $entity);
+
+        //Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Plan de capacitaciones", $this->get("router")->generate("pantalla_capacitaciones"));
+        $breadcrumbs->addItem("Consultar plan de capacitacion",$this->get("router")->generate("plancapacitacion"));
+        $breadcrumbs->addItem("Listado de capacitaciones",$this->get("router")->generate("plancapacitacion_show",array('id'=>$entity->getIdplan()->getId())));
+        $breadcrumbs->addItem("Datos de capacitacion",$this->get("router")->generate("capacitacion_show",array('id'=>$id)));
+        $breadcrumbs->addItem("Modificación",$this->get("router")->generate("capacitacion"));
+
+        return $this->render('CapacitacionBundle:Capacitacion:modificar.html.twig', array(
+            'id'   => $id,
+            'form' => $editForm->createView(),
+        ));
     }
 }

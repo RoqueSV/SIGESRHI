@@ -128,7 +128,7 @@ class Plaza
     private $idrefrenda;
     
     /**
-     * @ORM\OneToMany(targetEntity="Conocimientoplaza", mappedBy="idplaza", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Conocimientoplaza", mappedBy="idplaza", cascade={"all"}, orphanRemoval=true)
      * @Assert\Valid
      */
     private $idconocimientoplaza;

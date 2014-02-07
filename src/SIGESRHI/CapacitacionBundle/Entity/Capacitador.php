@@ -99,6 +99,10 @@ class Capacitador
         return $this->getNombrecapacitador();
     }
 
+    public function capacitadorins(){
+        return $this->getNombrecapacitador()." (".$this->getIdinstitucion()->getNombreinstitucion().")";
+    }
+
     /**
      * Get id
      *

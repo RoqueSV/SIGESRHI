@@ -17,8 +17,19 @@ class ConocimientoplazaAdmin extends Admin
     //Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
+
+        $em = $this->modelManager->getEntityManager('AdminBundle:Conocimiento');
+
+        $queryc = $em->createQueryBuilder('c')
+                     ->select('c')
+                     ->from('AdminBundle:Conocimiento', 'c')
+                     ->orderBy('c.nombreconocimiento', 'ASC');
+
         $formMapper
-            ->add('idconocimiento','sonata_type_model', array('label' => 'Conocimiento'))
+            ->add('idconocimiento','sonata_type_model', array(
+                  'label' => 'Conocimiento',
+                  'query' => $queryc,
+                  ))
             //->add('idplaza', null, array('label' => 'Plaza'))
             ->add('tipoconocimiento', 'choice', array(
                   'choices'=> array('I' => 'Indispensable', 
@@ -46,7 +57,7 @@ class ConocimientoplazaAdmin extends Admin
     }
 
     public function configureRoutes(RouteCollection $collection){
-    $collection->clearExcept(array('show'));
+    $collection->clearExcept(array('show','create','delete'));
     }
     
 }

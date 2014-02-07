@@ -2,11 +2,17 @@
 
 namespace SIGESRHI\CapacitacionBundle\Controller;
 
+setlocale(LC_ALL, "ES_ES");
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use SIGESRHI\CapacitacionBundle\Entity\Plancapacitacion;
 use SIGESRHI\CapacitacionBundle\Form\PlancapacitacionType;
+
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Action\RowAction;
+use APY\DataGridBundle\Grid\Grid;
 
 /**
  * Plancapacitacion controller.
@@ -18,16 +24,114 @@ class PlancapacitacionController extends Controller
      * Lists all Plancapacitacion entities.
      *
      */
-    public function indexAction()
+    public function consultarAction()
+    {
+        //Consultar planes registrados
+
+        $source = new Entity('CapacitacionBundle:Plancapacitacion','grupo_plancapacitacion');
+        
+        $grid = $this->get('grid');
+           
+        $grid->setId('grid_plan');
+        $grid->setSource($source);              
+        
+    
+        // Crear
+        $rowAction1 = new RowAction('Consultar', 'plancapacitacion_show');
+        $grid->addRowAction($rowAction1);
+        
+        $grid->setDefaultOrder('anoplan', 'desc');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Plan de capacitaciones", $this->get("router")->generate("pantalla_capacitaciones"));
+        $breadcrumbs->addItem("Consultar planes de capacitacion","");
+        
+        return $grid->getGridResponse('CapacitacionBundle:Plancapacitacion:index.html.twig');
+    }
+
+    public function resultadosAction()
+    {
+        //Consultar planes registrados
+
+        $source = new Entity('CapacitacionBundle:Plancapacitacion','grupo_plancapacitacion');
+        
+        $grid = $this->get('grid');
+           
+        $grid->setId('grid_plan');
+        $grid->setSource($source);              
+        
+    
+        // Crear
+        $rowAction1 = new RowAction('Consultar', 'plan_capacitacion_resultados');
+        $grid->addRowAction($rowAction1);
+        
+        $grid->setDefaultOrder('anoplan', 'desc');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Plan de capacitaciones", $this->get("router")->generate("pantalla_capacitaciones"));
+        $breadcrumbs->addItem("Registrar resultados del plan","");
+        
+        return $grid->getGridResponse('CapacitacionBundle:Plancapacitacion:resultados_plan.html.twig');
+    }
+
+    public function resultadosCapacitacionAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('CapacitacionBundle:Plancapacitacion')->findAll();
+        $entity = $em->getRepository('CapacitacionBundle:Plancapacitacion')->find($id);
 
-        return $this->render('CapacitacionBundle:Plancapacitacion:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Plancapacitacion entity.');
+        }
+
+        /********* GRID CAPACITACIONES ***********/
+        $source = new Entity('CapacitacionBundle:Capacitacion','grupo_capacitacion');
+        
+        $grid = $this->get('grid');
+
+        /* Capacitaciones ya realizadas */
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->andWhere($tableAlias.'.fechacapacitacion < :actual')
+                      ->setParameter('actual',new \Datetime('now'));
+            }
+        );   
+           
+        $grid->setId('grid_capacitacion');
+
+        $grid->setSource($source);              
+            
+        // Crear
+        $rowAction1 = new RowAction('Registrar', 'plancapacitacion_show');
+        $grid->addRowAction($rowAction1);
+        
+        $grid->setDefaultOrder('fechacapacitacion', 'asc');
+        $grid->setLimits(array(10 => '10', 20 => '20', 30 => '30'));
+
+
+        /*****************************************/
+
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Plan de capacitaciones", $this->get("router")->generate("pantalla_capacitaciones"));
+        $breadcrumbs->addItem("Registrar resultados del plan",$this->get("router")->generate("plancapacitacion"));
+        $breadcrumbs->addItem("Listado de capacitaciones",$this->get("router")->generate("plancapacitacion"));
+
+        return $grid->getGridResponse('CapacitacionBundle:Plancapacitacion:resultados_capacitacion.html.twig',array(
+                     'entity' => $entity));
     }
+
 
     /**
      * Creates a new Plancapacitacion entity.
@@ -111,9 +215,39 @@ class PlancapacitacionController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('CapacitacionBundle:Plancapacitacion:show.html.twig', array(
+        /********* GRID CAPACITACIONES ***********/
+        $source = new Entity('CapacitacionBundle:Capacitacion','grupo_capacitacion');
+        
+        $grid = $this->get('grid');
+           
+        $grid->setId('grid_capacitacion');
+
+        $grid->setSource($source);              
+            
+        // Crear
+        $rowAction1 = new RowAction('Consultar', 'capacitacion_show');
+        $grid->addRowAction($rowAction1);
+        
+        $grid->setDefaultOrder('fechacapacitacion', 'asc');
+        $grid->setLimits(array(10 => '10', 20 => '20', 30 => '30'));
+
+
+        /*****************************************/
+
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Plan de capacitaciones", $this->get("router")->generate("pantalla_capacitaciones"));
+        $breadcrumbs->addItem("Consultar plan de capacitacion",$this->get("router")->generate("plancapacitacion"));
+        $breadcrumbs->addItem("Listado de capacitaciones",$this->get("router")->generate("plancapacitacion"));
+
+        /*return $this->render('CapacitacionBundle:Plancapacitacion:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'delete_form' => $deleteForm->createView(),        ));*/
+
+        return $grid->getGridResponse('CapacitacionBundle:Plancapacitacion:show.html.twig',array(
+                     'entity' => $entity));
     }
 
     /**
@@ -210,4 +344,5 @@ class PlancapacitacionController extends Controller
             ->getForm()
         ;
     }
+
 }

@@ -1,0 +1,140 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+
+<h3 class="text-center">¿Qué tipo de modificación desea realizar?</h3>
+<br/>
+
+<table style="margin-left:250px; padding:10px">
+ 	<tr>
+ 		<td>
+          <label class="radio">
+             <input type="radio" name="tipomod" id="reprogramar" value="1" required = "required">&nbsp;&nbsp;
+             Reprogramar capacitación
+          </label>
+        </td>
+    </tr>
+    <tr>
+    	<td>
+          <label class="radio">
+             <input type="radio" name="tipomod" id="cancelar" value="2">&nbsp;&nbsp;
+             Cancelar capacitación
+          </label>
+        </td>
+    </tr>
+    <tr>
+    	<td>
+          <label class="radio">
+            <input type="radio" name="tipomod" id="generales" value="3">&nbsp;&nbsp;
+            Modificar datos generales
+         </label>
+        </td>
+    </tr>
+</table>
+<br/>  
+  <div class="text-center">
+      <button id="boton" onclick="mostrarocultar()" class="btn"> Seleccionar </button>
+      <a href="{{ path('capacitacion_show',{'id':id}) }}"  class="btn">Cancelar</a>
+  </div>
+
+  <br/>
+
+  <div id="formmodificar" class='hide'>
+
+    <fieldset>
+    <legend>Datos de modificación</legend>
+    
+    <form action="{{ path('capacitacion_update', {'id':id}) }}" method="post" class="form-horizontal">
+     
+       <div id='formreprogramar' class='hide'>
+       <h4 class='text-center'> Ingrese la siguiente información </h4><br/>
+       {{ form_row(form.fechacapacitacion) }}
+       {{ form_row(form.horainiciocapacitacion) }}
+       {{ form_row(form.horafincapacitacion) }}
+       </div>
+       
+       <div id='formcancelar' class='hide'>
+       <h4 class='text-center'> Ingrese el motivo por el que desea cancelar la capacitación </h4><br/>
+       </div>
+       
+       <div id='formgenerales' class='hide'>
+       <h4 class='text-center'> Ingrese la siguiente información </h4><br/>
+        {{ form_row(form.tematica) }}
+        {{ form_row(form.metodologia) }}
+        {{ form_row(form.resultadoscapacitacion) }}
+        {{ form_row(form.lugarcapacitacion) }}
+        {{ form_row(form.perfilcapacitacion) }}
+        {{ form_row(form.cupo) }}
+        {{ form_row(form.plazocapacitacion) }}
+        {{ form_row(form.materialcapacitacion) }}
+        {{ form_row(form.contactocapacitacion) }}
+       </div>
+       
+       {{ form_row(form.justificacioncambios) }}
+
+       <input type='hidden' name='idcap' id='idcap' value="{{id}}"/>
+       <input type='hidden' name='tipomod' id='tipomod'/>
+       <div class='hide'> {{ form_rest(form) }}</div>
+
+       <div class='text-center'>
+        <button type='submit' class='btn btn-primary'>Modificar</button>
+       </div>
+   </form>
+  </fieldset>
+  </div>
+
+
+<script type='text/javascript'>
+function mostrarocultar(){
+
+  if(document.getElementById('reprogramar').checked){
+     document.getElementById('formmodificar').style.display = 'block';
+     document.getElementById('formreprogramar').style.display = 'block';
+     document.getElementById('formcancelar').style.display = 'none';
+     document.getElementById('formgenerales').style.display = 'none';
+     document.getElementById('tipomod').value = 'R';
+  }
+  if(document.getElementById('cancelar').checked){
+     document.getElementById('formmodificar').style.display = 'block';
+    document.getElementById('formcancelar').style.display = 'block';
+    document.getElementById('formreprogramar').style.display = 'none';
+    document.getElementById('formgenerales').style.display = 'none';
+    document.getElementById('tipomod').value = 'C';
+  }
+  if(document.getElementById('generales').checked){
+    document.getElementById('formmodificar').style.display = 'block';
+    document.getElementById('formgenerales').style.display = 'block';
+    document.getElementById('formreprogramar').style.display = 'none';
+    document.getElementById('formcancelar').style.display = 'none';
+    document.getElementById('tipomod').value = 'M';
+  }
+  
+}
+
+$(function() {
+             $("#sigesrhi_capacitacionbundle_capacitaciontype_plazocapacitacion" ).datepicker({
+                 yearRange: "-0:+1",
+                 dateFormat: 'dd-mm-yy',
+                 changeYear: true,
+                 changeMonth: true,
+                 numberOfMonths: 1,
+                 onClose: function( selectedDate ) {
+                      $("#sigesrhi_capacitacionbundle_capacitaciontype_fechacapacitacion" ).datepicker( "option", "minDate", selectedDate );
+                 }
+              });
+           
+             $("#sigesrhi_capacitacionbundle_capacitaciontype_fechacapacitacion" ).datepicker({
+                 yearRange: "-0:+2",
+                 dateFormat: 'dd-mm-yy',
+                 changeMonth: true,
+                 changeYear: true,
+                 numberOfMonths: 1,
+                 onClose: function( selectedDate ) {
+                 $("#sigesrhi_capacitacionbundle_capacitaciontype_plazocapacitacion" ).datepicker( "option", "maxDate", selectedDate );
+                 }
+             });
+        });
+</script>
+
+{% endblock %}

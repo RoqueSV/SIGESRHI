@@ -556,7 +556,7 @@ class EvaluacionController extends Controller
             throw $this->createNotFoundException('No se encontro la refrenda del empleado.');
         }
 
-        $formularios = $em->getRepository('EvaluacionBundle:FormularioEvaluacion')->findAll();
+        $formularios = $em->getRepository('EvaluacionBundle:Formularioevaluacion')->findAll();
 
          if(!$formularios){
             throw $this->createNotFoundException('No hay formularios registrados en el sistema.');

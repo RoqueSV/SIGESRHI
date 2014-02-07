@@ -5,12 +5,15 @@ namespace SIGESRHI\CapacitacionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use APY\DataGridBundle\Grid\Mapping as GRID;
+
 /**
  * Plancapacitacion
  *
  * @ORM\Table(name="plancapacitacion")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="SIGESRHI\CapacitacionBundle\Repositorio\PlancapacitacionRepository")
+ * @GRID\Source(columns="id,nombreplan,objetivoplan,anoplan", groups={"grupo_plancapacitacion"})
  */
 class Plancapacitacion
 {
@@ -21,6 +24,7 @@ class Plancapacitacion
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="plancapacitacion_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(filterable=false, groups={"grupo_plancapacitacion"}, visible=false)
      */
     private $id;
 
@@ -28,6 +32,7 @@ class Plancapacitacion
      * @var string
      *
      * @ORM\Column(name="nombreplan", type="string", length=25, nullable=true)
+     * @GRID\Column(filterable=false, groups={"grupo_plancapacitacion"}, visible=true, title="Nombre")
      */
     private $nombreplan;
 
@@ -36,18 +41,20 @@ class Plancapacitacion
      *
      * @ORM\Column(name="anoplan", type="string", length=4, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el año del plan")
+     * @GRID\Column(filterable=false, groups={"grupo_plancapacitacion"}, visible=false, title="Año")
      */
     private $anoplan;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="objetivoplan", type="string", length=250, nullable=false)
+     * @ORM\Column(name="objetivoplan", type="text", length=350, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el objetivo del plan")
      * @Assert\Length(
-     * max = "250",
+     * max = "350",
      * maxMessage = "El objetivo del plan no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(filterable=false, groups={"grupo_plancapacitacion"}, visible=true, title="Objetivo")
      */
     private $objetivoplan;
 

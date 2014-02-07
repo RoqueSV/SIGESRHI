@@ -68,7 +68,7 @@ class PlancapacitacionType extends AbstractType
 
     public function buildYearChoices() {
     $distancebef = 0;
-    $distanceaft = 3;
+    $distanceaft = 2;
     $yearsBefore = date('Y', mktime(0, 0, 0, date("m"), date("d"), date("Y") - $distancebef));
     $yearsAfter = date('Y', mktime(0, 0, 0, date("m"), date("d"), date("Y") + $distanceaft));
     return array_combine(range($yearsBefore, $yearsAfter), range($yearsBefore, $yearsAfter));

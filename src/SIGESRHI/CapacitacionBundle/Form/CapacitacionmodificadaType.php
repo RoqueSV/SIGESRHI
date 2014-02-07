@@ -6,92 +6,81 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CapacitacionType extends AbstractType
+class CapacitacionmodificadaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('tematica',null,array(
+            ->add('tematicamodificada',null,array(
                   'label'=>'Temática',
-                  'required'=>true,
+                  'required'=>false,
                   'attr'=>array('class'=>'input-xmlarge')))
-            ->add('fechacapacitacion', null, array(
+            ->add('fechamodificada',null, array(
                   'label'=>'Fecha de realización', 
+                  'required' => false,
                   'widget' => 'single_text', 
                   'format'=>'dd-MM-yyyy', 
                   'attr' => array(
-                  'class' => 'input-small', 
+                  'class' => 'date input-small', 
                   'data-bvalidator'=>'required', 
                   'readonly'=>true))) 
-            ->add('horainiciocapacitacion','time',array(
+            ->add('horainiciomodificada','time',array(
                   'label'=>'Hora inicio'))
-            ->add('horafincapacitacion','time',array(
+            ->add('horafinmodificada','time',array(
                   'label'=>'Hora fin'))
-            ->add('lugarcapacitacion',null,array(
+            ->add('lugarmodificado',null,array(
                   'label'=>'Lugar capacitación',
-                  'required'=>true,
-                  'attr'=>array('class'=>'input-xmlarge')))
-            ->add('areacapacitacion',null,array(
-                  'label'=>'Area',
                   'required'=>false,
                   'attr'=>array('class'=>'input-xmlarge')))
-            ->add('objetivocapacitacion','textarea',array(
-                  'label'=>'Objetivo',
-                  'required'=>true,
-                  'attr'=>array('class'=>'input-xmlarge','rows'=>'3')))
-            ->add('perfilcapacitacion','textarea',array(
+            ->add('perfilmodificado','textarea',array(
                   'label'=>'Perfil del participante',
                   'required'=>false,
                   'attr'=>array('class'=>'input-xmlarge','rows'=>'3')))
-            ->add('cupo',null,array(
+            ->add('cupomodificado',null,array(
                   'label'=>'Cupo',
                   'required'=>false,
                   'attr'=>array('class'=>'input-mini','data-bvalidator'=>'number')))
-            ->add('metodologia','textarea',array(
+            ->add('metodologiamodificada','textarea',array(
                   'label'=>'Metodología ',
                   'required'=>false,
                   'attr'=>array('class'=>'input-xmlarge','rows'=>'3')))
-            ->add('resultadoscapacitacion','textarea',array(
+            ->add('resultadosmodificados','textarea',array(
                   'label'=>'Resultados esperados',
                   'required'=>false,
                   'attr'=>array('class'=>'input-xmlarge','rows'=>'3')))
-            ->add('plazocapacitacion',null, array(
+            ->add('plazomodificado',null, array(
                   'label'=>'Plazo inscripción', 
                   'required'=>false,
                   'widget' => 'single_text', 
                   'format'=>'dd-MM-yyyy', 
                   'attr' => array(
-                  'class' => 'input-small', 
+                  'class' => 'date input-small', 
                   'readonly'=>true))) 
-            ->add('contactocapacitacion',null,array(
+            ->add('contactomodificado',null,array(
                   'label'=>'Contacto',
                   'required'=>false,
                   'attr'=>array('class'=>'input-xmlarge')))
-            ->add('materialcapacitacion','textarea',array(
+            ->add('materialmodificado','textarea',array(
                   'label'=>'Material de apoyo',
                   'required'=>false,
                   'attr'=>array('class'=>'input-xmlarge','rows'=>'3')))
-            //->add('estadocapacitacion')
-            ->add('justificacioncambios','textarea',array(
+            ->add('justificacionmodificacion','textarea',array(
                   'label'=>'Motivo',
-                  'required'=>false,
+                  'required'=>true,
                   'attr'=>array('class'=>'input-xmlarge','rows'=>'3')))
-            //->add('idplan')
-            ->add('idcapacitador',null,array(
-                  'label'=>'Capacitador',
-                  'required'=>true))
+          //  ->add('idcapacitacion')
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'SIGESRHI\CapacitacionBundle\Entity\Capacitacion'
+            'data_class' => 'SIGESRHI\CapacitacionBundle\Entity\Capacitacionmodificada'
         ));
     }
 
     public function getName()
     {
-        return 'sigesrhi_capacitacionbundle_capacitaciontype';
+        return 'sigesrhi_capacitacionbundle_capacitacionmodificadatype';
     }
 }

@@ -104,12 +104,15 @@ class PlazaAdmin extends Admin
            ->end()
            ->with('Conocimientos', array('description' => 'Conocimientos especificos.'))
              ->add('idconocimientoplaza', 'sonata_type_collection', 
-             array('by_reference'=>false,'required'=>false,'label'=>'Conocimientos'), 
+             array('by_reference'=>false,'required'=>false,'label'=>'Conocimientos'
+                // Prevents the "Delete" option from being displayed
+                //'type_options' => array('delete' => false)
+                  ), 
              array(
                 'edit' => 'inline',
                 'inline' => 'table',
                 'sortable' => 'position',
-            ))
+                  ))
            ->end()
            ->with('Competencias', array('description' => 'Competencias conductuales.'))
               ->add('idcompetencia', 'sonata_type_model', array(

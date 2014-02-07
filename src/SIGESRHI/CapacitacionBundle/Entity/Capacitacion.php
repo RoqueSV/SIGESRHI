@@ -1,15 +1,18 @@
 <?php
 
 namespace SIGESRHI\CapacitacionBundle\Entity;
-
+setlocale(LC_ALL, "ES_ES");
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Capacitacion
  *
  * @ORM\Table(name="capacitacion")
  * @ORM\Entity
+ * @GRID\Source(columns="id,tematica,fechacapacitacion,horainiciocapacitacion,horafincapacitacion", groups={"grupo_capacitacion"})
  */
 class Capacitacion
 {
@@ -20,6 +23,7 @@ class Capacitacion
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="capacitacion_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(filterable=false, groups={"grupo_capacitacion"}, visible=false)
      */
     private $id;
 
@@ -32,6 +36,7 @@ class Capacitacion
      * max = "75",
      * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(filterable=false, groups={"grupo_capacitacion"}, visible=true, title="Temática")
      */
     private $tematica;
 
@@ -39,6 +44,7 @@ class Capacitacion
      * @var \DateTime
      *
      * @ORM\Column(name="fechacapacitacion", type="date", nullable=false)
+     * @GRID\Column(filterable=true, groups={"grupo_capacitacion"}, visible=true, filter="input", type="date", inputType="datetime", format="d-m-Y", locale="es", title="Fecha", align="center", operators={"btwe","gte", "eq", "lte"}, defaultOperator="gte", operatorsVisible=true)
      */
     private $fechacapacitacion;
 
@@ -46,6 +52,7 @@ class Capacitacion
      * @var \DateTime
      *
      * @ORM\Column(name="horainiciocapacitacion", type="time", nullable=false)
+     * @GRID\Column(filterable=false, groups={"grupo_capacitacion"}, visible=true, type="datetime", format="h:i a", title="Inicio", align="center")
      */
     private $horainiciocapacitacion;
 
@@ -53,6 +60,7 @@ class Capacitacion
      * @var \DateTime
      *
      * @ORM\Column(name="horafincapacitacion", type="time", nullable=false)
+     * @GRID\Column(filterable=false, groups={"grupo_capacitacion"}, visible=true, type="datetime", format="h:i a", title="Fin", align="center")
      */
     private $horafincapacitacion;
 
@@ -160,7 +168,7 @@ class Capacitacion
     /**
      * @var string
      *
-     * @ORM\Column(name="estadocapacitacion", type="string", nullable=false)
+     * @ORM\Column(name="estadocapacitacion", type="string", length=1, nullable=false)
      */
     private $estadocapacitacion;
 
@@ -195,7 +203,14 @@ class Capacitacion
      */
     private $idcapacitador;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Capacitacionmodificada", mappedBy="idcapacitacion")
+     */
+    private $idcapacitacionmod;
 
+    public function __toString(){
+        return $this->getTematica();
+    }
 
     /**
      * Get id
@@ -619,5 +634,46 @@ class Capacitacion
     public function getIdcapacitador()
     {
         return $this->idcapacitador;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idcapacitacionmod = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idcapacitacionmod
+     *
+     * @param \SIGESRHI\CapacitacionBundle\Entity\Capacitacionmodificada $idcapacitacionmod
+     * @return Capacitacion
+     */
+    public function addIdcapacitacionmod(\SIGESRHI\CapacitacionBundle\Entity\Capacitacionmodificada $idcapacitacionmod)
+    {
+        $this->idcapacitacionmod[] = $idcapacitacionmod;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idcapacitacionmod
+     *
+     * @param \SIGESRHI\CapacitacionBundle\Entity\Capacitacionmodificada $idcapacitacionmod
+     */
+    public function removeIdcapacitacionmod(\SIGESRHI\CapacitacionBundle\Entity\Capacitacionmodificada $idcapacitacionmod)
+    {
+        $this->idcapacitacionmod->removeElement($idcapacitacionmod);
+    }
+
+    /**
+     * Get idcapacitacionmod
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdcapacitacionmod()
+    {
+        return $this->idcapacitacionmod;
     }
 }

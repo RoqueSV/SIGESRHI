@@ -42,7 +42,7 @@ class MarcoreferenciaAdmin extends Admin
     }
 
     public function configureRoutes(RouteCollection $collection){
-    $collection->clearExcept(array('show'));
+       $collection->clearExcept(array('show','create'));
     }
     
 }

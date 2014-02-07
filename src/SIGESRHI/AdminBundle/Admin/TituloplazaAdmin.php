@@ -17,8 +17,20 @@ class TituloplazaAdmin extends Admin
     //Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
+
+        $em = $this->modelManager->getEntityManager('ExpedienteBundle:Titulo');
+
+        $queryt = $em->createQueryBuilder('t')
+                     ->select('t')
+                     ->from('ExpedienteBundle:Titulo', 't')
+                     ->orderBy('t.nombretitulo', 'ASC');
+
+
         $formMapper
-            ->add('idtitulo','sonata_type_model', array('label' => 'Titulo'))
+            ->add('idtitulo','sonata_type_model', 
+                   array(
+                  'label' => 'Titulo',
+                  'query' => $queryt))
             //->add('idplaza', null, array('label' => 'Plaza'))
             ->add('tipotitulo', 'choice', array(
                   'choices'=> array('I' => 'Indispensable', 
@@ -46,7 +58,7 @@ class TituloplazaAdmin extends Admin
     }
 
     public function configureRoutes(RouteCollection $collection){
-    $collection->clearExcept(array('show'));
+    $collection->clearExcept(array('show','create'));
     }
     
 }

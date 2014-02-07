@@ -54,12 +54,7 @@ class ContratacionController extends Controller
         $NombrePlazas = new TextColumn(array('id' => 'plazas','source' => true,'field'=>'idsolicitudempleo.idplaza.nombreplaza','title' => 'Plaza solicitada','operatorsVisible'=>false,'joinType'=>'inner'));
         $grid->addColumn($NombrePlazas,3);       
         
-      /* $grid->getColumn('fechaexpediente')->manipulateRenderCell(
-    function($value, $row, $router) {
-        return $router->generate('contratacion_new', array('tipogrid'=> 1));
-    }
-);*/
-
+      
         // Crear
         $rowAction1 = new RowAction('Seleccionar', 'contratacion_new');
         $rowAction1->manipulateRender(

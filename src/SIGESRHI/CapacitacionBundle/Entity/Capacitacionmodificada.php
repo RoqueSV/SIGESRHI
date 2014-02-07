@@ -24,10 +24,21 @@ class Capacitacionmodificada
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="tematicamodificada", type="string", length=75, nullable=true)
+     * @Assert\NotNull(message="Debe ingresar una tematica")
+     * @Assert\Length(
+     * max = "75",
+     * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
+     * )
+     */
+    private $tematicamodificada;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="fechamodificada", type="date", nullable=true)
-     * @Assert\DateTime()
      */
     private $fechamodificada;
 
@@ -35,7 +46,6 @@ class Capacitacionmodificada
      * @var \DateTime
      *
      * @ORM\Column(name="horainiciomodificada", type="time", nullable=true)
-     * @Assert\DateTime()
      */
     private $horainiciomodificada;
 
@@ -43,7 +53,6 @@ class Capacitacionmodificada
      * @var \DateTime
      *
      * @ORM\Column(name="horafinmodificada", type="time", nullable=true)
-     * @Assert\DateTime()
      */
     private $horafinmodificada;
 
@@ -138,7 +147,7 @@ class Capacitacionmodificada
     /**
      * @var \Capacitacion
      *
-     * @ORM\ManyToOne(targetEntity="Capacitacion")
+     * @ORM\ManyToOne(targetEntity="Capacitacion", inversedBy="idcapacitacionmod")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idcapacitacion", referencedColumnName="id")
      * })
@@ -454,5 +463,28 @@ class Capacitacionmodificada
     public function getIdcapacitacion()
     {
         return $this->idcapacitacion;
+    }
+
+    /**
+     * Set tematicamodificada
+     *
+     * @param string $tematicamodificada
+     * @return Capacitacionmodificada
+     */
+    public function setTematicamodificada($tematicamodificada)
+    {
+        $this->tematicamodificada = $tematicamodificada;
+    
+        return $this;
+    }
+
+    /**
+     * Get tematicamodificada
+     *
+     * @return string 
+     */
+    public function getTematicamodificada()
+    {
+        return $this->tematicamodificada;
     }
 }

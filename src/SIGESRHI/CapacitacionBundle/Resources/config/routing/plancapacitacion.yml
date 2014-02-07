@@ -1,6 +1,14 @@
 plancapacitacion:
     pattern:  /
-    defaults: { _controller: "CapacitacionBundle:Plancapacitacion:index" }
+    defaults: { _controller: "CapacitacionBundle:Plancapacitacion:consultar" }
+
+plan_resultados:
+    pattern:  /resultados
+    defaults: { _controller: "CapacitacionBundle:Plancapacitacion:resultados" }
+
+plan_capacitacion_resultados:
+    pattern:  /{id}/resultados
+    defaults: { _controller: "CapacitacionBundle:Plancapacitacion:resultadosCapacitacion" }
 
 plancapacitacion_show:
     pattern:  /{id}/show

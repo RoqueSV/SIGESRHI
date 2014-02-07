@@ -15,6 +15,10 @@ capacitacion_create:
     defaults: { _controller: "CapacitacionBundle:Capacitacion:create" }
     requirements: { _method: post }
 
+capacitacion_modificar:
+    pattern:  /{id}/modificar
+    defaults: { _controller: "CapacitacionBundle:Capacitacion:modificar" }
+
 capacitacion_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "CapacitacionBundle:Capacitacion:edit" }
