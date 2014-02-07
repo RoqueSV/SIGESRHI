@@ -14,7 +14,6 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  *
  * @ORM\Table(name="accionpersonal")
  * @ORM\Entity
- * @UniqueEntity("numacuerdo")
  * @GRID\Source(columns="id, idtipoaccion.nombretipoaccion, numacuerdo, fecharegistroaccion, idexpediente.id, motivoaccion", groups={"grupo_consultar_acuerdo"})
  */
 class Accionpersonal

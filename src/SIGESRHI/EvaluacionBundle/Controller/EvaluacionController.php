@@ -75,7 +75,8 @@ class EvaluacionController extends Controller
             throw $this->createNotFoundException('No se encuentra la entidad Refrenda del empleado.');
         }
 
-        if (!($refrenda->getCodigoempleado() == $empleado->getCodigoempleado())) {
+//        if (!($refrenda->getCodigoempleado() == $empleado->getCodigoempleado())) {
+        if (!($refrenda->getCodigoempleado() == $jefe->getCodigoempleado())) {
             throw $this->createNotFoundException('El puesto no corresponde al empleado');
         }
       
@@ -502,14 +503,7 @@ class EvaluacionController extends Controller
     //registra los comentarios y tiempo de supervisar al empleado.
     public function finalizarAction($id){
 
-        $request = $this->getRequest();
-        $incidente = $request->get('registra_incidente');
-
          $em = $this->getDoctrine()->getManager();
-
-         
-
-        if($incidente == "SI"){
 
             //obtenemos la entidad evaluacion del empleado
             $evaluacion = $em->getRepository('EvaluacionBundle:Evaluacion')->find($id);
@@ -535,14 +529,7 @@ class EvaluacionController extends Controller
                 'puestoemp' => $puestoemp,
                 'puestojefe' => $puestojefe,
                 ));
-        }
-        if($incidente == "NO"){
-            return $this->redirect($this->generateUrl('evaluacion'));
-            //return $this->render('EvaluacionBundle:Evaluacion:SeleccionPuesto.html.twig');
-        }
-
-                //  return $this->redirect($this->generateUrl('evaluacion'));
-
+        
     }//finalizarAction()
 
 

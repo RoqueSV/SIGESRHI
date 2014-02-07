@@ -63,20 +63,55 @@
         </tr>
     </table>
 
-<form action="{{path('evaluacion_finaliza',{'id':evaluacion.id})}}" method="post">
 
 <br>
 
 <div class="text-center">
 <b>¿Registrar Incidentes cr&iacute;ticos?</b>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SI <input type="radio" name="registra_incidente" required="required" value="SI"/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO <input type="radio" name="registra_incidente" required="required" value="NO"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SI <input type="radio" name="registra_incidente"  required="required" value="SI"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO <input type="radio" name="registra_incidente"  required="required" value="NO"/>
 <br><br>
-<input type="submit" value="Aceptar" class="btn btn-primary" />
+
+<input type="button" value="Aceptar" class="btn " name="incidente" id="incidente"  onclick="location.href='{{path('evaluacion_finaliza',{'id':evaluacion.id})}}'"/>
+<input type="button" value="Aceptar" class="btn " name="noincidente" id="noincidente" onclick="location.href='{{path('evaluacion')}}'"/>
+<input type="button" value="Generar PDF" class="btn " />
 <input type="button" value="Cancelar" class="btn" />
 </div>
 
-</form>
+
+<script>
+$(document).ready(function(){
+ 
+    $('#incidente').hide();
+    $('#noincidente').hide();
+ 
+ // Si se regresa a la pagina por medio de cache
+  if($("input[name='registra_incidente']:checked").val()=="SI")
+        {
+        $('#incidente').show();    
+        $('#noincidente').hide();
+        }
+        if($("input[name='registra_incidente']:checked").val()=="NO")
+        {
+        $('#incidente').hide();    
+        $('#noincidente').show();
+        }
+
+    // si se cambia de opcion en la pagina
+    $("input[name='registra_incidente']").change(function(){
+        if($("input[name='registra_incidente']:checked").val()=="SI")
+        {
+        $('#incidente').show();    
+        $('#noincidente').hide();
+        }
+        if($("input[name='registra_incidente']:checked").val()=="NO")
+        {
+        $('#incidente').hide();    
+        $('#noincidente').show();
+        }
+        });//change
+    });
+</script>
 
 {% endblock %}

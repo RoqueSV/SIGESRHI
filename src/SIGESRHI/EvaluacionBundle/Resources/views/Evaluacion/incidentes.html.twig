@@ -1,6 +1,8 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+<a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+{{ include('EvaluacionBundle:Ayuda/Incidente:Registrar.html.twig')}}
 
 <h4 class="text-center">REGISTRO INDIVIDUAL DE INCIDENTES CRITICOS DE DESEMPE&Ntilde;O PARA {{evaluacion.Respuestas[0].idfactor.idformulario.nombrebreve}}</h4>
 <br>
@@ -28,4 +30,55 @@ Factores que observan: <br>
 </table>
 </div>
 
+<br>
+
+<form action="" method="post">
+<table class="table table-bordered form-inline">
+	<tr>
+		<th width="5%">Fecha</th>
+		<th width="25%">Factor</th>
+		<th width="20%">Incidente</th>
+		<th width="50%">Descripción del evento</th>
+	</tr>
+	<tr>
+		<td><input type="text" class="date input-small" readonly="readonly" required="required"/></td>
+		<td>
+			<select name="factor" id="factor" required="required" >
+				{% for factor in evaluacion.Respuestas[0].idfactor.idformulario.Factores %}
+				<option value="{{factor.id}}"> {{ factor.nombrefactor}}</option>
+				{% endfor %}
+			</select>
+		</td>
+		<td>
+			<select name="tipoincidente" id="tipoincidente" required="required" class="input-small" >
+					<option value="F"> Favorable </option>
+					<option value="D"> Desfavorable </option>
+			</select>
+		</td>
+		<td><textarea rows="2" required="required"></textarea> </td>
+	</tr>
+</table>
+
+<div class="text-center">
+	
+{# <input type="submit" class="btn btn-primary" value="Registrar"> #}
+<input type="button" class="btn " value="Cancelar">
+
+</div>
+</form>
+
+<style>
+    textarea {
+        width:90%;
+    }
+</style>
+
+<script>
+$(document).ready(function(){
+ 
+    $('#factor').prop("selectedIndex",-1);
+    $('#tipoincidente').prop("selectedIndex",-1);
+ 
+    });
+</script>
 {% endblock %}

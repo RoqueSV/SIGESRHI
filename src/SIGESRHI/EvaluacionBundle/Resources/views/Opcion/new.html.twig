@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Opcion creation</h1>
+
+    <form action="{{ path('opcion_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <p>
+            <button type="submit">Create</button>
+        </p>
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('opcion') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

@@ -10,3 +10,14 @@ EvaluacionBundle_incidente:
     resource: "@EvaluacionBundle/Resources/config/routing/incidente.yml"
     prefix:   /incidente
 
+EvaluacionBundle_formularioevaluacion:
+      resource: "@EvaluacionBundle/Resources/config/routing/formularioevaluacion.yml"
+      prefix:   /formularioevaluacion
+
+EvaluacionBundle_factorevaluacion:
+      resource: "@EvaluacionBundle/Resources/config/routing/factorevaluacion.yml"
+      prefix:   /factorevaluacion
+
+EvaluacionBundle_opcion:
+     resource: "@EvaluacionBundle/Resources/config/routing/opcion.yml"
+     prefix:   /opcion

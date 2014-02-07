@@ -40,7 +40,6 @@ evaluacion_noperiodo:
 evaluacion_finaliza:
     pattern:  /{id}/finalizar
     defaults: { _controller: "EvaluacionBundle:Evaluacion:finalizar" }
-    requirements: { _method: post }
 
 evaluacion_sformulario:
     pattern:  /{id}/{idpuestoemp}/{idpuestojefe}/sformulario
