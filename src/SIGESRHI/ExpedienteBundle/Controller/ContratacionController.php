@@ -285,7 +285,7 @@ class ContratacionController extends Controller
              $accionpersonal->setIdexpediente($expediente);
              $accionpersonal->setFecharegistroaccion(new \Datetime(date('d-m-Y')));
              $accionpersonal->setNumacuerdo($request->get('numacuerdo'));
-             $accionpersonal->setMotivoaccion("Acuerdo ".$accionpersonal->getNumacuerdo().", ".$entity->getPuesto()." - Se registra su nombramiento a partir del ".$fechaini." como ".$entity->getPuesto().".- Partida: ".$partida." Subpartida: ".$subpartida." con sueldo mensual de $".$entity->getSueldoinicial());
+             $accionpersonal->setMotivoaccion("Acuerdo: ".$accionpersonal->getNumacuerdo()." - ".$entity->getPuesto()." - Se registra su nombramiento a partir del ".$fechaini." como ".$entity->getPuesto().".- Partida: ".$partida." Subpartida: ".$subpartida." con sueldo mensual de $".$entity->getSueldoinicial());
              
              $em->persist($accionpersonal);
 

@@ -46,7 +46,8 @@
     <legend>Datos de modificación</legend>
     
     <form action="{{ path('capacitacion_update', {'id':id}) }}" method="post" class="form-horizontal">
-     
+    <input type="hidden" name="_method" value="PUT" />
+    
        <div id='formreprogramar' class='hide'>
        <h4 class='text-center'> Ingrese la siguiente información </h4><br/>
        {{ form_row(form.fechacapacitacion) }}
@@ -71,7 +72,7 @@
         {{ form_row(form.contactocapacitacion) }}
        </div>
        
-       {{ form_row(form.justificacioncambios) }}
+       {{ form_row(form.justificacioncambios,{'required': true, 'value':''}) }}
 
        <input type='hidden' name='idcap' id='idcap' value="{{id}}"/>
        <input type='hidden' name='tipomod' id='tipomod'/>
@@ -126,6 +127,7 @@ $(function() {
            
              $("#sigesrhi_capacitacionbundle_capacitaciontype_fechacapacitacion" ).datepicker({
                  yearRange: "-0:+2",
+                 minDate: +1,
                  dateFormat: 'dd-mm-yy',
                  changeMonth: true,
                  changeYear: true,

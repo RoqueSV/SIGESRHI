@@ -1,0 +1,49 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+
+    <h3 class="text-center">Datos de Capacitacion</h3>
+
+    <table class="table table-bordered table-hover">
+        <tbody>
+            <tr>
+                <th>Temática</th>
+                <td>{{ entity.tematica }}</td>
+            </tr>
+            <tr>
+                <th>Fecha capacitacion</th>
+                <td>{{ entity.fechacapacitacion|date('Y-m-d')|fecha }}</td>
+            </tr>
+            <tr>
+                <th>Hora inicio</th>
+                <td>{{ entity.horainiciocapacitacion|date('h:i a')  }}</td>
+            </tr>
+            <tr>
+                <th>Hora fin</th>
+                <td>{{ entity.horafincapacitacion|date('h:i a')  }}</td>
+            </tr>
+            <tr>
+                <th>Lugar de capacitación</th>
+                <td>{{ entity.lugarcapacitacion }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="{{ path('capacitacion_updateresultados', {'id':entity.id}) }}" method="post" class="form-horizontal">
+       <input type="hidden" name="_method" value="PUT" />
+
+        <h4 class='text-center'> Ingrese la siguiente información </h4><br/>
+       {{ form_row(form.idcapacitador) }}
+       {{ form_row(form.numasistentes) }}
+       {{ form_row(form.otrasconsideraciones) }}
+
+       <div class='hide'> {{ form_rest(form) }}</div>
+
+
+    <div class='text-center'>
+        <button type='submit' class='btn btn-primary'>Registrar</button>
+        <a href="{{ path('plan_capacitacion_resultados',{'id':entity.idplan.id}) }}"  class="btn">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

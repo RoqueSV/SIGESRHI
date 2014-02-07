@@ -226,7 +226,9 @@ class CapacitacionController extends Controller
             $em->persist($modificada);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('capacitacion_edit', array('id' => $id)));
+
+            $this->get('session')->getFlashBag()->add('edit', 'Capacitación modificada correctamente');
+            return $this->redirect($this->generateUrl('capacitacion_show', array('id' => $id)));
         }
 
         return $this->render('CapacitacionBundle:Capacitacion:edit.html.twig', array(
@@ -301,5 +303,56 @@ class CapacitacionController extends Controller
             'id'   => $id,
             'form' => $editForm->createView(),
         ));
+    }
+
+    public function resultadosAction($id){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('CapacitacionBundle:Capacitacion')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Capacitacion entity.');
+        }
+        $form   = $this->createForm(new CapacitacionType(), $entity);
+
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+        $breadcrumbs->addItem("Plan de capacitaciones", $this->get("router")->generate("pantalla_capacitaciones"));
+        $breadcrumbs->addItem("Registrar resultados del plan",$this->get("router")->generate("plan_resultados"));
+        $breadcrumbs->addItem("Listado de capacitaciones",$this->get("router")->generate("plan_capacitacion_resultados",array('id'=>$entity->getIdplan()->getId())));
+        $breadcrumbs->addItem("Resultados de capacitación", "");
+
+        return $this->render('CapacitacionBundle:Capacitacion:resultados.html.twig', array(
+            'entity'   => $entity,
+            'form' => $form->createView(),
+        ));
+    }
+
+    public function updateResultadosAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('CapacitacionBundle:Capacitacion')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Capacitacion entity.');
+        }
+
+        $editForm = $this->createForm(new CapacitacionType(), $entity);
+        $editForm->bind($request);
+
+        if ($editForm->isValid()) {
+
+            $entity->setEstadocapacitacion('F');
+            $em->persist($entity);
+            $em->flush();
+
+
+            $this->get('session')->getFlashBag()->add('resultados', 'Resultados de capacitación registrado correctamente');
+            return $this->redirect($this->generateUrl('plan_capacitacion_resultados',array('id'=>$entity->getIdplan()->getId())));
+        }
     }
 }

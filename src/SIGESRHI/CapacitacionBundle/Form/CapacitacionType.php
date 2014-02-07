@@ -80,6 +80,14 @@ class CapacitacionType extends AbstractType
             ->add('idcapacitador',null,array(
                   'label'=>'Capacitador',
                   'required'=>true))
+            ->add('numasistentes',null,array(
+                  'label'=>'Número de asistentes',
+                  'required'=>false,
+                  'attr'=>array('class'=>'input-mini','data-bvalidator'=>'number')))
+            ->add('otrasconsideraciones','textarea',array(
+                  'label'=>'Otras consideraciones',
+                  'required'=>false,
+                  'attr'=>array('class'=>'input-xmlarge','rows'=>'3')))
         ;
     }
 

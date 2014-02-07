@@ -12,7 +12,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  *
  * @ORM\Table(name="capacitacion")
  * @ORM\Entity
- * @GRID\Source(columns="id,tematica,fechacapacitacion,horainiciocapacitacion,horafincapacitacion", groups={"grupo_capacitacion"})
+ * @GRID\Source(columns="id,tematica,fechacapacitacion,horainiciocapacitacion,horafincapacitacion,estadocapacitacion", groups={"grupo_capacitacion"})
  */
 class Capacitacion
 {
@@ -169,6 +169,7 @@ class Capacitacion
      * @var string
      *
      * @ORM\Column(name="estadocapacitacion", type="string", length=1, nullable=false)
+     * @GRID\Column(filterable=false, groups={"grupo_capacitacion"}, visible=false)
      */
     private $estadocapacitacion;
 
@@ -182,6 +183,24 @@ class Capacitacion
      * )
      */
     private $justificacioncambios;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numasistentes", type="integer", nullable=true)
+     */
+    private $numasistentes;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="otrasconsideraciones", type="string", length=250, nullable=true)
+     * @Assert\Length(
+     * max = "250",
+     * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
+     * )
+     */
+    private $otrasconsideraciones;
 
     /**
      * @var \Plancapacitacion
@@ -675,5 +694,51 @@ class Capacitacion
     public function getIdcapacitacionmod()
     {
         return $this->idcapacitacionmod;
+    }
+
+    /**
+     * Set numasistentes
+     *
+     * @param integer $numasistentes
+     * @return Capacitacion
+     */
+    public function setNumasistentes($numasistentes)
+    {
+        $this->numasistentes = $numasistentes;
+    
+        return $this;
+    }
+
+    /**
+     * Get numasistentes
+     *
+     * @return integer 
+     */
+    public function getNumasistentes()
+    {
+        return $this->numasistentes;
+    }
+
+    /**
+     * Set otrasconsideraciones
+     *
+     * @param string $otrasconsideraciones
+     * @return Capacitacion
+     */
+    public function setOtrasconsideraciones($otrasconsideraciones)
+    {
+        $this->otrasconsideraciones = $otrasconsideraciones;
+    
+        return $this;
+    }
+
+    /**
+     * Get otrasconsideraciones
+     *
+     * @return string 
+     */
+    public function getOtrasconsideraciones()
+    {
+        return $this->otrasconsideraciones;
     }
 }

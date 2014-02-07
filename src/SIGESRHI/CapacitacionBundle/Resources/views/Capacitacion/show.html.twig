@@ -1,6 +1,12 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+{% for flashMessage in app.session.flashbag.get('edit') %}
+  <div class="alert alert-success">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
     <h3 class="text-center">Datos de Capacitacion</h3>
 
     <table class="table table-bordered table-hover">
@@ -70,7 +76,9 @@
     </table>
 
     <div class="text-center">
+    {% if  "now"|date('Y-m-d') <= entity.fechacapacitacion|date('Y-m-d')  %}
       <a href="{{ path('capacitacion_modificar',{'id':entity.id}) }}" class="btn btn-primary"> Modificar </a>
+    {% endif %}
       <a href="{{ path('plancapacitacion_show',{'id':entity.idplan.id}) }}" class="btn"> Regresar </a>
     </div>
 

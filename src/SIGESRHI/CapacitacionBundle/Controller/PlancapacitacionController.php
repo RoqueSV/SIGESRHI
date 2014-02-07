@@ -2,8 +2,6 @@
 
 namespace SIGESRHI\CapacitacionBundle\Controller;
 
-setlocale(LC_ALL, "ES_ES");
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -102,16 +100,19 @@ class PlancapacitacionController extends Controller
         $source->manipulateQuery(
             function($query) use ($tableAlias){
                 $query->andWhere($tableAlias.'.fechacapacitacion < :actual')
-                      ->setParameter('actual',new \Datetime('now'));
+                      ->andWhere($tableAlias.'.estadocapacitacion <> :estado')
+                      ->setParameter('actual',new \Datetime('now'))
+                      ->setParameter('estado','F');
             }
         );   
            
         $grid->setId('grid_capacitacion');
 
-        $grid->setSource($source);              
+        $grid->setSource($source);    
+        $grid->setNoDataMessage('No existen capacitaciones finalizadas');          
             
         // Crear
-        $rowAction1 = new RowAction('Registrar', 'plancapacitacion_show');
+        $rowAction1 = new RowAction('Registrar', 'capacitacion_resultados');
         $grid->addRowAction($rowAction1);
         
         $grid->setDefaultOrder('fechacapacitacion', 'asc');
@@ -125,7 +126,7 @@ class PlancapacitacionController extends Controller
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
         $breadcrumbs->addItem("Plan de capacitaciones", $this->get("router")->generate("pantalla_capacitaciones"));
-        $breadcrumbs->addItem("Registrar resultados del plan",$this->get("router")->generate("plancapacitacion"));
+        $breadcrumbs->addItem("Registrar resultados del plan",$this->get("router")->generate("plan_resultados"));
         $breadcrumbs->addItem("Listado de capacitaciones",$this->get("router")->generate("plancapacitacion"));
 
         return $grid->getGridResponse('CapacitacionBundle:Plancapacitacion:resultados_capacitacion.html.twig',array(

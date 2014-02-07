@@ -2,11 +2,6 @@
 
 {% block principal -%}
 
-{% for flashMessage in app.session.flashbag.get('delete') %}
-     <div class="alert alert-danger">
-       <p>{{ flashMessage }}</p>
-     </div>
-{% endfor %}
 
 <h3 class='text-center'> Planes de capacitación registrados </h3>
 <br/>

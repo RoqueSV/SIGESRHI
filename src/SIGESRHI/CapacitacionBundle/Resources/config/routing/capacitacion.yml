@@ -28,7 +28,16 @@ capacitacion_update:
     defaults: { _controller: "CapacitacionBundle:Capacitacion:update" }
     requirements: { _method: post|put }
 
+capacitacion_updateresultados:
+    pattern:  /{id}/registrarresultados
+    defaults: { _controller: "CapacitacionBundle:Capacitacion:updateResultados" }
+    requirements: { _method: post|put }
+
 capacitacion_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "CapacitacionBundle:Capacitacion:delete" }
     requirements: { _method: post|delete }
+
+capacitacion_resultados:
+    pattern:  /{id}/resultados
+    defaults: { _controller: "CapacitacionBundle:Capacitacion:resultados" }

@@ -1,7 +1,11 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-
+{% for flashMessage in app.session.flashbag.get('resultados') %}
+     <div class="alert alert-success">
+       <p>{{ flashMessage }}</p>
+     </div>
+{% endfor %}
 
     <h3 class="text-center">Datos del plan</h3>
     <table class="table table-bordered table-hover mitable">
