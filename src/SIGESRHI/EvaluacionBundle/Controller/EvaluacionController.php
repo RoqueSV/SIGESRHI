@@ -13,6 +13,7 @@ use SIGESRHI\EvaluacionBundle\Entity\Respuesta;
 use SIGESRHI\EvaluacionBundle\Entity\Factorevaluacion;
 use SIGESRHI\EvaluacionBundle\Entity\Opcion;
 use SIGESRHI\EvaluacionBundle\Entity\Periodoeval;
+use SIGESRHI\EvaluacionBundle\Entity\Incidente;
 
 use SIGESRHI\AdminBundle\Entity\RefrendaAct;
 use Application\Sonata\UserBundle\Entity\User;
@@ -567,4 +568,40 @@ class EvaluacionController extends Controller
         return $this->redirect($this->generateUrl('evaluacion_new',array('idform'=>$idform, 'id'=>$id, 'idpuestoemp'=>$idpuestoemp,'idpuestojefe'=>$idpuestojefe)));
 
     }//LlamarFormulario
+
+    public function RegistraIncidenteAction($idevaluacion)
+    {
+        $request = $this->getRequest();
+        //recuperamos los parametros del formulario de incidentes
+        $fecha = $request->get('fecha');
+        $idfactor = $request->get('factor');
+        $tipo_incidente = $request->get('tipoincidente');
+        $descripcion = $request->get('descripcionincidente');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $evaluacion = $em->getRepository('EvaluacionBundle:Evaluacion')->find($idevaluacion);
+
+          if(!$evaluacion){
+            throw $this->createNotFoundException('No se encontro la evaluación del empleado.');
+        }
+
+        $factor_evaluacion = $em->getRepository('EvaluacionBundle:Factorevaluacion')->find($idfactor);
+
+          if(!$factor_evaluacion){
+            throw $this->createNotFoundException('No se encontro el factor de evaluación.');
+        }
+
+        $incidente = new Incidente();
+        $incidente->setIdevaluacion($evaluacion);
+        $incidente->setIdfactorevaluacion($factor_evaluacion);
+        $incidente->setFechaincidente(new \Datetime($fecha));
+        $incidente->setTipoincidente($tipo_incidente);
+        $incidente->setDescripcionincidente($descripcion);
+        $em->persist($incidente);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('evaluacion_finaliza',array('id'=>$evaluacion->getId())));
+
+    }//RegistraIncidente()
 }

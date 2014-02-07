@@ -48,3 +48,7 @@ evaluacion_sformulario:
 evaluacion_llamaformulario:
     pattern:  /{id}/{idpuestoemp}/{idpuestojefe}/llamaformulario
     defaults: { _controller: "EvaluacionBundle:Evaluacion:LlamarFormulario"}
+
+evaluacion_incidente:
+    pattern:  /{idevaluacion}/incidente
+    defaults: { _controller: "EvaluacionBundle:Evaluacion:RegistraIncidente"}

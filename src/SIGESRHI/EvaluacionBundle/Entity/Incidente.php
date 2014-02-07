@@ -64,7 +64,7 @@ class Incidente
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcionincidente", type="string", length=250, nullable=false)
+     * @ORM\Column(name="descripcionincidente", type="string", length=200, nullable=false)
      * @Assert\NotNull(message="Debe ingresar la descripcion del evento.")
      */
     private $descripcionincidente;
