@@ -113,8 +113,8 @@ class RefrendaController extends Controller
                         $freg = new \Datetime(date('d-m-Y'));
                         //$fhasta = strtotime('+1 year',strtotime($finicio));
                         $anyo = date("Y");
-                        $finicio = "01-01-".$anyo;
-                        $fhasta = "31-12-".$anyo;
+                        $finicio = "01 de Enero ";
+                        $fhasta = "31 de Diciembre de ".$anyo;
                         $numAcuerdo="GA-001/".$anyo;
                         $entityAcu  = new Accionpersonal();
                         $entityTipoaccion = $this->getDoctrine()->getRepository('ExpedienteBundle:Tipoaccion')->findOneByNombretipoaccion('Refrenda');
@@ -124,7 +124,7 @@ class RefrendaController extends Controller
                         $entityAcu->setNumacuerdo($numAcuerdo);
                         //Para ley de salario registramos acuerdo
                         
-                          $entityAcu->setMotivoaccion("Acuerdo: ".$numAcuerdo." ".$plaza."- Se refrenda su nombramiento a partir del: ".$finicio." al: ".$fhasta.". En PDA: ".$datos[2]." SUB N°: ".$datos[3].". Sueldo: ".$datos[6]);                        
+                          $entityAcu->setMotivoaccion("Acuerdo: ".$numAcuerdo." ".$plaza."- Se refrenda su nombramiento a partir del ".$finicio." al ".$fhasta.". En PDA: ".$datos[2]." SUB N°: ".$datos[3].". Sueldo: $".$datos[6].". En base al artículo 10 de la Ley de Presupuesto para el ejercicio Fiscal del ".$anyo." se le aumenta a su salario por efecto de la Ley de Escalafon a partir del ".$finicio." de ".$anyo);                        
                         $em->persist($entityAcu);
                         }
                         //Para contrato se obvia

@@ -70,11 +70,11 @@ class Solicitudcapacitacion
     /**
      * @var \Capacitacion
      *
-     * @ORM\ManyToOne(targetEntity="\SIGESRHI\CapacitacionBundle\Entity\Capacitacion")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\CapacitacionBundle\Entity\Capacitacion", inversedBy="idsolicitudcapacitacion")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idcapacitacion", referencedColumnName="id")
      * })
-     * @GRID\Column(align="center",field="idcapacitacion.tematica", groups={"solEmpleado"},type="text", title="Capacitación", joinType="inner",operatorsVisible=false, operators={"like"})
+     * @GRID\Column(align="center",field="idcapacitacion.tematica", groups={"solEmpleado"},type="text", title="Temática", joinType="inner",operatorsVisible=false, operators={"like"})
      */
     private $idcapacitacion;
 

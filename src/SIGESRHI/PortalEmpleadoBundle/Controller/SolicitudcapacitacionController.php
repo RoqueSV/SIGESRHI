@@ -79,18 +79,22 @@ class SolicitudcapacitacionController extends Controller
         $empleado = $user->getEmpleado();
         $idempleado = $empleado->getId();
 
-        $source = new Entity('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion','solEmpleado');
+        $source = new Entity('CapacitacionBundle:Capacitacion','grupo_capacitacion');
         $grid = $this->get('grid');
         $grid->setSource($source); 
-        
+        //Aqui falta buscar los centros del empleado y meterlos en un array y enviarlos a la consulta para filtarlos
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias,$idempleado){
-                $query->andWhere($tableAlias.'.idempleado = :emp')
+                $query->andWhere('_idplan.tipoplan = :C')
+                      ->andWhere('_idplan_idcentro_idunidad_idrefrenda_idempleado.id = :emp')                    
+                      ->orWhere('_idplan.tipoplan = :I')
+                      ->setParameter('I','I')
+                      ->setParameter('C','C')
                       ->setParameter('emp', $idempleado);
             }
         );        
-        $rowAction1 = new RowAction('Ver detalle', 'solicitudcapacitacion_show');
+        $rowAction1 = new RowAction('Ver detalle', 'solicitudcapacitacion_new');
         $rowAction1->setColumn('info_column');
         $rowAction1->manipulateRender(
             function ($action, $row)
@@ -101,8 +105,8 @@ class SolicitudcapacitacionController extends Controller
         );
         $grid->addRowAction($rowAction1);
 
-        $grid->setId('grid_solicitudesEmpleado');
-        $grid->setDefaultOrder('fechasolicitud','asc');
+        $grid->setId('grid_disponiblesEmpleado');
+        $grid->setDefaultOrder('fechacapacitacion','asc');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
         return $grid->getGridResponse('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:indexCapas.html.twig');
@@ -115,11 +119,12 @@ class SolicitudcapacitacionController extends Controller
     public function createAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $idcapa = $request->get('idcapa');
         $empleadoform = $em->getRepository('ExpedienteBundle:Empleado')->find($request->get('idempleado'));
-        $capacitacionform = $em->getRepository('CapacitacionBundle:Capacitacion')->find($request->get('idcapa'));
+        $capacitacionform = $em->getRepository('CapacitacionBundle:Capacitacion')->find($idcapa);
         
         $entity  = new Solicitudcapacitacion();
-        $entity -> setAprobacionsolicitud('R');
+        $entity -> setAprobacionsolicitud('P');
         $entity -> setFechasolicitud(new \Datetime(date('d-m-Y')));        
         $entity -> setIdcapacitacion($capacitacionform);
         $entity -> setIdempleado($empleadoform);        
@@ -155,7 +160,7 @@ class SolicitudcapacitacionController extends Controller
      * Displays a form to create a new Solicitudcapacitacion entity.
      *
      */
-    public function newAction($idcapa)
+    public function newAction($id)
     {
         $user = new User();
         $empleado = new Empleado();
@@ -163,7 +168,7 @@ class SolicitudcapacitacionController extends Controller
         $empleado = $user->getEmpleado();
 
         $em = $this->getDoctrine()->getManager();
-        $capacitacion = $em->getRepository('CapacitacionBundle:Capacitacion')->find($idcapa);
+        $capacitacion = $em->getRepository('CapacitacionBundle:Capacitacion')->find($id);
         if($capacitacion!=null AND $empleado!=null){
             $entity = new Solicitudcapacitacion();
             $form   = $this->createForm(new SolicitudcapacitacionType(), $entity);            

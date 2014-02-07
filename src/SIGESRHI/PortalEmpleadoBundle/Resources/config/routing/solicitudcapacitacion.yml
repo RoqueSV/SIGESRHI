@@ -11,7 +11,7 @@ solicitudcapacitacion_show:
     defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:show" }
 
 solicitudcapacitacion_new:
-    pattern:  /{idcapa}/new
+    pattern:  /{id}/new
     defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:new" }
 
 solicitudcapacitacion_create:

@@ -12,7 +12,11 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  *
  * @ORM\Table(name="capacitacion")
  * @ORM\Entity
+<<<<<<< HEAD
  * @GRID\Source(columns="id,tematica,fechacapacitacion,horainiciocapacitacion,horafincapacitacion,estadocapacitacion,idplan.id", groups={"grupo_capacitacion"})
+=======
+ * @GRID\Source(columns="id,tematica,fechacapacitacion,horainiciocapacitacion,horafincapacitacion,idplan.idcentro.idunidad.idrefrenda.idempleado.id", groups={"grupo_capacitacion"})
+>>>>>>> 1e83460cfaf0b1124ff15adc35993faee2aa2616
  */
 class Capacitacion
 {
@@ -210,6 +214,7 @@ class Capacitacion
      *   @ORM\JoinColumn(name="idplan", referencedColumnName="id")
      * })
      * @GRID\Column(field="idplan.id", filterable=false, groups={"grupo_capacitacion"}, visible=false, joinType="inner")
+     * @GRID\Column(field="idplan.idcentro.idunidad.idrefrenda.idempleado.id", visible=false, groups={"grupo_capacitacion"}, filterable=false)
      */
     private $idplan;
 
@@ -228,6 +233,12 @@ class Capacitacion
      * @ORM\OneToMany(targetEntity="Capacitacionmodificada", mappedBy="idcapacitacion")
      */
     private $idcapacitacionmod;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="\SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion", mappedBy="idcapacitacion")
+     */
+    private $idsolicitudcapacitacion;
 
     public function __toString(){
         return $this->getTematica();
@@ -699,6 +710,7 @@ class Capacitacion
     }
 
     /**
+<<<<<<< HEAD
      * Set numasistentes
      *
      * @param integer $numasistentes
@@ -707,11 +719,22 @@ class Capacitacion
     public function setNumasistentes($numasistentes)
     {
         $this->numasistentes = $numasistentes;
+=======
+     * Add idsolicitudcapacitacion
+     *
+     * @param \SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion $idsolicitudcapacitacion
+     * @return Capacitacion
+     */
+    public function addIdsolicitudcapacitacion(\SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion $idsolicitudcapacitacion)
+    {
+        $this->idsolicitudcapacitacion[] = $idsolicitudcapacitacion;
+>>>>>>> 1e83460cfaf0b1124ff15adc35993faee2aa2616
     
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * Get numasistentes
      *
      * @return integer 
@@ -742,5 +765,24 @@ class Capacitacion
     public function getOtrasconsideraciones()
     {
         return $this->otrasconsideraciones;
+=======
+     * Remove idsolicitudcapacitacion
+     *
+     * @param \SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion $idsolicitudcapacitacion
+     */
+    public function removeIdsolicitudcapacitacion(\SIGESRHI\PortalEmpleadoBundle\Entity\SolicitudCapacitacion $idsolicitudcapacitacion)
+    {
+        $this->idsolicitudcapacitacion->removeElement($idsolicitudcapacitacion);
+    }
+
+    /**
+     * Get idsolicitudcapacitacion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdsolicitudcapacitacion()
+    {
+        return $this->idsolicitudcapacitacion;
+>>>>>>> 1e83460cfaf0b1124ff15adc35993faee2aa2616
     }
 }
