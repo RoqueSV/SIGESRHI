@@ -154,6 +154,12 @@ class Capacitacionmodificada
      */
     private $idcapacitacion;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipomodificacion", type="string", length=1, nullable=false)
+     */
+    private $tipomodificacion;
 
 
     /**
@@ -486,5 +492,28 @@ class Capacitacionmodificada
     public function getTematicamodificada()
     {
         return $this->tematicamodificada;
+    }
+
+    /**
+     * Set tipomodificacion
+     *
+     * @param string $tipomodificacion
+     * @return Capacitacionmodificada
+     */
+    public function setTipomodificacion($tipomodificacion)
+    {
+        $this->tipomodificacion = $tipomodificacion;
+    
+        return $this;
+    }
+
+    /**
+     * Get tipomodificacion
+     *
+     * @return string 
+     */
+    public function getTipomodificacion()
+    {
+        return $this->tipomodificacion;
     }
 }

@@ -506,7 +506,7 @@ class Solicitudempleo
     /**
      * @var \SIGESRHI\AdminBundle\Entity\\Plaza
      *
-     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza", inversedBy="idsolicitud")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      * })

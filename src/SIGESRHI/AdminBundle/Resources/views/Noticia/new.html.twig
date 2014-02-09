@@ -6,11 +6,8 @@
     select { width: 100%; margin: 0; padding: 0; border-width: 0; }
     span.help-inline{ color: rgb(185, 74, 72);}
 </style>
-    <!-- Botón ayuda -->
-    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
-    {{ include('AdminBundle:Ayuda/Noticia:cargar.html.twig')}}
+
     {% if app.session.started %}
-    <br><br>
     {% for flashMessage in app.session.flashbag.get('errornew') %}
         <div class="alert alert-danger">
             <p> {{ flashMessage }} </p>

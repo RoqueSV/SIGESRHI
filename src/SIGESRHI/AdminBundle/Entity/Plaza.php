@@ -12,6 +12,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  * @ORM\Table(name="plaza")
  * @ORM\Entity
  * @GRID\Source(columns="id,nombreplaza,misionplaza", groups={"grupo_plaza"})
+ * @GRID\Source(columns="id,nombreplaza,misionplaza", groups={"grupo_plaza_reporte"})
  * @ORM\HasLifecycleCallbacks
  */
 class Plaza
@@ -23,7 +24,7 @@ class Plaza
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="plaza_id_seq", allocationSize=1, initialValue=1)
-     * @GRID\Column(filterable=false, groups="grupo_plaza", visible=false)
+     * @GRID\Column(filterable=false, groups={"grupo_plaza", "grupo_plaza_reporte"}, visible=false)
      */
     private $id;
 
@@ -36,7 +37,7 @@ class Plaza
      * max = "100",
      * maxMessage = "El nombre de la plaza no debe exceder los {{limit}} caracteres"
      * )
-     * @GRID\Column(groups="grupo_plaza",title="Nombre plaza", filter="input", operators={"like"}, operatorsVisible=false, align="center")
+     * @GRID\Column(groups={"grupo_plaza", "grupo_plaza_reporte"},title="Nombre plaza", filter="input", operators={"like"}, operatorsVisible=false, align="center")
      */
     private $nombreplaza;
 
@@ -54,7 +55,7 @@ class Plaza
      * max = "500",
      * maxMessage = "La descripcion de la plaza no debe exceder los {{limit}} caracteres"
      * )
-     * @GRID\Column(filterable=false, groups="grupo_plaza", title="Misión")
+     * @GRID\Column(filterable=false, groups={"grupo_plaza", "grupo_plaza_reporte"}, title="Misión")
      */
     private $misionplaza;
 
@@ -202,6 +203,11 @@ class Plaza
      * @ORM\Column(name="observaciones", type="string", nullable=true)
      */
     private $observaciones;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo", mappedBy="idplaza")
+     */
+    private $idsolicitud;
     
     
     /**
@@ -558,6 +564,7 @@ class Plaza
         $this->idcompetencia = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idmarcoreferencia = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idotrosaspectos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idsolicitud = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -941,5 +948,38 @@ class Plaza
     public function getIdotrosaspectos()
     {
         return $this->idotrosaspectos;
+    }
+
+    /**
+     * Add idsolicitud
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo $idsolicitud
+     * @return Plaza
+     */
+    public function addIdsolicitud(\SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo $idsolicitud)
+    {
+        $this->idsolicitud[] = $idsolicitud;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idsolicitud
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo $idsolicitud
+     */
+    public function removeIdsolicitud(\SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo $idsolicitud)
+    {
+        $this->idsolicitud->removeElement($idsolicitud);
+    }
+
+    /**
+     * Get idsolicitud
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdsolicitud()
+    {
+        return $this->idsolicitud;
     }
 }

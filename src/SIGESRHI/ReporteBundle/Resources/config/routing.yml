@@ -50,3 +50,15 @@ reporte_cartatrabajo:
     pattern:  /cartatrabajo
     defaults: { _controller: ReporteBundle:Reporte:cartaTrabajo }
 
+reporte_aspirante_plaza:
+    pattern:  /plazaaspirante
+    defaults: { _controller: ReporteBundle:ModuloReporte:plazaAspirante }
+
+reporte_aspirante_seleccionar:
+    pattern:  /seleccionartipo
+    defaults: { _controller: ReporteBundle:ModuloReporte:seleccionarReporte }
+
+reporte_aspirante:
+    pattern:  /reporteaspirante
+    defaults: { _controller: ReporteBundle:ModuloReporte:ReporteAspirante }
+

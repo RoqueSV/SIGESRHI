@@ -1,0 +1,159 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+
+{% block principal %}
+
+{% set cuenta = 0 %}
+
+ {% for valido in entity.idsolicitud if valido.idexpediente.tipoexpediente == 'A' %}
+    {% set cuenta = loop.index %}
+ {% endfor %}
+
+
+{% if entity.idsolicitud|length == 0 or cuenta == 0 %}
+  <p class='alert alert-danger'>No existen aspirantes válidos para la plaza seleccionada</p>
+  <div class="text-center">
+      <a href="{{path('reporte_aspirante_plaza')}}" class="btn"> Regresar </a>
+  </div>
+
+{% else %}
+<h4 class="text-center"> Seleccione el tipo de reporte a generar</h4>
+
+<form action="{{path('reporte_aspirante')}}" id="miform" method="post">
+<br>
+<fieldset>
+	<legend>Tipo de reporte</legend>
+	<br>
+	Seleccione el tipo de reporte a generar:
+	<select id="tipo_reporte" name="tipo_reporte" class="input-xlarge">
+		<option value="1">Todos los aspirantes</option>
+		<option value="2">Por fecha de registro</option>
+	</select>
+
+<br>
+
+<table border="0" class="centered-table">
+	<tr>
+		<td ><label for="fechainicio" id="fechainicio_label">Fecha Inicio:</label></td>
+		<td width="25px"></td>
+		<td><label for="fechafin" id="fechafin_label">Fecha Fin:</label></td>
+	</tr>
+	<tr>
+		<td><input type="text" class="input-small" id="fechainicio" name="fechainicio" readonly required></td>
+		<td ></td>
+		<td><input type="text" class="input-small" id="fechafin" name="fechafin" readonly required></td>
+	</tr>
+	<tr>
+		<Td colspan="3"><label for="fechainicio" id="fecha_requerida" class="help-inline">* Seleccione las fechas.</label>	</td>
+	</tr>
+</table>
+
+<br>
+</fieldset>
+
+<input type="hidden" id="idplaza" name="idplaza" value={{idplaza}} />
+
+<div class="text-center">
+<button id="enviar" type="button" onclick="llamar_controlador()" class="btn">Generar Reporte</button>
+<a href="{{path('reporte_aspirante_plaza')}}" class="btn"> Cancelar </a>
+</div>
+
+</form>
+{% endif %}
+<script>
+$(document).ready(function(){
+	$('#tipo_reporte').prop("selectedIndex",-1);
+	$('#enviar').hide();
+	
+	$('#fecha_requerida').hide();
+
+	$('#fechainicio').hide();
+	$('#fechafin').hide();
+
+	$('#fechainicio_label').hide();
+	$('#fechafin_label').hide();
+
+	$('#tipo_reporte').change(function(){
+		var valor= $('#tipo_reporte').val();
+
+		if(valor=='1')
+		{
+			$('#enviar').show();
+
+			$('#fechainicio').hide();
+			$('#fechafin').hide();
+
+			$('#fechainicio_label').hide();
+			$('#fechafin_label').hide();
+
+			$('#fecha_requerida').hide();
+		}
+		if(valor=='2')
+		{
+			$('#enviar').show();
+
+			$('#fechainicio').show();
+			$('#fechafin').show();
+
+			$('#fechainicio_label').show();
+			$('#fechafin_label').show();
+
+			$('#fecha_requerida').hide();
+		}
+		
+	//	$('#caja').val(valor);
+	});//change
+
+
+	$("#fechainicio").datepicker({
+                 yearRange: "-20:+0",
+                 dateFormat: 'dd-mm-yy',
+                 changeYear: true,
+                 changeMonth: true,
+                 numberOfMonths: 1,
+                 onClose: function( selectedDate ) {
+                      $("#fechafin" ).datepicker( "option", "minDate", selectedDate );
+                 }
+              });
+           
+             $("#fechafin").datepicker({
+                 yearRange: "-20:+0",
+                 dateFormat: 'dd-mm-yy',
+                 minDate: -0,
+                 changeMonth: true,
+                 changeYear: true,
+                 numberOfMonths: 1,
+                 onClose: function( selectedDate ) {
+                 $("#fechainicio" ).datepicker( "option", "maxDate", selectedDate );
+                 }
+             });
+
+});//ready
+
+
+
+function llamar_controlador(){
+
+var tipo = $('#tipo_reporte').val();
+
+if(tipo=="2"){
+	if($('#fechainicio').val()=="" || $('#fechafin').val()==""){
+
+			$('#fecha_requerida').show();
+		
+	return false;
+}//if interno
+}//if externo
+
+document.getElementById("miform").submit();
+}
+
+
+</script>
+
+<style type="text/css">
+.help-inline{
+        color: rgb(185, 74, 72); 
+        }
+</style>
+{% endblock %}

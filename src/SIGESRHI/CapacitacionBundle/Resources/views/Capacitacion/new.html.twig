@@ -1,8 +1,14 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
+<!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+
+    {{ include('CapacitacionBundle:Ayuda/Capacitacion:capacitacion.html.twig')}} 
+
 {# error en el create de la capacitacion #}
 {% for flashMessage in app.session.flashbag.get('errorcreate') %}
+  <br/>
   <div class="alert alert-danger">
     <p>{{ flashMessage }}</p>
   </div>
