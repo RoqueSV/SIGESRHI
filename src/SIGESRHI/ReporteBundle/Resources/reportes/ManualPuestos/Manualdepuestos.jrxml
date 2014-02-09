@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isTitleNewPage="true" uuid="a9dcd7be-f0b3-44d3-96bf-8025ac6097ae">
-	<property name="ireport.zoom" value="0.75"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="550" leftMargin="31" rightMargin="31" topMargin="20" bottomMargin="20" isTitleNewPage="true" uuid="a9dcd7be-f0b3-44d3-96bf-8025ac6097ae">
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="109"/>
+	<property name="ireport.y" value="0"/>
 	<style name="style1"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Formularios\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<title>
 		<band height="752">
 			<rectangle>
-				<reportElement uuid="88ed5ce8-9671-4867-bc7b-a6dd9e71e312" x="0" y="0" width="572" height="59" backcolor="#0066FF"/>
+				<reportElement uuid="88ed5ce8-9671-4867-bc7b-a6dd9e71e312" x="0" y="0" width="550" height="59" backcolor="#0066FF"/>
 			</rectangle>
 			<frame>
 				<reportElement uuid="48127242-85a2-4bc2-92b6-d5723ad4ad86" mode="Opaque" x="23" y="0" width="10" height="59" forecolor="#0099FF" backcolor="#FFFFFF"/>
@@ -23,7 +24,7 @@
 				</box>
 			</frame>
 			<staticText>
-				<reportElement uuid="7dd6a86e-cf65-4827-8861-541affc0a1a6" x="33" y="327" width="505" height="130"/>
+				<reportElement uuid="7dd6a86e-cf65-4827-8861-541affc0a1a6" x="33" y="327" width="488" height="130"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="32"/>
 				</textElement>
@@ -37,14 +38,14 @@
 				</box>
 			</frame>
 			<frame>
-				<reportElement uuid="5f8dbe6f-e33e-4137-bd84-efb60b24d19a" x="538" y="59" width="10" height="634" forecolor="#0099FF"/>
+				<reportElement uuid="5f8dbe6f-e33e-4137-bd84-efb60b24d19a" x="521" y="59" width="10" height="634" forecolor="#0099FF"/>
 				<box leftPadding="0">
 					<leftPen lineWidth="1.25"/>
 					<rightPen lineWidth="1.25"/>
 				</box>
 			</frame>
 			<rectangle>
-				<reportElement uuid="55f3a36e-70a3-48f0-80a6-c2c146cbf531" x="0" y="693" width="572" height="59" backcolor="#0066FF"/>
+				<reportElement uuid="55f3a36e-70a3-48f0-80a6-c2c146cbf531" x="0" y="693" width="550" height="59" backcolor="#0066FF"/>
 			</rectangle>
 			<frame>
 				<reportElement uuid="c724c52f-71e0-47b9-bf5d-819f3a332f8e" mode="Opaque" x="23" y="693" width="10" height="59" forecolor="#0099FF" backcolor="#FFFFFF"/>
@@ -54,56 +55,58 @@
 				</box>
 			</frame>
 			<frame>
-				<reportElement uuid="6dcc19bb-b91d-42ee-a194-5a53c24d7f9f" mode="Opaque" x="538" y="693" width="10" height="59" forecolor="#0099FF" backcolor="#FFFFFF"/>
+				<reportElement uuid="6dcc19bb-b91d-42ee-a194-5a53c24d7f9f" mode="Opaque" x="521" y="693" width="10" height="59" forecolor="#0099FF" backcolor="#FFFFFF"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 			</frame>
 			<line>
-				<reportElement uuid="545f852c-5be5-4cca-8c59-49de4bd7ddad" x="12" y="723" width="546" height="1"/>
+				<reportElement uuid="545f852c-5be5-4cca-8c59-49de4bd7ddad" x="12" y="723" width="530" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="066c2726-20b4-4873-839e-abf3cceaf57c" x="182" y="84" width="378" height="20"/>
+				<reportElement uuid="066c2726-20b4-4873-839e-abf3cceaf57c" x="194" y="84" width="327" height="32"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="11"/>
 				</textElement>
 				<text><![CDATA[UNIDAD DE PLANIFICACIÓN ESTRATEGICA Y DESARROLLO INSTITUCIONAL]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="988133f6-65e4-47a6-bf88-2ae06ded5c5d" x="559" y="30" width="1" height="694"/>
+				<reportElement uuid="988133f6-65e4-47a6-bf88-2ae06ded5c5d" x="542" y="30" width="1" height="694"/>
 			</line>
 			<line>
 				<reportElement uuid="4bd0976d-910e-425b-8f5d-f9f79e9bbe66" x="11" y="30" width="1" height="693"/>
 			</line>
+			<image>
+				<reportElement uuid="50ebff9a-d186-4201-b2cd-daa4e6007118" x="34" y="84" width="160" height="139"/>
+				<imageExpression><![CDATA[$P{ubicacionReport} +"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
+			</image>
 			<staticText>
-				<reportElement uuid="94453d06-4d7d-4e74-af49-7f62ac3e92c1" x="90" y="59" width="468" height="31"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement uuid="94453d06-4d7d-4e74-af49-7f62ac3e92c1" x="87" y="59" width="434" height="31"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL ]]></text>
 			</staticText>
 			<frame>
-				<reportElement uuid="5803ff6c-188b-4f8e-9c67-abe09d4967c7" mode="Opaque" x="538" y="0" width="10" height="59" forecolor="#0099FF" backcolor="#FFFFFF"/>
+				<reportElement uuid="5803ff6c-188b-4f8e-9c67-abe09d4967c7" mode="Opaque" x="521" y="0" width="10" height="59" forecolor="#0099FF" backcolor="#FFFFFF"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
 			</frame>
 			<line>
-				<reportElement uuid="01ee8477-b57c-4cdf-acb9-9dbcf1ad8b5c" x="11" y="29" width="547" height="1"/>
+				<reportElement uuid="01ee8477-b57c-4cdf-acb9-9dbcf1ad8b5c" x="11" y="29" width="532" height="1"/>
 			</line>
-			<image>
-				<reportElement uuid="50ebff9a-d186-4201-b2cd-daa4e6007118" x="33" y="84" width="160" height="139"/>
-				<imageExpression><![CDATA["../imagenes/Logo_ISRI2.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<summary>
 		<band height="50">
 			<subreport>
-				<reportElement uuid="8841ec95-0ef8-4501-85ca-bda5b93417fe" x="0" y="0" width="572" height="50"/>
-				<subreportParameter name="SUBREPORT_DIR"/>
+				<reportElement uuid="8841ec95-0ef8-4501-85ca-bda5b93417fe" x="0" y="0" width="550" height="50"/>
+				<subreportParameter name="ubicacionReport">
+					<subreportParameterExpression><![CDATA[$P{ubicacionReport}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["Descripciondepuestos.jasper"]]></subreportExpression>
 			</subreport>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_empleadosantiguos" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d7979e9e-cc58-44e8-ad97-5cd84df8502c">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="3"/>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
+	<parameter name="años" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select to_char(current_date,'DD" de "TMMonth" de "YYYY') as fechaactual,codigoempleado,cast(date_part('year',age(fechaingreso)) as INTEGER) as anos,nombreempleado,destacadoen,to_char(fechaingreso,'DD"/"MM"/"YYYY') as fechaingreso,concat(date_part('year',age(fechaingreso)),' años ') as tiempolaboral from
+expediente exp join empleado emp on (exp.id=emp.idexpediente) join hojaservicio hj on (hj.idexpediente=exp.id) where cast(date_part('year',age(fechaingreso)) as INTEGER)>=$P{años} and tipoexpediente='E']]>
+	</queryString>
+	<field name="fechaactual" class="java.lang.String"/>
+	<field name="codigoempleado" class="java.lang.String"/>
+	<field name="anos" class="java.lang.Integer"/>
+	<field name="nombreempleado" class="java.lang.String"/>
+	<field name="destacadoen" class="java.lang.String"/>
+	<field name="fechaingreso" class="java.lang.String"/>
+	<field name="tiempolaboral" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="146" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a1b443ac-1bff-4452-a634-b0746fd80e00" x="115" y="21" width="357" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL
+DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" hAlign="Center">
+				<reportElement uuid="ddde6c84-f899-420c-9e0d-648f49bc1fca" x="17" y="7" width="86" height="77"/>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="3b737b0d-690b-4e32-93ce-e62dcc2a1b53" x="124" y="73" width="317" height="32"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["REPORTE DE EMPLEADOS CON  "+$P{años}+" AÑOS  LABORANDO EN LA INSTITUCION "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="793800ea-d239-4e8b-b739-df8332a93194" x="312" y="123" width="260" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="html">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>Fecha de elaboración:</b> "+$F{fechaactual}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="b87212f8-4f5a-4b91-967f-3812ad736f80" mode="Opaque" x="0" y="0" width="58" height="22" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="86fdbfea-f342-4133-ab57-51933208d883" mode="Opaque" x="58" y="0" width="208" height="22" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Nombre empleado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1431a9d3-980b-4f04-92c5-a4cdc250a66d" mode="Opaque" x="423" y="0" width="99" height="22" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Fecha de ingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e8484036-edc3-4dc2-bbb6-2ef331285cd7" mode="Opaque" x="522" y="0" width="50" height="22" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Tiempo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="72cd91ae-05dc-4278-b547-aa0af1fc3637" mode="Opaque" x="266" y="0" width="157" height="22" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Centro de Atención]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c68fe783-23ee-4113-8dde-38a874677482" x="0" y="0" width="58" height="26"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{codigoempleado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="314971b6-7556-49ce-8848-3758b4ca1de8" x="58" y="0" width="208" height="26"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombreempleado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ca3bd4d5-65f2-4913-a703-d41b97de4e58" x="423" y="0" width="99" height="26"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fechaingreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6c8534f1-4a63-412c-8d43-f197fe124243" x="522" y="0" width="50" height="26"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[""+$F{tiempolaboral}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ae7915b8-32be-439b-81d3-65213c55c79e" x="266" y="0" width="157" height="26"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{destacadoen}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="44" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement uuid="24d321cb-efa6-4124-b23c-9e7277f6175d" x="216" y="7" width="84" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="059d92e0-85d9-4c6f-a68a-e4f712d93a5b" x="300" y="7" width="42" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

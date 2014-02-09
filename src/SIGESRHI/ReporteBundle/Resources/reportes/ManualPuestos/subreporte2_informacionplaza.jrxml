@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte2_informacionplaza" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ca08c4e7-c598-4785-ab45-5194187fe3fc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte2_informacionplaza" language="groovy" pageWidth="550" pageHeight="752" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ca08c4e7-c598-4785-ab45-5194187fe3fc">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.id,nombretitulo,tipotitulo from plaza p left outer join tituloplaza tp on(p.id=tp.idplaza) left outer join titulo t on (t.id=tp.idtitulo) where p.id=2 order by tipotitulo]]>
+		<![CDATA[select p.id,nombretitulo,tipotitulo from plaza p left outer join tituloplaza tp on(p.id=tp.idplaza) left outer join titulo t on (t.id=tp.idtitulo) where p.id=$P{idplaza} order by tipotitulo desc]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="nombretitulo" class="java.lang.String"/>
@@ -17,11 +17,11 @@
 		<groupHeader>
 			<band height="22">
 				<textField>
-					<reportElement uuid="c24accad-93fe-4bbc-bbcf-daf173ea0bf3" x="0" y="2" width="427" height="20"/>
+					<reportElement uuid="c24accad-93fe-4bbc-bbcf-daf173ea0bf3" x="24" y="2" width="511" height="20"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{tipotitulo}.equals("I")? "Formación Básica Indispensable":"Formación Básica Deseable"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{tipotitulo}.equals("I")? "7.1 Formación Básica Indispensable":"7.2 Formación Básica Deseable"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -32,18 +32,18 @@
 	<columnHeader>
 		<band height="19" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="b2d66f61-1579-4fbb-ae78-6b6d2d82f3b7" positionType="Float" x="1" y="1" width="176" height="18"/>
+				<reportElement uuid="b2d66f61-1579-4fbb-ae78-6b6d2d82f3b7" positionType="Float" x="1" y="1" width="282" height="18"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PERFIL DE CONTRATACION:]]></text>
+				<text><![CDATA[7. PERFIL DE CONTRATACION:]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="f0008d74-40bd-4b44-92f1-04d3fde82bd0" x="0" y="0" width="572" height="20"/>
+				<reportElement uuid="f0008d74-40bd-4b44-92f1-04d3fde82bd0" x="24" y="0" width="526" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["- "+$F{nombretitulo}]]></textFieldExpression>
 			</textField>

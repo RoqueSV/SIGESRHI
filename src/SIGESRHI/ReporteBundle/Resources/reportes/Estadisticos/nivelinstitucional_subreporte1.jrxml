@@ -252,9 +252,9 @@ order by 3]]>
 	<columnFooter>
 		<band height="45">
 			<staticText>
-				<reportElement uuid="f0b8fbba-a4c4-4205-b8fd-8e26bc40e19d" x="400" y="0" width="119" height="15"/>
+				<reportElement uuid="f0b8fbba-a4c4-4205-b8fd-8e26bc40e19d" x="438" y="0" width="81" height="15"/>
 				<textElement/>
-				<text><![CDATA[Total Empleados Centro:]]></text>
+				<text><![CDATA[Total puestos:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="30910f5e-2d32-4c13-b4db-e6c7520009f2" x="1" y="0" width="94" height="15"/>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_factorescriticos" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="de6b2087-dde4-4dcf-b7f0-8a3aadb29e44">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Reportes\\EvaluacionesDesempeño\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_eva" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select e.id,fev.id as for,nombrecompleto,tipoformulario,nombrefactor,codigoformulario,upper(pl.nombreplaza) as nombreplaza,to_char(fechaincidente,'DD"/"MM"/"YYYY') as fechaincidente,tipoincidente,descripcionincidente,
+(select nombrecompleto from empleado ej
+join expediente exj on (ej.idexpediente = exj.id)
+join solicitudempleo sej on (exj.id = sej.idexpediente)
+where ej.id=ev.idjefe) as nombrejefe,
+(select upper(nombreplaza) as nombreplaza from empleado ej
+join refrendaact refj on (ej.id=refj.idempleado)
+ where ej.id=ev.idjefe and refj.id=33) as puestojefe
+from
+solicitudempleo se join expediente ex on(se.idexpediente=ex.id)
+join empleado e on(e.idexpediente= ex.id)
+join evaluacion ev on(ev.idempleado=e.id)
+join refrendaact ref on(e.id=ref.idempleado)
+join plaza pl on(ref.idplaza=pl.id)
+join incidente i on(ev.id=i.idevaluacion)
+join factorevaluacion fe on (i.idfactorevaluacion=fe.id)
+join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{id_eva} and ref.id = ev.puestoemp]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="for" class="java.lang.Integer"/>
+	<field name="nombrecompleto" class="java.lang.String"/>
+	<field name="tipoformulario" class="java.lang.String"/>
+	<field name="nombrefactor" class="java.lang.String"/>
+	<field name="codigoformulario" class="java.lang.String"/>
+	<field name="nombreplaza" class="java.lang.String"/>
+	<field name="fechaincidente" class="java.lang.String"/>
+	<field name="tipoincidente" class="java.lang.String"/>
+	<field name="descripcionincidente" class="java.lang.String"/>
+	<field name="nombrejefe" class="java.lang.String"/>
+	<field name="puestojefe" class="java.lang.String"/>
+	<variable name="factor" class="java.lang.String"/>
+	<title>
+		<band height="273" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="95a675b2-fffe-483f-904d-7cf2f9fed8b7" x="1" y="3" width="157" height="32"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[MINISTERIO DE SALUD DIVISION DE ADMINISTRACION DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bc25c16c-4a82-47ac-be35-f11564252af2" x="1" y="199" width="172" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FACTORES QUE SE OBSERVAN:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="61f50240-eeaf-4d7d-91c2-7d6dd6955cf9" positionType="Float" x="16" y="49" width="542" height="35"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoformulario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="67310402-58ba-42db-b1d1-7217050610af" x="471" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{codigoformulario}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="2e6908ff-9cd7-4375-b347-d9a4a3dd3cf4" x="0" y="223" width="571" height="33"/>
+				<subreportParameter name="id_form">
+					<subreportParameterExpression><![CDATA[$F{for}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["subreporte1_factorescriticos.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement uuid="4edb6cad-766b-4d0b-a117-d415b353ea4d" x="1" y="109" width="306" height="33"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html"/>
+				<textFieldExpression><![CDATA["<b>NOMBRE DEL EMPLEADO:</b><br>"+$F{nombrecompleto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f5bf9137-fa32-49d7-a075-33a611c0a821" x="312" y="109" width="260" height="33"/>
+				<textElement textAlignment="Justified" markup="html"/>
+				<textFieldExpression><![CDATA["<b>PUESTO QUE OCUPA:</b><br> "+$F{nombreplaza}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1249f714-1a9d-4e02-a06e-fdeaca120657" x="1" y="143" width="306" height="37"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA["<b>NOMBRE DEL JEFE INMEDIATO:</b><br> "+$F{nombrejefe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3dfbfe38-1b99-4db9-84a2-af2cdeea86c8" x="312" y="143" width="259" height="37"/>
+				<textElement markup="html"/>
+				<textFieldExpression><![CDATA["<b>PUESTO QUE OCUPA:</b><br> "+$F{puestojefe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30">
+			<staticText>
+				<reportElement uuid="657fd352-ba15-44fa-b861-6a05b9d3764b" x="0" y="0" width="74" height="30"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="029042ca-68dc-4b1e-b928-95d048c81617" x="74" y="0" width="110" height="30"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FACTOR ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c167b3e4-473c-45f2-a5a2-33e832c6281e" x="184" y="0" width="32" height="16"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="html">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5645f15d-9001-4fa8-9f94-b44fd62281f0" x="184" y="16" width="32" height="14"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="None">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[D]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4c7e63fd-2b8f-45fd-a7d7-c8c0726aa26b" x="216" y="0" width="356" height="30"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION DEL EVENTO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement uuid="4a625045-0bd8-4ec6-a30e-644462c99410" x="0" y="0" width="74" height="28"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fechaincidente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="352ceb7a-89bd-43de-8d6e-5b69060a1300" x="184" y="0" width="32" height="28"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tipoincidente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b90ab637-81bf-4fba-9313-598bcaa7e16a" x="216" y="0" width="356" height="28"/>
+				<box leftPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{descripcionincidente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9df3ef01-4a80-45a2-a4ce-ac550dfaf917" x="74" y="0" width="110" height="28"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrefactor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2e5b2cc4-1984-474f-8913-1e8fd92f081e" x="1" y="3" width="21" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[F]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="00a64402-6928-40f9-896c-ab847e805a07" x="16" y="3" width="126" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Incidentes Favorables]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cff662b3-1d10-449c-bb0a-9200d28adf85" x="17" y="22" width="126" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Incidentes Desfavorables]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="83a784a8-d7b9-4f6f-8934-67ac860fb7d4" x="1" y="22" width="21" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[D]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d89585e9-a16d-46b7-b737-7ad1dee55296" x="1" y="46" width="222" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIONES:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

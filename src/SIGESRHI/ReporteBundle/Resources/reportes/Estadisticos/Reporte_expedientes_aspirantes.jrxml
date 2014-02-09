@@ -41,7 +41,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="79" splitType="Stretch">
+		<band height="61" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="bbfbbe31-b7a3-4015-b2ad-6dc0d1e6df37" x="84" y="15" width="406" height="22"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -169,13 +169,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="22" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="07e63d74-e373-4822-bb94-3c758b185fc7" x="456" y="2" width="49" height="20"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Total:]]></text>
-			</staticText>
-		</band>
+		<band height="22" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
@@ -191,4 +185,13 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 			</textField>
 		</band>
 	</pageFooter>
+	<summary>
+		<band height="37">
+			<textField>
+				<reportElement uuid="b8b8d842-009b-4aa9-962d-83d3e268d90f" x="1" y="17" width="185" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["TOTAL ASPIRANTES: "+$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
 </jasperReport>

@@ -3,13 +3,29 @@
 
 {% block titulo %}
 <h3 id="helpLabel">Record de Expediente Personal</h3>
-<p align="justify">Esta ventana permite llevar un respado digital de los documentos que un empleado posee f&iacute;sicamente, registrados en la hoja indice de cada expediente.</p>
+<p align="justify">Esta ventana permite llevar un respado digital de los documentos que un empleado posee en su expediente en f&iacute;sico; permite llevar un respaldo de la hoja indice de cada expediente.</p>
 {% endblock %}
 
 
 {% block contenido %}
- <p><h4>¿Cómo llenar este formulario?</h4></p>
-<p>Se describen a continuación los pasos necesarios:</p>
-
-
+ <p><h4>¿C&oacute;mo registrar un documento al expediente?</h4></p>
+<div class="justifyText">En la pantalla se muestra una lista de documentos obligatorios que debe contener un expediente de un empleado. Se identifica a cada documento como entregado hasta que se le asigna y registra un n&uacute;mero correlativo:<br><br>
+	<center><img src="{{asset('images/images_ayuda/docnoentregado.jpg') }}" alt="ISRI"/></center>
+	<center><img src="{{asset('images/images_ayuda/no.jpg') }}" alt="ISRI"/> Representa a un documento no entregado</center><br>
+	<center><img src="{{asset('images/images_ayuda/docentregado.jpg') }}" alt="ISRI"/></center>
+	<center><img src="{{asset('images/images_ayuda/si.jpg') }}" alt="ISRI"/> Representa a un documento entregado</center><br>
+<br>S&iacute; desea registrar un nuevo documento se describen a continuaci&oacute;n los pasos necesarios:
+</div>
+<ul style="list-style-type:disc; margin-left:25px">
+<li>Digite el nombre y n&uacute;mero correlativo del nuevo documento a registrar, luego presione el bot&oacute;n "Agregar"</li>
+<img src="{{asset('images/images_ayuda/agregardocexpediente.jpg') }}" alt="ISRI"/><br><br>
+<li>En la parte inferior de la pantalla se despliega una lista que incluye el nuevo documento junto a otros documentos registrados.</li>
+<img src="{{asset('images/images_ayuda/docregistradoexpediente.jpg') }}" alt="ISRI"/><br><br>
+<li>Sobre cada documento puede realizar acciones como:<br> 
+	<b>Actualizar: </b>Que permite realizar una modificaci&oacute;n a un documento su  n&uacute;mero correlativo asignado.<br>
+	<b>Borrar: </b>Permite eliminar un documento registrado.</li>
+<li>Una vez registrados los documentos, puede presionar el bot&oacute;n "Regresar", para realizar otra operaci&oacute;n o finalizar la sesi&oacute;n</li>
+</ul>
+<br>
+<br>
 {% endblock %}

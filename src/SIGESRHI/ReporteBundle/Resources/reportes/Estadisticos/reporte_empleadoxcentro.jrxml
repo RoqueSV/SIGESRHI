@@ -24,7 +24,7 @@
 				<text><![CDATA[EMPLEADOS DESTACADOS EN: ]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="666d0bb5-fa33-407d-b947-8857dc7aa1f1" x="67" y="99" width="457" height="20"/>
+				<reportElement uuid="666d0bb5-fa33-407d-b947-8857dc7aa1f1" x="67" y="99" width="457" height="27"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -48,11 +48,11 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{fechaactual}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="65266acb-cc85-48b7-b45e-a4a798098ac2" x="360" y="139" width="117" height="20"/>
+				<reportElement uuid="65266acb-cc85-48b7-b45e-a4a798098ac2" x="426" y="139" width="39" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Fecha de Elaboración:]]></text>
+				<text><![CDATA[Fecha:]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
