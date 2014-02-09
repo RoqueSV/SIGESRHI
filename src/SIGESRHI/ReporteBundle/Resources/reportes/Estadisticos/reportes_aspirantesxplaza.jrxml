@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportes_aspirantesxplaza" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="58463a82-486d-4ae0-80aa-00b7414c1840">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="17"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="id_plaza" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -39,14 +39,8 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[LISTADO DE ASPIRANTES A OCUPAR PLAZA]]></text>
+				<text><![CDATA[LISTADO DE ASPIRANTES]]></text>
 			</staticText>
-			<textField>
-				<reportElement uuid="31fe683c-8eb9-44c5-91cd-e3126c7e696b" x="2" y="33" width="503" height="20"/>
-				<box leftPadding="2"/>
-				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>

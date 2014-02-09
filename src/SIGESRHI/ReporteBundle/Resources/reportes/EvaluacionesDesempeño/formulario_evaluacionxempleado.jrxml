@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formulario_evaluacionxempleado" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3642e819-2001-48ac-9648-5f5f73ed3bd2">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="60"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -33,19 +33,19 @@
 	<parameter name="nevaluacion" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="funcion" class="java.lang.String"/>
-	<parameter name="apartirde" class="java.lang.String"/>
+	<parameter name="incidentes" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select e.id,fev.id as for,nombrecompleto,e.codigoempleado,nombrefactor,nombreopcion,descripcionfactor,tipoformulario,codigoformulario,nombreunidad,nombrecentro,pl.nombreplaza,partida,subpartida,to_char(sueldoactual,'$9,999.00') as sueldoactual,semestre,anoevaluado,
+		<![CDATA[select e.id,fev.id as for,nombrecompleto,cargofuncion,to_char(fechacargofuncion,'DD "de" TMmonth "del" YYYY') as fechacargofuncion,tiemposupervisar,to_char(fechaingreso,'DD "de" TMmonth "del" YYYY') as fechaingreso,e.codigoempleado,nombrefactor,nombreopcion,descripcionfactor,tipoformulario,codigoformulario,nombreunidad,nombrecentro,pl.nombreplaza,partida,subpartida,to_char(sueldoactual,'$9,999.00') as sueldoactual,case when semestre='I' then 'Enero a junio' else 'Julio a diciembre' end as semestre,anoevaluado,
 (select nombrecompleto from empleado ej
 join expediente exj on (ej.idexpediente = exj.id)
 join solicitudempleo sej on (exj.id = sej.idexpediente)
 where ej.id=ev.idjefe) as nombrejefe,
 (select nombreplaza from empleado ej
 join refrendaact refj on (ej.id=refj.idempleado)
- where ej.id=ev.idjefe) as puestojefe
+ where ej.id=ev.idjefe and refj.id=33) as puestojefe
 from
 solicitudempleo se join expediente ex on(se.idexpediente=ex.id)
+join hojaservicio hs on (hs.idexpediente=ex.id)
 join empleado e on(e.idexpediente= ex.id)
 join evaluacion ev on(ev.idempleado=e.id)
 join refrendaact ref on(e.id=ref.idempleado)
@@ -55,11 +55,15 @@ join centrounidad cu on(un.idcentro=cu.id)
 join respuesta r on(ev.id=r.idevaluacion)
 join opcion o on (r.idopcion = o.id)
 join factorevaluacion fe on (r.idfactor=fe.id)
-join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevaluacion}]]>
+join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevaluacion} and ref.id = ev.puestoemp]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="for" class="java.lang.Integer"/>
 	<field name="nombrecompleto" class="java.lang.String"/>
+	<field name="cargofuncion" class="java.lang.String"/>
+	<field name="fechacargofuncion" class="java.lang.String"/>
+	<field name="tiemposupervisar" class="java.lang.String"/>
+	<field name="fechaingreso" class="java.lang.String"/>
 	<field name="codigoempleado" class="java.lang.String"/>
 	<field name="nombrefactor" class="java.lang.String"/>
 	<field name="nombreopcion" class="java.lang.String"/>
@@ -77,7 +81,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 	<field name="nombrejefe" class="java.lang.String"/>
 	<field name="puestojefe" class="java.lang.String"/>
 	<title>
-		<band height="268" splitType="Stretch">
+		<band height="275" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="42cce553-24d8-41de-ba52-4370085526e3" x="-8" y="-2" width="189" height="32"/>
 				<textElement textAlignment="Center">
@@ -105,7 +109,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 				<text><![CDATA[I. DATOS GENERALES]]></text>
 			</staticText>
 			<frame>
-				<reportElement uuid="5b034547-6458-4aba-b74a-b4d4997e1f62" x="1" y="88" width="571" height="157"/>
+				<reportElement uuid="5b034547-6458-4aba-b74a-b4d4997e1f62" x="1" y="88" width="571" height="159"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -176,28 +180,21 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<text><![CDATA[Dependencia:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="8e50207e-e6d8-43b7-8376-eae622cb0e11" x="3" y="102" width="99" height="12"/>
-					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
-					</textElement>
-					<text><![CDATA[Unidad Administrativa]]></text>
-				</staticText>
-				<staticText>
-					<reportElement uuid="1ee41ca2-79b4-433f-96b8-695af343fde8" x="3" y="126" width="123" height="15"/>
+					<reportElement uuid="1ee41ca2-79b4-433f-96b8-695af343fde8" x="3" y="125" width="129" height="15"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="Arial"/>
 					</textElement>
 					<text><![CDATA[Nombre del Jefe Inmediato:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="e37557b1-d774-42a6-ba5c-69450deaca58" x="329" y="127" width="54" height="15"/>
+					<reportElement uuid="e37557b1-d774-42a6-ba5c-69450deaca58" x="305" y="126" width="54" height="15"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="Arial"/>
 					</textElement>
 					<text><![CDATA[Puesto:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="37e79185-386f-48e6-be11-fcec5d622cb1" x="3" y="141" width="115" height="15"/>
+					<reportElement uuid="37e79185-386f-48e6-be11-fcec5d622cb1" x="3" y="144" width="115" height="15"/>
 					<textElement textAlignment="Justified" verticalAlignment="Bottom">
 						<font fontName="Arial"/>
 					</textElement>
@@ -220,7 +217,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="8c87f846-a60c-4f97-9710-bd99acbbaf97" x="225" y="106" width="346" height="20"/>
+					<reportElement uuid="8c87f846-a60c-4f97-9710-bd99acbbaf97" positionType="Float" x="225" y="100" width="346" height="24"/>
 					<box>
 						<bottomPen lineWidth="0.75"/>
 					</box>
@@ -260,14 +257,15 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<textFieldExpression><![CDATA[$F{nombrecentro}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="435cef12-4588-4fc8-9249-0fda1f20853d" x="3" y="114" width="222" height="12"/>
+					<reportElement uuid="435cef12-4588-4fc8-9249-0fda1f20853d" x="3" y="100" width="222" height="24"/>
 					<textElement verticalAlignment="Bottom">
 						<font fontName="Arial"/>
 					</textElement>
-					<text><![CDATA[(Dirección,División,Depto.,Unidad,Sección, Area):]]></text>
+					<text><![CDATA[Unidad Administrativa
+(Dirección,División,Depto.,Unidad,Sección, Area):]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="6516ff6e-51dd-4999-8d0e-973a822287a8" x="126" y="126" width="204" height="15"/>
+					<reportElement uuid="6516ff6e-51dd-4999-8d0e-973a822287a8" x="126" y="125" width="179" height="15"/>
 					<box leftPadding="2">
 						<bottomPen lineWidth="0.75"/>
 					</box>
@@ -275,7 +273,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<textFieldExpression><![CDATA[$F{nombrejefe}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="430488ad-7f92-4fe6-8e7c-dcc72a2611c0" x="118" y="142" width="453" height="14"/>
+					<reportElement uuid="430488ad-7f92-4fe6-8e7c-dcc72a2611c0" x="118" y="144" width="453" height="14"/>
 					<box leftPadding="2">
 						<bottomPen lineWidth="0.0"/>
 					</box>
@@ -291,7 +289,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="ac178b20-67cf-4af6-b702-5df5a9159253" positionType="Float" x="364" y="127" width="207" height="15"/>
+					<reportElement uuid="ac178b20-67cf-4af6-b702-5df5a9159253" positionType="Float" x="343" y="126" width="228" height="15"/>
 					<box>
 						<bottomPen lineWidth="0.5"/>
 					</box>
@@ -299,24 +297,32 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<textFieldExpression><![CDATA[$F{puestojefe}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="abb6258d-e27e-4e98-867c-8a6ed4e8aeaf" x="100" y="49" width="471" height="15"/>
-					<box leftPadding="2">
+					<reportElement uuid="076d0811-1b83-464c-a3a1-e37e9694d8bf" x="85" y="32" width="250" height="17"/>
+					<box>
 						<bottomPen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Justified" verticalAlignment="Bottom"/>
-					<textFieldExpression><![CDATA[$P{funcion}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{fechaingreso}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="e832c03e-b073-4f82-9ffd-40c1644f0d39" x="50" y="64" width="521" height="17"/>
+					<reportElement uuid="9e4977ba-cca2-47d2-a6f2-b01404853347" x="101" y="48" width="470" height="16"/>
 					<box leftPadding="2">
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Bottom"/>
-					<textFieldExpression><![CDATA[$P{apartirde}]]></textFieldExpression>
+					<textElement verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA[$F{cargofuncion}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="1da3b54c-febc-406c-9e62-ae8c3cc34e30" x="62" y="64" width="509" height="17"/>
+					<box>
+						<bottomPen lineWidth="0.75"/>
+					</box>
+					<textElement verticalAlignment="Bottom"/>
+					<textFieldExpression><![CDATA[$F{fechacargofuncion}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<staticText>
-				<reportElement uuid="c3a854d0-fc1f-45a3-9b30-3e893de64d31" x="1" y="250" width="324" height="18"/>
+				<reportElement uuid="c3a854d0-fc1f-45a3-9b30-3e893de64d31" x="1" y="257" width="324" height="18"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
@@ -366,7 +372,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 		</band>
 	</detail>
 	<summary>
-		<band height="86">
+		<band height="82">
 			<subreport>
 				<reportElement uuid="39e9df41-5e04-4361-8b68-e25ab9f431fb" x="0" y="0" width="370" height="22"/>
 				<subreportParameter name="SUBREPORT_DIR"/>
@@ -384,16 +390,37 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["subreporte4_evaluacion.jasper"]]></subreportExpression>
 			</subreport>
-			<break>
-				<reportElement uuid="9b3323a9-9a0a-4c89-bae1-2b5f698902e7" x="0" y="37" width="572" height="1"/>
-			</break>
 			<subreport>
-				<reportElement uuid="a81777ba-8278-4e23-87a4-cfe26893f99b" x="0" y="55" width="572" height="19"/>
+				<reportElement uuid="a81777ba-8278-4e23-87a4-cfe26893f99b" x="0" y="35" width="572" height="12"/>
 				<subreportParameter name="nevaluacion">
 					<subreportParameterExpression><![CDATA[$P{nevaluacion}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["subreporte5_evaluacion.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement uuid="9b3323a9-9a0a-4c89-bae1-2b5f698902e7" x="0" y="53" width="572" height="1"/>
+			</break>
+			<subreport>
+				<reportElement uuid="760c7c8c-a93b-488e-9d87-944e5277c545" positionType="Float" x="0" y="58" width="572" height="11">
+					<printWhenExpression><![CDATA[$P{incidentes}.equals( "Y" )]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="id_eva">
+					<subreportParameterExpression><![CDATA[$P{nevaluacion}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reporte_factorescriticos.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="fd518111-8213-4c1c-af7e-d64e2f611929" positionType="Float" x="0" y="78" width="572" height="0">
+					<printWhenExpression><![CDATA[$P{incidentes}.equals("N")]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="id_formulario">
+					<subreportParameterExpression><![CDATA[$F{for}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reporte_factorescriticosenblanco.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>

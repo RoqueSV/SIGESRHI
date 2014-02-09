@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte3_informacionplaza" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6409e7b1-a185-439a-9be4-3a7805f1bf91">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte3_informacionplaza" language="groovy" pageWidth="510" pageHeight="712" columnWidth="510" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6409e7b1-a185-439a-9be4-3a7805f1bf91">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -15,21 +15,21 @@
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="22" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="b5df14b1-f955-47fb-aa7b-a7d97e066c6f" x="1" y="0" width="306" height="22"/>
+				<reportElement uuid="b5df14b1-f955-47fb-aa7b-a7d97e066c6f" positionType="Float" x="1" y="0" width="306" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[MARCO DE REFERENCIA PARA LA ACTUACION:]]></text>
+				<text><![CDATA[3. MARCO DE REFERENCIA PARA LA ACTUACION:]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement uuid="22384c4d-2a0d-4caf-a32f-fb26d9d7b909" x="0" y="0" width="572" height="20"/>
-				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="22384c4d-2a0d-4caf-a32f-fb26d9d7b909" positionType="Float" x="5" y="0" width="505" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA["- "+$F{nombremarcoref}]]></textFieldExpression>
 			</textField>
 		</band>

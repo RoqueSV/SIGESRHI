@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_empleadoscondobleplaza" pageWidth="612" pageHeight="792" columnWidth="550" leftMargin="31" rightMargin="31" topMargin="20" bottomMargin="20" uuid="d99eb311-9b50-4fea-9b1d-89c5bede3980">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     to_char(current_date,'DD "de " TMmonth "del " YYYY') as fechaactual,(select count(id) from refrendaact ref2 where ref2.idempleado=emp.id) numplazas,
+     idempleado,ref.codigoempleado,nombrecompleto,p.nombreplaza,partida,subpartida
+FROM solicitudempleo se
+     JOIN expediente exp  ON (se.idexpediente = exp.id)
+     JOIN empleado emp ON (exp.id = emp.idexpediente)
+     JOIN refrendaact ref ON (emp.id = ref.idempleado)
+     JOIN plaza p ON (ref.idplaza = p.id)
+where idempleado in (select idempleado from refrendaact group by idempleado having count(idempleado) > 1)
+order by codigoempleado]]>
+	</queryString>
+	<field name="fechaactual" class="java.lang.String"/>
+	<field name="numplazas" class="java.lang.Long"/>
+	<field name="idempleado" class="java.lang.Integer"/>
+	<field name="codigoempleado" class="java.lang.String"/>
+	<field name="nombrecompleto" class="java.lang.String"/>
+	<field name="nombreplaza" class="java.lang.String"/>
+	<field name="partida" class="java.lang.Integer"/>
+	<field name="subpartida" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="129" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="19a6ebe9-bb47-4b0c-8a72-fe3cf8e69ba4" x="107" y="28" width="357" height="35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL
+DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" hAlign="Center">
+				<reportElement uuid="ca9ef3bc-c97d-4a1c-98c3-70e7cd88cfc5" x="21" y="15" width="86" height="77"/>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="7b2f1a49-d7ed-48fc-8c8a-d11d6505e021" x="98" y="71" width="357" height="21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE EMPLEADOS CON DOBLE PLAZA]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e1863a6f-929c-408c-a4fb-36dab049f550" x="331" y="104" width="219" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="html"/>
+				<textFieldExpression><![CDATA["<b>Fecha elaboración:</b> "+$F{fechaactual}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="561ee209-1843-4961-bcc7-15d957f7b270" mode="Opaque" x="43" y="0" width="202" height="25" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE DEL EMPLEADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6fc0cfcc-cd80-4fce-aae7-cf9cc93bf5b8" mode="Opaque" x="291" y="0" width="259" height="25" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE DE LA PLAZA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b884d822-3ddc-453c-9732-c5a53df2583c" mode="Opaque" x="0" y="0" width="43" height="25" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="535bd51c-f3a5-42f7-9491-93393a307308" mode="Opaque" x="245" y="0" width="23" height="25" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PTDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="39553032-b075-4b31-a972-32b9ab8a5e3e" mode="Opaque" x="268" y="0" width="24" height="25" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUB]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d5ab3c35-a7b9-467d-8480-b1de2a2d754e" positionType="Float" isPrintRepeatedValues="false" x="0" y="0" width="43" height="23"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{codigoempleado}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="45467e37-4561-4f04-b0b8-5da1cd0e5f39" positionType="Float" isPrintRepeatedValues="false" x="43" y="0" width="202" height="23"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="b88b7f82-fc64-42de-a5bc-2b2c4eb5a326" positionType="Float" x="292" y="0" width="258" height="23"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="86b022dc-c38b-4ff9-a470-f6682009ef86" x="268" y="0" width="24" height="23"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{subpartida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="caf7976f-03b6-46bf-aa5a-3903d0a1400a" x="245" y="0" width="23" height="23"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{partida}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="e5f85acd-5016-451d-b3d3-25879dbaa426" x="0" y="0" width="1" height="23"/>
+			</line>
+			<line>
+				<reportElement uuid="cf7fe2ba-6c8f-4f9b-af86-5e3a3262eccc" x="43" y="0" width="1" height="23"/>
+			</line>
+			<line>
+				<reportElement uuid="a27c65fc-9404-45f1-98ea-7c1706a71283" x="245" y="0" width="1" height="23"/>
+			</line>
+			<line>
+				<reportElement uuid="4a3f65ee-75b3-4fac-a11d-a073498deee4" x="0" y="22" width="550" height="1">
+					<printWhenExpression><![CDATA[new Boolean(($V{REPORT_COUNT}.doubleValue() % 2) == 0)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement uuid="e818ea25-96a5-440e-a371-d44a8856bf65" x="199" y="17" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="285ac0dd-6bee-4aef-9ab9-b72775d040fa" x="279" y="17" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

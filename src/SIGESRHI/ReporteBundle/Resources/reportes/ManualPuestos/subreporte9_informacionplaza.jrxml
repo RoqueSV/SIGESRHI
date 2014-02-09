@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte9_informacionplaza" pageWidth="550" pageHeight="752" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c5a45ff1-f82d-4273-b61a-d86ffd98c53f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idplaza" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select nombreplaza,misionplaza from plaza where idplazasup=$P{idplaza}]]>
+	</queryString>
+	<field name="nombreplaza" class="java.lang.String"/>
+	<field name="misionplaza" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="0ab20576-a688-4141-8f51-abeeccf02184" x="1" y="0" width="304" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[5. ESTRUCTURA DEL PUESTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="79fa8fdf-c61b-4611-a47a-fe59a43d323f" x="13" y="18" width="505" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[5.1 Nombres de los puestos bajo su responsabilidad y  función principal]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="66" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="44abf713-e0f3-4f70-af7f-9e339322674c" positionType="Float" x="13" y="0" width="537" height="66"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html"/>
+				<textFieldExpression><![CDATA["<b>"+$F{nombreplaza}+"</b>: "+$F{misionplaza}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

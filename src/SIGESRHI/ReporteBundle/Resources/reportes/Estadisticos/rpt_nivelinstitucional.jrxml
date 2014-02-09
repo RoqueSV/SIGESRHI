@@ -2,14 +2,14 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_nivelinstitucional" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7acb005-7c95-40cc-9a11-ee3dc7d7225c">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="60"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Reportes\\EvaluacionesDesempeño\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ano_eva" class="java.lang.Integer"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select nombrecentro,to_char(current_date,'DD "de" TMMonth "de" YYYY') as fechaactual from centrounidad]]>
+		<![CDATA[select upper(nombrecentro) as nombrecentro,to_char(current_date,'DD "de" TMMonth "de" YYYY') as fechaactual from centrounidad]]>
 	</queryString>
 	<field name="nombrecentro" class="java.lang.String"/>
 	<field name="fechaactual" class="java.lang.String"/>
@@ -45,10 +45,10 @@
 			</staticText>
 			<textField>
 				<reportElement uuid="dc408b39-557b-4166-91f9-50471eac393f" x="179" y="107" width="224" height="24"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["AÑO: "+$P{ano_eva}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<b>AÑO: </b>"+$P{ano_eva}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="FillFrame" hAlign="Center" vAlign="Bottom">
 				<reportElement uuid="a32783cb-8bd6-4d36-8038-06f407bb1e3d" x="29" y="4" width="96" height="85"/>

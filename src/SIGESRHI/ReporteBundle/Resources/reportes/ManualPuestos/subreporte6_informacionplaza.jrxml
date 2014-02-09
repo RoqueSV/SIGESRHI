@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.id,case when tipoidioma='D' then 'Deseable' else 'Indispensable' end tipoidioma,case when nivelidioma='B' then 'nivel básico del idioma'
+		<![CDATA[select p.id,concat(experiencia,' años de experiencia profesional')as experiencia,case when tipoidioma='D' then 'Deseable' else 'Indispensable' end tipoidioma,case when nivelidioma='B' then 'nivel básico del idioma'
 	      when nivelidioma='I' then 'nivel Intermedio del idioma'
 	 else
 	'nivel avanzado del idioma' end as nivel,nombreidioma
@@ -17,6 +17,7 @@ from plaza p
 where p.id=2 order by tipoidioma]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
+	<field name="experiencia" class="java.lang.String"/>
 	<field name="tipoidioma" class="java.lang.String"/>
 	<field name="nivel" class="java.lang.String"/>
 	<field name="nombreidioma" class="java.lang.String"/>
@@ -32,20 +33,20 @@ where p.id=2 order by tipoidioma]]>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="d6a6223e-ef40-4db0-9846-6e29779d6a89" x="0" y="0" width="187" height="20"/>
+				<reportElement uuid="d6a6223e-ef40-4db0-9846-6e29779d6a89" x="24" y="0" width="187" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[OTROS IDIOMAS:]]></text>
+				<text><![CDATA[7.3 Otro idioma:]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="d7b8cf56-a03a-4ec4-8d6c-b5111e17500f" x="0" y="0" width="572" height="20"/>
+				<reportElement uuid="d7b8cf56-a03a-4ec4-8d6c-b5111e17500f" x="24" y="0" width="548" height="20"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{tipoidioma}+" "+$F{nivel}+" "+$F{nombreidioma}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["- "+$F{tipoidioma}+" "+$F{nivel}+" "+$F{nombreidioma}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -56,6 +57,19 @@ where p.id=2 order by tipoidioma]]>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band splitType="Stretch"/>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="0ee522a8-2263-4238-ad49-f938075d2ac2" x="24" y="0" width="187" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[7.4 Experiencia previa:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3557ab54-ad1f-47a4-953a-b26522edb16e" x="24" y="21" width="548" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["- "+$F{experiencia}]]></textFieldExpression>
+			</textField>
+		</band>
 	</summary>
 </jasperReport>

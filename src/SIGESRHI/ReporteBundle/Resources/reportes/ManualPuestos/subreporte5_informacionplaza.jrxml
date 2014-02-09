@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte5_informacionplaza" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ed3c2340-4c4a-4149-afe3-7a21b93fc2af">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte5_informacionplaza" language="groovy" pageWidth="550" pageHeight="752" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ed3c2340-4c4a-4149-afe3-7a21b93fc2af">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -18,14 +18,14 @@
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[RESULTADOS PRINCIPALES:]]></text>
+				<text><![CDATA[6. RESULTADOS PRINCIPALES:]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="f1453b5b-75f0-4f0d-99cf-1ce19934ed82" positionType="Float" x="0" y="0" width="572" height="20"/>
+				<reportElement uuid="f1453b5b-75f0-4f0d-99cf-1ce19934ed82" positionType="Float" x="12" y="0" width="538" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA["- "+$F{nombreresultado}]]></textFieldExpression>
 			</textField>
