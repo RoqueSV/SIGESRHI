@@ -1,0 +1,30 @@
+{% extends '::PrincipalBaseEmpleado.html.twig' %}
+{% block principal -%}
+<h4 class='text-center'>NOTICIAS ISRI</h4>
+<br>
+<div align='center'>
+    <a  href="{{ path('hello_page') }}" class="btn">Regresar</a>
+</div>
+<script>
+$(document).ready(function() {
+    moverSlider();
+    $(".bajar-slider").click(function(){
+        bajarSlider();
+    });
+
+    $(".subir-slider").click(function(){
+        subirSlider();
+    });
+
+    $(".slider-vertical").mouseover(function(){
+        verificar = 0;
+    });
+
+    $(".slider-vertical").mouseout(function(){
+        verificar = 1;
+    });
+
+    $('.container').css({ width: '200px' });
+});
+</script>
+{% endblock %}

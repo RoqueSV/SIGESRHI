@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use SIGESRHI\AdminBundle\Entity\Noticia;
 use SIGESRHI\AdminBundle\Entity\Docnoticia;
 use SIGESRHI\AdminBundle\Form\NoticiaType;
+use Application\Sonata\UserBundle\Entity\User;
+use SIGESRHI\ExpedienteBundle\Entity\Empleado;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -95,6 +97,43 @@ class NoticiaController extends Controller
             'entities' => $entities,
         ));*/
     }
+    /**
+    *Mostrar noticias a empleados...
+    *
+    */
+    public function indexempleadoAction(){
+        $em = $this->getDoctrine()->getManager();
+        $user = new User();
+        $empleado = new Empleado();
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        $empleado = $user->getEmpleado();
+        $idempleado = $empleado->getId();
+
+
+         //Obtener los centros del empleado
+        $query2 = $em->createQuery("SELECT identity(u.idcentro)
+                         FROM ExpedienteBundle:Empleado e JOIN e.idrefrenda r JOIN r.idunidad u 
+                         WHERE e.id=:idempleado")
+                    ->setParameter('idempleado',$idempleado);
+        $resultado = $query2->getResult();
+        $idcentros=array();
+        //$idcentros[]=0;
+        if(!is_array($resultado)){
+            foreach ($resultado as $val) {
+                foreach ($val as $v){
+                    $idcentros[]=$v;
+                }
+            }
+        }
+        else{
+            $idcentros[]=0;
+        }
+
+       return $this->render('AdminBundle:Noticia:indexempleado.html.twig', array(
+        ));
+    }
+
 
     /**
      * Creates a new Noticia entity.

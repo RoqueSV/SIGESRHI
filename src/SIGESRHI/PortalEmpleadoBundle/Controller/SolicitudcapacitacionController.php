@@ -83,6 +83,12 @@ class SolicitudcapacitacionController extends Controller
         $grid->setDefaultOrder('fechasolicitud','desc');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Solicitudes Capacitaciones", $this->get("router")->generate("solicitudcapacitacion"));
+
         return $grid->getGridResponse('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:index.html.twig');
     }
     /**
@@ -109,7 +115,7 @@ class SolicitudcapacitacionController extends Controller
         $resultado = $query2->getResult();
         $idcentros=array();
         //$idcentros[]=0;
-        if(!is_null($resultado)){
+        if(!is_array($resultado)){
             foreach ($resultado as $val) {
                 foreach ($val as $v){
                     $idcentros[]=$v;
@@ -127,7 +133,7 @@ class SolicitudcapacitacionController extends Controller
         $resultado = $query3->getResult();
         $idcapAplicadas=array();
         //$idcapAplicadas[]=0;
-        if(!is_null($resultado)){
+        if(!is_array($resultado)){
             foreach ($resultado as $val) {
                 foreach ($val as $v){
                     $idcapAplicadas[]=$v;
@@ -164,6 +170,12 @@ class SolicitudcapacitacionController extends Controller
         $grid->setDefaultOrder('fechacapacitacion','asc');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitaciones Disponibles", $this->get("router")->generate("capacitacionesdisponibles"));
+
         return $grid->getGridResponse('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:indexCapas.html.twig');
     }
 
@@ -201,6 +213,13 @@ class SolicitudcapacitacionController extends Controller
         $capacitacion = $em->getRepository('CapacitacionBundle:Capacitacion')->find($idcapa);
         if($capacitacion!=null AND $empleado!=null){
             $this->get('session')->getFlashBag()->add('errornew','Errores en el Registro de Solicitud');
+            //Camino de migas
+            $breadcrumbs = $this->get("white_october_breadcrumbs");
+            $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Empleado", $this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Capacitaciones Disponibles", $this->get("router")->generate("capacitacionesdisponibles"));
+            $breadcrumbs->addItem("Registrar Solicitud", "");
+
             return $this->render('  SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:new.html.twig', array(
                 'entity' => $entity,
                 'form'   => $form->createView(),
@@ -228,6 +247,12 @@ class SolicitudcapacitacionController extends Controller
             $entity = new Solicitudcapacitacion();
             $form   = $this->createForm(new SolicitudcapacitacionType(), $entity);            
 
+            //Camino de migas
+            $breadcrumbs = $this->get("white_october_breadcrumbs");
+            $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Empleado", $this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Capacitaciones Disponibles", $this->get("router")->generate("capacitacionesdisponibles"));
+            $breadcrumbs->addItem("Registrar Solicitud", "");
             return $this->render('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:new.html.twig', array(
                 'entity' => $entity,
                 'form'   => $form->createView(),
@@ -255,6 +280,12 @@ class SolicitudcapacitacionController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Solicitudes Capacitaciones", $this->get("router")->generate("solicitudcapacitacion"));
+        $breadcrumbs->addItem("Solicitud","");
         return $this->render('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
