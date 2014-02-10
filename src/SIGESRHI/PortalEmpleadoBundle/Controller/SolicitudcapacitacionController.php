@@ -49,7 +49,25 @@ class SolicitudcapacitacionController extends Controller
                 $query->andWhere($tableAlias.'.idempleado = :emp')
                       ->setParameter('emp', $idempleado);
             }
-        );        
+        ); 
+
+        $source->manipulateRow(
+            function ($row)
+            {
+            // Change the ouput of the column quantity if anarticle is sold out
+            if ($row->getField('aprobacionsolicitud') == 'R') {
+                $row->setField('aprobacionsolicitud', "No aprobada");
+            }
+            if ($row->getField('aprobacionsolicitud') == 'A') {
+                $row->setField('aprobacionsolicitud', "Aprobada");
+            }
+            if ($row->getField('aprobacionsolicitud') == 'P') {
+                $row->setField('aprobacionsolicitud', "Pendiente");
+            }
+
+            return $row;
+            }
+        );       
         $rowAction1 = new RowAction('Ver detalle', 'solicitudcapacitacion_show');
         $rowAction1->setColumn('info_column');
         $rowAction1->manipulateRender(
@@ -62,7 +80,7 @@ class SolicitudcapacitacionController extends Controller
         $grid->addRowAction($rowAction1);
 
         $grid->setId('grid_solicitudesEmpleado');
-        $grid->setDefaultOrder('fechasolicitud','asc');
+        $grid->setDefaultOrder('fechasolicitud','desc');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
         return $grid->getGridResponse('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:index.html.twig');
@@ -80,18 +98,55 @@ class SolicitudcapacitacionController extends Controller
         $idempleado = $empleado->getId();
 
         $source = new Entity('CapacitacionBundle:Capacitacion','grupo_capacitacion');
+        //modificar source y quitar empelado
         $grid = $this->get('grid');
         $grid->setSource($source); 
-        //Aqui falta buscar los centros del empleado y meterlos en un array y enviarlos a la consulta para filtarlos
+        //Obtener los centros del empleado
+        $query2 = $em->createQuery("SELECT identity(u.idcentro)
+                         FROM ExpedienteBundle:Empleado e JOIN e.idrefrenda r JOIN r.idunidad u 
+                         WHERE e.id=:idempleado")
+                    ->setParameter('idempleado',$idempleado);
+        $resultado = $query2->getResult();
+        $idcentros=array();
+        //$idcentros[]=0;
+        if(!is_null($resultado)){
+            foreach ($resultado as $val) {
+                foreach ($val as $v){
+                    $idcentros[]=$v;
+                }
+            }
+        }
+        else{
+            $idcentros[]=0;
+        }
+        //Sacamos las capacitaciones a las que ya aplico
+        $query3 = $em->createQuery("SELECT identity(sc.idcapacitacion)
+                         FROM SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion sc JOIN sc.idempleado e
+                         WHERE e.id=:idempleado")
+                    ->setParameter('idempleado',$idempleado);
+        $resultado = $query3->getResult();
+        $idcapAplicadas=array();
+        //$idcapAplicadas[]=0;
+        if(!is_null($resultado)){
+            foreach ($resultado as $val) {
+                foreach ($val as $v){
+                    $idcapAplicadas[]=$v;
+                }
+            }
+        }
+        else{
+            $idcapAplicadas[]=0;
+        }
+        //////////////////
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
-            function($query) use ($tableAlias,$idempleado){
-                $query->andWhere('_idplan.tipoplan = :C')
-                      ->andWhere('_idplan_idcentro_idunidad_idrefrenda_idempleado.id = :emp')                    
+            function($query) use ($tableAlias,$idempleado,$idcentros,$idcapAplicadas){
+                $query->andWhere('_idplan.tipoplan = :C')                    
+                      ->andWhere($query->expr()->in('_idplan_idcentro.id', $idcentros))
                       ->orWhere('_idplan.tipoplan = :I')
+                      ->andWhere($query->expr()->notin($tableAlias.'.id', $idcapAplicadas))
                       ->setParameter('I','I')
-                      ->setParameter('C','C')
-                      ->setParameter('emp', $idempleado);
+                      ->setParameter('C','C');
             }
         );        
         $rowAction1 = new RowAction('Ver detalle', 'solicitudcapacitacion_new');
@@ -193,7 +248,7 @@ class SolicitudcapacitacionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion')->find($id);
-
+        $capacitacion = $entity->getIdcapacitacion();
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Solicitudcapacitacion entity.');
         }
@@ -202,7 +257,9 @@ class SolicitudcapacitacionController extends Controller
 
         return $this->render('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'delete_form' => $deleteForm->createView(),
+            'capacitacion' => $capacitacion
+            ));
     }
 
     /**
@@ -281,7 +338,7 @@ class SolicitudcapacitacionController extends Controller
             $em->remove($entity);
             $em->flush();
         }
-
+        $this->get('session')->getFlashBag()->add('delete','Solicitud Cancelada');
         return $this->redirect($this->generateUrl('solicitudcapacitacion'));
     }
 

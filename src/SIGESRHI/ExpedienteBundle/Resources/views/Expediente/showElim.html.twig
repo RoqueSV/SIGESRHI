@@ -12,15 +12,15 @@
 
     {% block grid_filters %}{% endblock %}       
         {% if aspirantesElim %}
+        <br>
         <a href="{{ 
                     path('eliminar_aspirantes_confirm',
                         { 'fecha': fecha }
                         )
                     }}" class="btn btn-danger" onclick="return confirm('Se borraran los datos de los aspirantes mostrados ¿Está seguro de Eliminar? ')">Eliminar</a>
-        {% endif %}
-        <br>
+        {% endif %}        
             <a href="{{ 
-                path('eliminar_aspirantes')
+                path('pantalla_aspirante')
                 }}" class="btn">Cancelar</a>
     </div>
 {% endblock %}

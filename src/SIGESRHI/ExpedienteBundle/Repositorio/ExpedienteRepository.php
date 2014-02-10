@@ -80,7 +80,7 @@ public function obtenerPlazaEmpleado($idcontratacion)
   return $this->getEntityManager()
     ->createQuery("SELECT p.nombreplaza, ce.nombrecentro, c.id
                          FROM ExpedienteBundle:Contratacion c JOIN c.puesto r JOIN r.idplaza p JOIN r.idunidad u JOIN u.idcentro ce 
-                         WHERE c.id=:idc AND  c.fechafincontrato IS NULL
+                         WHERE c.id=:idc AND  c.fechafinnom IS NULL
                          ")
           ->setParameter('idc',$idcontratacion)  
           ->getResult();

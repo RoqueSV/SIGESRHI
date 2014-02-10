@@ -15,7 +15,7 @@
     <form action="{{ path('solicitudcapacitacion_create') }}" method="post" {{ form_enctype(form) }}>
         {#{ form_widget(form) }#}
     <fieldset><legend>Detalles Capacitación</legend>
-    <table class='table mitable' border='0' width='100%' align='center'>    <br>    
+    <table class='table mitable table-bordered' width='100%' align='center'>    <br>    
         <tr>
             <th>Temática</th>
             <td colspan="3" width="75%">{{ capacitacion.tematica }}</td>
@@ -51,8 +51,8 @@
             <td>{{ capacitacion.idcapacitador.idinstitucion.nombreinstitucion }}</td>
         </tr>
         <tr>
-            <th>Cupo disponible</th>
-            <td colspan="3" width="75%"></td>
+            <th>Cupo</th>
+            <td colspan="3" width="75%">{{ capacitacion.cupo }}</td>
         </tr>
     </table>
     </fieldset>
@@ -74,11 +74,7 @@
     {{ form_rest(form) }}
     <div class='text-center'>
         <button type="submit" class="btn btn-primary">Aplicar</button>
-        <a  href="{{ 
-                path('solicitudcapacitacion'                        
-                    )
-                }}" class="btn">Regresar
-        </a>
+        <a href="#" onclick="history.back()" class="btn">Cancelar</a>
     <div>
     </form>
 {% endblock %}

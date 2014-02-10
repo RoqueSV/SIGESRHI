@@ -12,7 +12,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  *
  * @ORM\Table(name="capacitacion")
  * @ORM\Entity
- * @GRID\Source(columns="id,tematica,fechacapacitacion,horainiciocapacitacion,horafincapacitacion,estadocapacitacion,idplan.id,idplan.idcentro.idunidad.idrefrenda.idempleado.id", groups={"grupo_capacitacion"})
+ * @GRID\Source(columns="id,tematica,fechacapacitacion,horainiciocapacitacion,horafincapacitacion,estadocapacitacion,idplan.id,idplan.idcentro.id", groups={"grupo_capacitacion"})
  */
 class Capacitacion
 {
@@ -210,7 +210,7 @@ class Capacitacion
      *   @ORM\JoinColumn(name="idplan", referencedColumnName="id")
      * })
      * @GRID\Column(field="idplan.id", filterable=false, groups={"grupo_capacitacion"}, visible=false, joinType="inner")
-     * @GRID\Column(field="idplan.idcentro.idunidad.idrefrenda.idempleado.id", visible=false, groups={"grupo_capacitacion"}, filterable=false)
+     * @GRID\Column(field="idplan.idcentro.id", visible=false, groups={"grupo_capacitacion"}, filterable=false)
      */
     private $idplan;
 
