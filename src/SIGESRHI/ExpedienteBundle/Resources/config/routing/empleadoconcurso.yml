@@ -1,7 +1,3 @@
-empleadoconcurso:
-    pattern:  /
-    defaults: { _controller: "ExpedienteBundle:Empleadoconcurso:index" }
-
 empleadoconcurso_show:
     pattern:  /{id}/show
     defaults: { _controller: "ExpedienteBundle:Empleadoconcurso:show" }
@@ -14,15 +10,6 @@ empleadoconcurso_create:
     pattern:  /create
     defaults: { _controller: "ExpedienteBundle:Empleadoconcurso:create" }
     requirements: { _method: post }
-
-empleadoconcurso_edit:
-    pattern:  /{id}/edit
-    defaults: { _controller: "ExpedienteBundle:Empleadoconcurso:edit" }
-
-empleadoconcurso_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "ExpedienteBundle:Empleadoconcurso:update" }
-    requirements: { _method: post|put }
 
 empleadoconcurso_delete:
     pattern:  /{id}/delete

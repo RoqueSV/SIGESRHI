@@ -8,19 +8,21 @@
 
 {# error en el create de la capacitacion #}
 {% for flashMessage in app.session.flashbag.get('errorcreate') %}
-  <br/>
+  <br/><br/>
   <div class="alert alert-danger">
     <p>{{ flashMessage }}</p>
   </div>
 {% endfor %}
 {# aviso de plan registrado correctamente #}
 {% for flashMessage in app.session.flashbag.get('aviso') %}
+<br/><br/>
   <div class="alert alert-success">
     <p>{{ flashMessage }}</p>
   </div>
 {% endfor %}
 {# aviso generado al registrar correctamente las capacitaciones #}
 {% for flashMessage in app.session.flashbag.get('avisocapacitacion') %}
+<br/><br/>
   <div class="alert alert-success">
     <p>{{ flashMessage }}</p>
   </div>

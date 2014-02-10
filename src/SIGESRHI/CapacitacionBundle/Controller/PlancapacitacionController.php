@@ -38,6 +38,7 @@ class PlancapacitacionController extends Controller
         $rowAction1 = new RowAction('Consultar', 'plancapacitacion_show');
         $grid->addRowAction($rowAction1);
         
+        $grid->setNoDataMessage('Actualmente no existen planes de capacitación registrados');
         $grid->setDefaultOrder('anoplan', 'desc');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         

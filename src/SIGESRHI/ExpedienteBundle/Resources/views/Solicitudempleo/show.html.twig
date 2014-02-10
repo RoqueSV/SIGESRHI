@@ -356,7 +356,7 @@
 
         <div class="text-center">
         <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id, 'ruta':ruta, 'vista':vista_retorno, 'nogrid':nogrid }) }}" class="btn btn-primary">Generar PDF</a>
-        <button type="button" class="btn" onclick="window.history.back(1);">Regresar</button>
+         <a href="{{app.request.headers.get('referer')}}"  class="btn">Regresar</a>
         {#{% if entity.numsolicitud == 0 %}
         <a href="{{ path('solicitud_pruebanumsol', { 'id': entity.id }) }}" class="btn">Asignar Numero de Solicitud</a>
         {% endif %}#}

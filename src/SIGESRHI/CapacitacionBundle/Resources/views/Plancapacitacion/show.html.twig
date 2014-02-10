@@ -48,8 +48,9 @@
      {% block grid_filters %}{% endblock %}
      <br />
      <div class="text-center">
-     <a href="{{path('plancapacitacion')}}" class="btn"> Cancelar </a>
+     <a href="{{path('reporte_plan_capacitacion',{'anio':entity.anoplan,'id':entity.id})}}" class="btn btn-primary"> Generar PDF </a>
      <a href="{{path('capacitacion_new',{'idplan':entity.id})}}" class="btn"> Registrar capacitación </a>
+     <a href="{{path('plancapacitacion')}}" class="btn"> Cancelar </a>
      </div>
 
 

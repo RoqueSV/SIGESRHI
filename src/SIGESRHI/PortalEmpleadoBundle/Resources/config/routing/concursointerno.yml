@@ -1,0 +1,12 @@
+concurso_empleado_consultar:
+    pattern:  /
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:ConcursoInterno:consultar" }
+
+concurso_empleado_detalle:
+    pattern:  /detalleconcurso
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:ConcursoInterno:detalleConcurso" }
+
+concurso_empleado_create:
+    pattern:  /create
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:ConcursoInterno:create" }
+    requirements: { _method: post }

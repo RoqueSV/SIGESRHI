@@ -138,6 +138,167 @@ class ModuloReporteController extends Controller
      return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
    }
 
+   public function seleccionarReporteEmpleadoAction()
+    {
+     
+     $em = $this->getDoctrine()->getManager();
+     $centros = $em->getRepository('AdminBundle:Centrounidad')->findAll();
+
+     // Incluimos camino de migas
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Generar reportes y documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
+     $breadcrumbs->addItem("Reportes", $this->get("router")->generate("pantalla_reportes"));
+     $breadcrumbs->addItem("Expediente de empleados", $this->get("router")->generate("reporte_empleado_seleccionar"));
+        
+     return $this->render('ReporteBundle:Reportes:reporte_empleado.html.twig',array('centros'=>$centros));
+    }
+
+    public function ReporteEmpleadosAntiguedadAction()
+    {
+
+     /* Obtengo parametros */
+     $request = $this->getRequest();
+     $anios = $request->get('anios'); 
+
+     //Comprobar existencia de registros
+      $em = $this->getDoctrine()->getManager();
+      $empleados = $em->getRepository('ExpedienteBundle:Hojaservicio')->findAll();
+
+      $cuenta = 0;
+      $antiguedad = date("Y-m-d", strtotime(date('Y-m-d') ."-".$anios." year"));  
+      $fecha_antiguo = new \Datetime($antiguedad);
+
+      foreach ($empleados as $empleado) {
+           if($empleado->getFechaingreso() <= $fecha_antiguo)
+           $cuenta++;
+      }
+
+      if($cuenta == 0){
+      	$this->get('session')->getFlashBag()->add('error', 'No existen registros para la cantidad de años ingresada');
+
+        return $this->redirect($this->generateUrl('reporte_empleado_seleccionar'));
+      }
+
+      /* ********* */
+     
+      // Incluimos camino de migas
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Generar reportes y documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
+     $breadcrumbs->addItem("Reportes", $this->get("router")->generate("pantalla_reportes"));
+     $breadcrumbs->addItem("Expediente de empleados", $this->get("router")->generate("reporte_empleado_seleccionar"));
+     $breadcrumbs->addItem("Reporte", "");
+     
+     // Nombre reporte
+     $filename= 'Reporte empleadosantiguos.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Estadisticos/reporte_empleadosantiguos.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("años", new java("java.lang.Integer", $anios));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+   public function ReporteEmpleadosDoblePlazaAction()
+    {
+         
+      // Incluimos camino de migas
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Generar reportes y documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
+     $breadcrumbs->addItem("Reportes", $this->get("router")->generate("pantalla_reportes"));
+     $breadcrumbs->addItem("Expediente de empleados", $this->get("router")->generate("reporte_empleado_seleccionar"));
+     $breadcrumbs->addItem("Reporte", "");
+     
+     // Nombre reporte
+     $filename= 'Reporte empleadosdobleplaza.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Estadisticos/reporte_empleadoscondobleplaza.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+
+   public function ReporteEmpleadosCentroAction()
+    {
+
+     /* Obtengo parametros */
+     $request = $this->getRequest();
+     $idcentro = $request->get('idcentro');
+
+     //Comprobar existencia de registros
+      $em = $this->getDoctrine()->getManager();
+      $query = $em->createQuery("SELECT COUNT(r.idempleado) AS  numempleados 
+                                 FROM AdminBundle:Centrounidad c 
+                                 JOIN c.idunidad u
+                                 JOIN u.idrefrenda r
+                                 where c.id = :idcentro")
+                   ->setParameter('idcentro',$idcentro);
+
+      $resultado = $query->getsingleResult();
+      $numempleados = $resultado['numempleados'];
+
+      if($numempleados == 0){
+        $this->get('session')->getFlashBag()->add('error', 'No existen empleados en el centro seleccionado');
+
+        return $this->redirect($this->generateUrl('reporte_empleado_seleccionar'));
+      }
+
+      /* ************************ */
+         
+      // Incluimos camino de migas
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Generar reportes y documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
+     $breadcrumbs->addItem("Reportes", $this->get("router")->generate("pantalla_reportes"));
+     $breadcrumbs->addItem("Expediente de empleados", $this->get("router")->generate("reporte_empleado_seleccionar"));
+     $breadcrumbs->addItem("Reporte", "");
+     
+     // Nombre reporte
+     $filename= 'Reporte empleadosxcentro.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Estadisticos/reporte_empleadoxcentro.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("id_centro", new java("java.lang.Integer", $idcentro));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
 
 
 

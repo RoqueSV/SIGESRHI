@@ -61,15 +61,30 @@ function eliminar() {
 
 
       <div class="text-center">
-        <a href="{{ path('reporte_cartelconcurso',{'id':entity.id, 'interesados':interesados}) }}" class="btn btn-primary"> Generar cartel de concurso</a>
-        <a href="{{ path('concurso_memo',{ 'id': entity.id, 'interesados':interesados,'tipo':1 }) }}" class="btn btn-primary"> Generar memorándum</a>
+        <fieldset class="mifieldset"><legend>Acciones</legend>
         <a href="{{ path('concurso_edit', { 'id': entity.id, 'interesados':interesados}) }}" class="btn">Editar</a>
         <a href="{{ path('concurso') }}" class="btn">Regresar al listado</a>
         <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
+        </fieldset>
+        <br/>
+
+        <fieldset class="mifieldset"><legend>Generar documentos</legend>
+        <a href="{{ path('reporte_cartelconcurso',{'id':entity.id, 'interesados':interesados}) }}" class="btn btn-primary"> Generar cartel de concurso</a>
+        <a href="{{ path('concurso_memo',{ 'id': entity.id, 'interesados':interesados,'tipo':1 }) }}" class="btn btn-primary"> Generar memorándum</a>
+        </fieldset>
       </div>
         <form action="{{ path('concurso_delete', { 'id': entity.id }) }}" id="form_borrar" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             <div class="invisible"> {{ form_widget(delete_form) }} </div>
-        </form>      
+        </form>   
+
+<style type="text/css">
+.mifieldset{
+        width: 70%;
+        padding: 10px;
+        margin: 0 auto;
+        text-align: center; 
+        }
+</style>   
 
 {% endblock %}

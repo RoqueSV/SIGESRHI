@@ -15,21 +15,7 @@ use SIGESRHI\ExpedienteBundle\Form\EmpleadoconcursoType;
  */
 class EmpleadoconcursoController extends Controller
 {
-    /**
-     * Lists all Empleadoconcurso entities.
-     *
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('ExpedienteBundle:Empleadoconcurso')->findAll();
-
-        return $this->render('ExpedienteBundle:Empleadoconcurso:index.html.twig', array(
-            'entities' => $entities,
-        ));
-    }
-
+    
     /**
      * Creates a new Empleadoconcurso entity.
      *
@@ -55,6 +41,15 @@ class EmpleadoconcursoController extends Controller
             $num=$resultado['numemp'];
 
             if($num != 0){
+                // Incluimos camino de migas
+                $breadcrumbs = $this->get("white_october_breadcrumbs");
+                $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+                $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
+                $breadcrumbs->addItem("Consultar concurso interno", $this->get("router")->generate("concurso_consultar"));
+                $breadcrumbs->addItem("Información de concurso", $this->get("router")->generate("detalle_concurso",array('id'=>$request->get('idconcurso'))));
+                $breadcrumbs->addItem("Registrar empleado", $this->get("router")->generate("concurso_consultar"));
+
+
                 $this->get('session')->getFlashBag()->add('error', 'Error. El empleado seleccionado ya se encuentra participando en este concurso.');
                 return $this->render('ExpedienteBundle:Empleadoconcurso:new.html.twig', array(
                 'entity' => $entity,
@@ -127,65 +122,39 @@ class EmpleadoconcursoController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
+         // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Promoción de personal", $this->get("router")->generate("pantalla_modulo",array('id'=>2)));
+        $breadcrumbs->addItem("Consultar concurso interno", $this->get("router")->generate("concurso_consultar"));
+        $breadcrumbs->addItem("Información de concurso", $this->get("router")->generate("detalle_concurso",array('id'=>$entity->getIdconcurso()->getId())));
+        $breadcrumbs->addItem("Ver documentación empleado", $this->get("router")->generate("concurso_consultar"));
+        
+        /* Obtener plaza (s) actuales del empleado */
+        $query=$em->createQuery('SELECT p.nombreplaza FROM ExpedienteBundle:Empleado e
+        join e.idrefrenda r
+        join r.idplaza p
+        WHERE e.id = :idempleado'
+        )->setParameter('idempleado', $entity->getIdempleado()->getId());
+        $plazas = $query->getResult();
+
+        /* ************* */     
+
+        if($entity->getDocconcurso() != null){
+          $extension=substr($entity->getDocconcurso(),-3,3);
+        
+
         return $this->render('ExpedienteBundle:Empleadoconcurso:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
-    }
-
-    /**
-     * Displays a form to edit an existing Empleadoconcurso entity.
-     *
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ExpedienteBundle:Empleadoconcurso')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Empleadoconcurso entity.');
-        }
-
-        $editForm = $this->createForm(new EmpleadoconcursoType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('ExpedienteBundle:Empleadoconcurso:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Edits an existing Empleadoconcurso entity.
-     *
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ExpedienteBundle:Empleadoconcurso')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Empleadoconcurso entity.');
+            'extension'   => $extension,
+            'plazas'      => $plazas,        ));
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new EmpleadoconcursoType(), $entity);
-        $editForm->bind($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('empleadoconcurso_edit', array('id' => $id)));
-        }
-
-        return $this->render('ExpedienteBundle:Empleadoconcurso:edit.html.twig', array(
+        return $this->render('ExpedienteBundle:Empleadoconcurso:show.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+            'plazas'      => $plazas,    ));
     }
 
     /**

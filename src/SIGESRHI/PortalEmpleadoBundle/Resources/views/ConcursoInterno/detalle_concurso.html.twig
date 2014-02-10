@@ -1,0 +1,96 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+{% for flashMessage in app.session.flashbag.get('aviso') %}
+  <div class="alert alert-success">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('error') %}
+  <div class="alert alert-danger">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
+<h3 class="text-center">Datos de concurso</h3>
+    <table class="table table-bordered">
+            <tr>
+                <th width="25%">Plaza en concurso</th>
+                <td>{{ entity.idplaza }}</td>
+            </tr>
+            <tr>
+                <th>Misión del puesto</th>
+                <td><div class="justifyColum">{{ entity.idplaza.misionplaza }}</div></td>
+            </tr>
+            <tr>
+                <th>Centro al que pertenece</th>
+                <td>{{entity.idcentro}}</td>
+            </tr>
+            <tr>
+                <th>Fecha de cierre de concurso</th>
+                <td>{{ entity.fechacierre|date('Y-m-d')|fecha }}</td>
+            </tr>
+    </table>
+
+    <a href="#funciones" class="tool" data-toggle="modal" title="Ver detalles">Ver funciones de la plaza</a>
+    
+    <br/><br/>
+    
+    <fieldset>
+     <legend>Aplicar a plaza vacante</legend><br/>
+     
+
+     <form action="{{ path('concurso_empleado_create') }}" method="post" {{ form_enctype(form) }} class="text-center">
+
+        <p class="justifyColum">Si desea participar en el concurso interno, por favor envíe su hoja de vida actualizada y anexe una nota donde exprese su interés de aplicar a la plaza vacante.</p>
+        <p class="text-center text-success">(Los formatos permitidos son: pdf y word)</p><br/><br/>
+
+        {{form_row(form.file)}}
+
+        {{ form_rest(form) }}
+
+        <input type="hidden" name="idconcurso" id="idconcurso" value="{{entity.id}}"/>
+    
+       <br/>
+       <div class="text-center">
+           <button type="submit" class="btn btn-primary">Registrar</button>
+           <a href="{{ path('concurso_empleado_consultar') }}" class="btn">Cancelar</a>
+       </div>
+     </form>
+
+    </fieldset>
+
+
+    
+<!-- Funciones plaza -->
+<div class="modal fade" id="funciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Funciones/Actividades básicas de la plaza</h4>
+      </div>
+      <div class="modal-body">
+       
+       {% if entity.idplaza.idfuncion|length > 0 %}
+              
+            {% for funcion in entity.idplaza.idfuncion %}
+                    <ul style="list-style-type: disc; margin-left:5px;">
+                       <li><p class="justifyColum">{{funcion.nombrefuncion}}</p><br/> </li>
+                    </ul>  
+            {% endfor %}
+
+     {% else %}
+
+        <p>No definido.</p>
+
+     {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div><!-- /.modal-contenido -->
+  </div><!-- /.modal-dialogo -->
+</div><!-- /.modal -->
+
+{% endblock %}

@@ -31,7 +31,7 @@ class Plancapacitacion
     /**
      * @var string
      *
-     * @ORM\Column(name="nombreplan", type="string", length=25, nullable=true)
+     * @ORM\Column(name="nombreplan", type="string", length=100, nullable=true)
      * @GRID\Column(filterable=false, groups={"grupo_plancapacitacion"}, visible=true, title="Nombre")
      */
     private $nombreplan;

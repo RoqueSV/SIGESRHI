@@ -62,3 +62,27 @@ reporte_aspirante:
     pattern:  /reporteaspirante
     defaults: { _controller: ReporteBundle:ModuloReporte:ReporteAspirante }
 
+reporte_evaluacion:
+    pattern:  /reporteevaluacion
+    defaults: { _controller: ReporteBundle:Reporte:ReporteEvaluacion }
+
+reporte_empleado_seleccionar:
+    pattern:  /seleccionarreporte
+    defaults: { _controller: ReporteBundle:ModuloReporte:seleccionarReporteEmpleado }
+
+reporte_empleado_antiguedad:
+    pattern:  /reporteantiguedad
+    defaults: { _controller: ReporteBundle:ModuloReporte:ReporteEmpleadosAntiguedad }
+
+reporte_empleado_dobleplaza:
+    pattern:  /reportedobleplaza
+    defaults: { _controller: ReporteBundle:ModuloReporte:ReporteEmpleadosDoblePlaza }
+
+reporte_empleado_centro:
+    pattern:  /reporteporcentro
+    defaults: { _controller: ReporteBundle:ModuloReporte:ReporteEmpleadosCentro }
+
+reporte_plan_capacitacion:
+    pattern:  /reporteplancapacitacion
+    defaults: { _controller: ReporteBundle:Reporte:ReportePlanCapacitacion }
+

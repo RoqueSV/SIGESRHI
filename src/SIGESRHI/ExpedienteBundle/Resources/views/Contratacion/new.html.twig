@@ -45,7 +45,7 @@
                 <tr>  
                     <th>Plaza (s):</th>
                     {% if (plazas|length) > 0 %}
-                    <td>{{ plazas[0].nombreplaza }}
+                    <td>{{ plazas[0].nombreplaza }}</td>
                     {% for i in 1..(plazas|length - 1) if (plazas|length) > 1 %}
                     <tr><td></td><td>{{ plazas[i].nombreplaza }}</td></tr>
                     {% endfor %}

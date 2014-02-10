@@ -16,20 +16,6 @@ use SIGESRHI\CapacitacionBundle\Form\CapacitacionmodificadaType;
  */
 class CapacitacionController extends Controller
 {
-    /**
-     * Lists all Capacitacion entities.
-     *
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('CapacitacionBundle:Capacitacion')->findAll();
-
-        return $this->render('CapacitacionBundle:Capacitacion:index.html.twig', array(
-            'entities' => $entities,
-        ));
-    }
 
     /**
      * Creates a new Capacitacion entity.
@@ -157,30 +143,7 @@ class CapacitacionController extends Controller
             'delete_form' => $deleteForm->createView(),        ));
     }
 
-    /**
-     * Displays a form to edit an existing Capacitacion entity.
-     *
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('CapacitacionBundle:Capacitacion')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Capacitacion entity.');
-        }
-
-        $editForm = $this->createForm(new CapacitacionType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('CapacitacionBundle:Capacitacion:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
+    
     /**
      * Edits an existing Capacitacion entity.
      *
@@ -222,6 +185,31 @@ class CapacitacionController extends Controller
 
         $modificada->setJustificacionmodificacion($entity->getJustificacioncambios());
 
+        /**** Validar horas ****/
+
+          $horaini = strtotime( $entity->getHorainiciocapacitacion()->format('H:i') );   
+          $horafin = strtotime( $entity->getHorafincapacitacion()->format('H:i') );
+
+        if($horaini > $horafin){
+            
+           //Incluimos camino de migas
+           $breadcrumbs = $this->get("white_october_breadcrumbs");
+           $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+           $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+           $breadcrumbs->addItem("Plan de capacitaciones", $this->get("router")->generate("pantalla_capacitaciones"));
+           $breadcrumbs->addItem("Consultar plan de capacitacion",$this->get("router")->generate("plancapacitacion"));
+           $breadcrumbs->addItem("Listado de capacitaciones",$this->get("router")->generate("plancapacitacion_show",array('id'=>$entity->getIdplan()->getId())));
+           $breadcrumbs->addItem("Datos de capacitacion",$this->get("router")->generate("capacitacion_show",array('id'=>$id)));
+           $breadcrumbs->addItem("Modificación","");
+
+            $this->get('session')->getFlashBag()->add('error', 'Error. La hora inicial es mayor a la final. Verifique los datos');
+            return $this->render('CapacitacionBundle:Capacitacion:modificar.html.twig', array(
+            'id' => $id,
+            'form'   => $editForm->createView(),
+            ));
+        }
+        /**** Fin validar horas ****/
+
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->persist($modificada);
@@ -231,12 +219,10 @@ class CapacitacionController extends Controller
             $this->get('session')->getFlashBag()->add('edit', 'Capacitación modificada correctamente');
             return $this->redirect($this->generateUrl('capacitacion_show', array('id' => $id)));
         }
-
-        return $this->render('CapacitacionBundle:Capacitacion:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('CapacitacionBundle:Capacitacion:modificar.html.twig', array(
+            'id' => $id,
+            'form'   => $editForm->createView(),
+            ));
     }
 
     /**
@@ -298,7 +284,7 @@ class CapacitacionController extends Controller
         $breadcrumbs->addItem("Consultar plan de capacitacion",$this->get("router")->generate("plancapacitacion"));
         $breadcrumbs->addItem("Listado de capacitaciones",$this->get("router")->generate("plancapacitacion_show",array('id'=>$entity->getIdplan()->getId())));
         $breadcrumbs->addItem("Datos de capacitacion",$this->get("router")->generate("capacitacion_show",array('id'=>$id)));
-        $breadcrumbs->addItem("Modificación",$this->get("router")->generate("capacitacion"));
+        $breadcrumbs->addItem("Modificación","");
 
         return $this->render('CapacitacionBundle:Capacitacion:modificar.html.twig', array(
             'id'   => $id,

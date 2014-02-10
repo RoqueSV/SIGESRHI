@@ -2,6 +2,11 @@
 
 {% block principal -%}
 
+{% for flashMessage in app.session.flashbag.get('error') %}
+  <div class="alert alert-danger">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
 
 <h3 class="text-center">¿Qué tipo de modificación desea realizar?</h3>
 <br/>

@@ -756,4 +756,85 @@ public function ReporteCertificacionAction()
    }
 
 
+   public function ReporteEvaluacionAction()
+    {
+     $em = $this->getDoctrine()->getManager();
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idevaluacion  = $request->get('idevaluacion'); 
+     $calificacion  = $request->get('calificacion'); 
+
+     $evaluacion = $em->getRepository('EvaluacionBundle:Evaluacion')->find($idevaluacion);
+
+     if(count($evaluacion->getIncidentes()) == 0){
+        $incidentes = 'N';
+     }
+     else{
+        $incidentes = 'Y';
+     }
+          
+     // Nombre reporte
+     $filename= 'Evaluacion.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Evaluacionindividual/formulario_evaluacionxempleado.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("nevaluacion", new java("java.lang.Integer", $idevaluacion));
+     $Parametro->put("cadena", new java("java.lang.String", $calificacion));
+     $Parametro->put("incidentes", new java("java.lang.String", $incidentes));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+
+
+   public function ReportePlanCapacitacionAction()
+    {
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $anio  = $request->get('anio'); 
+
+     // Incluimos camino de migas
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Capacitaciones", $this->get("router")->generate("pantalla_modulo",array('id'=>3)));
+     $breadcrumbs->addItem("Plan de capacitaciones", $this->get("router")->generate("pantalla_capacitaciones"));
+     $breadcrumbs->addItem("Consultar plan de capacitación",$this->get("router")->generate("plancapacitacion"));
+     $breadcrumbs->addItem("Listado de capacitaciones",$this->get("router")->generate("plancapacitacion_show",array('id'=>$request->get('id'))));
+     $breadcrumbs->addItem("Reporte","");
+          
+     // Nombre reporte
+     $filename= 'Plan Capacitacion.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Capacitaciones/planinstitucional_impreso.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("ano", new java("java.lang.String", $anio));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+
  }

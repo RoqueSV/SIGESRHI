@@ -10,7 +10,7 @@
 FROM
 plancapacitacion pc JOIN capacitacion cap ON (pc.id=cap.idplan)
 JOIN capacitador c ON (c.id=cap.idcapacitador)
-WHERE anoplan='2014'
+WHERE anoplan=$P{ano}
 order by 7]]>
 	</queryString>
 	<field name="nombreplan" class="java.lang.String"/>
@@ -24,7 +24,7 @@ order by 7]]>
 	<field name="horas" class="java.lang.String"/>
 	<field name="lugarcapacitacion" class="java.lang.String"/>
 	<variable name="tituloreporte" class="java.lang.String"/>
-	<group name="MES">
+	<group name="MES" keepTogether="true">
 		<groupExpression><![CDATA[$F{mes}]]></groupExpression>
 		<groupHeader>
 			<band height="40">
@@ -111,7 +111,7 @@ order by 7]]>
 					<textElement verticalAlignment="Middle">
 						<font size="11" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{mes}.equals("01")?"ENERO":$F{mes}.equals("02")?"FEBRERO":$F{mes}.equals("03")?"MARZO":$F{mes}.equals(04)?"ABRIL":$F{mes}.equals("05")?"MAYO":$F{mes}.equals("06")?"JUNIO":$F{mes}.equals("07")?"JULIO":$F{mes}.equals("08")?"AGOSTO":$F{mes}.equals("09")?"SEPTIEMBRE":$F{mes}.equals("10")?"OCTUBRE":$F{mes}.equals("11")?"NOVIEMBRE":"DICIEMBRE"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{mes}.equals("01")?"ENERO":$F{mes}.equals("02")?"FEBRERO":$F{mes}.equals("03")?"MARZO":$F{mes}.equals("04")?"ABRIL":$F{mes}.equals("05")?"MAYO":$F{mes}.equals("06")?"JUNIO":$F{mes}.equals("07")?"JULIO":$F{mes}.equals("08")?"AGOSTO":$F{mes}.equals("09")?"SEPTIEMBRE":$F{mes}.equals("10")?"OCTUBRE":$F{mes}.equals("11")?"NOVIEMBRE":"DICIEMBRE"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>

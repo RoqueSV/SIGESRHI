@@ -83,6 +83,7 @@ class ConcursoController extends Controller
         $rowAction1 = new RowAction('Seleccionar', 'detalle_concurso');
         $grid->addRowAction($rowAction1);
         
+        $grid->setNoDataMessage('Actualmente no existen concursos internos hábiles');
         $grid->setDefaultOrder('fechacierre', 'desc');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
@@ -249,9 +250,7 @@ class ConcursoController extends Controller
         $actionsColumn->setSeparator("<br />");
         $grid->addColumn($actionsColumn, 4);
 
-
-        // Pendiente!
-        $rowAction1 = new RowAction('Ver documentación', 'concurso_new');
+        $rowAction1 = new RowAction('Ver documentación', 'empleadoconcurso_show');
         $rowAction1->setColumn('info_column_1');
         $grid->addRowAction($rowAction1);
 
@@ -267,7 +266,8 @@ class ConcursoController extends Controller
         $rowAction2->setColumn('info_column_1');
         $grid->addRowAction($rowAction2);
 
-        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));       
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15')); 
+
         
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");

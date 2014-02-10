@@ -1,0 +1,140 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+{% for flashMessage in app.session.flashbag.get('error') %}
+  <div class="alert alert-danger">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
+<fieldset><legend>Seleccionar tipo de reporte</legend>
+<h3 class="text-center">Seleccione el tipo de reporte a generar</h3>
+<br/>
+
+<table style="margin-left:250px; padding:10px">
+ 	<tr>
+ 		<td>
+          <label class="radio">
+             <input type="radio" name="tipomod" id="antiguos" value="1" required = "required">&nbsp;&nbsp;
+             Reporte de empleados por antiguedad
+          </label>
+        </td>
+    </tr>
+    <tr>
+    	<td>
+          <label class="radio">
+             <input type="radio" name="tipomod" id="doble" value="2">&nbsp;&nbsp;
+             Reportes de empleados que ocupan doble plaza
+          </label>
+        </td>
+    </tr>
+    <tr>
+    	<td>
+          <label class="radio">
+            <input type="radio" name="tipomod" id="centro" value="3">&nbsp;&nbsp;
+            Reportes de empleados por centro
+         </label>
+        </td>
+    </tr>
+</table>
+<div id="tipo_requerido" class="text-center"><label class="help-inline">* Seleccione una opción.</label></div>  
+</fieldset>
+<br/>  
+  <div class="text-center">
+      <button id="boton" class="btn"> Seleccionar </button>
+      <a href="{{ path('pantalla_reportes') }}"  class="btn">Cancelar</a>
+  </div>
+
+  <br/>
+
+  <div id="antiguedad" class='hide'>
+  <fieldset><legend>Parámetros del reporte</legend>
+
+    <form action="{{ path('reporte_empleado_antiguedad') }}" method="post">
+
+      <h4 class="text-center"> Ingrese una cantidad en años </h4>
+      <div class='text-center'>
+
+         <div class="control-group">
+            <label for="codempleado" class="control-label required">Cantidad *</label>
+            <div class="controls">
+            <input type="text" name="anios" id="anios" maxlength="2" required="required" class="input-small" data-bvalidator="number"/>
+            </div>
+         </div>
+
+        <button type='submit' class='btn btn-primary'>Generar</button>
+      </div>
+   </form>
+  </fieldset>
+
+  </div>
+
+  <div id="dobleplaza" class='hide'>
+      <form action="{{ path('reporte_empleado_dobleplaza') }}" id="form_plaza" method="post">
+
+      </form>
+  </div>
+
+  <div id="empleadoscentro" class='hide'>
+    <fieldset><legend>Parámetros del reporte</legend>
+      <form action="{{ path('reporte_empleado_centro') }}"  method="post">
+        
+        <div class='text-center'>
+         <h4 class="text-center"> Seleccione el centro de atención </h4>
+         <select id="idcentro" name="idcentro" class="input-xmlarge">
+            {% for centro in centros %}
+             <option value="{{centro.id}}">{{centro.nombrecentro}}</option>
+            {% endfor %}
+         </select>
+         <br/>
+         <button type='submit' class='btn btn-primary'>Generar</button>
+        </div>
+      
+      </form>
+    </fieldset>
+  </div>
+
+
+<script type='text/javascript'>
+
+$(document).ready(function(){
+    $('#tipo_requerido').hide();
+
+
+    $("#boton").click(function() {  
+        if($("#antiguos").is(':checked')) {  
+             
+             $('#tipo_requerido').hide();
+             $('#empleadoscentro').hide();
+             $('#antiguedad').show();           
+            
+         } else if($("#doble").is(':checked')) {  
+
+             $('#tipo_requerido').hide();
+             $('#antiguedad').hide();
+             $('#empleadoscentro').hide();
+             document.getElementById("form_plaza").submit();
+           
+         } else if($("#centro").is(':checked')){
+
+             $('#tipo_requerido').hide();
+             $('#antiguedad').hide();
+             $('#empleadoscentro').show();
+         
+         }
+         else{
+          $('#tipo_requerido').show(); 
+         } 
+    });  
+});
+
+</script>
+
+<style type="text/css">
+.help-inline{
+        color: rgb(185, 74, 72); 
+        }
+</style>
+
+{% endblock %}

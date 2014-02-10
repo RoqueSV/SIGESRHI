@@ -5,3 +5,7 @@ sigesrhi_portal_empleado_homepage:
 SIGESRHIPortalEmpleadoBundle_solicitudcapacitacion:
     resource: "@SIGESRHIPortalEmpleadoBundle/Resources/config/routing/solicitudcapacitacion.yml"
     prefix:   /solicitudcapacitacion
+
+SIGESRHIPortalEmpleadoBundle_concursointerno:
+    resource: "@SIGESRHIPortalEmpleadoBundle/Resources/config/routing/concursointerno.yml"
+    prefix:   /concursointerno

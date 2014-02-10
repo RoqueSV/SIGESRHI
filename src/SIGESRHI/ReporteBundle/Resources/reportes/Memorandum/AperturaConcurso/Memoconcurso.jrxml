@@ -39,7 +39,7 @@
               join empleado em on (e.id=em.idexpediente)
               join refrendaact ra on (em.id=ra.idempleado)
               join hojaservicio hs on (hs.idexpediente=e.id)
-              where nombreplaza = 'Gerente') as gerente,
+              where upper(nombreplaza) like upper('%Gerente Administrativo%')) as gerente,
       c.codigoconcurso
 FROM
      concurso c
