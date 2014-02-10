@@ -322,7 +322,7 @@ public function confirmarValidoAction($id,$idsol)
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Eliminar por Antigüedad",  $this->get("router")->generate("eliminar_aspirantes"));
         return $this->render('ExpedienteBundle:Expediente:ant.html.twig');
     }
@@ -379,7 +379,7 @@ public function confirmarValidoAction($id,$idsol)
             $breadcrumbs = $this->get("white_october_breadcrumbs");
             $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
             $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
-            $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("pantalla_aspirante"));
             $breadcrumbs->addItem("Eliminar por Antigüedad",  $this->get("router")->generate("eliminar_aspirantes"));
             
             return $grid->getGridResponse('ExpedienteBundle:Expediente:showElim.html.twig',array(
@@ -407,7 +407,7 @@ public function confirmarValidoAction($id,$idsol)
             $breadcrumbs = $this->get("white_october_breadcrumbs");
             $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
             $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
-            $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("pantalla_aspirante"));
             $breadcrumbs->addItem("Eliminar", "");
             return $this->render('ExpedienteBundle:Expediente:seleliminar.html.twig');
         }
@@ -464,7 +464,7 @@ public function confirmarValidoAction($id,$idsol)
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente",$this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Aspirante",$this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Eliminar Individualmente",  $this->get("router")->generate("eliminar_aspirantes"));
         
         return $grid->getGridResponse('ExpedienteBundle:Expediente:showElimAll.html.twig');        

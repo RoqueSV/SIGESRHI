@@ -1,16 +1,72 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-    <h3 class="text-center">Solicitud para participación de Capacitación</h3>
+<script type='text/javascript'>
+function eliminar() {
 
-    <table class="table mitable" width="100%" align="center">
+    if(confirm('\xbfEst\xE1 seguro que desea eliminar este registro?')) {
+        document.getElementById('form_borrar').submit();
+}
+}
+</script>
+    <h3 class="text-center">Solicitud para participación de Capacitación</h3><br>
+<fieldset><legend>Capacitación</legend>
+    <table class='table mitable table-bordered' width='100%' align='center'>    <br>    
+        <tr>
+            <th>Temática</th>
+            <td colspan="3" width="75%">{{ capacitacion.tematica }}</td>
+        </tr>
+        <tr>
+            <th>Capacitador</th>
+            <td colspan="3">{{ capacitacion.idcapacitador.nombrecapacitador }}</td>
+        </tr>
+        <tr>
+            <th width="25%">Lugar</th>
+            <td>{{ capacitacion.lugarcapacitacion }}</td>
+            <th>Fecha</th>
+            <td>{{ capacitacion.fechacapacitacion | date('d-m-Y') | fecha }}</td>
+        </tr>
+        <tr>
+            <th>Hora inicio</th>
+            <td>{{ capacitacion.horainiciocapacitacion | date('h:m') }}</td>
+            <th>Hora Finalizacion</th>
+            <td>{{ capacitacion.horafincapacitacion | date('h:m') }}</td>
+        </tr>
+        <tr>
+            <th>Objetivo</th>
+            <td colspan="3" width="75%">{{ capacitacion.objetivocapacitacion}}</td>
+        </tr>
+        <tr>
+            <th>Perfil</th>
+            <td colspan="3" width="75%">{{ capacitacion.perfilcapacitacion }}</td>
+        </tr>
+        <tr>
+            <th width="25%">Capacitador</th>
+            <td>{{ capacitacion.idcapacitador.nombrecapacitador }}</td>
+            <th width="25%">Institucion</th>
+            <td>{{ capacitacion.idcapacitador.idinstitucion.nombreinstitucion }}</td>
+        </tr>
+        <tr>
+            <th>Cupo</th>
+            <td colspan="3" width="75%">{{ capacitacion.cupo }}</td
+        </tr>
+    </table>
+</fieldset>
+<fieldset><legend>Datos de Solicitud</legend>
+    <table class="table table-bordered mitable" width="100%" align="center">
             <tr>
-                <th>Fecha Solicitud</th>
-                <td>{{ entity.fechasolicitud|date('Y-m-d H:i:s') }}</td>
+                <th width="35%">Fecha Solicitud</th>
+                <td>{{ entity.fechasolicitud|date('Y-m-d') | fecha }}</td>
             </tr>
             <tr>
                 <th>Aprobacionsolicitud</th>
-                <td>{{ entity.aprobacionsolicitud }}</td>
+                <td>
+                    {% if entity.aprobacionsolicitud =='P' %} PENDIENTE
+                    {% elseif  entity.aprobacionsolicitud =='R' %} RECHAZADA
+                    {% elseif  entity.aprobacionsolicitud =='A' %} ACEPTADA
+                    {% endif %}
+
+                </td>
             </tr>
             <tr>
                 <th>Motivosolicitud</th>
@@ -21,24 +77,18 @@
                 <td>{{ entity.comentariosolicitud }}</td>
             </tr>
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('solicitudcapacitacion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('solicitudcapacitacion_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('solicitudcapacitacion_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+</fieldset>
+ <div class='text-center'>
+       
+    <a class="btn" href="{{ path('solicitudcapacitacion') }}">
+        Regresar
+    </a>    
+    {% if entity.aprobacionsolicitud == 'P' %}
+        <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar Solicitud</button>
+    {% endif %}
+    <form action="{{ path('solicitudcapacitacion_delete', { 'id': entity.id }) }}" id="form_borrar" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
+        <div class="invisible"> {{ form_widget(delete_form) }}</div>
+    </form>
+</div>
 {% endblock %}

@@ -6,6 +6,11 @@
         <p> {{ flashMessage }} </p>
     </div>
 {% endfor %}
+{% for flashMessage in app.session.flashbag.get('delete') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
 <br>
     <h4 class='text-center'>SOLICITUDES REGISTRADAS</h4>
     <p class="text-center">Seleccione para ver detalle</p>

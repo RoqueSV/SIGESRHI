@@ -75,7 +75,7 @@ margin-bottom: 0px;
     <fieldset><legend>Documentos Registrados</legend>
     <div class='text-centered'>
     {% if documentos|length > 0 %}
-        <table class='table table-bordered table-hover mitable' border='1' width='100%' align='center'>
+        <table class='table table-bordered mitable' border='1' width='100%' align='center'>
             <tr>
                 <th width='20px'></th>
                 <th>Nombre del documento</th>
@@ -85,7 +85,7 @@ margin-bottom: 0px;
         </table>        
         {% for doc in documentos %}
         <form action="{{ path('docpersonal_update',{'id':doc.id,'idexp':expediente[0].id, 'nogrid': nogrid, 'noasp':noasp }) }}" id= "docpersonal_form_edit{{ doc.id }}" method="post" class="recompone">
-        <table class='table table-bordered table-hover mitable' border='1' width='100%' align='center'>
+        <table class='table table-bordered mitable' border='1' width='100%' align='center'>
             <tr>                          
                 <td width='20px'>                
                     {% if doc.entregado == 1 %}
@@ -101,7 +101,7 @@ margin-bottom: 0px;
                     <input type="text" class="input-small" data-bvalidator="number" value="{{ doc.indice }}" name="indice" id="indice">
                 </td>
                 <td width='180px'>                                                        
-                    <button type="submit" class="btn" >Actualizar</button>
+                    &nbsp;<button type="submit" class="btn" >Actualizar</button>&nbsp;&nbsp;
                     <button type="button" class="btn btn-danger" onClick="confirmaborrar({{ doc.id }})">Borrar</button>
                 </td>                        
             </tr>
