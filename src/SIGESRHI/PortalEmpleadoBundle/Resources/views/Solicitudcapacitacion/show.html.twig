@@ -9,16 +9,13 @@ function eliminar() {
 }
 }
 </script>
-    <h3 class="text-center">Solicitud para participación de Capacitación</h3><br>
-<fieldset><legend>Capacitación</legend>
-    <table class='table mitable table-bordered' width='100%' align='center'>    <br>    
+<h3 class="text-center">Solicitud para participación en Capacitación</h3><br>
+<br> 
+<h4>Capacitación</h4>
+    <table class='table mitable table-bordered' width='100%' align='center'>       
         <tr>
             <th>Temática</th>
             <td colspan="3" width="75%">{{ capacitacion.tematica }}</td>
-        </tr>
-        <tr>
-            <th>Capacitador</th>
-            <td colspan="3">{{ capacitacion.idcapacitador.nombrecapacitador }}</td>
         </tr>
         <tr>
             <th width="25%">Lugar</th>
@@ -51,15 +48,15 @@ function eliminar() {
             <td colspan="3" width="75%">{{ capacitacion.cupo }}</td
         </tr>
     </table>
-</fieldset>
-<fieldset><legend>Datos de Solicitud</legend>
+    <br/>
+    <h4>Datos de solicitud</h4>
     <table class="table table-bordered mitable" width="100%" align="center">
             <tr>
-                <th width="35%">Fecha Solicitud</th>
+                <th width="35%">Fecha solicitud</th>
                 <td>{{ entity.fechasolicitud|date('Y-m-d') | fecha }}</td>
             </tr>
             <tr>
-                <th>Aprobacionsolicitud</th>
+                <th>Estado solicitud</th>
                 <td>
                     {% if entity.aprobacionsolicitud =='P' %} PENDIENTE
                     {% elseif  entity.aprobacionsolicitud =='R' %} RECHAZADA
@@ -69,17 +66,16 @@ function eliminar() {
                 </td>
             </tr>
             <tr>
-                <th>Motivosolicitud</th>
+                <th>Motivo solicitud</th>
                 <td>{{ entity.motivosolicitud }}</td>
             </tr>
             <tr>
-                <th>Comentariosolicitud</th>
+                <th>Comentario solicitud</th>
                 <td>{{ entity.comentariosolicitud }}</td>
             </tr>
     </table>
-</fieldset>
- <div class='text-center'>
-       
+
+    <div class='text-center'>    
     <a class="btn" href="{{ path('solicitudcapacitacion') }}">
         Regresar
     </a>    

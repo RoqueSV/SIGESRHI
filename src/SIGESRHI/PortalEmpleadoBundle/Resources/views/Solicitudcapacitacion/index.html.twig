@@ -16,19 +16,30 @@
     <p class="text-center">Seleccione para ver detalle</p>
 
 {{ grid_search(grid) }}
+<br/>
+<div class="pull-right">
+<b>Registrar Nueva Solicitud: </b>
+<a class="btn" onclick="location.href='{{path('capacitacionesdisponibles')}}'" title="Registrar Nueva Solicitud"><div class="icon-plus-sign"></div></a>
+</div>
 
+<br/><br/>
 {{ grid(grid,_self) }}
 
 {% block grid_filters %}{% endblock %}
-<b>Registrar Nueva Solicitud: </b>
-<a class="btn" onclick="location.href='{{path('capacitacionesdisponibles')}}'" title="Registrar Nueva Solicitud"><div class="icon-plus-sign"></div></a>
 
+<br/>
 <div align='center'>
     <a  href="{{ path('hello_page') }}" class="btn">Cancelar</a>
 </div>
 <style type="text/css">
 #grid_grid_solicitudesEmpleado__fechasolicitud__query__from{
     width: 100px; 
+}
+
+.grid-filter-input .grid-filter-operator select{
+    width: 185px;
+    margin-left: 10px;
+
 }
 </style>
 <script>

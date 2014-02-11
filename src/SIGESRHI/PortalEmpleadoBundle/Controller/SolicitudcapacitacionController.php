@@ -236,12 +236,34 @@ class SolicitudcapacitacionController extends Controller
      */
     public function newAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
         $user = new User();
         $empleado = new Empleado();
         $user = $this->get('security.context')->getToken()->getUser();
         $empleado = $user->getEmpleado();
 
-        $em = $this->getDoctrine()->getManager();
+        /***** Datos de jefe ******/
+       /* if( count($empleado->getIdrefrenda()) > 1 ){
+          
+           $query=$em->createQuery('SELECT e.id, s.nombrecompleto 
+                                    FROM ExpedienteBundle:Empleado e
+                                    JOIN e.idexpediente ex
+                                    JOIN ex.idsolicitudempleo s
+                                    WHERE e.id in (
+                                       SELECT r.idempleado 
+                                       FROM AdminBundle:RefrendaAct r
+                                       JOIN r.idpuestojefe c
+                                       WHERE r.idempleado = :idempleado) 
+                                  ')
+                     ->setParameter('idempleado', $empleado->getId());
+            $jefes = $query->getResult();
+
+        }*/
+        
+        /****                *****/
+
+
+        
         $capacitacion = $em->getRepository('CapacitacionBundle:Capacitacion')->find($id);
         if($capacitacion!=null AND $empleado!=null){
             $entity = new Solicitudcapacitacion();

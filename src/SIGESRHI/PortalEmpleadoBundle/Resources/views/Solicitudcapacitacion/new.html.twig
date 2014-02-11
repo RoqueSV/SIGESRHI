@@ -6,23 +6,16 @@
         <p> {{ flashMessage }} </p>
     </div>
 {% endfor %}
-<br>
-<!-- Botón ayuda -->
-<a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
-{{ include('SIGESRHIPortalEmpleadoBundle:Ayuda/Solicitudcapacitacion:registro.html.twig')}}
-    <h3 class="text-center">Registro de Solicitud para participación de Capacitación</h3>
 
+    <h3 class="text-center">Registro de Solicitud para participación en Capacitación</h3>
+    <br/>
     <form action="{{ path('solicitudcapacitacion_create') }}" method="post" {{ form_enctype(form) }}>
         {#{ form_widget(form) }#}
-    <fieldset><legend>Detalles Capacitación</legend>
-    <table class='table mitable table-bordered' width='100%' align='center'>    <br>    
+    <h4>Detalles Capacitación</h4>
+    <table class='table mitable table-bordered' width='100%' align='center'>    
         <tr>
             <th>Temática</th>
             <td colspan="3" width="75%">{{ capacitacion.tematica }}</td>
-        </tr>
-        <tr>
-            <th>Capacitador</th>
-            <td colspan="3">{{ capacitacion.idcapacitador.nombrecapacitador }}</td>
         </tr>
         <tr>
             <th width="25%">Lugar</th>
@@ -32,22 +25,22 @@
         </tr>
         <tr>
             <th>Hora inicio</th>
-            <td>{{ capacitacion.horainiciocapacitacion | date('h:m') }}</td>
+            <td>{{ capacitacion.horainiciocapacitacion | date('h:i a') }}</td>
             <th>Hora Finalizacion</th>
-            <td>{{ capacitacion.horafincapacitacion | date('h:m') }}</td>
+            <td>{{ capacitacion.horafincapacitacion | date('h:i a') }}</td>
         </tr>
         <tr>
             <th>Objetivo</th>
             <td colspan="3" width="75%">{{ capacitacion.objetivocapacitacion}}</td>
         </tr>
         <tr>
-            <th>Perfil</th>
+            <th>Perfil del participante</th>
             <td colspan="3" width="75%">{{ capacitacion.perfilcapacitacion }}</td>
         </tr>
         <tr>
             <th width="25%">Capacitador</th>
             <td>{{ capacitacion.idcapacitador.nombrecapacitador }}</td>
-            <th width="25%">Institucion</th>
+            <th width="25%">Institución</th>
             <td>{{ capacitacion.idcapacitador.idinstitucion.nombreinstitucion }}</td>
         </tr>
         <tr>
@@ -55,9 +48,10 @@
             <td colspan="3" width="75%">{{ capacitacion.cupo }}</td>
         </tr>
     </table>
-    </fieldset>
-    <fieldset><legend>Aplicar para participar en Capacitacion</legend>
-    <table class='table table-bordered table-hover mitable' border='1' width='100%' align='center'>    
+   
+    <br/>
+    <h4>Aplicar para participar en Capacitacion</h4>
+    <table class='table table-bordered mitable' border='1' width='100%' align='center'>    
         <tr>
             <th width="25%">{{ form_label(form.motivosolicitud) }}</th>
             <td>{{ form_widget(form.motivosolicitud) }}</td>
@@ -67,9 +61,14 @@
             <td>{{ form_widget(form.comentariosolicitud) }}</td>
         </tr>
     </table>
+
+    {# pruebas #}
+    
+    {# pruebas #}
+
     <input type="hidden" name="idcapa" id="idcapa" value="{{ capacitacion.id }}">
     <input type="hidden" name="idempleado" id="idempleado" value="{{ empleado.id }}">
-    </fieldset>
+   
 
     {{ form_rest(form) }}
     <div class='text-center'>

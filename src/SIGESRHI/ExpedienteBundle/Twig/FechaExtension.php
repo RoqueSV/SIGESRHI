@@ -16,7 +16,7 @@ class FechaExtension extends \Twig_Extension
     {
 
     $dias= array("Domingo,","Lunes,","Martes,","Miercoles,","Jueves,","Viernes,","Sabado,");
-    $meses= array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+    $meses= array("enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre");
     
     //$test = new \DateTime($fecha);
     //$test=$fecha;

@@ -17,17 +17,33 @@
 #grid_grid_disponiblesEmpleado__fechacapacitacion__query__from{
     width: 100px; 
 }
+
+#grid_grid_disponiblesEmpleado__fechacapacitacion__query__to{
+    width: 100px; 
+}
 </style>
 <script>
 $(document).ready(function(){
 
-         $("#grid_grid_disponiblesEmpleado__fechacapacitacion__query__from").datepicker({ 
-              dateFormat: 'yy-mm-dd',  
+          $("#grid_grid_disponiblesEmpleado__fechacapacitacion__query__from").datepicker({ 
+              dateFormat: 'dd-mm-yy',  
               changeMonth: true,
               changeYear: true,
-              yearRange: "-100:+0",});
+              yearRange: "-100:+0",
+              onClose: function( selectedDate ) {
+              $( "#grid_grid_disponiblesEmpleado__fechacapacitacion__query__to" ).datepicker( "option", "minDate", selectedDate);}
+         });
+
+         $( "#grid_grid_disponiblesEmpleado__fechacapacitacion__query__to" ).datepicker({
+             dateFormat: 'dd-mm-yy',
+             changeMonth: true,
+             changeYear: true,
+             onClose: function( selectedDate ) {
+            $( "#grid_grid_disponiblesEmpleado__fechacapacitacion__query__from" ).datepicker( "option", "maxDate", selectedDate );}
+         });
 
          $('#grid_grid_disponiblesEmpleado__fechacapacitacion__query__from').attr('readonly',true);
+         $('#grid_grid_disponiblesEmpleado__fechacapacitacion__query__to').attr('readonly',true);
      });
 </script>
 {% endblock %}

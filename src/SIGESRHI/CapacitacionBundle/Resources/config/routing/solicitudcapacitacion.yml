@@ -1,0 +1,3 @@
+solicitud_capacitacion:
+    pattern:  /
+    defaults: { _controller: "CapacitacionBundle:SolicitudCapacitacion:consultar" }
