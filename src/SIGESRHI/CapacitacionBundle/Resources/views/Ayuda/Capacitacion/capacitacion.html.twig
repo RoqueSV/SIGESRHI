@@ -3,12 +3,30 @@
 
 {% block titulo %}
 <h3 id="helpLabel">Registro de capacitaciones</h3>
+<p>Permite registrar las capacitaciones que se incluyen en un determinado plan.</p>
 {% endblock %}
 
 
 {% block contenido %}
  <p><h4>¿Cómo llenar este formulario?</h4></p>
-<p>Se describen a continuación los pasos necesarios:</p>
-
-
+Se describen a continuación los pasos necesarios:
+<ul style="list-style-type:decimal; margin-left:25px">
+<li>Ingrese el tema y objetivo de la capacitaci&oacute;n; estos campos son obligatorios</li>
+<img src="{{asset('images/images_ayuda/tematica.jpg') }}" alt="ISRI"/><br><br>
+<li>Opcionalmente puede registrar el &aacute;rea, metolog&iacute;a y resultados esperados de una capacitaci&oacute;n ya que estos campos no son obligatorios.</li><br>
+<li>Seleccione de la lista a la persona encargada de impartir la capacitaci&oacute;n</li>
+<img src="{{asset('images/images_ayuda/elegircapacitador.jpg') }}" alt="ISRI"/><br>
+<div class="justify">Se muestra una lista con nombres de personas asignadas por diferentes instituciones para brindar capacitaciones</div><br>
+<li>Seleccionar fecha en que se llevar&aacute; a cabo la capacitaci&oacute;n </li>
+<img src="{{asset('images/images_ayuda/fechacapacitacion.jpg') }}" alt="ISRI"/>
+<li>Elegir hora inicio y fin en que se desarrollar&aacute; la capacitaci&oacute;n</li>
+<img src="{{asset('images/images_ayuda/horacap.jpg') }}" alt="ISRI"/>
+<div>Se muestran dos listas, la primera representa las horas y la segunda los minutos.</div><br>
+<li>Digite el nombre del lugar donde se realizar&aacute; la capacitaci&oacute;n</li>
+<img src="{{asset('images/images_ayuda/lugarcapacitacion.jpg') }}" alt="ISRI"/>
+<li>Ingrese otras informaci&oacute;n como: perfil del participante, cupo, plazo de inscripci&oacute;n, material de apoyo, contacto</li>
+<li>Una vez ingresados los datos, presione el bot&oacute;n "Agregar"</li>
+<div>Se muestran dos listas, la primera representa las horas y la segunda los minutos.</div>
+</ul>
+<br>
 {% endblock %}

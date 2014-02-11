@@ -3,12 +3,29 @@
 
 {% block titulo %}
 <h3 id="helpLabel">Registro de planes de capacitación</h3>
+<p align="justify">Permite el registro de los datos generales de un plan de capacitaci&oacute;n de un centro de atenci&oacute;n o a nivel institucional.</p>
 {% endblock %}
 
 
 {% block contenido %}
- <p><h4>¿Cómo llenar este formulario?</h4></p>
-<p>Se describen a continuación los pasos necesarios:</p>
-
-
+ <p><h4>¿C&oacute;mo llenar este formulario?</h4></p>
+Se describen a continuación los pasos necesarios:
+<ul style="list-style-type:decimal; margin-left:25px">
+	<li>Ingrese nombre del plan:</li>
+	<img src="{{asset('images/images_ayuda/nombreplan.jpg') }}" alt="ISRI"/><br><br>
+	<li>Seleccione de la lista desplegable el a&ntilde;o de ejecuci&oacute;n del plan:</li>
+	<img src="{{asset('images/images_ayuda/añoplan.jpg') }}" alt="ISRI"/><br><br>
+	<li>Ingrese el objetivo que busca alcanzar con el desarrollo del plan</li>
+	<img src="{{asset('images/images_ayuda/objetivoplan.jpg') }}" alt="ISRI"/><br><br>
+	<li>Digite una descripci&oacute;n del plan, y resultados esperados. Los campos marcados con un asterisco <b>(*)</b>, representan campos obligatorios. No puede registrar un plan sino ha ingresado dichos campos.</li>	
+	<li>Seleccione el tipo de plan: Institucional o Interno.</li>
+	<div><b>Plan Institucional: </b>Contiene la informaci&oacute;n de todas capacitaciones a realizar a nivel de toda la instituci&oacute;n.<br>
+	<b>Plan Interno: </b>Contiene informaci&oacute;n sobre capacitaciones a realizarse en un centro de atenci&oacute;n especifico. </div>
+	<li>Una vez ingresados los datos obligatorios presione el bot&oacute;n "Registrar."</li>
+	<div>El sistema no permite el registro de dos planes de capacitaci&oacute;n para un mismo a&ntilde;o,si intenta registrar un nuevo plan, se despliega el siguiente mensaje:</div>
+	<img src="{{asset('images/images_ayuda/registrodobleplan.jpg') }}" alt="ISRI"/>
+	<li>Si no existen errores, el sistema confirma que el registro ha sido realizado correctamente, y despliega una nueva ventana para el registro individual de cada una de las capacitaciones que constituye el plan. </li>
+</ul>
+<br>
+<br>
 {% endblock %}
