@@ -36,8 +36,7 @@
             </tr>
         </table>
 
-        <ul class="Factores unstyled" data-prototype="
-
+        <ul class="Factores unstyled" data-prototype-fac ="
             <table class='table table-bordered form-inline'>
                 <tr>
                     <th width='30%''>{{form_label(form.Factores.vars.prototype.nombrefactor)|e}}</th>
@@ -48,7 +47,42 @@
                     <td>{{form_widget(form.Factores.vars.prototype.descripcionfactor)|e}} {{form_errors(form.Factores.vars.prototype.descripcionfactor)|e}}</td>
                 </tr>
             </table>
+               
                ">
+               
+               <div class='Opciones unstyled' data-prototype-opc ='
+                <table class="table table-bordered form-inline">
+                    <tr>
+                        <th>{{form_label(form.Factores.vars.prototype.children['Opciones'].vars.prototype.nombreopcion)|e}}</th>
+                        <td>{{form_widget(form.Factores.vars.prototype.children['Opciones'].vars.prototype.nombreopcion)|e}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{form_label(form.Factores.vars.prototype.children['Opciones'].vars.prototype.descripcionopcion)|e}} </th>
+                        <td>{{form_widget(form.Factores.vars.prototype.children['Opciones'].vars.prototype.descripcionopcion)|e}} </td>
+                    </tr>
+                    <tr>
+                        <th>{{form_label(form.Factores.vars.prototype.children['Opciones'].vars.prototype.valoropcion)|e}}</th>
+                        <td>{{form_widget(form.Factores.vars.prototype.children['Opciones'].vars.prototype.valoropcion)|e}}</td>
+                    </tr>
+                </table>
+               '
+               ></div>
+               <table class='table table-bordered form-inline'>
+                    <tr>
+                        <th>{{form_label(form.Factores[0].Opciones[0].nombreopcion)}}</th>
+                        <td>{{form_widget(form.Factores[0].Opciones[0].nombreopcion)}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{form_label(form.Factores[0].Opciones[0].descripcionopcion)}} </th>
+                        <td>{{form_widget(form.Factores[0].Opciones[0].descripcionopcion)}} </td>
+                    </tr>
+                    <tr>
+                        <th>{{form_label(form.Factores[0].Opciones[0].valoropcion)}}</th>
+                        <td>{{form_widget(form.Factores[0].Opciones[0].valoropcion)}}</td>
+                    </tr>
+                </table>
+
+                
            </ul>
 
 
@@ -66,7 +100,7 @@
 
 <script>
 
-/*********************************** Datos de Empleo ****************************************/
+/*********************************** FACTORES ****************************************/
 // Obtiene la ul que contiene la colección de etiquetas
 var collectionHolderFac = $('ul.Factores');
 
@@ -93,9 +127,91 @@ jQuery(document).ready(function() {
         e.preventDefault();
 
         // añade una nueva etiqueta form (ve el siguiente bloque de código)
-        addTagForm(collectionHolderFac, $newLinkLiFac);
+        addTagForm2(collectionHolderFac, $newLinkLiFac);
     });
  });
+
+/******************************* OPciones *************************/
+var collectionHolderOpc = $('div.Opciones');
+
+// configura una enlace "Agregar una etiqueta"
+var $addTagLinkOpc = $('<input type="button" value="Agregar Opcion" class="btn">');
+var $newLinkLiOpc = $('<ul></ul>').append($addTagLinkOpc);
+
+jQuery(document).ready(function() {
+    // Añade el ancla "Agregar una etiqueta" y las etiquetas li y ul
+    collectionHolderOpc.append($newLinkLiOpc);
+
+    // Añade un enlace para eliminar todas las etiquetas existentes
+    // en elementos li del formulario
+    collectionHolderOpc.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // cuenta las entradas actuales en el formulario (p. ej. 2),
+    // la usa como índice al insertar un nuevo elemento (p. ej. 2)
+    collectionHolderOpc.data('index', collectionHolderOpc.find(':input').length);
+
+    $addTagLinkOpc.on('click', function(e) {
+        // evita crear el enlace con una "#" en la URL
+        e.preventDefault();
+
+        // añade una nueva etiqueta form (ve el siguiente bloque de código)
+        addTagForm3(collectionHolderOpc, $newLinkLiOpc);
+    });
+ });
+
+
+/****** Funciones predefinidas Formularios embebidos ************/
+function addTagForm2(collectionHolder, $newLinkLi) {
+    // Obtiene los datos del prototipo explicado anteriormente
+    var prototype = collectionHolder.data('prototype-fac');
+
+    // Consigue el nuevo índice
+    var index = collectionHolder.data('index');
+
+    // Sustituye el '__name__' en el prototipo HTML para que
+    // en su lugar sea un número basado en cuántos elementos hay
+    var newForm = prototype.replace(/__name__/g, index);
+
+    // Incrementa en uno el índice para el siguiente elemento
+    collectionHolder.data('index', index + 1);
+
+    // Muestra el formulario en la página en un elemento li,
+    // antes del enlace 'Agregar una etiqueta'
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+
+     // Añade un enlace eliminar el nuevo formulario
+    addTagFormDeleteLink($newFormLi);
+}
+
+
+/****** Funciones predefinidas Formularios embebidos //OPCIONES ************/
+function addTagForm3(collectionHolder, $newLinkLi) {
+    // Obtiene los datos del prototipo explicado anteriormente
+    var prototype = collectionHolder.data('prototype-opc');
+
+    // Consigue el nuevo índice
+    var index = collectionHolder.data('index');
+
+    // Sustituye el '__name__' en el prototipo HTML para que
+    // en su lugar sea un número basado en cuántos elementos hay
+    var newForm = prototype.replace(/__name__/g, index);
+
+    // Incrementa en uno el índice para el siguiente elemento
+    collectionHolder.data('index', index + 1);
+
+    // Muestra el formulario en la página en un elemento li,
+    // antes del enlace 'Agregar una etiqueta'
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+
+     // Añade un enlace eliminar el nuevo formulario
+    addTagFormDeleteLink($newFormLi);
+}
+
+
 
 </script>
 

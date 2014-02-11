@@ -28,3 +28,7 @@ formularioevaluacion_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "EvaluacionBundle:Formularioevaluacion:delete" }
     requirements: { _method: post|delete }
+
+formularioevaluacion_deshabilita:
+    pattern:  /{id}/deshabilita
+    defaults: { _controller: "EvaluacionBundle:Formularioevaluacion:deshabilita" }

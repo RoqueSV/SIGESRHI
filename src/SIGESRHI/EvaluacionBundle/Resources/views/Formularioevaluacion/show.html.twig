@@ -1,46 +1,64 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Formularioevaluacion</h1>
+{% block principal -%}
 
-    <table class="record_properties">
+<script type='text/javascript'>
+function eliminar(ruta) {
+
+        if(confirm('\xbfEsta seguro que desea eliminar este formulario de evaluación?')) {
+            document.location.href=ruta;
+
+            }
+        }
+</script>
+
+    <h3 class="text-center">Formulario de evaluaci&oacute;n</h3>
+
+    <table class="table table-bordered table-hover mitable">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Tipoformulario</th>
+                <th>T&iacute;tulo del formulario: </th>
                 <td>{{ entity.tipoformulario }}</td>
             </tr>
             <tr>
-                <th>Codigoformulario</th>
+                <th>C&oacute;digo de formulario: </th>
                 <td>{{ entity.codigoformulario }}</td>
             </tr>
             <tr>
-                <th>Nombrebreve</th>
+                <th>Nombre del personal a evaluar: </th>
                 <td>{{ entity.nombrebreve }}</td>
             </tr>
         </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('formularioevaluacion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('formularioevaluacion_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('formularioevaluacion_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+ {% for factor in entity.factores %}
+    <table border="2" class="table-bordered" width="100%">
+        <tr><th colspan="{{factor.opciones|length}}" class="text-center"><b>{{ factor.nombrefactor}}</b></th></tr>
+        <tr><td colspan="{{factor.opciones|length}}">  <p class="justifyText"> {{factor.descripcionfactor}} </p> </td></tr>
+        </tr>
+        <tr>
+            {% set indice = loop.index %}
+        {% for opcion in factor.opciones %}
+        <td class="text-center" width="{{100 / (factor.opciones|length)}}%"> &nbsp;<b>{{opcion.nombreopcion}} </b></td>
+        {% endfor %}
+        </tr>
+        <tr>
+        {% for opcion in factor.opciones %}
+        <td><p class="justifyText opcionformulario">{{opcion.descripcionopcion}}</p></td>
+        {% endfor %}
+        </tr>
+    </table>
+    <br>
+    <br>
+    {% endfor %}
+
+<br>
+
+    <div class="text-center">
+    <a href="{{ path('formularioevaluacion') }}" class="btn">Regresar al listado</a>
+    <a href="{{ path('formularioevaluacion_edit', { 'id': entity.id }) }}" class="btn">Modificar</a>
+    <a onclick="eliminar('{{path('formularioevaluacion_deshabilita', { 'id': entity.id })}}')" class="btn btn-danger">Eliminar</a>
+    </div>
+<br>    
+    
 {% endblock %}

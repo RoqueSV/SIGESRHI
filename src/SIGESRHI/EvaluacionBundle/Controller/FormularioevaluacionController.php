@@ -7,8 +7,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion;
 use SIGESRHI\EvaluacionBundle\Entity\Factorevaluacion;
+use SIGESRHI\EvaluacionBundle\Entity\Opcion;
 use SIGESRHI\EvaluacionBundle\Form\FormularioevaluacionType;
 
+
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Action\RowAction;
+use APY\DataGridBundle\Grid\Column\ActionsColumn;
+use APY\DataGridBundle\Grid\Grid;
+use APY\DataGridBundle\Grid\Column\TextColumn;
 /**
  * Formularioevaluacion controller.
  *
@@ -21,13 +28,45 @@ class FormularioevaluacionController extends Controller
      */
     public function indexAction()
     {
+        $source = new Entity('EvaluacionBundle:Formularioevaluacion', 'grupo_formulario');
+        // Get a grid instance
+        $grid = $this->get('grid');
+
+    /*    //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+        $breadcrumbs->addItem("Consultar Solicitud de Empleo", $this->get("router")->generate("solicitud_caspirante"));
+    */    //fin camino de miga
+       
+        //seleccionamos solo los formularios que estan activos      
+      $tableAlias=$source->getTableAlias();
+        $source->manipulateQuery(
+        function($query) use ($tableAlias){
+            $query->andWhere($tableAlias.".estadoform = 'A' ");
+        }
+            );
+
+        // Attach the source to the grid
+        $grid->setId('grid_formularios');
+        $grid->setSource($source);
+
         $em = $this->getDoctrine()->getManager();
+          
+        $grid->setNoDataMessage("No se encontraron resultados");
+        $grid->setDefaultOrder('id', 'desc');
+        
+        $rowAction1 = new RowAction('Consultar', 'formularioevaluacion_show');
 
-        $entities = $em->getRepository('EvaluacionBundle:Formularioevaluacion')->findAll();
+        $rowAction1->setColumn('info_column');
 
-        return $this->render('EvaluacionBundle:Formularioevaluacion:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        $grid->addRowAction($rowAction1);     
+        //$grid->addExport(new ExcelExport('Exportar a Excel'));
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+    // Manage the grid redirection, exports and the response of the controller
+    return $grid->getGridResponse('EvaluacionBundle:Formularioevaluacion:index.html.twig');
     }
 
     /**
@@ -63,6 +102,8 @@ class FormularioevaluacionController extends Controller
         $entity = new Formularioevaluacion();
 
         $Factores = new Factorevaluacion();
+        $Opciones = new Opcion();
+        $Factores->getOpciones()->add($Opciones);
         $entity->getFactores()->add($Factores);
 
 
@@ -189,4 +230,21 @@ class FormularioevaluacionController extends Controller
             ->getForm()
         ;
     }
+
+    public function deshabilitaAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('EvaluacionBundle:Formularioevaluacion')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Formularioevaluacion entity.');
+            }
+
+            $entity->setEstadoform('I');
+            $em->persist($entity);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('del', 'Formulario de evaluación deshabilitado correctamente.'); 
+            return $this->redirect($this->generateUrl('formularioevaluacion'));
+    }//deshabilita
 }

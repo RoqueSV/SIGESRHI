@@ -72,6 +72,7 @@ class EvaluacionController extends Controller
             throw $this->createNotFoundException('No se encuentra la entidad del Empleado.');
         }
 
+        //refrenda del jefe
         if (!$refrenda) {
             throw $this->createNotFoundException('No se encuentra la entidad Refrenda del empleado.');
         }
@@ -94,19 +95,25 @@ class EvaluacionController extends Controller
         
         $periodo = $periodo_query->getsingleResult();
 
+        //Consultamos datos de las evaluaciones ya realizadas
+        $evalhechas = $em->CreateQuery('
+            select e.id, em.id idempleado, e.puestoemp, e.anoevaluado, e.semestre from EvaluacionBundle:Evaluacion e
+            join e.idempleado em
+            where e.anoevaluado =:anio and e.semestre =:semes and e.puestojefe =:pjefe
+            ')->setParameter('anio', $periodo['anio'])->setParameter('semes',$periodo['semestre'])->setParameter('pjefe',$idrefrenda);
         
+        $evaluaciones = $evalhechas->getResult();        
         //fin consulta
-
 
         $tableAlias=$source->getTableAlias();
         $source->manipulateQuery(
         function($query) use ($idrefrenda, $periodo){
             $query->andWhere("_idrefrenda_puestoempleado_puestojefe.id =:var ")
-            ->andWhere("_idevaluacion.anoevaluado =:anio or _idevaluacion.anoevaluado is null")
-            ->andWhere("_idevaluacion.semestre =:semestre or _idevaluacion.semestre is null")
+            //->andWhere("_idevaluacion.anoevaluado =:anio or _idevaluacion.anoevaluado is null")
+            //->andWhere("_idevaluacion.semestre =:semestre or _idevaluacion.semestre is null")
             ->setParameter('var',$idrefrenda)
-            ->setParameter('anio',$periodo['anio'])
-            ->setParameter('semestre',$periodo['semestre'])
+            //->setParameter('anio',$periodo['anio'])
+            //->setParameter('semestre',$periodo['semestre'])
              ;}
             );
     
@@ -122,38 +129,53 @@ class EvaluacionController extends Controller
         $rowAction1 = new RowAction('Registrar', 'evaluacion_sformulario');
         $rowAction2 = new RowAction('Consultar', 'evaluacion_show');
 
-
-        //Consultamos los datos de periodo de evaluacion vigente.
-        $fechaactual = date('d-m-Y');
-        $periodo_query = $em->CreateQuery('
-            select pe.anio, pe.semestre from EvaluacionBundle:Periodoeval pe
-            where :fechaactual between pe.fechainicio and pe.fechafin
-            ')->setParameter('fechaactual', $fechaactual);
-        
-        $periodo = $periodo_query->getsingleResult();
-
+        //construimos el string que se mostrara como titulo en la vista de evaluacion
         $periodo_evaluar= "Año: ".$periodo['anio']." - Semestre: ".$periodo['semestre'];
 
         //manipulamos el action de registro
          $rowAction1->manipulateRender(
-            function ($action, $row)use($idrefrenda, $periodo)
+            function ($action, $row)use($idrefrenda, $evaluaciones)
             {
-                if( ($periodo['anio'] == $row->getField('idevaluacion.anoevaluado') ) and $periodo['semestre']==$row->getField('idevaluacion.semestre')  ){
-                   return null;
-                }
-                else{
-                     $action->setRouteParameters(array('id','idpuestojefe'=>$idrefrenda, 'idpuestoemp'=> $row->getField('idrefrenda.id')));
+                $band=false;
+                foreach($evaluaciones as $eval)
+                {
+                    if($row->getField('idrefrenda.id') == $eval['puestoemp'] and $row->getField('id') == $eval['idempleado'])
+                    {
+                        $band=true;
+                    }
+
+                }//foreach
+
+                if($band == true)
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                    $action->setRouteParameters(array('id','idpuestojefe'=>$idrefrenda, 'idpuestoemp'=> $row->getField('idrefrenda.id')));
                     return $action;
-                }
+                    }
             }
         );
 
         //Manipulamos el action de consulta
         $rowAction2->manipulateRender(
-            function ($action, $row)use($idrefrenda, $periodo)
+            function ($action, $row)use($idrefrenda, $evaluaciones)
             {
-                if($periodo['anio'] == $row->getField('idevaluacion.anoevaluado') and $periodo['semestre']==$row->getField('idevaluacion.semestre')){
-                    $action->setRouteParameters(array('id'=> $row->getField('idevaluacion.id')));
+                $band=false;
+                $ideval=null;
+                foreach($evaluaciones as $eval)
+                {
+                    if($row->getField('idrefrenda.id') == $eval['puestoemp'] and $row->getField('id') == $eval['idempleado'])
+                    {
+                        $band=true;
+                        $ideval = $eval['id'];
+                    }                 
+                }//foreach
+
+                if($band == true)
+                 {
+                    $action->setRouteParameters(array('id'=> $ideval));
                     return $action;
                 }
                 else{
@@ -192,7 +214,11 @@ class EvaluacionController extends Controller
         $evaluacion->setComentario($comentario);
         $evaluacion->setTiemposupervisar($supervisa);
         $evaluacion->setCargofuncion($cargo);
-        $evaluacion->setFechacargofuncion(new \Datetime($fechacargo));
+        //si se ingreso fecha, la establecemos a la entidad
+        //porque si viene vacio, asignaria la fecha actual.
+        if($fechacargo != ""){
+                $evaluacion->setFechacargofuncion(new \Datetime($fechacargo));
+            }
 
         $form = $this->createForm(new EvaluacionType(), $evaluacion);
         $form->bind($request);
@@ -443,6 +469,10 @@ class EvaluacionController extends Controller
         $empleado = new Empleado();
 
         $user = $this->get('security.context')->getToken()->getUser();
+
+        if($user == "anon."){
+            throw $this->createNotFoundException('Usuario no autenticado.');
+        }
         
         $empleado = $user->getEmpleado();
 
@@ -544,7 +574,7 @@ class EvaluacionController extends Controller
             throw $this->createNotFoundException('No se encontro la refrenda del empleado.');
         }
 
-        $formularios = $em->getRepository('EvaluacionBundle:Formularioevaluacion')->findAll();
+        $formularios = $em->getRepository('EvaluacionBundle:Formularioevaluacion')->findBy(array('estadoform'=>'A'));
 
          if(!$formularios){
             throw $this->createNotFoundException('No hay formularios registrados en el sistema.');

@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use SIGESRHI\EvaluacionBundle\Entity\Factorevaluacion;
+use SIGESRHI\EvaluacionBundle\Entity\Opcion;
 use SIGESRHI\EvaluacionBundle\Form\FactorevaluacionType;
 
 /**
@@ -60,6 +61,10 @@ class FactorevaluacionController extends Controller
     public function newAction()
     {
         $entity = new Factorevaluacion();
+
+        $Opciones = new Opcion();
+        $entity->getOpciones()->add($Opciones);
+
         $form   = $this->createForm(new FactorevaluacionType(), $entity);
 
         return $this->render('EvaluacionBundle:Factorevaluacion:new.html.twig', array(

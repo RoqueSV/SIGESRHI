@@ -18,7 +18,7 @@ class FormularioevaluacionType extends AbstractType
         ;
 
         //agregamos un formulario de otra entidad (datos de Factores)
-            $builder->add('Factores', 'collection', array('label'=>' ', 'type' => new FactorevaluacionType(), 'allow_add' => true, 'allow_delete' => true, 'by_reference' => false, 'options'=>array('cascade_validation' => true)));
+            $builder->add('Factores', 'collection', array('label'=>' ', 'type' => new FactorevaluacionType(), 'allow_add' => true, 'allow_delete' => true, 'prototype_name' => '_factores_', 'by_reference' => false, 'options'=>array('cascade_validation' => true)));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

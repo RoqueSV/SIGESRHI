@@ -6,12 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Formularioevaluacion
  *
  * @ORM\Table(name="formularioevaluacion")
  * @ORM\Entity
+ * @GRID\Source(columns="id, codigoformulario, tipoformulario", groups={"grupo_formulario"})
  */
 class Formularioevaluacion
 {
@@ -22,6 +24,7 @@ class Formularioevaluacion
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="formularioevaluacion_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(field="id", groups={"grupo_formulario"},visible=false, filterable=false)
      */
     private $id;
 
@@ -30,6 +33,7 @@ class Formularioevaluacion
      *
      * @ORM\Column(name="tipoformulario", type="string", nullable=false)
      * @Assert\NotNull(message="Debe ingresar el tipo de formulario")
+     * @GRID\Column(field="tipoformulario", groups={"grupo_formulario"},visible=true, filterable=false, title="Título del Formulario")
      */
     private $tipoformulario;
 
@@ -42,6 +46,7 @@ class Formularioevaluacion
      * max = "5",
      * maxMessage = "El codigo del formulario no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(field="codigoformulario", groups={"grupo_formulario"},visible=true, filterable=false, title="Código", align="center")
      */
     private $codigoformulario;
 
@@ -52,6 +57,14 @@ class Formularioevaluacion
      * @Assert\NotNull(message="Debe ingresar el nombre breve del formulario")
      */
     private $nombrebreve;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="estadoform", type="string", length=1, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el estado del formulario")
+     */
+    private $estadoform;
 
        
     public function __toString() {
@@ -137,6 +150,28 @@ class Formularioevaluacion
         return $this->nombrebreve;
     }
 
+      /**
+     * Set estadoform
+     *
+     * @param string $estadoform
+     * @return Formularioevaluacion
+     */
+    public function setEstadoform($estadoform)
+    {
+        $this->estadoform = $estadoform;
+    
+        return $this;
+    }
+
+    /**
+     * Get estadoform
+     *
+     * @return string 
+     */
+    public function getEstadoform()
+    {
+        return $this->estadoform;
+    }
 
 
   public function __construct()

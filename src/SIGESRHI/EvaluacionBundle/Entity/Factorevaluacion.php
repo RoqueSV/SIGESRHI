@@ -149,7 +149,7 @@ class Factorevaluacion
     }
 
 
-/************************* Factores de evaluacion ***************************/
+/************************* Opciones del factor de evaluaicon ***************************/
 
 
 
@@ -169,7 +169,7 @@ class Factorevaluacion
         return $this->Opciones;
     }
 
-    public function setOpciones(\Doctrine\Common\Collections\Collection $opciones)
+    public function setOpciones( $opciones)
     {
         $this->Opciones = $opciones;
         foreach ($opciones as $opcion) {

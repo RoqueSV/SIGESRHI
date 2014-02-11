@@ -3,8 +3,10 @@
 {% block principal -%}
 <div class="text-center">
 <h3>Selecci&oacute;n de Formulario</h3>
+</div>
 
 <h4>Datos del empleado: </h4>
+<div class="text-center">
 <table class="table table-bordered table-hover mitable">
 	<tr>
 		<th width="30%">C&oacute;digo: </th><td>{{puestoemp.idempleado.codigoempleado}}</td>
@@ -26,7 +28,7 @@ Seleccione el tipo de formulario para evaluar al empleado:
 <select class="input-xmlarge" id="tipo_form" name="tipo_form">
 {% for formulario in formularios %}
 
-<option value="{{formulario.id}}" required="required" >{{formulario.nombrebreve}}</option>
+<option value="{{formulario.id}}" required="required" >{{formulario.nombrebreve|upper}}</option>
 
 {% endfor %}
 </select>

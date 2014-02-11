@@ -1,20 +1,68 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Factorevaluacion creation</h1>
+{% block principal -%}
+    <h3 class="text-center">REGISTRO DE FACTORES DE EVALUACI&Oacute;N</h3>
 
     <form action="{{ path('factorevaluacion_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+        
+        {{form_row(form.nombrefactor)}}
+        {{form_row(form.descripcionfactor)}}
+        {{form_row(form.idformulario)}}
+
+        {{form_row(form.Opciones[0].nombreopcion)}}
+        {{form_row(form.Opciones[0].descripcionopcion)}}
+        {{form_row(form.Opciones[0].valoropcion)}}
+
+        <ul class="Opciones unstyled" data-prototype="
+               {{form_row(form.Opciones.vars.prototype.nombreopcion)|e}}
+                {{form_row(form.Opciones.vars.prototype.descripcionopcion)|e}} 
+                {{form_row(form.Opciones.vars.prototype.valoropcion)|e}}
+               ">
+           </ul>
+
+<div class="hide"></div>
+        {{ form_rest(form) }}
+
         <p>
-            <button type="submit">Create</button>
+            <button type="submit">Registrar</button>
         </p>
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('factorevaluacion') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+      
+
+<script>
+
+/*********************************** Datos de Empleo ****************************************/
+// Obtiene la ul que contiene la colección de etiquetas
+var collectionHolderOpc = $('ul.Opciones');
+
+// configura una enlace "Agregar una etiqueta"
+var $addTagLinkOpc = $('<input type="button" value="Agregar Opcion" class="btn">');
+var $newLinkLiOpc = $('<ul></ul>').append($addTagLinkOpc);
+
+jQuery(document).ready(function() {
+    // Añade el ancla "Agregar una etiqueta" y las etiquetas li y ul
+    collectionHolderOpc.append($newLinkLiOpc);
+
+    // Añade un enlace para eliminar todas las etiquetas existentes
+    // en elementos li del formulario
+    collectionHolderOpc.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // cuenta las entradas actuales en el formulario (p. ej. 2),
+    // la usa como índice al insertar un nuevo elemento (p. ej. 2)
+    collectionHolderOpc.data('index', collectionHolderOpc.find(':input').length);
+
+    $addTagLinkOpc.on('click', function(e) {
+        // evita crear el enlace con una "#" en la URL
+        e.preventDefault();
+
+        // añade una nueva etiqueta form (ve el siguiente bloque de código)
+        addTagForm(collectionHolderOpc, $newLinkLiOpc);
+    });
+ });
+
+</script>
+
 {% endblock %}

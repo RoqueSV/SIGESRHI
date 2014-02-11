@@ -50,7 +50,7 @@ Factores que observan: <br>
 {% endfor %}
 
 	<tr>
-		<td><input type="text" required="required" class="date input-small" readonly="readonly" name="fecha" /></td>
+		<td><input type="text" required="required" class="date input-small " data-bvalidator="required" readonly="readonly" name="fecha" /></td>
 		<td>
 			<select name="factor" id="factor" required="required" >
 				{% for factor in evaluacion.Respuestas[0].idfactor.idformulario.Factores %}
