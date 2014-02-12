@@ -23,7 +23,7 @@ Sitio: www.xoyaz.com
 				else {
 					clearTimeout(timer);
 					$(".bloque-slider").css({ top: 0});			
-					timer = setTimeout('moverSlider()',0);				
+					timer = setTimeout('moverSlider()',2000);				
 				}
 		}		
 		else {	

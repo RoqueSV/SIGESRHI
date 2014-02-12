@@ -6,63 +6,36 @@
 {% endblock %}
 
 {% block seccion %}
-{{parent()}}
-    {% if app.user %}   
-      {# Secciones #}   
-      <br>        
-              {{ render(controller('AdminBundle:Default:Secciones', { 'idacceso': app.session.get('seccion'), 'nombreUsuario': app.user.username })) }} 
-      <br>
-    {#inicio columna noticias#}
+  {{parent()}}
+  {% if app.user %}   
+    {# Seccion noticias #}   
       <div class="container" id="containernoticias">
         <div class="contenido">
-
+            <h4>Noticias</h4>
           <div class="nivel slider-vertical">
-            <h3>Noticias</h3>
+
               <div class="contenedor-slider">
 
                 <div class="bloque-slider">
-                      <div class="modulo-slider">
-                          <h4><a href="#">Titular 1</a></h4>
-                          <p>Descripción 1</p>
-                      </div>
-                      <!-- fin modulo-noticias-slide -->
-                      <div class="modulo-slider">
-                          <h4><a href="#">Titular 2</a></h4>
-                          <p>Descripción 2</p>
-                      </div>
-                      <!-- fin modulo-noticias-slide -->
-                      <div class="modulo-slider">
-                          <h4><a href="#">Titular 3</a></h4>
-                          <p>Descripción 3</p>
-                      </div>
-                      <!-- fin modulo-noticias-slide -->
-                      <div class="modulo-slider">
-                          <h4><a href="#">Titular 4</a></h4>
-                          <p>Descripción 4</p>
-                      </div>
-                      <!-- fin modulo-noticias-slide -->
-                      <div class="modulo-slider">
-                          <h4><a href="#">Titular 5</a></h4>
-                          <p>Descripción 5</p>
-                      </div>
-                      <!-- fin modulo-noticias-slide -->
-                  </div>
+                  <br>   
+                  {#Aqui renderizamos las noticias#}     
+                    {{ render(controller('AdminBundle:Noticia:obtenerNoticias')) }} 
+                  <br>
+                </div>
                   <!-- fin bloque-slider -->
                 <p class="mover-slider-vertical"><a class="subir-slider" >Subir noticia</a> <a class="bajar-slider">Bajar noticia</a></p>
               </div>
             <!-- fin contenedor-noticias-slide -->
               <p class="vinculo-especial2">
-                <a href="#">Ver más noticias</a>
+                <a href="{{ path('noticia_indexempleado') }}">Ver más noticias</a>
               </p>
-
           </div>
           <!-- fin nivel slide-vertical -->
-
-
         </div>
         <!-- fin  contenido -->
       </div>
       <!-- fin  container -->
-    {#fin columna noticias#}
+    {#fin seccion noticias#}
+
     {% endif %}
 {% endblock %}

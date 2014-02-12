@@ -1,26 +1,11 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-<script type='text/javascript'>
-function eliminar() {
-
-    if(confirm('\xbfEsta seguro que desea eliminar este registro?')) {
-        document.getElementById('form_borrar').submit();
-    }
-}
-</script>
 <style type="text/css">
     ul.a {list-style-type:circle; padding-left: 20px;}
     li.b {list-style-type:none; padding-left: 10px;}
 </style>
-{% if app.session.started %}
-    {% for flashMessage in app.session.flashbag.get('new') %}
-        <div class="alert alert-success">
-            <p> {{ flashMessage }} </p>
-        </div>
-    {% endfor %}
-{% endif %}
-    <h3 class="text-center"> Datos registrados </h3>
+    <h3 class="text-center">Noticias</h3>
     <fieldset><legend>Fecha  de Registro: {{ entity.fechanoticia|date('Y-m-d H:i:s')|fecha }}</legend>
     <div class="text-centered">
     <table border='0' width='100%' align='center'>
@@ -87,45 +72,13 @@ function eliminar() {
     </table>      
     </fieldset> 
     <br>
-    <table class="table table-bordered mitable">
-        <tr>
-            <th colspan="2"><bold>Publicación</bold></th>
-        </tr>           
-        <tr>
-            <th><bold>Inicio publicación</bold></th>
-            <td>{{ entity.fechainicionoticia|date('Y-m-d')|fecha }}</td>
-        </tr>
-        <tr>
-            <th><bold>Fin publicación</bold></th>
-            <td>{{ entity.fechafinnoticia|date('Y-m-d')|fecha }}</td>
-        </tr> 
-        <tr>
-            <th><bold>A quien se publica</bold></th>
-            <td>
-            <ul class="a">
-                {% for centros in centrosnoticia %}
-                <li>{{ centros }}</li>
-                {% endfor %}
-            </ul>
-            </td>
-        </tr>            
-    </table>
-<br>
 <div class="text-center">        
     {% if nogrid == 0 %}
         <button type="button" class="btn" onclick="window.history.back(1);">Regresar</button>
     {% else %}
-        <a href="{{ path('noticia') }}" class="btn">
+        <a href="{{ path('noticia_indexempleado') }}" class="btn">
             Regresar
         </a>
     {% endif %}
-    <a href="{{ path('noticia_edit', { 'id': entity.id }) }}" class="btn">
-        Editar
-    </a>
-    <button type="button" onClick="eliminar();" class="btn btn-danger" >Borrar</button>   
-    <form action="{{ path('noticia_delete', { 'id': entity.id, 'from': 1 }) }}" id="form_borrar" method="post">
-        <input type="hidden" name="_method" value="DELETE" />
-        {#{ form_widget(delete_form) }#}
-    </form>                 
 </div>
 {% endblock %}

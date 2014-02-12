@@ -1,30 +1,41 @@
 {% extends '::PrincipalBaseEmpleado.html.twig' %}
 {% block principal -%}
 <h4 class='text-center'>NOTICIAS ISRI</h4>
+<p class="text-center">Seleccione para ver detalle</p>
+<br>
+{{ grid_search(grid) }}
+
+{{ grid(grid,_self) }}
+
+{% block grid_filters %}{% endblock %}
 <br>
 <div align='center'>
     <a  href="{{ path('hello_page') }}" class="btn">Regresar</a>
 </div>
+<style type="text/css">
+#grid_grid_noticiasEmpleado__fechanoticia__query__from{
+    width: 100px; 
+}
+
+.grid-filter-input .grid-filter-operator select{
+    width: 185px;
+    margin-left: 10px;
+
+}
+</style>
 <script>
-$(document).ready(function() {
-    moverSlider();
-    $(".bajar-slider").click(function(){
-        bajarSlider();
-    });
+$(document).ready(function(){
+         $("#grid_grid_noticiasEmpleado__fechanoticia__query__from").datepicker({ 
+              dateFormat: 'yy-mm-dd',  
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "-100:+0",});
 
-    $(".subir-slider").click(function(){
-        subirSlider();
-    });
+         $('#grid_grid_noticiasEmpleado__fechanoticia__query__from').attr('readonly',true);
 
-    $(".slider-vertical").mouseover(function(){
-        verificar = 0;
+         //$('#fecha_requerida').hide();
+         //$('#fecha_invalida').hide();
+        
     });
-
-    $(".slider-vertical").mouseout(function(){
-        verificar = 1;
-    });
-
-    $('.container').css({ width: '200px' });
-});
 </script>
 {% endblock %}

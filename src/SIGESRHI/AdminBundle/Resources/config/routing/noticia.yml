@@ -6,6 +6,10 @@ noticia_show:
     pattern:  /{id}/show
     defaults: { _controller: "AdminBundle:Noticia:show" }
 
+noticia_showEmpleado:
+    pattern:  /{id}/showEmpleado
+    defaults: { _controller: "AdminBundle:Noticia:showEmpleado" }
+
 noticia_new:
     pattern:  /new
     defaults: { _controller: "AdminBundle:Noticia:new" }
@@ -40,3 +44,7 @@ noticia_indexempleado:
 noticia_confirm_delete:
     pattern:  /{id}/confirmdelete
     defaults: { _controller: "AdminBundle:Noticia:confirmdelete" }
+
+noticia_obtener:
+    pattern:  /obtener
+    defaults: { _controller: "AdminBundle:Noticia:obtenerNoticias" }

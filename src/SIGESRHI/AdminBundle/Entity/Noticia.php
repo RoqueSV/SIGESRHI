@@ -13,7 +13,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  *
  * @ORM\Table(name="noticia")
  * @ORM\Entity
- * @GRID\Source(columns="id,asuntonoticia,fechanoticia,fechainicionoticia,fechafinnoticia",groups={"news"})
+ * @GRID\Source(columns="id,asuntonoticia,fechanoticia,fechainicionoticia,fechafinnoticia,idcentro.id",groups={"news"})
  * @Assert\Callback(methods={"fechasValidas"})
  */
 class Noticia
@@ -96,6 +96,7 @@ class Noticia
      *     @ORM\JoinColumn(name="idcentro", referencedColumnName="id")
      *   }
      * )
+     * @GRID\Column(field="idcentro.id",filterable=false, groups={"news"}, visible=false)
      */
     private $idcentro;
 
