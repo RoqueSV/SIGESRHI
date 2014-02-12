@@ -189,12 +189,14 @@ class SolicitudcapacitacionController extends Controller
         $idcapa = $request->get('idcapa');
         $empleadoform = $em->getRepository('ExpedienteBundle:Empleado')->find($request->get('idempleado'));
         $capacitacionform = $em->getRepository('CapacitacionBundle:Capacitacion')->find($idcapa);
+        $idjefe = $em->getRepository('ExpedienteBundle:Empleado')->find($request->get('idjefe'));
         
         $entity  = new Solicitudcapacitacion();
         $entity -> setAprobacionsolicitud('P');
         $entity -> setFechasolicitud(new \Datetime(date('d-m-Y')));        
         $entity -> setIdcapacitacion($capacitacionform);
-        $entity -> setIdempleado($empleadoform);        
+        $entity -> setIdempleado($empleadoform);     
+        $entity -> setIdjefe($idjefe);   
         $form = $this->createForm(new SolicitudcapacitacionType(), $entity);
         $form->bind($request);
 
@@ -209,6 +211,9 @@ class SolicitudcapacitacionController extends Controller
         $empleado = new Empleado();
         $user = $this->get('security.context')->getToken()->getUser();
         $empleado = $user->getEmpleado();
+
+        /***** Datos de jefe(s) ******/
+        $jefes = $em->getRepository('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion')->obtenerJefe($empleado->getId());
 
         $capacitacion = $em->getRepository('CapacitacionBundle:Capacitacion')->find($idcapa);
         if($capacitacion!=null AND $empleado!=null){
@@ -225,6 +230,7 @@ class SolicitudcapacitacionController extends Controller
                 'form'   => $form->createView(),
                 'capacitacion' => $capacitacion,
                 'empleado' => $empleado,
+                'jefes'    => $jefes,
             ));
         }
         throw $this->createNotFoundException('No se encontro capacitacion, ni empleado');
@@ -242,26 +248,8 @@ class SolicitudcapacitacionController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $empleado = $user->getEmpleado();
 
-        /***** Datos de jefe ******/
-       /* if( count($empleado->getIdrefrenda()) > 1 ){
-          
-           $query=$em->createQuery('SELECT e.id, s.nombrecompleto 
-                                    FROM ExpedienteBundle:Empleado e
-                                    JOIN e.idexpediente ex
-                                    JOIN ex.idsolicitudempleo s
-                                    WHERE e.id in (
-                                       SELECT r.idempleado 
-                                       FROM AdminBundle:RefrendaAct r
-                                       JOIN r.idpuestojefe c
-                                       WHERE r.idempleado = :idempleado) 
-                                  ')
-                     ->setParameter('idempleado', $empleado->getId());
-            $jefes = $query->getResult();
-
-        }*/
-        
-        /****                *****/
-
+        /***** Datos de jefe(s) ******/
+        $jefes = $em->getRepository('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion')->obtenerJefe($empleado->getId());
 
         
         $capacitacion = $em->getRepository('CapacitacionBundle:Capacitacion')->find($id);
@@ -280,6 +268,7 @@ class SolicitudcapacitacionController extends Controller
                 'form'   => $form->createView(),
                 'capacitacion' => $capacitacion,
                 'empleado' => $empleado,
+                'jefes'    => $jefes,
             ));
         }
         else

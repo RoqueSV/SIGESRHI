@@ -11,8 +11,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="solicitudcapacitacion")
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="SIGESRHI\PortalEmpleadoBundle\Repositorio\SolicitudcapacitacionRepository")
  * @GRID\Source(columns="id,aprobacionsolicitud,idcapacitacion.tematica,fechasolicitud",groups={"solEmpleado"})
- * @GRID\Source(columns="idempleado.idexpediente.idsolicitudempleo.nombrecompleto,id,fechasolicitud,aprobacionsolicitud",groups={"solicitud_empleado"})
+ * @GRID\Source(columns="idempleado.idexpediente.idsolicitudempleo.nombrecompleto,id,fechasolicitud,aprobacionsolicitud,idjefe.id",groups={"solicitud_empleado"})
  */
 class Solicitudcapacitacion
 {
@@ -90,10 +91,16 @@ class Solicitudcapacitacion
      */
     private $idempleado;
 
-    /*Agregar solo ORM*/
-    //private $idjefe;
-
-
+    /**
+     * @var \SIGESRHI\ExpedienteBundle\Entity\Empleado
+     *
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Empleado")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idjefe", referencedColumnName="id")
+     * })
+     * @GRID\Column(field="idjefe.id", visible=false, groups={"solicitud_empleado"}, joinType="inner", filterable=false)
+     */
+    private $idjefe;
 
     /**
      * Get id

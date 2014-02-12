@@ -1,3 +1,12 @@
 solicitud_capacitacion:
     pattern:  /
     defaults: { _controller: "CapacitacionBundle:SolicitudCapacitacion:consultar" }
+
+detalle_solicitud:
+    pattern:  /detallesolicitud
+    defaults: { _controller: "CapacitacionBundle:SolicitudCapacitacion:detalleSolicitud" }
+
+solicitudcapacitacion_update:
+    pattern:  /update
+    defaults: { _controller: "CapacitacionBundle:SolicitudCapacitacion:solicitudUpdate" }
+    requirements: { _method: post|put }

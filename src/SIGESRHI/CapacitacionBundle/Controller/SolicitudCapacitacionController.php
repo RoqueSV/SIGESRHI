@@ -39,24 +39,18 @@ class SolicitudCapacitacionController extends Controller
         }
         
         $idjefe = $user->getEmpleado()->getId();
-        $jefe = $em->getRepository('ExpedienteBundle:Empleado')->find($idjefe);
-
-        //Número de puestos que tiene el jefe logueado
-        $numpuestos = count($jefe->getIdrefrenda());
-
-        //$jefe = $em->getRepository('ExpedienteBundle:Empleado')->find($idjefe);
 
         $source = new Entity('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion','solicitud_empleado');
         $grid = $this->get('grid');
         $grid->setSource($source); 
         
-        /*$tableAlias = $source->getTableAlias();
+        $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
-            function($query) use ($tableAlias,$idempleado){
-                $query->andWhere($tableAlias.'.idempleado = :emp')
-                      ->setParameter('emp', $idempleado);
+            function($query) use ($tableAlias,$idjefe){
+                $query->andWhere('_idjefe.id = :emp')
+                      ->setParameter('emp', $idjefe);
             }
-        );*/ 
+        ); 
 
         $source->manipulateRow(
             function ($row)
@@ -75,27 +69,67 @@ class SolicitudCapacitacionController extends Controller
             return $row;
             }
         );       
-        $rowAction1 = new RowAction('Ver detalle', 'solicitudcapacitacion_show');
-        $rowAction1->manipulateRender(
-            function ($action, $row)
-            {
-                $action->setRouteParameters(array('id'));
-                return $action; 
-            }
-        );
+
+        $rowAction1 = new RowAction('Ver detalle', 'detalle_solicitud');
         $grid->addRowAction($rowAction1);
 
         $grid->setId('grid_solicitudcapacitacion');
         $grid->setDefaultOrder('fechasolicitud','desc');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
-        
+
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitaciones / Solicitudes", $this->get("router")->generate("solicitud_capacitacion"));       
         
         return $grid->getGridResponse('CapacitacionBundle:SolicitudCapacitacion:solicitud_capacitacion.html.twig');
 
-        /*return $this->render('CapacitacionBundle:SolicitudCapacitacion:solicitud_capacitacion.html.twig', array(
-                'puesto' => $idjefe,
-                'jefe'   => $numpuestos,
-            ));*/
+    }
+
+    public function detalleSolicitudAction()
+    { 
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion')->find($request->get('id'));
+
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Capacitaciones / Solicitudes", $this->get("router")->generate("solicitud_capacitacion"));
+        $breadcrumbs->addItem("Aprobación de solicitudes", $this->get("router")->generate("detalle_solicitud"));
+
+
+        return $this->render('CapacitacionBundle:SolicitudCapacitacion:detalle_solicitud.html.twig', array(
+            'entity' => $entity,
+        ));
+    }
+
+    public function solicitudUpdateAction(Request $request)
+    { 
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->get('idsol');
+
+        $entity = $em->getRepository('SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Expediente entity.');
+        }
+
+        $entity->setComentariosolicitud($request->get('comentario'));
+        $entity->setAprobacionsolicitud($request->get('estado'));
+
+            $em->persist($entity);
+            $em->flush();
+
+        if($entity->getAprobacionsolicitud() == 'A'){
+           $this->get('session')->getFlashBag()->add('aviso','Solicitud aprobada correctamente');
+        }
+        else{
+           $this->get('session')->getFlashBag()->add('aviso','Solicitud rechazada, registro actualizado');
+        }
+        return $this->redirect($this->generateUrl('solicitud_capacitacion'));
+
     }
 
 }

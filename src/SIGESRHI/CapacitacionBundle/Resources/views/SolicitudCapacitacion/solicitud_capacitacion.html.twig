@@ -2,10 +2,19 @@
 
 {% block principal -%}
 
+{% for flashMessage in app.session.flashbag.get('errornew') %}
+    <div class="alert alert-danger">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
 
 {{ grid_search(grid) }}
 {{ grid(grid,_self) }}
 {% block grid_filters %}{% endblock %}
+
+<div class="text-center">
+<a href="{{path('hello_page')}}" class="btn">Cancelar</a>
+</div>
 
 <style type="text/css">
 #grid_grid_solicitudcapacitacion__fechasolicitud__query__from{
@@ -23,12 +32,10 @@
 $(document).ready(function(){
 
          $("#grid_grid_solicitudcapacitacion__fechasolicitud__query__from").datepicker({ 
-              dateFormat: 'yy-mm-dd',  
+              dateFormat: 'dd-mm-yy',  
               changeMonth: true,
               changeYear: true,
               yearRange: "-100:+0",});
-
-         $('#grid_grid_solicitudcapacitacion__fechasolicitud__query__from').attr('readonly',true);
      });
 </script>
 

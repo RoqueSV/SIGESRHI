@@ -56,15 +56,21 @@
             <th width="25%">{{ form_label(form.motivosolicitud) }}</th>
             <td>{{ form_widget(form.motivosolicitud) }}</td>
         </tr>
+        {% if empleado.idrefrenda|length > 1 %}
         <tr>
-            <th>{{ form_label(form.comentariosolicitud) }}</th>
-            <td>{{ form_widget(form.comentariosolicitud) }}</td>
+            <th width="25%">A quien solicitar</th>
+            <td>
+              <select id="idjefe" name="idjefe" class="input-xlarge">
+              {% for jefe in jefes %}
+              <option value="{{jefe.id}}">{{jefe.puesto}}</option>
+              {% endfor %}
+              </select>
+            </td>
         </tr>
+        {% else %}
+        <input type="hidden" name="idjefe" id="idjefe" value="{{ jefes[0].id }}">
+        {% endif %}
     </table>
-
-    {# pruebas #}
-    
-    {# pruebas #}
 
     <input type="hidden" name="idcapa" id="idcapa" value="{{ capacitacion.id }}">
     <input type="hidden" name="idempleado" id="idempleado" value="{{ empleado.id }}">

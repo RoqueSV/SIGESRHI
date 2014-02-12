@@ -33,8 +33,10 @@
             </tr>
     </table>
 
+    {% if entity.idplaza.idfuncion|length > 0 %}
     <a href="#funciones" class="tool" data-toggle="modal" title="Ver detalles">Ver funciones de la plaza</a>
-    
+    {% endif %}
+
     <br/><br/>
     
     <fieldset>
@@ -71,20 +73,13 @@
         <h4 class="modal-title" id="myModalLabel">Funciones/Actividades básicas de la plaza</h4>
       </div>
       <div class="modal-body">
-       
-       {% if entity.idplaza.idfuncion|length > 0 %}
-              
+         
             {% for funcion in entity.idplaza.idfuncion %}
                     <ul style="list-style-type: disc; margin-left:5px;">
                        <li><p class="justifyColum">{{funcion.nombrefuncion}}</p><br/> </li>
                     </ul>  
             {% endfor %}
 
-     {% else %}
-
-        <p>No definido.</p>
-
-     {% endif %}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

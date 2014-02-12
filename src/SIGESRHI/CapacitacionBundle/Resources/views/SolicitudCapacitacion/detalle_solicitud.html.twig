@@ -1,0 +1,87 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+<script type='text/javascript'>
+function aceptar() {
+
+    if(confirm('\xbfEst\xE1 seguro que desea aprobar esta solicitud?')) {
+        document.getElementById('estado').value = 'A';
+        document.getElementById('form_solicitud').submit();
+}
+}
+
+function rechazar() {
+
+    if(confirm('\xbfEst\xE1 seguro que desea rechazar esta solicitud?')) {
+        document.getElementById('estado').value = 'R';
+        document.getElementById('form_solicitud').submit();
+}
+}
+</script>
+
+
+    <h3 class="text-center">Aprobación de solicitud para participación en capacitación</h3>
+    <br/>
+    
+    <h4>Detalles de la solicitud</h4>
+    <table class='table table-bordered' width='100%' align='center'>    
+        <tr>
+            <th>Solicitante</th>
+            <td colspan="3" width="75%">{{ entity.idempleado.idexpediente.idsolicitudempleo.nombrecompleto}}</td>
+        </tr>
+        <tr>
+            <th>Temática capacitación</th>
+            <td colspan="3" width="75%">{{ entity.idcapacitacion.tematica }}</td>
+        </tr>
+        <tr>
+            <th width="25%">Lugar</th>
+            <td>{{ entity.idcapacitacion.lugarcapacitacion }}</td>
+            <th>Fecha</th>
+            <td>{{ entity.idcapacitacion.fechacapacitacion | date('d-m-Y') | fecha }}</td>
+        </tr>
+        <tr>
+            <th>Hora inicio</th>
+            <td>{{ entity.idcapacitacion.horainiciocapacitacion | date('h:i a') }}</td>
+            <th>Hora Finalizacion</th>
+            <td>{{ entity.idcapacitacion.horafincapacitacion | date('h:i a') }}</td>
+        </tr>
+        <tr>
+            <th>Objetivo</th>
+            <td colspan="3" width="75%">{{ entity.idcapacitacion.objetivocapacitacion}}</td>
+        </tr>
+        <tr>
+            <th>Perfil del participante</th>
+            <td colspan="3" width="75%">{{ entity.idcapacitacion.perfilcapacitacion }}</td>
+        </tr>
+        <tr>
+            <th>Cupo</th>
+            <td colspan="3" width="75%">{{ entity.idcapacitacion.cupo }}</td>
+        </tr>
+    </table>
+   
+    <br/>
+
+    <form action="{{ path('solicitudcapacitacion_update') }}" method="post" id="form_solicitud">
+    <div class="form-horizontal control-group">
+        <label for="comentario" class="control-label optional">
+            Comentario
+        </label>
+        <div class="controls" >
+            <textarea id="comentario" name="comentario" class="input-xmlarge" rows="2"></textarea>
+        </div>
+    </div>
+    <input type="hidden" name="estado" id="estado" />
+    <input type="hidden" name="idsol" id="idsol" value="{{entity.id}}"/>
+    
+    <br/>
+    <div class='text-center'>
+        <button type="button"  class="btn btn-primary" onclick="aceptar();">Aprobar</button>
+        <button type="button"  class="btn btn-danger" onclick="rechazar();">Rechazar</button>
+        <a href="{{path('solicitud_capacitacion')}}" class="btn">Cancelar</a>
+    </div>
+    </form>
+
+
+
+{% endblock %}
