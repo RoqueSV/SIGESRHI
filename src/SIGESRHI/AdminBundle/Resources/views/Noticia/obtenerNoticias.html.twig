@@ -1,0 +1,28 @@
+  
+{% for noticia in noticias %}
+  <div class="modulo-slider">
+    <h4><a href="{{ path('noticia_showEmpleado', { 'id':noticia.id, 'nogrid':1 }) }}">{{ noticia.asuntonoticia }}</a></h4>
+  </div>
+{% endfor %}   
+<script>
+$(document).ready(function() {
+    moverSlider();
+    $(".bajar-slider").click(function(){
+        bajarSlider();
+    });
+
+    $(".subir-slider").click(function(){
+        subirSlider();
+    });
+
+    $(".slider-vertical").mouseover(function(){
+        verificar = 0;
+    });
+
+    $(".slider-vertical").mouseout(function(){
+        verificar = 1;
+    });
+
+    $('.container').css({ width: '200px' });
+});
+</script>               

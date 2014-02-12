@@ -4,6 +4,7 @@ namespace SIGESRHI\AdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 use SIGESRHI\AdminBundle\Entity\Noticia;
 use SIGESRHI\AdminBundle\Entity\Docnoticia;
@@ -98,11 +99,104 @@ class NoticiaController extends Controller
         ));*/
     }
     /**
-    *Mostrar noticias a empleados...
+    *prueba menu noticias a empleados...
     *
     */
-    public function indexempleadoAction(){
+    public function indexempleadoAction(){ 
         $em = $this->getDoctrine()->getManager();
+        $user = new User();
+        $empleado = new Empleado();
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        $empleado = $user->getEmpleado();
+        $idempleado = $empleado->getId();
+         //Obtener los centros del empleado
+        $query2 = $em->createQuery("SELECT identity(u.idcentro)
+                         FROM ExpedienteBundle:Empleado e JOIN e.idrefrenda r JOIN r.idunidad u 
+                         WHERE e.id=:idempleado")                    
+                    ->setParameter('idempleado',$idempleado);                    
+        $resultado = $query2->setFirstResult(0)                            
+                            ->getResult();
+        $idcentros=array();
+        //$idcentros[]=0;
+        if(!is_null($resultado)){
+            foreach ($resultado as $val) {
+                foreach ($val as $v){
+                    $idcentros[]=$v;
+                }
+            }
+        }   
+        else{
+            $idcentros[]=0;
+        }
+
+        $source = new Entity('AdminBundle:Noticia','news');
+        $grid = $this->get('grid');
+        $grid->setSource($source);
+
+        $source->manipulateQuery(
+            function($query) use ($idcentros){
+                $query->andWhere($query->expr()->in('_idcentro.id', $idcentros));                      
+            }
+        );        
+
+        $rowAction1 = new RowAction('Consultar', 'noticia_showEmpleado');
+        $rowAction1->setColumn('info_column');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                $action->setRouteParameters(array('id'));
+                return $action; 
+            }
+        );
+        $grid->addRowAction($rowAction1);
+
+        $grid->setId('grid_noticiasEmpleado');
+        $grid->setDefaultOrder('fechanoticia','desc');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Noticias", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Consultar Noticias", $this->get("router")->generate("noticia_indexempleado"));
+
+        return $grid->getGridResponse('AdminBundle:Noticia:indexEmpleado.html.twig');          
+    }
+
+    /**
+    *Vista de noticia a empleados...
+    *
+    */
+    public function showEmpleadoAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('AdminBundle:Noticia')->find($id);
+        $var = $request->get('nogrid');
+        $nogrid = (isset($var))?0:1;
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Noticia entity.');
+        }
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Consultar Noticia", $this->get("router")->generate("noticia_indexempleado"));
+        $breadcrumbs->addItem($entity->getAsuntonoticia(),"");
+        return $this->render('AdminBundle:Noticia:showEmpleado.html.twig', array(
+            'entity'      => $entity,
+            'nogrid' => $nogrid,
+            ));
+    }
+
+    /**
+    *Renderiza las noticias en div para mostrarlos en el menu de noticias
+    *
+    */
+    public function obtenerNoticiasAction(){
+         $em = $this->getDoctrine()->getManager();
         $user = new User();
         $empleado = new Empleado();
 
@@ -114,26 +208,36 @@ class NoticiaController extends Controller
          //Obtener los centros del empleado
         $query2 = $em->createQuery("SELECT identity(u.idcentro)
                          FROM ExpedienteBundle:Empleado e JOIN e.idrefrenda r JOIN r.idunidad u 
-                         WHERE e.id=:idempleado")
-                    ->setParameter('idempleado',$idempleado);
-        $resultado = $query2->getResult();
+                         WHERE e.id=:idempleado")                    
+                    ->setParameter('idempleado',$idempleado);                    
+        $resultado = $query2->setFirstResult(0)                            
+                            ->getResult();
         $idcentros=array();
         //$idcentros[]=0;
-        if(!is_array($resultado)){
+        if(!is_null($resultado)){
             foreach ($resultado as $val) {
                 foreach ($val as $v){
                     $idcentros[]=$v;
                 }
             }
-        }
+        }   
         else{
             $idcentros[]=0;
-        }
-
-       return $this->render('AdminBundle:Noticia:indexempleado.html.twig', array(
+        }        
+        $query = $em->createQueryBuilder()
+            ->select('n.id,n.fechanoticia, n.asuntonoticia')
+            ->from('AdminBundle:Noticia', 'n')
+            ->innerJoin('n.idcentro', 'c')
+            ->setMaxResults(5)
+            ->andWhere('c.id IN (:idscentro)')
+            ->groupBy('n.id')
+            ->setParameter('idscentro', $idcentros);
+        $noticias = $query->getQuery()->getResult();
+        return $this->render('AdminBundle:Noticia:obtenerNoticias.html.twig', array(
+       'noticias' => $noticias,
+       'idcentro' => $idcentros,
         ));
     }
-
 
     /**
      * Creates a new Noticia entity.

@@ -17,11 +17,11 @@ class SolicitudcapacitacionType extends AbstractType
                 'label'=>'Motivo de la solicitud',
                 'attr' => array('class'=>'input-xxlarge','rows'=>'2'),
                 ))
-            ->add('comentariosolicitud','textarea',array(
+            /*->add('comentariosolicitud','textarea',array(
                 'label'=>'Comentario',
                 'attr' => array('class'=>'input-xxlarge','rows'=>'2'),
                 'required' => false,               
-                ))
+                ))*/
             //->add('idcapacitacion')
             //->add('idempleado')
         ;
