@@ -36,6 +36,9 @@ class SolicitudcapacitacionController extends Controller
         $empleado = new Empleado();
 
         $user = $this->get('security.context')->getToken()->getUser();
+        if($user == 'anon.'){
+            return $this->redirect($this->generateUrl('hello_page'));           
+        }
         $empleado = $user->getEmpleado();
         $idempleado = $empleado->getId();
 
@@ -100,6 +103,9 @@ class SolicitudcapacitacionController extends Controller
         $empleado = new Empleado();
 
         $user = $this->get('security.context')->getToken()->getUser();
+        if($user == 'anon.'){
+            return $this->redirect($this->generateUrl('hello_page'));           
+        }
         $empleado = $user->getEmpleado();
         $idempleado = $empleado->getId();
 
@@ -213,6 +219,9 @@ class SolicitudcapacitacionController extends Controller
         $user = new User();
         $empleado = new Empleado();
         $user = $this->get('security.context')->getToken()->getUser();
+        if($user == 'anon.'){
+            return $this->redirect($this->generateUrl('hello_page'));           
+        }
         $empleado = $user->getEmpleado();
 
         /***** Datos de jefe(s) ******/
@@ -249,6 +258,9 @@ class SolicitudcapacitacionController extends Controller
         $user = new User();
         $empleado = new Empleado();
         $user = $this->get('security.context')->getToken()->getUser();
+        if($user == 'anon.'){
+            return $this->redirect($this->generateUrl('hello_page'));           
+        }
         $empleado = $user->getEmpleado();
 
         /***** Datos de jefe(s) ******/
