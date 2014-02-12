@@ -1,3 +1,0 @@
-empleadoportal:
-    pattern:  /
-    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Empleadoportal:index" }

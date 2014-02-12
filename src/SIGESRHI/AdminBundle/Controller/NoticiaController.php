@@ -130,7 +130,7 @@ class NoticiaController extends Controller
             $idcentros[]=0;
         }
 
-        $source = new Entity('AdminBundle:Noticia','news2');
+        $source = new Entity('AdminBundle:Noticia','news');
         $grid = $this->get('grid');
         $grid->setSource($source);
 
@@ -158,7 +158,7 @@ class NoticiaController extends Controller
         //Camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Empleado", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Noticias", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Consultar Noticias", $this->get("router")->generate("noticia_indexempleado"));
 
         return $grid->getGridResponse('AdminBundle:Noticia:indexEmpleado.html.twig');          
