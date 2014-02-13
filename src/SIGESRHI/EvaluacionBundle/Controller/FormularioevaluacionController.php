@@ -76,11 +76,27 @@ class FormularioevaluacionController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Formularioevaluacion();
+        //establecemos el estado del formulario a "activo" por defecto
+        $entity->setEstadoform('A');
+
         $form = $this->createForm(new FormularioevaluacionType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            //Asignamos al formulario todos los puntajes registrados
+               $puntajes = $em->getRepository('EvaluacionBundle:Puntaje')->findAll();
+               
+                foreach($puntajes as $puntaje)
+                {
+                    
+                    $entity->addPuntajes($puntaje);
+                    //$puntaje->addIdformulario($entity);
+                    //$em->persist($puntaje);
+                }
+            
+
             $em->persist($entity);
             $em->flush();
 
@@ -100,13 +116,6 @@ class FormularioevaluacionController extends Controller
     public function newAction()
     {
         $entity = new Formularioevaluacion();
-
-        $Factores = new Factorevaluacion();
-        $Opciones = new Opcion();
-        $Factores->getOpciones()->add($Opciones);
-        $entity->getFactores()->add($Factores);
-
-
         $form   = $this->createForm(new FormularioevaluacionType(), $entity);
 
         return $this->render('EvaluacionBundle:Formularioevaluacion:new.html.twig', array(

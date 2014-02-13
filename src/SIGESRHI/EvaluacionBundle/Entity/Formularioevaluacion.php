@@ -210,14 +210,24 @@ class Formularioevaluacion
 
 /******************************************************************************/
 
+   
+
     /**
-     *
      * @var \Doctrine\Common\Collections\Collection
-     * @ORM\ManyToMany(targetEntity="Puntaje", mappedBy="idformulario")
-    */
+     *
+     * @ORM\ManyToMany(targetEntity="Puntaje", inversedBy="idformulario")
+     * @ORM\JoinTable(name="formulariopuntaje",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="idformulario", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="idpuntaje", referencedColumnName="id")
+     *   }
+     * )
+     */
     protected $Puntajes;
 
- public function setPuntajes(\Doctrine\Common\Collections\Collection $puntajes)
+ public function setPuntajes($puntajes)
     {
         $this->Puntajes = $puntajes;
         foreach ($puntajes as $puntaje) {
@@ -232,5 +242,19 @@ class Formularioevaluacion
     public function getPuntajes()
     {
         return $this->Puntajes;
+    }
+
+
+    /**
+     * Add Puntajes
+     *
+     * @param \SIGESRHI\EvaluacionBundle\Entity\Puntaje $puntajes
+     * @return Formularioevaluacion
+     */
+    public function addPuntajes(\SIGESRHI\EvaluacionBundle\Entity\Puntaje $puntaje)
+    {
+        $this->Puntajes[] = $puntaje;
+    
+        return $this;
     }
 }

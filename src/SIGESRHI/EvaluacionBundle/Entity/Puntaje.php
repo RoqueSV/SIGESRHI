@@ -51,19 +51,11 @@ class Puntaje
      */
     private $puntajemax;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
+     /**
      *
-     * @ORM\ManyToMany(targetEntity="Formularioevaluacion", inversedBy="Puntajes")
-     * @ORM\JoinTable(name="formulariopuntaje",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="idpuntaje", referencedColumnName="id")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="idformulario", referencedColumnName="id")
-     *   }
-     * )
-     */
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\ManyToMany(targetEntity="Formularioevaluacion", mappedBy="Puntajes")
+    */
     private $idformulario;
 
     /**
@@ -167,6 +159,7 @@ class Puntaje
      */
     public function addIdformulario(\SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion $idformulario)
     {
+        $idformulario->addPuntajes($this);
         $this->idformulario[] = $idformulario;
     
         return $this;
@@ -191,4 +184,14 @@ class Puntaje
     {
         return $this->idformulario;
     }
+
+/*   public function setIdformulario($formulario)
+    {
+        $this->Idformulario = $formulario;
+        foreach ($puntajes as $puntaje) {
+            $puntaje->setIdformulario($this);
+        }
+    }
+*/
+
 }
