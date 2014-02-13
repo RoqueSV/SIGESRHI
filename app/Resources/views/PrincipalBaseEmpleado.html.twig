@@ -5,37 +5,41 @@
 	<script src="{{ asset('bundles/expediente/js/slider-vertical.js') }}" <type="text/javascript"></script>
 {% endblock %}
 
-{% block seccion %}
-  {{parent()}}
-  {% if app.user %}   
-    {# Seccion noticias #}   
-      <div class="container" id="containernoticias">
-        <div class="contenido">
-            <h4>Noticias</h4>
-          <div class="nivel slider-vertical">
+{% block extendido %}
+{{parent()}}
+  {% block seccion2 %}
+  <aside id="columna2">
+    {% if app.user %}   
+      {# Seccion noticias #}   
+        <div class="container" id="containernoticias">
+          <div class="contenido">
+              <h4>Noticias</h4>
+            <div class="nivel slider-vertical">
 
-              <div class="contenedor-slider">
+                <div class="contenedor-slider">
 
-                <div class="bloque-slider">
-                  <br>   
-                  {#Aqui renderizamos las noticias#}     
-                    {{ render(controller('AdminBundle:Noticia:obtenerNoticias')) }} 
-                  <br>
+                  <div class="bloque-slider">
+                    <br>   
+                    {#Aqui renderizamos las noticias#}     
+                      {{ render(controller('AdminBundle:Noticia:obtenerNoticias')) }} 
+                    <br>
+                  </div>
+                    <!-- fin bloque-slider -->
+                  <p class="mover-slider-vertical"><a class="subir-slider" >Subir noticia</a> <a class="bajar-slider">Bajar noticia</a></p>
                 </div>
-                  <!-- fin bloque-slider -->
-                <p class="mover-slider-vertical"><a class="subir-slider" >Subir noticia</a> <a class="bajar-slider">Bajar noticia</a></p>
-              </div>
-            <!-- fin contenedor-noticias-slide -->
-              <p class="vinculo-especial2">
-                <a href="{{ path('noticia_indexempleado') }}">Ver más noticias</a>
-              </p>
+              <!-- fin contenedor-noticias-slide -->
+                <p class="vinculo-especial2">
+                  <a href="{{ path('noticia_indexempleado') }}">Ver más noticias</a>
+                </p>
+            </div>
+            <!-- fin nivel slide-vertical -->
           </div>
-          <!-- fin nivel slide-vertical -->
+          <!-- fin  contenido -->
         </div>
-        <!-- fin  contenido -->
-      </div>
-      <!-- fin  container -->
-    {#fin seccion noticias#}
+        <!-- fin  container -->
+      {#fin seccion noticias#}
 
-    {% endif %}
+      {% endif %}
+  </aside>
+  {% endblock %}
 {% endblock %}

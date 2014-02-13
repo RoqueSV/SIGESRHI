@@ -36,6 +36,9 @@ class SolicitudcapacitacionController extends Controller
         $empleado = new Empleado();
 
         $user = $this->get('security.context')->getToken()->getUser();
+        if($user == 'anon.'){
+            return $this->redirect($this->generateUrl('hello_page'));           
+        }
         $empleado = $user->getEmpleado();
         $idempleado = $empleado->getId();
 
@@ -100,6 +103,9 @@ class SolicitudcapacitacionController extends Controller
         $empleado = new Empleado();
 
         $user = $this->get('security.context')->getToken()->getUser();
+        if($user == 'anon.'){
+            return $this->redirect($this->generateUrl('hello_page'));           
+        }
         $empleado = $user->getEmpleado();
         $idempleado = $empleado->getId();
 
@@ -115,7 +121,7 @@ class SolicitudcapacitacionController extends Controller
         $resultado = $query2->getResult();
         $idcentros=array();
         //$idcentros[]=0;
-        if(!is_array($resultado)){
+        if(!is_null($resultado)){
             foreach ($resultado as $val) {
                 foreach ($val as $v){
                     $idcentros[]=$v;
@@ -133,7 +139,7 @@ class SolicitudcapacitacionController extends Controller
         $resultado = $query3->getResult();
         $idcapAplicadas=array();
         //$idcapAplicadas[]=0;
-        if(!is_array($resultado)){
+        if(!is_null($resultado)){
             foreach ($resultado as $val) {
                 foreach ($val as $v){
                     $idcapAplicadas[]=$v;
@@ -144,7 +150,7 @@ class SolicitudcapacitacionController extends Controller
             $idcapAplicadas[]=0;
         }
         //////////////////
-        $codDisponibles=['P','M'];
+        $codDisponibles=array('P','M');
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias,$idcentros,$idcapAplicadas,$codDisponibles){
@@ -212,6 +218,9 @@ class SolicitudcapacitacionController extends Controller
         //retornamos al form
         $user = new User();
         $empleado = new Empleado();
+        if($user == 'anon.'){
+            return $this->redirect($this->generateUrl('hello_page'));           
+        }
         $user = $this->get('security.context')->getToken()->getUser();
         $empleado = $user->getEmpleado();
 
@@ -249,6 +258,9 @@ class SolicitudcapacitacionController extends Controller
         $user = new User();
         $empleado = new Empleado();
         $user = $this->get('security.context')->getToken()->getUser();
+        if($user == 'anon.'){
+            return $this->redirect($this->generateUrl('hello_page'));           
+        }
         $empleado = $user->getEmpleado();
 
         /***** Datos de jefe(s) ******/

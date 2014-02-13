@@ -1,26 +1,180 @@
 {% extends '::PrincipalBaseEmpleado.html.twig' %}
 
 {% block principal -%}
-    <h1>Empleado</h1>
-
-    <table class="record_properties">
-        <tbody>
+     <h4 class='text-center'>Consultar Información Personal.</h4><br>
+     <fieldset><legend>Empleado</legend>
+     <table width='100%'>   
+        <tr>
+        <td width="75%">  
+            <table class="table mitable"  border='1px'>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Codigoempleado</th>
+                <th>Codigo Empleado</th>
                 <td>{{ entity.codigoempleado }}</td>
             </tr>
-        </tbody>
+            <tr>
+                <th>Nombre Empleado</th>
+                <td>{{ entity.idexpediente.idsolicitudempleo.nombrecompleto }}</td>
+            </tr>
+            {% set yapaso = 0 %}
+            {% for plaza in plazas %}
+            <tr>
+            {% if yapaso == 0  %}
+                {% set yapaso = 1 %}
+                <th>{% if plazas|length > 1 %}
+                        Puestos                        
+                    {% else %}
+                        Puesto
+                    {% endif %}
+                </th>
+            {% else %}
+                <th></th>
+            {% endif %}
+                <td>{{ plaza.nombreplaza }} $ {{ plaza.sueldoactual }}</td>
+            </tr>            
+            {% endfor %}
+            </table>
+        </td>
+        <td>
+            <table border="3" align="center" width="150px" height="193px">
+                <tr>
+                    <td>
+                        <img src="{{asset('uploads/fotografias/' ~ entity.idexpediente.idsolicitudempleo.fotografia)}}"  class="fotoSol"/>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        </tr>
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('empleadoportal') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    </fieldset>
+    <fieldset><legend>Datos Personales</legend>
+    <table class="table mitable"  border='1px'>
+        <tr>
+            {% if entity.idexpediente.idsolicitudempleo.apellidocasada %}
+             <th>Apellido de casada</th>
+            {% endif %}
+            <th>Primer Apellido</th>
+            <th>Segundo Apellido</th>
+            <th>Nombres</th>
+        </tr>
+        <tr>
+            {% if entity.idexpediente.idsolicitudempleo.apellidocasada %}               
+                <td>{{ entity.idexpediente.idsolicitudempleo.primerapellido }}</td>
+            {% endif %}
+            <td>{{ entity.idexpediente.idsolicitudempleo.primerapellido }}</td>
+            <td>{{ entity.idexpediente.idsolicitudempleo.segundoapellido }}</td>
+            <td>{{ entity.idexpediente.idsolicitudempleo.nombres }}</td>
+        </tr>
+    </table>
+    <p style="font-weight: bold; font-size: 14px">Direccion Particular</p>
+    <table class="table mitable"  border='1px'>
+        <tr>
+            <th>Departamento</th>
+            <th>Municipio</th>
+            <th>Colonia</th>
+            <th>Número/Calle/Avenida</th>
+        </tr>
+        <tr>
+            <td>{{ entity.idexpediente.idsolicitudempleo.idmunicipio.iddepartamento.nombredepartamento }}</td>
+            <td>{{ entity.idexpediente.idsolicitudempleo.idmunicipio.nombremunicipio }}</td>
+            <td>{{ entity.idexpediente.idsolicitudempleo.colonia }}</td>
+            <td>{{ entity.idexpediente.idsolicitudempleo.calle }}</td>
+        </tr>
+    </table>
+    <table class="mitable" width="90%" border='0px'>
+        <tr>
+            <th>Estado Civil:</th>
+                <td>
+                  {% set gen='o' %}
+                  {% if entity.idexpediente.idsolicitudempleo.sexo=='F' %}
+                  {% set gen='a' %}
+                  {% endif %} 
+                  {% if entity.idexpediente.idsolicitudempleo.estadocivil=='C' %}
+                   Casad{{gen}}
+                  {% elseif entity.idexpediente.idsolicitudempleo.estadocivil=='S' %}
+                   Solter{{gen}}
+                  {% elseif entity.idexpediente.idsolicitudempleo.estadocivil=='D' %}
+                   Divorciad{{gen}}
+                  {% elseif entity.idexpediente.idsolicitudempleo.estadocivil=='A' %}
+                   Acompañad{{gen}}
+                  {% elseif entity.idexpediente.idsolicitudempleo.estadocivil=='V' %}
+                   Viud{{gen}}
+                  {% endif %}
+                </td>
+            <th>Telefono:</th><td>{{ entity.idexpediente.idsolicitudempleo.telefonofijo }}</td>
+            <th>Telefono (móvil):</th><td>{{ entity.idexpediente.idsolicitudempleo.telefonomovil }}</td>
+        </tr>
+        <tr>
+            <th>Correo electronico: </th>
+            <td colspan="5">{{ entity.idexpediente.idsolicitudempleo.email }}</td>
+        </tr>
+        <tr>
+            <th>Lugar de Nacimiento: </th>
+            <td colspan="2">{{ entity.idexpediente.idsolicitudempleo.lugarnac }}</td>
+            <th>Fecha de Nacimiento: </th>
+            <td colspan="2">{{ entity.idexpediente.idsolicitudempleo.fechanac | date('d-m-Y') | fecha }}</td>
+        </tr>
+    </table><br>
+    <p style="font-weight: bold; font-size: 14px">Documentos de identidad</p>
+    <table class="table mitable"  border='1px'>
+        <tr>
+            <th>N° DUI</th>
+            <th>N° NIT</th>
+            <th>N° ISSS</th>
+            <th>N° NUP(AFP)</th>
+            <th>N° NIP(docentes)</th>
+        </tr>
+        <tr>
+            <td>{{ entity.idexpediente.idsolicitudempleo.dui }}</td>
+            <td>{{ entity.idexpediente.idsolicitudempleo.nit }}</td>
+            <td>{{ entity.idexpediente.idsolicitudempleo.isss }}</td>
+            <td>{{ entity.idexpediente.idsolicitudempleo.nup }}</td>
+            <td>{{ entity.idexpediente.idsolicitudempleo.nip }}</td>
+        </tr>
+    </table>
+    <table class="mitable" width="100%">
+        <tr>
+            <th width="40%">Lugar y Fecha de expedicion de DUI</th>
+            <td>{{ entity.idexpediente.idsolicitudempleo.lugardui }}, {{ entity.idexpediente.idsolicitudempleo.fechadui | date('d-m-Y') | fecha }}</td>
+        </tr>
+    </table>
+    </fieldset>
+    <fieldset><legend>Datos de estudio</legend>
+        <table class="table mitable"  border='1px'>
+            <tr>
+                <th>Clase de estudio</th>
+                <th>Título obtenido/Grado aprobado</th>
+                <th>Centro de estudio</th>
+            </tr>
+            {% for destudio in Destudios %}
+            <tr>
+                <td>{{ destudio.niveltitulo }}</td>                
+                <td>{{ destudio.nombretitulo }}</td>
+                <td>{{ destudio.centroestudio }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if idiomas|length > 0 %}
+        <table class="table mitable"  border='1px'>
+            <tr>
+                <th>Idioma</th>
+                <th>Lee</th>
+                <th>Escribe</th>
+                <th>Habla</th>
+            </tr>
+            {% for idioma in idiomas %}
+            <tr>
+                <td>{{ idioma.nombreidioma }}</td>
+                <td>{{ idioma.nivellee }}</td>
+                <td>{{ idioma.nivelescribe }}</td>
+                <td>{{ idioma.nivelhabla }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </fieldset>
+    <div class='text-center'>    
+        <a class="btn" href="#" onClick="history.back()">
+            Regresar
+        </a>  
+    </div>
 {% endblock %}

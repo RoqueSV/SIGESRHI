@@ -39,9 +39,31 @@ class EmpleadoportalController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Empleado entity.');
         }
+        //obtenemos las plazas del empleado
+        $query = $em -> createQuery("SELECT r.nombreplaza, r.sueldoactual FROM ExpedienteBundle:Empleado e JOIN e.idrefrenda r WHERE e.id=:idempleado")
+                    ->setParameter('idempleado',$idempleado);
+        $plazas = $query->getResult();
+        
+        //obtenemos los datos de estudio
+        $query2 = $em -> createQuery("SELECT de.centroestudio, t.niveltitulo, t.nombretitulo  FROM ExpedienteBundle:Empleado e JOIN e.idexpediente ex JOIN ex.idsolicitudempleo s JOIN s.Destudios de  JOIN de.idtitulo t WHERE e.id=:idempleado ORDER BY t.niveltitulo ASC")
+                    ->setParameter('idempleado',$idempleado);
+        $Destudios = $query2->getResult();
+        
+        //obtenemos los idiomas del empleado
+        $query3 = $em -> createQuery("SELECT i.nombreidioma, i.nivelhabla, i.nivelescribe, i.nivellee FROM ExpedienteBundle:Empleado e JOIN e.idexpediente ex JOIN ex.idsolicitudempleo s JOIN s.Idiomas i WHERE e.id=:idempleado ")
+                    ->setParameter('idempleado',$idempleado);
+        $idiomas = $query3->getResult();
 
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Consultar Informacion Personal", "");
         return $this->render('SIGESRHIPortalEmpleadoBundle:Empleadoportal:show.html.twig', array(
-            'entity'      => $entity,
+            'entity'    => $entity,
+            'plazas'    => $plazas,
+            'Destudios' => $Destudios,
+            'idiomas'   => $idiomas,
         ));
     }
 
