@@ -161,7 +161,7 @@ class NoticiaController extends Controller
         $breadcrumbs->addItem("Noticias", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Consultar Noticias", $this->get("router")->generate("noticia_indexempleado"));
 
-        return $grid->getGridResponse('AdminBundle:Noticia:indexEmpleado.html.twig');          
+        return $grid->getGridResponse('AdminBundle:Noticia:indexempleado.html.twig');          
     }
 
     /**

@@ -48,7 +48,7 @@ class TipoaccionAdmin extends Admin
             ->addIdentifier('nombretipoaccion',null,array('label' => 'Nombre acción','route' => array('name' => 'show')))
             ->add('tipoaccion', 'string', array(
                   'label' => 'Tipo',
-                  'template' => 'AdminBundle:Documentos:tiposaccion.html.twig'
+                  'template' => 'AdminBundle:CRUD:tiposaccion.html.twig'
                   ))
                      
         ;
@@ -61,7 +61,7 @@ class TipoaccionAdmin extends Admin
             ->add('descripciontipoaccion', 'textarea', array('label' => 'Descripción'))
             ->add('tipoaccion', 'string', array(
                   'label' => 'Tipo',
-                  'template' => 'AdminBundle:Documentos:tiposaccionshow.html.twig'
+                  'template' => 'AdminBundle:CRUD:tiposaccionshow.html.twig'
                   ))
         ;
      }
