@@ -91,7 +91,7 @@ class LicenciaController extends Controller
                          ");
 
         $resultado = $query2->getResult();
-        $idemps=array();
+        $idemps=array(0);
         $idexp[]=0;
         if(!is_null($resultado)){
             foreach ($resultado as $val) {
@@ -99,9 +99,6 @@ class LicenciaController extends Controller
                     $idemps[]=$v;
                 }
             }
-        }
-        else{
-            $idemps[]=0;
         }
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(

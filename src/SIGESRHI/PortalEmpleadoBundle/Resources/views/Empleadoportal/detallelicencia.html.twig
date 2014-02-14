@@ -1,0 +1,73 @@
+{% extends '::PrincipalBaseEmpleado.html.twig' %}
+
+{% block principal -%}
+    <h3 class="text-center"> Detalles de Permiso </h3>
+    <br>
+    <div class="text-center">
+    <table id="tabladetalle" class="table table-hover mitable" border='1' width='75%' align='center'>        
+            <tr>
+                <th width="40%">Motivo</th>
+                <td><b>{{ entity.concepto }}</b></td>
+            </tr>
+            <tr>
+                <th>Permiso</th>
+                <td><b>
+                  {% if entity.congoce == 1 %}
+                    Con goce de Sueldo
+                  {% else %}
+                    Sin goce de Sueldo
+                  {% endif %}
+                </b></td>
+            </tr>
+            {% if (entity.duraciondias != "") and (entity.duracionhoras == "") %} 
+                <tr>
+                    <th>Fecha de inicio Permiso</th>
+                    <td><b>{{ entity.fechainiciolic|date('d-m-Y')|fecha }}</b></td>
+                </tr>
+                <tr>
+                    <th>Fecha fin Permiso</th>
+                    <td><b>{{ entity.fechafinlic|date('d-m-Y')|fecha }}</b></td>
+                </tr>
+                <tr>            
+                    <th>Duracion en días</th>
+                    <td><b>{{ entity.duraciondias }}</b></td>
+                </tr>
+            {% else %}                              
+                <tr>
+                    <th>Fecha de inicio Permiso</th>
+                    <td><b>{{ entity.fechainiciolic|date('d-m-Y')|fecha }}</b></td>
+                </tr>
+                <tr>
+                    <th>Hora inicio Permiso</th>
+                    <td><b>{{ entity.horainiciolic|date('H:i A') }}</b></td>
+                </tr>
+                <tr>
+                    <th>Hora fin Permiso</th>
+                    <td><b>{{ entity.horafinlic|date('H:i A') }}</b></td>
+                </tr> 
+                <tr>
+                    <th>Duración en horas</th>
+                    <td><b>{{ entity.duracionhoras }} hrs.
+                      {% if entity.duracionminutos != "" %}
+                        {{ entity.duracionminutos }}
+                      {% else %}   
+                      00
+                      {% endif %}
+                      minutos
+                    </b></td>
+                </tr>
+            {% endif %}           
+    </table>
+    <br>
+        <a class="btn" href="#" onClick="history.back()">
+            Regresar
+        </a> 
+    </div>
+<style type="text/css">
+#tabladetalle{
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+{% endblock %}

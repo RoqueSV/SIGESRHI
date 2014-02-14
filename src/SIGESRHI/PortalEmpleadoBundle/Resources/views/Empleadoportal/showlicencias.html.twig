@@ -1,0 +1,43 @@
+{% extends '::PrincipalBaseEmpleado.html.twig' %}
+
+{% block principal -%}
+<h4 class='text-center'>PERMISOS REGISTRADOS</h4>
+<p class="text-center">Seleccione para ver detalle</p>
+{{ grid_search(grid) }}
+
+    {{ grid(grid,_self) }}
+
+    {% block grid_filters %}{% endblock %}
+<br>
+<div class="text-center">
+<a class="btn" href="#" onClick="history.back()">
+            Regresar
+        </a> 
+</div>
+<style type="text/css">
+#grid_grid_licencias_empleado__fechapermiso__query__from{
+    width: 100px; 
+}
+</style>
+<script>
+$(document).ready(function(){
+
+         $("#grid_grid_licencias_empleado__fechapermiso__query__from").datepicker({ 
+              dateFormat: 'yy-mm-dd',  
+              changeMonth: true,
+              changeYear: true,
+              yearRange: "-100:+0",});
+
+         $('#grid_grid_licencias_empleado__fechapermiso__query__from').attr('readonly',true);
+
+         $('#fecha_requerida').hide();
+         $('#fecha_invalida').hide();
+        
+    });
+</script>
+<style type="text/css">
+.help-inline{
+        color: rgb(185, 74, 72); 
+        }
+</style>
+{% endblock %}

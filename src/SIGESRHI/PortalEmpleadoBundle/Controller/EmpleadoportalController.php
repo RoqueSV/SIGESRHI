@@ -7,8 +7,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Application\Sonata\UserBundle\Entity\User;
 use SIGESRHI\ExpedienteBundle\Entity\Empleado;
+use SIGESRHI\ExpedienteBundle\Entity\Contratacion;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+
+use APY\DataGridBundle\Grid\Grid;
+use APY\DataGridBundle\Grid\Column\ActionsColumn;
+use APY\DataGridBundle\Grid\Source\Entity;
+use APY\DataGridBundle\Grid\Action\RowAction;
 
 /**
  * Empleado controller.
@@ -65,6 +72,81 @@ class EmpleadoportalController extends Controller
             'Destudios' => $Destudios,
             'idiomas'   => $idiomas,
         ));
+    }
+
+    public function showlicenciasAction(){
+         $em = $this->getDoctrine()->getManager();
+        $user = new User();
+        $empleado = new Empleado();
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        if($user == 'anon.'){
+            return $this->redirect($this->generateUrl('hello_page'));           
+        }
+        $empleado = $user->getEmpleado();
+        $idempleado = $empleado->getId();
+        $contrataciones = $empleado->getIdcontratacion();
+        $idcontratacion = array(0);
+        foreach ($contrataciones as $contratacion) {
+            $idcontratacion[] = $contratacion->getId();
+        }
+        $entity = $em->getRepository('ExpedienteBundle:Empleado')->find($idempleado);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Empleado entity.');
+        }
+
+        //Obtenemos las licencias
+        $source = new Entity('ExpedienteBundle:Licencia','licencias_por_contrato');
+        $grid = $this->get('grid');
+        $grid->setSource($source); 
+
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias,$idcontratacion){
+                $query->andWhere($tableAlias.'.idcontratacion IN  (:idcontratacion)')                      
+                      ->setParameter('idcontratacion',$idcontratacion);
+            }
+        );
+
+         $rowAction1 = new RowAction('Ver detalle', 'empleadoportal_licencias_show');
+        $rowAction1->setColumn('info_column');
+        $rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                $action->setRouteParameters(array('id'));
+                return $action; 
+            }
+        );
+        $grid->addRowAction($rowAction1);
+        $grid->setId('grid_licencias_empleado');
+        $grid->setDefaultOrder('fechapermiso','asc');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Consultar Licencias y permisos","");
+        return $grid->getGridResponse('SIGESRHIPortalEmpleadoBundle:Empleadoportal:showlicencias.html.twig');
+
+    }
+
+    public function detallelicenciaAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ExpedienteBundle:Licencia')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Licencia entity.');
+        }
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Consultar Licencias y permisos",$this->get("router")->generate("empleadoportal_licencias"));
+        $breadcrumbs->addItem($entity->getConcepto(),"");
+
+        return $this->render('SIGESRHIPortalEmpleadoBundle:Empleadoportal:detallelicencia.html.twig', array(
+            'entity'      => $entity,
+            ));
     }
 
 }

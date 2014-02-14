@@ -119,7 +119,7 @@ class SolicitudcapacitacionController extends Controller
                          WHERE e.id=:idempleado")
                     ->setParameter('idempleado',$idempleado);
         $resultado = $query2->getResult();
-        $idcentros=array();
+        $idcentros=array(0);
         //$idcentros[]=0;
         if(!is_null($resultado)){
             foreach ($resultado as $val) {
@@ -128,16 +128,13 @@ class SolicitudcapacitacionController extends Controller
                 }
             }
         }
-        else{
-            $idcentros[]=0;
-        }
         //Sacamos las capacitaciones a las que ya aplico
         $query3 = $em->createQuery("SELECT identity(sc.idcapacitacion)
                          FROM SIGESRHIPortalEmpleadoBundle:Solicitudcapacitacion sc JOIN sc.idempleado e
                          WHERE e.id=:idempleado")
                     ->setParameter('idempleado',$idempleado);
         $resultado = $query3->getResult();
-        $idcapAplicadas=array();
+        $idcapAplicadas=array(0);
         //$idcapAplicadas[]=0;
         if(!is_null($resultado)){
             foreach ($resultado as $val) {
@@ -146,9 +143,7 @@ class SolicitudcapacitacionController extends Controller
                 }
             }
         }
-        else{
-            $idcapAplicadas[]=0;
-        }
+        
         //////////////////
         $codDisponibles=array('P','M');
         $tableAlias = $source->getTableAlias();
