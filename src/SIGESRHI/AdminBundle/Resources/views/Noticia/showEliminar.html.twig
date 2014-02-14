@@ -38,9 +38,9 @@ function eliminar() {
             <tr>
                 <th>Archivos Cargados</th>
                 <td align="center"> 
-                 {% set nombext = entity.iddocnoticia[i].rutadocnoticia|split('_',2) %}                   
-                    {{ nombext[1] }}
-                    [" {{ entity.iddocnoticia[i].nombredocnoticia }} "]
+                 {#% set nombext = entity.iddocnoticia[i].rutadocnoticia|split('_',2) %#}                   
+                    {#{ nombext[1] }#}
+                     {{ entity.iddocnoticia[i].nombredocnoticia }} 
                 </td>                                              
             </tr> 
             

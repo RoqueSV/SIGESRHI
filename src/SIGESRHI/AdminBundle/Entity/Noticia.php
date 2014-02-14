@@ -13,7 +13,8 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  *
  * @ORM\Table(name="noticia")
  * @ORM\Entity
- * @GRID\Source(columns="id,asuntonoticia,fechanoticia,fechainicionoticia,fechafinnoticia,idcentro.id",groups={"news"})
+ * @GRID\Source(columns="id,asuntonoticia,fechanoticia,fechainicionoticia,fechafinnoticia",groups={"news"})
+ * @GRID\Source(columns="id,asuntonoticia,fechanoticia,fechainicionoticia,fechafinnoticia,idcentro.id",groups={"newsempleado"})
  * @Assert\Callback(methods={"fechasValidas"})
  */
 class Noticia
@@ -25,7 +26,7 @@ class Noticia
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="noticia_id_seq", allocationSize=1, initialValue=1)
-     * @GRID\Column(filterable=false, groups={"news"}, visible=false)
+     * @GRID\Column(filterable=false, groups={"news","newsempleado"}, visible=false)
      */
     private $id;
 
@@ -35,7 +36,7 @@ class Noticia
      * @ORM\Column(name="fechanoticia", type="date", nullable=false)
      * @Assert\DateTime()
      * @Assert\NotNull(message="Debe ingresar la fecha de la noticia")
-     * @GRID\Column(align="center",type="date",title="Fecha de Registro",groups={"news"},filter="input", inputType="datetime", format="Y-m-d",operators={"gte", "eq", "lte"}, defaultOperator="gte"))
+     * @GRID\Column(align="center",type="date",title="Fecha de Registro",groups={"news","newsempleado"},filter="input", inputType="datetime", format="Y-m-d",operators={"gte", "eq", "lte"}, defaultOperator="gte"))
      */
     private $fechanoticia;
 
@@ -48,7 +49,7 @@ class Noticia
      * max = "50",
      * maxMessage = "El asunto de la noticia no debe exceder los {{limit}} caracteres"
      * )
-     * @GRID\Column(align="center",title="Titulo",groups={"news"},filter="input", inputType="text",operators={"like"}, operatorsVisible=false))
+     * @GRID\Column(align="center",title="Titulo",groups={"news","newsempleado"},filter="input", inputType="text",operators={"like"}, operatorsVisible=false))
      */
     private $asuntonoticia;
 
@@ -58,7 +59,7 @@ class Noticia
      * @ORM\Column(name="fechainicionoticia", type="date", nullable=false)
      * @Assert\DateTime()
      * @Assert\NotNull(message="Debe ingresar la fecha de inicio de la noticia")
-     * @GRID\Column(filterable=false, groups={"news"}, visible=false)
+     * @GRID\Column(filterable=false, groups={"news","newsempleado"}, visible=false)
      */
     private $fechainicionoticia;
 
@@ -68,7 +69,7 @@ class Noticia
      * @ORM\Column(name="fechafinnoticia", type="date", nullable=true)
      * @Assert\DateTime()
      * @Assert\NotNull(message="Debe ingresar la fecha de fin de la noticia")
-     * @GRID\Column(filterable=false, groups={"news"}, visible=false)
+     * @GRID\Column(filterable=false, groups={"news","newsempleado"}, visible=false)
      */
     private $fechafinnoticia;
 
@@ -96,7 +97,7 @@ class Noticia
      *     @ORM\JoinColumn(name="idcentro", referencedColumnName="id")
      *   }
      * )
-     * @GRID\Column(field="idcentro.id",filterable=false, groups={"news"}, visible=false)
+     * @GRID\Column(field="idcentro.id",filterable=false, groups={"newsempleado"}, visible=false)
      */
     private $idcentro;
 

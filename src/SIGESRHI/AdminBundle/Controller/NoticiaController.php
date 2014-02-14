@@ -130,7 +130,7 @@ class NoticiaController extends Controller
             $idcentros[]=0;
         }
 
-        $source = new Entity('AdminBundle:Noticia','news');
+        $source = new Entity('AdminBundle:Noticia','newsempleado');
         $grid = $this->get('grid');
         $grid->setSource($source);
 
@@ -456,7 +456,13 @@ class NoticiaController extends Controller
             return $this->redirect($this->generateUrl('noticia'));
             //throw $this->createNotFoundException('Unable to find Noticia entity.');
         }
+        //eliminar archivo unlink
+        $noticias = $entity->getIddocnoticia();
+        foreach ($noticias as $noticia) {
+            unlink($this->get('kernel')->getRootDir() . '/../web/uploads/docs_docsnoticia/'.$noticia->getRutadocnoticia());
+            //$loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');            
 
+        }        
         $em->remove($entity);
         $em->flush();
         //}

@@ -1,3 +1,11 @@
 empleadoportal:
     pattern:  /
     defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Empleadoportal:index" }
+
+empleadoportal_licencias:
+    pattern:  /licencias
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Empleadoportal:showlicencias" }
+
+empleadoportal_licencias_show:
+    pattern:  /{id}/licencia
+    defaults: { _controller: "SIGESRHIPortalEmpleadoBundle:Empleadoportal:detallelicencia" }

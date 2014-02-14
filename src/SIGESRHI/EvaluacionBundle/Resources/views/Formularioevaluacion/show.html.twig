@@ -2,6 +2,12 @@
 
 {% block principal -%}
 
+{% for flashMessage in app.session.flashbag.get('msg') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+
 <script type='text/javascript'>
 function eliminar(ruta) {
 
@@ -14,7 +20,8 @@ function eliminar(ruta) {
 
     <h3 class="text-center">Formulario de evaluaci&oacute;n</h3>
 
-    <table class="table table-bordered table-hover mitable">
+<b>Datos Generales:</b>
+    <table class="table table-bordered table-hover mitable" width="40%">
         <tbody>
             <tr>
                 <th>T&iacute;tulo del formulario: </th>
@@ -31,8 +38,15 @@ function eliminar(ruta) {
         </tbody>
     </table>
 
+{% if entity.factores|length > 0 %}
+   <b> Datos de Factores de Evaluaci&oacute;n:</b>
+{% else %}
+    <b>NO hay Factores de evaluací&oacute;n registrados</b>
+    <br><br><br>
+{% endif %}
+
  {% for factor in entity.factores %}
-    <table border="2" class="table-bordered" width="100%">
+    <table border="2" class="table-bordered " width="100%">
         <tr><th colspan="{{factor.opciones|length}}" class="text-center"><b>{{ factor.nombrefactor}}</b></th></tr>
         <tr><td colspan="{{factor.opciones|length}}">  <p class="justifyText"> {{factor.descripcionfactor}} </p> </td></tr>
         </tr>
@@ -49,14 +63,13 @@ function eliminar(ruta) {
         </tr>
     </table>
     <br>
-    <br>
     {% endfor %}
 
-<br>
 
     <div class="text-center">
     <a href="{{ path('formularioevaluacion') }}" class="btn">Regresar al listado</a>
-    <a href="{{ path('formularioevaluacion_edit', { 'id': entity.id }) }}" class="btn">Modificar</a>
+    <a href="{{ path('formularioevaluacion_edit', { 'id': entity.id }) }}" class="btn">Editar Generales</a>
+    <a href="{{ path('formularioevaluacion_editfactores', { 'id': entity.id }) }}" class="btn">Editar Factores</a>
     <a onclick="eliminar('{{path('formularioevaluacion_deshabilita', { 'id': entity.id })}}')" class="btn btn-danger">Eliminar</a>
     </div>
 <br>    
