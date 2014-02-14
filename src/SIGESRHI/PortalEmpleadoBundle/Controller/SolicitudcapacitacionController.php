@@ -145,7 +145,7 @@ class SolicitudcapacitacionController extends Controller
         }
         
         //////////////////
-        $codDisponibles=array('P','M');
+        $codDisponibles= array('P','M');
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias,$idcentros,$idcapAplicadas,$codDisponibles){

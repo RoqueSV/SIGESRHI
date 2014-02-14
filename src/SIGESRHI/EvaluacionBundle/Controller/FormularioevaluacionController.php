@@ -9,6 +9,7 @@ use SIGESRHI\EvaluacionBundle\Entity\Formularioevaluacion;
 use SIGESRHI\EvaluacionBundle\Entity\Factorevaluacion;
 use SIGESRHI\EvaluacionBundle\Entity\Opcion;
 use SIGESRHI\EvaluacionBundle\Form\FormularioevaluacionType;
+use SIGESRHI\EvaluacionBundle\Form\FactorevaluacionType;
 
 
 use APY\DataGridBundle\Grid\Source\Entity;
@@ -100,7 +101,8 @@ class FormularioevaluacionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('formularioevaluacion_show', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add('new','Datos generales del formulario registrado correctamente.'); 
+            return $this->redirect($this->generateUrl('formularioevaluacion_editfactores', array('id' => $entity->getId())));
         }
 
         return $this->render('EvaluacionBundle:Formularioevaluacion:new.html.twig', array(
@@ -160,12 +162,32 @@ class FormularioevaluacionController extends Controller
         }
 
         $editForm = $this->createForm(new FormularioevaluacionType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('EvaluacionBundle:Formularioevaluacion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+
+    public function editFactoresAction($id)
+    {
+        $factorevaluacion = new Factorevaluacion();
+        $Opciones = new Opcion();
+        $factorevaluacion->getOpciones()->add($Opciones);
+        $factor_form   = $this->createForm(new FactorevaluacionType(), $factorevaluacion);
+        
+        $em = $this->getDoctrine()->getManager();
+        $evaluacion = $em->getRepository('EvaluacionBundle:Formularioevaluacion')->find($id);
+
+        if (!$evaluacion) {
+            throw $this->createNotFoundException('Unable to find Formularioevaluacion entity.');
+        }
+
+        return $this->render('EvaluacionBundle:Formularioevaluacion:editarfactores.html.twig', array(
+            'factorevaluacion' => $factorevaluacion,
+            'form'   => $factor_form->createView(),
+            'evaluacion'=> $evaluacion,
         ));
     }
 
@@ -191,7 +213,8 @@ class FormularioevaluacionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('formularioevaluacion_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('msg', 'Datos generales del Formulario modificado correctamente.');
+            return $this->redirect($this->generateUrl('formularioevaluacion_show', array('id' => $id)));
         }
 
         return $this->render('EvaluacionBundle:Formularioevaluacion:edit.html.twig', array(

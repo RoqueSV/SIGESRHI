@@ -16,7 +16,7 @@ formularioevaluacion_create:
     requirements: { _method: post }
 
 formularioevaluacion_edit:
-    pattern:  /{id}/edit
+    pattern:  /{id}/editgeneral
     defaults: { _controller: "EvaluacionBundle:Formularioevaluacion:edit" }
 
 formularioevaluacion_update:
@@ -32,3 +32,7 @@ formularioevaluacion_delete:
 formularioevaluacion_deshabilita:
     pattern:  /{id}/deshabilita
     defaults: { _controller: "EvaluacionBundle:Formularioevaluacion:deshabilita" }
+
+formularioevaluacion_editfactores:
+    pattern:  /{id}/editfactores
+    defaults: { _controller: "EvaluacionBundle:Formularioevaluacion:editFactores" }
