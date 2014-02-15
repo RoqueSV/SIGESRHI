@@ -1,0 +1,68 @@
+{% extends '::PrincipalBaseEmpleado.html.twig' %}
+
+{% block principal -%}
+
+<h3 class="text-center">Resultado de Evaluaciones</h3>
+<p class="text-center">Seleccione el periodo a consultar</p>
+<br>
+<div class="text-center">
+{% if evaluaciones != 0 %}
+    <select id="periodo" name="periodo"><option value=0></option>
+    {% for evaluacion in evaluaciones %}
+        <option value={{ evaluacion.id }}>
+            {{ evaluacion.anoevaluado }}-{{ evaluacion.semestre }}
+        </option>
+    {% endfor %}
+    </select>
+{% else %}
+    <span id="nohay">No posee evaluaciones</span>
+{% endif %}
+<br>
+<span id="cargando_datos">Cargando datos...<br><br><br><br><br><br><br><br><br><br><br></span>
+</div>
+<div id="showevaluacion">
+    <br><br><br><br><br><br><br><br><br><br><br>
+</div>
+<br><br>
+<script>
+$(document).ready(function(){
+    $("#cargando_datos").hide();
+    var urlajax = "{{ path('empleadoportal_ajaxevaluaciones') }}"
+    $("#periodo").change(function()
+    {
+        if($("#periodo").val() != 0){
+            var periodo = $("#periodo").val();
+            getEvaluacion(urlajax,"showevaluacion",periodo);
+        }
+    });    
+});
+
+function getEvaluacion(reqAction,elemento,periodo){
+    $.ajax(
+    {
+    url:reqAction,
+    data:({periodo: periodo}),
+    datatype:"json",
+    beforeSend: function()
+    {        
+        $("#cargando_datos").show();
+        $("#showevaluacion").empty();
+    },
+    complete: function(){                
+        $("#cargando_datos").hide();
+    },
+    success: function(data, status){ 
+        $("#showevaluacion").append(data.contenido);
+    },
+    error: function(data, status, e){
+        alert('Ocurrió un error cargando los datos solicitados:.\n'+data.error);
+    },
+    });
+}
+</script>
+<style type="text/css">
+select {
+    width: 100px;
+}
+</style>
+{% endblock %}

@@ -2,7 +2,8 @@
 
 namespace SIGESRHI\PortalEmpleadoBundle\Controller;
 
-
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Application\Sonata\UserBundle\Entity\User;
@@ -75,7 +76,7 @@ class EmpleadoportalController extends Controller
     }
 
     public function showlicenciasAction(){
-         $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $user = new User();
         $empleado = new Empleado();
 
@@ -147,6 +148,56 @@ class EmpleadoportalController extends Controller
         return $this->render('SIGESRHIPortalEmpleadoBundle:Empleadoportal:detallelicencia.html.twig', array(
             'entity'      => $entity,
             ));
+    }
+
+    public function showevaluacionesAction(){
+        $em = $this->getDoctrine()->getManager();
+        $user = new User();
+        $empleado = new Empleado();
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        if($user == 'anon.'){
+            return $this->redirect($this->generateUrl('hello_page'));           
+        }
+        $empleado = $user->getEmpleado();
+        $idempleado = $empleado->getId();
+
+        $evaluaciones = $em->getRepository('EvaluacionBundle:Evaluacion')->findByIdempleado($idempleado);
+
+        if (!$evaluaciones) {
+            $evaluaciones=0;
+        }
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Empleado", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Consultar Evaluaciones","");
+
+        return $this->render('SIGESRHIPortalEmpleadoBundle:Empleadoportal:showevaluaciones.html.twig', array(
+            'evaluaciones'      => $evaluaciones,
+            ));
+    }
+
+    public function ajaxevaluacionesAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $idevaluacion = $request->get('periodo');
+        $evaluacion = $em->getRepository('EvaluacionBundle:Evaluacion')->find($idevaluacion);        
+        if (!$evaluacion) {
+            $contenido = '<span id="datos_noencontrados">No se encontro evaluacion</span>';
+        }
+        else{
+            $contenido = $this->renderView('SIGESRHIPortalEmpleadoBundle:Empleadoportal:detalleevaluacion.html.twig', array(
+            'evaluacion'      => $evaluacion,
+            ));
+        }
+        $datosrespuesta = array(
+            'contenido' => $contenido,
+            'error'=>'noerror',
+            'status'=>'OK'
+            );
+        $response = new Response(json_encode($datosrespuesta));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;   
     }
 
 }
