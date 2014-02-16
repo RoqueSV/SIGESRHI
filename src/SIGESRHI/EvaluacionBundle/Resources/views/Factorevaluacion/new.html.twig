@@ -1,34 +1,127 @@
 {% extends '::PrincipalBase.html.twig' %}
 
 {% block principal -%}
-    <h3 class="text-center">REGISTRO DE FACTORES DE EVALUACI&Oacute;N</h3>
 
-    <form action="{{ path('factorevaluacion_create') }}" method="post" {{ form_enctype(form) }}>
-        
-        {{form_row(form.nombrefactor)}}
-        {{form_row(form.descripcionfactor)}}
-        {{form_row(form.idformulario)}}
+{% for flashMessage in app.session.flashbag.get('msg') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
 
-        {{form_row(form.Opciones[0].nombreopcion)}}
-        {{form_row(form.Opciones[0].descripcionopcion)}}
-        {{form_row(form.Opciones[0].valoropcion)}}
+{% for flashMessage in app.session.flashbag.get('msg-error') %}
+    <div class="alert alert-danger">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+
+<a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+{{ include('EvaluacionBundle:Ayuda/Formulario:EditarFactor.html.twig')}}
+
+<h3 class="text-center">Registrar factores de evaluaci&oacute;n</h3>
+
+<b>Datos Generales:</b>
+    <table class="table table-bordered table-hover mitable">
+        <tbody>
+            <tr>
+                <th width="30%">T&iacute;tulo del formulario: </th>
+                <td>{{ fevaluacion.tipoformulario }}</td>
+            </tr>
+            <tr>
+                <th>C&oacute;digo de formulario: </th>
+                <td>{{ fevaluacion.codigoformulario }}</td>
+            </tr>
+            <tr>
+                <th>Nombre del personal a evaluar: </th>
+                <td>{{ fevaluacion.nombrebreve }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        {% if fevaluacion.factores|length > 0 %}
+            <b>Factores registrados:</b>
+            <table border="0" class="table-centered">
+                {% for factor in fevaluacion.factores %}
+                    <tr><td width="80%"> {{loop.index}}. {{factor.nombrefactor}} </td> <td align="center"> <a href="{{path('factorevaluacion_showfactor',{'id':factor.id})}}" title="{{factor.nombrefactor}}">Consultar/Editar</a></td></tr>
+                {% endfor %}
+            </table>
+                <br>
+        {% endif %}
+        <hr>
+        <b> NUEVO FACTOR DE EVALUACI&Oacute;N:</b>
+                
+	<form action="{{ path('factorevaluacion_createfactor', { 'id': fevaluacion.id }) }}" method="post" {{ form_enctype(form) }}>
+
+
+		<table class="table table-bordered mitable">
+			<tr>
+				<th>{{form_label(form.nombrefactor)}}</th><td>{{form_widget(form.nombrefactor)}} {{form_errors(form.nombrefactor)}}</td>
+			</tr>
+			<tr>
+				<th>{{form_label(form.descripcionfactor)}}</th><td>{{form_widget(form.descripcionfactor)}} {{form_errors(form.descripcionfactor)}}</td>
+			</tr>
+		</table>
+
+        <b>OPCIONES:</b>
+        <table class="table-bordered mitable table" align='right'>
+        	<tr>
+        		<th>{{form_label(form.Opciones[0].nombreopcion)}}</th>
+        		<th>{{form_label(form.Opciones[0].descripcionopcion)}}</th>
+        		<th>{{form_label(form.Opciones[0].valoropcion)}}</th>
+        	</tr>
+        	<tr>
+        		<td>{{form_widget(form.Opciones[0].nombreopcion)}} {{form_errors(form.Opciones[0].nombreopcion)}}</td>
+        		<td>{{form_widget(form.Opciones[0].descripcionopcion)}} {{form_errors(form.Opciones[0].descripcionopcion)}}</td>
+        		<td>{{form_widget(form.Opciones[0].valoropcion)}} {{form_errors(form.Opciones[0].valoropcion)}}</td>
+        	</tr>
+        </table>
+<br>
 
         <ul class="Opciones unstyled" data-prototype="
-               {{form_row(form.Opciones.vars.prototype.nombreopcion)|e}}
-                {{form_row(form.Opciones.vars.prototype.descripcionopcion)|e}} 
-                {{form_row(form.Opciones.vars.prototype.valoropcion)|e}}
-               ">
+                <table class='table-bordered table mitable' align='right'>
+        	<tr>
+        		<th>{{form_label(form.Opciones.vars.prototype.nombreopcion)|e}}</th>
+        		<th>{{form_label(form.Opciones.vars.prototype.descripcionopcion)|e}}</th>
+        		<th>{{form_label(form.Opciones.vars.prototype.valoropcion)|e}}</th>
+        	</tr>
+        	<tr>
+        		<td>{{form_widget(form.Opciones.vars.prototype.nombreopcion)|e}} {{form_errors(form.Opciones.vars.prototype.nombreopcion)|e}}</td>
+        		<td>{{form_widget(form.Opciones.vars.prototype.descripcionopcion)|e}} {{form_errors(form.Opciones.vars.prototype.descripcionopcion)|e}}</td>
+        		<td>{{form_widget(form.Opciones.vars.prototype.valoropcion)|e}} {{form_errors(form.Opciones.vars.prototype.valoropcion)|e}}</td>
+        	</tr>
+        </table>">
+
+           {% if form.Opciones|length > 1 %}
+
+           cantidad: {{form.Opciones|length}}
+                {% for opcion in form.Opciones %}
+                 {% if loop.index0 > 0 %}
+                    <li>
+                        <table class="table-bordered mitable table" align='right'>
+                            <tr>
+                                <th>{{form_label(opcion.nombreopcion)}}</th>
+                                <th>{{form_label(opcion.descripcionopcion)}}</th>
+                                <th>{{form_label(opcion.valoropcion)}}</th>
+                            </tr>
+                            <tr>
+                                <td>{{form_widget(opcion.nombreopcion)}} {{form_errors(opcion.nombreopcion)}}</td>
+                                <td>{{form_widget(opcion.descripcionopcion)}} {{form_errors(opcion.descripcionopcion)}}</td>
+                                <td>{{form_widget(opcion.valoropcion)}} {{form_errors(opcion.valoropcion)}}</td>
+                            </tr>
+                        </table>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
            </ul>
 
-<div class="hide"></div>
-        {{ form_rest(form) }}
+{{form_rest(form)}}
 
-        <p>
-            <button type="submit">Registrar</button>
-        </p>
-    </form>
+ 		<div class="text-center">
+            <button type="submit" class="btn">Registrar</button>
+            <a href="{{ path('formularioevaluacion_show', {'id':fevaluacion.id}) }}" class="btn" >Cancelar</a>    
+        </div>
+	</form>
 
-      
 
 <script>
 
@@ -64,5 +157,4 @@ jQuery(document).ready(function() {
  });
 
 </script>
-
 {% endblock %}

@@ -38,7 +38,6 @@ class EvaluacionController extends Controller
      */
     public function EmpleadosEvaluarAction($idrefrenda)
     {
-
         //Obtenemos el id de empleado del usuarioo logueado
         $user = new User();
         $empleado = new Empleado();
@@ -109,11 +108,7 @@ class EvaluacionController extends Controller
         $source->manipulateQuery(
         function($query) use ($idrefrenda, $periodo){
             $query->andWhere("_idrefrenda_puestoempleado_puestojefe.id =:var ")
-            //->andWhere("_idevaluacion.anoevaluado =:anio or _idevaluacion.anoevaluado is null")
-            //->andWhere("_idevaluacion.semestre =:semestre or _idevaluacion.semestre is null")
             ->setParameter('var',$idrefrenda)
-            //->setParameter('anio',$periodo['anio'])
-            //->setParameter('semestre',$periodo['semestre'])
              ;}
             );
     
@@ -190,6 +185,14 @@ class EvaluacionController extends Controller
         $grid->addRowAction($rowAction2);     
         
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+
+
+         //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Realizar evaluación", $this->get("router")->generate("evaluacion_seleccionempleado", array('idrefrenda'=>$idrefrenda)));
+        //fin camino de miga
 
     // Manage the grid redirection, exports and the response of the controller
     return $grid->getGridResponse('EvaluacionBundle:Evaluacion:Empleados_a_Evaluar.html.twig', array(
@@ -268,6 +271,7 @@ class EvaluacionController extends Controller
         $form_eval = $request->get('idform');
         $idpuestoemp = $request->get('idpuestoemp');
         $idpuestojefe = $request->get('idpuestojefe');
+        $id = $request->get('id');
 
         //Obtenemos el id de empleado del usuarioo logueado
         $user = new User();
@@ -333,6 +337,15 @@ class EvaluacionController extends Controller
 
         $form   = $this->createForm(new EvaluacionType(), $evaluacion);
 
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Realizar evaluación", $this->get("router")->generate("evaluacion_seleccionempleado", array('idrefrenda'=>$idpuestojefe)));
+        $breadcrumbs->addItem("Selección de formulario", $this->get("router")->generate("evaluacion_sformulario",array('id'=>$id, 'idpuestoemp'=>$idpuestoemp,'idpuestojefe'=>$idpuestojefe)));
+        $breadcrumbs->addItem("Evaluación", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
+
         return $this->render('EvaluacionBundle:Evaluacion:new.html.twig', array(
             'evaluacion' => $evaluacion,
             'form'   => $form->createView(),
@@ -356,12 +369,25 @@ class EvaluacionController extends Controller
         if (!$evaluacion) {
             throw $this->createNotFoundException('No se puede encontrar la entidad Evaluación.');
         }
+        $puestoemp = $em->getRepository('AdminBundle:RefrendaAct')->find($evaluacion->getPuestoemp());
+
+        if (!$puestoemp) {
+            throw $this->createNotFoundException('No se puede encontrar la entidad Refrenda.');
+        }
+
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Realizar evaluación", $this->get("router")->generate("evaluacion_seleccionempleado", array('idrefrenda'=>$evaluacion->getPuestojefe())));
+        $breadcrumbs->addItem("Resultados Evaluación", $this->get("router")->generate("evaluacion_show",array('id'=>$id)));
+        //fin camino de miga
 
         $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('EvaluacionBundle:Evaluacion:show.html.twig', array(
             'evaluacion'      => $evaluacion,
-            'delete_form' => $deleteForm->createView(),        ));
+            'delete_form' => $deleteForm->createView(),
+            'puestoemp'=> $puestoemp,        ));
     }
 
     /**
@@ -458,6 +484,13 @@ class EvaluacionController extends Controller
 
     public function InicioAction()
     {
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Selección de plaza", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
+
         //validamos si es periodo de evaluacion.
         $periodo_evaluacion= $this->VerificarPeriodoActivo();
         if(!$periodo_evaluacion){
@@ -555,6 +588,15 @@ class EvaluacionController extends Controller
             throw $this->createNotFoundException('No se encontro la plaza del jefe.');
         }
 
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Realizar evaluación", $this->get("router")->generate("evaluacion_seleccionempleado", array('idrefrenda'=>$evaluacion->getPuestojefe())));
+        $breadcrumbs->addItem("Resultados Evaluación", $this->get("router")->generate("evaluacion_show",array('id'=>$id)));
+        $breadcrumbs->addItem("Incidentes criticos", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
+
             return $this->render('EvaluacionBundle:Evaluacion:incidentes.html.twig', array(
                 'evaluacion' => $evaluacion,
                 'puestoemp' => $puestoemp,
@@ -579,6 +621,15 @@ class EvaluacionController extends Controller
          if(!$formularios){
             throw $this->createNotFoundException('No hay formularios registrados en el sistema.');
         }
+
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Realizar evaluación", $this->get("router")->generate("evaluacion_seleccionempleado", array('idrefrenda'=>$idpuestojefe)));
+        $breadcrumbs->addItem("Selección de formulario", $this->get("router")->generate("evaluacion_sformulario",array('id'=>$id, 'idpuestoemp'=>$idpuestoemp,'idpuestojefe'=>$idpuestojefe)));
+//        $breadcrumbs->addItem("Incidentes criticos", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
 
         return $this->render('EvaluacionBundle:Evaluacion:SeleccionFormulario.html.twig', 
             array(
@@ -607,6 +658,7 @@ class EvaluacionController extends Controller
         $idfactor = $request->get('factor');
         $tipo_incidente = $request->get('tipoincidente');
         $descripcion = $request->get('descripcionincidente');
+        $observacion = $request->get('observaciones');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -615,6 +667,9 @@ class EvaluacionController extends Controller
           if(!$evaluacion){
             throw $this->createNotFoundException('No se encontro la evaluación del empleado.');
         }
+
+        $evaluacion->setObservacion($observacion);
+        $em->persist($evaluacion);
 
         $factor_evaluacion = $em->getRepository('EvaluacionBundle:Factorevaluacion')->find($idfactor);
 

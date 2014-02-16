@@ -2,12 +2,31 @@
 
 {% block titulo %}
 
-<h3 id="helpLabel">Periodo de Evaluaci&oacute;n</h3>
-
+<h3 id="helpLabel">Registrar per&iacute;odo de Evaluaci&oacute;n</h3>
+<p>Permite registrar periodos de tiempo en los cuales ser&aacute;n realizadas las evaluaciones de desempe&ntilde;o a los empleados de la instituci&oacute;n</p>
 {% endblock %}
 
 {% block contenido %}
 
-<p>¿Cómo llenar este formulario?</p>
+<p><h4>¿Cómo registrar un per&iacute;odo de evaluaci&oacute;n?</h4></p>
+Los campos se&ntilde;alados con un asterisco<b>(*)</b>, indican que son campos obligatorios y deben ser completados durante el registro.<br>
+Se describen a continuación los pasos necesarios:<br>
+<ul style="list-style-type:disc; margin-left:25px">
+<li>Seleccione la fecha de inicio de un per&iacute;odo de evaluci&oacute;n del calendario que se muestra al dar click sobre la caja de texto.</li>
+<img src="{{asset('images/images_ayuda/fechainicioeval.jpg') }}" alt="ISRI"/>
+<li>Indique la fecha de finalizaci&oacute;n del per&iacute;odo de la misma manera que seleccion&oacute; la fecha inicial</li>
+<li>Seleccione el semestre de la lista que se muestra:</li>
+<img src="{{asset('images/images_ayuda/seleccionsemestre.jpg') }}" alt="ISRI"/>
+<li>Dar click sobre el bot&oacute;n "Registrar"</li>
+<li>Se pueden presentar algunos mensajes, indicando que el registro no se puede realizar.</li>
+</ul><br>
+<div class="justify">A continuaci&oacute;n se mencionan algunos casos:<br>
+Ya existe un per&iacute;odo de evaluacion registrado:<br></div>
+<img src="{{asset('images/images_ayuda/periodoya.jpg') }}" alt="ISRI"/><br><br>
+<div class="justify">
+Error en el ingreso de fechas:</div>
+<img src="{{asset('images/images_ayuda/periodoya.jpg') }}" alt="ISRI"/><br>
+<br>
+
 
 {% endblock %}

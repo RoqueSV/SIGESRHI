@@ -12,8 +12,8 @@ class OpcionType extends AbstractType
     {
         $builder
             ->add('nombreopcion', null, array('label'=>'Opción: ', 'attr'=>array('class'=>'input-small')))
-            ->add('descripcionopcion', 'textarea', array('label'=>'Descripción: ', 'attr'=>array('class'=>'input-xlarge')))
-            ->add('valoropcion', null, array('label'=>'Valor de la opción: ', 'attr'=>array('class'=>'input-small')))
+            ->add('descripcionopcion', 'textarea', array('label'=>'Descripción: ', 'attr'=>array('class'=>'input-xmlarge')))
+            ->add('valoropcion', null, array('label'=>'Valor de la opción: ', 'attr'=>array('class'=>'input-small', 'data-bvalidator'=>'number')))
             //->add('idfactor')
         ;
     }

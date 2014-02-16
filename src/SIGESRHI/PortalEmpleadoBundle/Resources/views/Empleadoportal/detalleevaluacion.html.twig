@@ -1,0 +1,46 @@
+<div class="text-center">
+    <h4>Periodo: {{ evaluacion.anoevaluado }}-{{ evaluacion.semestre }}</h4>
+    <br>
+    <b>TABLA DE VALORACIÓN</b>
+    {% set puntuacion = 0 %}
+    <br>
+    <table class="table-bordered table-hover mitable table">
+        <tr>
+            <th width="70%">FACTOR </th><th width="15%"> RESPUESTA </th><th width="15%"> <b class="centerColum">VALORACIÓN </b></th>
+        </tr>
+    {% for respuesta in evaluacion.Respuestas %}
+    <tr>
+        <td>{{loop.index}}. {{respuesta.idfactor.nombrefactor}}</td><td> <div class="centerColum">{{respuesta.idopcion.nombreopcion}} </div></td><td><div class="centerColum">{{respuesta.idopcion.valoropcion}}</div></td>
+    </tr>
+      {% set puntuacion = puntuacion + respuesta.idopcion.valoropcion %}
+        
+        {% if loop.last %}
+            <tr><td></td><td><div class="centerColum"><b>PUNTUACIÓN: </b></div> </td><td><div class="centerColum"><b>{{puntuacion}}</b></div></td></tr>
+        {% endif %}
+    {% endfor %}       
+    </table>
+</div>
+
+<div class="text-center">
+<b>CALIFICACIÓN POR PUNTOS Y POR RANGOS</b>
+{% set calificacion = "" %}
+    <table class="table-bordered table-hover mitable centered-table" width="50%">
+        <tr>
+            <th>Calificación</th><th>Puntuación</th>
+        </tr>
+    
+        {% for puntaje in evaluacion.Respuestas[0].idfactor.idformulario.Puntajes %}
+            <tr>
+                <td>{{puntaje.nombrepuntaje}}</td><td>de {{puntaje.puntajemin}} a {{puntaje.puntajemax}}</td>
+            </tr>
+                {% if puntuacion >= puntaje.puntajemin and puntuacion <= puntaje.puntajemax %}
+                {% set calificacion = puntaje.nombrepuntaje %}
+                {% endif %}
+
+        {% endfor %}
+    </table>
+<br>
+Con base a la evaluaci&oacute;n realizada el empleado merece una calificación de:
+<h3>{{ calificacion|upper }}</h>
+</div>
+<br>

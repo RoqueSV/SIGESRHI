@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte_expedientes_aspirantes" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cc2788c2-fa3a-49b6-9c05-046fb3acd384">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="184"/>
+	<property name="ireport.y" value="19"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="fechainicio" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -18,11 +18,13 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select ex.id,nombrecompleto,upper(nombreplaza) as nombreplaza,to_char(fechaexpediente,'DD"/"MM"/"YYYY') as fecharexpediente from solicitudempleo se join expediente  ex on (ex.id=se.idexpediente) join plaza p on (se.idplaza=p.id) where tipoexpediente='A' and p.id=$P{id_plaza} $P!{cadena}]]>
+		<![CDATA[select ex.id,nombrecompleto,upper(nombreplaza) as nombreplaza,telefonofijo,email,to_char(fechaexpediente,'DD"/"MM"/"YYYY') as fecharexpediente from solicitudempleo se join expediente  ex on (ex.id=se.idexpediente) join plaza p on (se.idplaza=p.id) where tipoexpediente='A' and p.id=$P{id_plaza} $P!{cadena}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="nombrecompleto" class="java.lang.String"/>
 	<field name="nombreplaza" class="java.lang.String"/>
+	<field name="telefonofijo" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
 	<field name="fecharexpediente" class="java.lang.String"/>
 	<title>
 		<band height="79" splitType="Stretch">
@@ -41,7 +43,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="61" splitType="Stretch">
+		<band height="85" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="bbfbbe31-b7a3-4015-b2ad-6dc0d1e6df37" x="84" y="15" width="406" height="22"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -57,6 +59,19 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 					<font size="11" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["DEL:  "+$P{fechainicio}+"  "+" HASTA: "+$P{fechafin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8fbdf167-c07d-4c1f-9124-c86c755ce1d0" x="1" y="58" width="571" height="27"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["<b>NOMBRE PLAZA: </b>"+$F{nombreplaza}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -112,7 +127,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Plaza a la que aplica]]></text>
+				<text><![CDATA[Información de aspirante]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -130,19 +145,6 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="8fbdf167-c07d-4c1f-9124-c86c755ce1d0" x="250" y="0" width="255" height="27"/>
-				<box leftPadding="1">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Justified" verticalAlignment="Middle">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="5ee415ca-8dbf-41e5-86dc-29c176c4993f" x="505" y="0" width="67" height="27"/>
@@ -165,6 +167,17 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ffbd100d-047b-4f39-bd9d-4a55a912ef31" x="250" y="0" width="255" height="27"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Tel:"+$F{telefonofijo}+"  "+$F{email}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -15,69 +15,77 @@ use SIGESRHI\EvaluacionBundle\Form\FactorevaluacionType;
  */
 class FactorevaluacionController extends Controller
 {
-    /**
-     * Lists all Factorevaluacion entities.
-     *
-     */
-    public function indexAction()
+   
+    //Guarda en la BD los datos del factor y opciones ingresadas
+    public function createFactorAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+            $id = $request->get('id');
+            $em = $this->getDoctrine()->getManager();
+            
+            $fevaluacion = $em->getRepository('EvaluacionBundle:Formularioevaluacion')->find($id);
 
-        $entities = $em->getRepository('EvaluacionBundle:Factorevaluacion')->findAll();
-
-        return $this->render('EvaluacionBundle:Factorevaluacion:index.html.twig', array(
-            'entities' => $entities,
-        ));
-    }
-
-    /**
-     * Creates a new Factorevaluacion entity.
-     *
-     */
-    public function createAction(Request $request)
-    {
+            if (!$fevaluacion) {
+                throw $this->createNotFoundException('Unable to find Formularioevaluacion entity.');
+                }
+    
         $entity  = new Factorevaluacion();
+        $entity->setIdformulario($fevaluacion);
         $form = $this->createForm(new FactorevaluacionType(), $entity);
         $form->bind($request);
-
+     
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('factorevaluacion_show', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add('msg', 'Factor de evaluación registrado correctamente.'); 
+            return $this->redirect($this->generateUrl('factorevaluacion_newfactor', array('id' => $fevaluacion->getId())));
+        }
+    
+        $this->get('session')->getFlashBag()->add('msg-error', 'error en el factor de evaluación.'); 
+        return $this->render('EvaluacionBundle:Factorevaluacion:new.html.twig', array(
+            'factorevaluacion' => $entity,
+            'form'   => $form->createView(),
+            'fevaluacion'=>$fevaluacion,
+        ));
+    }
+
+    
+
+    //crea el formulario para el registro de un nuevo factor y sus opciones
+    public function newFactorAction($id)
+    {
+        $factorevaluacion = new Factorevaluacion();
+        $Opciones = new Opcion();
+        $factorevaluacion->getOpciones()->add($Opciones);
+        $factor_form   = $this->createForm(new FactorevaluacionType(), $factorevaluacion);
+        
+        $em = $this->getDoctrine()->getManager();
+        $fevaluacion = $em->getRepository('EvaluacionBundle:Formularioevaluacion')->find($id);
+
+        if (!$fevaluacion) {
+            throw $this->createNotFoundException('Unable to find Formularioevaluacion entity.');
         }
 
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Formularios de evaluación", $this->get("router")->generate("formularioevaluacion"));
+        $breadcrumbs->addItem($fevaluacion->getNombrebreve(), $this->get("router")->generate("formularioevaluacion_show", array('id'=>$id)));
+        $breadcrumbs->addItem("Factores", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
+
         return $this->render('EvaluacionBundle:Factorevaluacion:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'factorevaluacion' => $factorevaluacion,
+            'form'   => $factor_form->createView(),
+            'fevaluacion'=> $fevaluacion,
         ));
     }
 
-    /**
-     * Displays a form to create a new Factorevaluacion entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new Factorevaluacion();
 
-        $Opciones = new Opcion();
-        $entity->getOpciones()->add($Opciones);
-
-        $form   = $this->createForm(new FactorevaluacionType(), $entity);
-
-        return $this->render('EvaluacionBundle:Factorevaluacion:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a Factorevaluacion entity.
-     *
-     */
-    public function showAction($id)
+     //recupera los datos de un factor para mostrarse en la vista
+    public function showFactorAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -87,8 +95,17 @@ class FactorevaluacionController extends Controller
             throw $this->createNotFoundException('Unable to find Factorevaluacion entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+         //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Formularios de evaluación", $this->get("router")->generate("formularioevaluacion"));
+        $breadcrumbs->addItem($entity->getIdformulario()->getNombrebreve(), $this->get("router")->generate("formularioevaluacion_show", array('id'=>$entity->getIdformulario()->getId())));
+        $breadcrumbs->addItem("Factores", $this->get("router")->generate("factorevaluacion_newfactor", array('id'=>$entity->getIdformulario()->getId())));
+        $breadcrumbs->addItem(substr($entity->getNombrefactor(),0,10)."..", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
 
+        $deleteForm = $this->createDeleteForm($id);
         return $this->render('EvaluacionBundle:Factorevaluacion:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
@@ -98,7 +115,7 @@ class FactorevaluacionController extends Controller
      * Displays a form to edit an existing Factorevaluacion entity.
      *
      */
-    public function editAction($id)
+    public function editFactorAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -110,6 +127,17 @@ class FactorevaluacionController extends Controller
 
         $editForm = $this->createForm(new FactorevaluacionType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
+
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Formularios de evaluación", $this->get("router")->generate("formularioevaluacion"));
+        $breadcrumbs->addItem($entity->getIdformulario()->getNombrebreve(), $this->get("router")->generate("formularioevaluacion_show", array('id'=>$entity->getIdformulario()->getId())));
+        $breadcrumbs->addItem("Factores", $this->get("router")->generate("factorevaluacion_newfactor", array('id'=>$entity->getIdformulario()->getId())));
+        $breadcrumbs->addItem(substr($entity->getNombrefactor(),0,10)."..", $this->get("router")->generate("factorevaluacion_showfactor", array('id'=>$entity->getIdformulario()->getId())));
+        $breadcrumbs->addItem("Modificar", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
 
         return $this->render('EvaluacionBundle:Factorevaluacion:edit.html.twig', array(
             'entity'      => $entity,
@@ -118,11 +146,8 @@ class FactorevaluacionController extends Controller
         ));
     }
 
-    /**
-     * Edits an existing Factorevaluacion entity.
-     *
-     */
-    public function updateAction(Request $request, $id)
+    //Actualiza los datos modificados
+    public function updateFactorAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -132,17 +157,44 @@ class FactorevaluacionController extends Controller
             throw $this->createNotFoundException('Unable to find Factorevaluacion entity.');
         }
 
+        //* Para eliminar Opciones (son embebidos)
+         //creamos un arreglo de los objetos Opciones
+        $originalOpciones = array();
+        foreach ($entity->getOpciones() as $Opcion) {
+           $originalOpciones[] = $Opcion;
+         }
+         //obtenemos el numero de opciones registradas del factor
+         $numOpciones = count($entity->getOpciones());
+
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new FactorevaluacionType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+
+             /*   Bloque de eliminacion de las Opciones */
+            foreach ($entity->getOpciones() as $Opcion) {
+                foreach ($originalOpciones as $key => $toDel) {
+                    if ($toDel->getId() === $Opcion->getId()) {
+                        unset($originalOpciones[$key]);
+                    }
+                }
+            }
+
+            // Elimina la relación entre Opciones y Factorevaluacion
+            foreach ($originalOpciones as $Opcion) {
+                     $Opcion->setIdfactor(null);
+                     $em->remove($Opcion);
+             }
+
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('factorevaluacion_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('msg','Modificación a factor realizada correctamente.'); 
+            return $this->redirect($this->generateUrl('factorevaluacion_showfactor', array('id' => $id)));
         }
 
+        $this->get('session')->getFlashBag()->add('msg-error','Error en la modificación del factor.'); 
         return $this->render('EvaluacionBundle:Factorevaluacion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -166,12 +218,12 @@ class FactorevaluacionController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Factorevaluacion entity.');
             }
-
+            $idform=$entity->getIdformulario()->getId();
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('factorevaluacion'));
+        return $this->redirect($this->generateUrl('factorevaluacion_newfactor',array('id'=>$idform)));
     }
 
     /**
