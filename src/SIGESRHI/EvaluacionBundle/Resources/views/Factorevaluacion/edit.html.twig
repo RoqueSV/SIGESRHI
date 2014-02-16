@@ -1,28 +1,112 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Factorevaluacion edit</h1>
+{% block principal -%}
+{% for flashMessage in app.session.flashbag.get('msg-error') %}
+    <div class="alert alert-danger">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+    <h3 class="text-center">MODIFICAR FACTOR DE EVALUACI&Oacute;N</h3>
 
-    <form action="{{ path('factorevaluacion_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <form action="{{ path('factorevaluacion_updatefactor', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
+        
+        <b>Datos del Factor: </b>
+        <table class="table table-bordered mitable">
+            <tr>
+                <th>{{form_label(edit_form.nombrefactor)}}</th>
+                <td>{{form_widget(edit_form.nombrefactor)}} {{form_errors(edit_form.nombrefactor)}}</td>
+            </tr>
+            <tr>
+                <th>{{form_label(edit_form.descripcionfactor)}}</th>
+                <td>{{form_widget(edit_form.descripcionfactor)}} {{form_errors(edit_form.descripcionfactor)}}</td>
+            </tr>
+        </table>
+        <br>
+        <b>Opciones:</b>
+
+        <ul class="Opciones unstyled" data-prototype="
+                <table class='table table-bordered' style='margin-bottom:8px;'>
+                    <tr>
+                        <th>{{form_label(edit_form.Opciones.vars.prototype.nombreopcion)|e}}</th>
+                        <th>{{form_label(edit_form.Opciones.vars.prototype.descripcionopcion)|e}}</th>
+                        <th>{{form_label(edit_form.Opciones.vars.prototype.valoropcion)|e}}</th>
+                    </tr>
+                    <tr>
+                        <td>{{form_widget(edit_form.Opciones.vars.prototype.nombreopcion)|e}} {{form_errors(edit_form.Opciones.vars.prototype.nombreopcion)|e}}
+                        <td>{{form_widget(edit_form.Opciones.vars.prototype.descripcionopcion)|e}} {{form_errors(edit_form.Opciones.vars.prototype.descripcionopcion)|e}}</td>
+                        <td>{{form_widget(edit_form.Opciones.vars.prototype.valoropcion)|e}} {{form_errors(edit_form.Opciones.vars.prototype.valoropcion)|e}}</td>
+                    <tr>
+                <table>
+                 ">
+                 {% if edit_form.Opciones|length > 0 %}
+
+        {% for opcion in edit_form.Opciones %}
+
+            <li>
+               <table class="table table-bordered" style="margin-bottom:8px;">
+                    <tr>
+                        <th>{{form_label(opcion.nombreopcion)}}</th>
+                        <th>{{form_label(opcion.descripcionopcion)}}</th>
+                        <th>{{form_label(opcion.valoropcion)}}</th>
+                    </tr>
+                    <tr>
+                        <td>{{form_widget(opcion.nombreopcion)}} {{form_errors(opcion.nombreopcion)}}</td>
+                        <td>{{form_widget(opcion.descripcionopcion)}} {{form_errors(opcion.descripcionopcion)}}</td>
+                        <td>{{form_widget(opcion.valoropcion)}} {{form_errors(opcion.valoropcion)}}</td>
+                    </tr>
+                </table>
+            </li>
+            {#<li>{{ form_row(estudio.centroestudio) }}</li> #}
+        {% endfor %}
+{% endif %}
+        </ul>
+        
+        
+        
+
+        {{ form_rest(edit_form) }}
+        
+        <div class="text-center">
+            <button type="submit" class="btn">Modificar</button>
+            <button type="button" onclick="location.href='{{path('factorevaluacion_showfactor', {'id':entity.id})}}'" class="btn">Cancelar</button>
+        </div>
+        
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('factorevaluacion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('factorevaluacion_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+    
+    <script>
+
+/*********************************** Datos de Empleo ****************************************/
+// Obtiene la ul que contiene la colección de etiquetas
+var collectionHolderOpc = $('ul.Opciones');
+
+// configura una enlace "Agregar una etiqueta"
+var $addTagLinkOpc = $('<input type="button" value="Agregar Opcion" class="btn">');
+var $newLinkLiOpc = $('<ul></ul>').append($addTagLinkOpc);
+
+jQuery(document).ready(function() {
+    // Añade el ancla "Agregar una etiqueta" y las etiquetas li y ul
+    collectionHolderOpc.append($newLinkLiOpc);
+
+    // Añade un enlace para eliminar todas las etiquetas existentes
+    // en elementos li del formulario
+    collectionHolderOpc.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+    });
+
+    // cuenta las entradas actuales en el formulario (p. ej. 2),
+    // la usa como índice al insertar un nuevo elemento (p. ej. 2)
+    collectionHolderOpc.data('index', collectionHolderOpc.find(':input').length);
+
+    $addTagLinkOpc.on('click', function(e) {
+        // evita crear el enlace con una "#" en la URL
+        e.preventDefault();
+
+        // añade una nueva etiqueta form (ve el siguiente bloque de código)
+        addTagForm(collectionHolderOpc, $newLinkLiOpc);
+    });
+ });
+
+</script>
 {% endblock %}

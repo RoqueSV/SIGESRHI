@@ -1,30 +1,26 @@
-factorevaluacion:
-    pattern:  /
-    defaults: { _controller: "EvaluacionBundle:Factorevaluacion:index" }
-
-factorevaluacion_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "EvaluacionBundle:Factorevaluacion:show" }
-
-factorevaluacion_new:
-    pattern:  /new
-    defaults: { _controller: "EvaluacionBundle:Factorevaluacion:new" }
-
-factorevaluacion_create:
-    pattern:  /create
-    defaults: { _controller: "EvaluacionBundle:Factorevaluacion:create" }
-    requirements: { _method: post }
-
-factorevaluacion_edit:
-    pattern:  /{id}/edit
-    defaults: { _controller: "EvaluacionBundle:Factorevaluacion:edit" }
-
-factorevaluacion_update:
-    pattern:  /{id}/update
-    defaults: { _controller: "EvaluacionBundle:Factorevaluacion:update" }
-    requirements: { _method: post|put }
-
 factorevaluacion_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "EvaluacionBundle:Factorevaluacion:delete" }
     requirements: { _method: post|delete }
+
+factorevaluacion_newfactor:
+    pattern:  /{id}/newfactor
+    defaults: { _controller: "EvaluacionBundle:Factorevaluacion:newfactor" }
+
+factorevaluacion_createfactor:
+    pattern:  /createfactor
+    defaults: { _controller: "EvaluacionBundle:Factorevaluacion:createFactor" }
+    requirements: { _method: post }
+
+factorevaluacion_editfactor:
+    pattern:  /{id}/editfactor
+    defaults: { _controller: "EvaluacionBundle:Factorevaluacion:editFactor" }
+
+factorevaluacion_updatefactor:
+    pattern:  /{id}/updatefactor
+    defaults: { _controller: "EvaluacionBundle:Factorevaluacion:updateFactor" }
+    requirements: { _method: post|put }
+
+factorevaluacion_showfactor:
+    pattern:  /{id}/showfactor
+    defaults: { _controller: "EvaluacionBundle:Factorevaluacion:showFactor" }

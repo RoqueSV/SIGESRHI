@@ -16,7 +16,7 @@ class FactorevaluacionType extends AbstractType
             //->add('idformulario')
         ;
         //agregamos un formulario de otra entidad (datos de Opciones)
-            $builder->add('Opciones', 'collection', array('label'=>' ', 'type' => new OpcionType(), 'allow_add' => true, 'allow_delete' => true, 'prototype_name' => '_opciones_', 'by_reference' => false, 'options'=>array('cascade_validation' => true)));
+            $builder->add('Opciones', 'collection', array('label'=>' ', 'type' => new OpcionType(), 'allow_add' => true, 'allow_delete' => true, 'by_reference' => false, 'options'=>array('cascade_validation' => true)));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

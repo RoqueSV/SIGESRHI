@@ -33,13 +33,12 @@ class FormularioevaluacionController extends Controller
         // Get a grid instance
         $grid = $this->get('grid');
 
-    /*    //camino de miga
+        //camino de miga
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
-        $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
-        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
-        $breadcrumbs->addItem("Consultar Solicitud de Empleo", $this->get("router")->generate("solicitud_caspirante"));
-    */    //fin camino de miga
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Formularios de evaluación", $this->get("router")->generate("formularioevaluacion"));
+        //fin camino de miga
        
         //seleccionamos solo los formularios que estan activos      
       $tableAlias=$source->getTableAlias();
@@ -101,8 +100,8 @@ class FormularioevaluacionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('new','Datos generales del formulario registrado correctamente.'); 
-            return $this->redirect($this->generateUrl('formularioevaluacion_editfactores', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add('msg','Datos generales del formulario registrado correctamente.'); 
+            return $this->redirect($this->generateUrl('factorevaluacion_newfactor', array('id' => $entity->getId())));
         }
 
         return $this->render('EvaluacionBundle:Formularioevaluacion:new.html.twig', array(
@@ -117,6 +116,14 @@ class FormularioevaluacionController extends Controller
      */
     public function newAction()
     {
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Formularios de evaluación", $this->get("router")->generate("formularioevaluacion"));
+        $breadcrumbs->addItem("Registrar", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
+
         $entity = new Formularioevaluacion();
         $form   = $this->createForm(new FormularioevaluacionType(), $entity);
 
@@ -140,8 +147,15 @@ class FormularioevaluacionController extends Controller
             throw $this->createNotFoundException('Unable to find Formularioevaluacion entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Formularios de evaluación", $this->get("router")->generate("formularioevaluacion"));
+        $breadcrumbs->addItem($entity->getNombrebreve(), $this->get("router")->generate("formularioevaluacion_show", array('id'=>$id)));
+        //fin camino de miga
 
+        $deleteForm = $this->createDeleteForm($id);
         return $this->render('EvaluacionBundle:Formularioevaluacion:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
@@ -161,35 +175,22 @@ class FormularioevaluacionController extends Controller
             throw $this->createNotFoundException('Unable to find Formularioevaluacion entity.');
         }
 
-        $editForm = $this->createForm(new FormularioevaluacionType(), $entity);
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Formularios de evaluación", $this->get("router")->generate("formularioevaluacion"));
+        $breadcrumbs->addItem($entity->getNombrebreve(), $this->get("router")->generate("formularioevaluacion_show", array('id'=>$id)));
+        $breadcrumbs->addItem("Modificar datos generales", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
 
+        $editForm = $this->createForm(new FormularioevaluacionType(), $entity);
         return $this->render('EvaluacionBundle:Formularioevaluacion:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
         ));
     }
 
-
-    public function editFactoresAction($id)
-    {
-        $factorevaluacion = new Factorevaluacion();
-        $Opciones = new Opcion();
-        $factorevaluacion->getOpciones()->add($Opciones);
-        $factor_form   = $this->createForm(new FactorevaluacionType(), $factorevaluacion);
-        
-        $em = $this->getDoctrine()->getManager();
-        $evaluacion = $em->getRepository('EvaluacionBundle:Formularioevaluacion')->find($id);
-
-        if (!$evaluacion) {
-            throw $this->createNotFoundException('Unable to find Formularioevaluacion entity.');
-        }
-
-        return $this->render('EvaluacionBundle:Formularioevaluacion:editarfactores.html.twig', array(
-            'factorevaluacion' => $factorevaluacion,
-            'form'   => $factor_form->createView(),
-            'evaluacion'=> $evaluacion,
-        ));
-    }
 
     /**
      * Edits an existing Formularioevaluacion entity.
@@ -279,4 +280,6 @@ class FormularioevaluacionController extends Controller
             $this->get('session')->getFlashBag()->add('del', 'Formulario de evaluación deshabilitado correctamente.'); 
             return $this->redirect($this->generateUrl('formularioevaluacion'));
     }//deshabilita
+
+
 }

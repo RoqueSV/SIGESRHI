@@ -758,6 +758,7 @@ public function ReporteCertificacionAction()
 
    public function ReporteEvaluacionAction()
     {
+
      $em = $this->getDoctrine()->getManager();
 
      /* Obtengo parametros */
@@ -766,6 +767,15 @@ public function ReporteCertificacionAction()
      $calificacion  = $request->get('calificacion'); 
 
      $evaluacion = $em->getRepository('EvaluacionBundle:Evaluacion')->find($idevaluacion);
+
+     //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Realizar evaluación", $this->get("router")->generate("evaluacion_seleccionempleado", array('idrefrenda'=>$evaluacion->getPuestojefe())));
+        $breadcrumbs->addItem("Resultados Evaluación", $this->get("router")->generate("evaluacion_show",array('id'=>$evaluacion->getId())));
+        $breadcrumbs->addItem("Reporte de Evaluación", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
 
      if(count($evaluacion->getIncidentes()) == 0){
         $incidentes = 'N';

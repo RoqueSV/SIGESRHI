@@ -2,6 +2,16 @@
 
 {% block principal -%}
 
+<table class="table table-bordered table-hover">
+    <tr>
+        <th width="20%">Empleado: </th><td>{{evaluacion.idempleado.idexpediente.idsolicitudempleo.nombrecompleto}}</td>
+    </tr>
+    <tr>
+        <th>Puesto: </th><td>{{puestoemp.idplaza.nombreplaza}}</td>
+
+    </tr>
+</table>
+
 <h4> III. RESULTADO DE EVALUACIÓN </h4>
 
     <div class="text-center">
@@ -67,14 +77,15 @@
 <br>
 
 <div class="text-center">
+    {#
 <b>¿Registrar Incidentes cr&iacute;ticos?</b>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SI <input type="radio" name="registra_incidente"  required="required" value="SI"/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO <input type="radio" name="registra_incidente"  required="required" value="NO"/>
 <br><br>
-
-<input type="button" value="Aceptar" class="btn " name="incidente" id="incidente"  onclick="location.href='{{path('evaluacion_finaliza',{'id':evaluacion.id})}}'"/>
-<input type="button" value="Aceptar" class="btn " name="noincidente" id="noincidente" onclick="location.href='{{path('evaluacion')}}'"/>
+#}
+<input type="button" value="Registrar Incidentes" class="btn " name="incidente" id="incidente"  onclick="location.href='{{path('evaluacion_finaliza',{'id':evaluacion.id})}}'"/>
+{# <input type="button" value="Aceptar" class="btn " name="noincidente" id="noincidente" onclick="location.href='{{path('evaluacion')}}'"/> #}
 <input type="button" onclick="reporte();" value="Generar PDF" class="btn" />
 <input type="button" value="Cancelar" class="btn" onclick="location.href='{{path('evaluacion')}}'" />
 </div>
@@ -85,6 +96,7 @@
 </form>
 
 <script>
+/*
 $(document).ready(function(){
  
     $('#incidente').hide();
@@ -116,7 +128,7 @@ $(document).ready(function(){
         }
         });//change
     });
-
+*/
  function reporte() {
    document.getElementById('form_eval').submit();
  }

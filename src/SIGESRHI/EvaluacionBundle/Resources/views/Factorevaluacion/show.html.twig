@@ -1,42 +1,78 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>Factorevaluacion</h1>
+{% block principal -%}
 
-    <table class="record_properties">
-        <tbody>
+{% for flashMessage in app.session.flashbag.get('msg') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+    
+    <h3 class="text-center">FACTOR DE EVALUACI&Oacute;N</h3>
+
+
+    <b>FORMULARIO AL CUAL PERTENECE:</b>
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th width="30%">T&iacute;tulo del formulario</th><td>{{entity.idformulario.tipoformulario}}</td>
+        </tr>
+        <tr>
+            <th>C&oacute;digo: </th><td>{{entity.idformulario.codigoformulario}}</td>
+        </tr>
+        <tr>
+            <th>Personal a evaluar</th><td>{{entity.idformulario.nombrebreve}}</td>
+        </tr>
+    </table>
+
+    <b>FACTOR DE EVALUACI&Oacute;N REGISTRADO:</b>
+    <table class="table table-bordered table-hover">           
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombrefactor</th>
+                <th width="30%">Nombre del factor:</th>
                 <td>{{ entity.nombrefactor }}</td>
             </tr>
             <tr>
-                <th>Descripcionfactor</th>
+                <th>Descripci&oacute;n del factor:</th>
                 <td>{{ entity.descripcionfactor }}</td>
             </tr>
-        </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('factorevaluacion') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('factorevaluacion_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('factorevaluacion_delete', { 'id': entity.id }) }}" method="post">
+    <b>OPCIONES:</b>
+    {% for opcion in entity.opciones %}
+        <table class="table table-bordered table-hover mitable">
+            <tr>
+                <th width="30%">Nombre Opci&oacute;n:</th><td>{{opcion.nombreopcion}}</td>
+            </tr>
+            <tr>
+                <th>Descripci&oacute;n de Opci&oacute;n:</th><td>{{opcion.descripcionopcion}}</td>
+            </tr>
+            <tr>
+                <th>Valor de la Opci&oacute;n:</th><td>{{opcion.valoropcion}}</td>
+            </tr>
+        </table>
+    {% endfor %}
+
+
+    <div class="text-center">       
+        <a href="{{ path('factorevaluacion_newfactor', {'id':entity.idformulario.id}) }}" class="btn">Cancelar</a>
+        <a href="{{ path('factorevaluacion_editfactor', { 'id': entity.id }) }}" class="btn">Modificar </a>
+        <button type="button" class="btn btn-danger" onclick="eliminar()">Eliminar</button>
+    </div>
+        
+        <div class="hide">
+        <form action="{{ path('factorevaluacion_delete', { 'id': entity.id }) }}" method="post" id="form_borrar">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
         </form>
-    </li>
-</ul>
+    </div>
+
+    <script type='text/javascript'>
+function eliminar(ruta) {
+
+        if(confirm('\xbfEsta seguro que desea eliminar este factor del formulario?')) {
+            document.getElementById('form_borrar').submit();
+
+            }
+        }
+</script>
+    
 {% endblock %}
