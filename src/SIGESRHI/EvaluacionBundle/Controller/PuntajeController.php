@@ -31,11 +31,11 @@ class PuntajeController extends Controller
         $grid = $this->get('grid');
 
         //camino de miga
-    /*    $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
-        $breadcrumbs->addItem("Formularios de evaluación", $this->get("router")->generate("formularioevaluacion"));
-      */  //fin camino de miga
+        $breadcrumbs->addItem("Puntajes", $this->get("router")->generate("puntaje"));
+        //fin camino de miga
        
 
         // Attach the source to the grid
@@ -74,6 +74,7 @@ class PuntajeController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $this->get('session')->getFlashBag()->add('msg','Datos de puntaje registrados correctamente.');
             return $this->redirect($this->generateUrl('puntaje_show', array('id' => $entity->getId())));
         }
 
@@ -91,6 +92,14 @@ class PuntajeController extends Controller
     {
         $entity = new Puntaje();
         $form   = $this->createForm(new PuntajeType(), $entity);
+
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Puntajes", $this->get("router")->generate("puntaje"));
+        $breadcrumbs->addItem("Registrar Puntaje", $this->get("router")->generate("puntaje_new"));
+        //fin camino de miga
 
         return $this->render('EvaluacionBundle:Puntaje:new.html.twig', array(
             'entity' => $entity,
@@ -112,8 +121,16 @@ class PuntajeController extends Controller
             throw $this->createNotFoundException('Unable to find Puntaje entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Puntajes", $this->get("router")->generate("puntaje"));
+        $breadcrumbs->addItem($entity->getNombrepuntaje(), $this->get("router")->generate("puntaje_show", array('id'=>$id)));
+        //fin camino de miga
+       
 
+        $deleteForm = $this->createDeleteForm($id);
         return $this->render('EvaluacionBundle:Puntaje:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
@@ -133,9 +150,17 @@ class PuntajeController extends Controller
             throw $this->createNotFoundException('Unable to find Puntaje entity.');
         }
 
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Puntajes", $this->get("router")->generate("puntaje"));
+        $breadcrumbs->addItem($entity->getNombrepuntaje(), $this->get("router")->generate("puntaje_show", array('id'=>$id)));
+        $breadcrumbs->addItem("Modificar", $this->get("router")->generate("puntaje_edit", array('id'=>$id)));
+        //fin camino de miga
+
         $editForm = $this->createForm(new PuntajeType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
-
         return $this->render('EvaluacionBundle:Puntaje:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -165,7 +190,8 @@ class PuntajeController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('puntaje_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('msg','Datos de puntaje modificados correctamente.');
+            return $this->redirect($this->generateUrl('puntaje_show', array('id' => $id)));
         }
 
         return $this->render('EvaluacionBundle:Puntaje:edit.html.twig', array(
