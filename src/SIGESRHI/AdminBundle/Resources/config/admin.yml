@@ -8,13 +8,13 @@ services:
    sonata.admin.admin.modulo:
       class: SIGESRHI\AdminBundle\Admin\ModuloAdmin
       tags:
-        - { name: sonata.admin, manager_type: orm, group: Configuraciones de permisos, label: Modulo }
+        - { name: sonata.admin, manager_type: orm, group: Configuraciones de permisos, label: Módulos }
       arguments: [null, SIGESRHI\AdminBundle\Entity\Modulo, AdminBundle:ModuloAdmin]
 
    sonata.admin.admin.acceso:
       class: SIGESRHI\AdminBundle\Admin\AccesoAdmin
       tags:
-        - { name: sonata.admin, manager_type: orm, group: Configuraciones de permisos, label: Acceso }
+        - { name: sonata.admin, manager_type: orm, group: Configuraciones de permisos, label: Accesos }
       arguments: [null, SIGESRHI\AdminBundle\Entity\Acceso, AdminBundle:AccesoAdmin]
 
    sonata.admin.admin.centro:

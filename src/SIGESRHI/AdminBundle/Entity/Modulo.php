@@ -28,8 +28,7 @@ class Modulo
      *
      * @ORM\Column(name="nombremodulo", type="string", length=100, nullable=true)
      * @Assert\Length(
-     * max = "100",
-     * maxMessage = "El nombre del modulo no debe exceder los {{limit}} caracteres"
+     * max = "100"
      * )
      */
     private $nombremodulo;
@@ -39,8 +38,7 @@ class Modulo
      *
      * @ORM\Column(name="descripcion", type="string", length=150, nullable=true)
      * @Assert\Length(
-     * max = "150",
-     * maxMessage = "La descripcion del módulo no debe exceder los {{limit}} caracteres"
+     * max = "150"
      * )
      */
     private $descripcion;

@@ -34,8 +34,7 @@ class Plaza
      * @ORM\Column(name="nombreplaza", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre de la plaza")
      * @Assert\Length(
-     * max = "100",
-     * maxMessage = "El nombre de la plaza no debe exceder los {{limit}} caracteres"
+     * max = "100"
      * )
      * @GRID\Column(groups={"grupo_plaza", "grupo_plaza_reporte"},title="Nombre plaza", filter="input", operators={"like"}, operatorsVisible=false, align="center")
      */
@@ -52,8 +51,7 @@ class Plaza
      * @ORM\Column(name="misionplaza", type="text", length=500, nullable=false)
      * @Assert\NotNull(message="Debe ingresar la descripcion de la plaza")
      * @Assert\Length(
-     * max = "500",
-     * maxMessage = "La descripcion de la plaza no debe exceder los {{limit}} caracteres"
+     * max = "500"
      * )
      * @GRID\Column(filterable=false, groups={"grupo_plaza", "grupo_plaza_reporte"}, title="Misión")
      */
@@ -65,8 +63,7 @@ class Plaza
      * @ORM\Column(name="unidad", type="string", length=200, nullable=false)
      * @Assert\NotNull(message="Debe ingresar la unidad organizativa de la plaza")
      * @Assert\Length(
-     * max = "200",
-     * maxMessage = "La unidad de la plaza no debe exceder los {{limit}} caracteres"
+     * max = "200"
      * )
      */
     private $unidad;

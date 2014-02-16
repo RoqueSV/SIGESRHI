@@ -74,7 +74,7 @@ class UserAdmin extends Admin
             ->with('Groups')
                 ->add('groups')
             ->end()
-            ->with('Perfil')
+            /*->with('Perfil')
                 ->add('dateOfBirth', 'birthday')
                 ->add('firstname')
                 ->add('lastname')
@@ -84,7 +84,7 @@ class UserAdmin extends Admin
                 ->add('locale')
                 ->add('timezone')
                 ->add('phone')
-            ->end()
+            ->end()*/
           /*  ->with('Social')
                 ->add('facebookUid')
                 ->add('facebookName')
@@ -93,10 +93,10 @@ class UserAdmin extends Admin
                 ->add('gplusUid')
                 ->add('gplusName')
             ->end() */
-            ->with('Seguridad')
+            /*->with('Seguridad')
                 ->add('token')
                 ->add('twoStepVerificationCode')
-            ->end()
+            ->end()*/
         ;
     }
 
@@ -109,7 +109,7 @@ class UserAdmin extends Admin
             ->with('General')
                 ->add('username')
                 ->add('email')
-                ->add('plainPassword', 'text', array('required' => false))
+                ->add('plainPassword', 'text', array('required' => false, 'attr'=>array('data-bvalidator'=>'minlength[8]')))
             ->end()
             ->with('Roles')
                 ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true, 'label'=>'Roles'))
@@ -123,8 +123,8 @@ class UserAdmin extends Admin
                 ->add('gender', 'choice', array(
                     'choices' => array(
                         UserInterface::GENDER_UNKNOWN => 'gender_unknown',
-                        UserInterface::GENDER_FEMALE  => 'Femenino',
-                        UserInterface::GENDER_MAN     => 'Masculino',
+                        UserInterface::GENDER_FEMALE  => 'gender_female',
+                        UserInterface::GENDER_MAN     => 'gender_male',
                     ),
                     'required' => true,
                     'translation_domain' => $this->getTranslationDomain()
@@ -161,10 +161,10 @@ class UserAdmin extends Admin
         }
 
         $formMapper
-            ->with('Seguridad')
+            /*->with('Seguridad')
                 ->add('token', null, array('required' => false))
                 ->add('twoStepVerificationCode', null, array('required' => false))
-            ->end()
+            ->end()*/
         ;
     }
 

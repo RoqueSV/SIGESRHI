@@ -127,11 +127,13 @@ class ReporteController extends Controller
      /* Obtengo parametros */
      $request=$this->getRequest();
      $idExp=$request->get('idexp');
-     $ruta=$request->get('ruta');           
+     $ruta=$request->get('ruta');       
+
 
      //Incluimos camino de migas
       $em = $this->getDoctrine()->getManager();
       $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($idExp);
+
       
       $breadcrumbs = $this->get("white_october_breadcrumbs");
       $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
@@ -139,12 +141,13 @@ class ReporteController extends Controller
       if($expediente->getTipoexpediente() == 'E'){
         $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
         $breadcrumbs->addItem("Listado de empleados", $this->get("router")->generate("pruebapsicologica"));
+        $breadcrumbs->addItem("Consultar prueba psicólogica", $this->get("router")->generate($ruta,array('id'=>$expediente->getIdpruebapsicologica()->getId(),'exp'=>$idExp,'noasp'=>1)));
       }
       else{
         $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
         $breadcrumbs->addItem("Listado de aspirantes", $this->get("router")->generate("pruebapsicologica"));
+        $breadcrumbs->addItem("Consultar prueba psicólogica", $this->get("router")->generate($ruta,array('id'=>$expediente->getIdpruebapsicologica()->getId(),'exp'=>$idExp)));
       }
-      $breadcrumbs->addItem("Consultar prueba psicólogica", $this->get("router")->generate($ruta,array('id'=>$expediente->getIdpruebapsicologica()->getId(),'exp'=>$idExp)));
       $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_pruebapsicologica"));
      
      // Nombre reporte

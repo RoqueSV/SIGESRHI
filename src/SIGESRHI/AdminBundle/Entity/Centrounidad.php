@@ -48,8 +48,7 @@ class Centrounidad
      * @ORM\Column(name="direccioncentro", type="string", length=200, nullable=false)
      * @Assert\NotNull(message="Debe ingresar la direccion")
      * @Assert\Length(
-     * max = "200",
-     * maxMessage = "La direccion del centro no debe exceder los {{limit}} caracteres"
+     * max = "200"
      * )
      */
     private $direccioncentro;
@@ -59,10 +58,8 @@ class Centrounidad
      *
      * @ORM\Column(name="faxcentro", type="string", length=8, nullable=true)
      * @Assert\Length(
-     * max = "8",
-     * maxMessage = "El fax no debe exceder los {{limit}} caracteres"
+     * max = "8"
      * )
-     * 
      */
     private $faxcentro;
 
@@ -71,8 +68,7 @@ class Centrounidad
      *
      * @ORM\Column(name="pbxcentro", type="string",length=8, nullable=true)
      * @Assert\Length(
-     * max = "8",
-     * maxMessage = "El pbx no debe exceder los {{limit}} caracteres"
+     * max = "8"
      * )
      * 
      */
