@@ -18,6 +18,6 @@ EvaluacionBundle_factorevaluacion:
       resource: "@EvaluacionBundle/Resources/config/routing/factorevaluacion.yml"
       prefix:   /factorevaluacion
 
-EvaluacionBundle_opcion:
-     resource: "@EvaluacionBundle/Resources/config/routing/opcion.yml"
-     prefix:   /opcion
+EvaluacionBundle_puntaje:
+     resource: "@EvaluacionBundle/Resources/config/routing/puntaje.yml"
+     prefix:   /puntaje

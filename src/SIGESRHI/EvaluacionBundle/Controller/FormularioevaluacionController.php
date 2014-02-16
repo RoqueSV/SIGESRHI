@@ -86,7 +86,7 @@ class FormularioevaluacionController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             //Asignamos al formulario todos los puntajes registrados
-               $puntajes = $em->getRepository('EvaluacionBundle:Puntaje')->findAll();
+         /*      $puntajes = $em->getRepository('EvaluacionBundle:Puntaje')->findAll();
                
                 foreach($puntajes as $puntaje)
                 {
@@ -95,7 +95,7 @@ class FormularioevaluacionController extends Controller
                     //$puntaje->addIdformulario($entity);
                     //$em->persist($puntaje);
                 }
-            
+           */ 
 
             $em->persist($entity);
             $em->flush();

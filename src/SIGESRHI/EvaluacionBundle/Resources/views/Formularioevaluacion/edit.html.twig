@@ -27,6 +27,15 @@
                 </tr>
             </table>
 
+            <table class="table table-bordered">
+            <tr>
+                <th>{{form_label(edit_form.Puntajes)}}</th>
+            </tr>
+            <tr>
+                <td>{{form_widget(edit_form.Puntajes)}} {{form_errors(edit_form.Puntajes)}}</td>
+            </tr>
+        </table>
+
         {{ form_rest(edit_form) }}
 
         <div class="text-center">
