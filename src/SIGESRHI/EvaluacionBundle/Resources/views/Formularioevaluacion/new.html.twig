@@ -2,9 +2,6 @@
 
 {% block principal -%}
 
-<a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
-{{ include('EvaluacionBundle:Ayuda/Formulario:Registrar.html.twig')}}
-
     <h4 class="text-center">REGISTRO DE NUEVO FORMULARIO DE EVALUACI&Oacute;N</h4>
 
     <form action="{{ path('formularioevaluacion_create') }}" method="post" {{ form_enctype(form) }}>
