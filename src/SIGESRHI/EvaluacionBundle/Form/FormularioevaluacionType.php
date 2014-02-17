@@ -15,7 +15,8 @@ class FormularioevaluacionType extends AbstractType
             ->add('codigoformulario', null, array('label'=>'Código de formulario: ', 'attr'=>array('class'=>'input-small')))
             ->add('nombrebreve', null, array('label'=>'Nombre del personal a evaluar: ', 'attr'=>array('class'=>'input-xmlarge')))
             //->add('estadoform',null, array('label'=>'Estado del Formulario'))
-            //->add('Puntajes', null, array('label'=>'Seleccione los puntajes aplicables: '))
+            ->add('Puntajes', null, array('label'=>'Seleccione los puntajes aplicables: ','multiple'=>true, 
+                    'expanded'=>true,))
         ;
 
    }

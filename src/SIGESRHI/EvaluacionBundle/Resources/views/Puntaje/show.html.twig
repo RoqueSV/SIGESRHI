@@ -1,0 +1,49 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+{% for flashMessage in app.session.flashbag.get('msg') %}
+    <div class="alert alert-success">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+
+    <h3 class="text-center">Puntaje</h3>
+
+    <table  class="table-bordered table-hover mitable centered-table">
+            <tr>
+                <th  width="50%">Nombre:</th>
+                <th>Puntaje minimo:</th>
+                <th>Puntaje máximo:</th>
+            </tr>
+            <tr>
+                <td>{{ entity.nombrepuntaje }}</td>
+                <td>{{ entity.puntajemin }}</td>
+                <td>{{ entity.puntajemax }}</td>
+            </tr>
+    </table>
+
+<br>
+     <div class="text-center">
+        <a href="{{ path('puntaje') }}" class="btn"> Regresar a Lista</a>
+        <a href="{{ path('puntaje_edit', { 'id': entity.id }) }}" class="btn"> Modificar </a>
+        <button type="button" class="btn btn-danger" onclick="eliminar()"> Eliminar</button>
+    </div>
+    
+    <div class="hide">
+        <form action="{{ path('puntaje_delete', { 'id': entity.id }) }}" method="post" id="form_borrar">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+        </form>
+    </div>
+    
+
+    <script type='text/javascript'>
+function eliminar() {
+
+        if(confirm('\xbfEsta seguro que desea eliminar este documento?')) {
+            document.getElementById('form_borrar').submit();
+            }
+        }
+</script>
+{% endblock %}

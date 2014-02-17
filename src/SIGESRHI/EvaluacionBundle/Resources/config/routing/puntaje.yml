@@ -1,0 +1,30 @@
+puntaje:
+    pattern:  /
+    defaults: { _controller: "EvaluacionBundle:Puntaje:index" }
+
+puntaje_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "EvaluacionBundle:Puntaje:show" }
+
+puntaje_new:
+    pattern:  /new
+    defaults: { _controller: "EvaluacionBundle:Puntaje:new" }
+
+puntaje_create:
+    pattern:  /create
+    defaults: { _controller: "EvaluacionBundle:Puntaje:create" }
+    requirements: { _method: post }
+
+puntaje_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "EvaluacionBundle:Puntaje:edit" }
+
+puntaje_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "EvaluacionBundle:Puntaje:update" }
+    requirements: { _method: post|put }
+
+puntaje_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "EvaluacionBundle:Puntaje:delete" }
+    requirements: { _method: post|delete }

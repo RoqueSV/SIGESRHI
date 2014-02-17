@@ -4,12 +4,14 @@ namespace SIGESRHI\EvaluacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use APY\DataGridBundle\Grid\Mapping as GRID;
 
 /**
  * Puntaje
  *
  * @ORM\Table(name="puntaje")
  * @ORM\Entity
+ * @GRID\Source(columns="id, nombrepuntaje, puntajemin, puntajemax", groups={"grupo_puntaje"})
  */
 class Puntaje
 {
@@ -20,6 +22,7 @@ class Puntaje
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="puntaje_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(field="id", groups={"grupo_puntaje"},visible=false, filterable=false)
      */
     private $id;
 
@@ -32,6 +35,7 @@ class Puntaje
      * max = "15",
      * maxMessage = "El nombre del puntaje no debe exceder los {{limit}} caracteres"
      * )
+     * @GRID\Column(field="nombrepuntaje", title="Nombre", groups={"grupo_puntaje"},visible=true, filterable=false, align="center")
      */
     private $nombrepuntaje;
 
@@ -40,6 +44,7 @@ class Puntaje
      *
      * @ORM\Column(name="puntajemin", type="integer", nullable=false)
      * @Assert\NotNull(message="Debe ingresar el puntaje minimo")
+     * @GRID\Column(field="puntajemin", title="Puntaje Minimo", groups={"grupo_puntaje"},visible=true, filterable=false, align="center")
      */
     private $puntajemin;
 
@@ -48,13 +53,14 @@ class Puntaje
      *
      * @ORM\Column(name="puntajemax", type="integer", nullable=false)
      * @Assert\NotNull(message="Debe ingresar el puntaje maximo")
+     * @GRID\Column(field="puntajemax", title="Puntaje Máximo", groups={"grupo_puntaje"},visible=true, filterable=false, align="center")
      */
     private $puntajemax;
 
      /**
      *
      * @var \Doctrine\Common\Collections\Collection
-     * @ORM\ManyToMany(targetEntity="Formularioevaluacion", mappedBy="Puntajes")
+     * @ORM\ManyToMany(targetEntity="Formularioevaluacion", mappedBy="Puntajes", cascade={"persist"})
     */
     private $idformulario;
 

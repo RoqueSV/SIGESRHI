@@ -1,0 +1,36 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    <h3 class="text-center">Registro de Nuevo Puntaje</h3>
+
+    <form action="{{ path('puntaje_create') }}" method="post" {{ form_enctype(form) }}>
+        
+
+        <table class="table table-bordered">
+            <tr>
+                <th>{{form_label(form.nombrepuntaje)}}</th>
+                <th>{{form_label(form.puntajemin)}}</th>
+                <th>{{form_label(form.puntajemax)}}</th>
+            </tr>
+            <tr>
+                <td>{{form_widget(form.nombrepuntaje)}} {{form_errors(form.nombrepuntaje)}}</td>
+                <td>{{form_widget(form.puntajemin)}} {{form_errors(form.puntajemin)}}</td>
+                <td>{{form_widget(form.puntajemax)}} {{form_errors(form.puntajemax)}}</td>
+            </tr>
+        </table>
+
+        
+
+        {{ form_rest(form) }}
+        
+            
+            <div class="text-center">
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            <a href="{{ path('puntaje') }}" class="btn">Regresar a lista</a>
+            </div>
+    </form>
+
+     
+        
+    
+{% endblock %}

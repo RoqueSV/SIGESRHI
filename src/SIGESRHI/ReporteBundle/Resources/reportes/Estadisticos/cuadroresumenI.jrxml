@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cuadroresumenI" pageWidth="612" pageHeight="792" columnWidth="550" leftMargin="31" rightMargin="31" topMargin="20" bottomMargin="20" uuid="7d3a5cb1-4ed4-47e6-942d-2d96a7b6d527">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="108"/>
+	<property name="ireport.x" value="63"/>
+	<property name="ireport.y" value="90"/>
 	<parameter name="ano_eva" class="java.lang.Integer"/>
 	<parameter name="idcentro" class="java.lang.Integer"/>
-	<parameter name="semestre" class="java.lang.String"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select to_char(current_date,'DD "de" TMMonth "de" YYYY') as fechaactual,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nombreplaza,sueldoactual,nombrecentro,

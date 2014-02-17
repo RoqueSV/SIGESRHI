@@ -1,0 +1,18 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+    <h3 class="text-center">PUNTAJES</h3>
+
+      {{ grid_search(grid) }} 
+<div align="right">
+        <b>Registrar Nuevo Puntaje: </b>
+        <a class="btn" onclick="location.href='{{path('puntaje_new')}}'" title="Registrar Nuevo Puntaje"><div class="icon-plus-sign"></div></a>
+</div>
+{{ grid(grid,_self) }}  
+<br>
+{% block grid_filters %}{% endblock %} 
+
+<div class="text-center">
+<button type="button" onclick="location.href='{{path('hello_page')}}'" class="btn">Cancelar</button>
+</div>
+    {% endblock %}
