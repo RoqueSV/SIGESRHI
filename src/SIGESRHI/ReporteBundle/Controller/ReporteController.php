@@ -137,6 +137,11 @@ class ReporteController extends Controller
       
       $breadcrumbs = $this->get("white_october_breadcrumbs");
       $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+      $user = $this->get('security.context')->getToken()->getUser();
+      if ($this->get('security.context')->isGranted('ROLE_PSICOLOGO')and !($this->get('security.context')->isGranted('ROLE_EMPLEADORRHH'))) {
+      $breadcrumbs->addItem("Consultar prueba psicólogica", $this->get("router")->generate($ruta,array('id'=>$expediente->getIdpruebapsicologica()->getId(),'exp'=>$idExp)));
+      }
+      else{
       $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
       if($expediente->getTipoexpediente() == 'E'){
         $breadcrumbs->addItem("Empleado activo", $this->get("router")->generate("pantalla_empleadoactivo"));
@@ -148,6 +153,7 @@ class ReporteController extends Controller
         $breadcrumbs->addItem("Listado de aspirantes", $this->get("router")->generate("pruebapsicologica"));
         $breadcrumbs->addItem("Consultar prueba psicólogica", $this->get("router")->generate($ruta,array('id'=>$expediente->getIdpruebapsicologica()->getId(),'exp'=>$idExp)));
       }
+     }
       $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_pruebapsicologica"));
      
      // Nombre reporte

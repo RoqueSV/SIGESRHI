@@ -25,8 +25,19 @@ class PlancapacitacionController extends Controller
     public function consultarAction()
     {
         //Consultar planes registrados
+        $user = $this->get('security.context')->getToken()->getUser();
 
         $source = new Entity('CapacitacionBundle:Plancapacitacion','grupo_plancapacitacion');
+
+        if ($this->get('security.context')->isGranted('ROLE_DIRECTOR')) {
+            //manipulando la Consulta del grid
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->andWhere($tableAlias.'.tipoplan = :tipo')
+                       ->setParameter('tipo','C');
+            });
+        }
         
         $grid = $this->get('grid');
            
@@ -146,6 +157,8 @@ class PlancapacitacionController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entity  = new Plancapacitacion();
         $form = $this->createForm(new PlancapacitacionType(), $entity);
+
+        
         $form->bind($request);
 
         //Comprobar si ya hay un plan para el año seleccionado
@@ -174,7 +187,8 @@ class PlancapacitacionController extends Controller
                         ));
             return $response;
         }
-
+ 
+        $this->get('session')->getFlashBag()->add('error', 'Error en el registro de datos.');
         return $this->render('CapacitacionBundle:Plancapacitacion:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),

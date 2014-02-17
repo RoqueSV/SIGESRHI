@@ -1,0 +1,27 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+<h4 class="text-center"> Cuadro resumen de evaluación de desempeño</h4>
+<form action="{{path('reporte_evaluaciones')}}" id="miform" method="post">
+<br>
+<fieldset>
+  <legend>Tipo de reporte</legend>
+  <br>
+  Seleccione el tipo de reporte a generar:
+  <select id="tipo_reporte" name="tipo_reporte" class="input-xlarge">
+    <option value="1">Primer semestre</option>
+    <option value="2">Segundo semestre (promedios)</option>
+  </select>
+</fieldset>
+
+<input type="hidden" name="idcentro" id="idcentro" value={{centros[0].id}} />
+<br>
+<div class="text-center">
+<button type="submit" class="btn btn-primary">Generar Reporte</button>
+<a href="{{path('hello_page')}}" class="btn"> Cancelar </a>
+</div>
+
+</form>
+
+{% endblock %}

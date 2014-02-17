@@ -13,7 +13,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  * @ORM\Table(name="plancapacitacion")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="SIGESRHI\CapacitacionBundle\Repositorio\PlancapacitacionRepository")
- * @GRID\Source(columns="id,nombreplan,objetivoplan,anoplan", groups={"grupo_plancapacitacion"})
+ * @GRID\Source(columns="id,nombreplan,objetivoplan,anoplan,tipoplan", groups={"grupo_plancapacitacion"})
  */
 class Plancapacitacion
 {
@@ -84,7 +84,8 @@ class Plancapacitacion
      * @var string
      *
      * @ORM\Column(name="tipoplan", type="string", nullable=false)
-     * @Assert\NotNull(message="Debe ingresar los resultados del plan")
+     * @Assert\NotNull(message="Debe seleccionar el tipo de plan")
+     * @GRID\Column(filterable=false, groups={"grupo_plancapacitacion"}, visible=false)
      */
     private $tipoplan;
 

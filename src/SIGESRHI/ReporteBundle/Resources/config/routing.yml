@@ -86,3 +86,15 @@ reporte_plan_capacitacion:
     pattern:  /reporteplancapacitacion
     defaults: { _controller: ReporteBundle:Reporte:ReportePlanCapacitacion }
 
+reporte_primera_evaluacion:
+    pattern:  /reporteevaluacionI
+    defaults: { _controller: ReporteBundle:ModuloReporte:PrimeraEvaluacion }
+
+reporte_evaluaciones:
+    pattern:  /reporteevaluaciones
+    defaults: { _controller: ReporteBundle:ModuloReporte:ReporteEvaluaciones }
+
+reporte_empleado_evaluacion:
+    pattern:  /reporteevaluacionesempleados
+    defaults: { _controller: ReporteBundle:ModuloReporte:ReporteEmpleadoEvaluacion }
+

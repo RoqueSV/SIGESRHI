@@ -37,6 +37,14 @@
          </label>
         </td>
     </tr>
+    <tr>
+      <td>
+          <label class="radio">
+            <input type="radio" name="tipomod" id="eval" value="4">&nbsp;&nbsp;
+            Reportes de evaluaciones
+         </label>
+        </td>
+    </tr>
 </table>
 <div id="tipo_requerido" class="text-center"><label class="help-inline">* Seleccione una opción.</label></div>  
 </fieldset>
@@ -72,6 +80,12 @@
 
   <div id="dobleplaza" class='hide'>
       <form action="{{ path('reporte_empleado_dobleplaza') }}" id="form_plaza" method="post">
+
+      </form>
+  </div>
+
+  <div id="evaluaciones" class='hide'>
+      <form action="{{ path('reporte_empleado_evaluacion') }}" id="form_evaluaciones" method="post">
 
       </form>
   </div>
@@ -122,8 +136,14 @@ $(document).ready(function(){
              $('#antiguedad').hide();
              $('#empleadoscentro').show();
          
-         }
-         else{
+         } else if($("#eval").is(':checked')) {  
+
+             $('#tipo_requerido').hide();
+             $('#antiguedad').hide();
+             $('#empleadoscentro').hide();
+             document.getElementById("form_evaluaciones").submit();
+
+         }else{
           $('#tipo_requerido').show(); 
          } 
     });  

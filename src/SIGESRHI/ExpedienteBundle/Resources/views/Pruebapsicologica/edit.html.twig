@@ -128,7 +128,11 @@
         {{ form_rest(edit_form) }}
         <div class='text-center'>
             <button type="submit" class="btn btn-primary">Modificar</button>
-            <a  href="{{ path('pruebapsicologica_index_edit') }}" class="btn">Cancelar</a>            
+             {% if is_granted('ROLE_PSICOLOGO')  %}
+             <button type="button" class="btn" onclick="window.history.back(1);">Regresar</button>
+             {% else %}
+            <a  href="{{ path('pruebapsicologica_index_edit') }}" class="btn">Cancelar</a> 
+            {% endif %}           
         </div>
     </form>
 

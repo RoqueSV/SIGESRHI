@@ -10,6 +10,9 @@ use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Grid;
 
+use Application\Sonata\UserBundle\Entity\User;
+use SIGESRHI\ExpedienteBundle\Entity\Empleado;
+
 class ModuloReporteController extends Controller
 {
 
@@ -246,11 +249,11 @@ class ModuloReporteController extends Controller
    public function ReporteEmpleadosCentroAction()
     {
 
-     /* Obtengo parametros */
-     $request = $this->getRequest();
-     $idcentro = $request->get('idcentro');
+      /* Obtengo parametros */
+      $request = $this->getRequest();
+      $idcentro = $request->get('idcentro');
 
-     //Comprobar existencia de registros
+      //Comprobar existencia de registros
       $em = $this->getDoctrine()->getManager();
       $query = $em->createQuery("SELECT COUNT(r.idempleado) AS  numempleados 
                                  FROM AdminBundle:Centrounidad c 
@@ -299,7 +302,124 @@ class ModuloReporteController extends Controller
      return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
    }
 
+    public function PrimeraEvaluacionAction()
+    {
+     
+     $em = $this->getDoctrine()->getManager();
+     
+     //Obtener usuario actual
+     $user = new User();
+     $empleado = new Empleado();
+     $user = $this->get('security.context')->getToken()->getUser();
+     if($user == 'anon.'){
+        return $this->redirect($this->generateUrl('hello_page'));           
+     }
+     $empleado = $user->getEmpleado(); //Id de director
+     
+      /* *** Obtener centro *** */
+        $query = $em->createQuery(
+                 "SELECT cu.id, cu.nombrecentro
+                  FROM AdminBundle:Centrounidad cu
+                  JOIN cu.idunidad uo
+                  JOIN uo.idrefrenda ra
+                  WHERE UPPER(ra.nombreplaza) like upper('%DIRECTOR%')
+                  AND ra.idempleado =:idempleado")
+                 ->setParameter('idempleado', $empleado->getId()); 
+        $centros = $query->getResult();
+
+      /*************************************************/
+
+     // Incluimos camino de migas
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Generar reporte de evaluación", $this->get("router")->generate("hello_page"));
+
+        
+     return $this->render('ReporteBundle:Reportes:reporte_evaluacion.html.twig',array(
+        'centros'=>$centros,
+        'empleado'=>$empleado));
+    }
+
+   
+
+   public function ReporteEvaluacionesAction()
+    {
+
+     /* Obtengo parametros */
+     $request = $this->getRequest();
+     $tipo_reporte = $request->get('tipo_reporte');
+     $idcentro = $request->get('idcentro');
+     $anio = date('Y');
 
 
+     // Incluimos camino de migas
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Generar reporte de evaluación", $this->get("router")->generate("reporte_primera_evaluacion"));
+     $breadcrumbs->addItem("Reporte", $this->get("router")->generate("hello_page"));
+    
+
+     // Nombre reporte
+     $filename= 'Cuadro resumen.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+
+     if($tipo_reporte == 1){
+      //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Estadisticos/cuadroresumenI.jasper';
+     }
+     else{
+     $Reporte=__DIR__.'/../Resources/reportes/Estadisticos/cuadroresumenII.jasper';
+     }
+     
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("idcentro", new java("java.lang.Integer", $idcentro));
+     $Parametro->put("ano_eva", new java("java.lang.Integer", $anio));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+    public function ReporteEmpleadoEvaluacionAction()
+    {
+
+     $anio = date('Y');
+         
+      // Incluimos camino de migas
+     $breadcrumbs = $this->get("white_october_breadcrumbs");
+     $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+     $breadcrumbs->addItem("Generar reportes y documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
+     $breadcrumbs->addItem("Reportes", $this->get("router")->generate("pantalla_reportes"));
+     $breadcrumbs->addItem("Expediente de empleados", $this->get("router")->generate("reporte_empleado_seleccionar"));
+     $breadcrumbs->addItem("Reporte", "");
+     
+     // Nombre reporte
+     $filename= 'Reporte empleadosevaluacion.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/Estadisticos/rpt_nivelinstitucional.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("ano_eva", new java("java.lang.Integer", $anio));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
 
 }

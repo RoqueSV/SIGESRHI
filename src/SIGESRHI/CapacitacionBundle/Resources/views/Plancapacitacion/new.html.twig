@@ -7,7 +7,7 @@
     {{ include('CapacitacionBundle:Ayuda/Capacitacion:plan_capacitacion.html.twig')}} 
 
 {% for flashMessage in app.session.flashbag.get('errorcreate') %}
-  <br/>
+  <br/><br/>
   <div class="alert alert-danger">
     <p>{{ flashMessage }}</p>
   </div>
@@ -23,7 +23,7 @@
         {{ form_row(form.anoplan) }}
         {{ form_row(form.objetivoplan) }}
         {{ form_row(form.descripcionplan) }}
-        {{ form_row(form.resultadosplan) }}
+        {{ form_row(form.resultadosplan) }}<br/>
         {{ form_row(form.tipoplan) }}
         {{ form_row(form.idcentro) }}
 

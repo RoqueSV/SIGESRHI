@@ -54,11 +54,19 @@ class PantallasController extends Controller
     public function pantallaAspiranteAction()
     {
 
+        $user = $this->get('security.context')->getToken()->getUser();
+        if ($this->get('security.context')->isGranted('ROLE_PSICOLOGO') and !($this->get('security.context')->isGranted('ROLE_EMPLEADORRHH'))) {
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        }
+        else{
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
         $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
+         }
         return $this->render('AdminBundle:Pantallas:pantalla_hexpediente.html.twig');
     }
 
@@ -144,12 +152,20 @@ public function pantallaReportesAction()
 
 public function pantallaRealizarEvaluacionAction()
     {
-
+        
+        $user = $this->get('security.context')->getToken()->getUser();
+        if ($this->get('security.context')->isGranted('ROLE_DIRECTOR') and !($this->get('security.context')->isGranted('ROLE_JEFERRHH'))) {
+        // Incluimos camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        }
+        else{
         // Incluimos camino de migas
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
         $breadcrumbs->addItem("Evaluación de Desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
         $breadcrumbs->addItem("Realizar evaluación", $this->get("router")->generate("pantalla_evaluacion"));
+        }
         return $this->render('AdminBundle:Pantallas:pantalla_hevaluacion.html.twig');
     }
 

@@ -29,7 +29,7 @@
                 <tr>
                     <td>
                         {{form_label(form.nombreempleado)}}
-                       <span style="margin-left:21px;">{{form_widget(form.nombreempleado)}}</span>  
+                       <span style="margin-left:19px;">{{form_widget(form.nombreempleado)}}</span>  
                         {{form_errors(form.nombreempleado)}}
                     </td>
                 </tr>
@@ -37,15 +37,15 @@
                     <td>
                         {{form_label(form.dui)}} 
                         <span style="margin-left:87px;">{{form_widget(form.dui)}}</span>
-                        <span style="margin-left:29px;">{{form_label(form.lugardui)}}</span>&nbsp;&nbsp;
+                        <span style="margin-left:25px;">{{form_label(form.lugardui)}}</span>&nbsp;
                         {{form_widget(form.lugardui)}}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        {{form_label(form.lugarnac)}} &nbsp;&nbsp;
-                        {{form_widget(form.lugarnac)}} {{form_errors(form.lugarnac)}}
-                        <span style="margin-left:10px;">{{form_label(form.fechanac)}}</span>&nbsp;&nbsp; 
+                        {{form_label(form.lugarnac)}} 
+                        <span style="margin-left:5px;">{{form_widget(form.lugarnac)}} {{form_errors(form.lugarnac)}}</span>
+                        <span style="margin-left:10px;">{{form_label(form.fechanac)}}</span>&nbsp;
                         {{form_widget(form.fechanac)}} {{form_errors(form.fechanac)}}
                     </td>
                 </tr>
@@ -59,16 +59,16 @@
                 <tr>
                     <td>
                         {{form_label(form.estadocivil)}} 
-                        <span style="margin-left:67px;">{{form_widget(form.estadocivil)}}</span>
+                        <span style="margin-left:65px;">{{form_widget(form.estadocivil)}}</span>
                         {{form_errors(form.estadocivil)}}
-                        <span style="margin-left:8px;">{{form_label(form.telefonofijo)}}</span>&nbsp;&nbsp;
+                        <span style="margin-left:8px;">{{form_label(form.telefonofijo)}}</span>
                         {{form_widget(form.telefonofijo)}} {{form_errors(form.telefonofijo)}}
                     </td>
                 </tr>
                 <tr>
                     <td>
                         {{form_label(form.educacion)}} 
-                        <span style="margin-left:72px;">{{form_widget(form.educacion)}}</span> 
+                        <span style="margin-left:70px;">{{form_widget(form.educacion)}}</span> 
                         {{form_errors(form.educacion)}}
                     </td>
                 </tr>
@@ -78,23 +78,23 @@
   </table>
   <br />
   {{form_label(form.fechaingreso)}}
-  <span style="margin-left:35px;">{{form_widget(form.fechaingreso)}}</span>
+  <span style="margin-left:25px;">{{form_widget(form.fechaingreso)}}</span>
   &nbsp;&nbsp;&nbsp;{{form_label(form.cargo)}}&nbsp;&nbsp;{{form_widget(form.cargo)}}
   <br /><br />
   
   {{form_label(form.sueldoinicial)}}
-  <span style="margin-left:60px;">{{form_widget(form.sueldoinicial)}}</span>
+  <span style="margin-left:53px;">{{form_widget(form.sueldoinicial)}}</span>
   <br /><br />
   
-  {{form_label(form.isss)}}<span style="margin-left:72px;">{{form_widget(form.isss)}}</span>
-  <span style="margin-left:54px;">{{form_label(form.nit)}}</span>&nbsp;&nbsp;{{form_widget(form.nit)}}
+  {{form_label(form.isss)}}<span style="margin-left:64px;">{{form_widget(form.isss)}}</span>
+  <span style="margin-left:49px;">{{form_label(form.nit)}}</span>&nbsp;&nbsp;{{form_widget(form.nit)}}
   <br /><br />
   
-  {{form_label(form.destacadoen)}}<span style="margin-left:61px;">{{form_widget(form.destacadoen)}}</span>
+  {{form_label(form.destacadoen)}}<span style="margin-left:54px;">{{form_widget(form.destacadoen)}}</span>
   <br /><br />
   
   {{form_label(form.informacionadicional)}}
-  <span style="margin-left:23px;">{{form_widget(form.informacionadicional)}}</span>
+  <span style="margin-left:12px;">{{form_widget(form.informacionadicional)}}</span>
   {{form_errors(form.informacionadicional)}}
 
   <input type="hidden" name="fotografia" id="fotografia" value="{{fotografia}}"/>
