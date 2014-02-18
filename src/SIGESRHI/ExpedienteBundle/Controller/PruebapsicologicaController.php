@@ -387,6 +387,7 @@ class PruebapsicologicaController extends Controller
         return $this->render('ExpedienteBundle:Pruebapsicologica:new.html.twig', array(
             'entity' => $entity,
             'expediente' => $expedienteinfo,
+            'expediente2' => $expediente,
             'form'   => $form->createView(),            
         ));
     }

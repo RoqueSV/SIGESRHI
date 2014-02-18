@@ -33,9 +33,9 @@
     </tr>
     {#% endfor %#}
     </table>
-
-    <form action="{{ path('pruebapsicologica_create',{'exp':exp.id}) }}" id= "pruebapsicologica_form" class="form-horizontal" method="post" {{ form_enctype(form) }}>
     {% endfor %}
+    <form action="{{ path('pruebapsicologica_create',{'exp':expediente2.id}) }}" id= "pruebapsicologica_form" class="form-horizontal" method="post" {{ form_enctype(form) }}>
+    
         {#{{ form_widget(form) }}#}        
         <fieldset>
         <legend>Resultados</legend>
