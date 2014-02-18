@@ -12,6 +12,9 @@ use APY\DataGridBundle\Grid\Source\Entity;
 use APY\DataGridBundle\Grid\Action\RowAction;
 use APY\DataGridBundle\Grid\Grid;
 
+use Application\Sonata\UserBundle\Entity\User;
+use SIGESRHI\ExpedienteBundle\Entity\Empleado;
+
 /**
  * Plancapacitacion controller.
  *
@@ -25,18 +28,54 @@ class PlancapacitacionController extends Controller
     public function consultarAction()
     {
         //Consultar planes registrados
-        $user = $this->get('security.context')->getToken()->getUser();
+        
 
         $source = new Entity('CapacitacionBundle:Plancapacitacion','grupo_plancapacitacion');
 
         if ($this->get('security.context')->isGranted('ROLE_DIRECTOR')) {
-            //manipulando la Consulta del grid
+           
+           $em = $this->getDoctrine()->getManager();
+           $user = new User();
+           $empleado = new Empleado();
+           $user = $this->get('security.context')->getToken()->getUser();
+           
+     
+           $empleado = $user->getEmpleado(); //Id de director
+           
+          /* *** Obtener centro *** */
+          $query = $em->createQuery(
+                 "SELECT cu.id
+                  FROM AdminBundle:Centrounidad cu
+                  JOIN cu.idunidad uo
+                  JOIN uo.idrefrenda ra
+                  WHERE UPPER(ra.nombreplaza) like upper('%DIRECTOR%')
+                  AND ra.idempleado =:idempleado")
+                 ->setParameter('idempleado', $empleado->getId()); 
+           $centros = $query->getSingleResult();
+
+           $idcentro = $centros['id'];
+
+        //manipulando la Consulta del grid
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
+            function($query) use ($tableAlias, $idcentro){
+                $query->andWhere($tableAlias.'.tipoplan = :tipo')
+                      ->andWhere('_idcentro.id = :idcentro')
+                      ->setParameter('tipo','C')
+                      ->setParameter('idcentro',$idcentro);
+            });
+        }
+
+        else {
+
+             //manipulando la Consulta del grid
+             $tableAlias = $source->getTableAlias();
+             $source->manipulateQuery(
             function($query) use ($tableAlias){
                 $query->andWhere($tableAlias.'.tipoplan = :tipo')
-                       ->setParameter('tipo','C');
+                      ->setParameter('tipo','I');
             });
+
         }
         
         $grid = $this->get('grid');
@@ -68,6 +107,52 @@ class PlancapacitacionController extends Controller
         //Consultar planes registrados
 
         $source = new Entity('CapacitacionBundle:Plancapacitacion','grupo_plancapacitacion');
+
+         if ($this->get('security.context')->isGranted('ROLE_DIRECTOR')) {
+           
+           $em = $this->getDoctrine()->getManager();
+           $user = new User();
+           $empleado = new Empleado();
+           $user = $this->get('security.context')->getToken()->getUser();
+           
+     
+           $empleado = $user->getEmpleado(); //Id de director
+           
+          /* *** Obtener centro *** */
+          $query = $em->createQuery(
+                 "SELECT cu.id
+                  FROM AdminBundle:Centrounidad cu
+                  JOIN cu.idunidad uo
+                  JOIN uo.idrefrenda ra
+                  WHERE UPPER(ra.nombreplaza) like upper('%DIRECTOR%')
+                  AND ra.idempleado =:idempleado")
+                 ->setParameter('idempleado', $empleado->getId()); 
+           $centros = $query->getSingleResult();
+
+           $idcentro = $centros['id'];
+
+        //manipulando la Consulta del grid
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias, $idcentro){
+                $query->andWhere($tableAlias.'.tipoplan = :tipo')
+                      ->andWhere('_idcentro.id = :idcentro')
+                      ->setParameter('tipo','C')
+                      ->setParameter('idcentro',$idcentro);
+            });
+        }
+
+        else {
+
+             //manipulando la Consulta del grid
+             $tableAlias = $source->getTableAlias();
+             $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->andWhere($tableAlias.'.tipoplan = :tipo')
+                      ->setParameter('tipo','I');
+            });
+
+        }
         
         $grid = $this->get('grid');
            
@@ -156,13 +241,58 @@ class PlancapacitacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entity  = new Plancapacitacion();
-        $form = $this->createForm(new PlancapacitacionType(), $entity);
-
         
+        
+        /******* DIRECTOR? ******/
+        
+        if ($this->get('security.context')->isGranted('ROLE_DIRECTOR') and !($this->get('security.context')->isGranted('ROLE_JEFERRHH'))) {
+                  
+           $user = new User();
+           $empleado = new Empleado();
+
+           $user = $this->get('security.context')->getToken()->getUser();
+        
+           $empleado = $user->getEmpleado(); //Id de director
+           
+          /* *** Obtener centro *** */
+           $query = $em->createQuery(
+                 "SELECT cu.id
+                  FROM AdminBundle:Centrounidad cu
+                  JOIN cu.idunidad uo
+                  JOIN uo.idrefrenda ra
+                  WHERE UPPER(ra.nombreplaza) like upper('%DIRECTOR%')
+                  AND ra.idempleado =:idempleado")
+                 ->setParameter('idempleado', $empleado->getId()); 
+           $centros = $query->getSingleResult();
+
+           $idcentro = $centros['id'];
+           $centro = $em->getRepository('AdminBundle:Centrounidad')->find($idcentro);
+
+           $entity->setTipoplan('C');
+           $entity->setIdCentro($centro);
+
+        }
+
+        else {
+            $entity->setTipoplan('I');
+        }
+
+        $form = $this->createForm(new PlancapacitacionType(), $entity);
         $form->bind($request);
 
+        /***********************/
+ 
+
+         if($entity->getTipoplan() == "I" )  //Comprobar año  si es institucional
+        {
         //Comprobar si ya hay un plan para el año seleccionado
-        $cant_anyo = $em->getRepository('CapacitacionBundle:Plancapacitacion')->comprobarAnyo($entity->getAnoplan());
+         $cant_anyo = $em->getRepository('CapacitacionBundle:Plancapacitacion')->comprobarAnyo($entity->getAnoplan());
+        }
+        if($entity->getTipoplan() == "C" )  //Comprobar año si es centro
+        {
+         $cant_anyo = $em->getRepository('CapacitacionBundle:Plancapacitacion')->comprobarAnyoCentro($entity->getAnoplan(),$entity->getIdcentro());
+        }
+
 
         if($cant_anyo > 0){
             $this->get('session')->getFlashBag()->add('errorcreate', 'Error. Ya existe un plan registrado para el año seleccionado!');
@@ -171,7 +301,8 @@ class PlancapacitacionController extends Controller
                'entity' => $entity,
                'form'   => $form->createView(),
            ));
-        }
+         }
+       
         /* ******** Fin comprobar año ********* */
 
         if ($form->isValid()) {

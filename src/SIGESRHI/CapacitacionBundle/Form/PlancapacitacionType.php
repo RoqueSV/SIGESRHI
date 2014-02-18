@@ -15,7 +15,7 @@ class PlancapacitacionType extends AbstractType
         $builder
             ->add('nombreplan',null,array(
                   'label'=>'Nombre plan',
-                  'required'=>false,
+                  'required'=>true,
                   'attr'=>array('class'=>'input-xmlarge')))
             ->add('anoplan','choice', array(
                   'required' => true, 
@@ -35,7 +35,7 @@ class PlancapacitacionType extends AbstractType
                   'label'=>'Resultados esperados',
                   'required'=>false,
                   'attr'=>array('class'=>'input-xmlarge','rows'=>'3')))
-            ->add('tipoplan','choice', array(
+           /* ->add('tipoplan','choice', array(
                   'label'=>'Tipo plan',
                   'choices' => array(
                   'I' => 'Institucional', 'C' => 'Interno'),
@@ -50,7 +50,7 @@ class PlancapacitacionType extends AbstractType
                                      ->orderBy('c.nombrecentro', 'ASC');
                                      },
                   'empty_value' => 'Seleccione un centro',
-                  'attr'=>array('class'=>'input-xmlarge')))
+                  'attr'=>array('class'=>'input-xmlarge'))) */
         ;
     }
 
