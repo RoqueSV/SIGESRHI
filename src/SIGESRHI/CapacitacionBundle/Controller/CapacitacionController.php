@@ -176,7 +176,7 @@ class CapacitacionController extends Controller
         $modificada->setIdcapacitacion($entity);
 
         $modificada->setTipomodificacion($request->get('tipomod'));
-        $entity->setEstadocapacitacion('M');
+        $entity->setEstadocapacitacion($request->get('tipomod'));
         /* ******************************************/
 
         $deleteForm = $this->createDeleteForm($id);

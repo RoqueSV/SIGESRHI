@@ -197,8 +197,8 @@ class PlancapacitacionController extends Controller
         $source->manipulateQuery(
             function($query) use ($tableAlias,$id){
                 $query->andWhere($tableAlias.'.fechacapacitacion < :actual')
+                      ->andWhere('_idplan.id= :id')
                       ->andWhere($tableAlias.'.estadocapacitacion <> :estado')
-                       ->andWhere('_idplan.id= :id')
                       ->setParameter('actual',new \Datetime('now'))
                       ->setParameter('estado','F')
                       ->setParameter('id',$id);
@@ -373,7 +373,9 @@ class PlancapacitacionController extends Controller
         $source->manipulateQuery(
             function($query) use ($tableAlias, $id){
                 $query->andWhere('_idplan.id = :id')
-                      ->setParameter('id',$id);
+                      ->andWhere($tableAlias.'.estadocapacitacion <> :estado')
+                      ->setParameter('id',$id)
+                      ->setParameter('estado','C');
             }
         );   
            
