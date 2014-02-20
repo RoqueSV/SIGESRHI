@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Solicitud de Empleo_subreport3" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fe4f2e71-ed29-4fcb-846f-5eda92ad17cf">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Solicitud de Empleo_subreport3" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fe4f2e71-ed29-4fcb-846f-5eda92ad17cf">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -16,7 +16,7 @@
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="28d9cdd1-dd76-41cb-9546-875c7163fb9a" mode="Opaque" x="18" y="0" width="203" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="18" y="0" width="203" height="20" backcolor="#CCCCCC" uuid="28d9cdd1-dd76-41cb-9546-875c7163fb9a"/>
 				<box leftPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -29,7 +29,7 @@
 				<text><![CDATA[Nombres]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d0ee8769-6563-4ef4-9297-e3bdd4dbc922" mode="Opaque" x="221" y="0" width="273" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="221" y="0" width="273" height="20" backcolor="#CCCCCC" uuid="d0ee8769-6563-4ef4-9297-e3bdd4dbc922"/>
 				<box leftPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -42,7 +42,7 @@
 				<text><![CDATA[Dirección]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="55eb4f4b-2a80-4b39-9fa2-394937f71ad6" mode="Opaque" x="494" y="0" width="63" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="494" y="0" width="63" height="20" backcolor="#CCCCCC" uuid="55eb4f4b-2a80-4b39-9fa2-394937f71ad6"/>
 				<box leftPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -59,7 +59,7 @@
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="242ef587-b15a-4521-a46f-791d6c3c15eb" x="62" y="0" width="159" height="19"/>
+				<reportElement x="62" y="0" width="159" height="19" uuid="242ef587-b15a-4521-a46f-791d6c3c15eb"/>
 				<box leftPadding="3">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -70,7 +70,7 @@
 				<textFieldExpression><![CDATA[$F{nombrefamiliar}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="0742f683-59de-41fd-8673-cc5a82ef56ad" positionType="Float" x="221" y="-1" width="273" height="20"/>
+				<reportElement positionType="Float" x="221" y="-1" width="273" height="20" uuid="0742f683-59de-41fd-8673-cc5a82ef56ad"/>
 				<box leftPadding="3">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -81,7 +81,7 @@
 				<textFieldExpression><![CDATA[$F{direccionfamiliar}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="63818a26-90f3-4cf8-9384-ec08d5c3363f" x="494" y="-1" width="63" height="20"/>
+				<reportElement x="494" y="-1" width="63" height="20" uuid="63818a26-90f3-4cf8-9384-ec08d5c3363f"/>
 				<box leftPadding="3">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
@@ -93,7 +93,7 @@
 				<textFieldExpression><![CDATA[$F{telefonofamiliar}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="60178b02-ca7c-49c2-9b67-af3ae81bcd85" x="18" y="0" width="44" height="19"/>
+				<reportElement x="18" y="0" width="44" height="19" uuid="60178b02-ca7c-49c2-9b67-af3ae81bcd85"/>
 				<box leftPadding="3">
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
