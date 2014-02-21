@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Solicitud de Empleo" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="14" bottomMargin="20" uuid="b71055dc-4258-4c24-9069-a03267bff9f9">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="576"/>
+	<property name="ireport.y" value="240"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Formularios\\"]]></defaultValueExpression>
 	</parameter>
@@ -212,7 +212,7 @@ coalesce(apellidoCasada,'------') as apellidoCasada,primerApellido,coalesce(segu
 				<text><![CDATA[Lugar y fecha de Nacimiento (D.M.A) ]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="189" y="325" width="367" height="20" uuid="c457c595-b50d-45c1-8f73-2acce8e204c7"/>
+				<reportElement x="198" y="325" width="358" height="20" uuid="c457c595-b50d-45c1-8f73-2acce8e204c7"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="12" y="351" width="171" height="20" uuid="0a2065e8-f12f-4d6d-aa91-3237203b7738"/>
@@ -590,7 +590,7 @@ coalesce(apellidoCasada,'------') as apellidoCasada,primerApellido,coalesce(segu
 				<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="191" y="324" width="365" height="20" uuid="d6206e91-946c-4cd0-b6c1-a930b7cc7584"/>
+				<reportElement x="198" y="324" width="358" height="20" uuid="d6206e91-946c-4cd0-b6c1-a930b7cc7584"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9"/>
@@ -621,9 +621,9 @@ coalesce(apellidoCasada,'------') as apellidoCasada,primerApellido,coalesce(segu
 			<break>
 				<reportElement x="0" y="550" width="572" height="1" uuid="699796d4-b2ae-40a2-ab88-edc6e4f8d640"/>
 			</break>
-			<image scaleImage="FillFrame">
+			<image scaleImage="FillFrame" onErrorType="Blank">
 				<reportElement x="467" y="17" width="89" height="117" uuid="f583e056-8dca-4bb2-8e05-0b6da77b0399">
-					<printWhenExpression><![CDATA[$F{fotografia}!=null]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{fotografia}.length()>0]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{ubicacionReport}+"/../../../../web/uploads/fotografias/" +$F{fotografia}]]></imageExpression>
 			</image>
