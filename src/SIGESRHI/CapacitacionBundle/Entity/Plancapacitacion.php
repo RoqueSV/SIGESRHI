@@ -13,7 +13,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  * @ORM\Table(name="plancapacitacion")
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="SIGESRHI\CapacitacionBundle\Repositorio\PlancapacitacionRepository")
- * @GRID\Source(columns="id,nombreplan,objetivoplan,anoplan,tipoplan", groups={"grupo_plancapacitacion"})
+ * @GRID\Source(columns="id,nombreplan,objetivoplan,anoplan,tipoplan,idcentro.id", groups={"grupo_plancapacitacion"})
  */
 class Plancapacitacion
 {
@@ -31,7 +31,7 @@ class Plancapacitacion
     /**
      * @var string
      *
-     * @ORM\Column(name="nombreplan", type="string", length=100, nullable=true)
+     * @ORM\Column(name="nombreplan", type="string", length=100, nullable=false)
      * @GRID\Column(filterable=false, groups={"grupo_plancapacitacion"}, visible=true, title="Nombre")
      */
     private $nombreplan;
@@ -96,6 +96,7 @@ class Plancapacitacion
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idcentro", referencedColumnName="id")
      * })
+     * @GRID\Column(field="idcentro.id", groups={"grupo_plancapacitacion"}, visible=false, filterable=false)
      */
     private $idcentro;
 

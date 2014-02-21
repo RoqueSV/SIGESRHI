@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="planinstitucional_impreso" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4a346f72-84d6-4bfd-8a90-7ea558c41a92">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="61"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="ano" class="java.lang.String"/>
@@ -10,7 +10,7 @@
 FROM
 plancapacitacion pc JOIN capacitacion cap ON (pc.id=cap.idplan)
 JOIN capacitador c ON (c.id=cap.idcapacitador)
-WHERE anoplan=$P{ano}
+WHERE anoplan=$P{ano} AND cap.estadocapacitacion != 'C'
 order by 7]]>
 	</queryString>
 	<field name="nombreplan" class="java.lang.String"/>
@@ -29,7 +29,7 @@ order by 7]]>
 		<groupHeader>
 			<band height="40">
 				<staticText>
-					<reportElement uuid="830986b5-2ded-4eb5-88f4-6ff9cdd6d062" mode="Opaque" x="40" y="20" width="160" height="20" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="40" y="20" width="160" height="20" backcolor="#CCCCCC" uuid="830986b5-2ded-4eb5-88f4-6ff9cdd6d062"/>
 					<box>
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -42,7 +42,7 @@ order by 7]]>
 					<text><![CDATA[TEMA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="14833f99-5ad0-4da7-b4fa-852083592bb7" mode="Opaque" x="200" y="20" width="82" height="20" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="200" y="20" width="82" height="20" backcolor="#CCCCCC" uuid="14833f99-5ad0-4da7-b4fa-852083592bb7"/>
 					<box>
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -55,7 +55,7 @@ order by 7]]>
 					<text><![CDATA[HORA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="dd549087-8c55-4466-80f3-a9ce31290e3a" mode="Opaque" x="282" y="20" width="118" height="20" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="282" y="20" width="118" height="20" backcolor="#CCCCCC" uuid="dd549087-8c55-4466-80f3-a9ce31290e3a"/>
 					<box>
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -68,7 +68,7 @@ order by 7]]>
 					<text><![CDATA[LUGAR]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="fe483cd8-67e9-419c-8dfe-629d2212731e" mode="Opaque" x="400" y="20" width="168" height="20" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="400" y="20" width="168" height="20" backcolor="#CCCCCC" uuid="fe483cd8-67e9-419c-8dfe-629d2212731e"/>
 					<box>
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -81,7 +81,7 @@ order by 7]]>
 					<text><![CDATA[CAPACITADOR]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="02e16e43-6c49-4806-bb22-1ff68ad6589c" mode="Opaque" x="568" y="20" width="184" height="20" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="568" y="20" width="184" height="20" backcolor="#CCCCCC" uuid="02e16e43-6c49-4806-bb22-1ff68ad6589c"/>
 					<box>
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -94,7 +94,7 @@ order by 7]]>
 					<text><![CDATA[OBSERVACIONES]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="cb104456-0290-4a7b-8932-6d1ae0dfb6db" mode="Opaque" x="0" y="20" width="40" height="20" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="0" y="20" width="40" height="20" backcolor="#CCCCCC" uuid="cb104456-0290-4a7b-8932-6d1ae0dfb6db"/>
 					<box>
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -107,7 +107,7 @@ order by 7]]>
 					<text><![CDATA[DIA]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="ce7207d7-24e6-404f-9637-44a3003957ca" x="0" y="0" width="247" height="20"/>
+					<reportElement x="0" y="0" width="247" height="20" uuid="ce7207d7-24e6-404f-9637-44a3003957ca"/>
 					<textElement verticalAlignment="Middle">
 						<font size="11" isBold="true"/>
 					</textElement>
@@ -125,11 +125,11 @@ order by 7]]>
 	<pageHeader>
 		<band height="168" splitType="Stretch">
 			<image>
-				<reportElement uuid="de35a9c9-3e50-4a8e-be9b-673e9946730f" x="92" y="12" width="86" height="86"/>
+				<reportElement x="92" y="12" width="86" height="86" uuid="de35a9c9-3e50-4a8e-be9b-673e9946730f"/>
 				<imageExpression><![CDATA[$P{ubicacionReport}+ "/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement uuid="463846f4-d5dd-4c6f-b6f5-c207e0440cf3" x="190" y="23" width="372" height="39"/>
+				<reportElement x="190" y="23" width="372" height="39" uuid="463846f4-d5dd-4c6f-b6f5-c207e0440cf3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -138,28 +138,28 @@ DEPARTAMENTO DE RECURSOS HUMANOS
 ]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="8d060651-894e-4573-bc9e-7cc5b8a52332" x="0" y="123" width="752" height="20"/>
+				<reportElement x="0" y="123" width="752" height="20" uuid="8d060651-894e-4573-bc9e-7cc5b8a52332"/>
 				<textElement verticalAlignment="Middle" markup="html">
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA["<b>NOMBRE DEL PLAN:</b> "+$F{nombreplan}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="7e5152c3-af37-4eb7-b0bc-424d1d83bed4" positionType="Float" x="120" y="139" width="632" height="29"/>
+				<reportElement positionType="Float" x="120" y="139" width="632" height="29" uuid="7e5152c3-af37-4eb7-b0bc-424d1d83bed4"/>
 				<textElement verticalAlignment="Middle" markup="html">
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{objetivoplan}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="aaa2df61-db07-4e7e-825e-33fa2eda1be7" x="0" y="139" width="149" height="29"/>
+				<reportElement x="0" y="139" width="149" height="29" uuid="aaa2df61-db07-4e7e-825e-33fa2eda1be7"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[OBJETIVO DEL PLAN:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="dfe1ef16-f78b-4bdd-9d03-ba9105ed5dcc" x="321" y="78" width="126" height="20"/>
+				<reportElement x="321" y="78" width="126" height="20" uuid="dfe1ef16-f78b-4bdd-9d03-ba9105ed5dcc"/>
 				<textElement verticalAlignment="Middle" markup="html">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -170,7 +170,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS
 	<columnHeader>
 		<band height="31" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="0c0781b5-97aa-4cb6-9f44-f682d1ddbd68" x="0" y="11" width="267" height="20"/>
+				<reportElement x="0" y="11" width="267" height="20" uuid="0c0781b5-97aa-4cb6-9f44-f682d1ddbd68"/>
 				<textElement verticalAlignment="Middle">
 					<font size="11" isBold="true"/>
 				</textElement>
@@ -181,7 +181,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS
 	<detail>
 		<band height="43" splitType="Stretch">
 			<textField>
-				<reportElement uuid="f45cf1b8-457d-42be-a6be-4a05b6b22709" x="40" y="0" width="160" height="43"/>
+				<reportElement x="40" y="0" width="160" height="43" uuid="f45cf1b8-457d-42be-a6be-4a05b6b22709"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -194,7 +194,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS
 				<textFieldExpression><![CDATA[$F{tematica}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="9ab22a95-9159-4ae6-9caa-6ddba28fe329" x="282" y="0" width="118" height="43"/>
+				<reportElement x="282" y="0" width="118" height="43" uuid="9ab22a95-9159-4ae6-9caa-6ddba28fe329"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -207,7 +207,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS
 				<textFieldExpression><![CDATA[$F{lugarcapacitacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="0b5002a6-1abc-40d0-b343-47c73ce5f4b3" x="0" y="0" width="40" height="43"/>
+				<reportElement x="0" y="0" width="40" height="43" uuid="0b5002a6-1abc-40d0-b343-47c73ce5f4b3"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -220,7 +220,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS
 				<textFieldExpression><![CDATA[$F{fechacapacitacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="09174416-7716-4bdf-8ea9-e6b56e2fb1f5" x="200" y="0" width="82" height="43"/>
+				<reportElement x="200" y="0" width="82" height="43" uuid="09174416-7716-4bdf-8ea9-e6b56e2fb1f5"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -233,7 +233,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS
 				<textFieldExpression><![CDATA[$F{horas}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="336e44d5-6b22-4450-8e3f-1b7c925d7d2d" x="400" y="0" width="168" height="43"/>
+				<reportElement x="400" y="0" width="168" height="43" uuid="336e44d5-6b22-4450-8e3f-1b7c925d7d2d"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -244,14 +244,13 @@ DEPARTAMENTO DE RECURSOS HUMANOS
 				<textFieldExpression><![CDATA[$F{nombrecapacitador}+"<br> Tel: "+$F{telefonocapacitador}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="033e2388-6f43-4806-955f-e9c785ae6b89" x="568" y="0" width="184" height="43"/>
+				<reportElement x="568" y="0" width="184" height="43" uuid="033e2388-6f43-4806-955f-e9c785ae6b89"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[]]></text>
 			</staticText>
 		</band>
@@ -262,13 +261,12 @@ DEPARTAMENTO DE RECURSOS HUMANOS
 	<pageFooter>
 		<band height="54" splitType="Stretch">
 			<textField>
-				<reportElement uuid="6583923b-5cd7-4bce-bf93-9a273feb5d8f" x="310" y="16" width="80" height="20"/>
+				<reportElement x="310" y="16" width="80" height="20" uuid="6583923b-5cd7-4bce-bf93-9a273feb5d8f"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="23ebee0a-adaa-49b0-9c0c-c603861cc34c" x="390" y="16" width="40" height="20"/>
-				<textElement/>
+				<reportElement x="390" y="16" width="40" height="20" uuid="23ebee0a-adaa-49b0-9c0c-c603861cc34c"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>

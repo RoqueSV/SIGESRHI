@@ -23,8 +23,24 @@ class PlancapacitacionRepository extends EntityRepository
         $query = $this->getEntityManager()
                       ->createQuery("SELECT COUNT(p.id) AS plan 
                                      FROM CapacitacionBundle:Plancapacitacion p 
-                                     WHERE p.anoplan = :actual")
-                      ->setParameter('actual', $anyo);
+                                     WHERE p.anoplan = :actual AND p.tipoplan = :tipo")
+                      ->setParameter('actual', $anyo)
+                      ->setParameter('tipo', 'I');
+
+        $resultado = $query->getsingleResult();
+        return $resultado['plan'];
+    }
+
+  public function comprobarAnyoCentro($anyo,$centro)
+    {
+        $query = $this->getEntityManager()
+                      ->createQuery("SELECT COUNT(p.id) AS plan 
+                                     FROM CapacitacionBundle:Plancapacitacion p 
+                                     JOIN p.idcentro c
+                                     WHERE p.anoplan = :actual and c.id= :centro AND p.tipoplan = :tipo")
+                      ->setParameter('actual', $anyo)
+                      ->setParameter('centro', $centro)
+                      ->setParameter('tipo', 'C');
 
         $resultado = $query->getsingleResult();
         return $resultado['plan'];
