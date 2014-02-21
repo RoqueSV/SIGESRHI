@@ -48,7 +48,9 @@ class PruebapsicologicaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $query2 = $em->createQuery("SELECT identity(p.idexpediente)
-                         FROM ExpedienteBundle:Pruebapsicologica p");
+                         FROM ExpedienteBundle:Pruebapsicologica p JOIN 
+                         p.idexpediente e
+                         WHERE e.tipoexpediente IN ('I','A')");
 
         $resultado = $query2->getResult();
         $idexp=array();
@@ -68,11 +70,7 @@ class PruebapsicologicaController extends Controller
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias,$idexp){
-                $query->andWhere('_idexpediente.tipoexpediente = :inv')
-                      ->orWhere('_idexpediente.tipoexpediente = :val')
-                      ->andWhere($query->expr()->in($tableAlias.'.idexpediente', $idexp))
-                      ->setParameter('inv','I')
-                      ->setParameter('val','A');
+                $query->andWhere($query->expr()->in($tableAlias.'.idexpediente', $idexp));
             }
         );
 
@@ -98,7 +96,8 @@ class PruebapsicologicaController extends Controller
         );
 
         //Columnas a filtrar
-        $NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        //$NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false, 'filterable'=>true, 'visible'=> true));
         $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idplaza.nombreplaza','title' => 'Plaza', 'filterable'=>false));
         $grid->addColumn($NombreAspirante,1);
         $grid->addColumn($plaza,2);
@@ -130,7 +129,7 @@ class PruebapsicologicaController extends Controller
     }
 
     /**
-    *Muestra expedientes de empleados para ingresar nueva prueba psicologica
+    *Muestra expedientes de aspirantes para ingresar nueva prueba psicologica
     *
     */
     public function indexExpedientesAction()
@@ -140,7 +139,9 @@ class PruebapsicologicaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $query2 = $em->createQuery("SELECT identity(p.idexpediente)
-                         FROM ExpedienteBundle:Pruebapsicologica p");
+                         FROM ExpedienteBundle:Pruebapsicologica p JOIN 
+                         p.idexpediente e
+                         WHERE e.tipoexpediente IN ('I','A')");
 
         $resultado = $query2->getResult();
         $idexp=array();
@@ -159,11 +160,7 @@ class PruebapsicologicaController extends Controller
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias,$idexp){
-                $query->andWhere('_idexpediente.tipoexpediente = :inv')
-                       ->orWhere('_idexpediente.tipoexpediente = :val')
-                       ->andWhere($query->expr()->notIn($tableAlias.'.idexpediente', $idexp))
-                       ->setParameter('inv','I')
-                       ->setParameter('val','A');
+                $query->andWhere($query->expr()->notIn($tableAlias.'.idexpediente', $idexp));
             });
 
         $grid->setSource($source);  
@@ -186,7 +183,8 @@ class PruebapsicologicaController extends Controller
         );
         $grid->setId('grid_prueba_aspirantes_reg');
         //Columnas a filtrar
-        $NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        //$NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
+        $NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false, 'filterable'=>true, 'visible'=> true));
         $plaza = new TextColumn(array('id' => 'plaza','source' => true,'field'=>'idplaza.nombreplaza','title' => 'Plaza', 'filterable'=>false));
         $grid->addColumn($NombreAspirante,1);
         $grid->addColumn($plaza,2);
@@ -258,9 +256,9 @@ class PruebapsicologicaController extends Controller
         $grid->setSource($source);  
 
         //Columnas a filtrar
-        $NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false, 'filterable'=>true, 'visible'=> true));
+        $NombreEmpl = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false, 'filterable'=>true, 'visible'=> true));
         $codigo = new TextColumn(array('id' => 'codigoempleado','source' => true,'field'=>'idexpediente.idempleado.codigoempleado','title' => 'Codigo', "operatorsVisible"=>false, 'filterable'=>true, 'visible'=> true));
-        $grid->addColumn($NombreAspirante,2);
+        $grid->addColumn($NombreEmpl,2);
         $grid->addColumn($codigo,1);
         
         $rowAction1 = new RowAction('Consultar', 'pruebapsicologica_show');
