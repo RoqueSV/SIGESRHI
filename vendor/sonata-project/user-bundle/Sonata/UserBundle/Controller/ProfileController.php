@@ -68,6 +68,11 @@ class ProfileController extends Controller
             return new RedirectResponse($this->generateUrl('sonata_user_profile_show'));
         }
 
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Mi cuenta / Datos de autenticación", "");
+
         return $this->render('SonataUserBundle:Profile:edit_authentication.html.twig', array(
             'form' => $form->createView(),
         ));
@@ -94,6 +99,11 @@ class ProfileController extends Controller
 
             return new RedirectResponse($this->generateUrl('sonata_user_profile_show'));
         }
+
+        //Camino de migas
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Mi cuenta / Perfil de usuario", "");
 
         return $this->render('SonataUserBundle:Profile:edit_profile.html.twig', array(
             'form' => $form->createView(),

@@ -6,9 +6,6 @@
             <p> {{ flashMessage }} </p>
         </div>
     {% endfor %}
-    <!-- Botón ayuda -->
-    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
-    {{ include('ExpedienteBundle:Ayuda/PruebaPsicologica:registro.html.twig')}}
 
     <h4 class='text-center'>Eliminación por antigüedad de Registro</h4>
     <form action="{{ path('expediente_aelim') }}" method="post">   

@@ -48,10 +48,10 @@ class Plaza
     /**
      * @var string
      *
-     * @ORM\Column(name="misionplaza", type="text", length=500, nullable=false)
+     * @ORM\Column(name="misionplaza", type="text", length=750, nullable=false)
      * @Assert\NotNull(message="Debe ingresar la descripcion de la plaza")
      * @Assert\Length(
-     * max = "500"
+     * max = "750"
      * )
      * @GRID\Column(filterable=false, groups={"grupo_plaza", "grupo_plaza_reporte"}, title="Misión")
      */

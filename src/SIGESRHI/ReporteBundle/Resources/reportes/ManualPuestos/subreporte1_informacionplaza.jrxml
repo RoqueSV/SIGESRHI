@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte1_informacionplaza" language="groovy" pageWidth="550" pageHeight="752" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="837ac732-8bc5-46b8-9f40-588c0628da47">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte1_informacionplaza" pageWidth="550" pageHeight="752" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="837ac732-8bc5-46b8-9f40-588c0628da47">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -14,7 +14,7 @@
 	<columnHeader>
 		<band height="20">
 			<staticText>
-				<reportElement uuid="3312e833-7e27-4691-8d94-2f6396bf7827" x="0" y="0" width="297" height="20"/>
+				<reportElement x="0" y="0" width="297" height="20" uuid="3312e833-7e27-4691-8d94-2f6396bf7827"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -25,13 +25,13 @@
 	<detail>
 		<band height="23" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="d55236cb-b29a-42ca-90fa-1045cde9c524" positionType="Float" stretchType="RelativeToBandHeight" x="13" y="0" width="537" height="23" isPrintWhenDetailOverflows="true"/>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="13" y="0" width="537" height="23" isPrintWhenDetailOverflows="true" uuid="d55236cb-b29a-42ca-90fa-1045cde9c524"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{nombrefuncion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="a4e0733e-14ea-4b48-b010-da6bdbc634f4" x="0" y="0" width="13" height="23"/>
-				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<reportElement x="0" y="0" width="13" height="23" uuid="a4e0733e-14ea-4b48-b010-da6bdbc634f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[-]]></text>
 			</staticText>
 		</band>
