@@ -41,6 +41,15 @@ class FactorevaluacionController extends Controller
             $this->get('session')->getFlashBag()->add('msg', 'Factor de evaluación registrado correctamente.'); 
             return $this->redirect($this->generateUrl('factorevaluacion_newfactor', array('id' => $fevaluacion->getId())));
         }
+
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Formularios de evaluación", $this->get("router")->generate("formularioevaluacion"));
+        $breadcrumbs->addItem($fevaluacion->getNombrebreve(), $this->get("router")->generate("formularioevaluacion_show", array('id'=>$id)));
+        $breadcrumbs->addItem("Factores", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
     
         $this->get('session')->getFlashBag()->add('msg-error', 'error en el factor de evaluación.'); 
         return $this->render('EvaluacionBundle:Factorevaluacion:new.html.twig', array(
@@ -157,6 +166,17 @@ class FactorevaluacionController extends Controller
             throw $this->createNotFoundException('Unable to find Factorevaluacion entity.');
         }
 
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Formularios de evaluación", $this->get("router")->generate("formularioevaluacion"));
+        $breadcrumbs->addItem($entity->getIdformulario()->getNombrebreve(), $this->get("router")->generate("formularioevaluacion_show", array('id'=>$entity->getIdformulario()->getId())));
+        $breadcrumbs->addItem("Factores", $this->get("router")->generate("factorevaluacion_newfactor", array('id'=>$entity->getIdformulario()->getId())));
+        $breadcrumbs->addItem(substr($entity->getNombrefactor(),0,10)."..", $this->get("router")->generate("factorevaluacion_showfactor", array('id'=>$entity->getIdformulario()->getId())));
+        $breadcrumbs->addItem("Modificar", $this->get("router")->generate("hello_page"));
+        //fin camino de miga
+
         //* Para eliminar Opciones (son embebidos)
          //creamos un arreglo de los objetos Opciones
         $originalOpciones = array();
@@ -183,6 +203,12 @@ class FactorevaluacionController extends Controller
 
             // Elimina la relación entre Opciones y Factorevaluacion
             foreach ($originalOpciones as $Opcion) {
+
+                     if(count($Opcion->getRespuestas()) > 0)
+                        {
+                            $this->get('session')->getFlashBag()->add('msg-error','No se puede eliminar la opcion: '.$Opcion->getNombreopcion(). " Tiene asociadas evaluaciones realizadas."); 
+                            return $this->redirect($this->generateUrl('factorevaluacion_editfactor', array('id' => $id)));
+                        }
                      $Opcion->setIdfactor(null);
                      $em->remove($Opcion);
              }
@@ -218,6 +244,14 @@ class FactorevaluacionController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Factorevaluacion entity.');
             }
+
+            //verificar que el factor no tenga relacioes con la tabla respuesta
+            $numRespuesta = count($entity->getRespuestas());
+            if($numRespuesta > 0 ){
+                $this->get('session')->getFlashBag()->add('msg-error','No se puede eliminar, el factor esta asociado a evaluaciones realizadas.');
+                return $this->redirect($this->generateUrl('factorevaluacion_showfactor',array('id'=>$id)));
+            }
+
             $idform=$entity->getIdformulario()->getId();
             $em->remove($entity);
             $em->flush();

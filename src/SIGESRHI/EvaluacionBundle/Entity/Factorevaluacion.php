@@ -146,6 +146,7 @@ class Factorevaluacion
     {
         $this->Opciones = new ArrayCollection();
         $this->Incidentes = new ArrayCollection();
+        $this->Respuestas = new ArrayCollection();
     }
 
 
@@ -202,4 +203,32 @@ class Factorevaluacion
             $incidente->setIdfactorevaluacion($this);
         }
     }
+
+
+    /************************* Respuestas asociadas al factor de evaluación ***************************/
+
+    /**
+     * @ORM\OneToMany(targetEntity="Respuesta", mappedBy="idfactor", cascade={"persist"})
+     * @Assert\Valid
+     */
+    protected $Respuestas;
+
+    /**
+     * Get Respuestas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRespuestas()
+    {
+        return $this->Respuestas;
+    }
+
+    public function setRespuestas($respuestas)
+    {
+        $this->Respuestas = $respuestas;
+        foreach ($respuestas as $respuesta) {
+            $respuesta->setIdfactor($this);
+        }
+    }
+
 }

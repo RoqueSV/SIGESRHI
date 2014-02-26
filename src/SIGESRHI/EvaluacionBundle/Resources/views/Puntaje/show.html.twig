@@ -8,6 +8,12 @@
     </div>
 {% endfor %}
 
+{% for flashMessage in app.session.flashbag.get('msg-error') %}
+    <div class="alert alert-danger">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+
     <h3 class="text-center">Puntaje</h3>
 
     <table  class="table-bordered table-hover mitable centered-table">

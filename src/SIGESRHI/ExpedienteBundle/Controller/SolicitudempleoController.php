@@ -155,7 +155,6 @@ class SolicitudempleoController extends Controller
             }
         );
 
-       
        $NombreAspirante = new TextColumn(array('id' => 'nombrecompleto','source' => true,'field'=>'nombrecompleto','title' => 'Nombre',"operatorsVisible"=>false));
         $grid->addColumn($NombreAspirante,1);
 
