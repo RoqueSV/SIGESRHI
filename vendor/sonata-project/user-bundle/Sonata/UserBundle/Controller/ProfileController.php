@@ -63,9 +63,9 @@ class ProfileController extends Controller
 
         $process = $formHandler->process($user);
         if ($process) {
-            $this->setFlash('fos_user_success', 'profile.flash.updated');
+            $this->setFlash('fos_user_success', 'Modificación realizada correctamente');
 
-            return new RedirectResponse($this->generateUrl('sonata_user_profile_show'));
+            return new RedirectResponse($this->generateUrl('sonata_user_profile_edit_authentication'));
         }
 
         //Camino de migas
@@ -95,9 +95,9 @@ class ProfileController extends Controller
 
         $process = $formHandler->process($user);
         if ($process) {
-            $this->setFlash('fos_user_success', 'profile.flash.updated');
+            $this->setFlash('fos_user_success', 'Modificación realizada correctamente');
 
-            return new RedirectResponse($this->generateUrl('sonata_user_profile_show'));
+            return new RedirectResponse($this->generateUrl('sonata_user_profile_edit'));
         }
 
         //Camino de migas

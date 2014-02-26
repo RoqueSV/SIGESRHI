@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 
+
+use Symfony\Component\HttpFoundation\Response;
 /**
  * Controller managing the password change
  *
@@ -39,10 +41,15 @@ class ChangePasswordController extends ContainerAware
 
         $process = $formHandler->process($user);
         if ($process) {
-            $this->setFlash('fos_user_success', 'change_password.flash.success');
+            $this->setFlash('fos_user_success', 'Contraseña modificada correctamente');
 
             return new RedirectResponse($this->getRedirectionUrl($user));
         }
+
+         //Camino de migas
+        $breadcrumbs = $this->container->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->container->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Mi cuenta / Cambiar password", "");
 
         return $this->container->get('templating')->renderResponse(
             'FOSUserBundle:ChangePassword:changePassword.html.'.$this->container->getParameter('fos_user.template.engine'),
@@ -59,7 +66,7 @@ class ChangePasswordController extends ContainerAware
      */
     protected function getRedirectionUrl(UserInterface $user)
     {
-        return $this->container->get('router')->generate('fos_user_profile_show');
+        return $this->container->get('router')->generate('fos_user_change_password');
     }
 
     /**

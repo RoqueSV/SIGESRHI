@@ -37,9 +37,11 @@ class ChangePasswordFormType extends AbstractType
         $builder->add('new', 'repeated', array(
             'type' => 'password',
             'options' => array('translation_domain' => 'FOSUserBundle'),
-            'first_options' => array('label' => 'form.new_password'),
+            'first_options' => array('label' => 'form.new_password',
+            'attr'=>array('data-bvalidator'=>'minlength[8]')),
             'second_options' => array('label' => 'form.new_password_confirmation'),
-            'invalid_message' => 'fos_user.password.mismatch',
+            'invalid_message' => 'La contraseña debe coincidir',
+            
         ));
     }
 

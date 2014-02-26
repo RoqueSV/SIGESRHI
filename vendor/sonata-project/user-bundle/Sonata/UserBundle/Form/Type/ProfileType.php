@@ -35,15 +35,17 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('gender', null, array('required' => false))
+            ->add('gender', 'choice', array('label'=>'Estado Civil: ',
+                  'choices' => array('u' => 'No definido', 'm' => 'Masculino', 'f' => 'Femenino'),
+                  'required'  => false))
             ->add('firstname', null, array('required' => false))
             ->add('lastname', null, array('required' => false))
             ->add('dateOfBirth', 'birthday', array('required' => false))
             ->add('website', null, array('required' => false))
-            ->add('biography', 'textarea', array('required' => false))
+            ->add('biography', 'textarea', array('required' => false, 'attr'=>array('class'=>'input-xmlarge','rows'=>'3')))
             ->add('locale', 'locale', array('required' => false))
             ->add('timezone', 'timezone', array('required' => false))
-            ->add('phone', null, array('required' => false))
+            ->add('phone', null, array('required' => false, 'label'=>'Teléfono Fijo: ', 'max_length'=>'8', 'attr'=>array('class'=>'input-small telefono', 'data-bvalidator'=>'phone')))
         ;
     }
 
