@@ -26,8 +26,7 @@ class Refrenda
     /**
      * @var string
      *
-     * @ORM\Column(name="codigoempleado", type="string", length=5, nullable=false)
-     * @Assert\NotNull(message="Debe ingresar el codigo del empleado")
+     * @ORM\Column(name="codigoempleado", type="string", length=5, nullable=true)
      * @Assert\Length(
      * max = "5",
      * maxMessage = "El codigo de empleado no debe exceder los {{limit}} caracteres"

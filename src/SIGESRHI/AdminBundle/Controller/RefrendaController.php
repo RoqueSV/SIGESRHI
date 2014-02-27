@@ -43,7 +43,8 @@ class RefrendaController extends Controller
           $msj="";
           if (($gestor = fopen($uploadfile, "r")) !== FALSE) {              
               while ((($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) AND ($sinerrores==1)) {
-                 if($fila!=0 AND $datos[1]!=""){
+                //se verifica que la fila no sea la primera y que este numerado el registro
+                 if($fila!=0 AND $datos[0]!=""){
                   //verificamos el año de la refrenda////
                   $entityRef = $this->getDoctrine()
                                         ->getRepository('AdminBundle:Refrenda')
@@ -95,21 +96,38 @@ class RefrendaController extends Controller
                           ->getRepository('AdminBundle:RefrendaAct')
                           ->findOneBy(array('codigoempleado'=>$codigoempleado,
                                          'idplaza'=>$idPlaza));                         
-                    
-                      if($entityRefAct!=null){
-                        $entityRefAct->setPartida($datos[2]);
-                        $entityRefAct->setSubpartida($datos[3]);
-                        $entityRefAct->setSueldoactual($datos[6]);
-                        $entityRefAct->setUnidadpresupuestaria($this->fullUpperFromDb($datos[10])); 
-                        $entityRefAct->setLineapresupuestaria($this->fullUpperFromDb($datos[11])); 
-                        $entityRefAct->setCodigolp($datos[12]);
-                        $entityRefAct->setNombreplaza($plaza);
-                        $entityRefAct->setTipo($datos[13]);
+                      $entityRefActSinEmpleado=$this->getDoctrine()
+                          ->getRepository('AdminBundle:RefrendaAct')
+                          ->findOneBy(array('codigoempleado'=>null,
+                                         'idplaza'=>$idPlaza));                         
+                      if($entityRefAct!=null OR ($entityRefActSinEmpleado!=null AND $codigoempleado=='')){
+                        if($entityRefAct!=null){
+                          $entityRefAct->setPartida($datos[2]);
+                          $entityRefAct->setSubpartida($datos[3]);
+                          $entityRefAct->setSueldoactual($datos[6]);
+                          $entityRefAct->setUnidadpresupuestaria($this->fullUpperFromDb($datos[10])); 
+                          $entityRefAct->setLineapresupuestaria($this->fullUpperFromDb($datos[11])); 
+                          $entityRefAct->setCodigolp($datos[12]);
+                          $entityRefAct->setNombreplaza($plaza);
+                          $entityRefAct->setTipo($datos[13]);
 
-                        $em->persist($entityRefAct);
+                          $em->persist($entityRefAct);
+                        }
+                        elseif($entityRefActSinEmpleado!=null){
+                          $entityRefActSinEmpleado->setPartida($datos[2]);
+                          $entityRefActSinEmpleado->setSubpartida($datos[3]);
+                          $entityRefActSinEmpleado->setSueldoactual($datos[6]);
+                          $entityRefActSinEmpleado->setUnidadpresupuestaria($this->fullUpperFromDb($datos[10])); 
+                          $entityRefActSinEmpleado->setLineapresupuestaria($this->fullUpperFromDb($datos[11])); 
+                          $entityRefActSinEmpleado->setCodigolp($datos[12]);
+                          $entityRefActSinEmpleado->setNombreplaza($plaza);
+                          $entityRefActSinEmpleado->setTipo($datos[13]);
+
+                          $em->persist($entityRefActSinEmpleado);
+                        }
 
                         //Crear acuerdo por refrenda para los empleados con LS
-                        if($datos[13]=='ls'){
+                        if($datos[13]=='ls' AND $entityRefAct!=null){
                         $freg = new \Datetime(date('d-m-Y'));
                         //$fhasta = strtotime('+1 year',strtotime($finicio));
                         $anyo = date("Y");
