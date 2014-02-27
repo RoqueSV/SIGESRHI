@@ -167,4 +167,38 @@ class Opcion
     {
         return $this->idfactor;
     }
+
+
+    //constructor del array()
+     public function __construct()
+    {
+        $this->Respuestas = new ArrayCollection();
+    }
+
+    /************************* Respuestas asociadas a la opcion del factor de evaluación ***************************/
+
+    /**
+     * @ORM\OneToMany(targetEntity="Respuesta", mappedBy="idopcion", cascade={"persist"})
+     * @Assert\Valid
+     */
+    protected $Respuestas;
+
+    /**
+     * Get Respuestas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRespuestas()
+    {
+        return $this->Respuestas;
+    }
+
+    public function setRespuestas($respuestas)
+    {
+        $this->Respuestas = $respuestas;
+        foreach ($respuestas as $respuesta) {
+            $respuesta->setIdfactor($this);
+        }
+    }
+
 }

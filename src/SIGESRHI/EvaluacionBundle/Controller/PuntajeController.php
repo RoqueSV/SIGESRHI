@@ -69,6 +69,42 @@ class PuntajeController extends Controller
         $form = $this->createForm(new PuntajeType(), $entity);
         $form->bind($request);
 
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Puntajes", $this->get("router")->generate("puntaje"));
+        $breadcrumbs->addItem("Registrar Puntaje", $this->get("router")->generate("puntaje_new"));
+        //fin camino de miga
+
+        //verificar que los puntajes vienen en el orden correcto
+        if($entity->getPuntajemin() > $entity->getPuntajemax()){
+            $this->get('session')->getFlashBag()->add('msg-error','El puntaje minimo ingresado no debe ser mayor que el puntaje máximo.');
+            return $this->render('EvaluacionBundle:Puntaje:new.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+        }
+
+        //verificar que datos ingresados de puntajes no se traslapen con otros ya existentes
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('
+          SELECT p.id, p.nombrepuntaje
+          FROM EvaluacionBundle:Puntaje p
+          WHERE (:puntajemin between p.puntajemin and p.puntajemax) or (:puntajemax between p.puntajemin and p.puntajemax)'
+        )->setParameter('puntajemin', $entity->getPuntajemin())->setParameter('puntajemax', $entity->getPuntajemax());  
+
+        $resul = $query->getResult();
+        $numResul = count($resul);
+
+        if($numResul > 0){
+            $this->get('session')->getFlashBag()->add('msg-error','Los datos de puntaje ingresados se traslapan con un registro existente: '.$resul[0]['nombrepuntaje']);
+            return $this->render('EvaluacionBundle:Puntaje:new.html.twig', array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ));
+        }
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
@@ -182,9 +218,53 @@ class PuntajeController extends Controller
             throw $this->createNotFoundException('Unable to find Puntaje entity.');
         }
 
+        //camino de miga
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+        $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+        $breadcrumbs->addItem("Puntajes", $this->get("router")->generate("puntaje"));
+        $breadcrumbs->addItem($entity->getNombrepuntaje(), $this->get("router")->generate("puntaje_show", array('id'=>$id)));
+        $breadcrumbs->addItem("Modificar", $this->get("router")->generate("puntaje_edit", array('id'=>$id)));
+        //fin camino de miga
+
+
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new PuntajeType(), $entity);
         $editForm->bind($request);
+
+        //verificar que los puntajes vienen en el orden correcto
+        if($entity->getPuntajemin() > $entity->getPuntajemax()){
+            $this->get('session')->getFlashBag()->add('msg-error','El puntaje minimo ingresado no debe ser mayor que el puntaje máximo.');
+            return $this->render('EvaluacionBundle:Puntaje:edit.html.twig', array(
+            'entity' => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+        }
+
+        //validar puntaje min y maximo no se traslapen
+        //verificar que datos ingresados de puntajes no se traslapen con otros ya existentes
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('
+          SELECT p.id, p.nombrepuntaje
+          FROM EvaluacionBundle:Puntaje p
+          WHERE ((:puntajemin between p.puntajemin and p.puntajemax) or (:puntajemax between p.puntajemin and p.puntajemax)) and p.id !=:idactual'
+        )->setParameter('puntajemin', $entity->getPuntajemin())
+        ->setParameter('puntajemax', $entity->getPuntajemax())
+        ->setParameter('idactual', $id);  
+
+        $resul = $query->getResult();
+        $numResul = count($resul);
+
+        if($numResul > 0){
+            $this->get('session')->getFlashBag()->add('msg-error','Los datos de puntaje ingresados se traslapan con un registro existente: '.$resul[0]['nombrepuntaje']);
+            return $this->render('EvaluacionBundle:Puntaje:edit.html.twig', array(
+            'entity' => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+        }
+
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -217,6 +297,13 @@ class PuntajeController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Puntaje entity.');
             }
+
+            $num = count($entity->getIdformulario());
+            //si la cantidad de asociacion con formulario es mayor a 0
+            if($num > 0){
+                 $this->get('session')->getFlashBag()->add('msg-error','Puntaje esta asociado a formulario, no se puede eliminar.');
+            return $this->redirect($this->generateUrl('puntaje_show', array('id' => $id)));
+            }            
 
             $em->remove($entity);
             $em->flush();

@@ -7,8 +7,13 @@
         <p> {{ flashMessage }} </p>
     </div>
 {% endfor %}
-    
-    <h3 class="text-center">FACTOR DE EVALUACI&Oacute;N</h3>
+
+{% for flashMessage in app.session.flashbag.get('msg-error') %}
+    <div class="alert alert-danger">
+        <p> {{ flashMessage }} </p>
+    </div>
+{% endfor %}
+    <h3 class="text-center">CONSULTA DE FACTOR DE EVALUACI&Oacute;N</h3>
 
 
     <b>FORMULARIO AL CUAL PERTENECE:</b>

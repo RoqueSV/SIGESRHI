@@ -25,7 +25,7 @@ class Respuesta
     /**
      * @var \Factorevaluacion
      *
-     * @ORM\ManyToOne(targetEntity="Factorevaluacion")
+     * @ORM\ManyToOne(targetEntity="Factorevaluacion", inversedBy="Respuestas")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idfactor", referencedColumnName="id")
      * })
@@ -35,7 +35,7 @@ class Respuesta
     /**
      * @var \Opcion
      *
-     * @ORM\ManyToOne(targetEntity="Opcion")
+     * @ORM\ManyToOne(targetEntity="Opcion", inversedBy="Respuestas")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idopcion", referencedColumnName="id")
      * })
