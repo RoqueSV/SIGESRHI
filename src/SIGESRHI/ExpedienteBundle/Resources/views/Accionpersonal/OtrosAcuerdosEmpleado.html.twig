@@ -101,7 +101,7 @@
 <br>
 
 {% if numacuerdos > 0 %} 
-<button class="btn" onclick="location.href='#'">Generar Reporte Historico </button>
+<button class="btn" onclick="location.href='{{path('reporte_otrasacciones',{'id':entity.id, 'vista_retorno':vista_retorno})}}'">Generar Reporte Historico </button>
 {% endif %}
 
 {% if vista_retorno == 3 %}
