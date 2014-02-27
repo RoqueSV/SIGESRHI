@@ -101,3 +101,11 @@ reporte_empleado_evaluacion:
 reporte_manualdepuestos:
     pattern:  /manualdepuestospdf
     defaults: { _controller: ReporteBundle:Reporte:ReporteManualdePuestos }
+
+reporte_formularioevaluacion:
+    pattern:  /reporte_formularioevaluacion
+    defaults: { _controller: ReporteBundle:Reporte:ReporteFormularioEvaluacion }
+
+reporte_otrasacciones:
+    pattern:  /reporte_otrasacciones
+    defaults: { _controller: ReporteBundle:Reporte:ReporteOtrasAcciones }

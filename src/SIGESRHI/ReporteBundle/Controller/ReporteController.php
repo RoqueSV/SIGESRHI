@@ -888,4 +888,100 @@ public function ReporteCertificacionAction()
    }
 
 
+   public function ReporteFormularioEvaluacionAction()
+    {
+
+     $em = $this->getDoctrine()->getManager();
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idformulario  = $request->get('id'); 
+
+     $entity = $em->getRepository('EvaluacionBundle:Formularioevaluacion')->find($idformulario);
+  
+    //camino de miga
+    $breadcrumbs = $this->get("white_october_breadcrumbs");
+    $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+    $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+    $breadcrumbs->addItem("Formularios de evaluación", $this->get("router")->generate("formularioevaluacion"));
+    $breadcrumbs->addItem($entity->getNombrebreve(), $this->get("router")->generate("formularioevaluacion_show", array('id'=>$idformulario)));
+    $breadcrumbs->addItem("Reporte", "");    
+    //fin camino de miga
+
+               
+     // Nombre reporte
+     $filename= 'FormularioEvaluacion.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/EvaluacionesDesempeño/formulario_evaluacion.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("formeval", new java("java.lang.Integer", $idformulario));
+     //$Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+
+   public function ReporteOtrasAccionesAction()
+    {
+
+     /* Obtengo parametros */
+     $request=$this->getRequest();
+     $idExp=$request->get('id');
+     $vista_retorno=$request->get('vista_retorno');
+
+      $entity = $em->getRepository('ExpedienteBundle:Expediente')->find($idExp);
+      //camino de miga
+      $breadcrumbs = $this->get("white_october_breadcrumbs");
+      $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+      $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
+        
+
+      /*if($vista_retorno==3){
+          $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+      $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cempleadosotros"));
+            }
+      if($vista_retorno==4){
+          $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
+      $breadcrumbs->addItem("Registro de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_rempleadosotros"));            
+      }
+      if($vista_retorno==6){
+          $breadcrumbs->addItem("Empleado Inactivo", $this->get("router")->generate("pantalla_empleadoinactivo"));
+      $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cinactivosotros"));            
+      }
+      $breadcrumbs->addItem($entity->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cotrosacuerdos", array('id'=>$entity->getId(), 'vista_retorno'=>$vista_retorno)));
+       $breadcrumbs->addItem("Reporte", "");*/
+ 
+     // Nombre reporte
+     $filename= 'otrasacciones.pdf';
+     
+     //Llamando la funcion JRU de la libreria php-jru
+     $jru=new JRU();
+     //Ruta del reporte compilado Jasper generado por IReports
+     $Reporte=__DIR__.'/../Resources/reportes/HojadeServicio/Hojadeservicio_otrasacciones.jasper';
+     //Ruta a donde deseo Guardar mi archivo de salida Pdf
+     $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
+     //Paso los parametros necesarios
+     $Parametro=new java('java.util.HashMap');
+     $Parametro->put("idexp", new java("java.lang.Integer", $idExp));
+     $Parametro->put("ubicacionReport", new java("java.lang.String", __DIR__));
+
+     //Funcion de Conexion a Base de datos 
+     $Conexion = $this->crearConexion();
+     //Generamos la Exportacion del reporte
+     $jru->runReportToPdfFile($Reporte,$SalidaReporte,$Parametro,$Conexion->getConnection());
+     
+     return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
+   }
+
+
  }

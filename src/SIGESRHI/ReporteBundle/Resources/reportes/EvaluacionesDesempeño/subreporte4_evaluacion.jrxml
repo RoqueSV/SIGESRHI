@@ -15,7 +15,7 @@ join puntaje p on(fp.idpuntaje=p.id) where fe.id=$P{for}]]>
 	<columnHeader>
 		<band height="19" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="f9e1e6d6-ded6-4605-ba02-0a102c4f1644" x="0" y="0" width="200" height="19"/>
+				<reportElement x="0" y="0" width="200" height="19" uuid="f9e1e6d6-ded6-4605-ba02-0a102c4f1644"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -26,7 +26,7 @@ join puntaje p on(fp.idpuntaje=p.id) where fe.id=$P{for}]]>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="2c3b3985-b95f-4586-81e8-b60106a64269" x="0" y="0" width="83" height="20"/>
+				<reportElement x="0" y="0" width="83" height="20" uuid="2c3b3985-b95f-4586-81e8-b60106a64269"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -36,7 +36,7 @@ join puntaje p on(fp.idpuntaje=p.id) where fe.id=$P{for}]]>
 				<textFieldExpression><![CDATA[$F{nombrepuntaje}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="12c6a433-9090-4c88-ac75-35a814aaf4fe" x="83" y="0" width="117" height="20"/>
+				<reportElement x="83" y="0" width="117" height="20" uuid="12c6a433-9090-4c88-ac75-35a814aaf4fe"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
