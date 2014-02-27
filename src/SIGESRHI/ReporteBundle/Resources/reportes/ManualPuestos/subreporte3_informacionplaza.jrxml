@@ -1,8 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte3_informacionplaza" pageWidth="510" pageHeight="712" columnWidth="510" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6409e7b1-a185-439a-9be4-3a7805f1bf91">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte3_informacionplaza" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6409e7b1-a185-439a-9be4-3a7805f1bf91">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="3bc126bd-882e-4e6b-bc32-c20095a01a2c"/>
+	<subDataset name="dataset1" uuid="46504864-7a14-4998-ba25-e03899f7479f">
+		<parameter name="IDPLAZA" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select nombremarcoref from marcoreferencia mr
+join marcoreferenciaplaza mp
+on (mr.id = mp.idmarcoreferencia)
+where mp.idplaza = $P{IDPLAZA}]]>
+		</queryString>
+		<field name="nombremarcoref" class="java.lang.String"/>
+	</subDataset>
 	<parameter name="idplaza" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -27,10 +64,10 @@
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" x="5" y="0" width="505" height="20" uuid="22384c4d-2a0d-4caf-a32f-fb26d9d7b909"/>
-				<textElement textAlignment="Justified" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA["- "+$F{nombremarcoref}]]></textFieldExpression>
+			<textField>
+				<reportElement positionType="Float" x="0" y="-1" width="612" height="20" uuid="b94566db-4a67-4926-a56e-bd2bb170e339"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html"/>
+				<textFieldExpression><![CDATA[$F{nombremarcoref}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

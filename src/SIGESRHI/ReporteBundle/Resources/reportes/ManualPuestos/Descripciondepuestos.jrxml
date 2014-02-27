@@ -2,8 +2,11 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1.1" pageWidth="548" pageHeight="752" whenNoDataType="AllSectionsNoDetail" columnWidth="548" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="77e4edc7-c1d9-43ac-bb05-4525401f4293">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="241"/>
+	<property name="ireport.y" value="113"/>
 	<subDataset name="dataset1" uuid="71fff411-c308-4a2d-bdbf-4fd48866e37f"/>
+	<subDataset name="dataset2" uuid="0b2bded0-b53c-4424-9afe-b29532aab26d">
+		<parameter name="parameter1" class="java.lang.String"/>
+	</subDataset>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Formularios\\"]]></defaultValueExpression>
 	</parameter>
@@ -187,7 +190,7 @@
 			<staticText>
 				<reportElement x="9" y="52" width="139" height="20" uuid="e2a79174-d801-49bc-94c8-5ca63a9bc915"/>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="8"/>
+					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL]]></text>
 			</staticText>
