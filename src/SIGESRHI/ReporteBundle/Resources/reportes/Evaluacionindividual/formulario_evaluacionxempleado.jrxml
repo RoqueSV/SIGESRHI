@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formulario_evaluacionxempleado" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3642e819-2001-48ac-9648-5f5f73ed3bd2">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formulario_evaluacionxempleado" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3642e819-2001-48ac-9648-5f5f73ed3bd2">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="381"/>
+	<property name="ireport.x" value="25"/>
+	<property name="ireport.y" value="208"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -105,7 +105,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 			<staticText>
 				<reportElement uuid="9aa8eec3-6634-4b49-9010-c930ca93d201" x="4" y="68" width="115" height="20"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[I. DATOS GENERALES]]></text>
 			</staticText>
@@ -120,84 +120,84 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 				<staticText>
 					<reportElement uuid="2f970010-4916-41ef-85f7-1c2b8b152b2c" x="3" y="0" width="143" height="15"/>
 					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Nombre del Empleado:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="06106ebe-6e9c-4c84-9888-fc69aaeea1df" x="3" y="15" width="153" height="16"/>
 					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Cargo según Nombramiento:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="b97bfd61-4120-46da-b3c0-977963833600" x="3" y="31" width="115" height="17"/>
 					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Fecha de Ingreso:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="efa3f9a2-851b-4d1c-be47-83d3f2ca7496" x="335" y="31" width="37" height="17"/>
 					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Partida:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="a9aa2ee8-bbdc-49a0-b4ef-9f1463b37513" x="395" y="31" width="56" height="18"/>
 					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Subnúmero:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="d721a817-d48b-4fb8-8f58-1fc32e76c6cd" x="475" y="31" width="47" height="18"/>
 					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Sueldo:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="8c317f03-c9ef-4988-8e94-8ebe8968ea86" x="3" y="52" width="115" height="16"/>
 					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Cargo según Función:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="3e772dea-0d2b-4d42-9e77-7663f15afe4d" x="455" y="50" width="92" height="18"/>
 					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[A partir de:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="d38b8eb2-f5f5-4be6-a8ff-24cda24f8e4b" x="3" y="71" width="104" height="17"/>
 					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Dependencia:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="1ee41ca2-79b4-433f-96b8-695af343fde8" x="3" y="120" width="143" height="15"/>
 					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Nombre del Jefe Inmediato:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="e37557b1-d774-42a6-ba5c-69450deaca58" x="305" y="121" width="54" height="15"/>
 					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Puesto:]]></text>
 				</staticText>
 				<staticText>
 					<reportElement uuid="37e79185-386f-48e6-be11-fcec5d622cb1" x="3" y="140" width="143" height="15"/>
 					<textElement textAlignment="Justified" verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Período comprendido de:]]></text>
 				</staticText>
@@ -206,7 +206,9 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box leftPadding="0">
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{codigoempleado}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -214,7 +216,9 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box leftPadding="2">
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement verticalAlignment="Bottom"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -222,7 +226,9 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box>
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement verticalAlignment="Bottom"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{nombreunidad}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -230,7 +236,9 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box>
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{partida}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -238,7 +246,9 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box>
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{subpartida}]]></textFieldExpression>
 				</textField>
 				<textField pattern="¤ #,##0.00">
@@ -246,7 +256,9 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box>
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{sueldoactual}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -254,13 +266,15 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box>
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement verticalAlignment="Bottom"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{nombrecentro}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="435cef12-4588-4fc8-9249-0fda1f20853d" x="3" y="91" width="256" height="24"/>
+					<reportElement uuid="435cef12-4588-4fc8-9249-0fda1f20853d" x="3" y="88" width="256" height="27"/>
 					<textElement verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Unidad Administrativa
 (Dirección,División,Depto.,Unidad,Sección, Area):]]></text>
@@ -270,7 +284,9 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box leftPadding="2">
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement verticalAlignment="Bottom"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{nombrejefe}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -278,7 +294,9 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box leftPadding="2">
 						<bottomPen lineWidth="0.0"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Bottom"/>
+					<textElement textAlignment="Justified" verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{semestre}+" "+$F{anoevaluado}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -286,7 +304,9 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box>
 						<bottomPen lineWidth="0.5"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
@@ -294,7 +314,9 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box>
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Bottom"/>
+					<textElement textAlignment="Justified" verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{puestojefe}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -302,7 +324,9 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box leftPadding="2">
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Justified" verticalAlignment="Bottom"/>
+					<textElement textAlignment="Justified" verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{fechaingreso}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -310,7 +334,9 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box leftPadding="2">
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement verticalAlignment="Bottom"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{cargofuncion}]]></textFieldExpression>
 				</textField>
 				<textField>
@@ -318,21 +344,23 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<box>
 						<bottomPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="SansSerif"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{fechacargofuncion}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<staticText>
 				<reportElement uuid="c3a854d0-fc1f-45a3-9b30-3e893de64d31" x="1" y="257" width="324" height="18"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[II. EVALUACION GENERAL POR PARTE DEL JEFE INMEDIATO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="78b609b7-fbb6-4fba-9937-2416c2fdda20" x="470" y="87" width="53" height="15"/>
 				<textElement verticalAlignment="Bottom">
-					<font fontName="Arial"/>
+					<font fontName="SansSerif"/>
 				</textElement>
 				<text><![CDATA[Código:]]></text>
 			</staticText>
@@ -343,7 +371,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="1c870621-0170-4175-b6ec-666365f86734" x="1" y="17" width="572" height="30"/>
 				<textElement textAlignment="Justified">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph spacingAfter="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descripcionfactor}]]></textFieldExpression>

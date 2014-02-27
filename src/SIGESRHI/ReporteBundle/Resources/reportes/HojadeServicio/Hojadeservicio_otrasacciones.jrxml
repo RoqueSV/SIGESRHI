@@ -2,14 +2,11 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Hojadeservicio" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b021ac6-0dfd-4221-a80e-b9adc9e37aee">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="266"/>
 	<parameter name="idexp" class="java.lang.Integer"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Reportes\\HojadeServicio\\"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="cadena" class="java.lang.String">
-		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select e.id,fotografia,nombreempleado,concat(substr(hs.dui,1,8),'-',substr(hs.dui,9))as dui,hs.lugardui,hs.lugarnac, to_char(hs.fechanac,'DD "de" TMMonth "de" YYYY') as fechanac,hs.direccion,case when hs.estadoCivil= 'S' then 'Soltero(a)'
@@ -17,7 +14,7 @@
 	   when hs.estadoCivil= 'V' then 'Viudo(a)'
 	   when hs.estadoCivil= 'D' then 'Divorciado(a)'
 	   else 'Casado(a)' end as estadocivil,hs.telefonofijo as telefonos,coalesce(hs.isss,'--') as isss,concat(substr(hs.nit,1,4),'-',substr(hs.nit,5,6),'-',substr(hs.nit,11,3),'-',substr(hs.nit,14)) as nit,to_char(fechaingreso,'DD "de" TMMonth "de" YYYY') as fechaingreso,to_char(hs.sueldoinicial,'$9,999.00') as sueldoinicial,coalesce(hs.informacionadicional,' ') as informacionadicional,hs.cargo,destacadoen,educacion,codigoempleado,
-(select count(*) from accionpersonal where idexpediente = $P{idexp} $P!{cadena}) as bandera
+(select count(*) from accionpersonal where idexpediente = $P{idexp}) as bandera
 from solicitudempleo se join expediente e on(se.idexpediente=e.id)
 join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.idexpediente) where e.id=$P{idexp}]]>
 	</queryString>
@@ -370,9 +367,6 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 			</line>
 			<subreport>
 				<reportElement uuid="15af5fb7-e0a5-451d-82fe-5c74c4e72c16" x="-2" y="27" width="572" height="18"/>
-				<subreportParameter name="subcadena">
-					<subreportParameterExpression><![CDATA[$P{cadena}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="idexp">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>

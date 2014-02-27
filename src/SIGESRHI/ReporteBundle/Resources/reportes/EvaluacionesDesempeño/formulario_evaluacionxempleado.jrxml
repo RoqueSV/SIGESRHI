@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formulario_evaluacionxempleado" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3642e819-2001-48ac-9648-5f5f73ed3bd2">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="60"/>
+	<property name="ireport.y" value="208"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -196,7 +196,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 				<staticText>
 					<reportElement uuid="37e79185-386f-48e6-be11-fcec5d622cb1" x="3" y="144" width="115" height="15"/>
 					<textElement textAlignment="Justified" verticalAlignment="Bottom">
-						<font fontName="Arial"/>
+						<font fontName="SansSerif"/>
 					</textElement>
 					<text><![CDATA[Período comprendido de:]]></text>
 				</staticText>
@@ -324,7 +324,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 			<staticText>
 				<reportElement uuid="c3a854d0-fc1f-45a3-9b30-3e893de64d31" x="1" y="257" width="324" height="18"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[II. EVALUACION GENERAL POR PARTE DEL JEFE INMEDIATO]]></text>
 			</staticText>
@@ -342,7 +342,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="1c870621-0170-4175-b6ec-666365f86734" x="1" y="17" width="572" height="30"/>
 				<textElement textAlignment="Justified">
-					<font fontName="Arial" size="9"/>
+					<font fontName="SansSerif" size="9"/>
 					<paragraph spacingAfter="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descripcionfactor}]]></textFieldExpression>
@@ -350,7 +350,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="6fbf8bb8-ff91-4325-9ed9-4ee4431aff1e" x="86" y="1" width="370" height="15"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9" isBold="true"/>
+					<font fontName="SansSerif" size="9" isBold="true"/>
 					<paragraph spacingAfter="4"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrefactor}]]></textFieldExpression>

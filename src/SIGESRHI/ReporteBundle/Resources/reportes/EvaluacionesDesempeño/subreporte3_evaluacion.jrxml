@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte3_evaluacion" language="groovy" pageWidth="572" pageHeight="752" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4a5408cc-9d86-4222-a101-4c21745775f2">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte3_evaluacion" pageWidth="572" pageHeight="752" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4a5408cc-9d86-4222-a101-4c21745775f2">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -41,7 +41,7 @@
 					<subreportParameterExpression><![CDATA[$P{for}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "subreporte3.3_evaluacion.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["subreporte3.3_evaluacion.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</columnHeader>
@@ -70,7 +70,7 @@
 					<subreportParameterExpression><![CDATA[$F{nombrefactor}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[ "prueba.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["prueba.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement uuid="1204072e-d10a-44d4-851f-1111bed8f782" x="0" y="0" width="12" height="15"/>
@@ -80,7 +80,7 @@
 					<bottomPen lineWidth="0.75"/>
 				</box>
 				<textElement/>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}+ '-']]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}+ "-"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

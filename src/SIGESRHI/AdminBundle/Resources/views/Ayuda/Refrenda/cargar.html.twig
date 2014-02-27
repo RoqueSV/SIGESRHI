@@ -11,12 +11,26 @@
 <p><h4>¿Cómo cargar la Refrenda?</h4></p>
 <p>Para una carga exitosa, tome en cuenta los siguientes pasos y consideraciones:</p><br>
 <ul style="list-style-type:decimal; margin-left:25px">
-	<li>Presionar el bot&oacute;n "Examinar" y selecionar el archivo que contiene los datos de refrenda, el formato (.CSV) del archivo es obligatorio para realizar este proceso.</li>
-	<div class="justifyText">Este proceso de carga debe realizarse una vez al año. Si ya fue cargada una refrenda para un año en espec&iacute;fico y se intenta cargar nuevamente, el sistema despliega el siguiente mensaje:</div>
+	<li>Presionar el bot&oacute;n "Examinar" y selecionar el archivo que contiene los datos de refrenda, el formato (.CSV) del archivo es obligatorio para realizar este proceso.<li>
+El archivo a cargar debe contener los siguientes campos estrictamente ordenados de la siguiente forma:<br>
+	<ul style="list-style-type:decimal; margin-left:35px">
+		<li>c&oacute;digo</li>
+		<li>partida</li>
+		<li>subpartida</li>
+		<li>nombre de empleado</li>
+		<li>plaza</li>
+		<li>salario</li>
+		<li>centro de atenci&oacute;n</li>
+		<li>salario m&iacute;nimo</li>
+		<li>salario m&aacute;ximo</li>
+		<li>linea presupuestaria</li>
+		<li>c&oacute;digo linea presupuestaria</li>
+		<li>tipo de contrataci&oacute;n (indicando ls: por ley de salario y c: por contrato)</li>
+	</ul><br>
+	<li>Este proceso de carga debe realizarse una vez al año. Si ya fue cargada una refrenda para un año en espec&iacute;fico y se intenta cargar nuevamente, el sistema despliega el siguiente mensaje:</li>
 	<img src="{{asset('images/images_ayuda/refrenda_errorcargar.jpg') }}" alt="ISRI"/><br>
 	<div class="justifyText">El sistema no permite la carga de una refrenda que no corresponde al año vigente presentando el siguiente mensaje:</div>
 	<img src="{{asset('images/images_ayuda/refrenda_error1.jpg') }}" alt="ISRI"/><br>
-
 	<br><li>Los nombres de las plazas inclu&iacute;das en el archivo refrenda, deber&aacute;n coincidir con los nombres de las plazas almacenadas en el sistema (Manual de puestos del ISRI).</li>
 	<div class="justifyText">Si las plazas difieren, el proceso de carga se cancela y muestra un mensaje como el siguiente: </div>
 	<img src="{{asset('images/images_ayuda/refrenda_inconsistencia.jpg') }}" alt="ISRI"/><br>
@@ -28,6 +42,5 @@
 	<li>Si la carga de refrenda no presenta inconsistencias, el sistema muestra el mensaje de refrenda cargada exitosamente:</li><br>
 	<img src="{{asset('images/images_ayuda/refrenda_exitosa.jpg') }}" alt="ISRI"/><br>
 </ul>
-
 <br><br>
 {% endblock %}
