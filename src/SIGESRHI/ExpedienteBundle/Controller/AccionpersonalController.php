@@ -49,6 +49,44 @@ class AccionpersonalController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        //obtenemos el tipo de accion a registrar
+        $tipo_accion = $entity->getIdtipoaccion()->getId();
+        if($tipo_accion == "5")
+        {
+        //verificar si ya registro las vacaciones anuales (idtipoaccion 5 segun la BD).
+        $AccionPersonal = $em->createQuery('
+                    SELECT ap.id
+                    FROM ExpedienteBundle:Accionpersonal ap
+                    join ap.idtipoaccion ta
+                    WHERE  ta.id = 5 and ap.idexpediente =:idexp and ap.fecharegistroaccion between :inicioanio and :finanio'
+        )->setParameter('idexp', $idexp)->setParameter('inicioanio', new \Datetime("01-01-".date('Y')))->setParameter('finanio', new \Datetime("31-12-".date('Y')));
+        $ResulatadoAccionPersonal = $AccionPersonal->getResult();
+
+            if(count($ResulatadoAccionPersonal) > 0 ){
+
+                 //obtenemos los puestos a los que esta asociado el empleado.
+                    $query = $em->createQuery('
+                    SELECT pl.nombreplaza, re.id, re.partida, re.subpartida, re.sueldoactual
+                    FROM ExpedienteBundle:Expediente ex
+                    join ex.idempleado em
+                    join em.idrefrenda re
+                    join re.idplaza pl
+                    WHERE ex.id =:idexp'
+                    )->setParameter('idexp', $idexp);
+
+                 $puestos = $query->getResult();
+                 $this->get('session')->getFlashBag()->add('msg-error', 'Las vacaciones anuales ya se han sido registradas con anterioridad para el empleado. AÑO: '.date('Y'));
+                return $this->render('ExpedienteBundle:Accionpersonal:new.html.twig', array(
+                'entity' => $entity,
+                'form'   => $form->createView(),
+                'idexp' =>  $idexp,
+                'puestos' => $puestos,
+                'vista_retorno' => $vista_retorno,
+                ));
+
+            }//Count > 0
+        }//fin if tipo_accion == "5"
+
         //agregado para el caso que sean varias puestos a registrar el acuerdo
         if($todos_puestos=="todos"){
             $query = $em->createQuery('
@@ -87,7 +125,7 @@ class AccionpersonalController extends Controller
         
         }//else todos_puestos
 
-        //si el tipo de acuerdo a registrar es 1 o 2 (destitucion o renuncia)
+        //si el tipo de acuerdo a registrar es 1, 2 o 3 (destitucion, renuncia o fallecimiento)
         //eliminamos la relacion entre la refrenda y el empleado.
         $tipo_accion = $entity->getIdtipoaccion()->getId(); 
         if ($tipo_accion =="1" || $tipo_accion=="2" || $tipo_accion=="3")

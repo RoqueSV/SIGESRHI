@@ -2,6 +2,12 @@
 
 {% block principal -%}
 
+{% for flashMessage in app.session.flashbag.get('msg-error') %}
+    <div class="alert alert-danger">
+        <p> {{ flashMessage }} </p>
+    </div>
+    {% endfor %}
+
     <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
     {{ include('ExpedienteBundle:Ayuda/AccionPersonal:RegistroAcuerdos.html.twig')}}
 
@@ -98,7 +104,7 @@
         var tipo_acuerdo =  $('#sigesrhi_expedientebundle_accionpersonaltype_idtipoaccion').val();
 
         //tipo 9 y 10 corresponde en la BD con licencia con goce y sin goce respectivamente.
-        if(tipo_acuerdo=="10" || tipo_acuerdo == "11" || tipo_acuerdo == "12" || tipo_acuerdo == "13" || tipo_acuerdo == "14")
+        if(tipo_acuerdo=="10" || tipo_acuerdo == "11" || tipo_acuerdo == "12" || tipo_acuerdo == "13" || tipo_acuerdo == "14" || tipo_acuerdo == "5")
         {
             $('#puesto').val("");
             $('#puesto').hide();

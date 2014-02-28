@@ -47,7 +47,7 @@ class DefaultController extends Controller
           join u.groups g
           join g.idacceso a
           join a.idmodulo m
-          WHERE u.username = :username  and a.idaccesosup is null order by m.nombremodulo'
+          WHERE u.username = :username  and a.idaccesosup is null order by m.nombremodulo, a.nombrepagina'
         )->setParameter('username', $nombreUsuario);  //and a.idaccesosup is null
 
         $opciones = $query->getResult();
@@ -92,7 +92,7 @@ class DefaultController extends Controller
                 left join a2.idaccesohija a3
                 WHERE a2.id in (select a7.id from ApplicationSonataUserBundle:User u2 join u2.groups g2 join g2.idacceso a7 where u2.username= :username)
                 and (a3.id in (select a6.id from ApplicationSonataUserBundle:User u3 join u3.groups g3 join g3.idacceso a6 where u3.username= :username) or a3.id is null)
-                and a1.id = :idacceso and u.username = :username order by a2.nombrepagina'
+                and a1.id = :idacceso and u.username = :username order by a2.nombrepagina, a3.nombrepagina'
                 )->setParameter('idacceso', $idacceso)->setParameter('username', $nombreUsuario);
 
   
