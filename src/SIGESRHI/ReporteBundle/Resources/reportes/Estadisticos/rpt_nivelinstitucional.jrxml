@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpt_nivelinstitucional" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b7acb005-7c95-40cc-9a11-ee3dc7d7225c">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="316"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Reportes\\EvaluacionesDesempeño\\"]]></defaultValueExpression>
@@ -61,16 +61,16 @@
 				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="98" y="20" width="412" height="21" uuid="eac3ecc6-358c-49fe-8d63-7ac5df1c54f6"/>
+				<reportElement x="107" y="18" width="412" height="21" uuid="eac3ecc6-358c-49fe-8d63-7ac5df1c54f6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="14" isBold="true"/>
+					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Instituto Salvadoreño de Rehabilitación Integral]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="96" y="39" width="390" height="21" uuid="d8fb79a8-0559-45ae-86a3-1d9464ee5923"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="14" isBold="true"/>
+					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Departamento de Recursos Humanos]]></text>
 			</staticText>
