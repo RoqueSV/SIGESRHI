@@ -194,6 +194,37 @@ class RefrendaController extends Controller
       //return $this->render('AdminBundle:Refrenda:cargar.html.twig');
       return $this->redirect($this->generateUrl('refrenda_cargar'));
     }
+    
+//CARGA INICIAL DE DATOS SIGESRHI
+    public function cargaInicialAction(){
+      return $this->render('AdminBundle:Refrenda:carga_inicial.html.twig');
+    }
+
+    public function verificarCargaInicialAction(){
+      $em = $this->getDoctrine()->getManager();
+      $max = $this->get('request')->request->get('MAX_FILE_SIZE');
+      $uploadfile = __DIR__."/../../../../web/uploads/RefrendaTemp/".basename($_FILES['arch_carga_incial']['name']);
+      $sinerrores=1;
+      $msj="";
+      
+      $empleadosA = $em->getRepository('ExpedienteBundle:Empleado')->findAll();
+      $expedientesA = $em->getRepository('ExpedienteBundle:Expediente')->findAll();
+      if($empleadosA==null AND $expedientesA==null ){
+        if ((move_uploaded_file($_FILES['arch_carga_incial']['tmp_name'], $uploadfile)) AND ($max>$_FILES['arch_carga_incial']['size']) AND (($_FILES['arch_carga_incial']['type']=="application/vnd.ms-excel") OR ($_FILES['arch_carga_incial']['type']=="text/csv") ) ) {
+          if (($gestor = fopen($uploadfile, "r")) !== FALSE) {              
+                while ((($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) AND ($sinerrores==1)) {
+                  
+                  
+                }
+          }
+        }
+      }
+      else{
+        $sinerrores=0;
+        $msj="Existen datos de empleados y expedientes, antes realice un respaldo de estos y borrelos de la base de datos";
+      }
+
+    }
 
     function fullUpperFromDb($String1){
       $String = utf8_encode(strtoupper($String1));

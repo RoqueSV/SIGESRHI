@@ -9,22 +9,32 @@
 
     <h3 class="text-center"> Datos registrados </h3>    
     <table class="table table-bordered table-hover mitable">
-    {% for exp in expediente %}
+    
     <tr>
         <th width="25%">Nombre:</th>
-        {% if noasp == 1 %}
-            <td> {{ exp.nombrecompleto  }} </td>
-        {% else %}
-            <td> {{ exp.nombres  }} </td>
-        {% endif %}
+        <td> {{ exp.idsolicitudempleo.nombrecompleto  }} </td>
     </tr>
     <tr>
         <th>Escolaridad:</th>
-        <td> {{ exp.nombretitulo }} </td>
+        {% set lastkey = exp.idsolicitudempleo.Destudios|length -1 %}
+        <td>
+            {% if exp.idsolicitudempleo.Destudios|length == 0 %}
+                -
+            {% else %}
+                {{ exp.idsolicitudempleo.Destudios[ lastkey ].idtitulo.nombretitulo }} 
+            {% endif %}
+        </td>
+
     </tr>
     <tr>
         <th>Plaza a la que aplica:</th>
-        <td> {{ exp.nombreplaza }} </td>
+        <td>
+        {% if noasp == 0 %}
+            {{ exp.idsolicitudempleo.idplaza.nombreplaza }}
+        {% else %}
+            {{ exp.idempleado.idrefrenda.idplaza.nombreplaza }}
+        {% endif %}        
+         </td>
     </tr>    
     </table>
     
@@ -82,6 +92,6 @@
      <a href="{{ path('pruebapsicologica_edit', { 'id': entity.id, 'exp': exp.id, 'pr': entity.id }) }}" class="btn">Editar Registro</a>
      {% endif %}
      </div>
-    {% endfor %}
+    
     </form>
 {% endblock %}
