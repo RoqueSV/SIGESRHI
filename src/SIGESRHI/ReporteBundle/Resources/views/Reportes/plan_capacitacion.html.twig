@@ -1,0 +1,19 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+{% set ruta = app.request.attributes.get('_route') %}
+
+    <h3 class="text-center"> Planes de capacitación </h3>
+    <p class="text-center">Seleccione el plan de capacitación</p>
+    <br/>
+
+     {{ grid_search(grid) }}
+     {{ grid(grid,_self, 'APYDataGridBundle::blocks_js.jquery.html.twig') }} 
+     {% block grid_filters %}{% endblock %}
+     <br />
+     <div class="text-center">
+     <a href="{{path('pantalla_reportes')}}" class="btn"> Cancelar </a>
+     </div>
+
+    
+    {% endblock %}

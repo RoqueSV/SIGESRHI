@@ -109,3 +109,11 @@ reporte_formularioevaluacion:
 reporte_otrasacciones:
     pattern:  /reporte_otrasacciones
     defaults: { _controller: ReporteBundle:Reporte:ReporteOtrasAcciones }
+
+consultar_plan:
+    pattern:  /consultar_plancapacitacion
+    defaults: { _controller: ReporteBundle:ModuloReporte:planConsultar }
+
+reporte_plancapacitacion:
+    pattern:  /reporte_plancapacitacion
+    defaults: { _controller: ReporteBundle:Reporte:ReporteResultadosPlan }

@@ -37,8 +37,12 @@
                     <td>
                         {{form_label(form.dui)}} 
                         <span style="margin-left:87px;">{{form_widget(form.dui)}}</span>
-                        <span style="margin-left:25px;">{{form_label(form.lugardui)}}</span>&nbsp;
-                        {{form_widget(form.lugardui)}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{form_label(form.lugardui)}}
+                        <span style="margin-left:53px;">{{form_widget(form.lugardui)}}</span>
                     </td>
                 </tr>
                 <tr>
@@ -61,7 +65,7 @@
                         {{form_label(form.estadocivil)}} 
                         <span style="margin-left:65px;">{{form_widget(form.estadocivil)}}</span>
                         {{form_errors(form.estadocivil)}}
-                        <span style="margin-left:8px;">{{form_label(form.telefonofijo)}}</span>
+                        <span style="margin-left:8px;">{{form_label(form.telefonofijo)}}</span>&nbsp;
                         {{form_widget(form.telefonofijo)}} {{form_errors(form.telefonofijo)}}
                     </td>
                 </tr>
@@ -79,7 +83,10 @@
   <br />
   {{form_label(form.fechaingreso)}}
   <span style="margin-left:25px;">{{form_widget(form.fechaingreso)}}</span>
-  &nbsp;&nbsp;&nbsp;{{form_label(form.cargo)}}&nbsp;&nbsp;{{form_widget(form.cargo)}}
+  <br /><br />
+
+  {{form_label(form.cargo)}}
+  <span style="margin-left:97px;">{{form_widget(form.cargo)}}</span>
   <br /><br />
   
   {{form_label(form.sueldoinicial)}}
@@ -87,7 +94,7 @@
   <br /><br />
   
   {{form_label(form.isss)}}<span style="margin-left:64px;">{{form_widget(form.isss)}}</span>
-  <span style="margin-left:49px;">{{form_label(form.nit)}}</span>&nbsp;&nbsp;{{form_widget(form.nit)}}
+  <span style="margin-left:47px;">{{form_label(form.nit)}}</span>&nbsp;{{form_widget(form.nit)}}
   <br /><br />
   
   {{form_label(form.destacadoen)}}<span style="margin-left:54px;">{{form_widget(form.destacadoen)}}</span>

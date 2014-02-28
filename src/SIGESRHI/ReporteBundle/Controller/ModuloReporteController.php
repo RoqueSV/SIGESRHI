@@ -422,4 +422,40 @@ class ModuloReporteController extends Controller
      return $this->render('ReporteBundle:Reportes:vistapdf.html.twig',array('reportes'=>$filename));
    }
 
+
+    public function planConsultarAction()
+    {
+    
+        $source = new Entity('CapacitacionBundle:Plancapacitacion','grupo_plancapacitacion');
+
+        $grid = $this->get('grid');
+           
+        $grid->setId('grid_plan');
+        $grid->setSource($source);              
+        
+        // Crear
+        $rowAction1 = new RowAction('Generar', 'reporte_plancapacitacion');
+        /*$rowAction1->manipulateRender(
+            function ($action, $row)
+            {
+                 $action->setRouteParameters(array('id'=> $row->getField('idsegurovida.id')));
+                return $action;
+            }
+        );*/
+        $grid->addRowAction($rowAction1);
+        
+        $grid->setNoDataMessage('Actualmente no existen planes de capacitación registrados');
+        $grid->setDefaultOrder('anoplan', 'desc');
+        $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+        
+        // Incluimos camino de migas
+       $breadcrumbs = $this->get("white_october_breadcrumbs");
+       $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+       $breadcrumbs->addItem("Generar reportes y documentos", $this->get("router")->generate("pantalla_modulo",array('id'=>5)));
+       $breadcrumbs->addItem("Reportes", $this->get("router")->generate("pantalla_reportes"));
+       $breadcrumbs->addItem("Plan de capacitación", $this->get("router")->generate("consultar_plan"));
+        
+        return $grid->getGridResponse('ReporteBundle:Reportes:plan_capacitacion.html.twig');   
+    }
+
 }

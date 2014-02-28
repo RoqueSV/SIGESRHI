@@ -34,11 +34,32 @@ class ConcursoController extends Controller
         $source = new Entity('AdminBundle:Plaza','grupo_plaza');
         
         $grid = $this->get('grid');
+
+        //manipulando la Consulta del grid
+        $tableAlias = $source->getTableAlias();
+        $source->manipulateQuery(
+            function($query) use ($tableAlias){
+                $query->andWhere($tableAlias.'.nombreplaza != :p')
+                      ->andWhere($tableAlias.'.nombreplaza != :pr')
+                      ->setParameter('p','PRESIDENTE')
+                      ->setParameter('pr','PRESIDENCIA');
+            }
+        );
            
         $grid->setId('grid_concurso');
         $grid->setSource($source);              
         
-    
+        //Manipular Fila
+        $source->manipulateRow(
+            function ($row)
+            {
+                if(strlen($row->getField('misionplaza')) >= 200 ){
+                   $row->setField('misionplaza', substr($row->getField('misionplaza'),0,200)." ...");          
+                }//if
+                return $row;
+            }
+        );
+
         // Crear
         $rowAction1 = new RowAction('Seleccionar', 'concurso_new');
         $grid->addRowAction($rowAction1);
