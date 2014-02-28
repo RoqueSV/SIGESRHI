@@ -70,7 +70,11 @@ class PruebapsicologicaController extends Controller
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias,$idexp){
-                $query->andWhere($query->expr()->in($tableAlias.'.idexpediente', $idexp));
+                $query->andWhere($query->expr()->in($tableAlias.'.idexpediente', $idexp))
+                      ->andWhere('_idexpediente.tipoexpediente != :emp')
+                      ->andWhere('_idexpediente.tipoexpediente != :emp2')
+                      ->setParameter('emp','E')
+                      ->setParameter('emp2','E');
             }
         );
 
@@ -160,7 +164,11 @@ class PruebapsicologicaController extends Controller
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
             function($query) use ($tableAlias,$idexp){
-                $query->andWhere($query->expr()->notIn($tableAlias.'.idexpediente', $idexp));
+                $query->andWhere($query->expr()->notIn($tableAlias.'.idexpediente', $idexp))
+                      ->andWhere('_idexpediente.tipoexpediente != :emp')
+                      ->andWhere('_idexpediente.tipoexpediente != :emp2')
+                      ->setParameter('emp','E')
+                      ->setParameter('emp2','E');
             });
 
         $grid->setSource($source);  
@@ -345,6 +353,7 @@ class PruebapsicologicaController extends Controller
         return $this->render('ExpedienteBundle:Pruebapsicologica:new.html.twig', array(
             'entity' => $entity,
             'expediente' => $expedienteinfo,
+            'expediente2' => $expediente,
             'form'   => $form->createView(),
         ));
     }
@@ -402,17 +411,19 @@ class PruebapsicologicaController extends Controller
         $noasp = (isset($var))?1:0;
         if($noasp==1){
             //$expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteEmpleado($request->query->get('exp'));
-            $query = $em->createQuery("SELECT s.id,e.id as idexpediente,s.nombrecompleto,                    
+            /*$query = $em->createQuery("SELECT s.id,e.id as idexpediente,s.nombrecompleto,                    
                          t.nombretitulo nombretitulo,e.tipoexpediente, r.nombreplaza
                          FROM ExpedienteBundle:Solicitudempleo s JOIN s.idexpediente e JOIN e.idempleado em JOIN s.Destudios i JOIN i.idtitulo t JOIN em.idrefrenda r
                          WHERE e.id=:idexp order by t.niveltitulo DESC
                          ")
                         ->setMaxResults(1)
                         ->setParameter('idexp',$request->query->get('exp'));
-          $expedienteinfo= $query->getResult();
+          $expedienteinfo= $query->getResult();*/
+          $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
         }        
         else{
-            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteAspirante($request->query->get('exp'));
+            //$expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->obtenerExpedienteAspirante($request->query->get('exp'));
+            $expedienteinfo = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
         }
         $entity = $em->getRepository('ExpedienteBundle:Pruebapsicologica')->find($id);
 
@@ -446,13 +457,15 @@ class PruebapsicologicaController extends Controller
             $breadcrumbs->addItem($entity->getIdexpediente()->getIdsolicitudempleo()->getNombrecompleto(),"");
         }
         }
+        if($expedienteinfo!=null){
         return $this->render('ExpedienteBundle:Pruebapsicologica:show.html.twig', array(
             'entity'      => $entity,
-            'expediente' => $expedienteinfo,
+            'exp' => $expedienteinfo,
             'delete_form' => $deleteForm->createView(),        
             'nogrid' => $nogrid,
             'noasp' => $noasp,
             ));
+        }
     }
 
     /**

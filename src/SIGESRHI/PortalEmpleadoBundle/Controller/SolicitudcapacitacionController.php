@@ -145,18 +145,18 @@ class SolicitudcapacitacionController extends Controller
         }
         
         //////////////////
-        $codDisponibles= array('P','M');
+        $codNoDisponibles= array('F','C');
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
-            function($query) use ($tableAlias,$idcentros,$idcapAplicadas,$codDisponibles){
+            function($query) use ($tableAlias,$idcentros,$idcapAplicadas,$codNoDisponibles){
                 $query->andWhere('_idplan.tipoplan = :C')                    
                       ->andWhere($query->expr()->in('_idplan_idcentro.id', $idcentros))
                       ->orWhere('_idplan.tipoplan = :I')
                       ->andWhere($query->expr()->notin($tableAlias.'.id', $idcapAplicadas))
-                      ->andWhere($tableAlias.'.estadocapacitacion IN (:estadovalido)')
+                      ->andWhere($tableAlias.'.estadocapacitacion NOT IN (:estadovalido)')
                       ->setParameter('I','I')
                       ->setParameter('C','C')
-                      ->setParameter('estadovalido',$codDisponibles);
+                      ->setParameter('estadovalido',$codNoDisponibles);
             }
         );        
         $rowAction1 = new RowAction('Ver detalle', 'solicitudcapacitacion_new');

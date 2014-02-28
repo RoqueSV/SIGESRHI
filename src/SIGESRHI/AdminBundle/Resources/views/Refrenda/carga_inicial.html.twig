@@ -1,0 +1,62 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+<script type='text/javascript'>
+function guardar() {
+  if(confirm('\xbfEsta seguro de Realizar una carga Inicial?')) {
+    var file = document.getElementById("arch_carga_incial").value;
+    var pedazos=file.split(".");
+    if(!(pedazos[1]=="csv")){
+      alert("Por favor seleccione un archivo .csv");
+      document.getElementById("arch_carga_incial").value="";
+    } 
+    else{
+        document.forms['form_carga_inicial'].submit();
+    }      
+  }
+  
+}
+</script>
+	<!-- Botón ayuda -->
+    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
+    {{ include('AdminBundle:Ayuda/Refrenda:cargar.html.twig')}}
+    
+    {% for flashMessage in app.session.flashbag.get('new') %}
+        <br><br>
+        <div class="alert alert-success">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('errornew') %}
+        <br><br>
+        <div class="alert alert-danger">
+            <p> {{ flashMessage }} </p>
+        </div>
+    {% endfor %}
+    <br>
+
+   <h3 class="text-center">CARGA INICIAL DE DATOS ISRI</h3>
+   <p class="text-center"> Seleccione un archivo para cargar</p>
+
+   <form action="{{ path('carga_inicial_verificar') }}" method="post" id="form_carga_inicial" enctype="multipart/form-data">
+   	<br>
+   	<table class="table table-bordered mitable" border='1' width='100%' align='center'>
+   		<tr>
+   			<th width="20%">Archivo a Cargar:</th>
+   			<td>
+          <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+          <input type="file" name="arch_carga_incial" id="arch_carga_incial" required>
+        </td>
+   		</tr>
+   		<tr>
+   			<th></th>
+   			<td>Formato .csv (mas detalle, ver ayuda)</td>
+   		</tr>
+   	</table>
+   <br />
+   <div class="text-center">
+   		<a class="btn btn-primary" name="Guardar" onClick="guardar()" >Cargar Datos</a>
+        <a href="{{ path('hello_page') }}" class="btn">Cancelar</a>
+   </div>
+   </form>
+{% endblock %}
