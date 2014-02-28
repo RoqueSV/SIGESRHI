@@ -644,7 +644,7 @@ class AccionpersonalController extends Controller
         $grid->setNoDataMessage("No se encontraron resultados");
         //$grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
         
-        $rowAction1 = new RowAction('Mostrar', 'accionpersonal_show');
+        $rowAction1 = new RowAction('Consultar', 'accionpersonal_show');
 
         //vista_retorno 3 consultar otros acuerdos, 4 registrar otros acuerdos
         $rowAction1->manipulateRender(
@@ -809,7 +809,7 @@ class AccionpersonalController extends Controller
         $grid->setNoDataMessage("No se encontraron resultados");
         $grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
         
-        $rowAction1 = new RowAction('Mostrar', 'accionpersonal_cotrosacuerdos');
+        $rowAction1 = new RowAction('Consultar', 'accionpersonal_cotrosacuerdos');
          //vista_retorno 3 consultar otros acuerdos, 4 registrar otros acuerdos
         $rowAction1->manipulateRender(
             function ($action, $row)
@@ -972,7 +972,7 @@ class AccionpersonalController extends Controller
        // $grid->setDefaultOrder('idempleado.codigoempleado', 'asc');
         $grid->hideColumns('numacuerdo');
         
-        $rowAction1 = new RowAction('Mostrar', 'accionpersonal_show');
+        $rowAction1 = new RowAction('Consultar', 'accionpersonal_show');
 
         //vista_retorno 3 consultar otros acuerdos, 4 registrar otros acuerdos
         $rowAction1->manipulateRender(
