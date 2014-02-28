@@ -915,7 +915,7 @@ public function ReporteCertificacionAction()
      //Llamando la funcion JRU de la libreria php-jru
      $jru=new JRU();
      //Ruta del reporte compilado Jasper generado por IReports
-     $Reporte=__DIR__.'/../Resources/reportes/EvaluacionesDesempeño/formulario_evaluacion.jasper';
+     $Reporte=__DIR__.'/../Resources/reportes/EvaluacionesDesempeno/formulario_evaluacion.jasper';
      //Ruta a donde deseo Guardar mi archivo de salida Pdf
      $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
      //Paso los parametros necesarios
@@ -934,6 +934,8 @@ public function ReporteCertificacionAction()
    public function ReporteOtrasAccionesAction()
     {
 
+    $em = $this->getDoctrine()->getManager();
+
      /* Obtengo parametros */
      $request=$this->getRequest();
      $idExp=$request->get('id');
@@ -946,7 +948,7 @@ public function ReporteCertificacionAction()
       $breadcrumbs->addItem("Expediente", $this->get("router")->generate("pantalla_modulo",array('id'=>1)));
         
 
-      /*if($vista_retorno==3){
+      if($vista_retorno==3){
           $breadcrumbs->addItem("Empleado Activo", $this->get("router")->generate("pantalla_empleadoactivo"));
       $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cempleadosotros"));
             }
@@ -959,7 +961,7 @@ public function ReporteCertificacionAction()
       $breadcrumbs->addItem("Consulta de Otras Acciones de Personal", $this->get("router")->generate("accionpersonal_cinactivosotros"));            
       }
       $breadcrumbs->addItem($entity->getIdempleado()->getCodigoempleado(), $this->get("router")->generate("accionpersonal_cotrosacuerdos", array('id'=>$entity->getId(), 'vista_retorno'=>$vista_retorno)));
-       $breadcrumbs->addItem("Reporte", "");*/
+       $breadcrumbs->addItem("Reporte", "");
  
      // Nombre reporte
      $filename= 'otrasacciones.pdf';

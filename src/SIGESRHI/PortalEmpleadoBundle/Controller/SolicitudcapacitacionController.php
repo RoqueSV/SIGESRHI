@@ -109,7 +109,7 @@ class SolicitudcapacitacionController extends Controller
         $empleado = $user->getEmpleado();
         $idempleado = $empleado->getId();
 
-        $source = new Entity('CapacitacionBundle:Capacitacion','grupo_capacitacion');
+        $source = new Entity('CapacitacionBundle:Capacitacion','grupo_capacitacion_empleado');
         //modificar source y quitar empelado
         $grid = $this->get('grid');
         $grid->setSource($source); 

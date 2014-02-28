@@ -100,6 +100,11 @@ class Plancapacitacion
      */
     private $idcentro;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Capacitacion", mappedBy="idplan")
+     */
+    private $idcapacitacion;
+
 
 
     /**
@@ -271,5 +276,45 @@ class Plancapacitacion
     public function getIdcentro()
     {
         return $this->idcentro;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idcapacitacion = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add idcapacitacion
+     *
+     * @param \SIGESRHI\CapacitacionBundle\Entity\Capacitacion $idcapacitacion
+     * @return Plancapacitacion
+     */
+    public function addIdcapacitacion(\SIGESRHI\CapacitacionBundle\Entity\Capacitacion $idcapacitacion)
+    {
+        $this->idcapacitacion[] = $idcapacitacion;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idcapacitacion
+     *
+     * @param \SIGESRHI\CapacitacionBundle\Entity\Capacitacion $idcapacitacion
+     */
+    public function removeIdcapacitacion(\SIGESRHI\CapacitacionBundle\Entity\Capacitacion $idcapacitacion)
+    {
+        $this->idcapacitacion->removeElement($idcapacitacion);
+    }
+
+    /**
+     * Get idcapacitacion
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdcapacitacion()
+    {
+        return $this->idcapacitacion;
     }
 }

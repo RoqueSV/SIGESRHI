@@ -82,9 +82,4 @@
       <a href="{{ path('plancapacitacion_show',{'id':entity.idplan.id}) }}" class="btn"> Regresar </a>
     </div>
 
-        <form action="{{ path('capacitacion_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            <div class="invisible">{{ form_widget(delete_form) }}</div>
-        </form>
-
 {% endblock %}

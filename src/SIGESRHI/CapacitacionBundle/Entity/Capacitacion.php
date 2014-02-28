@@ -13,6 +13,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  * @ORM\Table(name="capacitacion")
  * @ORM\Entity
  * @GRID\Source(columns="id,tematica,fechacapacitacion,horainiciocapacitacion,horafincapacitacion,estadocapacitacion,idplan.id,idplan.idcentro.id", groups={"grupo_capacitacion"})
+ * @GRID\Source(columns="id,tematica,fechacapacitacion,horainiciocapacitacion,horafincapacitacion,estadocapacitacion,idplan.id,idplan.idcentro.id", groups={"grupo_capacitacion_empleado"})
  */
 class Capacitacion
 {
@@ -23,7 +24,7 @@ class Capacitacion
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="capacitacion_id_seq", allocationSize=1, initialValue=1)
-     * @GRID\Column(filterable=false, groups={"grupo_capacitacion"}, visible=false)
+     * @GRID\Column(filterable=false, groups={"grupo_capacitacion","grupo_capacitacion_empleado"}, visible=false)
      */
     private $id;
 
@@ -36,7 +37,7 @@ class Capacitacion
      * max = "75",
      * maxMessage = "El nombre no debe exceder los {{limit}} caracteres"
      * )
-     * @GRID\Column(filterable=false, groups={"grupo_capacitacion"}, visible=true, title="Temática")
+     * @GRID\Column(filterable=false, groups={"grupo_capacitacion","grupo_capacitacion_empleado"}, visible=true, title="Temática")
      */
     private $tematica;
 
@@ -44,7 +45,7 @@ class Capacitacion
      * @var \DateTime
      *
      * @ORM\Column(name="fechacapacitacion", type="date", nullable=false)
-     * @GRID\Column(filterable=true, groups={"grupo_capacitacion"}, visible=true, filter="input", type="date", inputType="datetime", format="d-m-Y", locale="es", title="Fecha", align="center", operators={"btwe","gte", "eq", "lte"}, defaultOperator="gte", operatorsVisible=true)
+     * @GRID\Column(filterable=true, groups={"grupo_capacitacion","grupo_capacitacion_empleado"}, visible=true, filter="input", type="date", inputType="datetime", format="d-m-Y", locale="es", title="Fecha", align="center", operators={"btwe","gte", "eq", "lte"}, defaultOperator="gte", operatorsVisible=true)
      */
     private $fechacapacitacion;
 
@@ -52,7 +53,7 @@ class Capacitacion
      * @var \DateTime
      *
      * @ORM\Column(name="horainiciocapacitacion", type="time", nullable=false)
-     * @GRID\Column(filterable=false, groups={"grupo_capacitacion"}, visible=true, type="datetime", format="h:i a", title="Inicio", align="center")
+     * @GRID\Column(filterable=false, groups={"grupo_capacitacion","grupo_capacitacion_empleado"}, visible=true, type="datetime", format="h:i a", title="Inicio", align="center")
      */
     private $horainiciocapacitacion;
 
@@ -60,7 +61,7 @@ class Capacitacion
      * @var \DateTime
      *
      * @ORM\Column(name="horafincapacitacion", type="time", nullable=false)
-     * @GRID\Column(filterable=false, groups={"grupo_capacitacion"}, visible=true, type="datetime", format="h:i a", title="Fin", align="center")
+     * @GRID\Column(filterable=false, groups={"grupo_capacitacion","grupo_capacitacion_empleado"}, visible=true, type="datetime", format="h:i a", title="Fin", align="center")
      */
     private $horafincapacitacion;
 
@@ -169,7 +170,8 @@ class Capacitacion
      * @var string
      *
      * @ORM\Column(name="estadocapacitacion", type="string", length=1, nullable=false)
-     * @GRID\Column(filterable=false, groups={"grupo_capacitacion"}, visible=false)
+     * @GRID\Column(filterable=false, title="Estado", align="center", groups={"grupo_capacitacion"}, visible=true)
+     * @GRID\Column(filterable=false, groups={"grupo_capacitacion_empleado"}, visible=false)
      */
     private $estadocapacitacion;
 
@@ -205,12 +207,12 @@ class Capacitacion
     /**
      * @var \Plancapacitacion
      *
-     * @ORM\ManyToOne(targetEntity="Plancapacitacion")
+     * @ORM\ManyToOne(targetEntity="Plancapacitacion", inversedBy="idcapacitacion")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idplan", referencedColumnName="id")
      * })
-     * @GRID\Column(field="idplan.id", filterable=false, groups={"grupo_capacitacion"}, visible=false, joinType="inner")
-     * @GRID\Column(field="idplan.idcentro.id", visible=false, groups={"grupo_capacitacion"}, filterable=false)
+     * @GRID\Column(field="idplan.id", filterable=false, groups={"grupo_capacitacion", "grupo_capacitacion_empleado"}, visible=false, joinType="inner")
+     * @GRID\Column(field="idplan.idcentro.id", visible=false, groups={"grupo_capacitacion","grupo_capacitacion_empleado"}, filterable=false)
      */
     private $idplan;
 

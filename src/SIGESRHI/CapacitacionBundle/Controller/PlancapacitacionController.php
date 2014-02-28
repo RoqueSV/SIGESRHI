@@ -373,20 +373,45 @@ class PlancapacitacionController extends Controller
         $source->manipulateQuery(
             function($query) use ($tableAlias, $id){
                 $query->andWhere('_idplan.id = :id')
-                      ->andWhere($tableAlias.'.estadocapacitacion <> :estado')
-                      ->setParameter('id',$id)
-                      ->setParameter('estado','C');
+                     // ->andWhere($tableAlias.'.estadocapacitacion <> :estado')
+                      ->setParameter('id',$id);
+                    //  ->setParameter('estado','C');
             }
         );   
            
         $grid->setId('grid_capacitacion');
 
-        $grid->setSource($source);              
+        $grid->setSource($source);          
+
+        //Manipular Fila
+        $source->manipulateRow(
+            function ($row)
+            {
+                // Change the ouput of the column
+                if( $row->getField('estadocapacitacion')=='C' ) {
+                    $row->setField('estadocapacitacion', 'Cancelada');                 
+                }
+                else if( $row->getField('estadocapacitacion')=='R' ){
+                         $row->setField('estadocapacitacion', 'Reprogramada'); 
+                }
+                else if( $row->getField('estadocapacitacion')=='M' ){
+                         $row->setField('estadocapacitacion', 'Modificada'); 
+                }
+                else if( $row->getField('estadocapacitacion')=='F' ){
+                         $row->setField('estadocapacitacion', 'Finalizada'); 
+                }
+                else if( $row->getField('estadocapacitacion')=='P' ){
+                         $row->setField('estadocapacitacion', 'Programada'); 
+                }
+                return $row;
+            }
+        );    
             
         // Crear
         $rowAction1 = new RowAction('Consultar', 'capacitacion_show');
         $grid->addRowAction($rowAction1);
-        
+
+        $grid->setNoDataMessage('No existen capacitaciones registradas');  
         $grid->setDefaultOrder('fechacapacitacion', 'asc');
         $grid->setLimits(array(10 => '10', 20 => '20', 30 => '30'));
 
