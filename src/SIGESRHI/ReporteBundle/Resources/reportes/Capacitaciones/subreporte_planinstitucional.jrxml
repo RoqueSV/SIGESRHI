@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte_planinstitucional" pageWidth="572" pageHeight="752" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f8882be1-199d-4276-8619-44bda08511d3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ncap" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT case when tipomodificacion='R' then 'Reprogramación'
+	 when tipomodificacion='M' then 'Modificación'
+	 when tipomodificacion='F' then 'Finalición'
+	else 'Cancelación' end as acciones, justificacionmodificacion,cap.id
+FROM
+plancapacitacion pc JOIN capacitacion cap ON (pc.id=cap.idplan)
+JOIN capacitador ca ON (ca.id=cap.idcapacitador)
+JOIN institucioncapacitadora ica ON (ica.id=ca.idinstitucion)
+JOIN capacitacionmodificada cmod ON (cmod.idcapacitacion=cap.id)
+
+WHERE cap.id=$P{ncap}
+ORDER BY cmod.id]]>
+	</queryString>
+	<field name="acciones" class="java.lang.String"/>
+	<field name="justificacionmodificacion" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="1c3d268e-ef09-44fb-b2e3-edc7dea43e1c" mode="Opaque" x="0" y="0" width="174" height="20" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Acciones realizadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d911a7f4-115b-4ab7-81ab-ad770ee84938" mode="Opaque" x="174" y="0" width="380" height="20" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Justificación]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<textField>
+				<reportElement uuid="5715b77d-ce01-45c8-b5cf-36d4ac827978" x="0" y="0" width="174" height="39"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{acciones}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c20188b5-061b-4282-9041-16f1377f3cb3" positionType="Float" x="174" y="0" width="380" height="39"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{justificacionmodificacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="88699aed-a257-4610-984f-f0d5e7fac4bf" mode="Opaque" x="0" y="0" width="554" height="20">
+					<printWhenExpression><![CDATA[
+new java.lang.Boolean($V{REPORT_COUNT}.intValue()==0)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[No se registraron cambios]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

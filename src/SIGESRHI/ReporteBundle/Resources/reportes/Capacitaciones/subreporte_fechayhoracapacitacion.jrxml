@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte_fechayhoracapacitacion" pageWidth="381" pageHeight="20" columnWidth="381" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b8895c2e-b9c7-4a39-8eff-ef9d13bdb499">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="xcapacitacion" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select concat(to_char(fechamodificada,'TMDay, DD "de " TMmonth "del " YYYY'),'  HORA: ',to_char(horainiciomodificada,'HH12:MI AM')) as fechayhoramodificacion from capacitacion cap join capacitacionmodificada capmod on (cap.id=capmod.idcapacitacion) where cap.id=$P{xcapacitacion} and tipomodificacion='R' order by capmod.id limit 1]]>
+	</queryString>
+	<field name="fechayhoramodificacion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="0894f02f-f8ca-476e-a9b2-db137c816b86" mode="Opaque" x="0" y="0" width="381" height="20"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fechayhoramodificacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
