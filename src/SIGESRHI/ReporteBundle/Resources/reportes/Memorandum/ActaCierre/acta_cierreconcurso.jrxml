@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="acta_cierreconcurso" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="39356f29-aef4-4726-b41c-93444aeca7e1">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="321"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\wamp\\www\\SIGESRHI\\src\\SIGESRHI\\ReporteBundle\\Resources\\reportes\\HojadeServicio\\"]]></defaultValueExpression>
@@ -63,11 +63,11 @@ WHERE
 	<title>
 		<band height="79" splitType="Stretch">
 			<image scaleImage="FillFrame" hAlign="Center">
-				<reportElement uuid="9c395cb8-d66d-4f9a-8812-55aee55646e4" x="4" y="2" width="86" height="77"/>
+				<reportElement x="4" y="2" width="86" height="77" uuid="9c395cb8-d66d-4f9a-8812-55aee55646e4"/>
 				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement uuid="b250b642-e8a6-4565-8c9f-2fc155cd1077" x="107" y="25" width="357" height="35"/>
+				<reportElement x="107" y="25" width="357" height="35" uuid="b250b642-e8a6-4565-8c9f-2fc155cd1077"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -75,7 +75,7 @@ WHERE
 DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 			</staticText>
 			<image>
-				<reportElement uuid="04c269e3-42c4-4e99-a0ba-25b72bc3d897" x="482" y="0" width="90" height="77"/>
+				<reportElement x="482" y="0" width="90" height="77" uuid="04c269e3-42c4-4e99-a0ba-25b72bc3d897"/>
 				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/Imagenes/logo_gobierno.png"]]></imageExpression>
 			</image>
 		</band>
@@ -86,7 +86,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 	<detail>
 		<band height="368" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="a93a335e-589a-498d-9f63-e9177414bf99" positionType="Float" x="0" y="103" width="572" height="0"/>
+				<reportElement positionType="Float" x="0" y="103" width="572" height="0" uuid="a93a335e-589a-498d-9f63-e9177414bf99"/>
 				<subreportParameter name="id_concurso">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -94,7 +94,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<subreportExpression><![CDATA["subreporte1_actacierreconcurso.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement uuid="e90c9408-39ac-4e6e-8416-88c45f19d7d7" positionType="Float" x="0" y="287" width="260" height="20"/>
+				<reportElement positionType="Float" x="0" y="287" width="260" height="20" uuid="e90c9408-39ac-4e6e-8416-88c45f19d7d7"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 				</box>
@@ -104,7 +104,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[Jefe del Departamento de Recursos Humanos]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="853ae194-73ec-4e72-8f19-90ddf1118b5a" positionType="Float" x="0" y="267" width="375" height="20"/>
+				<reportElement positionType="Float" x="0" y="267" width="375" height="20" uuid="853ae194-73ec-4e72-8f19-90ddf1118b5a"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 				</box>
@@ -114,7 +114,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{jeferrhh}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="54941ddb-c5e6-4ca1-ab43-4e5784e832e7" positionType="Float" x="0" y="118" width="572" height="49"/>
+				<reportElement positionType="Float" x="0" y="118" width="572" height="49" uuid="54941ddb-c5e6-4ca1-ab43-4e5784e832e7"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font size="11"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -122,7 +122,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA["No habiendo mas que hacer constar confirmo la presente, el "+$F{dias}+" de "+$F{mes}+" del dos mil "+$F{ano}+" en las oficinas del Departamento de Recursos Humanos del Instituto Salvadoreño de Rehabilitación Integral - ISRI."]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="211694fb-ca71-405e-a09c-69b0bd2b3d91" x="0" y="4" width="572" height="92"/>
+				<reportElement x="0" y="4" width="572" height="92" uuid="211694fb-ca71-405e-a09c-69b0bd2b3d91"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font size="11"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -130,8 +130,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA["San Salvador, a las "+$F{horas}+" horas con "+$F{minutos}+" minutos del día "+$F{dias}+" de "+$F{mes}+" del dos mil "+$F{ano}+", en las oficinas del Departamento de Recursos Humanos, siendo este el día establecido como fecha de cierre para la recepcion de Curriculum Vitae a los interesados en participar en el CONCURSO INTERNO A PLAZA "+$F{plaza}+", se deja constancia que a la hora antes consignada "+$V{aplican}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e7cd77f4-9230-4e64-aa62-8996b7dd4947" positionType="Float" x="0" y="348" width="314" height="20"/>
-				<textElement/>
+				<reportElement positionType="Float" x="0" y="348" width="314" height="20" uuid="e7cd77f4-9230-4e64-aa62-8996b7dd4947"/>
 				<textFieldExpression><![CDATA["Acta "+$F{numeroacta}+"/Concurso Interno "+$F{numconcurso}+"/"+$F{anoacta}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -142,9 +141,9 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="220896ad-8630-4a84-984f-034a633665a7" x="95" y="0" width="387" height="54"/>
+				<reportElement x="95" y="0" width="387" height="54" uuid="220896ad-8630-4a84-984f-034a633665a7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Colonia Costa Rica, Avenida Iraza No 181 , San Salvador, El Salvador C.A.
+				<text><![CDATA[Colonia Costa Rica, Avenida Irazu No 181 , San Salvador, El Salvador C.A.
 Correo Electrónico: webmaster@isri.gob.sv, Telefax: 2270-0247
 Commutador(PBX): 2521-8600 ]]></text>
 			</staticText>

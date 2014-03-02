@@ -172,7 +172,7 @@ vich_uploader:
         fotografias:
             uri_prefix: fotografia_adapter
             upload_destination: fotografia_fs 
-            namer: vich_uploader.namer_origname
+            namer: vich_uploader.namer_uniqid
             delete_on_remove: true
             delete_on_update: true
 

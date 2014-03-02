@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="resultados_planinstitucional" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ce20361-3bc6-4af7-b559-fa69783474ef">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="142"/>
+	<property name="ireport.y" value="128"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Trabajo de Graduación\\Capacitaciones\\"]]></defaultValueExpression>
@@ -62,11 +62,11 @@ WHERE cap.idplan=$P{idplan} order by fechacapacitacion]]>
 	<pageHeader>
 		<band height="155" splitType="Stretch">
 			<image>
-				<reportElement uuid="ec929f44-75bf-4de4-aa08-985521f2f86d" x="27" y="13" width="80" height="86"/>
+				<reportElement x="27" y="13" width="80" height="86" uuid="ec929f44-75bf-4de4-aa08-985521f2f86d"/>
 				<imageExpression><![CDATA[$P{ubicacionReport}+ "/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement uuid="cad590e0-0af0-4310-95ce-39f61cd0254e" x="120" y="30" width="365" height="35"/>
+				<reportElement x="120" y="30" width="365" height="35" uuid="cad590e0-0af0-4310-95ce-39f61cd0254e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -74,21 +74,21 @@ WHERE cap.idplan=$P{idplan} order by fechacapacitacion]]>
 DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a7dffd78-7665-4ca1-a694-da9a5c54f0a1" x="145" y="79" width="275" height="20"/>
+				<reportElement x="145" y="79" width="275" height="20" uuid="a7dffd78-7665-4ca1-a694-da9a5c54f0a1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PLAN DE CAPACITACION INSTITUCIONAL]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="9542fbe5-89e4-4caa-ab3b-bdacececf95f" x="217" y="122" width="125" height="20"/>
+				<reportElement x="217" y="122" width="125" height="20" uuid="9542fbe5-89e4-4caa-ab3b-bdacececf95f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{anoplan}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="85e04dda-48a7-4e04-be31-38c7e8294af1" x="59" y="99" width="474" height="23"/>
+				<reportElement x="59" y="99" width="474" height="23" uuid="85e04dda-48a7-4e04-be31-38c7e8294af1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -102,7 +102,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 	<detail>
 		<band height="350" splitType="Stretch">
 			<textField>
-				<reportElement uuid="c0a8cfe3-3d8e-4d36-a146-74364569e5ac" x="174" y="162" width="381" height="20"/>
+				<reportElement x="188" y="162" width="367" height="20" uuid="c0a8cfe3-3d8e-4d36-a146-74364569e5ac"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -113,7 +113,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{fechayhora}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="c3d8c8e1-e4fb-4658-8f34-1c4d5e305846" x="0" y="43" width="174" height="23"/>
+				<reportElement x="0" y="43" width="188" height="23" uuid="c3d8c8e1-e4fb-4658-8f34-1c4d5e305846"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -126,7 +126,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[TEMA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9b831dc8-11c2-4721-b35d-fccffc3d10c8" x="0" y="66" width="174" height="24"/>
+				<reportElement x="0" y="66" width="188" height="24" uuid="9b831dc8-11c2-4721-b35d-fccffc3d10c8"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -139,7 +139,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[AREA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="eb770375-f50c-4b0d-89f1-dca392b960a7" x="0" y="115" width="174" height="27"/>
+				<reportElement x="0" y="115" width="188" height="27" uuid="eb770375-f50c-4b0d-89f1-dca392b960a7"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -152,7 +152,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[RESULTADOS ESPERADOS:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="04801aad-be81-457e-928b-dca345c674ab" x="0" y="90" width="174" height="25"/>
+				<reportElement x="0" y="90" width="188" height="25" uuid="04801aad-be81-457e-928b-dca345c674ab"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -165,7 +165,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[OBJETIVO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="46c7ebd1-3403-4514-8361-cd58637baaa4" x="0" y="142" width="174" height="20"/>
+				<reportElement x="0" y="142" width="188" height="20" uuid="46c7ebd1-3403-4514-8361-cd58637baaa4"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -178,7 +178,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[INSTITUCION CAPACITADORA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b6367607-a15d-401b-8f24-b74bae745531" x="0" y="162" width="174" height="20"/>
+				<reportElement x="0" y="162" width="188" height="20" uuid="b6367607-a15d-401b-8f24-b74bae745531"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -191,7 +191,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[FECHA Y HORA PROGRAMADA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7efe560d-5b52-4c86-ac52-4737feff0103" x="0" y="182" width="174" height="20"/>
+				<reportElement x="0" y="182" width="188" height="20" uuid="7efe560d-5b52-4c86-ac52-4737feff0103"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -204,7 +204,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[FECHA Y HORA QUE SE REALIZO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="63122499-ed0e-4647-ba2b-ac8361cdc82f" x="0" y="202" width="174" height="21"/>
+				<reportElement x="0" y="202" width="188" height="21" uuid="63122499-ed0e-4647-ba2b-ac8361cdc82f"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -217,7 +217,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[LUGAR:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2f9fd4c7-2b25-426b-9019-d3d156d12554" x="0" y="223" width="174" height="20"/>
+				<reportElement x="0" y="223" width="188" height="20" uuid="2f9fd4c7-2b25-426b-9019-d3d156d12554"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -230,7 +230,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[ESTADO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="3faa7197-7ad6-4d07-a492-13a4802bdc4f" x="0" y="243" width="174" height="47"/>
+				<reportElement x="0" y="243" width="188" height="47" uuid="3faa7197-7ad6-4d07-a492-13a4802bdc4f"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -243,7 +243,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[OTRAS CONSIDERACIONES:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="c5f4f5a4-07fc-47fe-b1fb-2573959270bb" positionType="Float" x="174" y="43" width="381" height="23"/>
+				<reportElement positionType="Float" x="188" y="43" width="367" height="23" uuid="c5f4f5a4-07fc-47fe-b1fb-2573959270bb"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -254,7 +254,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{tematica}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="1f8e908f-20ef-427e-94b4-5b79c81b970c" positionType="Float" x="174" y="66" width="381" height="24"/>
+				<reportElement positionType="Float" x="188" y="66" width="367" height="24" uuid="1f8e908f-20ef-427e-94b4-5b79c81b970c"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -265,7 +265,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{areacapacitacion}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="4f559385-60a1-4eac-8b37-832249bd0f56" positionType="Float" x="174" y="90" width="381" height="25"/>
+				<reportElement positionType="Float" x="188" y="90" width="367" height="25" uuid="4f559385-60a1-4eac-8b37-832249bd0f56"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -276,7 +276,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{objetivocapacitacion}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="b42d5815-22fc-4a8b-ac98-26356feac8be" x="174" y="115" width="381" height="27"/>
+				<reportElement x="188" y="115" width="367" height="27" uuid="b42d5815-22fc-4a8b-ac98-26356feac8be"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -287,7 +287,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{resultadoscapacitacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e1cd555d-0e70-4330-a989-a41ef187be4f" x="174" y="142" width="381" height="20"/>
+				<reportElement x="188" y="142" width="367" height="20" uuid="e1cd555d-0e70-4330-a989-a41ef187be4f"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -298,7 +298,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{nombreinstitucion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="ee4dbb85-d6e7-438f-a116-678ae04db683" x="174" y="202" width="381" height="21"/>
+				<reportElement x="188" y="202" width="367" height="21" uuid="ee4dbb85-d6e7-438f-a116-678ae04db683"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -309,7 +309,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{lugarcapacitacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="80618bf9-2b59-4a00-8721-facb9423fd18" x="174" y="223" width="381" height="20"/>
+				<reportElement x="188" y="223" width="367" height="20" uuid="80618bf9-2b59-4a00-8721-facb9423fd18"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -320,7 +320,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{estadocapacitacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="a7eea52a-738e-4660-a6b1-d42a1a4b372a" x="174" y="182" width="381" height="20"/>
+				<reportElement x="188" y="182" width="367" height="20" uuid="a7eea52a-738e-4660-a6b1-d42a1a4b372a"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -331,7 +331,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{fechayhora}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="9d403ed8-7f11-4825-8dbb-1ead936711a9" positionType="Float" x="174" y="243" width="381" height="47"/>
+				<reportElement positionType="Float" x="188" y="243" width="367" height="47" uuid="9d403ed8-7f11-4825-8dbb-1ead936711a9"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -342,12 +342,12 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{otrasconsideraciones}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="bd4ef0a4-bfdd-46be-97e8-a7d653edc6f4" x="0" y="292" width="555" height="20"/>
+				<reportElement x="0" y="292" width="555" height="20" uuid="bd4ef0a4-bfdd-46be-97e8-a7d653edc6f4"/>
 				<textElement verticalAlignment="Middle" markup="html"/>
 				<textFieldExpression><![CDATA["<b>Número de asistentes:</b> "+$F{numasistentes}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="12f1eef0-8432-4b98-b433-795fa1fa1cfa" x="0" y="332" width="555" height="18"/>
+				<reportElement x="0" y="332" width="555" height="18" uuid="12f1eef0-8432-4b98-b433-795fa1fa1cfa"/>
 				<subreportParameter name="ncap">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -355,14 +355,14 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<subreportExpression><![CDATA["subreporte_planinstitucional.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement uuid="74582fe7-7e38-4e55-b079-5b9b4e759983" x="0" y="311" width="372" height="20"/>
+				<reportElement x="0" y="311" width="372" height="20" uuid="74582fe7-7e38-4e55-b079-5b9b4e759983"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Información de la capacitación:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c0b8bdc2-47e3-4bfe-8e1a-089fff9cfad8" mode="Opaque" x="0" y="19" width="174" height="24" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="0" y="19" width="188" height="24" backcolor="#CCCCCC" uuid="c0b8bdc2-47e3-4bfe-8e1a-089fff9cfad8"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -375,7 +375,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[ASPECTOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b7ae471a-e36b-43d9-bb46-c3eb36889987" mode="Opaque" x="174" y="19" width="381" height="24" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="188" y="19" width="367" height="24" backcolor="#CCCCCC" uuid="b7ae471a-e36b-43d9-bb46-c3eb36889987"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -388,14 +388,14 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[DESCRIPCION]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="22cb05ee-1a5a-42e1-a836-3c0cbba6343e" x="0" y="0" width="252" height="20"/>
+				<reportElement x="0" y="0" width="252" height="20" uuid="22cb05ee-1a5a-42e1-a836-3c0cbba6343e"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Capacitación N° "+$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="941f17a4-7a91-4d99-ad81-89c9d02fdff6" mode="Transparent" x="174" y="162" width="381" height="20"/>
+				<reportElement mode="Transparent" x="188" y="162" width="367" height="20" uuid="941f17a4-7a91-4d99-ad81-89c9d02fdff6"/>
 				<subreportParameter name="xcapacitacion">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -403,7 +403,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<subreportExpression><![CDATA["subreporte_fechayhoracapacitacion.jasper"]]></subreportExpression>
 			</subreport>
 			<frame>
-				<reportElement uuid="2963ab3d-3c0c-4183-add3-5d8441304b83" x="174" y="162" width="381" height="20"/>
+				<reportElement x="188" y="162" width="367" height="20" uuid="2963ab3d-3c0c-4183-add3-5d8441304b83"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -419,13 +419,12 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 	<pageFooter>
 		<band height="49" splitType="Stretch">
 			<textField>
-				<reportElement uuid="ae27d7e7-889a-49d8-872c-540bddb72711" x="200" y="17" width="80" height="20"/>
+				<reportElement x="200" y="17" width="80" height="20" uuid="ae27d7e7-889a-49d8-872c-540bddb72711"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="9a219721-84b0-42f3-b830-9b21ebeeccec" x="280" y="17" width="40" height="20"/>
-				<textElement/>
+				<reportElement x="280" y="17" width="40" height="20" uuid="9a219721-84b0-42f3-b830-9b21ebeeccec"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -433,7 +432,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 	<summary>
 		<band height="67" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="3678cd82-5c0a-4fbb-95dd-a395e4e971ed" x="0" y="14" width="555" height="18"/>
+				<reportElement x="0" y="14" width="555" height="18" uuid="3678cd82-5c0a-4fbb-95dd-a395e4e971ed"/>
 				<subreportParameter name="nplan">
 					<subreportParameterExpression><![CDATA[$P{idplan}]]></subreportParameterExpression>
 				</subreportParameter>

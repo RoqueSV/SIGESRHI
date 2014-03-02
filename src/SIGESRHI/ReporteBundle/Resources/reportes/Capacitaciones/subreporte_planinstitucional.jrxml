@@ -35,7 +35,7 @@ ORDER BY cmod.id]]>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="1c3d268e-ef09-44fb-b2e3-edc7dea43e1c" mode="Opaque" x="0" y="0" width="174" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="0" y="0" width="190" height="20" backcolor="#CCCCCC" uuid="1c3d268e-ef09-44fb-b2e3-edc7dea43e1c"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -48,7 +48,7 @@ ORDER BY cmod.id]]>
 				<text><![CDATA[Acciones realizadas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d911a7f4-115b-4ab7-81ab-ad770ee84938" mode="Opaque" x="174" y="0" width="380" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="190" y="0" width="364" height="20" backcolor="#CCCCCC" uuid="d911a7f4-115b-4ab7-81ab-ad770ee84938"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -65,7 +65,7 @@ ORDER BY cmod.id]]>
 	<detail>
 		<band height="39" splitType="Stretch">
 			<textField>
-				<reportElement uuid="5715b77d-ce01-45c8-b5cf-36d4ac827978" x="0" y="0" width="174" height="39"/>
+				<reportElement x="0" y="0" width="190" height="39" uuid="5715b77d-ce01-45c8-b5cf-36d4ac827978"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -76,7 +76,7 @@ ORDER BY cmod.id]]>
 				<textFieldExpression><![CDATA[$F{acciones}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="c20188b5-061b-4282-9041-16f1377f3cb3" positionType="Float" x="174" y="0" width="380" height="39"/>
+				<reportElement positionType="Float" x="190" y="0" width="364" height="39" uuid="c20188b5-061b-4282-9041-16f1377f3cb3"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -97,9 +97,8 @@ ORDER BY cmod.id]]>
 	<summary>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="88699aed-a257-4610-984f-f0d5e7fac4bf" mode="Opaque" x="0" y="0" width="554" height="20">
-					<printWhenExpression><![CDATA[
-new java.lang.Boolean($V{REPORT_COUNT}.intValue()==0)]]></printWhenExpression>
+				<reportElement mode="Opaque" x="0" y="0" width="554" height="20" uuid="88699aed-a257-4610-984f-f0d5e7fac4bf">
+					<printWhenExpression><![CDATA[new java.lang.Boolean($V{REPORT_COUNT}.intValue()==0)]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>

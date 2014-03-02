@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Certificacion_hojaservicio" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8b021ac6-0dfd-4221-a80e-b9adc9e37aee">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="151"/>
+	<property name="ireport.y" value="245"/>
 	<parameter name="idexp" class="java.lang.Integer"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -53,18 +53,18 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 	<pageHeader>
 		<band height="92">
 			<staticText>
-				<reportElement uuid="3b2f8a16-abd8-4de6-bf5f-aa6795ea2cdd" x="116" y="5" width="364" height="38"/>
+				<reportElement x="116" y="5" width="364" height="38" uuid="3b2f8a16-abd8-4de6-bf5f-aa6795ea2cdd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL RECURSOS HUMANOS]]></text>
 			</staticText>
 			<image scaleImage="FillFrame">
-				<reportElement uuid="2735d0c0-14e5-474a-8d19-9069bcc5897c" x="19" y="0" width="85" height="83"/>
+				<reportElement x="19" y="0" width="85" height="83" uuid="2735d0c0-14e5-474a-8d19-9069bcc5897c"/>
 				<imageExpression><![CDATA[$P{ubicacionReport} +"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement uuid="7ca28a5d-f5b8-4f35-95fb-410102961248" x="172" y="43" width="229" height="20"/>
+				<reportElement x="172" y="43" width="229" height="20" uuid="7ca28a5d-f5b8-4f35-95fb-410102961248"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="12" isBold="true" isUnderline="true"/>
 				</textElement>
@@ -75,20 +75,20 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 	<detail>
 		<band height="326" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="cd3cf5fc-1211-48c3-a231-b241f82349e2" x="2" y="284" width="121" height="16"/>
+				<reportElement x="2" y="284" width="121" height="16" uuid="cd3cf5fc-1211-48c3-a231-b241f82349e2"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RECORD LABORAL]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="7386ff2e-a789-41c2-b0ba-702263f233ce" x="0" y="302" width="572" height="1"/>
+				<reportElement x="0" y="302" width="572" height="1" uuid="7386ff2e-a789-41c2-b0ba-702263f233ce"/>
 				<graphicElement>
 					<pen lineWidth="1.25" lineStyle="Double"/>
 				</graphicElement>
 			</line>
 			<subreport>
-				<reportElement uuid="15af5fb7-e0a5-451d-82fe-5c74c4e72c16" x="0" y="308" width="572" height="18"/>
+				<reportElement x="0" y="308" width="572" height="18" uuid="15af5fb7-e0a5-451d-82fe-5c74c4e72c16"/>
 				<subreportParameter name="idexp">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -96,7 +96,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<subreportExpression><![CDATA["Certificacionhojadeservicio_subreporte1.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement uuid="b8ec0131-2c7a-45bf-9ed1-1199e372f4a7" x="126" y="21" width="64" height="19"/>
+				<reportElement x="126" y="21" width="64" height="19" uuid="b8ec0131-2c7a-45bf-9ed1-1199e372f4a7"/>
 				<box leftPadding="1">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -106,7 +106,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{dui}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2a26ddca-0741-4584-8600-23cdc628b428" x="145" y="-1" width="280" height="20"/>
+				<reportElement x="145" y="-1" width="280" height="20" uuid="2a26ddca-0741-4584-8600-23cdc628b428"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -119,7 +119,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{nombreempleado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="9c9bf93e-d32f-4bda-9265-80d8211bdeb0" x="435" y="64" width="137" height="19"/>
+				<reportElement x="435" y="64" width="137" height="19" uuid="9c9bf93e-d32f-4bda-9265-80d8211bdeb0"/>
 				<box leftPadding="3">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -129,35 +129,35 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{estadocivil}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="ddfbf8d7-12c5-4d41-9139-2613df6685c9" x="190" y="21" width="81" height="20"/>
+				<reportElement x="190" y="21" width="81" height="20" uuid="ddfbf8d7-12c5-4d41-9139-2613df6685c9"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Extendido en:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5612068a-267b-437b-be4f-05c0f99ce7e9" x="425" y="0" width="103" height="20"/>
+				<reportElement x="425" y="0" width="103" height="20" uuid="5612068a-267b-437b-be4f-05c0f99ce7e9"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código Empleado:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="3f967468-fa01-4e34-8c25-b8215a57ad21" x="103" y="21" width="30" height="20"/>
+				<reportElement x="103" y="21" width="30" height="20" uuid="3f967468-fa01-4e34-8c25-b8215a57ad21"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DUI:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d87a8554-db07-4e52-ae19-559299d97f1f" x="200" y="156" width="42" height="20"/>
+				<reportElement x="200" y="156" width="42" height="20" uuid="d87a8554-db07-4e52-ae19-559299d97f1f"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ ISSS:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="062040d4-6a78-4cbe-af1f-b7475bf55bed" x="514" y="0" width="58" height="19"/>
+				<reportElement x="514" y="0" width="58" height="19" uuid="062040d4-6a78-4cbe-af1f-b7475bf55bed"/>
 				<box leftPadding="2">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -167,14 +167,14 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{codigoempleado}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="80fbd80d-11df-4dba-8f3e-e8376e264aea" x="0" y="155" width="85" height="20"/>
+				<reportElement x="0" y="155" width="85" height="20" uuid="80fbd80d-11df-4dba-8f3e-e8376e264aea"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sueldo Inicial:]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement uuid="dafb6e72-44a4-4c17-b489-f8c5201f3447" x="70" y="154" width="130" height="20"/>
+				<reportElement x="70" y="154" width="130" height="20" uuid="dafb6e72-44a4-4c17-b489-f8c5201f3447"/>
 				<box leftPadding="3">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -184,7 +184,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{sueldoinicial}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="41a07b4e-4253-41c7-93d0-a562aa4433af" x="200" y="44" width="372" height="18"/>
+				<reportElement x="200" y="44" width="372" height="18" uuid="41a07b4e-4253-41c7-93d0-a562aa4433af"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -194,7 +194,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{lugarnac}+", "+$F{fechanac}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="19a64b1a-820a-4d85-83ed-bd6da5d44919" x="261" y="20" width="311" height="21"/>
+				<reportElement x="261" y="20" width="311" height="21" uuid="19a64b1a-820a-4d85-83ed-bd6da5d44919"/>
 				<box leftPadding="3">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -204,14 +204,14 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{lugardui}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="fe417893-ef2c-48e6-b5d9-8f8f94b4629e" x="0" y="173" width="85" height="20"/>
+				<reportElement x="0" y="173" width="85" height="20" uuid="fe417893-ef2c-48e6-b5d9-8f8f94b4629e"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Destacado en:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="f62312a3-574f-4fe7-863b-1656fbe66bd1" x="214" y="63" width="159" height="19"/>
+				<reportElement x="214" y="63" width="159" height="19" uuid="f62312a3-574f-4fe7-863b-1656fbe66bd1"/>
 				<box leftPadding="3">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -221,7 +221,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{telefonos}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="7b2307dd-f2a7-40b2-8c36-8f5204d0bd51" x="155" y="84" width="417" height="19"/>
+				<reportElement x="155" y="84" width="417" height="19" uuid="7b2307dd-f2a7-40b2-8c36-8f5204d0bd51"/>
 				<box topPadding="2" leftPadding="3" rightPadding="0">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -231,14 +231,14 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="30571a3d-27b1-40ee-983d-645dbe551327" x="104" y="63" width="127" height="20"/>
+				<reportElement x="104" y="63" width="127" height="20" uuid="30571a3d-27b1-40ee-983d-645dbe551327"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Teléfonos(Fijo,Movil):]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="2397e847-d504-49f7-85ef-d1ba25b860d4" x="233" y="156" width="166" height="20"/>
+				<reportElement x="233" y="156" width="166" height="20" uuid="2397e847-d504-49f7-85ef-d1ba25b860d4"/>
 				<box leftPadding="3">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.0"/>
@@ -252,7 +252,7 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{isss}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="b9ba761b-e5dc-43af-98c8-d8261de5f865" x="70" y="175" width="502" height="18"/>
+				<reportElement x="70" y="175" width="502" height="18" uuid="b9ba761b-e5dc-43af-98c8-d8261de5f865"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -262,14 +262,14 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{destacadoen}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="31e18123-cdbb-4d18-a655-7493dd34aca4" x="373" y="64" width="82" height="20"/>
+				<reportElement x="373" y="64" width="82" height="20" uuid="31e18123-cdbb-4d18-a655-7493dd34aca4"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estado Civil:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="8509ddd8-9677-429b-b381-edd24cec8e78" x="92" y="136" width="141" height="20"/>
+				<reportElement x="92" y="136" width="141" height="20" uuid="8509ddd8-9677-429b-b381-edd24cec8e78"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -279,14 +279,14 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{fechaingreso}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="fdc7d668-096a-4b4c-b709-aa7f2cf397eb" x="399" y="156" width="36" height="20"/>
+				<reportElement x="399" y="156" width="36" height="20" uuid="fdc7d668-096a-4b4c-b709-aa7f2cf397eb"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NIT:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="951ad256-0d72-44b9-858f-3674bd38c0f8" x="159" y="105" width="413" height="20"/>
+				<reportElement x="159" y="105" width="413" height="20" uuid="951ad256-0d72-44b9-858f-3674bd38c0f8"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -296,28 +296,28 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{educacion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="9d0157df-67fb-4819-8b2d-b6c8170baa35" x="104" y="85" width="68" height="20"/>
+				<reportElement x="104" y="85" width="68" height="20" uuid="9d0157df-67fb-4819-8b2d-b6c8170baa35"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Dirección:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="839843da-aa0a-40fd-bd8d-dada6ee34b85" x="104" y="42" width="127" height="20"/>
+				<reportElement x="104" y="42" width="127" height="20" uuid="839843da-aa0a-40fd-bd8d-dada6ee34b85"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lugar y fecha Nac.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9003cf45-6de2-4d6f-a49c-950c5d0fb35a" x="0" y="136" width="105" height="20"/>
+				<reportElement x="0" y="136" width="105" height="20" uuid="9003cf45-6de2-4d6f-a49c-950c5d0fb35a"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de Ingreso:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="c9efffb9-ca2a-4037-92e1-0e92a159d52e" x="271" y="137" width="301" height="19"/>
+				<reportElement x="271" y="137" width="301" height="19" uuid="c9efffb9-ca2a-4037-92e1-0e92a159d52e"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -327,14 +327,14 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{cargo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="2deb02b3-7a74-4190-94de-ac43b6cebde1" x="104" y="106" width="68" height="20"/>
+				<reportElement x="104" y="106" width="68" height="20" uuid="2deb02b3-7a74-4190-94de-ac43b6cebde1"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Educación:]]></text>
 			</staticText>
 			<textField pattern="#,###.00">
-				<reportElement uuid="f2e26113-aded-4bdb-875f-b166039d21ef" x="425" y="156" width="147" height="20"/>
+				<reportElement x="425" y="156" width="147" height="20" uuid="f2e26113-aded-4bdb-875f-b166039d21ef"/>
 				<box leftPadding="3">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -348,10 +348,10 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{nit}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement uuid="18bf66d9-4cb2-4f37-8f48-c1dcbb9bc71e" x="0" y="9" width="100" height="126"/>
+				<reportElement x="0" y="9" width="100" height="126" uuid="18bf66d9-4cb2-4f37-8f48-c1dcbb9bc71e"/>
 			</rectangle>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="7a094027-1306-4593-95d6-772d8acdfacf" x="0" y="215" width="572" height="50" isRemoveLineWhenBlank="true"/>
+				<reportElement x="0" y="215" width="572" height="50" isRemoveLineWhenBlank="true" uuid="7a094027-1306-4593-95d6-772d8acdfacf"/>
 				<box leftPadding="1" rightPadding="2"/>
 				<textElement textAlignment="Justified">
 					<font fontName="SansSerif"/>
@@ -359,28 +359,28 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 				<textFieldExpression><![CDATA[$F{informacionadicional}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="64a3bda3-ba3d-48c2-827d-4120840557a7" x="103" y="-1" width="56" height="20"/>
+				<reportElement x="103" y="-1" width="56" height="20" uuid="64a3bda3-ba3d-48c2-827d-4120840557a7"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="5c199437-0bfd-440b-ae63-012a8671fd07" x="0" y="193" width="308" height="20"/>
+				<reportElement x="0" y="193" width="308" height="20" uuid="5c199437-0bfd-440b-ae63-012a8671fd07"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Informacion Adicional:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="430fc4f0-8934-4b25-a896-824fc6614e76" x="234" y="137" width="49" height="20"/>
+				<reportElement x="234" y="137" width="49" height="20" uuid="430fc4f0-8934-4b25-a896-824fc6614e76"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cargo:]]></text>
 			</staticText>
-			<image scaleImage="FillFrame">
-				<reportElement uuid="da3e1a28-ae7f-48cc-9e9c-2d8c0f135c78" x="3" y="12" width="95" height="121">
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement x="3" y="12" width="95" height="121" uuid="da3e1a28-ae7f-48cc-9e9c-2d8c0f135c78">
 					<printWhenExpression><![CDATA[$F{fotografia}!=null]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{ubicacionReport}+"/../../../../web/uploads/fotografias/"+$F{fotografia}]]></imageExpression>
@@ -390,17 +390,16 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 	<pageFooter>
 		<band height="85" splitType="Stretch">
 			<textField>
-				<reportElement uuid="dbe3aaa6-1ec9-418e-b9a3-d3181fd951b6" x="222" y="40" width="80" height="20"/>
+				<reportElement x="222" y="40" width="80" height="20" uuid="dbe3aaa6-1ec9-418e-b9a3-d3181fd951b6"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="3661dcda-7e2c-4ee6-bf54-e5aae4294555" x="302" y="40" width="40" height="20"/>
-				<textElement/>
+				<reportElement x="302" y="40" width="40" height="20" uuid="3661dcda-7e2c-4ee6-bf54-e5aae4294555"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="22e3d8c2-1f17-43be-8c61-767abd1bde89" x="342" y="13" width="230" height="27"/>
+				<reportElement x="342" y="13" width="230" height="27" uuid="22e3d8c2-1f17-43be-8c61-767abd1bde89"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 				</box>
@@ -412,12 +411,11 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 	<lastPageFooter>
 		<band height="83">
 			<textField evaluationTime="Report">
-				<reportElement uuid="f27607a1-c6cf-49e1-8cec-a5639127e3eb" x="306" y="35" width="40" height="20"/>
-				<textElement/>
+				<reportElement x="306" y="35" width="40" height="20" uuid="f27607a1-c6cf-49e1-8cec-a5639127e3eb"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="8868d821-5b55-410f-a0a0-68c586f05e1c" x="226" y="35" width="80" height="20"/>
+				<reportElement x="226" y="35" width="80" height="20" uuid="8868d821-5b55-410f-a0a0-68c586f05e1c"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
@@ -426,22 +424,22 @@ join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.i
 	<summary>
 		<band height="174">
 			<textField>
-				<reportElement uuid="e0408f6e-2f69-4432-b03e-a8191690804a" x="0" y="20" width="572" height="41"/>
+				<reportElement x="0" y="20" width="572" height="41" uuid="e0408f6e-2f69-4432-b03e-a8191690804a"/>
 				<textElement textAlignment="Justified" markup="html"/>
 				<textFieldExpression><![CDATA["El infranscrito Jefe del Departamento de Recursos Humanos del Instituto Salvadoreño de Rehabilitación Integral, certifica que las presentes copias de Hoja de Servicio del señor(a) "+$F{nombreempleado}+", es conforme con su original que se confronto en este Departamento."]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="4058b8db-b289-455a-9220-5fa924d3a45a" x="0" y="62" width="572" height="30"/>
+				<reportElement x="0" y="62" width="572" height="30" uuid="4058b8db-b289-455a-9220-5fa924d3a45a"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA["Y para los usos  que se consideren convenientes se extiende la presente en San Salvador a los "+$F{dias}+" días del mes de "+$F{mes}+" del dos mil "+$F{ano}+"."]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="fa23ae9a-d402-46d5-b4b9-be2b2682c116" x="0" y="146" width="219" height="28"/>
+				<reportElement x="0" y="146" width="219" height="28" uuid="fa23ae9a-d402-46d5-b4b9-be2b2682c116"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top"/>
 				<text><![CDATA[Jefe del Departamento de Recursos Humanos ISRI]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="bbb525b0-49bc-4dbf-89fd-9f7ab09f0e57" x="0" y="130" width="219" height="16"/>
+				<reportElement x="0" y="130" width="219" height="16" uuid="bbb525b0-49bc-4dbf-89fd-9f7ab09f0e57"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 				</box>

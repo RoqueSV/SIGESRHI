@@ -82,7 +82,7 @@ class Concurso
     /**
      * @var \SIGESRHI\AdminBundle\Entity\Plaza
      *
-     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza")
+     * @ORM\ManyToOne(targetEntity="\SIGESRHI\AdminBundle\Entity\Plaza", inversedBy="idconcurso")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      * })

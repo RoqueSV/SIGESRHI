@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="constanciadetrabajo" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="037db9c2-4363-4f2b-ad9a-c3426582682d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="141"/>
+	<property name="ireport.y" value="237"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="idexp" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -59,14 +59,14 @@ else
 	<title>
 		<band height="99" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="d59d6169-e376-46d8-8569-3e3092f9fc22" x="72" y="12" width="494" height="61"/>
+				<reportElement x="72" y="12" width="494" height="61" uuid="d59d6169-e376-46d8-8569-3e3092f9fc22"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 			</staticText>
 			<image>
-				<reportElement uuid="26ceaffa-13fc-41e1-b1d8-8d3646b4ab18" x="11" y="10" width="80" height="86"/>
+				<reportElement x="11" y="10" width="80" height="86" uuid="26ceaffa-13fc-41e1-b1d8-8d3646b4ab18"/>
 				<imageExpression><![CDATA[$P{ubicacionReport}+ "/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
 			</image>
 		</band>
@@ -74,14 +74,14 @@ else
 	<pageHeader>
 		<band height="83" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="9fafb7fa-1e7f-47a1-91ca-9bbb6704a140" x="179" y="12" width="239" height="35"/>
+				<reportElement x="179" y="12" width="239" height="35" uuid="9fafb7fa-1e7f-47a1-91ca-9bbb6704a140"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CONSTANCIA DE TRABAJO]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="5ef9daf3-bad6-4b11-9883-6176401a1b50" x="331" y="63" width="225" height="20"/>
+				<reportElement x="331" y="63" width="225" height="20" uuid="5ef9daf3-bad6-4b11-9883-6176401a1b50"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
@@ -92,21 +92,21 @@ else
 	<detail>
 		<band height="349" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="aaeb7011-cfae-44e9-a869-b81e4d571caa" x="15" y="15" width="148" height="20"/>
+				<reportElement x="15" y="15" width="148" height="20" uuid="aaeb7011-cfae-44e9-a869-b81e4d571caa"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[A quien corresponda:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6f0d81db-a4a7-44c1-9271-72d3482ff3ff" x="15" y="48" width="93" height="20"/>
+				<reportElement x="15" y="48" width="93" height="20" uuid="6f0d81db-a4a7-44c1-9271-72d3482ff3ff"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[Presente:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="72d21fe7-d8f1-4e20-99a1-8bf57e5e26ee" x="15" y="68" width="541" height="64"/>
+				<reportElement x="15" y="68" width="541" height="64" uuid="72d21fe7-d8f1-4e20-99a1-8bf57e5e26ee"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
 					<font size="11"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -114,7 +114,7 @@ else
 				<textFieldExpression><![CDATA["Por medio de la presente se hace constar que <b>"+$F{nombrecompleto}+"</b> con DUI: "+$F{dui}+" "+$F{estadolaboral}+" "+$F{periodolaboral}+" desempeñando el puesto de: "+$F{nombreplaza}+"."]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="d74e48ae-fb18-422c-8b4a-d7f59b0e69ef" x="15" y="280" width="226" height="20"/>
+				<reportElement x="15" y="280" width="247" height="20" uuid="d74e48ae-fb18-422c-8b4a-d7f59b0e69ef"/>
 				<box>
 					<topPen lineWidth="0.0"/>
 				</box>
@@ -124,7 +124,7 @@ else
 				<text><![CDATA[Jefe  Departamento de Recursos Humanos]]></text>
 			</staticText>
 			<textField pattern="">
-				<reportElement uuid="dd30d7d9-e23b-418e-8fb4-95b168c2f8e3" x="15" y="146" width="541" height="46"/>
+				<reportElement x="15" y="146" width="541" height="46" uuid="dd30d7d9-e23b-418e-8fb4-95b168c2f8e3"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
 					<font size="11"/>
 					<paragraph lineSpacing="1_1_2"/>
@@ -132,7 +132,7 @@ else
 				<textFieldExpression><![CDATA["Y para los fines que el interesado estime conveniente se le extiende la presente en San Salvador,  a los "+$F{dias}+" dias del mes de "+$F{mes}+" del dos mil "+$F{ano}+"."]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="df4f7d04-daa1-4538-bf53-30a439269d59" x="15" y="260" width="247" height="20"/>
+				<reportElement x="15" y="260" width="247" height="20" uuid="df4f7d04-daa1-4538-bf53-30a439269d59"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 				</box>
@@ -146,7 +146,7 @@ else
 	<pageFooter>
 		<band height="57" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="eacd430d-9800-47de-aa45-d87d65657dd1" x="127" y="10" width="350" height="40"/>
+				<reportElement x="127" y="10" width="350" height="40" uuid="eacd430d-9800-47de-aa45-d87d65657dd1"/>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<text><![CDATA[Instituto Salvadoreño de Rehabilitación Integral - ISRI
 Colonia Costa Rica Avenida Irazu # 181, San Salvador, El Salvador, C.A.

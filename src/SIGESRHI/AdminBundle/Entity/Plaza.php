@@ -11,7 +11,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  *
  * @ORM\Table(name="plaza")
  * @ORM\Entity
- * @GRID\Source(columns="id,nombreplaza,misionplaza", groups={"grupo_plaza"})
+ * @GRID\Source(columns="id,nombreplaza,misionplaza,idconcurso.id,idconcurso.fechacierre", groups={"grupo_plaza"})
  * @GRID\Source(columns="id,nombreplaza,misionplaza", groups={"grupo_plaza_reporte"})
  * @ORM\HasLifecycleCallbacks
  */
@@ -230,7 +230,13 @@ class Plaza
      */
     private $file;
     
-    
+    /**
+     * @ORM\OneToMany(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Concurso", mappedBy="idplaza")
+     * @GRID\Column(field="idconcurso.id", groups={"grupo_plaza"}, visible=false, filterable=false)
+     * @GRID\Column(field="idconcurso.fechacierre", groups={"grupo_plaza"}, visible=false, filterable=false)
+     * 
+     */
+    private $idconcurso;
     
 
     /**
@@ -562,6 +568,7 @@ class Plaza
         $this->idmarcoreferencia = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idotrosaspectos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idsolicitud = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idconcurso = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -978,5 +985,38 @@ class Plaza
     public function getIdsolicitud()
     {
         return $this->idsolicitud;
+    }
+
+    /**
+     * Add idconcurso
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Concurso $idconcurso
+     * @return Plaza
+     */
+    public function addIdconcurso(\SIGESRHI\ExpedienteBundle\Entity\Concurso $idconcurso)
+    {
+        $this->idconcurso[] = $idconcurso;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idconcurso
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Concurso $idconcurso
+     */
+    public function removeIdconcurso(\SIGESRHI\ExpedienteBundle\Entity\Concurso $idconcurso)
+    {
+        $this->idconcurso->removeElement($idconcurso);
+    }
+
+    /**
+     * Get idconcurso
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdconcurso()
+    {
+        return $this->idconcurso;
     }
 }

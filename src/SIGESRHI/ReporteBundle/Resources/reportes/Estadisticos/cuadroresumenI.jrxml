@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cuadroresumenI" pageWidth="612" pageHeight="792" columnWidth="550" leftMargin="31" rightMargin="31" topMargin="20" bottomMargin="20" uuid="7d3a5cb1-4ed4-47e6-942d-2d96a7b6d527">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="63"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="90"/>
 	<parameter name="ano_eva" class="java.lang.Integer"/>
 	<parameter name="idcentro" class="java.lang.Integer"/>
@@ -48,41 +48,41 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 	<pageHeader>
 		<band height="139" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="27b67746-89e4-4f9c-9cf2-28bad955c180" x="48" y="15" width="521" height="28"/>
+				<reportElement x="48" y="15" width="521" height="28" uuid="27b67746-89e4-4f9c-9cf2-28bad955c180"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7bf0fccf-c906-4d26-aa45-bca7e02baf16" x="144" y="70" width="333" height="20"/>
+				<reportElement x="117" y="70" width="427" height="20" uuid="7bf0fccf-c906-4d26-aa45-bca7e02baf16"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cuadro Resumen de Evaluaciones realizadas correspondientes al]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="beda1bf4-2f9e-40c1-bef1-7090bd984734" x="0" y="119" width="247" height="20"/>
+				<reportElement x="0" y="119" width="247" height="20" uuid="beda1bf4-2f9e-40c1-bef1-7090bd984734"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle" markup="html"/>
 				<textFieldExpression><![CDATA["<b>Fecha de Elaboración: </b>"+$F{fechaactual}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="4451a4a2-06b0-4a6a-8794-4f9fb82c73a2" x="33" y="43" width="536" height="20"/>
+				<reportElement x="33" y="43" width="536" height="20" uuid="4451a4a2-06b0-4a6a-8794-4f9fb82c73a2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrecentro}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="bdc1077e-b962-42f2-a22b-ede0fa4f0c22" x="220" y="85" width="193" height="20"/>
+				<reportElement x="220" y="85" width="193" height="20" uuid="bdc1077e-b962-42f2-a22b-ede0fa4f0c22"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{semestre}+" "+"del Año:"+$F{anoevaluado}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement uuid="969436da-1613-4866-bcad-15484ae81c3b" x="8" y="5" width="80" height="86"/>
+				<reportElement x="8" y="5" width="80" height="86" uuid="969436da-1613-4866-bcad-15484ae81c3b"/>
 				<imageExpression><![CDATA[$P{ubicacionReport}+ "/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
 			</image>
 		</band>
@@ -90,9 +90,9 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 	<columnHeader>
 		<band height="40">
 			<frame>
-				<reportElement uuid="fbe87329-7f6a-4f3c-baee-a0a50e5ad12d" x="0" y="15" width="551" height="25"/>
+				<reportElement x="0" y="15" width="551" height="25" uuid="fbe87329-7f6a-4f3c-baee-a0a50e5ad12d"/>
 				<staticText>
-					<reportElement uuid="58ff0472-9697-403b-aa28-130718f98502" mode="Opaque" x="0" y="0" width="33" height="25" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="0" y="0" width="33" height="25" backcolor="#CCCCCC" uuid="58ff0472-9697-403b-aa28-130718f98502"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -105,7 +105,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 					<text><![CDATA[CODIGO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="00c5b3ed-265b-4f7d-9893-6d652f7ac77c" mode="Opaque" x="33" y="0" width="23" height="25" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="33" y="0" width="23" height="25" backcolor="#CCCCCC" uuid="00c5b3ed-265b-4f7d-9893-6d652f7ac77c"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -118,7 +118,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 					<text><![CDATA[PTDA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="51d26a94-19e3-4f33-ba34-e839218d2b67" mode="Opaque" x="56" y="0" width="18" height="25" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="56" y="0" width="18" height="25" backcolor="#CCCCCC" uuid="51d26a94-19e3-4f33-ba34-e839218d2b67"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -131,7 +131,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 					<text><![CDATA[SUB]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="e2e59f6d-0919-4f19-8a7d-a557021d3a9b" mode="Opaque" x="252" y="0" width="225" height="25" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="252" y="0" width="225" height="25" backcolor="#CCCCCC" uuid="e2e59f6d-0919-4f19-8a7d-a557021d3a9b"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -144,7 +144,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 					<text><![CDATA[NOMBRE DE LA PLAZA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="9f8e4ca1-24f2-49af-bf32-02657211ed62" mode="Opaque" x="74" y="0" width="178" height="25" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="74" y="0" width="178" height="25" backcolor="#CCCCCC" uuid="9f8e4ca1-24f2-49af-bf32-02657211ed62"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -157,7 +157,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 					<text><![CDATA[NOMBRE DEL EMPLEADO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="e62f5fae-6351-4b4e-909c-80760e82c14c" mode="Opaque" x="477" y="12" width="37" height="13" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="477" y="12" width="37" height="13" backcolor="#CCCCCC" uuid="e62f5fae-6351-4b4e-909c-80760e82c14c"/>
 					<box leftPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -170,7 +170,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 					<text><![CDATA[NOTA1]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="90d2fd1e-b68a-4269-a198-8eda5f423810" mode="Opaque" x="477" y="0" width="73" height="12" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="477" y="0" width="73" height="12" backcolor="#CCCCCC" uuid="90d2fd1e-b68a-4269-a198-8eda5f423810"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -183,7 +183,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 					<text><![CDATA[RESULTADO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="7be5ed01-aee0-4767-a925-7759f7994639" mode="Opaque" x="514" y="12" width="36" height="13" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="514" y="12" width="36" height="13" backcolor="#CCCCCC" uuid="7be5ed01-aee0-4767-a925-7759f7994639"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -201,7 +201,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="e285a060-4f98-4a17-9198-9f9eaa2accf8" positionType="Float" x="252" y="0" width="225" height="20"/>
+				<reportElement positionType="Float" x="252" y="0" width="225" height="20" uuid="e285a060-4f98-4a17-9198-9f9eaa2accf8"/>
 				<box topPadding="1" leftPadding="2" bottomPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -214,7 +214,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 				<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="54db379d-fb8c-4cdf-a055-017480a89bee" x="33" y="0" width="23" height="20"/>
+				<reportElement x="33" y="0" width="23" height="20" uuid="54db379d-fb8c-4cdf-a055-017480a89bee"/>
 				<box topPadding="1" leftPadding="2" bottomPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -227,7 +227,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 				<textFieldExpression><![CDATA[$F{partida}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="95231168-e8e4-4777-ae2d-806fd1583b0a" x="0" y="0" width="33" height="20"/>
+				<reportElement x="0" y="0" width="33" height="20" uuid="95231168-e8e4-4777-ae2d-806fd1583b0a"/>
 				<box topPadding="1" leftPadding="2" bottomPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -240,7 +240,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 				<textFieldExpression><![CDATA[$F{codigoempleado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="7b46b215-009e-4784-b9a8-e00419798a95" positionType="Float" x="74" y="0" width="178" height="20"/>
+				<reportElement positionType="Float" x="74" y="0" width="178" height="20" uuid="7b46b215-009e-4784-b9a8-e00419798a95"/>
 				<box topPadding="1" leftPadding="2" bottomPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -253,7 +253,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 				<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="f788efcd-209d-4fde-b6f0-557129cbefc1" x="56" y="0" width="18" height="20"/>
+				<reportElement x="56" y="0" width="18" height="20" uuid="f788efcd-209d-4fde-b6f0-557129cbefc1"/>
 				<box topPadding="1" leftPadding="2" bottomPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -266,7 +266,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 				<textFieldExpression><![CDATA[$F{subpartida}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="09b3afe2-1c83-4b3d-86e6-d528d0211e89" x="477" y="0" width="37" height="20"/>
+				<reportElement x="477" y="0" width="37" height="20" uuid="09b3afe2-1c83-4b3d-86e6-d528d0211e89"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -277,7 +277,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 				<textFieldExpression><![CDATA[$F{puntuacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="9e0e2c3f-1ef2-4701-873a-d7d6579eb22c" x="514" y="0" width="36" height="20"/>
+				<reportElement x="514" y="0" width="36" height="20" uuid="9e0e2c3f-1ef2-4701-873a-d7d6579eb22c"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -295,13 +295,12 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 	<pageFooter>
 		<band height="54" splitType="Stretch">
 			<textField>
-				<reportElement uuid="e094fc62-c691-4467-a71c-23f8a38dd5e2" x="211" y="14" width="80" height="20"/>
+				<reportElement x="211" y="14" width="80" height="20" uuid="e094fc62-c691-4467-a71c-23f8a38dd5e2"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="349ade9b-b606-4bc1-9565-10f47d79c7aa" x="291" y="14" width="43" height="20"/>
-				<textElement/>
+				<reportElement x="291" y="14" width="43" height="20" uuid="349ade9b-b606-4bc1-9565-10f47d79c7aa"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -309,7 +308,7 @@ group by fe.id,e.codigoempleado,s.nombrecompleto,re.partida,re.subpartida,p.nomb
 	<summary>
 		<band height="82">
 			<staticText>
-				<reportElement uuid="757aca74-158e-4758-b0f9-bd0b47e30468" x="0" y="62" width="225" height="20"/>
+				<reportElement x="0" y="62" width="225" height="20" uuid="757aca74-158e-4758-b0f9-bd0b47e30468"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 				</box>

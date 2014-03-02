@@ -34,15 +34,42 @@ class ConcursoController extends Controller
         $source = new Entity('AdminBundle:Plaza','grupo_plaza');
         
         $grid = $this->get('grid');
+        
+        // Plazas vacantes y en concurso
+        $em = $this->getDoctrine()->getManager();
+        $plazasvac = $em->CreateQuery('
+                  SELECT  distinct(p.id)
+                  FROM    AdminBundle:Plaza p
+                  JOIN    p.idrefrenda r
+                  WHERE   r.idempleado is null
+                  AND     p.id NOT IN (
+                          select IDENTITY(c.idplaza) 
+                          from ExpedienteBundle:Concurso c 
+                          where c.fechacierre > :fechaactual
+                          and c.idplaza not in (
+                               select IDENTITY(r2.idplaza)
+                               from AdminBundle:RefrendaAct r2
+                               group by r2.idplaza
+                               having count(r2.idplaza)>=2 
+                               )
+                          )'
+                  )
+                  ->setParameter('fechaactual', new \Datetime('now'));
+
+        $plazas = $plazasvac->getResult();
+        // Fin plazas vacantes
+
 
         //manipulando la Consulta del grid
         $tableAlias = $source->getTableAlias();
         $source->manipulateQuery(
-            function($query) use ($tableAlias){
+            function($query) use ($tableAlias,$plazas){
                 $query->andWhere($tableAlias.'.nombreplaza != :p')
                       ->andWhere($tableAlias.'.nombreplaza != :pr')
+                      ->andWhere($tableAlias.'.id in (:plazas)')
                       ->setParameter('p','PRESIDENTE')
-                      ->setParameter('pr','PRESIDENCIA');
+                      ->setParameter('pr','PRESIDENCIA')
+                      ->setParameter('plazas',$plazas);
             }
         );
            
@@ -64,7 +91,7 @@ class ConcursoController extends Controller
         $rowAction1 = new RowAction('Seleccionar', 'concurso_new');
         $grid->addRowAction($rowAction1);
         
-
+        $grid->setNoResultMessage('La plaza no se encuentra vacante o ya está en concurso');
         $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
         
         // Incluimos camino de migas
@@ -344,7 +371,6 @@ class ConcursoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-        echo $request->get('plaza');
         $entity = $em->getRepository('ExpedienteBundle:Concurso')->find($id);
 
         if (!$entity) {
