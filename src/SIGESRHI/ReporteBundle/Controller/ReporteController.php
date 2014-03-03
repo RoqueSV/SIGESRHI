@@ -77,8 +77,7 @@ class ReporteController extends Controller
      /* Obtengo parametros */
      $request=$this->getRequest();
      $idSol=$request->get('idsol'); 
-     $ruta = $request->get('ruta');
-     $vista = $request->get('vista');   
+     $vista = $request->get('vista_retorno');   
      $nogrid = $request->get('nogrid');       
      
     //Incluimos camino de migas 
@@ -96,7 +95,14 @@ class ReporteController extends Controller
        $breadcrumbs->addItem("Aspirante", $this->get("router")->generate("pantalla_aspirante"));
        $breadcrumbs->addItem("Listado de aspirantes", $this->get("router")->generate("solicitud_caspirante"));
      }
-     $breadcrumbs->addItem("Consultar solicitud", $this->get("router")->generate($ruta,array("id"=>$idSol,"vista_retorno"=>$vista,"nogrid"=>$nogrid)));
+
+     if(isset($nogrid)){
+     $breadcrumbs->addItem("Consultar solicitud", $this->get("router")->generate('solicitud_show',array("id"=>$idSol,"vista_retorno"=>$vista,"nogrid"=>$nogrid)));
+        }
+        else
+        {
+         $breadcrumbs->addItem("Consultar solicitud", $this->get("router")->generate('solicitud_show',array("id"=>$idSol,"vista_retorno"=>$vista)));   
+        }
      $breadcrumbs->addItem("Reporte", $this->get("router")->generate("reporte_solicitudempleo"));
 
      // Nombre reporte

@@ -46,7 +46,7 @@ function eliminar(ruta) {
 {% endif %}
 
  {% for factor in entity.factores %}
-    <table border="2" class="table-bordered " width="100%">
+    <table border="2" class="table-bordered tablaformularioeval" width="100%" bgcolor="#8A889C">
         <tr><th colspan="{{factor.opciones|length}}" class="text-center"><b>{{ factor.nombrefactor}}</b></th></tr>
         <tr><td colspan="{{factor.opciones|length}}">  <p class="justifyText"> {{factor.descripcionfactor}} </p> </td></tr>
         </tr>
@@ -74,5 +74,5 @@ function eliminar(ruta) {
     <a onclick="eliminar('{{path('formularioevaluacion_deshabilita', { 'id': entity.id })}}')" class="btn btn-danger">Eliminar</a>
     </div>
 <br>    
-    
+
 {% endblock %}

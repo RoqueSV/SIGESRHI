@@ -379,7 +379,6 @@ class SolicitudempleoController extends Controller
     public function showAction($id)
     {
         //comprobar si viene de un grid u otra pagina (por parametro enviado)
-        
         $request = $this->getRequest();
         $var = $request->get('nogrid');
         $vista_retorno = $request->get('vista_retorno');
