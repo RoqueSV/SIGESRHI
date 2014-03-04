@@ -198,4 +198,13 @@ text-align : center;
 .tablachica {
         width:60%;
     }
+
+
+.tablaformularioeval{
+    background-color:#BBBBBB;
+}
+
+.table tr{
+    background-color:#BBBBBB;   
+}
 /*******************/

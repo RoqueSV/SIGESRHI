@@ -353,25 +353,20 @@
 {% set ruta = app.request.attributes.get('_route') %}
 
     {% if nogrid == 0 %}
-
+        {# la consulta viene desde una pagina cualquiera #}
         <div class="text-center">
-        <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id, 'ruta':ruta, 'vista':vista_retorno, 'nogrid':nogrid }) }}" class="btn btn-primary">Generar PDF</a>
+        <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id, 'nogrid':nogrid }) }}" class="btn btn-primary">Generar PDF</a>
          <a href="{{app.request.headers.get('referer')}}"  class="btn">Regresar</a>
-        {#{% if entity.numsolicitud == 0 %}
-        <a href="{{ path('solicitud_pruebanumsol', { 'id': entity.id }) }}" class="btn">Asignar Numero de Solicitud</a>
-        {% endif %}#}
         </div>
 
     {% else %}
+        {# la consulta viene desde un grid de solicitud#}
         <div class="text-center">
-        <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id, 'ruta':ruta, 'vista':vista_retorno, 'nogrid':nogrid }) }}" class="btn btn-primary">Generar PDF</a>
+        <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id, 'vista_retorno':vista_retorno }) }}" class="btn btn-primary">Generar PDF</a>
         <button type="button" class="btn" onclick="location.href='{% if entity.idexpediente.tipoexpediente == 'I' or entity.idexpediente.tipoexpediente == 'A' %} {{ path ('solicitud_caspirante') }} {% elseif entity.idexpediente.tipoexpediente == 'E' or entity.idexpediente.tipoexpediente == 'T' %}{{ path ('solicitud_cempleado') }} {% elseif entity.idexpediente.tipoexpediente == 'X' %} {{ path('solicitud_cinactivo')}} {% endif %}'">Regresar al listado</button>
         {% if vista_retorno == 1 or vista_retorno == 2 or vista_retorno == 4 or vista_retorno == 5 %}
         <a href="{{ path('solicitud_edit', { 'id': entity.id, 'vista_retorno':vista_retorno }) }}" class="btn">Editar Registro</a>
         {% endif %}
-        {#{% if entity.numsolicitud == 0 %}
-        <a href="{{ path('solicitud_pruebanumsol', { 'id': entity.id }) }}" class="btn">Asignar Numero de Solicitud</a>
-        {% endif %}#}
         </div>
      {% endif %}
 
