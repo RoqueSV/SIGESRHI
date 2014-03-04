@@ -33,10 +33,10 @@ class Docnoticia
     /**
      * @var string
      *
-     * @ORM\Column(name="nombredocnoticia", type="string", length=50, nullable=false)
+     * @ORM\Column(name="nombredocnoticia", type="string", length=100, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el nombre del archivo")
      * @Assert\Length(
-     * max = "50",
+     * max = "100",
      * maxMessage = "El nombre de la noticia no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -45,9 +45,9 @@ class Docnoticia
     /**
      * @var string
      *
-     * @ORM\Column(name="rutadocnoticia", type="string", length=50, nullable=false)
+     * @ORM\Column(name="rutadocnoticia", type="string", length=150, nullable=false)
      * @Assert\Length(
-     * max = "100",
+     * max = "150",
      * maxMessage = "La ruta de la noticia no debe exceder los {{limit}} caracteres"
      * )
      *

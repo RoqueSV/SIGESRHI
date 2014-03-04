@@ -61,16 +61,21 @@
 
     <form action="{{ path('reporte_empleado_antiguedad') }}" method="post">
 
-      <h4 class="text-center"> Ingrese una cantidad en años </h4>
+      <h4 class="text-center"> Seleccione una cantidad </h4>
       <div class='text-center'>
 
-         <div class="control-group">
+        <!-- <div class="control-group">
             <label for="codempleado" class="control-label required">Cantidad *</label>
             <div class="controls">
             <input type="text" name="anios" id="anios" maxlength="2" required="required" class="input-small" data-bvalidator="number"/>
-            </div>
-         </div>
-
+            </div>  -->
+        <select id="anios" name="anios" class="input-mini">
+            {% for i in 1.. 50 %}
+             <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+         </select>
+         <br/>
+      
         <button type='submit' class='btn btn-primary'>Generar</button>
       </div>
    </form>

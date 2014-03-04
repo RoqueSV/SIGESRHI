@@ -100,6 +100,13 @@ class Concurso
      */
     private $idcentro;   
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="Memorandum", mappedBy="idconcurso")
+     * 
+     */
+    private $idmemorandum;
+
     /**
      * Get id
      *
@@ -299,6 +306,7 @@ class Concurso
     public function __construct()
     {
         $this->idempleadoconcurso = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->idmemorandum = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -332,5 +340,38 @@ class Concurso
     public function getIdempleadoconcurso()
     {
         return $this->idempleadoconcurso;
+    }
+
+    /**
+     * Add idmemorandum
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Memorandum $idmemorandum
+     * @return Concurso
+     */
+    public function addIdmemorandum(\SIGESRHI\ExpedienteBundle\Entity\Memorandum $idmemorandum)
+    {
+        $this->idmemorandum[] = $idmemorandum;
+    
+        return $this;
+    }
+
+    /**
+     * Remove idmemorandum
+     *
+     * @param \SIGESRHI\ExpedienteBundle\Entity\Memorandum $idmemorandum
+     */
+    public function removeIdmemorandum(\SIGESRHI\ExpedienteBundle\Entity\Memorandum $idmemorandum)
+    {
+        $this->idmemorandum->removeElement($idmemorandum);
+    }
+
+    /**
+     * Get idmemorandum
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIdmemorandum()
+    {
+        return $this->idmemorandum;
     }
 }

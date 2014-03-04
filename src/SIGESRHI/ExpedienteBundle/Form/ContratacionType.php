@@ -20,10 +20,12 @@ class ContratacionType extends AbstractType
                   'label'=>'Sueldo inicial',  
                   'required'  => true,
                   'attr' => array('class' => 'input-small dinero', 'data-bvalidator'=>'required')))
-            ->add('horaslaborales',null, array(
+            ->add('horaslaborales', 'choice', array(
+                  'required' => true, 
                   'label'=>'Horas laborales',
-                  'max_length'=>'2',
-                  'attr' => array('class'=>'input-mini', 'data-bvalidator'=>'between[1:24]')))
+                  'choices' => $this->NumList(),
+                  'empty_value' => ' ',
+                  'attr'=>array('class'=>'input-mini')))
             ->add('jornadalaboral','choice', array(
                   'label'=>'Jornada laboral',
                   'choices' => array(
@@ -120,5 +122,15 @@ class ContratacionType extends AbstractType
     public function getName()
     {
         return 'sigesrhi_expedientebundle_contrataciontype';
+    }
+
+    public function NumList() {
+    $listNumber = array();
+     
+    for($i=1; $i<=8; $i++){
+      $listNumber[$i] = $i; 
+    }
+
+    return array_combine($listNumber, $listNumber);
     }
 }

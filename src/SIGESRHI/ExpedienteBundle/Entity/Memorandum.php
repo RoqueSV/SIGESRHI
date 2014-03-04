@@ -42,7 +42,7 @@ class Memorandum
     /**
      * @var \Concurso
      *
-     * @ORM\ManyToOne(targetEntity="Concurso")
+     * @ORM\ManyToOne(targetEntity="Concurso", inversedBy="idmemorandum")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idconcurso", referencedColumnName="id")
      * })

@@ -11,7 +11,7 @@ use APY\DataGridBundle\Grid\Mapping as GRID;
  *
  * @ORM\Table(name="plaza")
  * @ORM\Entity
- * @GRID\Source(columns="id,nombreplaza,misionplaza,idconcurso.id,idconcurso.fechacierre", groups={"grupo_plaza"})
+ * @GRID\Source(columns="id,nombreplaza,misionplaza", groups={"grupo_plaza"})
  * @GRID\Source(columns="id,nombreplaza,misionplaza", groups={"grupo_plaza_reporte"})
  * @ORM\HasLifecycleCallbacks
  */
@@ -232,8 +232,6 @@ class Plaza
     
     /**
      * @ORM\OneToMany(targetEntity="\SIGESRHI\ExpedienteBundle\Entity\Concurso", mappedBy="idplaza")
-     * @GRID\Column(field="idconcurso.id", groups={"grupo_plaza"}, visible=false, filterable=false)
-     * @GRID\Column(field="idconcurso.fechacierre", groups={"grupo_plaza"}, visible=false, filterable=false)
      * 
      */
     private $idconcurso;
