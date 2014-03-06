@@ -16,7 +16,7 @@
 
     <h3 class="text-center">Puntaje</h3>
 
-    <table  class="table-bordered table-hover mitable centered-table">
+    <table  class="table-bordered table-hover mitable centered-table table tabla-corta">
             <tr>
                 <th  width="50%">Nombre:</th>
                 <th>Puntaje minimo:</th>
@@ -42,7 +42,13 @@
             {{ form_widget(delete_form) }}
         </form>
     </div>
-    
+
+<style>
+.tabla-corta
+{
+width:60%;
+}
+</style>
 
     <script type='text/javascript'>
 function eliminar() {

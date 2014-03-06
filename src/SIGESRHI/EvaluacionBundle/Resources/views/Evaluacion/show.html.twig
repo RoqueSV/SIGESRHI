@@ -43,7 +43,7 @@
     <b>CALIFICACIÓN POR PUNTOS Y POR RANGOS</b>
     {% set calificacion = "" %}
 
-            <table class="table-bordered table-hover mitable centered-table" width="50%">
+            <table class="table-bordered table-hover mitable centered-table table tabla-corta" width="50%">
                 <tr>
                     <th>Calificación</th><th>Puntuación</th>
                 </tr>
@@ -94,6 +94,13 @@
   <input type="hidden" name='idevaluacion' id='idevaluacion' value={{evaluacion.id}} />
   <input type="hidden" name='calificacion' id='calificacion' value="{{calificacion}}" />
 </form>
+
+<style>
+.tabla-corta
+{
+width:50%;
+}
+</style>
 
 <script>
 /*
