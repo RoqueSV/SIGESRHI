@@ -54,7 +54,7 @@ where mp.idplaza = $P{IDPLAZA}]]>
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement positionType="Float" x="1" y="0" width="306" height="20" uuid="b5df14b1-f955-47fb-aa7b-a7d97e066c6f"/>
+				<reportElement uuid="b5df14b1-f955-47fb-aa7b-a7d97e066c6f" positionType="Float" x="1" y="0" width="306" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -64,11 +64,16 @@ where mp.idplaza = $P{IDPLAZA}]]>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement positionType="Float" x="0" y="-1" width="612" height="20" uuid="b94566db-4a67-4926-a56e-bd2bb170e339"/>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="b94566db-4a67-4926-a56e-bd2bb170e339" positionType="Float" x="20" y="0" width="612" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
+					<paragraph spacingBefore="7"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nombremarcoref}]]></textFieldExpression>
 			</textField>
+			<ellipse>
+				<reportElement uuid="1a164bfe-4bf2-49c4-988f-de2a7ff9868c" positionType="Float" x="10" y="12" width="3" height="3" backcolor="#000000"/>
+			</ellipse>
 		</band>
 	</detail>
 </jasperReport>

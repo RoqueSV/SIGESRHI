@@ -82,7 +82,7 @@
 				<imageExpression><![CDATA[$P{ubicacionReport} +"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement uuid="94453d06-4d7d-4e74-af49-7f62ac3e92c1" x="87" y="59" width="434" height="31"/>
+				<reportElement uuid="94453d06-4d7d-4e74-af49-7f62ac3e92c1" x="45" y="59" width="476" height="31"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="14" isBold="true"/>
 				</textElement>

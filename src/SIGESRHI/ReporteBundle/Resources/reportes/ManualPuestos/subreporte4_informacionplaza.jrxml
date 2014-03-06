@@ -17,7 +17,7 @@
 		<groupHeader>
 			<band height="21">
 				<textField>
-					<reportElement x="32" y="0" width="518" height="20" uuid="0fef799f-016a-4ce4-a5e5-1f12740509b2"/>
+					<reportElement uuid="0fef799f-016a-4ce4-a5e5-1f12740509b2" x="32" y="0" width="518" height="20"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
@@ -32,7 +32,7 @@
 	<columnHeader>
 		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement x="23" y="1" width="527" height="20" uuid="a5376c10-73ed-455a-a0e0-b0f3a44c85da"/>
+				<reportElement uuid="a5376c10-73ed-455a-a0e0-b0f3a44c85da" x="21" y="1" width="529" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -43,7 +43,7 @@
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="32" y="0" width="518" height="20" uuid="0231bad7-6a5d-4d76-8ca5-05947f232aeb"/>
+				<reportElement uuid="0231bad7-6a5d-4d76-8ca5-05947f232aeb" x="32" y="0" width="518" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="false"/>
 				</textElement>
