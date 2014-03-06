@@ -23,7 +23,7 @@
 
 <div class="text-center">
 Factores que observan: <br>
-<table border="1" class="centered-table table-bordered table-hover" width="50%" align="center">
+<table border="1" class="centered-table table-bordered table-hover table tabla-corta mitable" align="center">
 {% for factor in evaluacion.Respuestas[0].idfactor.idformulario.Factores %}
 		<tr><td>{{loop.index}}. {{ factor.nombrefactor}} </td></tr>
 {% endfor %}
@@ -83,6 +83,12 @@ Factores que observan: <br>
     textarea {
         width:90%;
     }
+
+ 
+.tabla-corta
+{
+width:45%;
+}
 </style>
 
 <script>

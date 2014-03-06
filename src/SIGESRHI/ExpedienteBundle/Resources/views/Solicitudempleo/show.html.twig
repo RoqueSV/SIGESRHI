@@ -355,7 +355,7 @@
     {% if nogrid == 0 %}
         {# la consulta viene desde una pagina cualquiera #}
         <div class="text-center">
-        <a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id, 'nogrid':nogrid }) }}" class="btn btn-primary">Generar PDF</a>
+        {#<a href="{{ path('reporte_solicitudempleo', { 'idsol':entity.id, 'nogrid':nogrid }) }}" class="btn btn-primary">Generar PDF</a>#}
          <a href="{{app.request.headers.get('referer')}}"  class="btn">Regresar</a>
         </div>
 
