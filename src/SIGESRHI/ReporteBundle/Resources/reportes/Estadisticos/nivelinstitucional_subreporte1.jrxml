@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="nivelinstitucional_subreporte1" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="55c7b427-9e1c-47c1-b024-37d45a9ab043">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="84"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="centro" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -160,14 +160,14 @@ order by 3]]>
 			<frame>
 				<reportElement uuid="8bb40079-686c-4ffc-8ca6-974c1169c517" x="0" y="0" width="574" height="32"/>
 				<textField isStretchWithOverflow="true">
-					<reportElement uuid="2fabe34d-7a52-4d0a-92a9-e560745b35c1" mode="Transparent" x="286" y="0" width="233" height="32" backcolor="#FFFFFF"/>
+					<reportElement uuid="2fabe34d-7a52-4d0a-92a9-e560745b35c1" positionType="Float" mode="Transparent" x="286" y="0" width="233" height="32" backcolor="#FFFFFF"/>
 					<box topPadding="1" leftPadding="2" bottomPadding="1" rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
 						<font size="9"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
@@ -186,14 +186,14 @@ order by 3]]>
 					<textFieldExpression><![CDATA[$F{codigoempleado}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="d77b0414-385c-4424-9dca-3fbc7023634d" x="115" y="0" width="171" height="32"/>
+					<reportElement uuid="d77b0414-385c-4424-9dca-3fbc7023634d" positionType="Float" x="115" y="0" width="171" height="32"/>
 					<box topPadding="1" leftPadding="2" bottomPadding="1" rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
 						<font size="9"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
@@ -252,55 +252,55 @@ order by 3]]>
 	<columnFooter>
 		<band height="45">
 			<staticText>
-				<reportElement uuid="f0b8fbba-a4c4-4205-b8fd-8e26bc40e19d" x="438" y="0" width="81" height="15"/>
+				<reportElement uuid="f0b8fbba-a4c4-4205-b8fd-8e26bc40e19d" x="396" y="0" width="136" height="15"/>
 				<textElement/>
-				<text><![CDATA[Total puestos:]]></text>
+				<text><![CDATA[Total puestos evaluados:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="30910f5e-2d32-4c13-b4db-e6c7520009f2" x="1" y="0" width="94" height="15"/>
+				<reportElement uuid="30910f5e-2d32-4c13-b4db-e6c7520009f2" x="1" y="0" width="127" height="15"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Total calificaciones:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8bbf532d-fcd1-4197-8a83-f824ac66ccbc" x="1" y="15" width="47" height="15"/>
+				<reportElement uuid="8bbf532d-fcd1-4197-8a83-f824ac66ccbc" x="1" y="15" width="65" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
 				<text><![CDATA[Excelente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f2a0f902-9f63-4616-a173-6c871c39bea9" x="95" y="15" width="65" height="15"/>
+				<reportElement uuid="f2a0f902-9f63-4616-a173-6c871c39bea9" x="95" y="15" width="77" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
-				<text><![CDATA[Muy bueno:]]></text>
+				<text><![CDATA[Muy Bueno:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f1a478f0-a8c5-4a0e-a3ba-644d20513ff5" x="1" y="30" width="47" height="15"/>
+				<reportElement uuid="f1a478f0-a8c5-4a0e-a3ba-644d20513ff5" x="1" y="30" width="65" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
 				<text><![CDATA[Bueno:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b6d5233c-3725-4c06-9f55-1f657ee988ca" x="95" y="30" width="65" height="15"/>
+				<reportElement uuid="b6d5233c-3725-4c06-9f55-1f657ee988ca" x="95" y="30" width="77" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif"/>
 				</textElement>
 				<text><![CDATA[Insatisfactorio:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="71a3a036-53d7-45d8-9282-9a6374fb9f23" x="519" y="0" width="40" height="15"/>
+				<reportElement uuid="71a3a036-53d7-45d8-9282-9a6374fb9f23" x="514" y="0" width="40" height="15"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement uuid="24d80e56-e77d-47db-b1ab-4a267438bff9" x="48" y="15" width="33" height="15"/>
+				<reportElement uuid="24d80e56-e77d-47db-b1ab-4a267438bff9" x="51" y="15" width="33" height="15"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$V{countE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="950f7c56-9a7c-4af3-a29d-745f7fb794d0" x="48" y="30" width="33" height="15"/>
+				<reportElement uuid="950f7c56-9a7c-4af3-a29d-745f7fb794d0" x="51" y="30" width="33" height="15"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$V{countB}]]></textFieldExpression>
 			</textField>

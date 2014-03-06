@@ -10,7 +10,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select e.id,to_char(fecharegistroaccion,'DD"/"TMMonth"/"YYYY') as fecharegistroaccion,upper(nombretipoaccion),tipoaccion,motivoaccion,numacuerdo from expediente e left outer join accionpersonal acc on(e.id=acc.idexpediente) left outer join tipoaccion  ta on (ta.id=acc.idtipoaccion) where e.id=$P{idexp} and upper(nombretipoaccion)=$P{acciones}]]>
+		<![CDATA[select e.id,to_char(fecharegistroaccion,'DD"/"TMMonth"/"YYYY') as fecharegistroaccion,upper(nombretipoaccion),tipoaccion,motivoaccion,numacuerdo from expediente e left outer join accionpersonal acc on(e.id=acc.idexpediente) left outer join tipoaccion  ta on (ta.id=acc.idtipoaccion) where e.id=$P{idexp} and upper(nombretipoaccion)=$P{acciones} order by 2]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="fecharegistroaccion" class="java.lang.String"/>
@@ -22,11 +22,11 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="35" splitType="Stretch">
-			<textField>
-				<reportElement uuid="b25179ce-924b-4f69-8f06-abe28a5eaf2f" positionType="Float" isPrintRepeatedValues="false" x="0" y="0" width="572" height="35"/>
+		<band height="50" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="b25179ce-924b-4f69-8f06-abe28a5eaf2f" positionType="Float" isPrintRepeatedValues="false" x="0" y="0" width="572" height="50"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html"/>
-				<textFieldExpression><![CDATA[$F{fecharegistroaccion}+"<br>"+$F{numacuerdo}+" "+$F{motivoaccion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fecharegistroaccion}+"<br>"+$F{motivoaccion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

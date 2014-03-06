@@ -95,7 +95,7 @@ reporte_evaluaciones:
     defaults: { _controller: ReporteBundle:ModuloReporte:ReporteEvaluaciones }
 
 reporte_empleado_evaluacion:
-    pattern:  /reporteevaluacionesempleados
+    pattern:  /reporteevalempleados
     defaults: { _controller: ReporteBundle:ModuloReporte:ReporteEmpleadoEvaluacion }
 
 reporte_manualdepuestos:

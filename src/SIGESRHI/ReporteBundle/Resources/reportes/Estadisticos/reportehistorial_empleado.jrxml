@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportehistorial_empleado" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2f5ef40b-5152-4fdd-add7-c648970aaf69">
 	<property name="ireport.zoom" value="1.5026296018031553"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="180"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Reportes\\Estadisticos\\"]]></defaultValueExpression>
@@ -13,7 +13,7 @@
 	   when hs.estadoCivil= 'A' then 'Acompañado(a)'
 	   when hs.estadoCivil= 'V' then 'Viudo(a)'
 	   when hs.estadoCivil= 'D' then 'Divorciado(a)'
-	   else 'Casado(a)' end as estadocivil,hs.telefonofijo as telefonos,hs.isss,concat(substr(hs.nit,1,4),'-',substr(hs.nit,5,6),'-',substr(hs.nit,11,3),'-',substr(hs.nit,14)) as nit,to_char(fechaingreso,'DD "de" TMMonth "de" YYYY') as fechaingreso,to_char(hs.sueldoinicial,'$9,999.00') as sueldoinicial,coalesce(hs.informacionadicional,' ') as informacionadicional,hs.cargo,destacadoen,educacion,codigoempleado
+	   else 'Casado(a)' end as estadocivil,hs.telefonofijo as telefonos,hs.isss,concat(substr(hs.nit,1,4),'-',substr(hs.nit,5,6),'-',substr(hs.nit,11,3),'-',substr(hs.nit,14)) as nit,to_char(fechaingreso,'DD "de" TMMonth "de" YYYY') as fechaingreso,to_char(hs.sueldoinicial,'$9,999.00') as sueldoinicial,coalesce(hs.informacionadicional,' ') as informacionadicional,upper(hs.cargo) as cargo,destacadoen,educacion,codigoempleado
 from solicitudempleo se join expediente e on(se.idexpediente=e.id)
 join empleado emp on (e.id=emp.idexpediente) join hojaservicio  hs on (e.id=hs.idexpediente)
 join accionpersonal acc on (e.id=acc.idexpediente) join tipoaccion ta on (ta.id=acc.idtipoaccion)
@@ -78,7 +78,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				</textElement>
 				<text><![CDATA[ ISSS:]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="c483d994-629a-4632-81a1-cfcac257637f" x="365" y="244" width="75" height="20"/>
 				<box leftPadding="3">
 					<pen lineWidth="0.5"/>
@@ -100,7 +100,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[Dirección:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="553ced73-dcf0-467d-8607-34e150cc7659" x="80" y="285" width="492" height="18"/>
+				<reportElement uuid="553ced73-dcf0-467d-8607-34e150cc7659" x="75" y="285" width="497" height="18"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -109,14 +109,14 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{destacadoen}]]></textFieldExpression>
 			</textField>
-			<image scaleImage="FillFrame">
+			<image scaleImage="FillFrame" onErrorType="Blank">
 				<reportElement uuid="a966880a-6f02-46c6-8f9c-6097466e06cc" x="5" y="118" width="95" height="121">
 					<printWhenExpression><![CDATA[$F{fotografia}!=null]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{ubicacionReport}+"/../../../../web/uploads/fotografias/"+$F{fotografia}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement uuid="cf42613e-920b-4c9b-a0ac-141f99cdba40" x="106" y="152" width="109" height="20"/>
+				<reportElement uuid="cf42613e-920b-4c9b-a0ac-141f99cdba40" x="106" y="152" width="122" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -140,7 +140,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{lugarnac}+", "+$F{fechanac}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="b3536072-d328-46b2-b86b-63fc1d0d5796" x="59" y="46" width="481" height="20"/>
+				<reportElement uuid="b3536072-d328-46b2-b86b-63fc1d0d5796" x="57" y="47" width="481" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -187,7 +187,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{dui}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="f7a4719e-24f0-4271-b7cb-8c5bc8b23e56" x="2" y="303" width="121" height="20"/>
+				<reportElement uuid="f7a4719e-24f0-4271-b7cb-8c5bc8b23e56" x="2" y="303" width="172" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -211,7 +211,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<text><![CDATA[Extendido en:]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement uuid="b5f2047e-ee3b-46e1-88fc-a466a29fc9bb" x="70" y="245" width="65" height="20"/>
+				<reportElement uuid="b5f2047e-ee3b-46e1-88fc-a466a29fc9bb" x="70" y="245" width="66" height="20"/>
 				<box leftPadding="3">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -220,10 +220,8 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sueldoinicial}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="70198fdf-e0c6-4c9e-8258-18bc36e7985b" x="2" y="325" width="570" height="50" isRemoveLineWhenBlank="true">
-					<printWhenExpression><![CDATA[$F{informacionadicional}!=null]]></printWhenExpression>
-				</reportElement>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="70198fdf-e0c6-4c9e-8258-18bc36e7985b" x="2" y="324" width="570" height="50" isRemoveLineWhenBlank="true"/>
 				<box leftPadding="1" rightPadding="2"/>
 				<textElement textAlignment="Justified">
 					<font fontName="SansSerif"/>
@@ -272,21 +270,21 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{cargo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="247555f8-aee7-4d3b-ade3-aedb4afeece2" x="106" y="173" width="114" height="20"/>
+				<reportElement uuid="247555f8-aee7-4d3b-ade3-aedb4afeece2" x="106" y="173" width="130" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Teléfonos(Fijo,Movil):]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="46c70431-2d29-474b-b9bd-45b7043edca5" x="2" y="283" width="85" height="20"/>
+				<reportElement uuid="46c70431-2d29-474b-b9bd-45b7043edca5" x="2" y="283" width="100" height="20"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Destacado en:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="5447db4a-3a38-486e-89f3-ee5883750207" x="157" y="194" width="415" height="19"/>
+				<reportElement uuid="5447db4a-3a38-486e-89f3-ee5883750207" x="157" y="195" width="415" height="19"/>
 				<box topPadding="2" leftPadding="3" rightPadding="0">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -381,17 +379,17 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 	<detail>
 		<band height="33" splitType="Stretch">
 			<textField>
-				<reportElement uuid="c5c8e0dd-99fe-483c-8096-2497b7263374" x="2" y="-1" width="244" height="18"/>
+				<reportElement uuid="c5c8e0dd-99fe-483c-8096-2497b7263374" x="2" y="0" width="570" height="18"/>
+				<box>
+					<bottomPen lineWidth="0.75"/>
+				</box>
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombretipoaccion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombretipoaccion}+"S"]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement uuid="81766c0f-34e5-4353-96b0-ecb6cf4c6830" x="0" y="18" width="572" height="1"/>
-			</line>
 			<subreport>
-				<reportElement uuid="c2d66530-e949-4f21-a388-094b712a3549" x="0" y="19" width="572" height="14"/>
+				<reportElement uuid="c2d66530-e949-4f21-a388-094b712a3549" x="0" y="22" width="572" height="10"/>
 				<subreportParameter name="acciones">
 					<subreportParameterExpression><![CDATA[$F{nombretipoaccion}]]></subreportParameterExpression>
 				</subreportParameter>
