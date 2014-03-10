@@ -318,6 +318,64 @@ class EvaluacionController extends Controller
           throw $this->createNotFoundException('No se puede encontrar la entidad Formulario.');
         }
 
+        //Obtenemos la antiguedad del empleado para establecer el tiempo maximo de supervision que pueda tener.
+        $antiguedad = $empleadoevaluado->getIdexpediente()->getHojaservicio()->getFechaingreso();
+        $cant = intval((strtotime('now') - strtotime($antiguedad->format('d-m-Y')))/60/60/24/30); //meses
+      echo $cant/12;
+        $tiempo = array();
+
+        
+        for ($i=0;$i<=$cant;$i=$i+6){
+
+            if($i == 0){
+                $tiempo[]= "menos de 6 meses.";
+            }
+            else{
+
+                if($i==6){
+                    $tiempo[]= $i." meses.";
+                }
+                elseif($i % 12 == 0 && $i ==12){
+                $tiempo[] = ($i/12)." año.";
+                }
+                /*elseif($i % 12 !=0 && $i <= 18){ //para establecer rangos de 6 meses
+                 $tiempo[] = intval($i/12)." año y 6 meses.";   
+                }*/
+                elseif($i % 12 == 0 && $i > 12){
+                $tiempo[] = ($i/12)." años.";
+                }
+               /* elseif($i % 12 !=0 && $i > 18){ //para establecer rangos de 6 meses
+                 $tiempo[] = intval($i/12)." años y 6 meses.";   
+                }*/
+
+
+            }
+
+
+           /* if($i<=6){
+                $tiempo[] = "menos de 6 meses.";
+            }
+            elseif( $i > 6 && $i < 12)
+            {
+                $tiempo[] = "menos de 6 meses.";
+                $tiempo[] = "6 meses.";
+            }
+            elseif($i == 12 ){
+            $tiempo[] = ($i/12)." año.";
+            
+            if ($i<$cant){
+                    $tiempo[] = ($i/12)." año 6 meses.";
+                }
+            }
+            elseif($i % 12 == 0 && $i !=12){
+                $tiempo[] = ($i/12)." años.";
+                
+            }elseif($i % 12 != 0){
+
+                    $tiempo[] = intval($i/12)." años 6 meses.";
+            } */
+        }
+       //fin antiguedad del empleado
         
         $evaluacion = new Evaluacion();
         $evaluacion->setFecharealizacion(new \datetime(date('d-m-Y')));
@@ -354,6 +412,7 @@ class EvaluacionController extends Controller
             'jefe' => $jefe,
             'refrenda'=>$refrenda,
             'refrendajefe'=> $refrendajefe,
+            'tiempo'=>$tiempo,
         ));
     }
 

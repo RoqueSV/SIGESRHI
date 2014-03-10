@@ -84,7 +84,12 @@
 
 
 
- Tiempo de supervisar al empleado:  <input type="text" name="supervisa" id="supervisa" size="100" required="required"/>
+ Tiempo de supervisar al empleado:  {#<input type="text" name="supervisa" id="supervisa" size="100" required="required"/>#}
+ <select name="supervisa" id="supervisa" required="required">
+    {% for t in tiempo %}
+    <option value="{{t}}">{{t}}</option>
+    {% endfor %}
+ </select>
 <br>
     Comentarios: &nbsp;&nbsp;&nbsp;
     <textarea rows="3" cols="100" required="required" name="comentario" id="comentario"></textarea> 
@@ -105,14 +110,10 @@
         width:70%;
     }
 </style>
-{#
-<script type='text/javascript'>
-function registrar() {
 
-        if(confirm('\xbf Se registrara esta evaluación, seguro de continuar?')) {
-            document.getElementById('frm_evaluacion').submit();
-            }
-        }
+<script type='text/javascript'>
+    $(document).ready(function(){
+    $('#supervisa').prop("selectedIndex",-1);
+    });//ready
 </script>
-#}
 {% endblock %}

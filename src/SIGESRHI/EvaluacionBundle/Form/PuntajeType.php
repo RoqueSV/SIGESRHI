@@ -14,6 +14,7 @@ class PuntajeType extends AbstractType
             ->add('nombrepuntaje',null, array('label'=>'Nombre: ', 'attr'=>array('class'=>'input-medium')))
             ->add('puntajemin',null, array('label'=>'Puntaje Minimo: ', 'attr'=>array('class'=>'input-small')))
             ->add('puntajemax', null, array('label'=>'Puntaje Máximo: ', 'attr'=>array('class'=>'input-small')))
+            ->add('nombreabreviado', null, array('label'=>'Nombre Abreviado: ', 'attr'=>array('class'=>'input-small')))
            // ->add('idformulario',null, array('label'=>'Formularios donde aplica el puntaje: ', 'multiple'=>true, expanded'=>true))
            /* ->add('idformulario','entity', array(
                     'class' => 'EvaluacionBundle:Formularioevaluacion',

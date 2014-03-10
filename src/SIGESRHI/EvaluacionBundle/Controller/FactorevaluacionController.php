@@ -255,6 +255,8 @@ class FactorevaluacionController extends Controller
             $idform=$entity->getIdformulario()->getId();
             $em->remove($entity);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('msg','Factor eliminado correctamente.');
         }
 
         return $this->redirect($this->generateUrl('factorevaluacion_newfactor',array('id'=>$idform)));

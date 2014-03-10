@@ -64,6 +64,18 @@ class Puntaje
     */
     private $idformulario;
 
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="nombreabreviado", type="string", length=2, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el nombre abreviado del puntaje")
+     * @Assert\Length(
+     * max = "2",
+     * maxMessage = "El nombre del puntaje no debe exceder los {{limit}} caracteres"
+     * )
+     */
+    private $nombreabreviado;
+
     /**
      * Constructor
      */
@@ -191,6 +203,30 @@ class Puntaje
         return $this->idformulario;
     }
 
+
+    /**
+     * Set nombreabreviado
+     *
+     * @param string $nombreabreviado
+     * @return Puntaje
+     */
+    public function setNombreabreviado($nombreabreviado)
+    {
+        $this->nombreabreviado = $nombreabreviado;
+    
+        return $this;
+    }
+
+    /**
+     * Get nombreabreviado
+     *
+     * @return string 
+     */
+    public function getNombreabreviado()
+    {
+        return $this->nombreabreviado;
+    }
+
 /*   public function setIdformulario($formulario)
     {
         $this->Idformulario = $formulario;
@@ -199,5 +235,6 @@ class Puntaje
         }
     }
 */
+
 
 }

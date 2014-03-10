@@ -13,16 +13,18 @@
     <form action="{{ path('puntaje_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
         
-        <table class="table table-bordered">
+        <table class="table table-bordered mitable">
             <tr>
                 <th>{{form_label(edit_form.nombrepuntaje)}}</th>
                 <th>{{form_label(edit_form.puntajemin)}}</th>
                 <th>{{form_label(edit_form.puntajemax)}}</th>
+                <th>{{form_label(edit_form.nombreabreviado)}}</th>
             </tr>
             <tr>
-                <td>{{form_widget(edit_form.nombrepuntaje)}} {{form_errors(edit_form.nombrepuntaje)}}</td>
+                <td>{{form_widget(edit_form.nombrepuntaje, { 'attr': {'readonly': 'readonly'} })}} {{form_errors(edit_form.nombrepuntaje)}}</td>
                 <td>{{form_widget(edit_form.puntajemin)}} {{form_errors(edit_form.puntajemin)}}</td>
                 <td>{{form_widget(edit_form.puntajemax)}} {{form_errors(edit_form.puntajemax)}}</td>
+                <td>{{form_widget(edit_form.nombreabreviado)}} {{form_errors(edit_form.nombreabreviado)}}</td>
             </tr>
 
         </table>
