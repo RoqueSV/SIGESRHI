@@ -13,6 +13,8 @@ use APY\DataGridBundle\Grid\Grid;
 use Application\Sonata\UserBundle\Entity\User;
 use SIGESRHI\ExpedienteBundle\Entity\Empleado;
 
+use SIGESRHI\ExpedienteBundle\Form\ConcursoType;
+
 class ModuloReporteController extends Controller
 {
 
@@ -146,6 +148,8 @@ class ModuloReporteController extends Controller
      
      $em = $this->getDoctrine()->getManager();
      $centros = $em->getRepository('AdminBundle:Centrounidad')->findAll();
+
+     
 
      // Incluimos camino de migas
      $breadcrumbs = $this->get("white_october_breadcrumbs");

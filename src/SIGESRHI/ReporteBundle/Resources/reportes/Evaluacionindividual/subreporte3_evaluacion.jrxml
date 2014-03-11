@@ -16,14 +16,14 @@
 	<columnHeader>
 		<band height="35">
 			<staticText>
-				<reportElement uuid="e819a827-c609-4a4b-a074-56b9ed57c30f" x="0" y="1" width="201" height="19"/>
+				<reportElement x="0" y="1" width="201" height="19" uuid="e819a827-c609-4a4b-a074-56b9ed57c30f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[TABLA DE VALORACION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c5cc0203-80f8-4151-9d55-3fef512a4bb4" x="0" y="20" width="201" height="15"/>
+				<reportElement x="0" y="20" width="222" height="15" uuid="c5cc0203-80f8-4151-9d55-3fef512a4bb4"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -36,7 +36,7 @@
 				<text><![CDATA[FACTOR]]></text>
 			</staticText>
 			<subreport>
-				<reportElement uuid="b335897b-1621-4440-8034-f08175b23f80" x="201" y="20" width="371" height="15"/>
+				<reportElement x="222" y="20" width="350" height="15" uuid="b335897b-1621-4440-8034-f08175b23f80"/>
 				<subreportParameter name="for">
 					<subreportParameterExpression><![CDATA[$P{for}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -48,18 +48,20 @@
 	<detail>
 		<band height="15">
 			<textField>
-				<reportElement uuid="f19ca2c4-87e8-43c0-895d-9cf298cb7ee6" x="12" y="0" width="189" height="15"/>
+				<reportElement positionType="Float" x="12" y="0" width="210" height="15" uuid="f19ca2c4-87e8-43c0-895d-9cf298cb7ee6"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrefactor}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="d436a9b6-498a-418b-95e9-8bd6104584b3" x="201" y="0" width="371" height="15"/>
+				<reportElement x="222" y="0" width="350" height="15" uuid="d436a9b6-498a-418b-95e9-8bd6104584b3"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -73,13 +75,15 @@
 				<subreportExpression><![CDATA["prueba.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement uuid="1204072e-d10a-44d4-851f-1111bed8f782" x="0" y="0" width="12" height="15"/>
+				<reportElement x="0" y="0" width="12" height="15" uuid="1204072e-d10a-44d4-851f-1111bed8f782"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 				</box>
-				<textElement/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}+ "-"]]></textFieldExpression>
 			</textField>
 		</band>

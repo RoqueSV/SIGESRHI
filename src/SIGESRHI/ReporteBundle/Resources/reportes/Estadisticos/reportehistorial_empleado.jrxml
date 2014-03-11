@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportehistorial_empleado" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2f5ef40b-5152-4fdd-add7-c648970aaf69">
-	<property name="ireport.zoom" value="1.5026296018031553"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="180"/>
+	<property name="ireport.y" value="159"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Reportes\\Estadisticos\\"]]></defaultValueExpression>
@@ -41,16 +41,16 @@ join accionpersonal acc on (e.id=acc.idexpediente) join tipoaccion ta on (ta.id=
 	<field name="educacion" class="java.lang.String"/>
 	<field name="codigoempleado" class="java.lang.String"/>
 	<title>
-		<band height="397" splitType="Stretch">
+		<band height="399" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="0969f868-cf65-40d6-8cef-2a065e699d5c" x="2" y="114" width="100" height="129"/>
+				<reportElement x="2" y="114" width="100" height="129" uuid="0969f868-cf65-40d6-8cef-2a065e699d5c"/>
 			</rectangle>
 			<image scaleImage="FillFrame" hAlign="Center">
-				<reportElement uuid="97594314-17e9-4e71-8987-eda1fc95e483" x="28" y="2" width="86" height="77"/>
+				<reportElement x="28" y="2" width="86" height="77" uuid="97594314-17e9-4e71-8987-eda1fc95e483"/>
 				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement uuid="db2c16f6-c2ee-4e9c-b610-d39d6eddee62" x="124" y="14" width="357" height="35"/>
+				<reportElement x="124" y="14" width="406" height="35" uuid="db2c16f6-c2ee-4e9c-b610-d39d6eddee62"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -58,28 +58,28 @@ join accionpersonal acc on (e.id=acc.idexpediente) join tipoaccion ta on (ta.id=
 DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="47c569e2-1575-4eb9-aa4e-937db88cd2cb" x="2" y="245" width="85" height="20"/>
+				<reportElement x="2" y="245" width="85" height="20" uuid="47c569e2-1575-4eb9-aa4e-937db88cd2cb"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sueldo Inicial:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="26a4c46f-fb51-4916-8d77-d52ce265ba86" x="136" y="245" width="100" height="20"/>
+				<reportElement x="1" y="269" width="110" height="20" uuid="26a4c46f-fb51-4916-8d77-d52ce265ba86"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de Ingreso:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="cc102e00-5637-4479-92f8-a137b1f701e2" x="335" y="244" width="42" height="20"/>
+				<reportElement x="252" y="268" width="55" height="20" uuid="cc102e00-5637-4479-92f8-a137b1f701e2"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ ISSS:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="c483d994-629a-4632-81a1-cfcac257637f" x="365" y="244" width="75" height="20"/>
+				<reportElement x="283" y="268" width="157" height="20" uuid="c483d994-629a-4632-81a1-cfcac257637f"/>
 				<box leftPadding="3">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.0"/>
@@ -93,14 +93,14 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{isss}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="b11e7c41-342e-4d5b-a387-4e15dd0cc5d6" x="106" y="196" width="68" height="20"/>
+				<reportElement x="106" y="196" width="68" height="20" uuid="b11e7c41-342e-4d5b-a387-4e15dd0cc5d6"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Dirección:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="553ced73-dcf0-467d-8607-34e150cc7659" x="75" y="285" width="497" height="18"/>
+				<reportElement x="85" y="291" width="487" height="18" uuid="553ced73-dcf0-467d-8607-34e150cc7659"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -110,27 +110,27 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{destacadoen}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="FillFrame" onErrorType="Blank">
-				<reportElement uuid="a966880a-6f02-46c6-8f9c-6097466e06cc" x="5" y="118" width="95" height="121">
+				<reportElement x="5" y="118" width="95" height="121" uuid="a966880a-6f02-46c6-8f9c-6097466e06cc">
 					<printWhenExpression><![CDATA[$F{fotografia}!=null]]></printWhenExpression>
 				</reportElement>
 				<imageExpression><![CDATA[$P{ubicacionReport}+"/../../../../web/uploads/fotografias/"+$F{fotografia}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement uuid="cf42613e-920b-4c9b-a0ac-141f99cdba40" x="106" y="152" width="122" height="20"/>
+				<reportElement x="106" y="152" width="122" height="20" uuid="cf42613e-920b-4c9b-a0ac-141f99cdba40"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lugar y fecha Nac.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a5af3c89-79f1-40c5-a7e2-e9c098342cbd" x="106" y="216" width="68" height="20"/>
+				<reportElement x="106" y="216" width="68" height="20" uuid="a5af3c89-79f1-40c5-a7e2-e9c098342cbd"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Educación:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="2cd64f56-ee45-40af-b1a6-688a628e5532" x="201" y="154" width="371" height="18"/>
+				<reportElement x="218" y="154" width="354" height="18" uuid="2cd64f56-ee45-40af-b1a6-688a628e5532"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -140,22 +140,22 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{lugarnac}+", "+$F{fechanac}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="b3536072-d328-46b2-b86b-63fc1d0d5796" x="57" y="47" width="481" height="20"/>
+				<reportElement x="67" y="47" width="481" height="20" uuid="b3536072-d328-46b2-b86b-63fc1d0d5796"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[REPORTE HISTORICO DE EMPLEADO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="89ec8f99-518e-422a-bfd6-e91e4f85d7da" x="105" y="131" width="30" height="20"/>
+				<reportElement x="105" y="131" width="30" height="20" uuid="89ec8f99-518e-422a-bfd6-e91e4f85d7da"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DUI:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="f2383e44-3c81-4863-9ff9-7e11e17f3f71" x="147" y="109" width="280" height="20"/>
-				<box>
+				<reportElement x="153" y="109" width="274" height="20" uuid="f2383e44-3c81-4863-9ff9-7e11e17f3f71"/>
+				<box leftPadding="2">
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
 					<bottomPen lineWidth="0.5"/>
@@ -167,7 +167,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{nombreempleado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="30f4fd2f-39da-4b04-80da-e684efb154ec" x="253" y="130" width="319" height="21"/>
+				<reportElement x="273" y="130" width="299" height="21" uuid="30f4fd2f-39da-4b04-80da-e684efb154ec"/>
 				<box leftPadding="3">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -177,7 +177,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{lugardui}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="7f535eec-78f6-4d97-a01a-afb6617edcde" x="128" y="131" width="57" height="19"/>
+				<reportElement x="128" y="131" width="64" height="19" uuid="7f535eec-78f6-4d97-a01a-afb6617edcde"/>
 				<box leftPadding="1">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -187,14 +187,14 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{dui}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="f7a4719e-24f0-4271-b7cb-8c5bc8b23e56" x="2" y="303" width="172" height="20"/>
+				<reportElement x="2" y="309" width="172" height="20" uuid="f7a4719e-24f0-4271-b7cb-8c5bc8b23e56"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Informacion Adicional:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="ebc9bf27-694d-4567-bc79-de06bac9cbd5" x="516" y="110" width="56" height="19"/>
+				<reportElement x="516" y="110" width="56" height="19" uuid="ebc9bf27-694d-4567-bc79-de06bac9cbd5"/>
 				<box leftPadding="2">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -204,14 +204,14 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{codigoempleado}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="55e7f9b6-42ee-46a7-9dd4-9f4d2ea9950e" x="185" y="131" width="81" height="20"/>
+				<reportElement x="192" y="131" width="81" height="20" uuid="55e7f9b6-42ee-46a7-9dd4-9f4d2ea9950e"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Extendido en:]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement uuid="b5f2047e-ee3b-46e1-88fc-a466a29fc9bb" x="70" y="245" width="66" height="20"/>
+				<reportElement x="79" y="245" width="57" height="20" uuid="b5f2047e-ee3b-46e1-88fc-a466a29fc9bb"/>
 				<box leftPadding="3">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -221,7 +221,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{sueldoinicial}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="70198fdf-e0c6-4c9e-8258-18bc36e7985b" x="2" y="324" width="570" height="50" isRemoveLineWhenBlank="true"/>
+				<reportElement x="2" y="330" width="570" height="50" isRemoveLineWhenBlank="true" uuid="70198fdf-e0c6-4c9e-8258-18bc36e7985b"/>
 				<box leftPadding="1" rightPadding="2"/>
 				<textElement textAlignment="Justified">
 					<font fontName="SansSerif"/>
@@ -229,14 +229,14 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{informacionadicional}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="9dd21c85-c466-418f-b781-1bc1e16bef22" x="427" y="110" width="103" height="20"/>
+				<reportElement x="427" y="110" width="103" height="20" uuid="9dd21c85-c466-418f-b781-1bc1e16bef22"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código Empleado:]]></text>
 			</staticText>
 			<textField pattern="#,###.00">
-				<reportElement uuid="cf55d45b-52b0-4709-b83e-b9d4064a7f30" x="462" y="243" width="110" height="20"/>
+				<reportElement x="462" y="266" width="110" height="20" uuid="cf55d45b-52b0-4709-b83e-b9d4064a7f30"/>
 				<box leftPadding="3">
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -250,7 +250,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{nit}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="55ba33d7-b215-469e-923d-2aed7a737c86" x="223" y="244" width="113" height="20"/>
+				<reportElement x="93" y="268" width="159" height="20" uuid="55ba33d7-b215-469e-923d-2aed7a737c86"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -260,7 +260,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{fechaingreso}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="8ff8ac41-13dc-40d7-91cf-94e4e82c0cfd" x="35" y="265" width="537" height="19"/>
+				<reportElement positionType="Float" x="178" y="235" width="394" height="30" uuid="8ff8ac41-13dc-40d7-91cf-94e4e82c0cfd"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -270,21 +270,21 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{cargo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="247555f8-aee7-4d3b-ade3-aedb4afeece2" x="106" y="173" width="130" height="20"/>
+				<reportElement x="106" y="173" width="130" height="20" uuid="247555f8-aee7-4d3b-ade3-aedb4afeece2"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Teléfonos(Fijo,Movil):]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="46c70431-2d29-474b-b9bd-45b7043edca5" x="2" y="283" width="100" height="20"/>
+				<reportElement x="2" y="289" width="100" height="20" uuid="46c70431-2d29-474b-b9bd-45b7043edca5"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Destacado en:]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="5447db4a-3a38-486e-89f3-ee5883750207" x="157" y="195" width="415" height="19"/>
+				<reportElement x="161" y="195" width="411" height="19" uuid="5447db4a-3a38-486e-89f3-ee5883750207"/>
 				<box topPadding="2" leftPadding="3" rightPadding="0">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -294,21 +294,21 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="1aa909c1-93ff-4a19-87ad-7202495aa3ce" x="105" y="109" width="56" height="20"/>
+				<reportElement x="105" y="109" width="56" height="20" uuid="1aa909c1-93ff-4a19-87ad-7202495aa3ce"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f676b3db-9fba-46e1-8a01-12e3e054ac16" x="2" y="264" width="49" height="20"/>
+				<reportElement x="138" y="245" width="62" height="20" uuid="f676b3db-9fba-46e1-8a01-12e3e054ac16"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cargo:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="efaf42b3-064c-4212-b58b-86ec0a228c82" x="212" y="173" width="163" height="19"/>
+				<reportElement x="228" y="173" width="147" height="19" uuid="efaf42b3-064c-4212-b58b-86ec0a228c82"/>
 				<box leftPadding="3">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -318,7 +318,7 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{telefonos}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="79a61acb-2214-49c6-88fa-374b5cc818b6" x="437" y="174" width="135" height="19"/>
+				<reportElement x="447" y="174" width="125" height="19" uuid="79a61acb-2214-49c6-88fa-374b5cc818b6"/>
 				<box leftPadding="3">
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -328,14 +328,14 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{estadocivil}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="5d14d251-12ff-4416-826d-c8ea863e068b" x="440" y="244" width="36" height="20"/>
+				<reportElement x="440" y="267" width="36" height="20" uuid="5d14d251-12ff-4416-826d-c8ea863e068b"/>
 				<textElement textAlignment="Justified" verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NIT:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="c1cb988d-751c-4aaa-b424-c05183a4bb84" x="161" y="215" width="411" height="20"/>
+				<reportElement x="168" y="215" width="404" height="20" uuid="c1cb988d-751c-4aaa-b424-c05183a4bb84"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -345,31 +345,31 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 				<textFieldExpression><![CDATA[$F{educacion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="e6cd31fb-f49c-4848-a403-de85d587d522" x="375" y="174" width="82" height="20"/>
+				<reportElement x="375" y="174" width="82" height="20" uuid="e6cd31fb-f49c-4848-a403-de85d587d522"/>
 				<textElement verticalAlignment="Bottom">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estado Civil:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="ccccd79b-f1e8-423a-980b-84fa3aac22b5" x="4" y="91" width="179" height="20"/>
+				<reportElement x="4" y="91" width="179" height="20" uuid="ccccd79b-f1e8-423a-980b-84fa3aac22b5"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[DATOS GENERALES]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="6a0535f8-967a-4e03-b433-dbd99f7196ce" x="1" y="108" width="571" height="1"/>
+				<reportElement x="1" y="108" width="571" height="1" uuid="6a0535f8-967a-4e03-b433-dbd99f7196ce"/>
 			</line>
 			<staticText>
-				<reportElement uuid="4508e672-686e-42c3-8935-fd1ef0c9d21c" x="2" y="372" width="244" height="20"/>
+				<reportElement x="2" y="378" width="244" height="20" uuid="4508e672-686e-42c3-8935-fd1ef0c9d21c"/>
 				<textElement textAlignment="Justified" verticalAlignment="Bottom">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RECORD LABORAL]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="04d2f001-77d5-4563-9b85-48d5ad2ef019" x="1" y="392" width="571" height="1"/>
+				<reportElement x="1" y="398" width="571" height="1" uuid="04d2f001-77d5-4563-9b85-48d5ad2ef019"/>
 				<graphicElement>
 					<pen lineWidth="1.5" lineStyle="Double"/>
 				</graphicElement>
@@ -379,17 +379,17 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 	<detail>
 		<band height="33" splitType="Stretch">
 			<textField>
-				<reportElement uuid="c5c8e0dd-99fe-483c-8096-2497b7263374" x="2" y="0" width="570" height="18"/>
+				<reportElement x="2" y="0" width="570" height="18" uuid="c5c8e0dd-99fe-483c-8096-2497b7263374"/>
 				<box>
 					<bottomPen lineWidth="0.75"/>
 				</box>
 				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombretipoaccion}+"S"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombretipoaccion}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="c2d66530-e949-4f21-a388-094b712a3549" x="0" y="22" width="572" height="10"/>
+				<reportElement x="0" y="22" width="572" height="10" uuid="c2d66530-e949-4f21-a388-094b712a3549"/>
 				<subreportParameter name="acciones">
 					<subreportParameterExpression><![CDATA[$F{nombretipoaccion}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -404,13 +404,12 @@ DEPARTAMENTO DE RECURSOS HUMANOS]]></text>
 	<pageFooter>
 		<band height="46" splitType="Stretch">
 			<textField>
-				<reportElement uuid="c2355656-63d5-4bfc-a477-11753599cd72" x="228" y="18" width="80" height="20"/>
+				<reportElement x="228" y="18" width="80" height="20" uuid="c2355656-63d5-4bfc-a477-11753599cd72"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="9eca06f7-71a9-4a0c-bcf4-b35a3db608ec" x="308" y="18" width="40" height="20"/>
-				<textElement/>
+				<reportElement x="308" y="18" width="40" height="20" uuid="9eca06f7-71a9-4a0c-bcf4-b35a3db608ec"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>

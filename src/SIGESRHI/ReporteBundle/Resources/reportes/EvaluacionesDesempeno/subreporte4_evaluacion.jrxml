@@ -17,7 +17,7 @@ join puntaje p on(fp.idpuntaje=p.id) where fe.id=$P{for}]]>
 			<staticText>
 				<reportElement x="0" y="0" width="200" height="19" uuid="f9e1e6d6-ded6-4605-ba02-0a102c4f1644"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CALIFICACION POR PUNTOS Y RANGOS]]></text>
 			</staticText>

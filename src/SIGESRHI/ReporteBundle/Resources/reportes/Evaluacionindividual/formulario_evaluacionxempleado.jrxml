@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="formulario_evaluacionxempleado" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3642e819-2001-48ac-9648-5f5f73ed3bd2">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="96"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -195,7 +195,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<text><![CDATA[Puesto:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="3" y="140" width="143" height="15" uuid="37e79185-386f-48e6-be11-fcec5d622cb1"/>
+					<reportElement x="3" y="141" width="143" height="15" uuid="37e79185-386f-48e6-be11-fcec5d622cb1"/>
 					<textElement textAlignment="Justified" verticalAlignment="Bottom">
 						<font fontName="SansSerif"/>
 					</textElement>
@@ -222,7 +222,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement positionType="Float" x="233" y="91" width="338" height="24" uuid="8c87f846-a60c-4f97-9710-bd99acbbaf97"/>
+					<reportElement positionType="Float" x="250" y="91" width="321" height="24" uuid="8c87f846-a60c-4f97-9710-bd99acbbaf97"/>
 					<box>
 						<bottomPen lineWidth="0.75"/>
 					</box>
@@ -262,7 +262,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<textFieldExpression><![CDATA[$F{sueldoactual}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="66" y="71" width="505" height="17" uuid="5262de3c-09f5-4be8-8e03-6b3ca7676ce4"/>
+					<reportElement x="74" y="71" width="497" height="17" uuid="5262de3c-09f5-4be8-8e03-6b3ca7676ce4"/>
 					<box>
 						<bottomPen lineWidth="0.75"/>
 					</box>
@@ -280,7 +280,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 (Dirección,División,Depto.,Unidad,Sección, Area):]]></text>
 				</staticText>
 				<textField>
-					<reportElement positionType="Float" x="124" y="115" width="200" height="23" uuid="6516ff6e-51dd-4999-8d0e-973a822287a8"/>
+					<reportElement positionType="Float" x="140" y="115" width="184" height="23" uuid="6516ff6e-51dd-4999-8d0e-973a822287a8"/>
 					<box leftPadding="2">
 						<bottomPen lineWidth="0.75"/>
 					</box>
@@ -290,7 +290,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<textFieldExpression><![CDATA[$F{nombrejefe}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="118" y="140" width="453" height="14" uuid="430488ad-7f92-4fe6-8e7c-dcc72a2611c0"/>
+					<reportElement x="133" y="141" width="438" height="14" uuid="430488ad-7f92-4fe6-8e7c-dcc72a2611c0"/>
 					<box leftPadding="2">
 						<bottomPen lineWidth="0.0"/>
 					</box>
@@ -310,7 +310,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement positionType="Float" x="359" y="115" width="212" height="25" uuid="ac178b20-67cf-4af6-b702-5df5a9159253"/>
+					<reportElement positionType="Float" x="363" y="115" width="208" height="25" uuid="ac178b20-67cf-4af6-b702-5df5a9159253"/>
 					<box>
 						<bottomPen lineWidth="0.75"/>
 					</box>
@@ -320,7 +320,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<textFieldExpression><![CDATA[$F{puestojefe}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="85" y="32" width="250" height="17" uuid="076d0811-1b83-464c-a3a1-e37e9694d8bf"/>
+					<reportElement x="94" y="32" width="241" height="17" uuid="076d0811-1b83-464c-a3a1-e37e9694d8bf"/>
 					<box leftPadding="2">
 						<bottomPen lineWidth="0.75"/>
 					</box>
@@ -330,7 +330,7 @@ join formularioevaluacion fev on (fe.idformulario=fev.id)  where ev.id=$P{nevalu
 					<textFieldExpression><![CDATA[$F{fechaingreso}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="107" y="50" width="348" height="18" uuid="9e4977ba-cca2-47d2-a6f2-b01404853347"/>
+					<reportElement x="115" y="50" width="340" height="18" uuid="9e4977ba-cca2-47d2-a6f2-b01404853347"/>
 					<box leftPadding="2">
 						<bottomPen lineWidth="0.75"/>
 					</box>

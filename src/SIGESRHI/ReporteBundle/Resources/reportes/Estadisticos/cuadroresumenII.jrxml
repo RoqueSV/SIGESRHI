@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cuadroresumen" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7d3a5cb1-4ed4-47e6-942d-2d96a7b6d527">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="32"/>
+	<property name="ireport.x" value="435"/>
+	<property name="ireport.y" value="96"/>
 	<parameter name="ano_eva" class="java.lang.Integer"/>
 	<parameter name="idcentro" class="java.lang.Integer"/>
 	<parameter name="ubicacionReport" class="java.lang.String"/>
@@ -12,21 +12,13 @@
        s.nombrecompleto,
        re.partida,
        re.subpartida,p.nombreplaza,to_char(sueldoactual,'$ 9,999.99')as sueldoactual,nombrecentro,
-       fe.id,
-       sum(valoropcion) as puntuacion,
-       case when semestre='I' then 'Primer semestre'
+       fe.id,anoevaluado, case when semestre='I' then 'Primer semestre'
        else 'Segundo semestre'
        end as semestre,
-       anoevaluado,
- /**** Obtener calificacion semestre I *****/
-(select case 	when nombrepuntaje='Excelente' then 'E'
-		when nombrepuntaje='Muy Bueno' then 'MB'
-		when nombrepuntaje='Bueno' then 'B'
-		else 'I' end
-from puntaje p2
-join formulariopuntaje fp2 on (p2.id=fp2.idpuntaje)
-join formularioevaluacion fe2 on (fp2.idformulario=fe2.id)
-where fe2.id=fe.id and sum(valoropcion) between p2.puntajemin and p2.puntajemax) as calificacion,
+       sum(valoropcion) as puntuacion,
+
+
+/**** Obtener calificacion semestre I *****/
 /*** Puntuacion segundo semestre  **/
 (select sum(valoropcion) from empleado e3
 join refrendaact re3 on (e3.id=re3.idempleado)
@@ -36,20 +28,16 @@ join opcion o3 on(r3.idopcion=o3.id)
 join factorevaluacion fa3 on (r3.idfactor=fa3.id)
 join formularioevaluacion fe3 on (fa3.idformulario=fe3.id)
 where semestre = 'II' and e3.id=e.id and re3.id=re.id and eva3.puestoemp=re.id) as puntuacion2,
+(sum(valoropcion)/(select count(idempleado) from evaluacion where idempleado =e.id)) as promedio,
+(select nombreabreviado
+from puntaje p2 join formulariopuntaje fp2 on (p2.id=fp2.idpuntaje)
+join formularioevaluacion fe2 on (fp2.idformulario=fe2.id)
+where fe2.id=fe.id and (sum(valoropcion)/(select count(idempleado) from evaluacion where idempleado =e.id)) between p2.puntajemin and p2.puntajemax) as calificacion,
+(select pescalafon
+from puntaje p2 join formulariopuntaje fp2 on (p2.id=fp2.idpuntaje)
+join formularioevaluacion fe2 on (fp2.idformulario=fe2.id)
+where fe2.id=fe.id and (sum(valoropcion)/(select count(idempleado) from evaluacion where idempleado =e.id)) between p2.puntajemin and p2.puntajemax) as escalafon
 /***** Aqui obtener calificacion segundo semestre */
-(select case when nombrepuntaje='Excelente' then 'E'
-	     when nombrepuntaje='Muy Bueno' then 'MB'
-	     when nombrepuntaje='Bueno' then 'B'
-	     else 'I' end
-from puntaje p4 join formulariopuntaje fp4 on (p4.id=fp4.idpuntaje)
-join formularioevaluacion fe4 on (fp4.idformulario=fe4.id)
-where fe4.id=fe.id and (select sum(valoropcion) from empleado e4 join refrendaact re4 on (e4.id=re4.idempleado)
-join evaluacion eva4 on (e4.id=eva4.idempleado)
-join respuesta r4 on(r4.idevaluacion=eva4.id)
-join opcion o4 on(r4.idopcion=o4.id)
-join factorevaluacion fa4 on (r4.idfactor=fa4.id)
-join formularioevaluacion fe4 on (fa4.idformulario=fe4.id)
-where e4.id = e.id and semestre = 'II' and re4.id=re.id and eva4.puestoemp=re.id) between p4.puntajemin and p4.puntajemax) as calificacion2
 /**************************************/
 from empleado e join refrendaact re on (e.id=re.idempleado)
 join plaza p on (re.idplaza=p.id)
@@ -75,33 +63,24 @@ order by 3]]>
 	<field name="sueldoactual" class="java.lang.String"/>
 	<field name="nombrecentro" class="java.lang.String"/>
 	<field name="id" class="java.lang.Integer"/>
-	<field name="puntuacion" class="java.lang.Long"/>
-	<field name="semestre" class="java.lang.String"/>
 	<field name="anoevaluado" class="java.lang.Integer"/>
-	<field name="calificacion" class="java.lang.String"/>
+	<field name="semestre" class="java.lang.String"/>
+	<field name="puntuacion" class="java.lang.Long"/>
 	<field name="puntuacion2" class="java.lang.Long"/>
-	<field name="calificacion2" class="java.lang.String"/>
-	<variable name="promedio" class="java.lang.Double" incrementType="Report">
-		<variableExpression><![CDATA[($F{puntuacion}+$F{puntuacion2})/new java.lang.Double(2)]]></variableExpression>
-		<initialValueExpression><![CDATA[new java.lang.Double(0)]]></initialValueExpression>
-	</variable>
-	<variable name="calificacion" class="java.lang.String">
-		<variableExpression><![CDATA[($V{promedio}>=73 && $V{promedio}<=84)?"E":($V{promedio}>=56 && $V{promedio}<=72)? "MB":($V{promedio}>=28 && $V{promedio}<=55)?"B":"I"]]></variableExpression>
-	</variable>
-	<variable name="escalafon" class="java.lang.String">
-		<variableExpression><![CDATA[$V{calificacion}.equals("E")?"5%":$V{calificacion}.equals("MB")?"4%":$V{calificacion}.equals("B")?"3%":"0"]]></variableExpression>
-	</variable>
+	<field name="promedio" class="java.lang.Long"/>
+	<field name="calificacion" class="java.lang.String"/>
+	<field name="escalafon" class="java.lang.Integer"/>
 	<pageHeader>
 		<band height="139" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="27b67746-89e4-4f9c-9cf2-28bad955c180" x="134" y="29" width="521" height="28"/>
+				<reportElement x="134" y="29" width="521" height="28" uuid="27b67746-89e4-4f9c-9cf2-28bad955c180"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="afd1ed10-c9f7-495f-adff-c9ce2b2d835a" x="0" y="119" width="198" height="20"/>
+				<reportElement x="0" y="119" width="198" height="20" uuid="afd1ed10-c9f7-495f-adff-c9ce2b2d835a"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
@@ -109,27 +88,27 @@ order by 3]]>
 				<text><![CDATA[Fecha de Elaboración:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="beda1bf4-2f9e-40c1-bef1-7090bd984734" x="111" y="119" width="251" height="20"/>
+				<reportElement x="129" y="119" width="251" height="20" uuid="beda1bf4-2f9e-40c1-bef1-7090bd984734"/>
 				<box leftPadding="2"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{fechaactual}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="4451a4a2-06b0-4a6a-8794-4f9fb82c73a2" x="119" y="54" width="536" height="20"/>
+				<reportElement x="119" y="54" width="536" height="20" uuid="4451a4a2-06b0-4a6a-8794-4f9fb82c73a2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrecentro}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="bdc1077e-b962-42f2-a22b-ede0fa4f0c22" x="210" y="75" width="327" height="35"/>
+				<reportElement x="210" y="75" width="327" height="35" uuid="bdc1077e-b962-42f2-a22b-ede0fa4f0c22"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Cuadro Resumen de Evaluaciones realizadas correspondientes al segundo semestre del Año:"+$F{anoevaluado}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement uuid="969436da-1613-4866-bcad-15484ae81c3b" x="72" y="18" width="80" height="86"/>
+				<reportElement x="72" y="18" width="80" height="86" uuid="969436da-1613-4866-bcad-15484ae81c3b"/>
 				<imageExpression><![CDATA[$P{ubicacionReport}+ "/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
 			</image>
 		</band>
@@ -137,9 +116,9 @@ order by 3]]>
 	<columnHeader>
 		<band height="25">
 			<frame>
-				<reportElement uuid="fbe87329-7f6a-4f3c-baee-a0a50e5ad12d" x="0" y="0" width="752" height="25"/>
+				<reportElement x="0" y="0" width="752" height="25" uuid="fbe87329-7f6a-4f3c-baee-a0a50e5ad12d"/>
 				<staticText>
-					<reportElement uuid="58ff0472-9697-403b-aa28-130718f98502" mode="Opaque" x="0" y="0" width="33" height="25" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="0" y="0" width="33" height="25" backcolor="#CCCCCC" uuid="58ff0472-9697-403b-aa28-130718f98502"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -152,7 +131,7 @@ order by 3]]>
 					<text><![CDATA[CODIGO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="00c5b3ed-265b-4f7d-9893-6d652f7ac77c" mode="Opaque" x="33" y="0" width="23" height="25" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="33" y="0" width="23" height="25" backcolor="#CCCCCC" uuid="00c5b3ed-265b-4f7d-9893-6d652f7ac77c"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -165,7 +144,7 @@ order by 3]]>
 					<text><![CDATA[PTDA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="51d26a94-19e3-4f33-ba34-e839218d2b67" mode="Opaque" x="56" y="0" width="18" height="25" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="56" y="0" width="18" height="25" backcolor="#CCCCCC" uuid="51d26a94-19e3-4f33-ba34-e839218d2b67"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -178,7 +157,7 @@ order by 3]]>
 					<text><![CDATA[SUB]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="e2e59f6d-0919-4f19-8a7d-a557021d3a9b" mode="Opaque" x="252" y="0" width="247" height="25" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="252" y="0" width="247" height="25" backcolor="#CCCCCC" uuid="e2e59f6d-0919-4f19-8a7d-a557021d3a9b"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -191,7 +170,7 @@ order by 3]]>
 					<text><![CDATA[NOMBRE DE LA PLAZA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="9f8e4ca1-24f2-49af-bf32-02657211ed62" mode="Opaque" x="74" y="0" width="178" height="25" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="74" y="0" width="178" height="25" backcolor="#CCCCCC" uuid="9f8e4ca1-24f2-49af-bf32-02657211ed62"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -204,7 +183,7 @@ order by 3]]>
 					<text><![CDATA[NOMBRE DEL EMPLEADO]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="e62f5fae-6351-4b4e-909c-80760e82c14c" mode="Opaque" x="561" y="12" width="35" height="13" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="561" y="12" width="35" height="13" backcolor="#CCCCCC" uuid="e62f5fae-6351-4b4e-909c-80760e82c14c"/>
 					<box leftPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -217,7 +196,7 @@ order by 3]]>
 					<text><![CDATA[EVA1]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="7be5ed01-aee0-4767-a925-7759f7994639" mode="Opaque" x="662" y="12" width="39" height="13" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="662" y="12" width="39" height="13" backcolor="#CCCCCC" uuid="7be5ed01-aee0-4767-a925-7759f7994639"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -230,7 +209,7 @@ order by 3]]>
 					<text><![CDATA[EVAL]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="2b1dc301-616f-4432-8da6-08994de6e629" mode="Opaque" x="596" y="12" width="35" height="13" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="596" y="12" width="35" height="13" backcolor="#CCCCCC" uuid="2b1dc301-616f-4432-8da6-08994de6e629"/>
 					<box leftPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -243,7 +222,7 @@ order by 3]]>
 					<text><![CDATA[EVA2]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="2267db03-3cc0-49d8-8b44-0a1f94c77c50" mode="Opaque" x="499" y="0" width="62" height="25" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="499" y="0" width="62" height="25" backcolor="#CCCCCC" uuid="2267db03-3cc0-49d8-8b44-0a1f94c77c50"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -256,7 +235,7 @@ order by 3]]>
 					<text><![CDATA[SALARIO($)]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="d46d431c-10ab-4149-b648-7fff73caf9a6" mode="Opaque" x="631" y="12" width="31" height="13" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="631" y="12" width="31" height="13" backcolor="#CCCCCC" uuid="d46d431c-10ab-4149-b648-7fff73caf9a6"/>
 					<box leftPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -269,7 +248,7 @@ order by 3]]>
 					<text><![CDATA[Prom.]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="b4af159d-b599-4b24-87d5-dd2cdb51b2b6" mode="Opaque" x="701" y="12" width="51" height="13" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="701" y="12" width="51" height="13" backcolor="#CCCCCC" uuid="b4af159d-b599-4b24-87d5-dd2cdb51b2b6"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -282,7 +261,7 @@ order by 3]]>
 					<text><![CDATA[% asignado]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="90d2fd1e-b68a-4269-a198-8eda5f423810" mode="Opaque" x="561" y="0" width="101" height="12" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="561" y="0" width="101" height="12" backcolor="#CCCCCC" uuid="90d2fd1e-b68a-4269-a198-8eda5f423810"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -295,7 +274,7 @@ order by 3]]>
 					<text><![CDATA[EVALUACIONES]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="2fd85b93-04fd-4a82-a510-c731ba515872" mode="Opaque" x="662" y="0" width="90" height="12" backcolor="#CCCCCC"/>
+					<reportElement mode="Opaque" x="662" y="0" width="90" height="12" backcolor="#CCCCCC" uuid="2fd85b93-04fd-4a82-a510-c731ba515872"/>
 					<box>
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
@@ -313,7 +292,7 @@ order by 3]]>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="e285a060-4f98-4a17-9198-9f9eaa2accf8" positionType="Float" x="252" y="0" width="247" height="20"/>
+				<reportElement positionType="Float" x="252" y="0" width="247" height="20" uuid="e285a060-4f98-4a17-9198-9f9eaa2accf8"/>
 				<box topPadding="1" leftPadding="2" bottomPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -326,7 +305,7 @@ order by 3]]>
 				<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="09b3afe2-1c83-4b3d-86e6-d528d0211e89" x="561" y="0" width="35" height="20"/>
+				<reportElement x="561" y="0" width="35" height="20" uuid="09b3afe2-1c83-4b3d-86e6-d528d0211e89"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -339,7 +318,7 @@ order by 3]]>
 				<textFieldExpression><![CDATA[$F{puntuacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="47957260-c71b-4816-bb3c-2baa1ce4fd21" x="499" y="0" width="62" height="20"/>
+				<reportElement x="499" y="0" width="62" height="20" uuid="47957260-c71b-4816-bb3c-2baa1ce4fd21"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -352,7 +331,7 @@ order by 3]]>
 				<textFieldExpression><![CDATA[$F{sueldoactual}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="70fcd60b-9bf2-4e33-b56c-01d411a9941f" x="596" y="0" width="35" height="20"/>
+				<reportElement x="596" y="0" width="35" height="20" uuid="70fcd60b-9bf2-4e33-b56c-01d411a9941f"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -364,35 +343,9 @@ order by 3]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{puntuacion2}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="428ca6df-843b-414e-a868-d83cecdedb0c" x="662" y="0" width="39" height="20"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{calificacion}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="344f7ab6-a809-4cf8-a875-f7af3cd04007" x="701" y="0" width="51" height="20"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{escalafon}]]></textFieldExpression>
-			</textField>
 			<elementGroup>
 				<textField>
-					<reportElement uuid="7b46b215-009e-4784-b9a8-e00419798a95" positionType="Float" x="74" y="0" width="178" height="20"/>
+					<reportElement positionType="Float" x="74" y="0" width="178" height="20" uuid="7b46b215-009e-4784-b9a8-e00419798a95"/>
 					<box topPadding="1" leftPadding="2" bottomPadding="1">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -405,7 +358,7 @@ order by 3]]>
 					<textFieldExpression><![CDATA[$F{nombrecompleto}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="95231168-e8e4-4777-ae2d-806fd1583b0a" x="0" y="0" width="33" height="20"/>
+					<reportElement x="0" y="0" width="33" height="20" uuid="95231168-e8e4-4777-ae2d-806fd1583b0a"/>
 					<box topPadding="1" leftPadding="2" bottomPadding="1">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -418,7 +371,7 @@ order by 3]]>
 					<textFieldExpression><![CDATA[$F{codigoempleado}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="f788efcd-209d-4fde-b6f0-557129cbefc1" x="56" y="0" width="18" height="20"/>
+					<reportElement x="56" y="0" width="18" height="20" uuid="f788efcd-209d-4fde-b6f0-557129cbefc1"/>
 					<box topPadding="1" leftPadding="2" bottomPadding="1">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -431,7 +384,7 @@ order by 3]]>
 					<textFieldExpression><![CDATA[$F{subpartida}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="54db379d-fb8c-4cdf-a055-017480a89bee" x="33" y="0" width="23" height="20"/>
+					<reportElement x="33" y="0" width="23" height="20" uuid="54db379d-fb8c-4cdf-a055-017480a89bee"/>
 					<box topPadding="1" leftPadding="2" bottomPadding="1">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -444,8 +397,8 @@ order by 3]]>
 					<textFieldExpression><![CDATA[$F{partida}]]></textFieldExpression>
 				</textField>
 			</elementGroup>
-			<textField isBlankWhenNull="true">
-				<reportElement uuid="91c47e07-ed57-4286-8a53-5542b7ba9d20" x="631" y="0" width="31" height="20"/>
+			<textField>
+				<reportElement x="631" y="0" width="31" height="20" uuid="f3496fd7-10e2-4c8c-b838-ec549e253396"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -455,7 +408,33 @@ order by 3]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{promedio}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{promedio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="662" y="0" width="39" height="20" uuid="c116d43b-4178-41a4-861e-5e3aff881547"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="701" y="0" width="51" height="20" uuid="ba660805-d0d5-4a55-ba38-f47d3b017229"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{escalafon}+"%"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -465,13 +444,12 @@ order by 3]]>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
 			<textField>
-				<reportElement uuid="e094fc62-c691-4467-a71c-23f8a38dd5e2" x="311" y="17" width="80" height="20"/>
+				<reportElement x="311" y="17" width="80" height="20" uuid="e094fc62-c691-4467-a71c-23f8a38dd5e2"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement uuid="349ade9b-b606-4bc1-9565-10f47d79c7aa" x="391" y="17" width="43" height="20"/>
-				<textElement/>
+				<reportElement x="391" y="17" width="43" height="20" uuid="349ade9b-b606-4bc1-9565-10f47d79c7aa"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -479,7 +457,7 @@ order by 3]]>
 	<summary>
 		<band height="59">
 			<staticText>
-				<reportElement uuid="8d5b228b-e873-4190-a7af-27dbba18ffeb" x="0" y="39" width="225" height="20"/>
+				<reportElement x="0" y="39" width="225" height="20" uuid="8d5b228b-e873-4190-a7af-27dbba18ffeb"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 				</box>
