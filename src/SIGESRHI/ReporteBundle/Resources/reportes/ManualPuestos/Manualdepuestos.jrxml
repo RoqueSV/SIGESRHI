@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="550" leftMargin="31" rightMargin="31" topMargin="20" bottomMargin="20" isTitleNewPage="true" uuid="a9dcd7be-f0b3-44d3-96bf-8025ac6097ae">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="286"/>
 	<style name="style1"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Formularios\\"]]></defaultValueExpression>
@@ -24,7 +24,7 @@
 				</box>
 			</frame>
 			<staticText>
-				<reportElement uuid="7dd6a86e-cf65-4827-8861-541affc0a1a6" x="33" y="327" width="488" height="130"/>
+				<reportElement uuid="7dd6a86e-cf65-4827-8861-541affc0a1a6" x="45" y="327" width="476" height="132"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="32"/>
 				</textElement>

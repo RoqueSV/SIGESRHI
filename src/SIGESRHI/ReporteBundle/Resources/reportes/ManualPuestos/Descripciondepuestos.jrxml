@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1.1" pageWidth="548" pageHeight="752" whenNoDataType="AllSectionsNoDetail" columnWidth="548" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="77e4edc7-c1d9-43ac-bb05-4525401f4293">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="113"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="dataset1" uuid="71fff411-c308-4a2d-bdbf-4fd48866e37f"/>
 	<subDataset name="dataset2" uuid="0b2bded0-b53c-4424-9afe-b29532aab26d">
 		<parameter name="parameter1" class="java.lang.String"/>
@@ -24,73 +24,73 @@
 		<groupHeader>
 			<band height="253">
 				<rectangle>
-					<reportElement x="2" y="27" width="546" height="72" uuid="9f68dbcf-b223-41b7-8680-c95b3d798f35"/>
+					<reportElement uuid="9f68dbcf-b223-41b7-8680-c95b3d798f35" x="2" y="27" width="546" height="72"/>
 					<graphicElement>
 						<pen lineWidth="0.75"/>
 					</graphicElement>
 				</rectangle>
 				<line>
-					<reportElement x="2" y="49" width="546" height="1" uuid="27a4ef49-38d1-4064-8315-46776ac38988"/>
+					<reportElement uuid="27a4ef49-38d1-4064-8315-46776ac38988" x="2" y="49" width="546" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.75"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement x="2" y="75" width="546" height="1" uuid="89442d41-ed32-449c-8e6e-3e5080cfb798"/>
+					<reportElement uuid="89442d41-ed32-449c-8e6e-3e5080cfb798" x="2" y="75" width="546" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.75"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement x="140" y="27" width="1" height="72" uuid="8f8a8801-2c0d-4452-929b-4ac0bae7569c"/>
+					<reportElement uuid="8f8a8801-2c0d-4452-929b-4ac0bae7569c" x="140" y="27" width="1" height="72"/>
 					<graphicElement>
 						<pen lineWidth="0.75"/>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement x="5" y="28" width="132" height="20" uuid="54968cb1-34c4-402c-9c1e-850957c5a8e4"/>
+					<reportElement uuid="54968cb1-34c4-402c-9c1e-850957c5a8e4" x="5" y="28" width="132" height="20"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="SansSerif" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Titulo del puesto:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="6" y="78" width="131" height="18" uuid="a17dafd9-8d42-4435-9ba1-5dd9e7c09b8b"/>
+					<reportElement uuid="a17dafd9-8d42-4435-9ba1-5dd9e7c09b8b" x="6" y="78" width="131" height="18"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="SansSerif" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Unidad Organizativa:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="5" y="49" width="132" height="27" uuid="85678107-ac6a-49b1-9aee-192b21822947"/>
+					<reportElement uuid="85678107-ac6a-49b1-9aee-192b21822947" x="5" y="49" width="132" height="27"/>
 					<textElement textAlignment="Justified">
 						<font fontName="SansSerif" size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Titulo del puesto superior inmediato:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
-					<reportElement x="141" y="28" width="407" height="20" uuid="bca62c6a-74b6-4ae3-b977-f17e22c7b34c"/>
+					<reportElement uuid="bca62c6a-74b6-4ae3-b977-f17e22c7b34c" x="141" y="28" width="407" height="20"/>
 					<textElement textAlignment="Justified" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="9"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="7" width="218" height="20" uuid="6b0d5dbf-6abe-4aec-a71a-9637559e9eed"/>
+					<reportElement uuid="6b0d5dbf-6abe-4aec-a71a-9637559e9eed" x="0" y="7" width="218" height="20"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true" isStrikeThrough="false"/>
 					</textElement>
 					<text><![CDATA[1. IDENTIFICACION]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="104" width="218" height="20" uuid="45b42413-c7ac-4f45-be6b-41518b0ecca1"/>
+					<reportElement uuid="45b42413-c7ac-4f45-be6b-41518b0ecca1" x="0" y="104" width="218" height="20"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true" isStrikeThrough="false"/>
 					</textElement>
 					<text><![CDATA[2. MISION DEL PUESTO DE TRABAJO:]]></text>
 				</staticText>
 				<subreport>
-					<reportElement positionType="Float" x="1" y="164" width="547" height="7" uuid="54e03625-e6e4-4612-a4de-8d211e7769fd"/>
+					<reportElement uuid="54e03625-e6e4-4612-a4de-8d211e7769fd" positionType="Float" x="1" y="164" width="547" height="7"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -98,21 +98,22 @@
 					<subreportExpression><![CDATA["subreporte3_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<textField>
-					<reportElement x="142" y="78" width="406" height="19" uuid="762af5fb-bca4-4b8d-8f89-f8c06cfbd08c"/>
+					<reportElement uuid="762af5fb-bca4-4b8d-8f89-f8c06cfbd08c" x="142" y="78" width="406" height="19"/>
 					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{unidad}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="142" y="54" width="406" height="20" uuid="7291089b-569d-419e-9357-6c67f4a21a1a"/>
+					<reportElement uuid="7291089b-569d-419e-9357-6c67f4a21a1a" x="142" y="54" width="406" height="20"/>
+					<textElement/>
 					<textFieldExpression><![CDATA[$F{puestosuperior}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement positionType="Float" x="0" y="122" width="548" height="34" uuid="669f58e8-66ff-4b2b-9759-3dcaab01bb0e"/>
+					<reportElement uuid="669f58e8-66ff-4b2b-9759-3dcaab01bb0e" positionType="Float" x="0" y="122" width="548" height="34"/>
 					<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{misionplaza}]]></textFieldExpression>
 				</textField>
 				<subreport>
-					<reportElement positionType="Float" x="1" y="174" width="547" height="5" uuid="e1b07276-a5b7-4de7-ace9-c712d647cf24"/>
+					<reportElement uuid="e1b07276-a5b7-4de7-ace9-c712d647cf24" positionType="Float" x="1" y="174" width="547" height="5"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -120,7 +121,7 @@
 					<subreportExpression><![CDATA["subreporte1_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement positionType="Float" x="1" y="182" width="547" height="5" uuid="9355f22d-8f5a-4f65-93b6-32077fe4a65c"/>
+					<reportElement uuid="9355f22d-8f5a-4f65-93b6-32077fe4a65c" positionType="Float" x="1" y="182" width="547" height="5"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -128,7 +129,7 @@
 					<subreportExpression><![CDATA["subreporte9_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement positionType="Float" x="0" y="218" width="548" height="5" uuid="9c3b36f8-30a5-42ba-b656-cc6937d8e207"/>
+					<reportElement uuid="9c3b36f8-30a5-42ba-b656-cc6937d8e207" positionType="Float" x="0" y="218" width="548" height="5"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -136,7 +137,7 @@
 					<subreportExpression><![CDATA["subreporte4_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement positionType="Float" x="0" y="190" width="548" height="10" uuid="dba4c663-950e-41fd-bdb5-bc4cd8e031d5"/>
+					<reportElement uuid="dba4c663-950e-41fd-bdb5-bc4cd8e031d5" positionType="Float" x="0" y="190" width="548" height="10"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -144,7 +145,7 @@
 					<subreportExpression><![CDATA["subreporte5_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement positionType="Float" x="0" y="210" width="548" height="6" uuid="53de781d-073c-499b-b84f-a0b54ad9a1b5"/>
+					<reportElement uuid="53de781d-073c-499b-b84f-a0b54ad9a1b5" positionType="Float" x="0" y="210" width="548" height="6"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -152,7 +153,7 @@
 					<subreportExpression><![CDATA["subreporte6_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement positionType="Float" x="0" y="225" width="548" height="8" uuid="3495fcf1-a23e-4ba1-83e8-626e8675e364"/>
+					<reportElement uuid="3495fcf1-a23e-4ba1-83e8-626e8675e364" positionType="Float" x="0" y="225" width="548" height="8"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -160,7 +161,7 @@
 					<subreportExpression><![CDATA["subreporte7_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement positionType="Float" x="0" y="235" width="548" height="5" uuid="a41c7fbb-e55a-4f6b-8a51-fc6b8db33338"/>
+					<reportElement uuid="a41c7fbb-e55a-4f6b-8a51-fc6b8db33338" positionType="Float" x="0" y="235" width="548" height="5"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -168,7 +169,7 @@
 					<subreportExpression><![CDATA["subreporte8_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement positionType="Float" x="0" y="202" width="548" height="7" uuid="da5970fb-fe89-4c71-b459-37c099ca5c52"/>
+					<reportElement uuid="da5970fb-fe89-4c71-b459-37c099ca5c52" positionType="Float" x="0" y="202" width="548" height="7"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -181,21 +182,21 @@
 	<pageHeader>
 		<band height="85" splitType="Prevent">
 			<staticText>
-				<reportElement x="99" y="26" width="399" height="20" backcolor="#FFFFFF" uuid="4fe55da7-b0a7-4348-8d53-4b95418f6945"/>
+				<reportElement uuid="4fe55da7-b0a7-4348-8d53-4b95418f6945" x="99" y="26" width="399" height="20" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[MANUAL DE DESCRIPCION DE PUESTO DEL ISRI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="52" width="139" height="20" uuid="e2a79174-d801-49bc-94c8-5ca63a9bc915"/>
+				<reportElement uuid="e2a79174-d801-49bc-94c8-5ca63a9bc915" x="9" y="52" width="139" height="33"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
 				<text><![CDATA[INSTITUTO SALVADOREÑO DE REHABILITACION INTEGRAL]]></text>
 			</staticText>
 			<image scaleImage="FillFrame">
-				<reportElement x="52" y="2" width="58" height="50" uuid="eba44f69-de61-4bca-839c-c823834ba02f"/>
+				<reportElement uuid="eba44f69-de61-4bca-839c-c823834ba02f" x="52" y="2" width="58" height="50"/>
 				<imageExpression><![CDATA[$P{ubicacionReport} +"/../Resources/Imagenes/Logo_ISRI2.png"]]></imageExpression>
 			</image>
 		</band>
@@ -206,28 +207,28 @@
 	<pageFooter>
 		<band height="49">
 			<line>
-				<reportElement x="5" y="8" width="543" height="1" uuid="f91c99b4-de28-4db3-bcb1-f134b3e298c1"/>
+				<reportElement uuid="f91c99b4-de28-4db3-bcb1-f134b3e298c1" x="5" y="8" width="543" height="1"/>
 				<graphicElement>
 					<pen lineWidth="2.0" lineColor="#0066CC"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="2" y="11" width="135" height="30" uuid="2bac44e8-eeae-4e7d-9de7-267e668680d4"/>
+				<reportElement uuid="2bac44e8-eeae-4e7d-9de7-267e668680d4" x="2" y="11" width="135" height="30"/>
 				<textElement verticalAlignment="Top"/>
 				<text><![CDATA[Fecha de Actualización Noviembre 2013]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="218" y="21" width="140" height="20" uuid="94ec5cd3-f148-4944-8c7f-6a72d41357c4"/>
+				<reportElement uuid="94ec5cd3-f148-4944-8c7f-6a72d41357c4" x="218" y="21" width="140" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[17 de diciembre del 2013]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="218" y="9" width="141" height="20" uuid="6a9d0f2a-d7b6-4759-855c-bcc02b012af9"/>
+				<reportElement uuid="6a9d0f2a-d7b6-4759-855c-bcc02b012af9" x="218" y="9" width="141" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<text><![CDATA[Fecha de Aprobación ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="467" y="11" width="81" height="20" uuid="b95d1e67-abe5-4bb2-9f7a-59c53ac9c142"/>
+				<reportElement uuid="b95d1e67-abe5-4bb2-9f7a-59c53ac9c142" x="467" y="11" width="81" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>

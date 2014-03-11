@@ -14,7 +14,7 @@
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="256" height="22" uuid="87a531ce-5d87-4fff-b09f-cf21b7eb8293"/>
+				<reportElement uuid="87a531ce-5d87-4fff-b09f-cf21b7eb8293" x="0" y="0" width="256" height="22"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -23,10 +23,12 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement positionType="Float" x="12" y="0" width="538" height="20" uuid="f1453b5b-75f0-4f0d-99cf-1ce19934ed82"/>
-				<textElement textAlignment="Justified" verticalAlignment="Top"/>
+		<band height="25" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="f1453b5b-75f0-4f0d-99cf-1ce19934ed82" positionType="Float" x="12" y="0" width="538" height="25"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<paragraph spacingBefore="5"/>
+				</textElement>
 				<textFieldExpression><![CDATA["- "+$F{nombreresultado}]]></textFieldExpression>
 			</textField>
 		</band>
