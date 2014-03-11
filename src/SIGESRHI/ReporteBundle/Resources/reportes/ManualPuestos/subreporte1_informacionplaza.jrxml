@@ -23,11 +23,11 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="23" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="d55236cb-b29a-42ca-90fa-1045cde9c524" positionType="Float" stretchType="RelativeToBandHeight" x="20" y="0" width="537" height="23" isPrintWhenDetailOverflows="true"/>
+				<reportElement uuid="d55236cb-b29a-42ca-90fa-1045cde9c524" positionType="Float" stretchType="RelativeToBandHeight" x="20" y="0" width="530" height="25"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
-					<paragraph spacingBefore="7"/>
+					<paragraph spacingBefore="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrefuncion}]]></textFieldExpression>
 			</textField>

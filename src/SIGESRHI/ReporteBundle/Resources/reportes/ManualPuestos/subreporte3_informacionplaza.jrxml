@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte3_informacionplaza" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6409e7b1-a185-439a-9be4-3a7805f1bf91">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte3_informacionplaza" pageWidth="550" pageHeight="792" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6409e7b1-a185-439a-9be4-3a7805f1bf91">
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
@@ -63,17 +63,17 @@ where mp.idplaza = $P{IDPLAZA}]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="b94566db-4a67-4926-a56e-bd2bb170e339" positionType="Float" x="20" y="0" width="612" height="20"/>
-				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
-					<paragraph spacingBefore="7"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{nombremarcoref}]]></textFieldExpression>
-			</textField>
+		<band height="25" splitType="Stretch">
 			<ellipse>
 				<reportElement uuid="1a164bfe-4bf2-49c4-988f-de2a7ff9868c" positionType="Float" x="10" y="12" width="3" height="3" backcolor="#000000"/>
 			</ellipse>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="8cef211e-07fc-4f4a-9c80-e42302dd76e1" positionType="Float" x="23" y="0" width="527" height="25" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<paragraph spacingBefore="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombremarcoref}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
