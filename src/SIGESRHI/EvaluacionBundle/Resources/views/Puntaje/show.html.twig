@@ -18,16 +18,19 @@
 
     <table  class="table-bordered table-hover mitable centered-table table tabla-corta">
             <tr>
-                <th  width="30%">Nombre:</th>
-                <th>Puntaje minimo:</th>
-                <th>Puntaje m&aacute;ximo:</th>
-                <th>Nombre abreviado:</th>
+                <th  width="50%">Nombre:</th><td>{{ entity.nombrepuntaje }}</td>
             </tr>
             <tr>
-                <td>{{ entity.nombrepuntaje }}</td>
-                <td>{{ entity.puntajemin }}</td>
-                <td>{{ entity.puntajemax }}</td>
-                <td>{{ entity.nombreabreviado }}</td>
+                <th>Puntaje minimo:</th><td>{{ entity.puntajemin }}</td>
+            </tr>
+            <tr>
+                <th>Puntaje m&aacute;ximo:</th><td>{{ entity.puntajemax }}</td>
+            </tr>
+            <tr>
+                <th>Nombre abreviado:</th><td>{{ entity.nombreabreviado }}</td>
+            </tr>
+            <tr>
+                <th>% de escalaf&oacute;n:</th><td>{{ entity.pescalafon}}</td>
             </tr>
     </table>
 
@@ -48,7 +51,7 @@
 <style>
 .tabla-corta
 {
-width:75%;
+width:50%;
 }
 </style>
 

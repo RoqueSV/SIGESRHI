@@ -321,7 +321,7 @@ class EvaluacionController extends Controller
         //Obtenemos la antiguedad del empleado para establecer el tiempo maximo de supervision que pueda tener.
         $antiguedad = $empleadoevaluado->getIdexpediente()->getHojaservicio()->getFechaingreso();
         $cant = intval((strtotime('now') - strtotime($antiguedad->format('d-m-Y')))/60/60/24/30); //meses
-      echo $cant/12;
+      
         $tiempo = array();
 
         

@@ -13,23 +13,30 @@
     <form action="{{ path('puntaje_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
         
-        <table class="table table-bordered mitable">
+        <table class="table table-bordered mitable tabla-corta centered-table form-inline">
             <tr>
                 <th>{{form_label(edit_form.nombrepuntaje)}}</th>
-                <th>{{form_label(edit_form.puntajemin)}}</th>
-                <th>{{form_label(edit_form.puntajemax)}}</th>
-                <th>{{form_label(edit_form.nombreabreviado)}}</th>
+                <td>{{form_widget(edit_form.nombrepuntaje, { 'attr': {'readonly': 'readonly'} })}} {{form_errors(edit_form.nombrepuntaje)}}</td>
             </tr>
             <tr>
-                <td>{{form_widget(edit_form.nombrepuntaje, { 'attr': {'readonly': 'readonly'} })}} {{form_errors(edit_form.nombrepuntaje)}}</td>
+                <th>{{form_label(edit_form.puntajemin)}}</th>
                 <td>{{form_widget(edit_form.puntajemin)}} {{form_errors(edit_form.puntajemin)}}</td>
+            </tr>
+            <tr>
+                <th>{{form_label(edit_form.puntajemax)}}</th>
                 <td>{{form_widget(edit_form.puntajemax)}} {{form_errors(edit_form.puntajemax)}}</td>
+            </tr>
+            <tr>
+                <th>{{form_label(edit_form.nombreabreviado)}}</th>
                 <td>{{form_widget(edit_form.nombreabreviado)}} {{form_errors(edit_form.nombreabreviado)}}</td>
             </tr>
-
+            <tr>
+                <th>{{form_label(edit_form.pescalafon)}}</th>
+                <td>{{form_widget(edit_form.pescalafon)}} {{form_errors(edit_form.pescalafon)}}</td>
+            </tr>
         </table>
 
-         
+         <br>
 
         {{ form_rest(edit_form) }}
         
@@ -39,6 +46,12 @@
         </div>
     </form>
 
+<style>
+.tabla-corta
+{
+width:55%;
+}
+</style>
         
         
 {% endblock %}

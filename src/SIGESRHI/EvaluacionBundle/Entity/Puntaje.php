@@ -77,6 +77,14 @@ class Puntaje
     private $nombreabreviado;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="pescalafon", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el % de escalafón")
+     */
+    private $pescalafon;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -227,14 +235,28 @@ class Puntaje
         return $this->nombreabreviado;
     }
 
-/*   public function setIdformulario($formulario)
+     /**
+     * Set pescalafoon
+     *
+     * @param integer $pescalafon
+     * @return Puntaje
+     */
+    public function setPescalafon($pescalafon)
     {
-        $this->Idformulario = $formulario;
-        foreach ($puntajes as $puntaje) {
-            $puntaje->setIdformulario($this);
-        }
+        $this->pescalafon = $pescalafon;
+    
+        return $this;
     }
-*/
+
+    /**
+     * Get pescalafon
+     *
+     * @return integer 
+     */
+    public function getPescalafon()
+    {
+        return $this->pescalafon;
+    }
 
 
 }

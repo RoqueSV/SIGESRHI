@@ -69,11 +69,8 @@ $(document).ready(function(){
         show: false,  // Mostrar sólo por medio del boton
         keyboard: false  // Desactivar el evento ESC del teclado
     };
-    $('#help').modal(opcioneshelp) 
+    $('#help').modal(opcioneshelp);
 
-
-
-    
 });
 
 
@@ -151,4 +148,19 @@ $(document).ready(function(){
       $(this).next().slideDown();
     }
   })
-})
+});
+
+
+  //agregar el widget "spinner" para los campos que tengan la clase "spinner"
+   $(document).ready(function(){
+    
+    $( ".spinner" ).spinner({
+spin: function( event, ui ) {
+if ( ui.value < 0 ) {
+$( this ).spinner( "value", 0 );
+return false;
+} 
+}
+});
+    });//ready
+

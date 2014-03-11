@@ -12,22 +12,25 @@
     <form action="{{ path('puntaje_create') }}" method="post" {{ form_enctype(form) }}>
         
 
-        <table class="table table-bordered">
+        <table class="table table-bordered mitable centered-table tabla-corta form-inline">
             <tr>
-                <th>{{form_label(form.nombrepuntaje)}}</th>
-                <th>{{form_label(form.puntajemin)}}</th>
-                <th>{{form_label(form.puntajemax)}}</th>
-                <th>{{form_label(form.nombreabreviado)}}</th>
+                <th width="45%">{{form_label(form.nombrepuntaje)}}</th><td>{{form_widget(form.nombrepuntaje)}} {{form_errors(form.nombrepuntaje)}}</td>
             </tr>
             <tr>
-                <td>{{form_widget(form.nombrepuntaje)}} {{form_errors(form.nombrepuntaje)}}</td>
-                <td>{{form_widget(form.puntajemin)}} {{form_errors(form.puntajemin)}}</td>
-                <td>{{form_widget(form.puntajemax)}} {{form_errors(form.puntajemax)}}</td>
-                <td>{{form_widget(form.nombreabreviado)}} {{form_errors(form.nombreabreviado)}}</td>
+                <th>{{form_label(form.puntajemin)}}</th><td>{{form_widget(form.puntajemin)}} {{form_errors(form.puntajemin)}}</td>
+            </tr>
+            <tr>
+                <th>{{form_label(form.puntajemax)}}</th><td>{{form_widget(form.puntajemax)}} {{form_errors(form.puntajemax)}}</td>
+            </tr>
+            <tr>
+                <th>{{form_label(form.nombreabreviado)}}</th><td>{{form_widget(form.nombreabreviado)}} {{form_errors(form.nombreabreviado)}}</td>
+            </tr>
+            <tr>
+                <th>{{form_label(form.pescalafon)}}</th><td>{{form_widget(form.pescalafon)}} {{form_errors(form.pescalafon)}}</td>
             </tr>
         </table>
 
-        
+        <br>
 
         {{ form_rest(form) }}
         
@@ -39,6 +42,29 @@
     </form>
 
      
+     <style type="text/css">
+ 
+    input[type="number"],
+  .uneditable-input {
+  border: 0px;
+  height: 15px;
+  -webkit-box-shadow: inset 0 0px 0px 0px;
+     -moz-box-shadow: inset 0 0px 0px 0px;
+          box-shadow: inset 0 0px 0px 0px;
+}
+
+input[type="number"]:focus,
+  .uneditable-input {
+  -webkit-box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+     -moz-box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+          box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+}
+
+.tabla-corta
+{
+width:55%;
+}
+</style>
         
     
 {% endblock %}
