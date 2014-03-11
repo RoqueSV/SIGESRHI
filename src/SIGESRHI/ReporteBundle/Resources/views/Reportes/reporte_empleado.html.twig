@@ -2,6 +2,8 @@
 
 {% block principal -%}
 
+{{ form_javascript(form) }}
+
 {% for flashMessage in app.session.flashbag.get('error') %}
   <div class="alert alert-danger">
     <p>{{ flashMessage }}</p>
@@ -41,14 +43,22 @@
       <td>
           <label class="radio">
             <input type="radio" name="tipomod" id="eval" value="4">&nbsp;&nbsp;
-            Reporte anual de resultados de evaluaciones
+            Informe anual de resultados de evaluaciones
          </label>
         </td>
     </tr>
     <tr>
       <td>
           <label class="radio">
-            <input type="radio" name="tipomod" id="eval" value="4">&nbsp;&nbsp;
+            <input type="radio" name="tipomod" id="evalxcentro" value="5">&nbsp;&nbsp;
+            Reporte anual de evaluaciones por centro
+         </label>
+        </td>
+    </tr>
+    <tr>
+      <td>
+          <label class="radio">
+            <input type="radio" name="tipomod" id="historico" value="6">&nbsp;&nbsp;
             Reporte histórico de empleado
          </label>
         </td>
@@ -73,18 +83,13 @@
       <h4 class="text-center"> Seleccione una cantidad </h4>
       <div class='text-center'>
 
-        <!-- <div class="control-group">
+           <div class="control-group">
             <label for="codempleado" class="control-label required">Cantidad *</label>
             <div class="controls">
-            <input type="text" name="anios" id="anios" maxlength="2" required="required" class="input-small" data-bvalidator="number"/>
-            </div>  -->
-        <select id="anios" name="anios" class="input-mini">
-            {% for i in 1.. 50 %}
-             <option value="{{i}}">{{i}}</option>
-            {% endfor %}
-         </select>
-         <br/>
-      
+            <input name="anios" id="anios" required="required" class="spinner input-mini" readonly="readonly"/>
+            </div>  
+            <br/>
+
         <button type='submit' class='btn btn-primary'>Generar</button>
       </div>
    </form>
@@ -100,6 +105,19 @@
 
   <div id="evaluaciones" class='hide'>
       <form action="{{ path('reporte_empleado_evaluacion') }}" id="form_evaluaciones" method="post">
+      
+      {% set anyoact = "now"|date("Y") %}   
+
+       <div class='text-center'>  
+        <h4 class="text-center"> Seleccione un año </h4>
+         <select id="anio" name="anio" class="input-small">
+            {% for i in (anyoact - 10).. anyoact %}
+             <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+         </select>
+         <br/>
+        <button type='submit' class='btn btn-primary'>Generar</button>
+       </div>
 
       </form>
   </div>
@@ -107,6 +125,40 @@
   <div id="empleadoscentro" class='hide'>
     <fieldset><legend>Parámetros del reporte</legend>
       <form action="{{ path('reporte_empleado_centro') }}"  method="post">
+        
+        <div class='text-center'>
+         <h4 class="text-center"> Seleccione el centro de atención </h4>
+         <select id="idcentro" name="idcentro" class="input-xmlarge">
+            {% for centro in centros %}
+             <option value="{{centro.id}}">{{centro.nombrecentro}}</option>
+            {% endfor %}
+         </select>
+         <br/>
+         <button type='submit' class='btn btn-primary'>Generar</button>
+        </div>
+      
+      </form>
+    </fieldset>
+  </div>
+
+  <div id="historicoempleado" class="hide">
+
+    <form action="{{ path('reporte_empleado_historico') }}" method="post" >
+            
+        <div class="text-center">
+        {{form_row(form.empleado)}}
+        {{form_rest(form)}}
+        
+        <button type="submit" class="btn btn-primary">Generar</button>
+        </div>
+
+    </form>
+  </div>
+
+
+  <div id="evalcentro" class='hide'>
+    <fieldset><legend>Parámetros del reporte</legend>
+      <form action="{{ path('reporte_evaluacion_centro') }}"  method="post">
         
         <div class='text-center'>
          <h4 class="text-center"> Seleccione el centro de atención </h4>
@@ -135,6 +187,9 @@ $(document).ready(function(){
              
              $('#tipo_requerido').hide();
              $('#empleadoscentro').hide();
+             $('#evaluaciones').hide();
+             $('#historicoempleado').hide();
+             $('#evalcentro').hide();
              $('#antiguedad').show();           
             
          } else if($("#doble").is(':checked')) {  
@@ -142,12 +197,18 @@ $(document).ready(function(){
              $('#tipo_requerido').hide();
              $('#antiguedad').hide();
              $('#empleadoscentro').hide();
+             $('#evaluaciones').hide();
+             $('#historicoempleado').hide();
+             $('#evalcentro').hide();
              document.getElementById("form_plaza").submit();
            
          } else if($("#centro").is(':checked')){
 
              $('#tipo_requerido').hide();
              $('#antiguedad').hide();
+             $('#evaluaciones').hide();
+             $('#historicoempleado').hide();
+             $('#evalcentro').hide();
              $('#empleadoscentro').show();
          
          } else if($("#eval").is(':checked')) {  
@@ -155,7 +216,27 @@ $(document).ready(function(){
              $('#tipo_requerido').hide();
              $('#antiguedad').hide();
              $('#empleadoscentro').hide();
-             document.getElementById("form_evaluaciones").submit();
+             $('#historicoempleado').hide();
+             $('#evalcentro').hide();
+             $('#evaluaciones').show();
+
+         } else if($("#historico").is(':checked')) {  
+
+             $('#tipo_requerido').hide();
+             $('#antiguedad').hide();
+             $('#empleadoscentro').hide();
+             $('#evaluaciones').hide();
+             $('#evalcentro').hide();
+             $('#historicoempleado').show();
+
+         } else if($("#evalxcentro").is(':checked')) {  
+
+             $('#tipo_requerido').hide();
+             $('#antiguedad').hide();
+             $('#empleadoscentro').hide();
+             $('#evaluaciones').hide();
+             $('#historicoempleado').hide();
+             $('#evalcentro').show();
 
          }else{
           $('#tipo_requerido').show(); 

@@ -1,5 +1,6 @@
 #
 # Archivo .htacces configurado por LPaulino - rgijeru@gmail.com
+# Actualizado por E.Roque - 11/02/14
 #
 
 
@@ -15,5 +16,21 @@ Options All -Indexes
 
 # Se evita que se muestren los archivos de los directorios (directorios en blanco) ** Basta con no mostrar los directorios (opcion anterior) **
 # IndexIgnore *
+
+# Remover /app.php de url
+<IfModule mod_rewrite.c>
+    Options +FollowSymlinks
+    RewriteEngine On
+
+    # Explicitly disable rewriting for front controllers
+    RewriteRule ^app_dev.php - [L]
+    RewriteRule ^app.php - [L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+
+    # Cambiar la siguiente opción al pasar a producción
+    #RewriteRule ^(.*)$ app.php [QSA,L]
+    RewriteRule ^(.*)$ app_dev.php [QSA,L]
+</IfModule>
 
 

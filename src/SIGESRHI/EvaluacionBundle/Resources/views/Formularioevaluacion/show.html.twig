@@ -68,7 +68,7 @@ function eliminar(ruta) {
 
     <div class="text-center">
     <a href="{{ path('formularioevaluacion') }}" class="btn">Regresar al listado</a>
-    <a href="{{path('reporte_formularioevaluacion', {'id':entity.id})}}" class="btn">Reporte </a>
+    <a href="{{path('reporte_formularioevaluacion', {'id':entity.id})}}" class="btn">Generar PDF </a>
     <a href="{{ path('formularioevaluacion_edit', { 'id': entity.id }) }}" class="btn">Editar Generales</a>
     <a href="{{ path('factorevaluacion_newfactor', { 'id': entity.id }) }}" class="btn">Editar Factores</a>
     <a onclick="eliminar('{{path('formularioevaluacion_deshabilita', { 'id': entity.id })}}')" class="btn btn-danger">Eliminar</a>

@@ -1,5 +1,12 @@
 {% extends '::PrincipalBase.html.twig' %}
 
-{%block extendido -%}
-<a href="{{ asset('uploads/reportes/'~ reportes) }}"> Descargar </a>
+{%block principal -%}
+<h4 class="text-center"> Descarga de archivo </h4>
+
+<div class="text-center">
+  <p>De clic en la siguiente imagen para descargar el archivo en formato .xls (excel)</p><br/>
+  <a href="{{ asset('uploads/reportes/'~ reportes) }}"> <img src="{{asset('images/excel.png')}}" height="100px" width="100px"/> </a>
+   <br/><br/>
+  <a href="{{app.request.headers.get('referer')}}"  class="btn btn-primary">Regresar</a>
+</div>
 {% endblock %}

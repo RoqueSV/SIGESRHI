@@ -29,6 +29,7 @@ class ConcursoType extends AbstractType
             ->add('idcentro', null, array(
                   'label'=>'Centro al que pertenece', 
                   'required' => true,
+                  'empty_value' => 'Seleccione un centro',
                   'attr'=>array('class'=>'input-xmlarge')))
            /* ->add('numeroacta',null,array(
                   'label'=>'No de acta de concurso')) */

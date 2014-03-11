@@ -155,12 +155,12 @@ $(document).ready(function(){
    $(document).ready(function(){
     
     $( ".spinner" ).spinner({
-spin: function( event, ui ) {
-if ( ui.value < 0 ) {
-$( this ).spinner( "value", 0 );
-return false;
-} 
-}
-});
-    });//ready
+     spin: function( event, ui ) {
+      if ( ui.value < 0 ) {
+       $( this ).spinner( "value", 0 );
+       return false;
+      } 
+     }
+    });
+   });//ready
 
