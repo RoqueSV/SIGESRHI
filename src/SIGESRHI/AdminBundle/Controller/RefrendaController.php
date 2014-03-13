@@ -6,6 +6,11 @@ use Doctrine\ORM\EntityRepository;
 use SIGESRHI\AdminBundle\Entity\Refrenda;
 use SIGESRHI\ExpedienteBundle\Entity\Accionpersonal;
 
+use SIGESRHI\ExpedienteBundle\Entity\Expediente;
+use SIGESRHI\ExpedienteBundle\Entity\Empleado;
+use SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo;
+use SIGESRHI\ExpedienteBundle\Entity\Hojaservicio;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -204,16 +209,92 @@ class RefrendaController extends Controller
       $em = $this->getDoctrine()->getManager();
       $max = $this->get('request')->request->get('MAX_FILE_SIZE');
       $uploadfile = __DIR__."/../../../../web/uploads/RefrendaTemp/".basename($_FILES['arch_carga_incial']['name']);
-      $sinerrores=1;
+      $BKdir = $this->get('kernel')->getRootDir()."/../web/uploads/";
+      $sinerrores=0;
       $msj="";
       
-      $empleadosA = $em->getRepository('ExpedienteBundle:Empleado')->findAll();
+      $plazas = $this->getDoctrine()->getRepository('AdminBundle:Plaza')->findAll();
+      $centros= $this->getDoctrine()->getRepository('AdminBundle:Centrounidad')->findAll();
+      if($plazas != null AND $centros != null){
+        if ((move_uploaded_file($_FILES['arch_carga_incial']['tmp_name'], $uploadfile)) AND ($max>$_FILES['arch_carga_incial']['size']) AND (($_FILES['arch_carga_incial']['type']=="application/vnd.ms-excel") OR ($_FILES['arch_carga_incial']['type']=="text/csv") ) ) {
+           //respaldo BD
+          /*exec("cd ".$BKdir."");
+          system("C:\BitNami\wappstack-5.4.24-0\postgresql\bin\pg_dump.exe -i -h localhost -p 5432 -U postgres -F c -b -v -f sigesrhi sigesrhi");
+          echo "cd ".$BKdir."";
+          echo "C:\BitNami\wappstack-5.4.24-0\postgresql\bin\pg_dump.exe -i -h localhost -p 5432 -U postgres -F c -b -v -f sigesrhi sigesrhi";
+           $msj="REspaldo exitoso";*/
+           ///////
+           while ((($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) AND ($sinerrores==0)) {
+            //obtenemos el codigo del empleado
+            if(($totalblank=substr_count($datos[1]," "))>0){
+              $codigocortado = explode(" ", $datos[1]);
+              $codigoempleado=$codigocortado[$totalblank];
+            }else{
+              $codigoempleado=$datos[1];
+            }  
+
+            if(strlen($codigoempleado)==5){
+              //Verificamos si ya existe un expediente para el empleado
+              $empleadofind = $this->getDoctrine()->getRepository('ExpedienteBundle:Empleado')->findOneByCodigoempleado($codigoempleado);
+              $expedientefind = $empleado->getIdexpediente();
+              $plaza = $this->fullUpperFromDb($datos[5]);
+              if($expedientefind == null){
+                //creamos el expediente
+                $fexp = new \Datetime(date('d-m-Y'));
+                $expediente = new Expediente();                 
+                $expediente->setTipoexpediente('E');
+                $expediente->setFechaexpediente($fexp);
+                //Usuario para el empleado
+                $usuario = new Usuario();
+                $usuario->setUsername($codigoempleado);
+                //Entidad Empleado
+                $empleado = new Empleado();
+
+              }else{
+                //si ya existe no creamos expediente
+                $expediente = $expedientefind;
+              }
+              
+              //Verificamos que exista la plaza asignada
+              $entityPlaza = $this->getDoctrine()
+                                        ->getRepository('AdminBundle:Plaza')
+                                        ->findOneByNombreplaza($plaza); 
+              if($entityPlaza != null){
+                //Solicitud de empleo
+              }else{
+                $sinerrores=4;
+                $msj="Plaza no encontrada en el Manual de Puestos del ISRI: ".$plaza;
+              }
+            }
+            else{
+              $sinerrores=3;
+              $msj="Codigo Inválido: ".$codigoempleado;
+            }
+
+           }//fin while leer linear
+
+        }else{
+          $sinerrores=2;
+          $msj="Error en Archivo";
+        }
+
+      }else{
+        $sinerrores=1;
+        $msj="No existen catalogos Plaza y Centros";
+      }
+
+
+      echo $msj;
+      }
+      /*$empleadosA = $em->getRepository('ExpedienteBundle:Empleado')->findAll();
       $expedientesA = $em->getRepository('ExpedienteBundle:Expediente')->findAll();
       if($empleadosA==null AND $expedientesA==null ){
         if ((move_uploaded_file($_FILES['arch_carga_incial']['tmp_name'], $uploadfile)) AND ($max>$_FILES['arch_carga_incial']['size']) AND (($_FILES['arch_carga_incial']['type']=="application/vnd.ms-excel") OR ($_FILES['arch_carga_incial']['type']=="text/csv") ) ) {
           if (($gestor = fopen($uploadfile, "r")) !== FALSE) {              
                 while ((($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) AND ($sinerrores==1)) {
+                  //llenado de EXPEDIENTE
                   
+                  //FIN EXPEDIENTE
                   
                 }
           }
@@ -224,7 +305,7 @@ class RefrendaController extends Controller
         $msj="Existen datos de empleados y expedientes, antes realice un respaldo de estos y borrelos de la base de datos";
       }
 
-    }
+    }*/
 
     function fullUpperFromDb($String1){
       $String = utf8_encode(strtoupper($String1));

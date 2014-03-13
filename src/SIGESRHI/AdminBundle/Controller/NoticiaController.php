@@ -224,14 +224,18 @@ class NoticiaController extends Controller
         else{
             $idcentros[]=0;
         }        
+        $fechaactual = new \Datetime(date('d-m-Y'));
         $query = $em->createQueryBuilder()
             ->select('n.id,n.fechanoticia, n.asuntonoticia')
             ->from('AdminBundle:Noticia', 'n')
             ->innerJoin('n.idcentro', 'c')
             ->setMaxResults(5)
             ->andWhere('c.id IN (:idscentro)')
+            ->andWhere('n.fechafinnoticia >= :fechaactual')
+            ->andWhere('n.fechainicionoticia <= :fechaactual')
             ->groupBy('n.id')
-            ->setParameter('idscentro', $idcentros);
+            ->setParameter('idscentro', $idcentros)
+            ->setParameter('fechaactual', $fechaactual);
         $noticias = $query->getQuery()->getResult();
         return $this->render('AdminBundle:Noticia:obtenerNoticias.html.twig', array(
        'noticias' => $noticias,

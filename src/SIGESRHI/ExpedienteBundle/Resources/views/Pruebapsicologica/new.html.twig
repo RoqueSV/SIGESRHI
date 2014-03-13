@@ -31,18 +31,24 @@
         <th>Plaza a la que aplica:</th>
         <td> {{ exp.nombreplaza }} </td>
     </tr>
-    {#% endfor %#}
-    </table>
     {% endfor %}
+    {% if expediente|length == 0 %}
+    <tr>
+        <th width="25%">Nombre:</th>
+        <td> {{ expediente2.idsolicitudempleo.nombrecompleto  }} </td>
+    </tr>
+    {% endif %}
+    </table>
     <form action="{{ path('pruebapsicologica_create',{'exp':expediente2.id}) }}" id= "pruebapsicologica_form" class="form-horizontal" method="post" {{ form_enctype(form) }}>
     
         {#{{ form_widget(form) }}#}        
         <fieldset>
         <legend>Resultados</legend>
         <p>Para la evaluación psicológica se tomo en cuenta los siguientes aspectos:</p><br />
+        <div class='centered'>
             <table class='centered-table table-bordered' border='1' width='85%'>    
             <tr>
-            <th>Criterios</th>
+            <th width="160">Criterios</th>
             <th  width="250">Rangos</th>
             <th>Calificación</th>
             </tr>            
@@ -60,8 +66,8 @@
                 </td>
                 <td>{{ form_widget(form.calificacioncoeficiente) }} {{form_errors(form.calificacioncoeficiente)}}
                     {% for flashMessage in app.session.flashbag.get('calificacion') %}
-                        <div class="alert alert-danger">
-                            <p> {{ flashMessage }} </p>
+                        <div class="alert alert-danger" id="error2">
+                            <span id> {{ flashMessage }} </span>
                         </div>
                     {% endfor %}
                 </td>
@@ -123,6 +129,8 @@
                 <td></td>
             </tr>
             </table>
+            <br>
+        </div>
         </fieldset>
         {#{ form_widget(form.idexpediente) }#}
         {{ form_rest(form) }}
@@ -151,6 +159,7 @@ $( document ).ready(function() {
     $("#sigesrhi_expedientebundle_pruebapsicologicatype_resultadocoeficiente_3").click(function(){
         $("#sigesrhi_expedientebundle_pruebapsicologicatype_calificacioncoeficiente").removeAttr("disabled");
     });
+    $("#error2").height(11);
 });
 </script>
 {% endblock %}
