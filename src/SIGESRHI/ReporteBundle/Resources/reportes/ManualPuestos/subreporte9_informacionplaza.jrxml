@@ -39,9 +39,9 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="66" splitType="Stretch">
+		<band height="34" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="44abf713-e0f3-4f70-af7f-9e339322674c" positionType="Float" x="13" y="0" width="537" height="66"/>
+				<reportElement uuid="44abf713-e0f3-4f70-af7f-9e339322674c" positionType="Float" stretchType="RelativeToTallestObject" x="13" y="0" width="537" height="25"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html"/>
 				<textFieldExpression><![CDATA["<b>"+$F{nombreplaza}+"</b>: "+$F{misionplaza}]]></textFieldExpression>
 			</textField>

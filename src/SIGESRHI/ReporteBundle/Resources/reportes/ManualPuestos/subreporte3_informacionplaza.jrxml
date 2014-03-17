@@ -27,24 +27,42 @@
 			<bottomPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="Table Dataset 1" uuid="3bc126bd-882e-4e6b-bc32-c20095a01a2c"/>
-	<subDataset name="dataset1" uuid="46504864-7a14-4998-ba25-e03899f7479f">
-		<parameter name="IDPLAZA" class="java.lang.Integer">
-			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-		</parameter>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Marcosdereferencia" uuid="c3e57ef9-a56b-4adb-9354-a58b46c2fb5c">
+		<parameter name="idplaza" class="java.lang.Integer"/>
 		<queryString>
-			<![CDATA[select nombremarcoref from marcoreferencia mr
-join marcoreferenciaplaza mp
-on (mr.id = mp.idmarcoreferencia)
-where mp.idplaza = $P{IDPLAZA}]]>
+			<![CDATA[select p.id,nombremarcoref from plaza p join marcoreferenciaplaza mrp on (p.id=mrp.idplaza) join marcoreferencia mr on (mr.id=mrp.idmarcoreferencia) where p.id=$P{idplaza}]]>
 		</queryString>
+		<field name="id" class="java.lang.Integer"/>
 		<field name="nombremarcoref" class="java.lang.String"/>
+		<group name="nombremarcoref">
+			<groupExpression><![CDATA[$F{nombremarcoref}]]></groupExpression>
+		</group>
 	</subDataset>
 	<parameter name="idplaza" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.id,nombremarcoref from plaza p join marcoreferenciaplaza mrp on (p.id=mrp.idplaza) join marcoreferencia mr on (mr.id=mrp.idmarcoreferencia) where p.id=$P{idplaza}]]>
+		<![CDATA[]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="nombremarcoref" class="java.lang.String"/>
@@ -52,28 +70,42 @@ where mp.idplaza = $P{IDPLAZA}]]>
 		<band splitType="Stretch"/>
 	</background>
 	<columnHeader>
-		<band height="20" splitType="Stretch">
+		<band height="51" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="51f0f3ba-00bc-4c0c-9148-0ead9c35bf30" key="table 1" style="table 1" mode="Opaque" x="0" y="26" width="354" height="25"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Marcosdereferencia" uuid="1a98e3e5-16d1-478e-b312-c5a6d435a502">
+						<datasetParameter name="idplaza">
+							<datasetParameterExpression><![CDATA[$P{idplaza}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="9" uuid="941ba392-956c-4791-892f-da6d675ab21d">
+						<jr:detailCell height="35" rowSpan="1">
+							<ellipse>
+								<reportElement uuid="e79a62df-60a2-4a83-907f-9d34af2b2ccf" x="3" y="16" width="3" height="3" backcolor="#000000"/>
+							</ellipse>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="549" uuid="4afd9dbc-efa4-4317-93d5-4d5670287849">
+						<jr:detailCell height="35" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement uuid="7614c804-fb3c-4aa4-8b7b-3543fa76b952" positionType="Float" x="0" y="0" width="549" height="35"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none"/>
+								<textFieldExpression><![CDATA[$F{nombremarcoref}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
 			<staticText>
-				<reportElement uuid="b5df14b1-f955-47fb-aa7b-a7d97e066c6f" positionType="Float" x="1" y="0" width="306" height="20"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement uuid="18aaa3c0-42a3-4979-96df-e2b81117354e" x="0" y="4" width="354" height="17"/>
+				<textElement verticalAlignment="Bottom">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[3. MARCO DE REFERENCIA PARA LA ACTUACION:]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
-	<detail>
-		<band height="25" splitType="Stretch">
-			<ellipse>
-				<reportElement uuid="1a164bfe-4bf2-49c4-988f-de2a7ff9868c" positionType="Float" x="10" y="12" width="3" height="3" backcolor="#000000"/>
-			</ellipse>
-			<textField isStretchWithOverflow="true">
-				<reportElement uuid="8cef211e-07fc-4f4a-9c80-e42302dd76e1" positionType="Float" x="23" y="0" width="527" height="25" isPrintWhenDetailOverflows="true"/>
-				<textElement textAlignment="Justified" verticalAlignment="Middle">
-					<paragraph spacingBefore="5"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{nombremarcoref}]]></textFieldExpression>
-			</textField>
-		</band>
-	</detail>
 </jasperReport>

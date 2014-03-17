@@ -2,12 +2,31 @@
 
 {% block titulo %}
 
-<h3 id="helpLabel">Incidentes</h3>
+<h3 id="helpLabel">Registrar Incidentes</h3>
+<p>Este formulario permite registrar acciones que inciden de manera favorable o desfavorable en el nivel de desempe&ntilde;o laboral de un empleado</p> 
 
 {% endblock %}
 
 {% block contenido %}
 
-<p>¿Cómo llenar este formulario?</p>
-
+<p><h4>¿C&oacute;mo llenar este formulario?</h4></p>
+<div class="justify">A continuaci&oacute;n se mencionan los pasos necesarios para su correcto registro:<br>
+</div>
+<ul style="list-style-type:disc; margin-left:25px">
+<li>Para el registro de incidentes es necesario el ingreso de datos solicitados en la tabla que se muestra a continuaci&oacute;n:</li>
+<img src="{{asset('images/images_ayuda/factores.jpg') }}" alt="ISRI"/><br><br>
+<li>Seleccionar fecha en que se registra el incidente</li>
+<img src="{{asset('images/images_ayuda/calendariofactor.jpg') }}" alt="ISRI"/><br><br>
+<li>Seleccionar del listado de factores, el factor sobre el cual se registrar&aacute; un nuevo incidente</li>
+<img src="{{asset('images/images_ayuda/factorseleccionado.jpg') }}" alt="ISRI"/><br><br>
+<li>Seleccionar tipo de incidente: Favorables o Desfavorable</li><br>
+<li>Ingresar una descripci&oacute;n del incidente o evento generado</li><br>
+<li>Una vez completados los registros de la tabla, presionar la opci&oacute;n "Registrar"</li>
+<img src="{{asset('images/images_ayuda/tablafactores.jpg') }}" alt="ISRI"/><br>
+<div class="justify">Se observa la nueva columna agregada en la tabla junto con la posibilidad para agregar m&aacute;s incidentes.</div><br>
+<li>Adicionalmente se presenta la opci&oacute;n para agregar algun comentario general.</li>
+<li>Para realizar otra operaci&oacute;n presione el bot&oacute;n "Finalizar".</li>
+</ul>
+<br>
+<br>
 {% endblock %}

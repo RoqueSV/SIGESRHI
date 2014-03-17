@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte1_informacionplaza" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="837ac732-8bc5-46b8-9f40-588c0628da47">
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="4.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idplaza" class="java.lang.Integer">
@@ -14,7 +14,7 @@
 	<columnHeader>
 		<band height="20">
 			<staticText>
-				<reportElement x="0" y="0" width="272" height="20" uuid="3312e833-7e27-4691-8d94-2f6396bf7827"/>
+				<reportElement uuid="3312e833-7e27-4691-8d94-2f6396bf7827" x="0" y="0" width="272" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -23,17 +23,17 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="23" splitType="Stretch">
+		<band height="9" splitType="Immediate">
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" x="14" y="0" width="558" height="23" uuid="d55236cb-b29a-42ca-90fa-1045cde9c524"/>
-				<textElement textAlignment="Justified" verticalAlignment="Top"/>
+				<reportElement uuid="d55236cb-b29a-42ca-90fa-1045cde9c524" positionType="Float" stretchType="RelativeToTallestObject" x="13" y="0" width="559" height="6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nombrefuncion}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="0" y="0" width="14" height="13" uuid="de880a08-6a20-40ca-9fdc-e324d22b2b77"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[-]]></text>
-			</staticText>
+			<ellipse>
+				<reportElement uuid="745d8de1-f23f-42fd-affa-732ef706a745" positionType="Float" x="6" y="3" width="3" height="3" backcolor="#000000"/>
+			</ellipse>
 		</band>
 	</detail>
 </jasperReport>
