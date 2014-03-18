@@ -117,3 +117,11 @@ consultar_plan:
 reporte_plancapacitacion:
     pattern:  /reporte_plancapacitacion
     defaults: { _controller: ReporteBundle:Reporte:ReporteResultadosPlan }
+
+reporte_empleado_historico:
+    pattern:  /reportehistorico
+    defaults: { _controller: ReporteBundle:ModuloReporte:ReporteHistoricoEmpleado }
+
+reporte_evaluacion_centro:
+    pattern:  /reporteevalxcentro
+    defaults: { _controller: ReporteBundle:ModuloReporte:ReporteEvaluacionesExcel }

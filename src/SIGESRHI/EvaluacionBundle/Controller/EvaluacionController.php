@@ -266,6 +266,12 @@ class EvaluacionController extends Controller
      */
     public function newAction()
     {
+         //validamos si es periodo de evaluacion.
+        $periodo_evaluacion= $this->VerificarPeriodoActivo();
+        if(!$periodo_evaluacion){
+            return $this->redirect($this->generateUrl('evaluacion_noperiodo'));
+        }
+
         //recibimos el tipo de formulario a usar
         $request = $this->getRequest();
         $form_eval = $request->get('idform');
@@ -295,6 +301,7 @@ class EvaluacionController extends Controller
         $refrendajefe = $em->getRepository('AdminBundle:RefrendaAct')->find($idpuestojefe);
         $empleadoevaluado =  $em->getRepository('ExpedienteBundle:Empleado')->find($refrenda->getIdempleado());
 
+
         //hacemos validacion de existencia de entidades, y comprobamos que el id de la refrenda sea una asignada a nuestro evaluador.
         if (!$empleadoevaluado) {
             throw $this->createNotFoundException('No se encuentra la entidad del Empleado.');
@@ -304,8 +311,16 @@ class EvaluacionController extends Controller
             throw $this->createNotFoundException('No se encuentra la entidad Refrenda del empleado.');
         }
 
+        if (!$refrenda->getIdempleado()) {
+            throw $this->createNotFoundException('La plaza del empleado proporcionada no se encuentra asignada.');
+        }
+
          if (!$refrendajefe) {
             throw $this->createNotFoundException('No se encuentra la entidad Refrenda del empleado.');
+        }
+
+         if (!$refrendajefe->getIdempleado()) {
+            throw $this->createNotFoundException('La plaza del jefe proporcionada No se encuentra asignada a ningun empleado.');
         }
 
         if (!($refrenda->getCodigoempleado() == $empleadoevaluado->getCodigoempleado())) {
@@ -316,6 +331,13 @@ class EvaluacionController extends Controller
 
         if (!$formulario) {
           throw $this->createNotFoundException('No se puede encontrar la entidad Formulario.');
+        }
+
+         //validamos que el empleado este asignado al puesto, que el jefe sea el asignado.
+        $vsuprema = $em->getRepository('ExpedienteBundle:Contratacion')->findBy(array('idempleado'=>$id, 'puesto'=>$idpuestoemp, 'puestojefe'=>$idpuestojefe));
+
+          if(!$vsuprema){
+            throw $this->createNotFoundException('Datos obtenidos no concuendan.');
         }
 
         //Obtenemos la antiguedad del empleado para establecer el tiempo maximo de supervision que pueda tener.
@@ -347,33 +369,9 @@ class EvaluacionController extends Controller
                /* elseif($i % 12 !=0 && $i > 18){ //para establecer rangos de 6 meses
                  $tiempo[] = intval($i/12)." años y 6 meses.";   
                 }*/
-
-
             }
 
 
-           /* if($i<=6){
-                $tiempo[] = "menos de 6 meses.";
-            }
-            elseif( $i > 6 && $i < 12)
-            {
-                $tiempo[] = "menos de 6 meses.";
-                $tiempo[] = "6 meses.";
-            }
-            elseif($i == 12 ){
-            $tiempo[] = ($i/12)." año.";
-            
-            if ($i<$cant){
-                    $tiempo[] = ($i/12)." año 6 meses.";
-                }
-            }
-            elseif($i % 12 == 0 && $i !=12){
-                $tiempo[] = ($i/12)." años.";
-                
-            }elseif($i % 12 != 0){
-
-                    $tiempo[] = intval($i/12)." años 6 meses.";
-            } */
         }
        //fin antiguedad del empleado
         
@@ -667,13 +665,76 @@ class EvaluacionController extends Controller
 
     public function SeleccionFormularioAction($id, $idpuestoemp, $idpuestojefe){
 
+        //obtenemos el administrador de entidades
         $em = $this->getDoctrine()->getManager();
 
-         $puestoemp = $em->getRepository('AdminBundle:RefrendaAct')->find($idpuestoemp);
+        //////////////***************validacion de inicio agregada***********************/////////////////////////////
+
+         //validamos si es periodo de evaluacion.
+        $periodo_evaluacion= $this->VerificarPeriodoActivo();
+        if(!$periodo_evaluacion){
+            return $this->redirect($this->generateUrl('evaluacion_noperiodo'));
+        }
+        //Obtenemos el id de empleado del usuarioo logueado
+        $user = new User();
+        $jefe = new Empleado();
+        $user = $this->get('security.context')->getToken()->getUser();
+        if($user == "anon."){
+            throw $this->createNotFoundException('Usuario no autenticado.');
+        }
+        $jefe = $user->getEmpleado();
+
+        if(!$jefe){
+            throw $this->createNotFoundException('Usuario no tiene asociado ningún perfil de empleado.');
+        }
+
+        $puestojefe = $em->getRepository('AdminBundle:RefrendaAct')->find($idpuestojefe);
+
+        if(!$puestojefe){
+            throw $this->createNotFoundException('No se encontro la refrenda del jefe.');
+        }
+
+        if(!$puestojefe->getIdempleado()){
+            throw $this->createNotFoundException('El puesto de jefe ingresado no esta asignado a ningun empleado.');
+        }
+
+        //validamos que el idpuestojefe sea del jefe evaluador
+        if($puestojefe->getIdempleado()->getId() != $jefe->getId())
+            {
+                throw $this->createNotFoundException('El puesto del jefe proporcionado no corresponde al jefe evaluador.');
+            }
+
+            //obtenemos la entidad empleado del empleado evaluado
+            $empleado = $em->getRepository('ExpedienteBundle:Empleado')->find($id);
+            
+            if(!$empleado)
+            {
+                throw $this->createNotFoundException('No se encontro la entidad empleado.');
+            }
+        
+            //puestoemp del empleado evaluado, se envia hacia la vista
+        $puestoemp = $em->getRepository('AdminBundle:RefrendaAct')->find($idpuestoemp);
 
           if(!$puestoemp){
             throw $this->createNotFoundException('No se encontro la refrenda del empleado.');
         }
+
+        if(!$puestoemp->getIdempleado()){
+            throw $this->createNotFoundException('El puesto de empleado ingresado no esta asignado a ningun empleado.');
+        }
+
+        if($puestoemp->getIdempleado()->getId() != $empleado->getId())
+            {
+                throw $this->createNotFoundException('El puesto de empleado proporcionado no corresponde al empleado.');
+            }
+
+            //validamos que el empleado este asignado al puesto, que el jefe sea el asignado.
+        $vsuprema = $em->getRepository('ExpedienteBundle:Contratacion')->findBy(array('idempleado'=>$id, 'puesto'=>$idpuestoemp, 'puestojefe'=>$idpuestojefe));
+
+          if(!$vsuprema){
+            throw $this->createNotFoundException('Datos obtenidos no concuendan.');
+        }
+        /////////////////////////*****************************////////////////////////////////
 
         $formularios = $em->getRepository('EvaluacionBundle:Formularioevaluacion')->findBy(array('estadoform'=>'A'));
 
@@ -702,6 +763,12 @@ class EvaluacionController extends Controller
 
     public function LlamarFormularioAction($id, $idpuestoemp, $idpuestojefe)
     {
+         //validamos si es periodo de evaluacion.
+        $periodo_evaluacion= $this->VerificarPeriodoActivo();
+        if(!$periodo_evaluacion){
+            return $this->redirect($this->generateUrl('evaluacion_noperiodo'));
+        }
+
         $request = $this->getRequest();
         $idform = $request->get('tipo_form');
 
@@ -711,6 +778,12 @@ class EvaluacionController extends Controller
 
     public function RegistraIncidenteAction($idevaluacion)
     {
+         //validamos si es periodo de evaluacion.
+        $periodo_evaluacion= $this->VerificarPeriodoActivo();
+        if(!$periodo_evaluacion){
+            return $this->redirect($this->generateUrl('evaluacion_noperiodo'));
+        }
+
         $request = $this->getRequest();
         //recuperamos los parametros del formulario de incidentes
         $fecha = $request->get('fecha');

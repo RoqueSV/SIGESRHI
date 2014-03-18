@@ -15,7 +15,7 @@
         
         <table class="table table-bordered mitable tabla-corta centered-table form-inline">
             <tr>
-                <th>{{form_label(edit_form.nombrepuntaje)}}</th>
+                <th width="45%">{{form_label(edit_form.nombrepuntaje)}}</th>
                 <td>{{form_widget(edit_form.nombrepuntaje, { 'attr': {'readonly': 'readonly'} })}} {{form_errors(edit_form.nombrepuntaje)}}</td>
             </tr>
             <tr>
@@ -47,6 +47,29 @@
     </form>
 
 <style>
+
+ input[type="number"],
+  .uneditable-input {
+  border: 0px;
+  height: 15px;
+  -webkit-box-shadow: inset 0 0px 0px 0px;
+     -moz-box-shadow: inset 0 0px 0px 0px;
+          box-shadow: inset 0 0px 0px 0px;
+}
+
+input[type="number"]:focus,
+  .uneditable-input {
+  -webkit-box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+     -moz-box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+          box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+}
+
+input[readonly],
+.spinner
+{
+  background-color: #ffffff;
+}
+
 .tabla-corta
 {
 width:55%;
