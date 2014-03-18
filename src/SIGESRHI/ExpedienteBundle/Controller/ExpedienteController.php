@@ -332,8 +332,14 @@ public function confirmarValidoAction($id,$idsol)
     {        
         //recuperar desde un formulario
         $periodo=$this->get('request')->request->get('periodo');   
-
+        $session = $this->getRequest()->getSession();
+        if($periodo==""){
+            if($Speriodo = $session->get('Speriodo'))
+                $periodo = $Speriodo;
+                
+        }
         if($periodo!=""){
+            $session->set('Speriodo',$periodo);
             $fecha_actual=date('d-m-Y');
             $pedazos=explode('-', $fecha_actual);
             $anofind=+$pedazos[2]-$periodo;
@@ -375,6 +381,7 @@ public function confirmarValidoAction($id,$idsol)
             );
 
             $grid->setLimits(array(5 => '5', 10 => '10', 15 => '15'));
+            $grid ->setId('grid_eliminar_antiguedad');
             //Camino de migas
             $breadcrumbs = $this->get("white_october_breadcrumbs");
             $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
