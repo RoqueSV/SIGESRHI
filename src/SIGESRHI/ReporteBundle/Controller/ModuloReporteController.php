@@ -525,7 +525,7 @@ class ModuloReporteController extends Controller
      
      //Llamando la funcion JRU de la libreria php-jru
      $jru=new JRU();
-     $Reporte=__DIR__.'/../Resources/reportes/Estadisticos/cuadroresumenII.jasper';     
+     $Reporte=__DIR__.'/../Resources/reportes/Estadisticos/cuadroresumenII_descargar.jasper';     
      //Ruta a donde deseo Guardar mi archivo de salida Pdf
      $SalidaReporte=__DIR__.'/../../../../web/uploads/reportes/'.$filename;
      //Paso los parametros necesarios
