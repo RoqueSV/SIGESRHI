@@ -325,6 +325,7 @@ class ContratacionController extends Controller
              $refrendaAct = $em->getRepository('AdminBundle:RefrendaAct')->find($entity->getPuesto()->getId());
              $refrendaAct->setIdempleado($empleado);
              $refrendaAct->setCodigoempleado($empleado->getCodigoempleado());
+             $refrendaAct->setSueldoactual($entity->getSueldoinicial());
              $em->persist($refrendaAct);
 
              $em->persist($entity);

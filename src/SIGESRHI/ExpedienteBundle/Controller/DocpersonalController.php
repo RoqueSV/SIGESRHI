@@ -158,8 +158,11 @@ class DocpersonalController extends Controller
         $expediente = $em->getRepository('ExpedienteBundle:Expediente')->find($request->query->get('exp'));
 
         $Documentos = $em->getRepository('ExpedienteBundle:Docpersonal')->findBy(array(
-                                                                                    'idexpediente' => $request->query->get('exp'),
-                                                                                        ));
+                                                                                    'idexpediente' => $request->query->get('exp')
+                                                                                        ),
+                                                                                array(
+                                                                                    'id' => 'ASC'
+                                                                                    ));
         $var = $request->get('nogrid');
         $var2 = $request->get('noasp');
         $nogrid = (isset($var))?$var:1;

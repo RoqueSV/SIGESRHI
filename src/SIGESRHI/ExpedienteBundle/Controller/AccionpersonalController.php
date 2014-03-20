@@ -132,7 +132,9 @@ class AccionpersonalController extends Controller
         {
             $refrendaact = $em->getRepository('AdminBundle:RefrendaAct')->find($idrefrenda);
 
+            //eliminamos la relacion de refrenda con empleado
             $refrendaact->setIdempleado(null);
+            $refrendaact->setCodigoempleado(null);
             $em->persist($refrendaact);
 
             $contratacion = $em->getRepository('ExpedienteBundle:Contratacion')->findOneBy(array('puesto'=>$idrefrenda));

@@ -231,7 +231,7 @@ class SolicitudempleoController extends Controller
             $completo= $nombres." ".$primapell." de ".$apellcasada;
         }
     
-        $entity->setNombrecompleto($completo);
+        $entity->setNombrecompleto(trim($completo));
 
        
         // Verificamos la cantidad de datos de empleo ingresados
@@ -632,7 +632,7 @@ class SolicitudempleoController extends Controller
             $completo= $nombres." ".$primapell." de ".$apellcasada;
         }
     
-        $entity->setNombrecompleto($completo);
+        $entity->setNombrecompleto(trim($completo));
         // fin establecer nombre completo
 
         $numEstudios=count($entity->getDestudios());

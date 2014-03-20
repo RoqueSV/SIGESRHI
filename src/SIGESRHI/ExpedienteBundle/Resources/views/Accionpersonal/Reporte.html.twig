@@ -48,7 +48,7 @@ El empleado no tiene acuerdos registrados.
 		<td><input type="text" class="date input-small" id="fechafin" name="fechafin" readonly required></td>
 	</tr>
 	<tr>
-		<Td colspan="3"><label for="fechainicio" id="fecha_requerida" class="help-inline">* Seleccione las fechas.</label>	</td>
+		<Td colspan="3"><label for="fechainicio" id="fecha_requerida" class="help-inline">* Seleccione las fechas.</label>	<label for="fechainicio" id="fecha_invalida" class="help-inline">* Error fecha inicio es mayor que fecha fin.</label></td>
 	</tr>
 </table>
 
@@ -70,6 +70,7 @@ $(document).ready(function(){
 	$('#enviar').hide();
 	
 	$('#fecha_requerida').hide();
+	$('#fecha_invalida').hide();
 
 	$('#tipo_accion').hide();
 	$('#fechainicio').hide();
@@ -95,6 +96,7 @@ $(document).ready(function(){
 			$('#fechafin_label').hide();
 
 			$('#fecha_requerida').hide();
+			$('#fecha_invalida').hide();
 		}
 		if(valor=='2')
 		{
@@ -109,6 +111,7 @@ $(document).ready(function(){
 			$('#fechafin_label').hide();
 
 			$('#fecha_requerida').hide();
+			$('#fecha_invalida').hide();
 		}
 		if(valor=='3')
 		{
@@ -123,6 +126,7 @@ $(document).ready(function(){
 			$('#fechafin_label').show();
 
 			$('#fecha_requerida').hide();
+			$('#fecha_invalida').hide();
 		}
 		if(valor=='4')
 		{
@@ -137,6 +141,7 @@ $(document).ready(function(){
 			$('#fechafin_label').show();
 
 			$('#fecha_requerida').hide();
+			$('#fecha_invalida').hide();
 		}
 		if(valor=='5')
 		{
@@ -151,6 +156,7 @@ $(document).ready(function(){
 			$('#fechafin_label').hide();
 
 			$('#fecha_requerida').hide();
+			$('#fecha_invalida').hide();
 		}
 	//	$('#caja').val(valor);
 	});//change
@@ -170,6 +176,14 @@ if(tipo=="3" || tipo=="4"){
 		
 	return false;
 }//if interno
+
+	if(($('#fechainicio').val()) > ($('#fechafin').val())){
+
+			$('#fecha_invalida').show();
+		
+	return false;
+}//if interno
+
 }//if externo
 
 document.getElementById("miform").submit();
