@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.id,nombreotrosaspectos from plaza p join otrosaspectosplaza opp on (p.id=opp.idplaza) join otrosaspectos op on (op.id=opp.idotrosaspectos) where p.id=$P{idplaza}]]>
+		<![CDATA[select p.id,coalesce(nombreotrosaspectos,'No definidos') as nombreotrosaspectos from plaza p join otrosaspectosplaza opp on (p.id=opp.idplaza) join otrosaspectos op on (op.id=opp.idotrosaspectos) where p.id=$P{idplaza}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="nombreotrosaspectos" class="java.lang.String"/>
@@ -23,7 +23,7 @@
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="272" height="20" uuid="d70a7e80-d058-4758-84e9-0b753945de0b"/>
+				<reportElement uuid="d70a7e80-d058-4758-84e9-0b753945de0b" x="0" y="0" width="272" height="20"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -34,7 +34,7 @@
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="1" width="550" height="20" uuid="57feabdb-89e0-44aa-b4da-a8b179edfa9d"/>
+				<reportElement uuid="57feabdb-89e0-44aa-b4da-a8b179edfa9d" x="0" y="1" width="550" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["- "+$F{nombreotrosaspectos}]]></textFieldExpression>
 			</textField>

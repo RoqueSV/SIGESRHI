@@ -2,23 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1.1" pageWidth="548" pageHeight="752" whenNoDataType="AllSectionsNoDetail" columnWidth="548" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="77e4edc7-c1d9-43ac-bb05-4525401f4293">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="5"/>
-	<property name="ireport.y" value="217"/>
-	<subDataset name="dataset1" uuid="b0f8953d-919a-4895-a37e-41be3e44b7bb">
-		<parameter name="idplaza" class="java.lang.Integer"/>
-		<queryString>
-			<![CDATA[select p.id,nombremarcoref from plaza p join marcoreferenciaplaza mrp on (p.id=mrp.idplaza) join marcoreferencia mr on (mr.id=mrp.idmarcoreferencia) where p.id=$P{idplaza}]]>
-		</queryString>
-		<field name="id" class="java.lang.Integer"/>
-		<field name="nombremarcoref" class="java.lang.String"/>
-	</subDataset>
-	<subDataset name="dataset2" uuid="6a7abe6d-6153-450b-82e9-e66a31346e80">
-		<parameter name="idplaza" class="java.lang.Integer"/>
-		<queryString>
-			<![CDATA[select p.id,nombrefuncion from plaza p join funcionplaza fp on (p.id=fp.idplaza) join funcion f on (f.id=fp.idfuncion) where p.id=$P{idplaza}]]>
-		</queryString>
-		<field name="id" class="java.lang.Integer"/>
-		<field name="nombrefuncion" class="java.lang.String"/>
-	</subDataset>
+	<property name="ireport.y" value="96"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Dropbox\\TG\\Etapa 3\\Formularios\\"]]></defaultValueExpression>
 	</parameter>
@@ -31,12 +15,12 @@
 	<field name="misionplaza" class="java.lang.String"/>
 	<field name="unidad" class="java.lang.String"/>
 	<field name="puestosuperior" class="java.lang.String"/>
-	<group name="plazas" isStartNewPage="true" footerPosition="ForceAtBottom">
+	<group name="plazas" isStartNewPage="true" minHeightToStartNewPage="10" footerPosition="ForceAtBottom">
 		<groupExpression><![CDATA[$F{id}]]></groupExpression>
 		<groupHeader>
-			<band height="361">
+			<band height="282" splitType="Stretch">
 				<rectangle>
-					<reportElement uuid="9f68dbcf-b223-41b7-8680-c95b3d798f35" x="2" y="27" width="546" height="72"/>
+					<reportElement uuid="9f68dbcf-b223-41b7-8680-c95b3d798f35" x="2" y="22" width="546" height="89"/>
 					<graphicElement>
 						<pen lineWidth="0.75"/>
 					</graphicElement>
@@ -48,13 +32,13 @@
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement uuid="89442d41-ed32-449c-8e6e-3e5080cfb798" x="2" y="75" width="546" height="1"/>
+					<reportElement uuid="89442d41-ed32-449c-8e6e-3e5080cfb798" x="2" y="78" width="546" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.75"/>
 					</graphicElement>
 				</line>
 				<line>
-					<reportElement uuid="8f8a8801-2c0d-4452-929b-4ac0bae7569c" x="140" y="27" width="1" height="72"/>
+					<reportElement uuid="8f8a8801-2c0d-4452-929b-4ac0bae7569c" x="140" y="22" width="1" height="88"/>
 					<graphicElement>
 						<pen lineWidth="0.75"/>
 					</graphicElement>
@@ -67,117 +51,57 @@
 					<text><![CDATA[Titulo del puesto:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="a17dafd9-8d42-4435-9ba1-5dd9e7c09b8b" x="6" y="78" width="131" height="18"/>
+					<reportElement uuid="a17dafd9-8d42-4435-9ba1-5dd9e7c09b8b" x="6" y="88" width="131" height="18"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="SansSerif" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Unidad Organizativa:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="85678107-ac6a-49b1-9aee-192b21822947" x="5" y="49" width="132" height="27"/>
+					<reportElement uuid="85678107-ac6a-49b1-9aee-192b21822947" x="5" y="50" width="132" height="27"/>
 					<textElement textAlignment="Justified">
 						<font fontName="SansSerif" size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Titulo del puesto superior inmediato:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true">
-					<reportElement uuid="bca62c6a-74b6-4ae3-b977-f17e22c7b34c" x="141" y="28" width="407" height="20"/>
+					<reportElement uuid="bca62c6a-74b6-4ae3-b977-f17e22c7b34c" positionType="Float" x="141" y="23" width="407" height="26"/>
 					<textElement textAlignment="Justified" verticalAlignment="Middle">
 						<font fontName="SansSerif" size="9"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nombreplaza}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="6b0d5dbf-6abe-4aec-a71a-9637559e9eed" x="0" y="7" width="218" height="20"/>
+					<reportElement uuid="6b0d5dbf-6abe-4aec-a71a-9637559e9eed" x="0" y="2" width="218" height="20"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true" isStrikeThrough="false"/>
 					</textElement>
 					<text><![CDATA[1. IDENTIFICACION]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="45b42413-c7ac-4f45-be6b-41518b0ecca1" x="0" y="104" width="218" height="20"/>
+					<reportElement uuid="45b42413-c7ac-4f45-be6b-41518b0ecca1" x="0" y="112" width="218" height="20"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true" isStrikeThrough="false"/>
 					</textElement>
 					<text><![CDATA[2. MISION DEL PUESTO DE TRABAJO:]]></text>
 				</staticText>
-				<textField>
-					<reportElement uuid="762af5fb-bca4-4b8d-8f89-f8c06cfbd08c" x="142" y="78" width="406" height="19"/>
-					<textElement verticalAlignment="Middle"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="762af5fb-bca4-4b8d-8f89-f8c06cfbd08c" positionType="Float" x="142" y="80" width="406" height="31"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{unidad}]]></textFieldExpression>
 				</textField>
-				<textField isBlankWhenNull="true">
-					<reportElement uuid="7291089b-569d-419e-9357-6c67f4a21a1a" x="142" y="54" width="406" height="20"/>
-					<textElement/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="7291089b-569d-419e-9357-6c67f4a21a1a" positionType="Float" x="142" y="50" width="406" height="28"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{puestosuperior}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement uuid="669f58e8-66ff-4b2b-9759-3dcaab01bb0e" positionType="Float" x="0" y="122" width="548" height="34"/>
+					<reportElement uuid="669f58e8-66ff-4b2b-9759-3dcaab01bb0e" positionType="Float" x="0" y="130" width="548" height="32"/>
 					<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{misionplaza}]]></textFieldExpression>
 				</textField>
-				<componentElement>
-					<reportElement uuid="fb78715c-f645-4ffb-a4cf-91419bbeebdb" positionType="Float" x="0" y="173" width="548" height="14"/>
-					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical" ignoreWidth="false">
-						<datasetRun subDataset="dataset1" uuid="d8527abb-8729-4aa7-8479-99338cf2bfc6">
-							<datasetParameter name="idplaza">
-								<datasetParameterExpression><![CDATA[$F{id}]]></datasetParameterExpression>
-							</datasetParameter>
-							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-						</datasetRun>
-						<jr:listContents height="14" width="548">
-							<textField isStretchWithOverflow="true" pattern="">
-								<reportElement uuid="84e24926-0970-4fdb-990e-28ccf2bee91d" positionType="Float" stretchType="RelativeToTallestObject" x="9" y="0" width="539" height="10"/>
-								<textElement textAlignment="Justified" markup="html">
-									<paragraph spacingBefore="2"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{nombremarcoref}]]></textFieldExpression>
-							</textField>
-							<ellipse>
-								<reportElement uuid="f0cfbec8-7840-4c57-9719-7a0b1793a38f" x="3" y="7" width="3" height="3" backcolor="#000000"/>
-							</ellipse>
-						</jr:listContents>
-					</jr:list>
-				</componentElement>
-				<staticText>
-					<reportElement uuid="71cdaae5-796f-49c1-89fa-885c0f94ee4b" positionType="Float" x="0" y="159" width="218" height="14"/>
-					<textElement verticalAlignment="Middle">
-						<font isBold="true" isStrikeThrough="false"/>
-					</textElement>
-					<text><![CDATA[3. MARCO DE REFERENCIA:]]></text>
-				</staticText>
-				<componentElement>
-					<reportElement uuid="072421c6-8e23-4190-8d78-9d03d1f74de5" positionType="Float" isPrintRepeatedValues="false" x="0" y="212" width="548" height="14"/>
-					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical" ignoreWidth="false">
-						<datasetRun subDataset="dataset2" uuid="c7f278ef-f1a3-41e6-b936-bffbae22d0f3">
-							<datasetParameter name="idplaza">
-								<datasetParameterExpression><![CDATA[$F{id}]]></datasetParameterExpression>
-							</datasetParameter>
-							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-						</datasetRun>
-						<jr:listContents height="14" width="548">
-							<textField isStretchWithOverflow="true">
-								<reportElement uuid="7ebdb020-6c01-4329-8289-3f92fa0bc8af" positionType="Float" stretchType="RelativeToTallestObject" x="9" y="1" width="539" height="8"/>
-								<textElement textAlignment="Justified" verticalAlignment="Top">
-									<paragraph spacingAfter="2"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{nombrefuncion}]]></textFieldExpression>
-							</textField>
-							<ellipse>
-								<reportElement uuid="dc7b8a94-1cde-40de-8a9e-327eb05b630a" x="3" y="6" width="3" height="3" backcolor="#000000"/>
-							</ellipse>
-						</jr:listContents>
-					</jr:list>
-				</componentElement>
-				<staticText>
-					<reportElement uuid="ee488322-195b-4cd2-a61d-87839e4ab130" positionType="Float" x="0" y="197" width="218" height="14"/>
-					<textElement verticalAlignment="Middle">
-						<font isBold="true" isStrikeThrough="false"/>
-					</textElement>
-					<text><![CDATA[4. FUNCIONES/ACTIVIDADES BASICAS:]]></text>
-				</staticText>
 				<subreport>
-					<reportElement uuid="741cb786-e2ad-47b0-9a59-9d10d79c36fc" positionType="Float" x="0" y="236" width="548" height="10"/>
+					<reportElement uuid="741cb786-e2ad-47b0-9a59-9d10d79c36fc" positionType="Float" x="0" y="186" width="548" height="10"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -185,7 +109,7 @@
 					<subreportExpression><![CDATA["subreporte9_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement uuid="289c64e7-c393-4fd0-b5d3-1d0b42d0f034" positionType="Float" x="0" y="262" width="548" height="12"/>
+					<reportElement uuid="289c64e7-c393-4fd0-b5d3-1d0b42d0f034" positionType="Float" x="0" y="212" width="548" height="12"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -193,7 +117,7 @@
 					<subreportExpression><![CDATA["subreporte2_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement uuid="cdbdc86d-9889-43ab-8683-3d294a910753" positionType="Float" x="0" y="248" width="548" height="12"/>
+					<reportElement uuid="cdbdc86d-9889-43ab-8683-3d294a910753" positionType="Float" x="0" y="198" width="548" height="12"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -201,7 +125,7 @@
 					<subreportExpression><![CDATA["subreporte5_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement uuid="8cf58536-931d-49d0-8a09-c2e26661562b" positionType="Float" x="0" y="276" width="548" height="11"/>
+					<reportElement uuid="8cf58536-931d-49d0-8a09-c2e26661562b" positionType="Float" x="0" y="226" width="548" height="11"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -209,7 +133,7 @@
 					<subreportExpression><![CDATA["subreporte6_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement uuid="23212545-5a4c-4556-ae7a-3a11db0e9e1b" positionType="Float" x="0" y="301" width="548" height="12"/>
+					<reportElement uuid="23212545-5a4c-4556-ae7a-3a11db0e9e1b" positionType="Float" x="0" y="251" width="548" height="12"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -217,7 +141,7 @@
 					<subreportExpression><![CDATA["subreporte7_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement uuid="3e3101ed-b8b6-4b4a-b02d-c4abc433f899" positionType="Float" x="0" y="289" width="548" height="10"/>
+					<reportElement uuid="3e3101ed-b8b6-4b4a-b02d-c4abc433f899" positionType="Float" x="0" y="239" width="548" height="10"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -225,18 +149,37 @@
 					<subreportExpression><![CDATA["subreporte4_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport>
-					<reportElement uuid="8de96de0-3846-4524-8aed-a86bdab855af" positionType="Float" x="0" y="315" width="548" height="10"/>
+					<reportElement uuid="8de96de0-3846-4524-8aed-a86bdab855af" positionType="Float" x="0" y="265" width="548" height="10"/>
 					<subreportParameter name="idplaza">
 						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA["subreporte8_informacionplaza.jasper"]]></subreportExpression>
 				</subreport>
+				<subreport>
+					<reportElement uuid="376c8889-0d9d-4c47-bec6-9a39d3948b42" positionType="Float" x="0" y="177" width="548" height="7"/>
+					<subreportParameter name="idplaza">
+						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["subreporte1_informacionplaza.jasper"]]></subreportExpression>
+				</subreport>
+				<subreport>
+					<reportElement uuid="3ef74ba2-e1fb-4c37-8d99-7110baed06e8" positionType="Float" x="0" y="166" width="548" height="9"/>
+					<subreportParameter name="idplaza">
+						<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["subreporte3_informacionplaza.jasper"]]></subreportExpression>
+				</subreport>
 			</band>
 		</groupHeader>
+		<groupFooter>
+			<band height="20"/>
+		</groupFooter>
 	</group>
 	<pageHeader>
-		<band height="85" splitType="Prevent">
+		<band height="89" splitType="Prevent">
 			<staticText>
 				<reportElement uuid="4fe55da7-b0a7-4348-8d53-4b95418f6945" x="99" y="26" width="399" height="20" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -245,7 +188,7 @@
 				<text><![CDATA[MANUAL DE DESCRIPCION DE PUESTO DEL ISRI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="e2a79174-d801-49bc-94c8-5ca63a9bc915" x="9" y="52" width="139" height="33"/>
+				<reportElement uuid="e2a79174-d801-49bc-94c8-5ca63a9bc915" x="9" y="52" width="143" height="33"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="8"/>
 				</textElement>
@@ -258,30 +201,30 @@
 		</band>
 	</pageHeader>
 	<pageFooter>
-		<band height="49">
+		<band height="63">
 			<line>
-				<reportElement uuid="f91c99b4-de28-4db3-bcb1-f134b3e298c1" x="5" y="8" width="543" height="1"/>
+				<reportElement uuid="f91c99b4-de28-4db3-bcb1-f134b3e298c1" x="0" y="17" width="548" height="1"/>
 				<graphicElement>
 					<pen lineWidth="2.0" lineColor="#0066CC"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement uuid="2bac44e8-eeae-4e7d-9de7-267e668680d4" x="2" y="11" width="135" height="30"/>
+				<reportElement uuid="2bac44e8-eeae-4e7d-9de7-267e668680d4" x="2" y="20" width="135" height="30"/>
 				<textElement verticalAlignment="Top"/>
 				<text><![CDATA[Fecha de Actualización Noviembre 2013]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="94ec5cd3-f148-4944-8c7f-6a72d41357c4" x="218" y="21" width="140" height="20"/>
+				<reportElement uuid="94ec5cd3-f148-4944-8c7f-6a72d41357c4" x="218" y="30" width="140" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[17 de diciembre del 2013]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6a9d0f2a-d7b6-4759-855c-bcc02b012af9" x="218" y="9" width="141" height="20"/>
+				<reportElement uuid="6a9d0f2a-d7b6-4759-855c-bcc02b012af9" x="218" y="18" width="141" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Top"/>
 				<text><![CDATA[Fecha de Aprobación ]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="b95d1e67-abe5-4bb2-9f7a-59c53ac9c142" x="467" y="11" width="81" height="20"/>
+				<reportElement uuid="b95d1e67-abe5-4bb2-9f7a-59c53ac9c142" x="467" y="20" width="81" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>

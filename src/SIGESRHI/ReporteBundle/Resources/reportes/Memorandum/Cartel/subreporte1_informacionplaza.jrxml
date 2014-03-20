@@ -23,7 +23,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="9" splitType="Immediate">
+		<band height="9">
 			<textField isStretchWithOverflow="true">
 				<reportElement uuid="d55236cb-b29a-42ca-90fa-1045cde9c524" positionType="Float" stretchType="RelativeToTallestObject" x="13" y="0" width="559" height="6"/>
 				<textElement textAlignment="Justified" verticalAlignment="Top">

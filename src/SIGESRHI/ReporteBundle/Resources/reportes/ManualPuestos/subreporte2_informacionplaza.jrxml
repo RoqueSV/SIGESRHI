@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.id,nombretitulo,tipotitulo from plaza p left outer join tituloplaza tp on(p.id=tp.idplaza) left outer join titulo t on (t.id=tp.idtitulo) where p.id=$P{idplaza} order by tipotitulo desc]]>
+		<![CDATA[select p.id,coalesce(nombretitulo,'No definido') as nombretitulo,coalesce(tipotitulo,'No definido') as tipotitulo from plaza p left outer join tituloplaza tp on(p.id=tp.idplaza) left outer join titulo t on (t.id=tp.idtitulo) where p.id=$P{idplaza} order by tipotitulo desc]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="nombretitulo" class="java.lang.String"/>
@@ -17,7 +17,7 @@
 		<groupHeader>
 			<band height="22">
 				<textField>
-					<reportElement x="24" y="2" width="511" height="20" uuid="c24accad-93fe-4bbc-bbcf-daf173ea0bf3"/>
+					<reportElement uuid="c24accad-93fe-4bbc-bbcf-daf173ea0bf3" x="24" y="2" width="511" height="20"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
@@ -32,7 +32,7 @@
 	<columnHeader>
 		<band height="19" splitType="Stretch">
 			<staticText>
-				<reportElement positionType="Float" x="1" y="1" width="282" height="18" uuid="b2d66f61-1579-4fbb-ae78-6b6d2d82f3b7"/>
+				<reportElement uuid="b2d66f61-1579-4fbb-ae78-6b6d2d82f3b7" positionType="Float" x="1" y="1" width="282" height="18"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -42,8 +42,8 @@
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement x="24" y="0" width="526" height="20" uuid="f0008d74-40bd-4b44-92f1-04d3fde82bd0"/>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f0008d74-40bd-4b44-92f1-04d3fde82bd0" x="24" y="0" width="526" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["- "+$F{nombretitulo}]]></textFieldExpression>
 			</textField>

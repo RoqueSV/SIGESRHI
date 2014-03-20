@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.id,nombrecompetencia from plaza p join competenciaplaza cp on (p.id=cp.idplaza) join competencia c on (c.id=cp.idcompetencia) where p.id=$P{idplaza}]]>
+		<![CDATA[select p.id,coalesce(nombrecompetencia,'No definidas')as nombrecompetencia from plaza p join competenciaplaza cp on (p.id=cp.idplaza) join competencia c on (c.id=cp.idcompetencia) where p.id=$P{idplaza}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="nombrecompetencia" class="java.lang.String"/>
@@ -26,7 +26,7 @@
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="33" y="0" width="341" height="20" uuid="d5406a1f-7f81-48b6-bc08-cebbe88d28ce"/>
+				<reportElement uuid="d5406a1f-7f81-48b6-bc08-cebbe88d28ce" x="33" y="0" width="341" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -37,7 +37,7 @@
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="33" y="0" width="517" height="20" uuid="6ff49006-8414-4373-8ca3-5c4d94d1c382"/>
+				<reportElement uuid="6ff49006-8414-4373-8ca3-5c4d94d1c382" x="33" y="0" width="517" height="20"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["- "+$F{nombrecompetencia}]]></textFieldExpression>
 			</textField>

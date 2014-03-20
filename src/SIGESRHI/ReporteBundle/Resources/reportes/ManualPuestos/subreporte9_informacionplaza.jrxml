@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select nombreplaza,misionplaza from plaza where idplazasup=$P{idplaza}]]>
+		<![CDATA[select upper(coalesce(nombreplaza,'No definida'))as nombreplaza,coalesce(misionplaza,'No definida') as misionplaza from plaza where idplazasup=$P{idplaza}]]>
 	</queryString>
 	<field name="nombreplaza" class="java.lang.String"/>
 	<field name="misionplaza" class="java.lang.String"/>

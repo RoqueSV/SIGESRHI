@@ -7,14 +7,14 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.id,nombreresultado from plaza p join resultadoplaza rp on (p.id=rp.idplaza) join resultados r on (r.id=rp.idresultado) where p.id=$P{idplaza}]]>
+		<![CDATA[select p.id,coalesce(nombreresultado,'No definido')as nombreresultado from plaza p join resultadoplaza rp on (p.id=rp.idplaza) join resultados r on (r.id=rp.idresultado) where p.id=$P{idplaza}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="nombreresultado" class="java.lang.String"/>
 	<columnHeader>
-		<band height="22" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="87a531ce-5d87-4fff-b09f-cf21b7eb8293" x="0" y="0" width="256" height="22"/>
+				<reportElement uuid="87a531ce-5d87-4fff-b09f-cf21b7eb8293" x="0" y="0" width="256" height="20"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -23,13 +23,13 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25" splitType="Stretch">
+		<band height="10" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="f1453b5b-75f0-4f0d-99cf-1ce19934ed82" positionType="Float" x="12" y="0" width="538" height="25"/>
-				<textElement textAlignment="Justified" verticalAlignment="Top">
+				<reportElement uuid="f1453b5b-75f0-4f0d-99cf-1ce19934ed82" positionType="Float" stretchType="RelativeToTallestObject" x="12" y="0" width="538" height="5"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="none">
 					<paragraph spacingBefore="5"/>
 				</textElement>
-				<textFieldExpression><![CDATA["- "+$F{nombreresultado}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombreresultado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

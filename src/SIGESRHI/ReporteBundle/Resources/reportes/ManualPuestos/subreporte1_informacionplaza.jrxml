@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte1_informacionplaza" pageWidth="550" pageHeight="752" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="837ac732-8bc5-46b8-9f40-588c0628da47">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="5.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
@@ -23,24 +23,16 @@
 			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
 		</box>
 	</style>
-	<subDataset name="funciones" uuid="844c3f47-25e4-4df9-b3c6-57e742bdcb6c">
-		<parameter name="idplaza" class="java.lang.Integer"/>
-		<queryString>
-			<![CDATA[select p.id,nombrefuncion from plaza p join funcionplaza fp on (p.id=fp.idplaza) join funcion f on (f.id=fp.idfuncion) where p.id=$P{idplaza}]]>
-		</queryString>
-		<field name="id" class="java.lang.Integer"/>
-		<field name="nombrefuncion" class="java.lang.String"/>
-	</subDataset>
 	<parameter name="idplaza" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select p.id,nombrefuncion from plaza p join funcionplaza fp on (p.id=fp.idplaza) join funcion f on (f.id=fp.idfuncion) where p.id=$P{idplaza}]]>
+		<![CDATA[select p.id,coalesce(nombrefuncion,'No definido') as nombrefuncion from plaza p join funcionplaza fp on (p.id=fp.idplaza) join funcion f on (f.id=fp.idfuncion) where p.id=$P{idplaza}]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer"/>
 	<field name="nombrefuncion" class="java.lang.String"/>
 	<columnHeader>
-		<band height="51">
+		<band height="21">
 			<staticText>
 				<reportElement uuid="3312e833-7e27-4691-8d94-2f6396bf7827" x="0" y="0" width="297" height="20"/>
 				<textElement verticalAlignment="Middle">
@@ -48,36 +40,18 @@
 				</textElement>
 				<text><![CDATA[4. FUNCIONES GENERALES / ACTIVIDADES BASICAS:]]></text>
 			</staticText>
-			<componentElement>
-				<reportElement uuid="cd5de41a-b3c7-4770-85d6-c9d113837323" key="table" style="table" x="0" y="20" width="374" height="31"/>
-				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="funciones" uuid="2e2cb96b-5aa4-468f-bbf0-83d6385841b5">
-						<datasetParameter name="idplaza">
-							<datasetParameterExpression><![CDATA[$P{idplaza}]]></datasetParameterExpression>
-						</datasetParameter>
-						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					</datasetRun>
-					<jr:column width="12" uuid="f4cb69db-793e-488b-b215-32e1c26e7a59">
-						<jr:detailCell height="33" rowSpan="1">
-							<ellipse>
-								<reportElement uuid="fe65a6b3-b7fc-447c-8439-18ad730b12e2" x="5" y="5" width="3" height="3" backcolor="#000000"/>
-							</ellipse>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="546" uuid="a316233e-cecc-4d99-ab4b-3858b534dbd1">
-						<jr:detailCell style="table_TD" height="33" rowSpan="1">
-							<textField>
-								<reportElement uuid="2d6a4061-bff3-461c-a31e-cf333ff88798" positionType="Float" x="0" y="0" width="546" height="33"/>
-								<textElement textAlignment="Justified" verticalAlignment="Top"/>
-								<textFieldExpression><![CDATA[$F{nombrefuncion}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-				</jr:table>
-			</componentElement>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25" splitType="Stretch"/>
+		<band height="15" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="13f5343c-8bda-4c5b-b61c-ff3c7cf35ebe" positionType="Float" stretchType="RelativeToTallestObject" x="12" y="1" width="538" height="10"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombrefuncion}]]></textFieldExpression>
+			</textField>
+			<ellipse>
+				<reportElement uuid="f6e1dfa2-0e20-4fa8-a2d9-05ef1c5799dc" x="5" y="6" width="2" height="2" backcolor="#000000"/>
+			</ellipse>
+		</band>
 	</detail>
 </jasperReport>
