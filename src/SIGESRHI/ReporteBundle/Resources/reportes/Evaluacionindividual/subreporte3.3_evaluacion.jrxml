@@ -11,7 +11,7 @@
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="25" height="15" uuid="43215f57-b4da-4a92-8130-fed177a88eb9"/>
+				<reportElement uuid="43215f57-b4da-4a92-8130-fed177a88eb9" x="0" y="0" width="25" height="15"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>

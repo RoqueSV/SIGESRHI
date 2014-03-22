@@ -22,13 +22,13 @@ where nombrefactor=$P{factorx} and fev.id=$P{form}]]>
 	<detail>
 		<band height="92" splitType="Prevent">
 			<rectangle>
-				<reportElement x="96" y="4" width="19" height="12" backcolor="#FFFFFF" uuid="32c10e89-027a-4465-8961-02df94bfa041"/>
+				<reportElement uuid="32c10e89-027a-4465-8961-02df94bfa041" x="96" y="4" width="19" height="12" backcolor="#FFFFFF"/>
 				<graphicElement>
 					<pen lineWidth="0.75"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="43" y="5" width="42" height="11" uuid="8377d1a8-f20d-4416-85b2-e72bef88fad2"/>
+				<reportElement uuid="8377d1a8-f20d-4416-85b2-e72bef88fad2" x="43" y="5" width="42" height="11"/>
 				<box leftPadding="3">
 					<topPen lineWidth="0.0"/>
 					<leftPen lineWidth="0.0"/>
@@ -40,7 +40,7 @@ where nombrefactor=$P{factorx} and fev.id=$P{form}]]>
 				<textFieldExpression><![CDATA[$F{nombreopcion}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="96" y="4" width="19" height="12" backcolor="#000000" uuid="a6914870-494a-42f3-b860-f9f8a2c14436">
+				<reportElement uuid="a6914870-494a-42f3-b860-f9f8a2c14436" x="96" y="4" width="19" height="12" backcolor="#000000">
 					<printWhenExpression><![CDATA[$P{op}.equals( $F{nombreopcion} )]]></printWhenExpression>
 				</reportElement>
 				<graphicElement>
@@ -48,7 +48,7 @@ where nombrefactor=$P{factorx} and fev.id=$P{form}]]>
 				</graphicElement>
 			</rectangle>
 			<frame>
-				<reportElement x="0" y="0" width="143" height="18" uuid="a03f12b3-dd9b-46cd-9437-0c6c86ebc56a"/>
+				<reportElement uuid="a03f12b3-dd9b-46cd-9437-0c6c86ebc56a" x="0" y="0" width="143" height="18"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -56,7 +56,7 @@ where nombrefactor=$P{factorx} and fev.id=$P{form}]]>
 				</box>
 			</frame>
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement positionType="Float" x="0" y="18" width="143" height="74" backcolor="#FFFFFF" uuid="0fe971b2-8841-4464-b2a9-5f963fa18cc0"/>
+				<reportElement uuid="0fe971b2-8841-4464-b2a9-5f963fa18cc0" positionType="Float" x="0" y="18" width="143" height="74" backcolor="#FFFFFF"/>
 				<box topPadding="0" leftPadding="3" bottomPadding="1" rightPadding="2">
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
