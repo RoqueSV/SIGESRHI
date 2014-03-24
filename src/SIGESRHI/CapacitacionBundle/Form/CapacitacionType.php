@@ -46,7 +46,7 @@ class CapacitacionType extends AbstractType
             ->add('cupo',null,array(
                   'label'=>'Cupo',
                   'required'=>false,
-                  'attr'=>array('class'=>'spinner input-mini', 'readonly'=>true,)))
+                  'attr'=>array('class'=>'spinner1 input-mini', 'readonly'=>true,)))
             ->add('metodologia','textarea',array(
                   'label'=>'Metodología ',
                   'required'=>false,

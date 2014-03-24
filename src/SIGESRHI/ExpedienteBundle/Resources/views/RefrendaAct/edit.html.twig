@@ -1,28 +1,84 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>RefrendaAct edit</h1>
+{% block principal -%}
 
-    <form action="{{ path('refrendaact_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+{{ form_javascript(edit_form) }}
+
+{% for flashMessage in app.session.flashbag.get('erroredit') %}
+  <div class="alert alert-success">
+    <p>{{ flashMessage }}</p>
+  </div>
+{% endfor %}
+
+<style type="text/css">
+input[type="number"],
+  .uneditable-input {
+  border: 0px;
+  height: 15px;
+  -webkit-box-shadow: inset 0 0px 0px 0px;
+     -moz-box-shadow: inset 0 0px 0px 0px;
+          box-shadow: inset 0 0px 0px 0px;
+}
+
+input[type="number"]:focus,
+  .uneditable-input {
+  -webkit-box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+     -moz-box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+          box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+}
+
+input[readonly],
+.spinner
+{
+  background-color: #ffffff;
+}
+</style>
+
+    <h3 class="text-center">Edici&oacute;n de registro de nuevo puesto</h3>
+
+    <form action="{{ path('refrendaact_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal">
         <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
+        
+        {{form_row(edit_form.idplaza)}}
+        {{form_row(edit_form.centro, {value : datosunidad[0].centro}) }} 
+        {{form_row(edit_form.idunidad, {value : datosunidad[0].unidad}) }} 
+        {{form_row(edit_form.partida)}}
+        {{form_row(edit_form.subpartida)}}
+        {{form_row(edit_form.unidadpresupuestaria)}}
+        {{form_row(edit_form.lineapresupuestaria)}}
+        {{form_row(edit_form.codigolp)}}
+        {{form_row(edit_form.sueldoactual)}}
+        {{form_row(edit_form.tipo)}}
+        
+        <input type="hidden" name="tipo" id="tipo" value="{{tipo}}"/>
+        <input type="hidden" name="tipocontratacion" id="tipocontratacion" value="{{tipocontratacion}}"/>
+        <input type="hidden" name="idexp" id="idexp" value="{{idexp}}"/>
+        <input type="hidden" name="tipogrid" id="tipogrid" value="{{tipogrid}}"/>
+
+        {{ form_rest(edit_form) }}
+        
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Modificar</button>
+          {% if tipogrid == 2 %}
+          <a href="{{ path('refrendaact_show', { 'id': entity.id, 'tipogrid':tipogrid }) }}" class="btn"> Cancelar </a>
+          {% else %}
+           <a href="{{ path('refrendaact_show', { 'id': entity.id, 'tipo':tipo,'tipocontratacion':tipocontratacion,'idexp':idexp }) }}" class="btn"> Cancelar </a>
+          {% endif %}
+        </div>
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('refrendaact') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('refrendaact_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+
+<script>
+/**************** Establecer Centro, unidad *********/
+
+$(document).ready(function(){
+   document.getElementById('sigesrhi_adminbundle_refrendaacttype_centro').value={{datosunidad[0].centro}};
+   document.getElementById('sigesrhi_adminbundle_refrendaacttype_idunidad').value={{datosunidad[0].unidad}};
+});
+
+jQuery(function(){    
+     jQuery("select#sigesrhi_adminbundle_refrendaacttype_centro").trigger('change');
+});
+/*************************************************************/
+</script>
 {% endblock %}

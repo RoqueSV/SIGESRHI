@@ -2,21 +2,30 @@
 
 {% block principal -%}
 {% for flashMessage in app.session.flashbag.get('aviso') %}
-    <div class="alert alert-danger">
+    <div class="alert alert-success">
        <p> {{ flashMessage }}</p>
     </div>
 {% endfor %}
-    <h1>RefrendaAct</h1>
 
-    <table class="record_properties">
+
+<script type='text/javascript'>
+function eliminar() {
+
+    if(confirm('\xbfEst\xE1 seguro que desea eliminar este registro?')) {
+        document.getElementById('form_borrar').submit();
+}
+}
+</script>
+    {% if tipogrid == 1 %}
+    <h3 class="text-center">Datos del puesto </h3>
+    {% else %}
+    <h3 class="text-center">Datos del nuevo puesto </h3>
+    {% endif %}
+    <table class="table table-bordered table-hover">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Codigoempleado</th>
-                <td>{{ entity.codigoempleado }}</td>
+                <th width="35%">Nombre plaza</th>
+                <td>{{ entity.nombreplaza }}</td>
             </tr>
             <tr>
                 <th>Partida</th>
@@ -27,49 +36,58 @@
                 <td>{{ entity.subpartida }}</td>
             </tr>
             <tr>
-                <th>Sueldoactual</th>
-                <td>{{ entity.sueldoactual }}</td>
+                <th>Sueldo actual</th>
+                <td>$ {{ entity.sueldoactual|number_format(2, '.', ',') }}</td>
             </tr>
             <tr>
-                <th>Unidadpresupuestaria</th>
+                <th>Unidad presupuestaria</th>
                 <td>{{ entity.unidadpresupuestaria }}</td>
             </tr>
             <tr>
-                <th>Lineapresupuestaria</th>
+                <th>Linea presupuestaria</th>
                 <td>{{ entity.lineapresupuestaria }}</td>
             </tr>
             <tr>
-                <th>Codigolp</th>
+                <th>Codigo Linea presupuestaria</th>
                 <td>{{ entity.codigolp }}</td>
             </tr>
             <tr>
-                <th>Nombreplaza</th>
-                <td>{{ entity.nombreplaza }}</td>
-            </tr>
-            <tr>
                 <th>Tipo</th>
-                <td>{{ entity.tipo }}</td>
+                <td>
+                {% if entity.tipo == 'ls' %} 
+                    Ley de salario
+                    {% else %}
+                    Contrato
+                    {% endif %}
+                </td>
             </tr>
         </tbody>
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('refrendaact') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('refrendaact_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('refrendaact_delete', { 'id': entity.id }) }}" method="post">
+    <br />
+    <div class="text-center">
+        {% if tipogrid == 1 %}
+        <a href="{{path('refrendaact') }}" class="btn btn-primary">Cancelar</a>
+        
+        {% elseif tipogrid == 2 %}
+        <a href="{{path('refrendaact') }}" class="btn btn-primary">Finalizar</a>
+        <a href="{{ path('refrendaact_edit', { 'id': entity.id, 'tipogrid':tipogrid }) }}" class="btn"> Editar </a>
+        <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar</button>
+        <form action="{{ path('refrendaact_delete', { 'id': entity.id }) }}" id="form_borrar" method="post">
             <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
+            <input type="hidden" name="tipogrid" id="tipogrid" value="{{tipogrid}}" />
+           <div class="hide">  {{ form_widget(delete_form) }} </div>
         </form>
-    </li>
-</ul>
+        {% else %}
+        <a href="{{path('contratacion_tipo',{'tipo':tipo,'tipogrid':tipocontratacion,'idexp':idexp}) }}" class="btn btn-primary">Finalizar</a>
+        <a href="{{ path('refrendaact_edit', { 'id': entity.id, 'tipo':tipo,'tipocontratacion':tipocontratacion,'idexp':idexp }) }}" class="btn"> Editar </a>
+        <button type="button"  class="btn btn-danger" onclick="eliminar();">Borrar y cancelar </button>
+        <form action="{{ path('refrendaact_delete', { 'id': entity.id }) }}" id="form_borrar" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            <input type="hidden" name="tipo" id="tipo" value="{{tipo}}" />
+            <input type="hidden" name="tipocontratacion" id="tipocontratacion" value="{{tipocontratacion}}" />
+            <input type="hidden" name="idexp" id="idexp" value="{{idexp}}" />
+           <div class="hide">  {{ form_widget(delete_form) }} </div>
+        </form>
+        {% endif %}
+    </div>
 {% endblock %}

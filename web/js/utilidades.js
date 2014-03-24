@@ -174,3 +174,15 @@ $(document).ready(function(){
     });
    });//ready
 
+   $(document).ready(function(){
+    
+    $( ".spinner1" ).spinner({
+     spin: function( event, ui ) {
+      if ( ui.value < 1 ) {
+       $( this ).spinner( "value", 1 );
+       return false;
+      } 
+     }
+    });
+   });//ready
+

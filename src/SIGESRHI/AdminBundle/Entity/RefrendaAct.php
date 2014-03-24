@@ -5,11 +5,14 @@ namespace SIGESRHI\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use APY\DataGridBundle\Grid\Mapping as GRID;
+
 /**
  * Refrenda
  *
  * @ORM\Table(name="refrendaact")
  * @ORM\Entity
+ * @GRID\Source(columns="id , idplaza.nombreplaza, partida, subpartida, sueldoactual", groups={"grupo_refrenda"})
  */
 class RefrendaAct
 {
@@ -20,6 +23,7 @@ class RefrendaAct
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\SequenceGenerator(sequenceName="refrenda_id_seq", allocationSize=1, initialValue=1)
+     * @GRID\Column(filterable=false, groups={"grupo_refrenda"}, visible=false)
      */
     private $id;
 
@@ -27,7 +31,6 @@ class RefrendaAct
      * @var string
      *
      * @ORM\Column(name="codigoempleado", type="string", length=5, nullable=true)
-     * @Assert\NotNull(message="Debe ingresar el codigo del empleado")
      * @Assert\Length(
      * max = "5",
      * maxMessage = "El codigo de empleado no debe exceder los {{limit}} caracteres"
@@ -41,6 +44,7 @@ class RefrendaAct
      *
      * @ORM\Column(name="partida", type="integer", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la partida")
+     * @GRID\Column(filterable=false, groups="grupo_refrenda", title="Partida", align="center")
      */
     private $partida;
 
@@ -49,6 +53,7 @@ class RefrendaAct
      *
      * @ORM\Column(name="subpartida", type="integer", nullable=false)
      * @Assert\NotNull(message="Debe ingresar la subpartida")
+     * @GRID\Column(filterable=false, groups="grupo_refrenda", title="Subpartida", align="center")
      */
     private $subpartida;
 
@@ -57,6 +62,7 @@ class RefrendaAct
      *
      * @ORM\Column(name="sueldoactual", type="float", nullable=false)
      * @Assert\NotNull(message="Debe ingresar el sueldo actual")
+     * @GRID\Column(filterable=false, type="number", style="currency", locale="en_US", groups="grupo_refrenda", title="Sueldo actual", align="center", size="100")
      */
     private $sueldoactual;
 
@@ -88,7 +94,7 @@ class RefrendaAct
      *
      * @ORM\Column(name="codigolp", type="string", length=25, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el codigo")
-      * max = "25",
+     * max = "25",
      * maxMessage = "El codigo no debe exceder los {{limit}} caracteres"
      * )
      */
@@ -111,6 +117,7 @@ class RefrendaAct
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="idplaza", referencedColumnName="id")
      * })
+     * @GRID\Column(field="idplaza.nombreplaza", groups="grupo_refrenda", joinType="inner", visible=false, filterable=false)
      */
     private $idplaza;
 
@@ -118,7 +125,6 @@ class RefrendaAct
      * @var string
      *
      * @ORM\Column(name="nombreplaza", type="string", length=100, nullable=false)
-     * @Assert\NotNull(message="Debe ingresar el nombre de la plaza")
      * @Assert\Length(
      * max = "100",
      * maxMessage = "El nombre de la plaza no debe exceder los {{limit}} caracteres"

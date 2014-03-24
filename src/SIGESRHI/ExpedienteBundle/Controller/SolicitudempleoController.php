@@ -264,7 +264,7 @@ class SolicitudempleoController extends Controller
             //$em->flush();
         
         //creeamos todos los docpersonal que el aspirante debera presentar.
-            $documento1 = new Docpersonal(); ;$documento1->setIdexpediente($expediente); $documento1->setEntregado(false); $documento1->setNombredocpersonal('Solicitud de empleo');
+            $documento1 = new Docpersonal(); $documento1->setIdexpediente($expediente); $documento1->setEntregado(false); $documento1->setNombredocpersonal('Solicitud de empleo');
             $em->persist($documento1);
             $documento2 = new Docpersonal(); $documento2->setIdexpediente($expediente); $documento2->setEntregado(false); $documento2->setNombredocpersonal('Prueba Psicológica');
             $em->persist($documento2);

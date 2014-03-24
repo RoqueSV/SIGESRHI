@@ -1,57 +1,56 @@
-{% extends '::base.html.twig' %}
+{% extends '::PrincipalBase.html.twig' %}
 
-{% block body -%}
-    <h1>RefrendaAct list</h1>
+{% block principal -%}
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <div class="alert alert-danger">
+       <p> {{ flashMessage }}</p>
+    </div>
+{% endfor %}
+<script>
+        jQuery(function() {
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Codigoempleado</th>
-                <th>Partida</th>
-                <th>Subpartida</th>
-                <th>Sueldoactual</th>
-                <th>Unidadpresupuestaria</th>
-                <th>Lineapresupuestaria</th>
-                <th>Codigolp</th>
-                <th>Nombreplaza</th>
-                <th>Tipo</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('refrendaact_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.codigoempleado }}</td>
-                <td>{{ entity.partida }}</td>
-                <td>{{ entity.subpartida }}</td>
-                <td>{{ entity.sueldoactual }}</td>
-                <td>{{ entity.unidadpresupuestaria }}</td>
-                <td>{{ entity.lineapresupuestaria }}</td>
-                <td>{{ entity.codigolp }}</td>
-                <td>{{ entity.nombreplaza }}</td>
-                <td>{{ entity.tipo }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('refrendaact_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('refrendaact_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            jQuery("#grid_grid_refrenda__plazas__query__from").autocomplete({
+                source: function( request, response ) {
+                    jQuery.ajax({
+                        url: "{{ path('shtumi_ajaxautocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            maxRows: 12,
+                            letters: request.term,
+                            entity_alias: "plazas"
+                        },
+                        success: function( data ) {
+                            response( jQuery.map( data, function( item ) {
+                                return {
+                                    label: item,
+                                    value: item
+                                }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                open: function() {
+                    jQuery( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                },
+                close: function() {
+                    jQuery( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                }
+            });
 
-        <ul>
-        <li>
-            <a href="{{ path('refrendaact_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+        });
+</script>
+
+    <h3 class="text-center">Lista de puestos registrados (Refrenda actual)</h3>
+
+     {{ grid_search(grid) }}
+     {{ grid(grid,_self) }} 
+     {% block grid_filters %}{% endblock %}
+
+<br/>
+<div class="text-center">
+     <a href="{{path('pantalla_empleadoactivo')}}" class="btn"> Cancelar </a>
+     <a href="{{path('refrendaact_new',{'tipogrid':2})}}" class="btn"> Nuevo puesto </a>
+</div>
+
+{% endblock %}

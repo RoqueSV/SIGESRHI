@@ -16,11 +16,11 @@ class RefrendaActType extends AbstractType
             ->add('partida',null,array(
                   'required' => true, 
                   'label'=>'Partida',
-                  'attr'=>array('class'=>'spinner input-mini', 'readonly'=>true)))
+                  'attr'=>array('class'=>'spinner1 input-mini', 'readonly'=>true)))
             ->add('subpartida',null,array(
                   'required' => true, 
                   'label'=>'Subpartida',
-                  'attr'=>array('class'=>'spinner input-mini', 'readonly'=>true)))
+                  'attr'=>array('class'=>'spinner1 input-mini', 'readonly'=>true)))
             ->add('sueldoactual','text',array(
                   'label'=>'Sueldo actual',  
                   'required'  => true,
