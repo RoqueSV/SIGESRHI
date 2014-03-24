@@ -32,7 +32,36 @@ class FactorevaluacionController extends Controller
         $entity->setIdformulario($fevaluacion);
         $form = $this->createForm(new FactorevaluacionType(), $entity);
         $form->bind($request);
-     
+
+        //Guardamos en un array los nombres de las opciones ingresadas
+        $nopcion_array = array();
+        foreach($entity->getOpciones() as $opcion)
+        {
+            $nopcion_array[]= $opcion->getNombreopcion();
+
+        }
+        //comprobamos si las opciones se repiten con la funcion "compruebaOpciones"
+        if($this->compruebaOpciones($nopcion_array))
+        {
+               //camino de miga
+            $breadcrumbs = $this->get("white_october_breadcrumbs");
+            $breadcrumbs->addItem("Inicio", $this->get("router")->generate("hello_page"));
+            $breadcrumbs->addItem("Evaluación de desempeño", $this->get("router")->generate("pantalla_modulo",array('id'=>4)));
+            $breadcrumbs->addItem("Formularios de evaluación", $this->get("router")->generate("formularioevaluacion"));
+            $breadcrumbs->addItem($fevaluacion->getNombrebreve(), $this->get("router")->generate("formularioevaluacion_show", array('id'=>$id)));
+            $breadcrumbs->addItem("Factores", $this->get("router")->generate("hello_page"));
+            //fin camino de miga
+    
+            $this->get('session')->getFlashBag()->add('msg-error', 'NO pueden haber opciones repetidas en el factor de evaluación.'); 
+            return $this->render('EvaluacionBundle:Factorevaluacion:new.html.twig', array(
+                'factorevaluacion' => $entity,
+                'form'   => $form->createView(),
+                'fevaluacion'=>$fevaluacion,
+            ));
+        }//if compruebapciones()
+       
+
+
         if ($form->isValid()) {
             
             $em->persist($entity);
@@ -51,16 +80,16 @@ class FactorevaluacionController extends Controller
         $breadcrumbs->addItem("Factores", $this->get("router")->generate("hello_page"));
         //fin camino de miga
     
-        $this->get('session')->getFlashBag()->add('msg-error', 'error en el factor de evaluación.'); 
+        $this->get('session')->getFlashBag()->add('msg-error', 'Error en el factor de evaluación.'); 
         return $this->render('EvaluacionBundle:Factorevaluacion:new.html.twig', array(
             'factorevaluacion' => $entity,
             'form'   => $form->createView(),
             'fevaluacion'=>$fevaluacion,
         ));
+    
     }
 
     
-
     //crea el formulario para el registro de un nuevo factor y sus opciones
     public function newFactorAction($id)
     {
@@ -190,6 +219,26 @@ class FactorevaluacionController extends Controller
         $editForm = $this->createForm(new FactorevaluacionType(), $entity);
         $editForm->bind($request);
 
+//////*********************** COMPROBACION DE N REPETICION DE OPCIONES***********//////
+        //Guardamos en un array los nombres de las opciones ingresadas
+        $nopcion_array = array();
+        foreach($entity->getOpciones() as $opcion)
+        {
+            $nopcion_array[]= $opcion->getNombreopcion();
+
+        }
+        //comprobamos si las opciones se repiten con la funcion "compruebaOpciones"
+        if($this->compruebaOpciones($nopcion_array))
+        {    
+             $this->get('session')->getFlashBag()->add('msg-error','NO pueden haber opciones repetidas en el factor de evaluación.'); 
+        return $this->render('EvaluacionBundle:Factorevaluacion:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+        }//if compruebapciones()
+//////***********************---------------------------------------------***********//////
+
         if ($editForm->isValid()) {
 
              /*   Bloque de eliminacion de las Opciones */
@@ -276,4 +325,28 @@ class FactorevaluacionController extends Controller
             ->getForm()
         ;
     }
+
+
+    //funcion utilizada para comprobar que los nombres seleccionados de las opciones de un factor de evaluacion no se repitan
+    //Recibe un array conteniendo solo los nombres de las opciones
+    public function compruebaOpciones($array)
+    {
+        $bandera= false;
+        for($i=0; $i< count($array); $i++)
+        {
+            $cont=0;
+            for($j=0; $j < count($array); $j++)
+            {
+                if($array[$i] == $array[$j]){
+                    $cont++;
+                }
+            }
+            if($cont > 1)
+            {
+                $bandera=true;
+            }
+        }
+        return $bandera;
+    }//function
+
 }

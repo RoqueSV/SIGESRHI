@@ -53,6 +53,7 @@ class Opcion
      * @var integer
      *
      * @ORM\Column(name="valoropcion", type="integer", nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el valor de la opcion")
      */
     private $valoropcion;
 
