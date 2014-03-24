@@ -217,10 +217,10 @@ class Solicitudempleo
     /**
      * @var string
      *
-     * @ORM\Column(name="dui", type="string", nullable=false)
+     * @ORM\Column(name="dui", type="string", length=9, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el DUI")
      * @Assert\Length(
-     * max = "10",
+     * max = "9",
      * maxMessage = "El DUI no debe exceder los {{limit}} caracteres"
      * )
      *
