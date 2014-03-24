@@ -66,5 +66,6 @@ ExpedienteBundle_memorandum:
         resource: "@ExpedienteBundle/Resources/config/routing/memorandum.yml"
         prefix:   /memorandum
 
-
-
+ExpedienteBundle_refrendaact:
+        resource: "@ExpedienteBundle/Resources/config/routing/refrendaact.yml"
+        prefix:   /refrendaact

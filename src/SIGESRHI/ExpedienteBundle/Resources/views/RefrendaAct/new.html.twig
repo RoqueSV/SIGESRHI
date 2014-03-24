@@ -1,0 +1,66 @@
+{% extends '::PrincipalBase.html.twig' %}
+
+{% block principal -%}
+
+{% for flashMessage in app.session.flashbag.get('aviso') %}
+    <div class="alert alert-danger">
+       <p> {{ flashMessage }}</p>
+    </div>
+{% endfor %}
+
+<style type="text/css">
+input[type="number"],
+  .uneditable-input {
+  border: 0px;
+  height: 15px;
+  -webkit-box-shadow: inset 0 0px 0px 0px;
+     -moz-box-shadow: inset 0 0px 0px 0px;
+          box-shadow: inset 0 0px 0px 0px;
+}
+
+input[type="number"]:focus,
+  .uneditable-input {
+  -webkit-box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+     -moz-box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+          box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+}
+
+input[readonly],
+.spinner
+{
+  background-color: #ffffff;
+}
+</style>
+
+{{ form_javascript(form) }}
+    <h3 class="text-center">Creación de nuevo puesto</h3>
+    <p class="text-center">Digite la siguiente información para completar el registro</p>
+    <br/>
+    <form action="{{ path('refrendaact_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+        {{form_row(form.idplaza)}}
+        {{form_row(form.centro)}}
+        {{form_row(form.idunidad)}}
+        {{form_row(form.partida)}}
+        {{form_row(form.subpartida)}}
+        {{form_row(form.unidadpresupuestaria)}}
+        {{form_row(form.lineapresupuestaria)}}
+        {{form_row(form.codigolp)}}
+        {{form_row(form.sueldoactual)}}
+        {{form_row(form.tipo)}}
+        
+       
+        <input type="hidden" name="tipo" id="tipo" value="{{tipo}}"/>
+        <input type="hidden" name="tipocontratacion" id="tipocontratacion" value="{{tipocontratacion}}"/>
+        <input type="hidden" name="idexp" id="idexp" value="{{idexp}}"/>
+
+        {{ form_rest(form) }}
+    
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">Registrar</button>
+      <a href="{{path('contratacion_tipo',{'tipo':tipo,'tipogrid':tipocontratacion,'idexp':idexp}) }}" class="btn">Cancelar</a>
+    </div>
+
+    </form>
+
+        
+{% endblock %}

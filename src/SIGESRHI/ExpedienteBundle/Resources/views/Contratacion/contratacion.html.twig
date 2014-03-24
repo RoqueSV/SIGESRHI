@@ -42,14 +42,35 @@
          </div>
     </div>
 
-    
 
     {{form_row(form.centro)}}
     {{form_row(form.unidad)}}
     {% if tipocontratacion == 1 %}
-    {{form_row(form.puesto,{value : plaza})}}
+    <table>
+      <tr>
+        <td>
+           {{form_row(form.puesto,{value : plaza})}} 
+        </td>
+        <td>
+          <div class="control-group">
+            <a href="{{ path('refrendaact_new',{'tipo':tipo,'tipocontratacion':tipocontratacion,'idexp':expediente[0].id}) }}" class="btn tool btnopcion" title="Nuevo puesto"><i class="icon-plus-sign"></i></a>
+          </div>
+        </td>
+      </tr>
+    </table>
     {% else %}  
-    {{form_row(form.puesto)}}
+    <table>
+      <tr>
+        <td>
+           {{form_row(form.puesto)}} 
+        </td>
+        <td>
+          <div class="control-group">
+            <a href="{{ path('refrendaact_new',{'tipo':tipo,'tipocontratacion':tipocontratacion,'idexp':expediente[0].id}) }}" class="btn tool btnopcion" title="Nuevo puesto"><i class="icon-plus-sign"></i></a>
+          </div>
+        </td>
+      </tr>
+    </table>
     {% endif %}
    
 

@@ -1,0 +1,30 @@
+refrendaact:
+    pattern:  /
+    defaults: { _controller: "ExpedienteBundle:RefrendaAct:index" }
+
+refrendaact_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "ExpedienteBundle:RefrendaAct:show" }
+
+refrendaact_new:
+    pattern:  /new
+    defaults: { _controller: "ExpedienteBundle:RefrendaAct:new" }
+
+refrendaact_create:
+    pattern:  /create
+    defaults: { _controller: "ExpedienteBundle:RefrendaAct:create" }
+    requirements: { _method: post }
+
+refrendaact_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ExpedienteBundle:RefrendaAct:edit" }
+
+refrendaact_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "ExpedienteBundle:RefrendaAct:update" }
+    requirements: { _method: post|put }
+
+refrendaact_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "ExpedienteBundle:RefrendaAct:delete" }
+    requirements: { _method: post|delete }

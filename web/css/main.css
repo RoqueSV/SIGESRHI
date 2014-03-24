@@ -168,6 +168,12 @@ textarea {
   line-height: 15px;
 }
 
+/* Alinear boton 'nuevo puesto' */
+
+.btnopcion {
+    margin-left: 15px;
+}
+
 /* Imagenes estados */
 .imageEst {
     height: 120px;
