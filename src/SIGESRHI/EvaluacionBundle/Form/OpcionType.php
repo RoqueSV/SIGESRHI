@@ -11,9 +11,10 @@ class OpcionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombreopcion', null, array('label'=>'Opción: ', 'attr'=>array('class'=>'input-small')))
+            //->add('nombreopcion', null, array('label'=>'Opción: ', 'attr'=>array('class'=>'input-small')))
+            ->add('nombreopcion', 'choice', array('label'=>'Opción: ', 'choices' => array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E'), 'expanded'=>false, 'empty_value'=>'Seleccione', 'attr'=>array('class'=>'input-small')))
             ->add('descripcionopcion', 'textarea', array('label'=>'Descripción: ', 'attr'=>array('class'=>'input-xmlarge')))
-            ->add('valoropcion', null, array('label'=>'Valor de la opción: ', 'attr'=>array('class'=>'input-small', 'data-bvalidator'=>'number')))
+            ->add('valoropcion', null, array('label'=>'Valor de la opción: ', 'attr'=>array('class'=>'input-mini spinner', 'data-bvalidator'=>'number', 'readonly'=>true)))
             //->add('idfactor')
         ;
     }

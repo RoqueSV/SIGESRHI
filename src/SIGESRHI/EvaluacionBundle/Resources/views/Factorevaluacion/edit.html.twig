@@ -109,4 +109,34 @@ jQuery(document).ready(function() {
  });
 
 </script>
+
+ <style type="text/css">
+ 
+    input[type="number"],
+  .uneditable-input {
+  border: 0px;
+  height: 15px;
+  -webkit-box-shadow: inset 0 0px 0px 0px;
+     -moz-box-shadow: inset 0 0px 0px 0px;
+          box-shadow: inset 0 0px 0px 0px;
+}
+
+input[type="number"]:focus,
+  .uneditable-input {
+  -webkit-box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+     -moz-box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+          box-shadow: inset 0 0px 0px 0px, 0 0 0px 0px;
+}
+
+input[readonly],
+.spinner
+{
+  background-color: #ffffff;
+}
+
+.tabla-corta
+{
+width:55%;
+}
+</style>
 {% endblock %}

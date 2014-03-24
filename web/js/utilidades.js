@@ -133,6 +133,16 @@ $(".telefono").mask("99999999",{placeholder:" "});
 $(".dinero").maskMoney({thousands:'', decimal:'.'});
 });
 
+//Spinner para los elementos de forms embebidos
+$( ".spinner" ).spinner({
+     spin: function( event, ui ) {
+      if ( ui.value < 0 ) {
+       $( this ).spinner( "value", 0 );
+       return false;
+      } 
+     }
+    });
+
 }
 
 
