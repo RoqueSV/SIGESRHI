@@ -55,7 +55,8 @@ class Institucioncapacitadora
     /**
      * @var string
      *
-     * @ORM\Column(name="telefonocontacto", type="string", length=8, nullable=true)
+     * @ORM\Column(name="telefonocontacto", type="string", length=8, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el telefono de contacto")
      * @GRID\Column(filterable=false, groups={"grupo_institucion"}, title="Teléfono", align="center")
      */
     private $telefonocontacto;
@@ -75,7 +76,8 @@ class Institucioncapacitadora
     /**
      * @var string
      *
-     * @ORM\Column(name="emailcontacto", type="string", length=50, nullable=true)
+     * @ORM\Column(name="emailcontacto", type="string", length=50, nullable=false)
+     * @Assert\NotNull(message="Debe ingresar el correo")
      * @Assert\Email(
      *     message = "El correo '{{ value }}' no es valido."
      * )

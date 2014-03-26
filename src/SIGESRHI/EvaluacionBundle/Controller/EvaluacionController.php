@@ -580,7 +580,7 @@ class EvaluacionController extends Controller
         $numpuestos=count($entity->getIdrefrenda());
 
         //Si el empleado evaluador solo posee una plaza, lo redirigimos directamente a la vista de seleccion de subordinados
-        if($numpuestos = 1)
+        if($numpuestos == 1)
         {
             $refrenda = $entity->getIdrefrenda();
             return $this->redirect($this->generateUrl('evaluacion_seleccionempleado', array(

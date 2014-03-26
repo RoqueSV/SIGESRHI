@@ -51,6 +51,10 @@
 
         <h4>II. EVALUACIÓN GENERAL POR PARTE DEL JEFE INMEDIATO</h4>
 
+        {% if formulario.factores|length == 0 %}
+            <b>NO HAY FACTORES DE EVALUACION REGISTRADOS</b>
+        {% endif %}
+
     {% for factor in formulario.factores %}
     <table border="2" class="table-bordered tablaformularioeval">
         <tr><th colspan="{{factor.opciones|length}}" class="text-center"><b>{{ factor.nombrefactor}}</b></th></tr>
@@ -101,7 +105,9 @@
     {{ form_rest(form) }}
         <p>
             <div class="text-center">
-            <button type="submit" class="btn btn-primary" >Guardar</button>
+            {% if formulario.factores|length > 0%}
+                <button type="submit" class="btn btn-primary" >Guardar</button>
+            {% endif %}
             <button type="button" class="btn" onclick="location.href='{{path('evaluacion_seleccionempleado', {'idrefrenda':refrendajefe.id})}}'">Cancelar</button>
             </div>
         </p>
