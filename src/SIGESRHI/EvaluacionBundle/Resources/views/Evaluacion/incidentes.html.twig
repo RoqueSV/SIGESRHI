@@ -42,7 +42,7 @@ Factores que observan: <br>
 	</tr>
 {% for incidente in evaluacion.Incidentes %}
 <tr>
-	<td>{{incidente.fechaincidente|date('d-m-Y')}}</td>
+	<td>{{incidente.fechaincidente|date('d-m-Y')|fecha}}</td>
 	<td>{{incidente.idfactorevaluacion.nombrefactor}}</td>
 	<td>{% if incidente.tipoincidente == "F"%} Favorable {% elseif incidente.tipoincidente == "D" %} Desfavorable {% endif %}</td>
 	<td>{{incidente.descripcionincidente}}</td>
