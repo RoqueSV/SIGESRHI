@@ -157,7 +157,7 @@ class Solicitudempleo
     /**
      * @var string
      *
-     * @ORM\Column(name="telefonofijo", type="string", nullable=false)
+     * @ORM\Column(name="telefonofijo", type="string", length=8,nullable=false)
      * @Assert\NotNull(message="Debe ingresar el telefono")
      * @Assert\Length(
      * max = "8",
@@ -170,7 +170,7 @@ class Solicitudempleo
     /**
      * @var string
      *
-     * @ORM\Column(name="telefonomovil", type="string", nullable=false)
+     * @ORM\Column(name="telefonomovil", type="string", length=8,nullable=false)
      * @Assert\NotNull(message="Debe ingresar el telefono movil")
      * @Assert\Length(
      * max = "8",
@@ -183,10 +183,14 @@ class Solicitudempleo
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     * @ORM\Column(name="email", type="string", length=75, nullable=false)
      * @Assert\NotNull(message="Debe ingresar el correo")
      * @Assert\Email(
      *     message = "El correo '{{ value }}' no es un correo valido."
+     * )
+     * @Assert\Length(
+     * max = "75",
+     * maxMessage = "El correo no debe exceder los {{limit}} caracteres"
      * )
      *
      */
@@ -299,10 +303,12 @@ class Solicitudempleo
     /**
      * @var string
      *
-     * @ORM\Column(name="sexo", type="string", nullable=false)
+     * @ORM\Column(name="sexo", type="string", length=1, nullable=false)
      * @Assert\NotNull(message="Debe seleccionar el sexo")
-     *
-     *
+     * @Assert\Length(
+     * max = "1",
+     * maxMessage = "El Sexo no debe exceder los {{limit}} caracteres"
+     * )
      */
     private $sexo;
 
