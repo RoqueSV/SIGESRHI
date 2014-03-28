@@ -9,7 +9,9 @@ use SIGESRHI\ExpedienteBundle\Entity\Accionpersonal;
 use SIGESRHI\ExpedienteBundle\Entity\Expediente;
 use SIGESRHI\ExpedienteBundle\Entity\Empleado;
 use SIGESRHI\ExpedienteBundle\Entity\Solicitudempleo;
+use SIGESRHI\ExpedienteBundle\Entity\Contratacion;
 use SIGESRHI\ExpedienteBundle\Entity\Hojaservicio;
+use SIGESRHI\AdminBundle\Entity\RefrendaAct;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -215,6 +217,7 @@ class RefrendaController extends Controller
       
       $plazas = $this->getDoctrine()->getRepository('AdminBundle:Plaza')->findAll();
       $centros= $this->getDoctrine()->getRepository('AdminBundle:Centrounidad')->findAll();
+
       if($plazas != null AND $centros != null){
         if ((move_uploaded_file($_FILES['arch_carga_incial']['tmp_name'], $uploadfile)) AND ($max>$_FILES['arch_carga_incial']['size']) AND (($_FILES['arch_carga_incial']['type']=="application/vnd.ms-excel") OR ($_FILES['arch_carga_incial']['type']=="text/csv") ) ) {
            //respaldo BD
@@ -224,54 +227,361 @@ class RefrendaController extends Controller
           echo "C:\BitNami\wappstack-5.4.24-0\postgresql\bin\pg_dump.exe -i -h localhost -p 5432 -U postgres -F c -b -v -f sigesrhi sigesrhi";
            $msj="REspaldo exitoso";*/
            ///////
+           //if (($gestor = fopen($uploadfile, "r")) !== FALSE) {  
+           $gestor = fopen($uploadfile, "r");
+           $i=0; 
            while ((($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) AND ($sinerrores==0)) {
             //obtenemos el codigo del empleado
+           if($i!=0 && $datos[0]!=" "){            
             if(($totalblank=substr_count($datos[1]," "))>0){
               $codigocortado = explode(" ", $datos[1]);
               $codigoempleado=$codigocortado[$totalblank];
             }else{
               $codigoempleado=$datos[1];
+              //echo $codigoempleado;
             }  
 
             if(strlen($codigoempleado)==5){
               //Verificamos si ya existe un expediente para el empleado
               $empleadofind = $this->getDoctrine()->getRepository('ExpedienteBundle:Empleado')->findOneByCodigoempleado($codigoempleado);
-              $expedientefind = $empleado->getIdexpediente();
+              if($empleadofind!=null){
+                $expedientefind = $empleadofind->getIdexpediente();
+                $usuariofind = $empleadofind->getIdusuario();
+              } 
+              else{
+                $expedientefind = null;
+                $usuariofind = null;
+              }             
+              //***busqueda en catalogos*******/
               $plaza = $this->fullUpperFromDb($datos[5]);
-              if($expedientefind == null){
+              $plazafind = $this->getDoctrine()->getRepository('AdminBundle:Plaza')->findOneByNombreplaza($plaza);
+              $centroOk=$this->fullUpperFromDb($datos[29]);
+              $unidadOk=$this->fullUpperFromDb($datos[35]);    
+
+              //query para encontrar el centro
+              $queryc = $em->createQuery('SELECT c.id as id FROM AdminBundle:Centrounidad c WHERE upper(c.nombrecentro) =:par')
+                          ->setParameter('par',$centroOk);
+              $idcentro = $queryc->getResult();
+              $centrofind=null;
+              if(count($idcentro)>0)
+                $centrofind = $this->getDoctrine()->getRepository('AdminBundle:Centrounidad')->find($idcentro[0]);
+              
+              //query para encontrar la unidad
+              $queryu = $em->createQuery('SELECT u.id as id FROM AdminBundle:Unidadorganizativa u WHERE upper(u.nombreunidad) =:par AND u.idcentro=:par1')
+                          ->setParameter('par',$unidadOk)
+                          ->setParameter('par1',$centrofind->getId());
+              $idunidad = $queryu->getResult();
+              $unidadfind=null;
+              if(count($idunidad)>0){
+               //echo "entraaaaaaaaaaa";
+                $unidadfind = $this->getDoctrine()->getRepository('AdminBundle:Unidadorganizativa')->find($idunidad[0]);
+              }
+              /***************************/
+
+
+              //echo $codigoempleado;
+              if($expedientefind == null){                
                 //creamos el expediente
-                $fexp = new \Datetime(date('d-m-Y'));
+                $factual = new \Datetime(date('d-m-Y'));
                 $expediente = new Expediente();                 
                 $expediente->setTipoexpediente('E');
-                $expediente->setFechaexpediente($fexp);
-                //Usuario para el empleado
-                $usuario = new Usuario();
-                $usuario->setUsername($codigoempleado);
+                $expediente->setFechaexpediente(new \Datetime($datos[23]));
+                $em->persist($expediente);
+
                 //Entidad Empleado
                 $empleado = new Empleado();
+                $empleado->setIdexpediente($expediente);
+                $empleado->setCodigoempleado($codigoempleado);
+                
+               $userfind = $this->getDoctrine()->getRepository('ApplicationSonataUserBundle:User')->findOneByUsername($codigoempleado);          
+               if($userfind==null){
+                  //- Inyección de dependencias
+                 $userManager = $this->get('fos_user.user_manager');
+                 $user = $userManager->createUser();
+
+                 //- Datos para crear usuario por defecto
+                 $correo = $datos[32];
+                 $tempPassword = $codigoempleado; 
+                 $usuario = $codigoempleado;
+
+                 //Asignando variables
+                 $user->setUsername($usuario);
+                 $user->setPlainPassword($tempPassword);
+                 $user->setEmail($correo);
+
+                 $user->setEnabled(true); //Activado x defecto
+                 $user->setRoles(array('ROLE_USER')); //Permisos
+                 
+                 /* Asigno rol "Empleado" */
+                 
+                 $rol = $em->getRepository('ApplicationSonataUserBundle:Group')->findOneByName('Empleado');
+
+                 $user->addGroup($rol); //Rol aplicacion           
+                 $userManager->updateUser($user); //Guardar cambios
+               }
+               else{
+                $user = $userfind;
+               }        
+               $empleado->setIdusuario($user); //Asignar usuario a empleado
+               $em->persist($empleado);
+               /*********************/            
+
+               /***************Datos personales**************/              
+               if($datos[4]!="" && $datos[14]!="" && $datos[15]!="" && $datos[16]!="" && $datos[17]!="" && $datos[18]!="" && $datos[19]!="" && $datos[20]!="" && $datos[21]!="" && $datos[22]!="" && $datos[23]!="" && $datos[24]!="" && $datos[25]!="" && $datos[29]!="" && $datos[30]!="" && $datos[31]!="" && $datos[32]!="" && $datos[33]!=""){                  
+                  $nombreOk=$this->fullUpperFromDb($datos[4]);
+                  /***************Hoja de servicio**************/              
+                  $hojaservicio = new Hojaservicio();
+                  $hojaservicio->setNombreempleado($nombreOk);
+                  $hojaservicio->setDui($datos[14]);
+                  $hojaservicio->setLugardui($datos[15]);
+                  $hojaservicio->setLugarnac($datos[17]);
+                  $hojaservicio->setFechanac(new \Datetime($datos[18]));
+                  //estado civil : S,C,V,A,D
+                  $estadosValidos = array("S","C","V","A","D");
+                  if(in_array($datos[19],$estadosValidos)){
+                    $hojaservicio->setEstadocivil($datos[19]);
+                  }
+                  else{
+                    $sinerrores=5;
+                    $msj="Error en Resgistro: ".$i.". No coincide estado civil";
+                  }
+                  $direccionCompleta = $datos[31].", ".$datos[30];
+                  $hojaservicio->setDireccion($direccionCompleta);              
+                  $hojaservicio->setTelefonofijo($datos[21]);
+                  $hojaservicio->setEducacion($this->fullUpperFromDb($datos[22]));
+                  $hojaservicio->setFechaingreso(new \Datetime($datos[23]));
+                  $hojaservicio->setCargo($datos[24]);
+                  $hojaservicio->setSueldoinicial($datos[25]);
+                  $hojaservicio->setIsss($datos[26]);
+                  $hojaservicio->setNit($datos[27]);
+                  $hojaservicio->setDestacadoen($centroOk);
+                  $hojaservicio->setIdexpediente($expediente);     
+
+                  $em->persist($hojaservicio);
+                  /***************Fin Hoja de servicio**************/
+
+                  /***************Solicitud empleo**************/ 
+                  $solicitudempleo = new Solicitudempleo();
+                  /*****find plaza***/                  
+                  if($plazafind != null){
+                    $solicitudempleo->setIdplaza($plazafind);
+                  }                  
+                  else{
+                    $msj="Error. Plaza no encontrada en manual: ".$plaza.". En registro: ".$i;
+                    $sinerrores=7;
+                  }                  
+                  /****find municipio****/
+                  //$municipiofind = $this->getDoctrine()->getRepository('ExpedienteBundle:Municipio')->findOneByNombremunicipio($datos[33]);
+                  //query para encontrar la unidad
+                  $municipioOK = $this->fullUpperFromDb($datos[33]);
+                  $queryu = $em->createQuery('SELECT m.id as id FROM ExpedienteBundle:Municipio m WHERE upper(m.nombremunicipio) =:par')
+                              ->setParameter('par',$municipioOK);
+                  $idmunicipio = $queryu->getSingleResult();
+                  $municipiofind=null;
+                  if(count($idmunicipio)>0)
+                    $municipiofind = $this->getDoctrine()->getRepository('ExpedienteBundle:Municipio')->find($idmunicipio['id']);
+
+                  if($municipiofind != null){
+                    $solicitudempleo->setIdmunicipio($municipiofind);
+                  }
+                  else{
+                    $msj="Error. Municipio no encontrado: ".$datos[33].". En registro: ".$i;
+                    $sinerrores=7; 
+                  }                  
+                  /****expediente***/
+                  $solicitudempleo->setIdexpediente($expediente);                  
+                  /****dependenciaparinst-centrode atencion**/                  
+                  //$centrofind = $this->getDoctrine()->getRepository('AdminBundle:Centrounidad')->findOneByNombrecentro($centroOk);
+
+                  if($centrofind != null){
+                    $solicitudempleo->setDependenciaparinst($centrofind);
+                  }
+                  else{
+                    $msj="Error. Centro no encontrado: ".$datos[29].". En registro: ".$i;
+                    $sinerrores=7;
+                  }
+
+                  $solicitudempleo->setNumsolicitud("00-2014");
+                  $solicitudempleo->setPrimerapellido(" ");
+                  $solicitudempleo->setNombres(" ");
+                  $solicitudempleo->setNombrecompleto($nombreOk);
+                  $solicitudempleo->setColonia($datos[30]);
+                  $solicitudempleo->setCalle($datos[31]);
+                  $solicitudempleo->setEstadocivil($datos[19]);
+                  $solicitudempleo->setTelefonofijo($datos[21]);
+                  $solicitudempleo->setTelefonomovil(" ");
+                  $solicitudempleo->setEmail($datos[32]);
+                  $solicitudempleo->setLugarnac($datos[17]);
+                  $solicitudempleo->setFechanac(new \Datetime($datos[18]));
+                  $solicitudempleo->setDui($datos[14]);
+                  $solicitudempleo->setLugardui($datos[15]);
+                  $solicitudempleo->setFechadui(new \Datetime($datos[16]));
+                  $solicitudempleo->setNit($datos[27]);                  
+                  $solicitudempleo->setIsss($datos[26]);
+                  $solicitudempleo->setNup($datos[28]);
+                  $solicitudempleo->setNip($datos[34]);
+                  $solicitudempleo->setSexo($datos[20]);                  
+                  $solicitudempleo->setFotografia($codigoempleado);
+                  $solicitudempleo->setFecharegistro(new \Datetime($datos[23]));                  
+                  $solicitudempleo->setFechamodificacion($factual);
+
+                  $em->persist($solicitudempleo);
+                  /***************Fin Solicitud empleo**************/ 
+                }
+                else{
+                  $sinerrores=6;
+                  $msj="Faltan datos en Resgistro: ".$i;
+                }
 
               }else{
-                //si ya existe no creamos expediente
-                $expediente = $expedientefind;
+                echo "Ya existe expediente, usuario, hojaservicio, empleado, solicitudempleo";
+                $expediente = $expedientefind;                   
+                $empleado = $empleadofind;                            
+              }      
+
+              /**************Llenamos la tabla refrendaAct************/
+              $refrendaAct  = new RefrendaAct();
+              //$centrofind = $this->getDoctrine()->getRepository('AdminBundle:Centrounidad')->findOneByNombrecentro($centroOk);              
+              //$unidadfind = $this->getDoctrine()->getRepository('AdminBundle:Unidadorganizativa')->findOneByNombreunidad($unidadOk);
+              if($plazafind == null){
+                $msj="Error. Plaza no encontrada en Manual de Puestos: ".$plaza.". En registro: ".$i;
+                $sinerrores=9;
+              }              
+              elseif($unidadfind == null){
+                $msj="Error. Unidad Organizativa no encontrada: ".$datos[35]." En centro: ".$datos[29]."(".$centrofind->getId()."). En registro: ".$i;
+                $sinerrores=9;
               }
+              elseif($centrofind == null) {
+                $msj="Error. Centro no encontrado: ".$datos[29].". En registro: ".$i;
+                $sinerrores=9; 
+              }
+              else{
+                //Registramos refrenda si no hay inconsistencias
+                if($datos[2]!="" && $datos[3]!="" && $datos[6]!="" && $datos[10]!="" && $datos[11]!="" && $datos[12]!=""){
+                  $refrendaAct->setIdempleado($empleado);
+                  $refrendaAct->setIdplaza($plazafind);
+                  $refrendaAct->setIdunidad($unidadfind);
+                  $refrendaAct->setCodigoempleado($codigoempleado);
+                  $refrendaAct->setPartida($datos[2]);
+                  $refrendaAct->setSubpartida($datos[3]);
+                  $refrendaAct->setSueldoactual($datos[6]);
+                  $refrendaAct->setUnidadpresupuestaria($datos[10]);
+                  $refrendaAct->setLineapresupuestaria($datos[11]);
+                  $refrendaAct->setCodigolp($datos[12]);
+                  $refrendaAct->setNombreplaza($plaza);
+                  $refrendaAct->setTipo($datos[13]);
+
+                  $em->persist($refrendaAct);
+
+
+                  /**************Contratacion*******************/              
+                  $contratacion  = new Contratacion();
+                  //1-nombramiento, 2-contrato
+                  $tipo=0;
+                  if($datos[13]=="ls"){
+                    $tipo=1;
+                  }
+                  elseif ($datos[13]=="c") {
+                    $tipo=2;
+                  }
+                  else{
+                    $msj="Error. Verifique los codigos de tipo de contratacion debe coincidir con 'ls' o 'c'. Registro:".$i;          
+                    $sinerrores=8;
+                  } 
+                  //buscando el jefe
+                  /*$jefefind=null;                 
+                  if($datos[36]!="")
+                    $jefefind = $this->getDoctrine()->getRepository('AdminBundle:RefrendaAct')->findOneByCodigoempleado($datos[36]);
+                  else{
+                    $jefefind = $refrendaAct;
+                  }
+                    
+                  if($jefefind!=null OR $datos[36]==""){*/
+                    $contratacion->setTipocontratacion($tipo);
+                    $contratacion->setIdempleado($empleado);
+                    $contratacion->setPuesto($refrendaAct);                  
+                    //$contratacion->setPuestojefe($jefefind);
+                    $contratacion->setSueldoinicial($datos[25]);
+                    $contratacion->setHoraslaborales($datos[37]);
+                    $contratacion->setJornadalaboral($datos[38]);
+                    $contratacion->setFechainiciocontratacion(new \Datetime($datos[23]));
+
+                    $em->persist($contratacion);
+                    /*****************Generar Acuerdo***********************/
+                    $accionpersonal  = new Accionpersonal;
+                    $accionpersonal->setIdexpediente($expediente);
+                    $accionpersonal->setFecharegistroaccion(new \Datetime($datos[23]));                    
+                    
+                    $tipoaccion = $em->getRepository('ExpedienteBundle:Tipoaccion')->find(6);
+                    $tipoaccion2 = $em->getRepository('ExpedienteBundle:Tipoaccion')->find(7);
+                    if($tipo == 1 && $tipoaccion != null){
+                      //nombramiento
+                      $numeroacuerdo="GA-".$i;                    
+                      $accionpersonal->setNumacuerdo($numeroacuerdo);
+                      $accionpersonal->setIdtipoaccion($tipoaccion);
+                      $accionpersonal->setMotivoaccion("Acuerdo: ".$accionpersonal->getNumacuerdo()." - ".$plaza." - Se registra su nombramiento a partir del ".$datos[23]." como ".$plaza.".- Partida: ".$datos[2]." Subpartida: ".$datos[3]." con sueldo mensual de $".$datos[25]);
+                      $em->persist($accionpersonal);
+                    }
+                    elseif($tipo == 2 && $tipoaccion2 != null){
+                      //contratacion
+                      if($datos[39]!=""){
+                      $accionpersonal->setNumacuerdo($datos[39]);
+                      $accionpersonal->setIdtipoaccion($tipoaccion2);
+                      $accionpersonal->setMotivoaccion("Contrato No ".$accionpersonal->getNumacuerdo().", ".$plaza." - Se le contrata a partir del ".$datos[23]." al ____ según contrato No. ".$datos[39]." como ".$plaza." con sueldo mensual de $".$datos[25]);
+
+                      $em->persist($accionpersonal);
+                      }
+                      else{
+                        $msj="Error. ingrese el numero de contrato para el registro:".$i;
+                        $sinerrores=12;     
+                      }
+                    }
+                    else{
+                      $msj="Error. Verifique catalogo tipoaccion y los codigos de contratacion ls o c. Registro:".$i;
+                      $sinerrores=11;   
+                    }
+                /*}
+                  else{
+                    $msj="Error. Verifique los codigos ingresados para los jefes(".$datos[36]."), debe ingresarlos en orden jerarquico. Registro:".$i;          
+                    $sinerrores=10; 
+                  }*/
+                  
+                  /************Fin Contratacion**************/
+                }
+                else{
+                  $msj="Error. Datos incompletos(ref) en registro: ".$i;
+                  $sinerrores=9;   
+                }
+              }              
               
               //Verificamos que exista la plaza asignada
-              $entityPlaza = $this->getDoctrine()
+              /*$entityPlaza = $this->getDoctrine()
                                         ->getRepository('AdminBundle:Plaza')
                                         ->findOneByNombreplaza($plaza); 
               if($entityPlaza != null){
                 //Solicitud de empleo
+                $solicitudempleo = new Solicitudempleo();
+
+                //Refrenda Act
+                $refrendaAct = new RefrendaAct();
+                //Contratacion
+                $contratacion = new Contratacion();
               }else{
                 $sinerrores=4;
                 $msj="Plaza no encontrada en el Manual de Puestos del ISRI: ".$plaza;
-              }
+              }*/
             }
             else{
               $sinerrores=3;
-              $msj="Codigo Inválido: ".$codigoempleado;
+              //o es una plaza vacante
+              $msj="Codigo Inválido: ".$codigoempleado.". Registro:".$i;
             }
-
-           }//fin while leer linear
+            $i++;
+            }//fin if i==0 lee a excepcion de la primera linea
+            else{
+             $i++;
+            }
+           }//fin while leer lineas (empleados)          
 
         }else{
           $sinerrores=2;
@@ -280,12 +590,20 @@ class RefrendaController extends Controller
 
       }else{
         $sinerrores=1;
-        $msj="No existen catalogos Plaza y Centros";
+        $msj="No existen catalogos Plaza, Centros y RolEmpleado";
       }
 
-
-      echo $msj;
+      if($sinerrores==0){        
+        $em->flush();
+        $msj='CARGA CORRECTA';
+        $this->get('session')->getFlashBag()->add('new',$msj);
       }
+      else        
+        $this->get('session')->getFlashBag()->add('errornew',$msj);          
+      //echo $msj;
+      return $this->redirect($this->generateUrl('cargar_inicial'));
+    }//fin verificar carga inicial
+      
       /*$empleadosA = $em->getRepository('ExpedienteBundle:Empleado')->findAll();
       $expedientesA = $em->getRepository('ExpedienteBundle:Expediente')->findAll();
       if($empleadosA==null AND $expedientesA==null ){
