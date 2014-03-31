@@ -239,7 +239,7 @@ class RefrendaController extends Controller
             }else{
               $codigoempleado=$datos[1];
               //echo $codigoempleado;
-            }  
+            }
 
             if(strlen($codigoempleado)==5){
               //Verificamos si ya existe un expediente para el empleado
@@ -267,15 +267,19 @@ class RefrendaController extends Controller
                 $centrofind = $this->getDoctrine()->getRepository('AdminBundle:Centrounidad')->find($idcentro[0]);
               
               //query para encontrar la unidad
-              $queryu = $em->createQuery('SELECT u.id as id FROM AdminBundle:Unidadorganizativa u WHERE upper(u.nombreunidad) =:par AND u.idcentro=:par1')
-                          ->setParameter('par',$unidadOk)
-                          ->setParameter('par1',$centrofind->getId());
-              $idunidad = $queryu->getResult();
-              $unidadfind=null;
+              $unidades = $this->getDoctrine()->getRepository('AdminBundle:Unidadorganizativa')->findAll();
+              foreach ($unidades as $unidad) {
+                if($this->fullUpperFromDb($unidad->getNombreunidad()) ==$unidadOk){
+                  $unidadfind= $this->getDoctrine()->getRepository('AdminBundle:Unidadorganizativa')->find($unidad->getId());
+                }
+              }
+
+              $cf = $centrofind->getId();
+              /*$unidadfind=null;
               if(count($idunidad)>0){
                //echo "entraaaaaaaaaaa";
                 $unidadfind = $this->getDoctrine()->getRepository('AdminBundle:Unidadorganizativa')->find($idunidad[0]);
-              }
+              }*/
               /***************************/
 
 
@@ -465,8 +469,8 @@ class RefrendaController extends Controller
                   $refrendaAct->setPartida($datos[2]);
                   $refrendaAct->setSubpartida($datos[3]);
                   $refrendaAct->setSueldoactual($datos[6]);
-                  $refrendaAct->setUnidadpresupuestaria($datos[10]);
-                  $refrendaAct->setLineapresupuestaria($datos[11]);
+                  $refrendaAct->setUnidadpresupuestaria($this->fullUpperFromDb($datos[10]));
+                  $refrendaAct->setLineapresupuestaria($this->fullUpperFromDb($datos[11]));
                   $refrendaAct->setCodigolp($datos[12]);
                   $refrendaAct->setNombreplaza($plaza);
                   $refrendaAct->setTipo($datos[13]);
@@ -570,6 +574,9 @@ class RefrendaController extends Controller
                 $sinerrores=4;
                 $msj="Plaza no encontrada en el Manual de Puestos del ISRI: ".$plaza;
               }*/
+            }
+            elseif($datos[1]=="" && $datos[2]!="" && $datos[3]!="" && $datos[5]!=""){
+              /**************PLAZAS VACANTES*****************/
             }
             else{
               $sinerrores=3;
