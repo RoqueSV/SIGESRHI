@@ -270,7 +270,9 @@ class RefrendaController extends Controller
               $unidades = $this->getDoctrine()->getRepository('AdminBundle:Unidadorganizativa')->findAll();
               foreach ($unidades as $unidad) {
                 if($this->fullUpperFromDb($unidad->getNombreunidad()) ==$unidadOk){
-                  $unidadfind= $this->getDoctrine()->getRepository('AdminBundle:Unidadorganizativa')->find($unidad->getId());
+                  $unidadfind_band= $this->getDoctrine()->getRepository('AdminBundle:Unidadorganizativa')->find($unidad->getId());
+                  if($unidadfind_band->getIdcentro()->getId() == $centrofind->getId() )
+                    $unidadfind = $unidadfind_band;
                 }
               }
 
@@ -575,8 +577,19 @@ class RefrendaController extends Controller
                 $msj="Plaza no encontrada en el Manual de Puestos del ISRI: ".$plaza;
               }*/
             }
-            elseif($datos[1]=="" && $datos[2]!="" && $datos[3]!="" && $datos[5]!=""){
+            elseif($datos[1]=="" && $datos[2]!="" && $datos[3]!="" && $datos[5]!="" && $datos[10]!="" && $datos[11]!="" && $datos[12]!=""){
               /**************PLAZAS VACANTES*****************/
+              $refrendaAct  = new RefrendaAct();
+              $refrendaAct->setIdplaza($plazafind);              
+              $refrendaAct->setPartida($datos[2]);
+              $refrendaAct->setSubpartida($datos[3]);
+              $refrendaAct->setUnidadpresupuestaria($this->fullUpperFromDb($datos[10]));
+              $refrendaAct->setLineapresupuestaria($this->fullUpperFromDb($datos[11]));
+              $refrendaAct->setCodigolp($datos[12]);
+              $refrendaAct->setNombreplaza($plaza);
+              $refrendaAct->setSueldoactual(0);
+
+              $em->persist($refrendaAct);
             }
             else{
               $sinerrores=3;
