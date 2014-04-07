@@ -259,24 +259,28 @@ class RefrendaController extends Controller
               $unidadOk=$this->fullUpperFromDb($datos[35]);    
 
               //query para encontrar el centro
-              $queryc = $em->createQuery('SELECT c.id as id FROM AdminBundle:Centrounidad c WHERE upper(c.nombrecentro) =:par')
-                          ->setParameter('par',$centroOk);
-              $idcentro = $queryc->getResult();
               $centrofind=null;
-              if(count($idcentro)>0)
-                $centrofind = $this->getDoctrine()->getRepository('AdminBundle:Centrounidad')->find($idcentro[0]);
-              
+              $centros = $this->getDoctrine()->getRepository('AdminBundle:Centrounidad')->findAll();
+              foreach ($centros as $centro) {
+                //echo strtoupper(utf8_decode($centro->getNombrecentro()))."==".strtoupper($datos[29])."<br>";
+                if(strtoupper(utf8_decode($centro->getNombrecentro())) ==strtoupper($datos[29])){
+                  $centrofind= $centro;
+                  $centrofind->getNombrecentro();
+                }
+              }
               //query para encontrar la unidad
-              $unidades = $this->getDoctrine()->getRepository('AdminBundle:Unidadorganizativa')->findAll();
-              foreach ($unidades as $unidad) {
-                if($this->fullUpperFromDb($unidad->getNombreunidad()) ==$unidadOk){
-                  $unidadfind_band= $this->getDoctrine()->getRepository('AdminBundle:Unidadorganizativa')->find($unidad->getId());
-                  if($unidadfind_band->getIdcentro()->getId() == $centrofind->getId() )
-                    $unidadfind = $unidadfind_band;
+              if($centrofind!=null){
+                $unidades = $this->getDoctrine()->getRepository('AdminBundle:Unidadorganizativa')->findAll();
+                foreach ($unidades as $unidad) {
+                  if($this->fullUpperFromDb($unidad->getNombreunidad()) ==$unidadOk){
+                    $unidadfind_band= $this->getDoctrine()->getRepository('AdminBundle:Unidadorganizativa')->find($unidad->getId());
+                    if($unidadfind_band->getIdcentro()->getId() == $centrofind->getId() )
+                      $unidadfind = $unidadfind_band;
+                  }
                 }
               }
 
-              $cf = $centrofind->getId();
+              //$cf = $centrofind->getId();
               /*$unidadfind=null;
               if(count($idunidad)>0){
                //echo "entraaaaaaaaaaa";
@@ -647,8 +651,8 @@ class RefrendaController extends Controller
 
     function fullUpperFromDb($String1){
       $String = utf8_encode(strtoupper($String1));
-      $String = str_ireplace(array("á","à","â","ã","ª","ä"),"A",$String);
-      $String = str_replace(array("Á","À","Â","Ã","Ä"),"A",$String);
+      $String = str_ireplace(array("á","ã","à","â","ª","ä"),"A",$String);
+      $String = str_replace(array("Á","Ã","À","Â","Ä"),"A",$String);      
       $String = str_replace(array("Í","Ì","Î","Ï"),"I",$String);
       $String = str_replace(array("í","ì","î","ï"),"I",$String);
       $String = str_replace(array("é","è","ê","ë"),"E",$String);
@@ -657,6 +661,7 @@ class RefrendaController extends Controller
       $String = str_replace(array("Ó","Ò","Ô","Õ","Ö"),"O",$String);
       $String = str_replace(array("ú","ù","û","ü"),"U",$String);
       $String = str_replace(array("Ú","Ù","Û","Ü"),"U",$String);
+      //$String = str_replace(array("Ñ","ñ"),"Ñ",$String);
       $String = str_replace(array("[","^","´","`","¨","~","]"),"",$String);
       $String = str_replace("ç","c",$String);
       $String = str_replace("Ç","C",$String);
@@ -664,6 +669,7 @@ class RefrendaController extends Controller
       $String = str_replace("ý","y",$String);
 
       return $String;
-    }   
+    }
+
 }
 
