@@ -16,11 +16,7 @@ function guardar() {
   }
   
 }
-</script>
-	<!-- Botón ayuda -->
-    <a href="#help" class="btn pull-right tool" data-toggle="modal" title="Click para ayuda"><i class="icon-question-sign"></i></a>
-    {{ include('AdminBundle:Ayuda/Refrenda:cargar.html.twig')}}
-    
+</script>    
     {% for flashMessage in app.session.flashbag.get('new') %}
         <br><br>
         <div class="alert alert-success">

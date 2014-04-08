@@ -403,18 +403,25 @@ class RefrendaController extends Controller
                   /****dependenciaparinst-centrode atencion**/                  
                   //$centrofind = $this->getDoctrine()->getRepository('AdminBundle:Centrounidad')->findOneByNombrecentro($centroOk);
 
-                  if($centrofind != null){
+                  /*if($centrofind != null){
                     $solicitudempleo->setDependenciaparinst($centrofind);
                   }
                   else{
                     $msj="Error. Centro no encontrado: ".$datos[29].". En registro: ".$i;
                     $sinerrores=7;
-                  }
+                  }*/
 
                   $solicitudempleo->setNumsolicitud("00-2014");
-                  $solicitudempleo->setPrimerapellido(" ");
-                  $solicitudempleo->setNombres(" ");
                   $solicitudempleo->setNombrecompleto($nombreOk);
+                  $pedazos = explode(",", $nombreOk);
+                  if(isset($pedazos[0]))                  
+                    $solicitudempleo->setPrimerapellido($pedazos[0]);
+                  else
+                    $solicitudempleo->setPrimerapellido("");                  
+                  if(isset($pedazos[1]))                  
+                    $solicitudempleo->setNombres($pedazos[1]);                  
+                  else
+                    $solicitudempleo->setNombres("");
                   $solicitudempleo->setColonia($datos[30]);
                   $solicitudempleo->setCalle($datos[31]);
                   $solicitudempleo->setEstadocivil($datos[19]);
@@ -499,18 +506,18 @@ class RefrendaController extends Controller
                     $sinerrores=8;
                   } 
                   //buscando el jefe
-                  /*$jefefind=null;                 
+                  $jefefind=null;                 
                   if($datos[36]!="")
                     $jefefind = $this->getDoctrine()->getRepository('AdminBundle:RefrendaAct')->findOneByCodigoempleado($datos[36]);
-                  else{
-                    $jefefind = $refrendaAct;
-                  }
+                  else
+                    $jefefind = $refrendaAct;                
                     
-                  if($jefefind!=null OR $datos[36]==""){*/
+                  if($jefefind!=null)
+                    $contratacion->setPuestojefe($jefefind);
+
                     $contratacion->setTipocontratacion($tipo);
                     $contratacion->setIdempleado($empleado);
-                    $contratacion->setPuesto($refrendaAct);                  
-                    //$contratacion->setPuestojefe($jefefind);
+                    $contratacion->setPuesto($refrendaAct);                                      
                     $contratacion->setSueldoinicial($datos[25]);
                     $contratacion->setHoraslaborales($datos[37]);
                     $contratacion->setJornadalaboral($datos[38]);
